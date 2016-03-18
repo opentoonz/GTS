@@ -1,0 +1,464 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cxx}
+decl {\#include "gts_master.h"} {} 
+
+class gts_gui {open
+} {
+  Function {make_window()} {open
+  } {
+    Fl_Window window_opengl {
+      label {GTS}
+      callback {exit(0);}
+      xywh {20 50 200 25} type Double resizable
+      code0 {\#include <stdlib.h>} visible
+    } {
+      Fl_Menu_Bar {} {open
+        xywh {0 0 200 25}
+      } {
+        Submenu {} {
+          label File open
+          xywh {5 5 100 20}
+        } {
+          MenuItem menite_level {
+            label {Level...}
+            callback {cl_gts_master.cl_bro_level.cb_wintgl();}
+            xywh {5 5 100 20} type Toggle shortcut 0xffbf divider
+          }
+          MenuItem menite_config_load {
+            label {Load Config...}
+            callback {cl_gts_master.cl_bro_config.cb_load_wintgl();}
+            xywh {5 5 100 20} type Toggle shortcut 0xffbe
+          }
+          MenuItem menite_config_save_as {
+            label {Save As Config...}
+            callback {cl_gts_master.cl_bro_config.cb_save_as_wintgl();}
+            xywh {5 5 100 20} type Toggle shortcut 0x50073 divider
+          }
+          MenuItem {} {
+            label {    Quit}
+            callback {exit(0);}
+            xywh {10 10 100 20} shortcut 0x51
+            code0 {\#include <stdlib.h>}
+          }
+        }
+        Submenu {} {
+          label Setup open
+          xywh {10 10 100 20}
+        } {
+          MenuItem menite_trace_batch {
+            label {Color Trace Batch...}
+            callback {cl_gts_master.cl_bro_trace_batch.cb_wintgl();}
+            xywh {0 0 100 20} type Toggle
+          }
+        }
+      }
+    }
+    Fl_Window window_config_load {
+      label {Load Config}
+      callback {cl_gts_master.cl_bro_config.cb_load_cancel();}
+      xywh {30 100 300 390} type Double resizable non_modal size_range {180 125 0 0} visible
+    } {
+      Fl_Button {} {
+        callback {cl_gts_master.cl_bro_config.cb_load_dir_up();}
+        xywh {0 0 0 0} shortcut 0x40075
+      }
+      Fl_File_Input filinp_config_load_dir {
+        label Directory
+        callback {cl_gts_master.cl_bro_config.cb_load_dir();}
+        xywh {0 20 300 35} box BORDER_BOX align 5 when 1
+      }
+      Fl_Tile {} {open
+        xywh {0 60 300 265} resizable
+      } {
+        Fl_Group {} {open
+          xywh {0 60 150 265}
+        } {
+          Fl_Browser selbro_config_load_list {
+            callback {cl_gts_master.cl_bro_config.cb_load_list();}
+            xywh {0 60 150 265} type Hold box DOWN_BOX align 0
+          }
+        }
+        Fl_Group {} {open
+          xywh {150 60 150 265}
+        } {
+          Fl_Text_Display txtdis_config_load_text {
+            xywh {150 60 150 265} box DOWN_BOX color 50 align 0
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 330 300 25}
+      } {
+        Fl_Box {} {
+          xywh {0 330 30 25}
+        }
+        Fl_Input strinp_config_load_file {
+          label File
+          xywh {30 330 270 25} box BORDER_BOX when 1 resizable
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 360 300 25}
+      } {
+        Fl_Button {} {
+          label Load
+          callback {cl_gts_master.cl_bro_config.cb_load_ok();}
+          xywh {10 360 80 25}
+        }
+        Fl_Box {} {
+          xywh {90 360 120 25} resizable
+        }
+        Fl_Button {} {
+          label Cancel
+          callback {cl_gts_master.cl_bro_config.cb_load_cancel();}
+          xywh {210 360 80 25}
+        }
+      }
+    }
+    Fl_Window window_config_save_as {
+      label {Save As Config}
+      callback {cl_gts_master.cl_bro_config.cb_save_as_cancel();}
+      xywh {40 150 300 390} type Double resizable non_modal size_range {180 125 0 0} visible
+    } {
+      Fl_Button {} {
+        callback {cl_gts_master.cl_bro_config.cb_save_as_dir_up();}
+        xywh {0 0 0 0} shortcut 0x40075
+      }
+      Fl_File_Input filinp_config_save_as_dir {
+        label Directory
+        callback {cl_gts_master.cl_bro_config.cb_save_as_dir();}
+        xywh {0 20 300 35} box BORDER_BOX align 5 when 1
+      }
+      Fl_Tile {} {open
+        xywh {0 60 300 265} resizable
+      } {
+        Fl_Group {} {open
+          xywh {0 60 150 265}
+        } {
+          Fl_Browser selbro_config_save_as_list {
+            callback {cl_gts_master.cl_bro_config.cb_save_as_list();}
+            xywh {0 60 150 265} type Hold box DOWN_BOX align 0
+          }
+        }
+        Fl_Group {} {open
+          xywh {150 60 150 265}
+        } {
+          Fl_Text_Display txtdis_config_save_as_text {
+            xywh {150 60 150 265} box DOWN_BOX color 50 align 0
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 330 300 25}
+      } {
+        Fl_Box {} {
+          xywh {0 330 30 25}
+        }
+        Fl_Input strinp_config_save_as_file {
+          label File
+          xywh {30 330 270 25} box BORDER_BOX when 1 resizable
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 360 300 25}
+      } {
+        Fl_Button {} {
+          label Save
+          callback {cl_gts_master.cl_bro_config.cb_save_as_ok();}
+          xywh {10 360 80 25}
+        }
+        Fl_Box {} {
+          xywh {90 360 120 25} resizable
+        }
+        Fl_Button {} {
+          label Cancel
+          callback {cl_gts_master.cl_bro_config.cb_save_as_cancel();}
+          xywh {210 360 80 25}
+        }
+      }
+    }
+    Fl_Window window_level {
+      label {Browse Level}
+      callback {cl_gts_master.cl_bro_level.cb_cancel();}
+      xywh {50 200 350 570} type Double resizable non_modal size_range {310 265 0 0} visible
+    } {
+      Fl_Button {} {
+        callback {cl_gts_master.cl_bro_level.cb_dir_up();}
+        xywh {0 0 0 0} shortcut 0x40075
+      }
+      Fl_File_Input filinp_level_dir {
+        label Directory
+        callback {cl_gts_master.cl_bro_level.cb_dir();}
+        xywh {0 20 350 35} box BORDER_BOX align 5 when 1
+      }
+      Fl_Group {} {open
+        xywh {0 60 350 25}
+      } {
+        Fl_Choice choice_level_list_form {
+          callback {cl_gts_master.cl_bro_level.cb_file_or_level();} open
+          xywh {5 60 80 25} down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label {File.tif}
+            xywh {15 15 100 20}
+          }
+          MenuItem {} {
+            label {Level.tif}
+            xywh {20 20 100 20}
+          }
+        }
+        Fl_Button {} {
+          label Makedir
+          callback {cl_gts_master.cl_bro_level.cb_mkdir();}
+          xywh {90 60 60 25}
+        }
+        Fl_Button {} {
+          label Rename
+          callback {cl_gts_master.cl_bro_level.cb_rename();}
+          xywh {155 60 60 25}
+        }
+        Fl_Button button_level_shift_number {
+          label {Shift number}
+          callback {cl_gts_master.cl_bro_level.cb_renumber();}
+          xywh {220 60 85 25} hide
+        }
+        Fl_Box {} {
+          xywh {305 60 45 25} resizable
+        }
+      }
+      Fl_Tile {} {open
+        xywh {0 90 350 330} align 0 resizable
+      } {
+        Fl_Group {} {open
+          xywh {0 90 150 330} box DOWN_BOX
+        } {
+          Fl_Browser selbro_level_list {
+            callback {cl_gts_master.cl_bro_level.cb_list();}
+            xywh {0 90 150 330} type Hold align 0
+          }
+        }
+        Fl_Group {} {open
+          xywh {150 90 200 150} box DOWN_BOX
+        } {
+          Fl_Box box_level_image {
+            xywh {150 90 200 150}
+          }
+        }
+        Fl_Group {} {open
+          xywh {150 240 200 180} box DOWN_BOX
+        } {
+          Fl_Text_Display txtdis_level_info {
+            xywh {150 240 200 155} color 50 align 4 resizable
+          }
+          Fl_Group {} {open
+            xywh {150 395 200 25}
+          } {
+            Fl_Scrollbar scroll_level_info_number {
+              callback {cl_gts_gui.valinp_level_crnt->value(
+cl_gts_gui.scroll_level_info_number->value()
+);
+cl_gts_master.cl_bro_level.cb_info_redisplay();}
+              xywh {150 395 160 25} type Horizontal box BORDER_BOX when 4 resizable
+            }
+            Fl_Value_Input valinp_level_crnt {
+              callback {((Fl_Valuator *)(cl_gts_gui.scroll_level_info_number))->value(
+(double)cl_gts_gui.valinp_level_crnt->value()
+);
+cl_gts_master.cl_bro_level.cb_info_redisplay();}
+              xywh {310 395 40 25} when 8 minimum 1 maximum 9999 value 1
+            }
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 425 350 25}
+      } {
+        Fl_Box {} {
+          xywh {0 425 40 25}
+        }
+        Fl_Input strinp_level_file {
+          label Level
+          xywh {40 425 310 25} box BORDER_BOX resizable
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 455 350 25}
+      } {
+        Fl_Value_Input valinp_level_start {
+          label Start
+          xywh {40 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+        }
+        Fl_Value_Input valinp_level_end {
+          label End
+          xywh {110 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+        }
+        Fl_Box {} {
+          xywh {150 455 60 25} resizable
+        }
+        Fl_Light_Button ligbut_level_image_x1_sw {
+          label x1
+          callback {cl_gts_master.cl_bro_level.cb_x1view_wintgl();}
+          xywh {210 455 35 25}
+        }
+        Fl_Light_Button ligbut_level_view_sw {
+          label {View image}
+          callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
+          xywh {250 455 95 25}
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 485 350 50}
+      } {
+        Fl_File_Input filinp_level_rgb_scan_dir {
+          label {RGB scan dir}
+          callback {cl_gts_master.cl_bro_level.cb_rgb_scan_dir();}
+          xywh {0 500 165 35} align 5 when 1 deactivate resizable
+        }
+        Fl_Check_Button chkbtn_level_trace_save_sw {
+          label {S.C.T.}
+          tooltip {Save Color Trace level} xywh {165 515 55 20} down_box DOWN_BOX
+        }
+        Fl_Light_Button ligbut_level_rgb_scan_browse_sw {
+          label Browse
+          callback {cl_gts_master.cl_bro_level.cb_browse_sw();}
+          xywh {225 510 70 25}
+        }
+        Fl_Light_Button ligbut_level_info_rgb_sub_sw {
+          label Full
+          callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
+          xywh {300 510 45 25} hide
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 540 350 25}
+      } {
+        Fl_Button {} {
+          label OK
+          callback {cl_gts_master.cl_bro_level.cb_ok();}
+          xywh {10 540 80 25}
+        }
+        Fl_Box {} {
+          xywh {90 540 170 25} resizable
+        }
+        Fl_Button {} {
+          label Cancel
+          callback {cl_gts_master.cl_bro_level.cb_cancel();}
+          xywh {260 540 80 25}
+        }
+      }
+    }
+    Fl_Window window_x1view {
+      label x1
+      callback {cl_gts_master.cl_bro_level.cb_x1view_cancel();}
+      xywh {60 250 300 300} type Double align 0 resizable non_modal visible
+    } {
+      Fl_Scroll scroll_level_x1view {open
+        xywh {0 0 300 300} align 0 resizable
+      } {
+        Fl_Box box_level_x1view {
+          xywh {0 0 300 300}
+        }
+      }
+    }
+    Fl_Window window_trace_batch {
+      label {Color Trace Batch}
+      callback {cl_gts_master.cl_bro_trace_batch.cb_cancel();}
+      xywh {70 300 300 415} type Double resizable non_modal size_range {180 125 0 0} visible
+    } {
+      Fl_Button {} {
+        callback {cl_gts_master.cl_bro_trace_batch.cb_dir_up();} selected
+        xywh {0 0 0 0} shortcut 0x40075
+      }
+      Fl_Menu_Bar {} {open
+        xywh {0 0 300 25}
+      } {
+        Submenu {} {
+          label Edit open
+          xywh {10 10 100 20}
+        } {
+          MenuItem {} {
+            label Add
+            callback {cl_gts_master.cl_bro_trace_batch.cb_add();}
+            xywh {0 0 100 20} shortcut 0x40073
+          }
+          MenuItem {} {
+            label {All Add}
+            callback {cl_gts_master.cl_bro_trace_batch.cb_alladd();}
+            xywh {0 0 100 20} shortcut 0x50073
+          }
+          MenuItem {} {
+            label {Select All}
+            callback {int     ii;
+for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size(); ++ii) {
+                   cl_gts_gui.selbro_trace_batch_run_list->select(ii);
+}}
+            xywh {10 10 100 20} shortcut 0x40061
+          }
+          MenuItem {} {
+            label Delete
+            callback {int     ii;
+for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();) {
+              if ( cl_gts_gui.selbro_trace_batch_run_list->selected(ii) ) {
+                   cl_gts_gui.selbro_trace_batch_run_list->remove(ii);
+              } else { ++ii; }
+}}
+            xywh {10 10 100 20} shortcut 0x40078
+          }
+        }
+      }
+      Fl_File_Input filinp_trace_batch_dir {
+        label Directory
+        callback {cl_gts_master.cl_bro_trace_batch.cb_dir();}
+        xywh {0 40 300 35} box BORDER_BOX align 5 when 1
+      }
+      Fl_Tile {} {open
+        xywh {0 80 300 300} resizable
+      } {
+        Fl_Group {} {open
+          xywh {0 80 150 150}
+        } {
+          Fl_Browser selbro_trace_batch_list {
+            callback {cl_gts_master.cl_bro_trace_batch.cb_list();}
+            xywh {0 80 150 150} type Hold box DOWN_BOX align 0
+          }
+        }
+        Fl_Group {} {open
+          xywh {150 80 150 150}
+        } {
+          Fl_Text_Display txtdis_trace_batch_text {
+            xywh {150 80 150 150} box DOWN_BOX color 50 align 0
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 230 300 150}
+        } {
+          Fl_Browser selbro_trace_batch_run_list {
+            xywh {0 230 300 150} type Multi box DOWN_BOX
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 385 300 25}
+      } {
+        Fl_Button {} {
+          label Run
+          callback {cl_gts_master.cl_bro_trace_batch.cb_run();}
+          xywh {10 385 80 25}
+        }
+        Fl_Box {} {
+          xywh {90 385 120 25} resizable
+        }
+        Fl_Button {} {
+          label Cancel
+          callback {cl_gts_master.cl_bro_trace_batch.cb_cancel();}
+          xywh {210 385 80 25}
+        }
+      }
+    }
+  }
+} 
+
+decl {gts_gui cl_gts_gui;} {public
+} 

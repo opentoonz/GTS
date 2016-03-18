@@ -1,0 +1,83 @@
+.SUFFIXES: .obj .cpp
+#---define--------------------------------------------------------------
+APPLICATION_NAME = gts
+OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
+# /wd4996 : Stop warning message by MS-C old function
+# /DWIN32 : for Use fltk in Windows
+# /wd4819 : Stop warning message about Language Code
+INCS =\
+/I..\libcpp83gts_callback_and_action\
+/I..\libcpp82gts_hsv_histogram\
+/I..\libcpp81gts_file_browser\
+/I..\libcpp72iip_erase_dot_noise\
+/I..\libcpp71iip_color_trace_hab\
+/I..\libcpp64iip_rot90\
+/I..\libcpp56iip_opengl\
+/I..\libcpp55iip_scan\
+/I..\libcpp53iip_precision\
+/I..\libcpp52iip_rw\
+/I..\libcpp51iip_canvas\
+/I..\libc12pri\
+/I..\libc11portable\
+/I$(DPATH_TWAIN)\
+/I$(DPATH_FLTK)
+SRCS =\
+main.cpp
+LIBS =\
+$(DPATH_LIBR)\libcpp83gts_callback_and_action.lib\
+$(DPATH_LIBR)\libcpp82gts_hsv_histogram.lib\
+$(DPATH_LIBR)\libcpp81gts_file_browser.lib\
+$(DPATH_LIBR)\libcpp72iip_erase_dot_noise.lib\
+$(DPATH_LIBR)\libcpp71iip_color_trace_hab.lib\
+$(DPATH_LIBR)\libcpp69iip_scale_by_subpixel.lib\
+$(DPATH_LIBR)\libcpp64iip_rot90.lib\
+$(DPATH_LIBR)\libcpp56iip_opengl.lib\
+$(DPATH_LIBR)\libcpp55iip_scan.lib\
+$(DPATH_LIBR)\libcpp53iip_precision.lib\
+$(DPATH_LIBR)\libcpp52iip_rw.lib\
+$(DPATH_LIBR)\libcpp51iip_canvas.lib\
+$(DPATH_LIBR)\libcpp38calcu_rgb_to_hsv.lib\
+$(DPATH_LIBR)\libcpp31calcu_precision.lib\
+$(DPATH_LIBR)\libc18image_rw_tga.lib\
+$(DPATH_LIBR)\libc16image_rw_tif.lib\
+$(DPATH_LIBR)\libc14image_rw_base.lib\
+$(DPATH_LIBR)\libc12pri.lib\
+$(DPATH_LIBR)\libc11portable.lib\
+$(DPATH_TIFF)\lib\libtiff.lib\
+$(DPATH_FLTK)\lib\fltk.lib\
+$(DPATH_FLTK)\lib\fltkgl.lib\
+glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib\
+user32.lib gdi32.lib shell32.lib ole32.lib
+#------
+TARG_CON = $(APPLICATION_NAME)_console.exe
+TARG = $(APPLICATION_NAME).exe
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_FLTK  = ..\..\..\..\..\sdk\fltk\fltk-1.3.3
+DPATH_TWAIN = ..\..\..\..\..\sdk\twain\twain-2.3
+DPATH_TIFF  = ..\..\..\..\..\sdk\libtiff\tiff-4.0.3
+DPATH_APPL = ..\build
+DPATH_LIBR = $(DPATH_APPL)\lib
+DPATH_OBJE = $(DPATH_APPL)\obj
+DPATH_BINA = ..\..\x86_release
+DPATH_REDIST = "%VCINSTALLDIR%"redist\x86\Microsoft.VC120.CRT
+CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
+#---action--------------------------------------------------------------
+all: make_obj_dir $(TARG_CON) $(TARG) inst
+make_obj_dir:
+	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
+	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
+	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
+	if not exist $(DPATH_BINA) (mkdir $(DPATH_BINA))
+$(TARG_CON):
+	cl $(CC_OPTIONS) $(SRCS) $(LIBS) /Fe$@
+	del $(OBJS)
+$(TARG):
+	cl $(CC_OPTIONS) $(SRCS) $(LIBS) /Fe$@ /link /subsystem:windows
+	del $(OBJS)
+inst:
+	move $(TARG_CON) $(DPATH_BINA)
+	move $(TARG) $(DPATH_BINA)
+	copy _gts-scan_area.txt $(DPATH_BINA)
+	copy gts_install_setup.txt $(DPATH_BINA)
+	copy $(DPATH_REDIST)\msvcp120.dll $(DPATH_BINA)
+	copy $(DPATH_REDIST)\msvcr120.dll $(DPATH_BINA)

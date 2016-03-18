@@ -1,0 +1,42 @@
+.SUFFIXES: .obj .cpp
+#---define--------------------------------------------------------------
+NAME = libcpp52iip_rw
+OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
+# /wd4996 : Stop warning message by MS-C old function
+# /wd4819 : Stop warning message about Language Code
+INCS =\
+/I.\
+/I..\libcpp51iip_canvas\
+/I..\libc18image_rw_tga\
+/I..\libc16image_rw_tif\
+/I..\libc14image_rw_base\
+/I..\libc12pri\
+/I..\libc11portable
+SRCS =\
+check_save.cpp\
+iip_read_file.cpp\
+iip_read_header.cpp\
+iip_read_set_tif_param.cpp\
+iip_write_file.cpp\
+iip_write_set_file_attrbute_from_read.cpp\
+iip_write_set_tif_param.cpp\
+name_strings.cpp
+TARG = $(NAME).lib
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_APPL = ..\build
+DPATH_LIBR = $(DPATH_APPL)\lib
+DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
+CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
+#---action--------------------------------------------------------------
+all: make_obj_dir $(TARG)
+make_obj_dir:
+	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
+	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
+	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
+$(TARG): $(OBJS)
+	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
+.cpp.obj:
+	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
+clean_obj:
+	pushd $(DPATH_OBJE) & del $(OBJS) & popd
+	rmdir $(DPATH_OBJE)

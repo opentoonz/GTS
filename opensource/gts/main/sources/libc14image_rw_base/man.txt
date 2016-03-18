@@ -1,0 +1,137 @@
+【名前】
+     bread_init_head,
+     bread_open,
+     bread_set_byte_swap_sw,
+     bread_get_byte_swap_sw,
+     bread_seek,
+     bread_1byte, bread_2bytes, bread_4bytes,
+     bread_array1byte, bread_array2bytes, bread_array4bytes,
+     bread_close,
+     bwrite_init_head,
+     bwrite_open,
+     bwrite_set_byte_swap_sw,
+     bwrite_get_byte_swap_sw,
+     bwrite_seek,
+     bwrite_1byte, bwrite_2bytes, bwrite_4bytes,
+     bwrite_array1byte, bwrite_array2bytes, bwrite_array4bytes,
+     bwrite_close
+     - BytesSwap処理可能なBinary読み書き関数群
+
+【形式】
+     /****** ファイル読み込み関数群 ******/
+
+     #include <bread.h>
+
+     /* ヘッダーパラメータの初期化(init_head) */
+     void bread_init_head( BREAD *tp_ );
+     /* 開く(fopen) */
+     int bread_open( BREAD *tp_, char *cp_fname );
+     /* BigIndian(68x),LittleIndian(x86)の対応 */
+     void bread_set_byte_swap_sw( int sw, BREAD *tp_ );
+     int bread_get_byte_swap_sw( BREAD *tp_ );
+     /* 捜索(fseek) */
+     int bread_seek( BREAD *tp_, long l_pos );
+     /* 読む(fgetc) */
+     int bread_1byte( BREAD *tp_, u_char *ucp_ );
+     int bread_2bytes( BREAD *tp_, u_char *ucp_ );
+     int bread_4bytes( BREAD *tp_, u_char *ucp_ );
+     int bread_array1byte( BREAD *tp_, long l_size,
+			u_char *ucp_, long l_incr );
+     int bread_array2bytes( BREAD *tp_, long l_size,
+			u_char *ucp_, long l_incr );
+     int bread_array4bytes( BREAD *tp_, long l_size,
+			u_char *ucp_, long l_incr );
+     /* 閉じる(fclose) */
+     int bread_close( BREAD *tp_ );
+
+     /****** ファイル書き出し関数群 ******/
+
+     #include <bwrite.h>
+
+     /* ヘッダーパラメータの初期化(init_head) */
+     void bwrite_init_head( BWRITE *tp_ );
+     /* 開く(fopen) */
+     int bwrite_open( BWRITE *tp_, char *cp_fname );
+     /* BigIndian(68x),LittleIndian(x86)の対応 */
+     void bwrite_set_byte_swap_sw( int sw, BWRITE *tp_ );
+     int bwrite_get_byte_swap_sw( BWRITE *tp_ );
+     /* 捜索(fseek) */
+     int bwrite_seek( BWRITE *tp_, long l_pos );
+     /* 書く(fputc) */
+     int bwrite_1byte( BWRITE *tp_, u_char *ucp_ );
+     int bwrite_2bytes( BWRITE *tp_, u_char *ucp_ );
+     int bwrite_4bytes( BWRITE *tp_, u_char *ucp_ );
+     int bwrite_array1byte( BWRITE *tp_, long l_size,
+			u_char *ucp_, long l_incr );
+     int bwrite_array2bytes( BWRITE *tp_, long l_size,
+			u_char *ucp_, long l_incr );
+     int bwrite_array4bytes( BWRITE *tp_, long l_size,
+			u_char *ucp_, long l_incr );
+     /* 閉じる(fclose) */
+     int bwrite_close( BWRITE *tp_ );
+
+【歴史と目的】
+     画像ファイルを読み書きするとき、
+     MIPS(68k)系のCPUのみを使っていた時は、バイナリーデータであっ
+     ても、ただ素直にファイルを読み書きしていればよかったのだが、
+     Intel(x86)系のCPUも同時に使うことになり(2002年以後)、ファイ
+     ルの読み書きでバイトスワップの問題がでてきた。
+
+     Intel(x86)系のCPUは、LittleIndian配置なので、2bytes(uint16_t
+     ),4bytes(uint32_t)のBinaryの数値表現はbyte-swappedである。よ
+     って、読み込み時は、CPUタイプ(68k系,x86系)と、画像タイプ
+     (byte-swapped,not-swapped)が違うとき、byte swap処理が必要と
+     なる。
+
+     このbyte swap処理を機能として分離独立し、共有して使用できる
+     ようにした。
+
+【機能説明】
+     CPUタイプ(68k系,x86系)と、画像タイプ(byte-swapped,not-swapped)
+     との違いの時のbyte swap対処をしたBinary読み込み関数群。
+     1,2,4bytes単位のファイル読み書きに対応している。
+
+     C言語で作成した。
+     C/C++言語のプログラムから、コール可能。
+
+     int bread_close( BREAD *tp_ );
+     int bwrite_close( BWRITE *tp_ );
+     は、パラメータの初期化をしてしまう。 close関数を呼び出したあ
+     と、_byte_swap_swの値を確認することはできない。
+
+【戻り値】
+     定義変数 OK あるいは、NG を返す。
+     この変数宣言は"ptbl_returncode.h"にある。
+
+【使用例】
+	#include "ptbl_returncode.h"
+	#include "bwrite.h"
+	long l_pos;
+	BWRITE	t_;
+
+	bwrite_init_head( &t_ );
+	if (OK != bwrite_open( &t_, argv[1] )) {
+		(void)fprintf(stderr,
+		"Error : bwrite_open(-) returns NG.\n");
+		return NG;
+	}
+	bwrite_set_byte_swap_sw( ON, &t_ );
+
+	l_pos = 2001L;
+	if (OK != bwrite_4bytes( &t_, (u_char *)l_pos )) {
+		(void)fprintf(stderr,
+		"Error : bwrite_4bytes(,%ld) returns NG.\n",l_pos);
+		return NG;
+	}
+
+	if (OK != bwrite_close(&t_)) {
+		(void)fprintf(stderr,
+		"Error : bwrite_close(-) returns NG.\n");
+		return NG;
+	}
+
+【関連項目】	なし。
+【注意事項】	なし。
+
+【記述日】	2004年6月21日（月曜日） 
+

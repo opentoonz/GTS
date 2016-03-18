@@ -1,0 +1,76 @@
+.SUFFIXES: .obj .cpp
+#---define--------------------------------------------------------------
+NAME = libcpp55iip_scan
+OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
+# /wd4996 : Stop warning message by MS-C old function
+# /wd4819 : Stop warning message about Language Code
+INCS =\
+/I.\
+/I..\libcpp51iip_canvas\
+/I..\libc12pri\
+/I..\libc11portable\
+/I$(DPATH_TWAIN)
+SRCS =\
+tw_win_l1_dsm_entry.cpp\
+tw_win_l1_dsm_get_cc.cpp\
+tw_win_l1_dsm_init_tw_id.cpp\
+tw_win_l1_dsm_pri_cc.cpp\
+tw_win_l1_dsm_pri_error.cpp\
+tw_win_l1_dsm_state1to2.cpp\
+tw_win_l1_dsm_state2to1.cpp\
+tw_win_l1_dsm_state2to3.cpp\
+tw_win_l1_dsm_state3to2.cpp\
+tw_win_l1_dsm_state3to4.cpp\
+tw_win_l1_dsm_state4to3.cpp\
+tw_win_l2_dss_calc.cpp\
+tw_win_l2_dss_cap_get_ctnr.cpp\
+tw_win_l2_dss_cap_get_ctnr_onev.cpp\
+tw_win_l2_dss_cap_get_ctnr_range.cpp\
+tw_win_l2_dss_cap_get_param_onev.cpp\
+tw_win_l2_dss_cap_pri_ctnr_enum.cpp\
+tw_win_l2_dss_cap_pri_ctnr_onev.cpp\
+tw_win_l2_dss_cap_pri_ctnr_range.cpp\
+tw_win_l2_dss_cap_pri_param_enum.cpp\
+tw_win_l2_dss_cap_pri_param_onev.cpp\
+tw_win_l2_dss_cap_pri_param_range.cpp\
+tw_win_l2_dss_cap_set_ctnr.cpp\
+tw_win_l2_dss_cap_set_ctnr_onev.cpp\
+tw_win_l2_dss_cap_set_param_onev.cpp\
+tw_win_l2_dss_imageinfo_get.cpp\
+tw_win_l2_dss_imageinfo_get_reso.cpp\
+tw_win_l2_dss_imageinfo_pri.cpp\
+tw_win_l2_dss_imageinfo_pri_all.cpp\
+tw_win_l2_dss_imagelayout_get.cpp\
+tw_win_l2_dss_imagelayout_pri.cpp\
+tw_win_l2_dss_imagelayout_pri_all.cpp\
+tw_win_l2_dss_imagelayout_set.cpp\
+tw_win_l2_dss_imagelayout_set_area.cpp\
+tw_win_l2_dss_setupmemxfer_pri.cpp\
+tw_win_l3_dsi_state4to5.cpp\
+tw_win_l3_dsi_state5to4.cpp\
+tw_win_l3_dsi_state5to6to5event.cpp\
+tw_win_l3_dsi_state6to7to6native.cpp\
+tw_win_l3_dsi_state6to7to6select.cpp\
+tw_win_l4_scan_orc.cpp\
+tw_win_l4_scan_pri_dib_header.cpp\
+tw_win_l4_scan_trans_image.cpp
+TARG = $(NAME).lib
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_TWAIN = ..\..\..\..\..\sdk\twain\twain-2.3
+DPATH_APPL = ..\build
+DPATH_LIBR = $(DPATH_APPL)\lib
+DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
+CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
+#---action--------------------------------------------------------------
+all: make_obj_dir $(TARG)
+make_obj_dir:
+	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
+	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
+	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
+$(TARG): $(OBJS)
+	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
+.cpp.obj:
+	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
+clean_obj:
+	pushd $(DPATH_OBJE) & del $(OBJS) & popd
+	rmdir $(DPATH_OBJE)

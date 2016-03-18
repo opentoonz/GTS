@@ -1,0 +1,33 @@
+.SUFFIXES: .obj .cpp
+#---define--------------------------------------------------------------
+APPLICATION_NAME = gts
+NAME = libcpp51iip_canvas
+OPTS = /W4 /MD /EHa /O2 /wd4819
+# /wd4819 : Stop warning message about Language Code
+INCS =\
+/I.\
+/I..\libcpp31calcu_precision\
+/I..\libc12pri\
+/I..\libc11portable
+SRCS =\
+iip_canvas.cpp\
+iip_channel_info.cpp
+TARG = $(NAME).lib
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_APPL = ..\build
+DPATH_LIBR = $(DPATH_APPL)\lib
+DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
+CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
+#---action--------------------------------------------------------------
+all: make_obj_dir $(TARG)
+make_obj_dir:
+	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
+	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
+	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
+$(TARG): $(OBJS)
+	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
+.cpp.obj:
+	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
+clean_obj:
+	pushd $(DPATH_OBJE) & del $(OBJS) & popd
+	rmdir $(DPATH_OBJE)

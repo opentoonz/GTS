@@ -1,0 +1,46 @@
+.SUFFIXES: .obj .cpp
+#---define--------------------------------------------------------------
+NAME = libcpp56iip_opengl
+OPTS = /W4 /MD /EHa /O2 /wd4819
+# /wd4819 : Stop warning message about Language Code
+INCS =\
+/I.\
+/I..\libcpp53iip_precision\
+/I..\libcpp51iip_canvas\
+/I..\libc12pri\
+/I..\libc11portable
+SRCS =\
+iip_opengl_l1edit_channel.cpp\
+iip_opengl_l1edit_draw.cpp\
+iip_opengl_l1edit_edit_crop.cpp\
+iip_opengl_l1edit_method.cpp\
+iip_opengl_l1edit_position.cpp\
+iip_opengl_l1edit_scroll.cpp\
+iip_opengl_l1edit_select.cpp\
+iip_opengl_l1edit_zoom.cpp\
+iip_opengl_l2data_set_imagedata.cpp\
+iip_opengl_l3event_draw.cpp\
+iip_opengl_l3event_init_viewparam.cpp\
+iip_opengl_l3event_method.cpp\
+iip_opengl_l3event_select_area.cpp\
+iip_opengl_l3event_set_imagedata.cpp\
+iip_opengl_l3event_wview.cpp
+TARG = $(NAME).lib
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_APPL = ..\build
+DPATH_LIBR = $(DPATH_APPL)\lib
+DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
+CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
+#---action--------------------------------------------------------------
+all: make_obj_dir $(TARG)
+make_obj_dir:
+	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
+	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
+	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
+$(TARG): $(OBJS)
+	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
+.cpp.obj:
+	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
+clean_obj:
+	pushd $(DPATH_OBJE) & del $(OBJS) & popd
+	rmdir $(DPATH_OBJE)
