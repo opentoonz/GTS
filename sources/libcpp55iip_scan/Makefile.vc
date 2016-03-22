@@ -56,7 +56,8 @@ tw_win_l4_scan_pri_dib_header.cpp\
 tw_win_l4_scan_trans_image.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
-DPATH_TWAIN = ..\..\..\..\..\sdk\twain\twain-2.3
+DPATH_SDK = ..\..
+DPATH_TWAIN = $(DPATH_SDK)\sdk\twain\twain-2.3
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)

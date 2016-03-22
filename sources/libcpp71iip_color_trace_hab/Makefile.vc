@@ -1,41 +1,29 @@
-.SUFFIXES: .obj .c
+.SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
-NAME = libc16image_rw_tif
-OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
-# /wd4996 : Stop warning message by MS-C old function
+NAME = libcpp71iip_color_trace_hab
+OPTS = /W4 /MD /EHa /O2 /DWIN32 /wd4819
+# /DWIN32 : for Use fltk in Windows
 # /wd4819 : Stop warning message about Language Code
 INCS =\
 /I.\
-/I$(DPATH_TIFF)\
+/I..\libcpp51iip_canvas\
+/I..\libcpp38calcu_rgb_to_hsv\
+/I..\libcpp31calcu_precision\
 /I..\libc12pri\
-/I..\libc11portable
+/I..\libc11portable\
+/I$(DPATH_FLTK)
 SRCS =\
-tif_bw_invert.c\
-tif_bw_read.c\
-tif_bw_reverse.c\
-tif_bw_write.c\
-tif_image_read.c\
-tif_image_read_header.c\
-tif_image_read_y_manual.c\
-tif_image_write.c\
-tif_init_rw_header.c\
-tif_read_close.c\
-tif_read_get_reverse_sw.c\
-tif_read_open.c\
-tif_read_sca_all.c\
-tif_read_sca_y.c\
-tif_read_scanline.c\
-tif_read_til_all.c\
-tif_read_tile.c\
-tif_stat.c\
-tif_write_close.c\
-tif_write_get_param.c\
-tif_write_header.c\
-tif_write_open.c\
-tif_write_scanline.c
+calcu_color_trace_hab.cpp\
+calcu_histogram_hab.cpp\
+iip_color_trace_hab_doubl.cpp\
+iip_color_trace_hab_exec.cpp\
+iip_color_trace_hab_uchar.cpp\
+iip_color_trace_hab_ulong.cpp\
+iip_color_trace_hab_ushrt.cpp
 TARG = $(NAME).lib
-OBJS = $(SRCS:.c=.obj)
-DPATH_TIFF = ..\..\..\..\..\sdk\libtiff\tiff-4.0.3\libtiff
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_SDK = ..\..
+DPATH_FLTK = $(DPATH_SDK)\sdk\fltk\fltk-1.3.3
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
@@ -48,7 +36,7 @@ make_obj_dir:
 	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
 $(TARG): $(OBJS)
 	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
-.c.obj:
+.cpp.obj:
 	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
 clean_obj:
 	pushd $(DPATH_OBJE) & del $(OBJS) & popd
