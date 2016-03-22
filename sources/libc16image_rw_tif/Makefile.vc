@@ -1,37 +1,42 @@
-.SUFFIXES: .obj .cpp
+.SUFFIXES: .obj .c
 #---define--------------------------------------------------------------
-NAME = libcpp82gts_hsv_histogram
-OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
+NAME = libc16image_rw_tif
+OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
 # /wd4996 : Stop warning message by MS-C old function
-# /DWIN32 : for Use fltk in Windows
 # /wd4819 : Stop warning message about Language Code
 INCS =\
 /I.\
-/I..\libcpp83gts_callback_and_action\
-/I..\libcpp81gts_file_browser\
-/I..\libcpp72iip_erase_dot_noise\
-/I..\libcpp71iip_color_trace_hab\
-/I..\libcpp69iip_scale_by_subpixel\
-/I..\libcpp64iip_rot90\
-/I..\libcpp56iip_opengl\
-/I..\libcpp55iip_scan\
-/I..\libcpp53iip_precision\
-/I..\libcpp52iip_rw\
-/I..\libcpp51iip_canvas\
-/I..\libcpp38calcu_rgb_to_hsv\
+/I$(DPATH_TIFF)\
 /I..\libc12pri\
-/I..\libc11portable\
-/I$(DPATH_TWAIN)\
-/I$(DPATH_FLTK)
+/I..\libc11portable
 SRCS =\
-fltk_1000_range_cyclic.cpp\
-fltk_1000_range_minmax.cpp\
-fltk_1000x100_histogram.cpp\
-fltk_1000x10_hsv_belt_image.cpp
+tif_bw_invert.c\
+tif_bw_read.c\
+tif_bw_reverse.c\
+tif_bw_write.c\
+tif_image_read.c\
+tif_image_read_header.c\
+tif_image_read_y_manual.c\
+tif_image_write.c\
+tif_init_rw_header.c\
+tif_read_close.c\
+tif_read_get_reverse_sw.c\
+tif_read_open.c\
+tif_read_sca_all.c\
+tif_read_sca_y.c\
+tif_read_scanline.c\
+tif_read_til_all.c\
+tif_read_tile.c\
+tif_stat.c\
+tif_write_close.c\
+tif_write_get_param.c\
+tif_write_header.c\
+tif_write_open.c\
+tif_write_scanline.c
 TARG = $(NAME).lib
-OBJS = $(SRCS:.cpp=.obj)
-DPATH_FLTK  = ..\..\..\..\..\sdk\fltk\fltk-1.3.3
-DPATH_TWAIN = ..\..\..\..\..\sdk\twain\twain-2.3
+OBJS = $(SRCS:.c=.obj)
+DPATH_SDK = ..\..
+DPATH_TIFF = $(DPATH_SDK)\sdk\libtiff\tiff-4.0.3\libtiff
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
@@ -44,7 +49,7 @@ make_obj_dir:
 	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
 $(TARG): $(OBJS)
 	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
-.cpp.obj:
+.c.obj:
 	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
 clean_obj:
 	pushd $(DPATH_OBJE) & del $(OBJS) & popd

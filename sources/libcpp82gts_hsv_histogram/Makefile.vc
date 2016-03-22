@@ -1,28 +1,38 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
-NAME = libcpp71iip_color_trace_hab
-OPTS = /W4 /MD /EHa /O2 /DWIN32 /wd4819
+NAME = libcpp82gts_hsv_histogram
+OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
+# /wd4996 : Stop warning message by MS-C old function
 # /DWIN32 : for Use fltk in Windows
 # /wd4819 : Stop warning message about Language Code
 INCS =\
 /I.\
+/I..\libcpp83gts_callback_and_action\
+/I..\libcpp81gts_file_browser\
+/I..\libcpp72iip_erase_dot_noise\
+/I..\libcpp71iip_color_trace_hab\
+/I..\libcpp69iip_scale_by_subpixel\
+/I..\libcpp64iip_rot90\
+/I..\libcpp56iip_opengl\
+/I..\libcpp55iip_scan\
+/I..\libcpp53iip_precision\
+/I..\libcpp52iip_rw\
 /I..\libcpp51iip_canvas\
 /I..\libcpp38calcu_rgb_to_hsv\
-/I..\libcpp31calcu_precision\
 /I..\libc12pri\
 /I..\libc11portable\
+/I$(DPATH_TWAIN)\
 /I$(DPATH_FLTK)
 SRCS =\
-calcu_color_trace_hab.cpp\
-calcu_histogram_hab.cpp\
-iip_color_trace_hab_doubl.cpp\
-iip_color_trace_hab_exec.cpp\
-iip_color_trace_hab_uchar.cpp\
-iip_color_trace_hab_ulong.cpp\
-iip_color_trace_hab_ushrt.cpp
+fltk_1000_range_cyclic.cpp\
+fltk_1000_range_minmax.cpp\
+fltk_1000x100_histogram.cpp\
+fltk_1000x10_hsv_belt_image.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
-DPATH_FLTK = ..\..\..\..\..\sdk\fltk\fltk-1.3.3
+DPATH_SDK = ..\..
+DPATH_FLTK  = $(DPATH_SDK)\sdk\fltk\fltk-1.3.3
+DPATH_TWAIN = $(DPATH_SDK)\sdk\twain\twain-2.3
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)

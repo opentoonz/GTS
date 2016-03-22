@@ -52,9 +52,10 @@ user32.lib gdi32.lib shell32.lib ole32.lib
 TARG_CON = $(APPLICATION_NAME)_console.exe
 TARG = $(APPLICATION_NAME).exe
 OBJS = $(SRCS:.cpp=.obj)
-DPATH_FLTK  = ..\..\..\..\..\sdk\fltk\fltk-1.3.3
-DPATH_TWAIN = ..\..\..\..\..\sdk\twain\twain-2.3
-DPATH_TIFF  = ..\..\..\..\..\sdk\libtiff\tiff-4.0.3
+DPATH_SDK = ..\..
+DPATH_FLTK  = $(DPATH_SDK)\sdk\fltk\fltk-1.3.3
+DPATH_TWAIN = $(DPATH_SDK)\sdk\twain\twain-2.3
+DPATH_TIFF  = $(DPATH_SDK)\sdk\libtiff\tiff-4.0.3
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj
@@ -62,7 +63,7 @@ DPATH_BINA = ..\..\x86_release
 DPATH_REDIST = "%VCINSTALLDIR%"redist\x86\Microsoft.VC120.CRT
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
 #---action--------------------------------------------------------------
-all: make_obj_dir $(TARG_CON) $(TARG) inst
+all: make_obj_dir $(TARG) inst
 make_obj_dir:
 	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
 	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
@@ -75,9 +76,10 @@ $(TARG):
 	cl $(CC_OPTIONS) $(SRCS) $(LIBS) /Fe$@ /link /subsystem:windows
 	del $(OBJS)
 inst:
-	move $(TARG_CON) $(DPATH_BINA)
 	move $(TARG) $(DPATH_BINA)
 	copy _gts-scan_area.txt $(DPATH_BINA)
 	copy gts_install_setup.txt $(DPATH_BINA)
 	copy $(DPATH_REDIST)\msvcp120.dll $(DPATH_BINA)
 	copy $(DPATH_REDIST)\msvcr120.dll $(DPATH_BINA)
+inst_con:
+	move $(TARG_CON) $(DPATH_BINA)

@@ -39,11 +39,11 @@ https://github.com/opentoonz/GTS/releases から、最新版の gts.zip ファ�
 
 4. ビルドする
 
-  `GTS\opensource\gts\main\sources` へ移動し、ビルドバッチファイル `one_step_build_vc2013.bat` を実行します。
+  `GTS/sources/` へ移動し、ビルドバッチファイル `one_step_build_vc2013.bat` を実行します。
 
 5. 動作確認
 
-  `GTS\opensource\gts\main\x86_release\` にある、`gts.exe` を実行して動作を確かめてください。
+  `GTS/x86_release/` にある、`gts.exe` を実行して動作を確かめてください。
 
 ### ライセンス
 
