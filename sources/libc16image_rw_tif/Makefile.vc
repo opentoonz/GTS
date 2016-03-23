@@ -35,8 +35,8 @@ tif_write_open.c\
 tif_write_scanline.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
-DPATH_SDK = ..\..
-DPATH_TIFF = $(DPATH_SDK)\sdk\libtiff\tiff-4.0.3\libtiff
+DPATH_3RD_PARTY = ..\..\thirdparty
+DPATH_TIFF = $(DPATH_3RD_PARTY)\libtiff\tiff-4.0.3\libtiff
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)

@@ -31,8 +31,8 @@
 build/
 x86_release/
 
-# sdk
-sdk/fltk/
-sdk/libtiff/
-sdk/twain/
+# ThirdParty Programs
+thirdparty/fltk/
+thirdparty/libtiff/
+thirdparty/twain/
 
