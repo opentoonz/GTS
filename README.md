@@ -12,7 +12,7 @@ Windows 32-bit アプリケーションです（64-bit OS でも動作します�
 
 ## インストール
 
-https://github.com/opentoonz/GTS/releases から、最新版の gts.zip ファイルをダウンロードし、解凍してください。
+https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip ファイルをダウンロードし、解凍してください。
 
 ## 開発者向け
 
