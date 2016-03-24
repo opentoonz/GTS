@@ -1,4 +1,4 @@
-﻿#	GTS - Gts does Trace after Scan
+﻿#	GTS
 
 ## これは何？
 
