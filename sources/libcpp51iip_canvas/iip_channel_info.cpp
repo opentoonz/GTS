@@ -39,18 +39,13 @@ void iip_channel_info::set_e_ch_num_type( E_CH_NUM_TYPE e_type )
 		this->_e_num_form = E_NUM_INTEGER;
 		break;
 	}
+
+    this->_e_type = e_type;
 }
 
 E_CH_NUM_TYPE iip_channel_info::get_e_ch_num_type( void )
 {
-	switch (this->_l_bytes) {
-	case sizeof(unsigned char):  return E_CH_NUM_UCHAR;
-	case sizeof(unsigned short): return E_CH_NUM_USHRT;
-	case sizeof(unsigned long):  return E_CH_NUM_ULONG;
-	case sizeof(double):         return E_CH_NUM_DOUBL;
-	case 0L:                     return E_CH_NUM_BITBW;
-	}
-	return E_CH_NUM_EMPTY;
+    return this->_e_type;
 }
 
 /* get_cp_ch_num_type()は、関数のオーバーロードやってます。
@@ -82,28 +77,28 @@ int iip_channel_info::chk_e_ch_num_type( void )
 		i_bad_bits = OK,
 		i_bad_form = OK;
 
-	switch (this->_l_bytes) {
-	case sizeof(unsigned char):
-	case sizeof(unsigned short):
-	case sizeof(unsigned long):
+	switch (this->_e_type) {
+	case E_CH_NUM_UCHAR:
+	case E_CH_NUM_USHRT:
+	case E_CH_NUM_ULONG:
 		if (this->_l_bytes * CHAR_BIT != this->_l_bits) {
 			i_bad_bits = NG; i_ret = NG; }
 		if (E_NUM_INTEGER != this->_e_num_form) {
 			i_bad_form = NG; i_ret = NG; }
 		break;
-	case sizeof(double):
+	case E_CH_NUM_DOUBL:
 		if (this->_l_bytes * CHAR_BIT != this->_l_bits) {
 			i_bad_bits = NG; i_ret = NG; }
 		if (E_NUM_FLOATING != this->_e_num_form) {
 			i_bad_form = NG; i_ret = NG; }
 		break;
-	case 0L:
+	case E_CH_NUM_BITBW:
 		if (1L != this->_l_bits) {
 			i_bad_bits = NG; i_ret = NG; }
 		if (E_NUM_INTEGER != this->_e_num_form) {
 			i_bad_form = NG; i_ret = NG; }
 		break;
-	case -1L:
+	case E_CH_NUM_EMPTY:
 		pri_funct_err_bttvr(
 			"Error : bad %ld bytes... empty settting",
 			this->_l_bytes

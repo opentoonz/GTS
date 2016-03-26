@@ -59,6 +59,7 @@ private:
 	long	_l_bytes,
 		_l_bits;
 	E_NUM_FORM _e_num_form;
+    E_CH_NUM_TYPE _e_type;
 };
 
 #endif /* !__iip_channel_info_h__ */
