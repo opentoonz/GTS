@@ -14,9 +14,15 @@ AC_PATH_PROG(FLTK_CONFIG, fltk-config, no)
 if test "$FLTK_CONFIG" = "no"; then
     AC_MSG_ERROR(fltk-config is required)
 fi
-dnl FLTK_CXXFLAGS="`$FLTK_CONFIG --cxxflags` -fno-exceptions"
-FLTK_CXXFLAGS="`$FLTK_CONFIG --cxxflags`"
-FLTK_LIBS="`$FLTK_CONFIG --ldflags`"
+dnl FLTK_CPPFLAGS="`$FLTK_CONFIG --cxxflags` -fno-exceptions"
+AC_SUBST(FLTK_CPPFLAGS, "`$FLTK_CONFIG --cxxflags`")
+AC_SUBST(FLTK_LIBS, "`$FLTK_CONFIG --use-gl --ldflags`")
+
+case "$host" in
+    *-*-cygwin* | *-*-mingw32*)
+        on_windows=true
+esac
+AM_CONDITIONAL([WINDOWS], [test x$on_windows = xtrue])
 
 AC_CONFIG_FILES([
                  Makefile

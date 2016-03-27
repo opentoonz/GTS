@@ -2,6 +2,7 @@
 #include <string.h>
 #include <string>
 #include <fstream>
+#include <cerrno>
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"
@@ -11,11 +12,17 @@
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
 
+# ifndef _MAX_ENV
+#  define _MAX_ENV 32767
+# endif
+
+
 namespace {
  int getenv_(const char *const key ,std::string&val) {
 	size_t length=0;
 	char ca_env[_MAX_ENV];	// _MAX_ENV is 32,767 at vc2005 stdlib.h
 	ca_env[0] = '\0';
+# ifdef _WIN32
 	errno_t err_no = getenv_s(&length,ca_env,_MAX_ENV,key);
 	if (err_no != 0) {
 		pri_funct_err_bttvr("getenv_s() returns error(%d)" ,err_no);
@@ -25,6 +32,13 @@ namespace {
 		pri_funct_err_bttvr("getenv_s() get bad length(%d)",length);
 		return NG;
 	}
+# else
+    const char* value = getenv(key);
+    if(value != NULL) {
+        length = strlen(value);
+        strncpy(ca_env, value, length);
+    }
+# endif
 	ca_env[length] = '\0';
 	val = ca_env;
 	return OK;

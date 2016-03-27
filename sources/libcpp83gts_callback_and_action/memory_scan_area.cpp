@@ -1,5 +1,10 @@
+#include <string.h>
 #include "gts_gui.h"
 #include "gts_master.h"
+
+# ifndef _MAX_ENV
+#  define _MAX_ENV 32767
+# endif
 
 void gts_master::cb_area_selecter( void ) {
 	/* Areaセレクターで先頭のゼロを選択したときは"Custom" */
@@ -182,6 +187,7 @@ namespace {
 	size_t length=0;
 	char ca_env[_MAX_ENV];	// _MAX_ENV is 32,767 at vc2005 stdlib.h
 	ca_env[0] = '\0';
+# ifdef _WIN32
 	errno_t err_no = getenv_s(&length,ca_env,_MAX_ENV,key);
 	/* getenv_s(-)は環境変数がない場合、正常終了し、lengthゼロとなる */
 	if (err_no != 0) {
@@ -195,6 +201,13 @@ namespace {
 			<< ") get too long length(" << err_no << ")";
 		throw std::domain_error( ost.str() );
 	}
+# else
+    const char* value = getenv(key);
+    if(value != NULL) {
+        length = strlen(value);
+        strncpy(ca_env, value, length);
+    }
+# endif
 	ca_env[length] = '\0';
 	return std::string(ca_env);
  }
