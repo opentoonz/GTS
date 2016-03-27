@@ -26,6 +26,7 @@
 *.exe
 *.out
 *.app
+/gts
 
 # OpenGTS binary Folder
 build/
@@ -34,7 +35,6 @@ x86_release/
 # ThirdParty Programs
 thirdparty/fltk/
 thirdparty/libtiff/
-thirdparty/twain/
 
 # Autotools
 Makefile
