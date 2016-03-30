@@ -7,7 +7,7 @@
 #include "ptbl_funct.h"
 
 /* ディレクトリを１個作成する(戻り値 0:成功,-1:失敗) */
-int ptbl_mkdir( char *cp_dirpath )
+int ptbl_mkdir(const char *cp_dirpath)
 {
 #if defined _WIN32
 	return _mkdir( cp_dirpath );

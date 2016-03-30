@@ -17,7 +17,7 @@
 	なければ   0 を返す
    を返す
  */
-int ptbl_dir_or_file_is_exist( char *cp_path )
+int ptbl_dir_or_file_is_exist(const char *cp_path)
 {
 #if defined _WIN32
 	int i_len,i_ret;

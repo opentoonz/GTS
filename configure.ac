@@ -21,6 +21,9 @@ AC_SUBST(FLTK_LIBS, "`$FLTK_CONFIG --use-gl --ldflags`")
 case "$host" in
     *-*-cygwin* | *-*-mingw32*)
         on_windows=true
+        CFLAGS="$CFLAGS -D_WIN32"
+        CXXFLAGS="$CXXFLAGS -D_WIN32"
+    ;;
 esac
 AM_CONDITIONAL([WINDOWS], [test x$on_windows = xtrue])
 

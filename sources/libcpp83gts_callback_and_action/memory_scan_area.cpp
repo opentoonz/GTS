@@ -1,10 +1,11 @@
 #include <string.h>
+#include <fstream>
+#include <sstream>
+#include <cstdlib> /* getenv_s() */
 #include "gts_gui.h"
 #include "gts_master.h"
-
-# ifndef _MAX_ENV
-#  define _MAX_ENV 32767
-# endif
+#include "ptbl_funct.h"
+#include "memory_desktop.h"
 
 void gts_master::cb_area_selecter( void ) {
 	/* Areaセレクターで先頭のゼロを選択したときは"Custom" */
@@ -80,9 +81,6 @@ void gts_master::cb_area_aspect_ratio_selecter( void ) {
 	}
 }
 //--------------------------------------------------------------------
-#include <fstream>
-#include <sstream>
-#include <cstdlib> /* getenv_s() */
 namespace {
  double dbl_from_str_( const std::string&str) {
 	std::istringstream ist(str);
@@ -182,48 +180,8 @@ namespace {
 	/*--- ファイル閉じる ---*/
 	ifs.close();
  }
- //--------------------------------------------------------------------
- std::string getenv_(const char *const key) {
-	size_t length=0;
-	char ca_env[_MAX_ENV];	// _MAX_ENV is 32,767 at vc2005 stdlib.h
-	ca_env[0] = '\0';
-# ifdef _WIN32
-	errno_t err_no = getenv_s(&length,ca_env,_MAX_ENV,key);
-	/* getenv_s(-)は環境変数がない場合、正常終了し、lengthゼロとなる */
-	if (err_no != 0) {
-		std::ostringstream ost;
-		ost<<"getenv_s(,,,"<<key<<") returns error("<<err_no<<")";
-		throw std::domain_error( ost.str() );
-	}
-	if (length >= _MAX_ENV) {
-		std::ostringstream ost;
-		ost	<< "getenv_s(,,," << key
-			<< ") get too long length(" << err_no << ")";
-		throw std::domain_error( ost.str() );
-	}
-# else
-    const char* value = getenv(key);
-    if(value != NULL) {
-        length = strlen(value);
-        strncpy(ca_env, value, length);
-    }
-# endif
-	ca_env[length] = '\0';
-	return std::string(ca_env);
- }
- std::string get_user_home_( void ) {
-	std::string home_drive( getenv_("HOMEDRIVE") );
-	if	   (home_drive.empty()) { return std::string(); }
-	std::string home_path( getenv_("HOMEPATH") );
-	if	   (home_path.empty()) { return std::string(); }
-	home_drive += home_path;
-	return home_drive;
- }
- std::string get_profile_home_(void) { return getenv_("ALLUSERSPROFILE"); }
- std::string get_public_home_( void) { return getenv_("PUBLIC"); }
 }
 //----------------------------------------------------------------------
-#include "ptbl_funct.h"
 namespace {
  bool exist_file(const char *filename) {
 	/*FILE  *fp;
@@ -265,8 +223,11 @@ namespace {
 	--> %HOMEDRIVE%%HOMEPATH%\_gts-scan_area.txt"
 	=         "C:\Users\user1\_gts-scan_area.txt"
 	*/
-	std::string fpath_user( file_path_from_home_(get_user_home_()) );
-	if        (!fpath_user.empty()) { return fpath_user; }
+	std::string fpath_user;
+    get_user_home_(fpath_user);
+	if(!fpath_user.empty()) {
+        return fpath_user;
+    }
 
 	/* 優先度B  全ユーザープロファイルのホームにあるなら
  	--> %ALLUSERSPROFILE%\_gts-scan_area.txt"
@@ -274,15 +235,21 @@ namespace {
 	=     "C:\ProgramData\_gts-scan_area.txt" at Windows7  
 		Windows7では一般ユーザーが書き込めないので使えない
 	*/
-	std::string fpath_prof( file_path_from_home_(get_profile_home_()) );
-	if        (!fpath_prof.empty()) { return fpath_prof; }
+	std::string fpath_prof;
+    getenv_("ALLUSERSPROFILE", fpath_prof);
+	if (!fpath_prof.empty()) {
+        return fpath_prof;
+    }
 
 	/* 優先度C  共有のホームにあるなら
  	-->       %PUBLIC%\_gts-scan_area.txt"
 	= "C:\Users\Public\_gts-scan_area.txt" at Windows7
 	*/
-	std::string fpath_publ( file_path_from_home_(get_public_home_()) );
-	if        (!fpath_publ.empty()) { return fpath_publ; }
+	std::string fpath_publ;
+    getenv_("PUBLIC", fpath_publ);
+	if (!fpath_publ.empty()) {
+        return fpath_publ;
+    }
 
 	/* 優先度D  .exeと同じ場所にあるなら */
 	std::string fpath_dexe( file_path_from_home_(get_dexe_home_(comm)));

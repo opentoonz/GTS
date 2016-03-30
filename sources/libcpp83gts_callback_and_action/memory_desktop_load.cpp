@@ -12,55 +12,44 @@
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
 
-# ifndef _MAX_ENV
-#  define _MAX_ENV 32767
-# endif
 
-
-namespace {
- int getenv_(const char *const key ,std::string&val) {
-	size_t length=0;
-	char ca_env[_MAX_ENV];	// _MAX_ENV is 32,767 at vc2005 stdlib.h
-	ca_env[0] = '\0';
-# ifdef _WIN32
-	errno_t err_no = getenv_s(&length,ca_env,_MAX_ENV,key);
-	if (err_no != 0) {
-		pri_funct_err_bttvr("getenv_s() returns error(%d)" ,err_no);
-		return NG;
-	}
-	if ( (length <= 0) || (length >= _MAX_ENV) ) {
-		pri_funct_err_bttvr("getenv_s() get bad length(%d)",length);
-		return NG;
-	}
-# else
-    const char* value = getenv(key);
-    if(value != NULL) {
-        length = strlen(value);
-        strncpy(ca_env, value, length);
-    }
-# endif
-	ca_env[length] = '\0';
-	val = ca_env;
-	return OK;
- }
- int get_user_home_( std::string&user_home ) {
-	std::string homedrive ,homepath;
-	const int ret1 = getenv_("HOMEDRIVE",homedrive);
-	const int ret2 = getenv_("HOMEPATH" ,homepath);
-	if (ret1 != OK || ret2 != OK) { return NG; }
-	user_home = homedrive;
-	user_home += homepath;
-	return OK;
- }
+void getenv_(const char *name, std::string& dest) {
+    char *value = ptbl_getenv(name);
+    dest = value; // does a copy
+    free(value);
 }
+
+int get_user_home_(std::string& user_home){
+# ifdef _WIN32
+    std::string homedrive, homepath;
+    getenv_("HOMEDRIVE", homedrive);
+    getenv_("HOMEPATH" , homepath);
+    if (homedrive.empty() || homepath.empty()) {
+        return NG;
+    }
+    user_home = homedrive;
+    user_home += homepath;
+# else
+    getenv_("HOME", user_home);
+# endif
+    return OK;
+}
+
 int memory_desktop::set_desktop_file_path_( void ) {
 	int ret = OK;
-	if ( this->user_home_.empty() ) {
-		ret = get_user_home_( this->user_home_ );
+	if(this->user_home_.empty()) {
+		ret = get_user_home_(this->user_home_);
 	}
-	if ( this->desktop_file_path_.empty() ) {
+	if(this->desktop_file_path_.empty()) {
 		this->desktop_file_path_ = this->user_home_;
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+# ifndef _WIN32
+		this->desktop_file_path_ += STR_DESKTOP_DIR;
+		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+        if(!ptbl_dir_or_file_is_exist(this->desktop_file_path_.c_str())) {
+            ptbl_mkdir(this->desktop_file_path_.c_str());
+        }
+# endif
 		this->desktop_file_path_ += STR_DESKTOP_FILENAME2;
 	}
 	return ret;
