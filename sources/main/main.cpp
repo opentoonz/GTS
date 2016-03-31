@@ -9,6 +9,7 @@
 #include "pri.h"
 #include "gts_master.h"
 #include "gts_gui.h"
+#include "memory_desktop.h"
 
 static void print_version( char *title )
 {
@@ -69,15 +70,8 @@ static int argument_analyzer( int argc, char *argv[], char *cp_comm, gts_master 
 #include "igs_lex_white_space_and_double_quote.h"
 namespace {
  void setup_gts_( const char *comm ) {
-	std::string path(comm);
-	const char *const setup_file = "gts_install_setup.txt";
-	std::string::size_type index = path.find_last_of("/\\");
-	if (std::string::npos != index) {
-		path.erase(index+1);
-		path += setup_file;
-	} else {
-		path  = setup_file;
-	}
+	const char *setup_file = "gts_install_setup.txt";
+	std::string path = gts_file_path(comm, setup_file);
 
 	std::ifstream ifs( path.c_str() );
 	if (!ifs) { return; } /* ファイルがないのでなにもしない */

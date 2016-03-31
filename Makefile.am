@@ -1,4 +1,9 @@
 ACLOCAL_AMFLAGS = -I m4
+CPPFLAGS += -DDATADIR='"$(pkgdatadir)"'
+
+pkgdata_DATA = \
+			   sources/main/_gts-scan_area.txt \
+			   sources/main/gts_install_setup.txt
 
 lib_LTLIBRARIES = \
 				  libc11portable.la \

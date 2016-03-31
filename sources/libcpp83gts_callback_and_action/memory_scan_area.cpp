@@ -196,19 +196,18 @@ namespace {
 	return false;
  }
 
- std::string file_path_from_home_( const std::string&dir_path ) {
-	if (dir_path.empty()) { return std::string(); }
+ void file_path_from_dir_(std::string& dir_path, const char *file_name) {
+	if (dir_path.empty()) {
+        return;
+    }
 
-	const char *const file_name = "_gts-scan_area.txt";
-
-	std::string file_path( dir_path );
-	file_path += ptbl_get_cp_path_separeter();
-	file_path += file_name;
-	if (exist_file(file_path.c_str())) {
-		return file_path;
+	dir_path += ptbl_get_cp_path_separeter();
+	dir_path += file_name;
+	if (!exist_file(dir_path.c_str())) {
+        dir_path = std::string();
 	}
-	return std::string();
  }
+
  std::string get_dexe_home_(const char *comm) {
 	std::string path(comm);
 	std::string::size_type index = path.find_last_of("/\\");
@@ -217,17 +216,34 @@ namespace {
 	}
 	return path;
  }
- std::string gts_scan_area_file_path_( const char *comm ) {
+}
 
+ std::string gts_file_path(const char *comm, const char *file_name) {
 	/* 優先度A  各ユーザーのホームにあるなら
 	--> %HOMEDRIVE%%HOMEPATH%\_gts-scan_area.txt"
 	=         "C:\Users\user1\_gts-scan_area.txt"
 	*/
 	std::string fpath_user;
     get_user_home_(fpath_user);
+# ifndef _WIN32
+    fpath_user += ptbl_get_cp_path_separeter();
+    fpath_user += STR_DESKTOP_DIR;
+    if(!ptbl_dir_or_file_is_exist(fpath_user.c_str())) {
+        ptbl_mkdir(fpath_user.c_str());
+    }
+# endif
+    file_path_from_dir_(fpath_user, file_name);
 	if(!fpath_user.empty()) {
         return fpath_user;
     }
+
+# ifdef DATADIR
+    std::string fpath_data(DATADIR);
+    file_path_from_dir_(fpath_data, file_name);
+    if(!fpath_data.empty()) {
+        return fpath_data;
+    }
+# endif
 
 	/* 優先度B  全ユーザープロファイルのホームにあるなら
  	--> %ALLUSERSPROFILE%\_gts-scan_area.txt"
@@ -237,6 +253,7 @@ namespace {
 	*/
 	std::string fpath_prof;
     getenv_("ALLUSERSPROFILE", fpath_prof);
+    file_path_from_dir_(fpath_prof, file_name);
 	if (!fpath_prof.empty()) {
         return fpath_prof;
     }
@@ -247,18 +264,27 @@ namespace {
 	*/
 	std::string fpath_publ;
     getenv_("PUBLIC", fpath_publ);
+    file_path_from_dir_(fpath_publ, file_name);
 	if (!fpath_publ.empty()) {
         return fpath_publ;
     }
 
 	/* 優先度D  .exeと同じ場所にあるなら */
-	std::string fpath_dexe( file_path_from_home_(get_dexe_home_(comm)));
-	if        (!fpath_dexe.empty()) { return fpath_dexe; }
+    std::string fpath_dexe(get_dexe_home_(comm));
+    file_path_from_dir_(fpath_dexe, file_name);
+	if(!fpath_dexe.empty()) {
+        return fpath_dexe;
+    }
 
 	/* A,B,Cどれのファイルもないならなにもしない */
 	return std::string();
  }
-}
+
+ std::string gts_scan_area_file_path_( const char *comm ) {
+	const char *file_name = "_gts-scan_area.txt";
+    return gts_file_path(comm, file_name);
+ }
+
 //----------------------------------------------------------------------
 int memory_scan_area::load( const char *comm ) {
  try {

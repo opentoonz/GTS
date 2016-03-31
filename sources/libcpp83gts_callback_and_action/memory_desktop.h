@@ -23,7 +23,7 @@
 
 #define STR_DESKTOP_FILENAME	".GTS-desktop"
 #define STR_DESKTOP_FILENAME2	"_gts-desktop.txt"
-#define STR_DESKTOP_DIR	".gts"
+#define STR_DESKTOP_DIR	".GTS"
 
 #include <string>
 
@@ -46,5 +46,6 @@ private:
 
 void getenv_(const char *name, std::string& dest);
 int get_user_home_(std::string& user_home);
+std::string gts_file_path(const char *comm, const char *file_name);
 
 #endif /* !__memory_desktop_h__ */
