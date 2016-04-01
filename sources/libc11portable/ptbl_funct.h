@@ -13,7 +13,7 @@ extern "C" {
 extern int ptbl_cpu_is_little_endian( void );
 
 /* ディレクトリあるいはファイルが存在すれば 1 を、なければ 0 を返す */
-extern int ptbl_dir_or_file_is_exist(const char *cp_path );
+extern int ptbl_dir_or_file_is_exist(char *cp_path );
 
 /* ホスト名を得る、ホスト名が見つからないときはNULLを戻す */
 extern char *ptbl_get_cp_hostname( void );
