@@ -192,6 +192,19 @@ void* iip_scan::option_get_value(ScannerOption *option) {
     if(option->desc->type == SANE_TYPE_FIXED) {
         *((SANE_Word*)value) = SANE_UNFIX(*((SANE_Fixed*)value));
     }
+
+    if (ON == this->get_i_mv_sw()) {
+        switch(option->desc->type) {
+            case SANE_TYPE_BOOL:
+            case SANE_TYPE_INT:
+            case SANE_TYPE_FIXED:
+                pri_funct_msg_ttvr("... %d", *((SANE_Word*)value));
+                break;
+            case SANE_TYPE_STRING:
+                pri_funct_msg_ttvr("... %s", (char*)value);
+                break;
+        }
+    }
     return value;
 }
 
@@ -200,6 +213,16 @@ void iip_scan::option_set_value(ScannerOption *option, void *value) {
 
     if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("SANE option_set_value() for '%s'", option->desc->name);
+        switch(option->desc->type) {
+            case SANE_TYPE_BOOL:
+            case SANE_TYPE_INT:
+            case SANE_TYPE_FIXED:
+                pri_funct_msg_ttvr("... to %d", *((SANE_Word*)value));
+                break;
+            case SANE_TYPE_STRING:
+                pri_funct_msg_ttvr("... to %s", (char*)value);
+                break;
+        }
         pri_funct_msg_ttvr("type=%d, unit=%d, size=%d, cap=%d, constraint_type=%d", option->desc->type, option->desc->unit, option->desc->size, option->desc->cap, option->desc->constraint_type);
     }
 
@@ -330,6 +353,7 @@ int iip_scan::setup_action(void) {
     void *value;
     SANE_Int i;
     SANE_String_Const mode;
+    SANE_Word word_value;
 
 	switch (this->_e_pixeltype) {
         case E_PIXELTYPE_BW:
@@ -348,10 +372,13 @@ int iip_scan::setup_action(void) {
 
     // set resolution
     if(this->_option_info.x_resolution.num != -1 && this->_option_info.y_resolution.num != -1) {
-        this->option_set_value(&this->_option_info.x_resolution, &this->_d_x_resolution);
-        this->option_set_value(&this->_option_info.y_resolution, &this->_d_y_resolution);
+        word_value = this->_d_x_resolution;
+        this->option_set_value(&this->_option_info.x_resolution, &word_value);
+        word_value = this->_d_y_resolution;
+        this->option_set_value(&this->_option_info.y_resolution, &word_value);
     } else {
-        this->option_set_value(&this->_option_info.resolution, &_d_x_resolution);
+        word_value = this->_d_x_resolution;
+        this->option_set_value(&this->_option_info.resolution, &word_value);
     }
 
     // set coordinates
@@ -362,6 +389,7 @@ int iip_scan::setup_action(void) {
     tl_x = this->gts_coord_to_sane(this->_d_left, this->_d_x_resolution);
 
 	if (ON == this->get_i_mv_sw()) {
+        pri_funct_msg_ttvr("_d_left=%g, _d_top=%g, _d_right=%g, _d_bottom=%g", this->_d_left, this->_d_top, this->_d_right, this->_d_bottom);
         pri_funct_msg_ttvr("tl_x=%g, tl_y=%g, br_x=%g, br_y=%g", tl_x, tl_y, br_x, br_y);
     }
 
@@ -371,8 +399,6 @@ int iip_scan::setup_action(void) {
     this->option_set_value(&this->_option_info.tl_x, &tl_x);
 
     // set other options
-    SANE_Word word_value;
-
     if(this->_option_info.threshold.num != -1) {
         word_value = this->_d_threshold;
         this->option_set_value(&this->_option_info.threshold, &word_value);
