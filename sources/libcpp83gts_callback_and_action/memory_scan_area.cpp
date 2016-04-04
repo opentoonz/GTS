@@ -228,7 +228,7 @@ namespace {
 # ifndef _WIN32
     fpath_user += ptbl_get_cp_path_separeter();
     fpath_user += STR_DESKTOP_DIR;
-    if(!ptbl_dir_or_file_is_exist(fpath_user.c_str())) {
+    if(!ptbl_dir_or_file_is_exist((char *)fpath_user.c_str())) {
         ptbl_mkdir(fpath_user.c_str());
     }
 # endif
@@ -237,8 +237,8 @@ namespace {
         return fpath_user;
     }
 
-# ifdef DATADIR
-    std::string fpath_data(DATADIR);
+# ifdef PKGDATADIR
+    std::string fpath_data(PKGDATADIR);
     file_path_from_dir_(fpath_data, file_name);
     if(!fpath_data.empty()) {
         return fpath_data;

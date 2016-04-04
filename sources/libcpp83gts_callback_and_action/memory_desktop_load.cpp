@@ -46,7 +46,7 @@ int memory_desktop::set_desktop_file_path_( void ) {
 # ifndef _WIN32
 		this->desktop_file_path_ += STR_DESKTOP_DIR;
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
-        if(!ptbl_dir_or_file_is_exist(this->desktop_file_path_.c_str())) {
+        if(!ptbl_dir_or_file_is_exist((char *)this->desktop_file_path_.c_str())) {
             ptbl_mkdir(this->desktop_file_path_.c_str());
         }
 # endif
@@ -130,6 +130,11 @@ int memory_desktop::load( void ) {
 		} else
 		if ((STR_CONFIG_DIR == key) && (2 == ret)) {
 		cl_gts_master.cl_bro_config.init_config_dir(di.c_str());
+# ifndef _WIN32
+		} else
+		if ((STR_SANE_DEVICE_NAME == key) && (2 == ret)) {
+        cl_gts_master.cl_iip_scan.device_name((char*)di.c_str());
+# endif
 		} else
 		if (  (STR_WINDOW_CROP_AREA_AND_ROT90==key)&&(4==ret)) {
 			if (di == "show") {

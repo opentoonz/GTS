@@ -103,6 +103,10 @@ std::cout
 		cl_gts_gui.valinp_area_reso->value() );
 	this->cl_iip_scan.d_y_resolution(
 		cl_gts_gui.valinp_area_reso->value() );
+# ifndef _WIN32
+    // the requested resolution may be adjusted, so update the GUI value
+    cl_gts_gui.valinp_area_reso->value(this->cl_iip_scan.d_x_resolution());
+# endif
 
 	/* ピクセルタイプ */
 	/* cl_gts_gui.choice_pixel_type -> 0:bw,1:gray,2:rgb */

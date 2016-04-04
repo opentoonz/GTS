@@ -455,26 +455,29 @@ fl_message( ost.str().c_str() );}
         Fl_Button {} {
           label Explorer
           callback {std::string comm("C:\\\\WINDOWS\\\\explorer.exe");
-comm += ' ';
-comm += cl_gts_gui.filinp_level_dir->value();
-//std::string comm("start "); comm += cl_gts_gui.filinp_level_dir->value();
-for (unsigned ii = 0; ii < comm.size(); ++ii) {
-	if ('/' == comm[ii]) { comm[ii] = '\\\\'; }
-}
+\# ifdef _WIN32
+    comm += ' ';
+    comm += cl_gts_gui.filinp_level_dir->value();
+    //std::string comm("start "); comm += cl_gts_gui.filinp_level_dir->value();
+    for (unsigned ii = 0; ii < comm.size(); ++ii) {
+        if ('/' == comm[ii]) { comm[ii] = '\\\\'; }
+    }
 
-STARTUPINFO si; ::ZeroMemory(&si,sizeof(si)); si.cb = sizeof(si);
-PROCESS_INFORMATION pi;
-if (!::CreateProcess(
-	NULL,(LPTSTR)comm.c_str(),NULL,NULL,FALSE,0,NULL,NULL,&si,&pi
-)) {
-	std::cerr
-		<< "Error : Cannot CreateProcess("
-		<< comm
-		<< ")\\n";
-	return;
-}
-::CloseHandle(pi.hProcess);
-::CloseHandle(pi.hThread);}
+    STARTUPINFO si; ::ZeroMemory(&si,sizeof(si)); si.cb = sizeof(si);
+    PROCESS_INFORMATION pi;
+    if (!::CreateProcess(
+        NULL,(LPTSTR)comm.c_str(),NULL,NULL,FALSE,0,NULL,NULL,&si,&pi
+    )) {
+        std::cerr
+            << "Error : Cannot CreateProcess("
+            << comm
+            << ")\\n";
+        return;
+    }
+    ::CloseHandle(pi.hProcess);
+    ::CloseHandle(pi.hThread);
+\# endif
+    }
           xywh {315 60 60 25}
           code0 {\#include <iostream>}
         }

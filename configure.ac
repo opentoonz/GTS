@@ -10,22 +10,33 @@ LT_INIT
 PKG_CHECK_MODULES([TIFF], [libtiff-4])
 AX_CHECK_GLU
 
-AC_PATH_PROG(FLTK_CONFIG, fltk-config, no)
+AC_PATH_TOOL(FLTK_CONFIG, fltk-config, no)
 if test "$FLTK_CONFIG" = "no"; then
     AC_MSG_ERROR(fltk-config is required)
 fi
-dnl FLTK_CPPFLAGS="`$FLTK_CONFIG --cxxflags` -fno-exceptions"
 AC_SUBST(FLTK_CPPFLAGS, "`$FLTK_CONFIG --cxxflags`")
 AC_SUBST(FLTK_LIBS, "`$FLTK_CONFIG --use-gl --ldflags`")
 
+on_windows=no
 case "$host" in
     *-*-cygwin* | *-*-mingw32*)
-        on_windows=true
+        on_windows=yes
         CFLAGS="$CFLAGS -D_WIN32"
         CXXFLAGS="$CXXFLAGS -D_WIN32"
     ;;
 esac
-AM_CONDITIONAL([WINDOWS], [test x$on_windows = xtrue])
+AM_CONDITIONAL([WINDOWS], [test "$on_windows" = "yes"])
+
+if test "$on_windows" = "no"; then
+    AC_CHECK_HEADERS([sane/sane.h], [], [AC_MSG_ERROR([SANE not found])])
+    AC_PATH_TOOL(SANE_CONFIG, sane-config, no)
+    if test "$SANE_CONFIG" = "no"; then
+        AC_MSG_ERROR(sane-config is required)
+    fi
+    AC_SUBST(SANE_CFLAGS, `$SANE_CONFIG --cflags`)
+    AC_SUBST(SANE_LDFLAGS, `$SANE_CONFIG --ldflags`)
+    AC_SUBST(SANE_LIBS, `$SANE_CONFIG --libs`)
+fi
 
 AC_CONFIG_FILES([
                  Makefile

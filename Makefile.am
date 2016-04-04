@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-CPPFLAGS += -DDATADIR='"$(pkgdatadir)"'
+CPPFLAGS += -DPKGDATADIR='"$(pkgdatadir)"'
 
 pkgdata_DATA = \
 			   sources/main/_gts-scan_area.txt \
@@ -205,8 +205,12 @@ libcpp55iip_scan_la_SOURCES = \
 							  sources/libcpp55iip_scan/tw_win_l4_scan_pri_dib_header.cpp \
 							  sources/libcpp55iip_scan/tw_win_l4_scan_trans_image.cpp
 else
+libcpp55iip_scan_la_LDFLAGS += $(SANE_LDFLAGS)
+libcpp55iip_scan_la_CPPFLAGS += \
+								$(SANE_CFLAGS) \
+								$(FLTK_CPPFLAGS)
 libcpp55iip_scan_la_SOURCES = \
-							  sources/libcpp55iip_scan/tw_dmy_l1_scan_orc.cpp
+							  sources/libcpp55iip_scan/sane_scan.cpp
 endif
 
 libcpp56iip_opengl_la_LDFLAGS = -version-info 0:0:0
@@ -497,6 +501,7 @@ gts_LDADD = \
 			libc12pri.la \
 			libc11portable.la \
 			$(TIFF_LIBS) \
-			$(FLTK_LIBS)
+			$(FLTK_LIBS) \
+			$(SANE_LIBS)
 gts_SOURCES = sources/main/main.cpp
 
