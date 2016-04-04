@@ -45,7 +45,7 @@ int iip_scan::device_search(void) {
         return NG;
     }
 
-    // FIXME: allow the user to choose the SANE device instead of just using the first one available
+    // TODO: allow the user to choose the SANE device instead of just using the first one available
     this->_device_name = (char*)malloc(strlen(devlist[0]->name) + 1);
     if(!this->_device_name) {
         pri_funct_msg_v("malloc error\n");
@@ -110,6 +110,8 @@ void iip_scan::option_get_info() {
     this->_option_info.y_resolution.desc = NULL;
     this->_option_info.mode.num = -1;
     this->_option_info.mode.desc = NULL;
+    this->_option_info.threshold.num = -1;
+    this->_option_info.threshold.desc = NULL;
 
     const SANE_Option_Descriptor *option;
     SANE_Int i;
@@ -147,6 +149,9 @@ void iip_scan::option_get_info() {
         } else if(!strcmp(option->name, SANE_NAME_SCAN_MODE)) {
             this->_option_info.mode.num = i;
             this->_option_info.mode.desc = option;
+        } else if(!strcmp(option->name, SANE_NAME_THRESHOLD)) {
+            this->_option_info.threshold.num = i;
+            this->_option_info.threshold.desc = option;
         }
     }
 }
@@ -224,6 +229,7 @@ int iip_scan::get_physical_param(void) {
     SANE_Int i;
     double tl_x, tl_y, br_x, br_y;
 
+    // coordinates
     value = this->option_get_value(&this->_option_info.tl_x);
     if(value){
         tl_x = *((SANE_Word*)value);
@@ -253,6 +259,7 @@ int iip_scan::get_physical_param(void) {
         pri_funct_msg_ttvr("tl_x=%g, tl_y=%g, br_x=%g, br_y=%g", tl_x, tl_y, br_x, br_y);
     }
 
+    // resolution
     if(this->_option_info.resolution.num != -1) {
         value = this->option_get_value(&this->_option_info.resolution);
         if(value){
@@ -292,6 +299,16 @@ int iip_scan::get_physical_param(void) {
             break;
     }
     return OK;
+
+    // get other options
+    if(this->_option_info.threshold.num != -1) {
+        value = this->option_get_value(&this->_option_info.threshold);
+        if(value){
+            this->_d_threshold = *((SANE_Word*)value);
+            free(value);
+        }
+    }
+
 }
 
 double iip_scan::gts_coord_to_sane(double x, double res) {
@@ -352,6 +369,14 @@ int iip_scan::setup_action(void) {
     this->option_set_value(&this->_option_info.tl_y, &tl_y);
     this->option_set_value(&this->_option_info.br_x, &br_x);
     this->option_set_value(&this->_option_info.tl_x, &tl_x);
+
+    // set other options
+    SANE_Word word_value;
+
+    if(this->_option_info.threshold.num != -1) {
+        word_value = this->_d_threshold;
+        this->option_set_value(&this->_option_info.threshold, &word_value);
+    }
 
     return OK;
 }
@@ -475,13 +500,13 @@ int iip_scan::read(void) {
             pri_funct_msg_ttvr("param.depth = %d", param.depth);
         }
         if(!(param.format == SANE_FRAME_GRAY || param.format == SANE_FRAME_RGB)) {
-            // FIXME: support the rest
+            // TODO: support the rest
             pri_funct_msg_v("Error: unsupported SANE frame format %d.\n", param.format);
             sane_cancel(this->sane_handle);
             return NG;
         }
         if(param.lines < 0) {
-            // FIXME: support it
+            // TODO: support it
             pri_funct_msg_v("Error: unsupported SANE frame with unknown number of total lines.\n");
             sane_cancel(this->sane_handle);
             return NG;

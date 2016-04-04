@@ -25,6 +25,7 @@ typedef struct {
     ScannerOption x_resolution;
     ScannerOption y_resolution;
     ScannerOption mode;
+    ScannerOption threshold;
 } ScannerOptionsInfo;
 
 class iip_scan {

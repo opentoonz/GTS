@@ -53,6 +53,11 @@ std::cout
 	/* メニューに設定 */
 	cl_gts_gui.valout_scanner_width_max->value(d_maxcm_w);
 	cl_gts_gui.valout_scanner_height_max->value(d_maxcm_h);
+
+    // override the gts_gui.fl defaults with the ones from headers
+    cl_gts_gui.valinp_area_reso->value(this->cl_iip_scan.d_x_resolution());
+    cl_gts_gui.valinp_bw_threshold->value(this->cl_iip_scan.d_threshold());
+    cl_gts_gui.scrbar_bw_threshold->value(this->cl_iip_scan.d_threshold());
 }
 
 void gts_master::_iipg_scan_get_from_gui( void )
