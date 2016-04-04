@@ -35,7 +35,6 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
 
   - `GTS/thirdparty/fltk/fltk-1.3.3/`
   - `GTS/thirdparty/libtiff/tiff-4.0.3/`
-  - `GTS/thirdparty/twain/twain-2.3/twain.h`
 
 4. ビルドする
 
