@@ -25,8 +25,8 @@ $ git clone https://github.com/opentoonz/GTS.git
 
 * Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
 * third party libraries unarchived in:
- * GTS/thirdparty/fltk/fltk-1.3.3/
- * GTS/thirdparty/libtiff/tiff-4.0.3/
+ * `GTS/thirdparty/fltk/fltk-1.3.3/`
+ * `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
 #### Linux, OS X, etc.
 
@@ -58,9 +58,9 @@ Now you can use gdb:
 gdb --args ./gts -bv
 ```
 
-Note for distribution packagers: change *browser_directory_path* to "." in *sources/main/gts_install_setup.txt* before installation.
+Note for distribution packagers: change *browser_directory_path* to "." in `sources/main/gts_install_setup.txt` before installation.
 
-If you're not using a proper package manager, do the change yourself and copy the 2 .txt files in *sources/main/* to *~/.GTS/*.
+If you're not using a proper package manager, do the change yourself and copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
 
 # License
 
