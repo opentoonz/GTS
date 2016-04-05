@@ -19,11 +19,11 @@ void iip_scan::device_name(char *s) {
 
 int iip_scan::open( void )
 {
-	if (ON == this->get_i_mv_sw()) {
-		pri_funct_msg_ttvr("iip_scan::open()");
-	}
+    if (ON == this->get_i_mv_sw()) {
+        pri_funct_msg_ttvr("iip_scan::open()");
+    }
     sane_init(NULL, NULL);
-	return OK;
+    return OK;
 }
 
 int iip_scan::device_search(void) {
@@ -59,7 +59,7 @@ int iip_scan::device_search(void) {
 int iip_scan::setup_unit(void) {
     SANE_Status status;
 
-	if (ON == this->get_i_mv_sw()) {
+    if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("iip_scan::setup_unit()");
     }
 
@@ -243,7 +243,7 @@ void iip_scan::option_set_value(ScannerOption *option, void *value) {
 }
 
 int iip_scan::get_physical_param(void) {
-	if (ON == this->get_i_mv_sw()) {
+    if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("iip_scan::get_physical_param()");
     }
 
@@ -278,7 +278,7 @@ int iip_scan::get_physical_param(void) {
         free(value);
     }
 
-	if (ON == this->get_i_mv_sw()) {
+    if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("tl_x=%g, tl_y=%g, br_x=%g, br_y=%g", tl_x, tl_y, br_x, br_y);
     }
 
@@ -345,7 +345,7 @@ double iip_scan::gts_coord_to_sane(double x, double res) {
 }
 
 int iip_scan::setup_action(void) {
-	if (ON == this->get_i_mv_sw()) {
+    if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("iip_scan::setup_action()");
     }
 
@@ -355,7 +355,7 @@ int iip_scan::setup_action(void) {
     SANE_String_Const mode;
     SANE_Word word_value;
 
-	switch (this->_e_pixeltype) {
+    switch (this->_e_pixeltype) {
         case E_PIXELTYPE_BW:
             mode = SANE_VALUE_SCAN_MODE_LINEART;
             break;
@@ -388,7 +388,7 @@ int iip_scan::setup_action(void) {
     br_x = this->gts_coord_to_sane(this->_d_right, this->_d_x_resolution);
     tl_x = this->gts_coord_to_sane(this->_d_left, this->_d_x_resolution);
 
-	if (ON == this->get_i_mv_sw()) {
+    if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("_d_left=%g, _d_top=%g, _d_right=%g, _d_bottom=%g", this->_d_left, this->_d_top, this->_d_right, this->_d_bottom);
         pri_funct_msg_ttvr("tl_x=%g, tl_y=%g, br_x=%g, br_y=%g", tl_x, tl_y, br_x, br_y);
     }
@@ -408,10 +408,11 @@ int iip_scan::setup_action(void) {
 }
 
 int iip_scan::print_all(void) {
-	pri_funct_msg_vr("native_resolution x %.16g y %.16g", this->_d_x_native_resolution, this->_d_y_native_resolution);
-	pri_funct_msg_vr("physical_area     x %.16g y %.16g", this->_d_physical_width, this->_d_physical_height);
+    // TODO: print more info here
+    pri_funct_msg_vr("native_resolution x %.16g y %.16g", this->_d_x_native_resolution, this->_d_y_native_resolution);
+    pri_funct_msg_vr("physical_area     x %.16g y %.16g", this->_d_physical_width, this->_d_physical_height);
 
-	return OK;
+    return OK;
 }
 
 void iip_scan::adjust_resolution(ScannerOption *option, double *res) {
@@ -465,20 +466,20 @@ void iip_scan::d_y_resolution(double res) {
 }
 
 int iip_scan::read(void) {
-	iip_canvas *clp_canvas;
+    iip_canvas *clp_canvas;
     SANE_Status status;
 
-	if (ON == this->get_i_mv_sw()) {
-		pri_funct_msg_ttvr("iip_scan::read()");
+    if (ON == this->get_i_mv_sw()) {
+        pri_funct_msg_ttvr("iip_scan::read()");
         pri_funct_msg_ttvr("_d_right=%g, _d_left=%g, _d_x_resolution=%g", this->_d_right, this->_d_left, this->_d_x_resolution);
         pri_funct_msg_ttvr("_d_bottom=%g, _d_top=%g, _d_y_resolution=%g", this->_d_bottom, this->_d_top, this->_d_y_resolution);
-	}
+    }
 
-	clp_canvas = &(this->_cl_iip_canvas);
+    clp_canvas = &(this->_cl_iip_canvas);
 
-	clp_canvas->set_i_mv_sw(this->get_i_mv_sw());
-	clp_canvas->set_i_pv_sw(this->get_i_pv_sw());
-	clp_canvas->set_i_cv_sw(this->get_i_cv_sw());
+    clp_canvas->set_i_mv_sw(this->get_i_mv_sw());
+    clp_canvas->set_i_pv_sw(this->get_i_pv_sw());
+    clp_canvas->set_i_cv_sw(this->get_i_cv_sw());
 
     switch(this->_e_pixeltype) {
         case E_PIXELTYPE_BW:
@@ -548,10 +549,17 @@ int iip_scan::read(void) {
         canvas = clp_canvas->get_vp_canvas();
 
         // read the scanned data
-        SANE_Int offset = 0;
-        SANE_Int line_offset = 0;
-        SANE_Int x, y, written, byte_out_pos, bit_out_pos, byte_in_pos, bit_in_pos, bit_in_is_set;
-        SANE_Int read_len_pixels; // actually read pixels (read_len multiplied by 8 for B/W, divided by 3 for RGB)
+        SANE_Int offset = 0,
+                 line_offset = 0,
+                 x,
+                 y,
+                 written,
+                 byte_out_pos,
+                 bit_out_pos,
+                 byte_in_pos,
+                 bit_in_pos,
+                 bit_in_is_set,
+                 read_len_pixels; // actually read pixels (read_len multiplied by 8 for B/W, divided by 3 for RGB)
 
         for(;;) {
             status = sane_read(this->sane_handle, buffer, buffer_size, &read_len);
@@ -619,18 +627,18 @@ DONE_WRITING:
         }
     } while(!param.last_frame);
 
-	return OK;
+    return OK;
 }
 
 int iip_scan::close( void )
 {
-	if (ON == this->get_i_mv_sw()) {
-		pri_funct_msg_ttvr( "iip_scan::close()" );
-	}
+    if (ON == this->get_i_mv_sw()) {
+        pri_funct_msg_ttvr( "iip_scan::close()" );
+    }
     if(this->sane_handle) {
         sane_close(this->sane_handle);
     }
     sane_exit();
-	return OK;
+    return OK;
 }
 
