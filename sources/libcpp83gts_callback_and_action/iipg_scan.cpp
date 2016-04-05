@@ -265,6 +265,16 @@ int gts_master::_iipg_scan_get_scanner_info( void )
 	 "Error : this->cl_iip_scan.get_physical_param() returns NG.");
 		return NG;
 	}
+    // override some GUI default values from gts_gui.fl
+    if(this->cl_iip_scan.d_x_native_resolution()) {
+        // from scanner
+        cl_gts_gui.valinp_area_reso->value(this->cl_iip_scan.d_x_native_resolution());
+    } else {
+        // from header
+        cl_gts_gui.valinp_area_reso->value(this->cl_iip_scan.d_x_resolution());
+    }
+    cl_gts_gui.valinp_bw_threshold->value(this->cl_iip_scan.d_threshold());
+    cl_gts_gui.scrbar_bw_threshold->value(this->cl_iip_scan.d_threshold());
 
 	/* ...メニューにセット */
 	this->_iipg_scan_set_physical_param();

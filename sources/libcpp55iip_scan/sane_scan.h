@@ -42,8 +42,8 @@ public:
 		this->_d_right = 0.0;
 		this->_d_bottom = 0.0;
 		this->_d_top = 0.0;
-		this->_d_x_resolution = 72.0;
-		this->_d_y_resolution = 72.0;
+		this->_d_x_resolution = 75.0;
+		this->_d_y_resolution = 75.0;
 
 		/* grayscale */
 		this->_e_pixeltype = E_PIXELTYPE_BW;
