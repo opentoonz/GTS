@@ -112,10 +112,12 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 # ifndef _WIN32
-	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_SANE_DEVICE_NAME,
-        cl_gts_master.cl_iip_scan.device_name() );
-	if (i_ret < 0) { return NG; }
+    if(cl_gts_master.cl_iip_scan.device_name()) {
+        i_ret = fprintf(fp, "%-24s \"%s\"\n", STR_SANE_DEVICE_NAME, cl_gts_master.cl_iip_scan.device_name());
+        if(i_ret < 0) {
+            return NG;
+        }
+    }
 # endif
 
 	return OK;
