@@ -2,7 +2,7 @@
 
 [GTS](https://opentoonz.github.io/e/index.html) is a scanning tool developed by Studio Ghibli. It's specialized in hand-drawn animation frames and it uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32 bits.
+The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
 
 GTS's interface is in English and scanned images are saved as TIFF.
 
