@@ -53,11 +53,6 @@ public:
 		this->_d_contrast = 0.0;
 		this->_d_gamma = 2.2;
 
-		/* 取り込み動作に関する */
-		this->_i_twain_gui_sw = OFF;
-		this->_i_indicators_sw = ON;  /* GUI OFF時のPROGRESS*/
-		this->_i_xfermech_memory_sw = OFF; /* OFF is native */
-
 		/* scanner information from SANE */
         this->sane_handle = NULL;
 		this->_d_x_native_resolution = 0.0;
@@ -66,13 +61,11 @@ public:
 		this->_d_physical_height = 0.0;
         this->_device_name = NULL;
 
-		this->_cl_iip_canvas.set_ccp_object_name_of_mv(
-			"iip_scan"
-		);
+		this->_cl_iip_canvas.set_ccp_object_name_of_mv("iip_scan");
 	}
 
 	/*
-	 * same "tw_win_l1_dsm.h" public method
+	 * setters and getters
 	 */
 
 	void set_i_mv_sw( int sw ) {      this->_i_mv_sw = sw; }
@@ -81,12 +74,6 @@ public:
 	int  get_i_pv_sw( void ) { return this->_i_pv_sw; }
 	void set_i_cv_sw( int sw ) {      this->_i_cv_sw = sw; }
 	int  get_i_cv_sw( void ) { return this->_i_cv_sw; }
-
-	// void set_hw_parent( HWND hw ) { this->_hw_parent = hw; }
-
-	/*
-	 * same "tw_win_l4_scan.h" public method
-	 */
 
 	/* capture area and resolution */
 	int  i_centimeters_sw( void ) { return this->_i_units_centimeters_sw; }
@@ -116,20 +103,6 @@ public:
 	void   d_contrast( double dd ) {   this->_d_contrast = dd; }
 	double d_gamma( void ) { return this->_d_gamma; }
 	void   d_gamma( double dd ) {   this->_d_gamma = dd; }
-
-	/* 取り込み動作に関する */
-	int  i_twain_gui_sw( void )
-	{ return this->_i_twain_gui_sw; }
-	void i_twain_gui_sw( int sw )
-	{        this->_i_twain_gui_sw = sw;}
-	int  i_indicators_sw( void )
-	{ return this->_i_indicators_sw; }
-	void i_indicators_sw( int sw )
-	{        this->_i_indicators_sw = sw;}
-	int  i_xfer_memory_sw( void )
-	{ return this->_i_xfermech_memory_sw;}
-	void i_xfer_memory_sw( int sw )
-	{        this->_i_xfermech_memory_sw = sw;}
 
     /* scanner information from SANE */
 	double d_x_native_resolution(void) {return this->_d_x_native_resolution;}
@@ -181,11 +154,6 @@ private:
 	double	_d_brightness,
 		_d_contrast,
 		_d_gamma;
-
-	/* 取り込み動作に関する */
-	int	_i_twain_gui_sw,
-		_i_indicators_sw, /* def. indicators_on_when_gui_off */
-		_i_xfermech_memory_sw;  /* def. xfermech_native */
 
     /* scanner information from SANE */
     SANE_Handle sane_handle;
