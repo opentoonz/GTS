@@ -46,12 +46,7 @@ int iip_scan::device_search(void) {
     }
 
     // TODO: allow the user to choose the SANE device instead of just using the first one available
-    this->_device_name = (char*)malloc(strlen(devlist[0]->name) + 1);
-    if(!this->_device_name) {
-        pri_funct_msg_v("malloc error\n");
-        return NG;
-    }
-    strncpy(this->_device_name, devlist[0]->name, strlen(devlist[0]->name) + 1);
+    this->device_name((char*)(devlist[0]->name));
 
     return OK;
 }
