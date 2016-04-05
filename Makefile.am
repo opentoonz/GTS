@@ -5,10 +5,9 @@ pkgdata_DATA = \
 			   sources/main/_gts-scan_area.txt \
 			   sources/main/gts_install_setup.txt
 
-noinst_LTLIBRARIES = libgts.a
+noinst_LTLIBRARIES = libgts.la
 
-libgts_a_LDFLAGS =
-libgts_a_CFLAGS = \
+libgts_la_CFLAGS = \
 				  -Isources/libc11portable \
 				  -Isources/libc12pri \
 				  -Isources/libc14image_rw_base \
@@ -30,9 +29,10 @@ libgts_a_CFLAGS = \
 				  -Isources/libcpp83gts_callback_and_action \
 				  $(TIFF_CFLAGS) \
 				  $(FLTK_CPPFLAGS)
-libgts_a_CPPFLAGS = $(libgts_a_CFLAGS)
 
-libgts_a_SOURCES = \
+libgts_la_CPPFLAGS = $(libgts_la_CFLAGS)
+
+libgts_la_SOURCES = \
 				   sources/libc11portable/ptbl_cpu_is_little_endian.c \
 				   sources/libc11portable/ptbl_dir_or_file_is_exist.c \
 				   sources/libc11portable/ptbl_get_cp_hostname.c \
@@ -240,8 +240,8 @@ libgts_a_SOURCES = \
 				   sources/libcpp83gts_callback_and_action/memory_short_cut_key.cpp
 
 if WINDOWS
-libgts_a_CPPFLAGS += -Ithirdparty/twain/twain-2.3
-libgts_a_SOURCES += \
+libgts_la_CPPFLAGS += -Ithirdparty/twain/twain-2.3
+libgts_la_SOURCES += \
 					sources/libcpp55iip_scan/tw_win_l1_dsm_entry.cpp \
 					sources/libcpp55iip_scan/tw_win_l1_dsm_get_cc.cpp \
 					sources/libcpp55iip_scan/tw_win_l1_dsm_init_tw_id.cpp \
@@ -286,16 +286,16 @@ libgts_a_SOURCES += \
 					sources/libcpp55iip_scan/tw_win_l4_scan_pri_dib_header.cpp \
 					sources/libcpp55iip_scan/tw_win_l4_scan_trans_image.cpp
 else
-libgts_a_LDFLAGS += $(SANE_LDFLAGS)
-libgts_a_CPPFLAGS += $(SANE_CFLAGS)
-libgts_a_SOURCES += \
+libgts_la_CPPFLAGS += $(SANE_CFLAGS)
+libgts_la_SOURCES += \
 					sources/libcpp55iip_scan/sane_scan.cpp
 endif
 
 bin_PROGRAMS = gts
-gts_CPPFLAGS = $(libgts_a_CPPFLAGS)
+gts_LDFLAGS = $(SANE_LDFLAGS)
+gts_CPPFLAGS = $(libgts_la_CPPFLAGS)
 gts_LDADD = \
-			libgts.a \
+			libgts.la \
 			$(TIFF_LIBS) \
 			$(FLTK_LIBS) \
 			$(SANE_LIBS)
