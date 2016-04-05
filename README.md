@@ -64,5 +64,5 @@ If you're not using a proper package manager, do the change yourself and copy th
 
 # License
 
-[New BSD License] (blob/master/LICENSE.txt)
+[New BSD License](LICENSE.txt)
 
