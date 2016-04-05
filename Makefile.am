@@ -7,7 +7,7 @@ pkgdata_DATA = \
 
 noinst_LTLIBRARIES = libgts.la
 
-libgts_la_CFLAGS = \
+libgts_la_CPPFLAGS = \
 				   -Isources/libc11portable \
 				   -Isources/libc12pri \
 				   -Isources/libc14image_rw_base \
@@ -29,8 +29,6 @@ libgts_la_CFLAGS = \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
 				   $(FLTK_CPPFLAGS)
-
-libgts_la_CPPFLAGS = $(libgts_la_CFLAGS)
 
 libgts_la_SOURCES = \
 					sources/libc11portable/ptbl_cpu_is_little_endian.c \
