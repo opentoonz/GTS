@@ -61,7 +61,15 @@ class iip_scan {
             this->_device_name = NULL;
 
             this->_cl_iip_canvas.set_ccp_object_name_of_mv("iip_scan");
+            this->sane_devlist = NULL;
+            this->sane_num_devices = 0;
         }
+
+        /*
+         * public variables
+         */
+        const SANE_Device **sane_devlist;
+        int sane_num_devices;
 
         /*
          * setters and getters
@@ -179,7 +187,7 @@ class iip_scan {
 
         /* access to the scanner */
         int open(void);
-        int device_search(void);
+        int device_select(void);
         int setup_unit(void);
         void option_get_info();
         void* option_get_value(ScannerOption *option);

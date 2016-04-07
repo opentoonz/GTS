@@ -1,13 +1,22 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <FL/Fl.H>
 #include <FL/fl_ask.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Hold_Browser.H>
+#include <FL/Fl_Button.H>
 #include <climits>
 #include "pri.h"
+#include "gts_gui.h"
 #include "sane_scan.h"
 
 void iip_scan::device_name(char *s) {
     size_t len = strlen(s);
+
+    if(this->_device_name) {
+        free(this->_device_name);
+    }
 
     this->_device_name = (char*)malloc(len + 1);
     if(!this->_device_name) {
@@ -26,29 +35,122 @@ int iip_scan::open( void )
     return OK;
 }
 
-int iip_scan::device_search(void) {
-    const SANE_Device **devlist;
+Fl_Window *devices_win = NULL;
+Fl_Hold_Browser *browser = NULL;
+void cb_sane_device_select(Fl_Widget *w, void *data) {
+    iip_scan *scan = (iip_scan*)data;
+    int dev_num = browser->value();
+    if(dev_num) {
+        scan->device_name((char*)(scan->sane_devlist[dev_num - 1]->name));
+    }
+    devices_win->hide();
+}
+
+void cb_sane_device_cancel(Fl_Widget *w, void *data) {
+    devices_win->hide();
+}
+
+Fl_Window *progress_win = NULL;
+Fl_Box *progress_win_box = NULL;
+void show_progress_win(const char *label) {
+    int win_width = 300,
+        win_height = 100;
+    if(!progress_win) {
+        progress_win = new Fl_Window(win_width, win_height);
+        progress_win_box = new Fl_Box(0, 0, win_width, win_height);
+        progress_win->end();
+    }
+    progress_win_box->label(label);
+    progress_win->set_modal();
+    progress_win->show();
+    progress_win->wait_for_expose();
+    Fl::flush();
+}
+
+void hide_progress_win(void) {
+    progress_win->hide();
+}
+
+int iip_scan::device_select(void) {
     SANE_Status status;
 
-    status = sane_get_devices(&devlist, SANE_FALSE);
-    if(status != SANE_STATUS_GOOD) {
-        fl_message("iip_scan::device_search() - sane_get_devices() failed with: %s", sane_strstatus(status));
-        return NG;
-    }
-    int num_devices = 0;
-    int i;
-    for(i=0; devlist[i]; i++) {
-        num_devices++;
-    }
-    if(num_devices == 0) {
-        pri_funct_msg_v("SANE: no scanners found.\n");
-        return NG;
+    if(!this->sane_devlist) {
+        show_progress_win("Looking for SANE devices...");
+        status = sane_get_devices(&this->sane_devlist, SANE_FALSE);
+        hide_progress_win();
+        if(status != SANE_STATUS_GOOD) {
+            fl_message("iip_scan::device_select() - sane_get_devices() failed with: %s", sane_strstatus(status));
+            return NG;
+        }
     }
 
-    // TODO: allow the user to choose the SANE device instead of just using the first one available
-    this->device_name((char*)(devlist[0]->name));
+    this->sane_num_devices = 0;
+    while(this->sane_devlist[this->sane_num_devices]) {
+        this->sane_num_devices++;
+    }
+    switch(this->sane_num_devices) {
+        case 0:
+            fl_message("SANE: no scanners found");
+            return NG;
+        case 1:
+            this->device_name((char*)(this->sane_devlist[0]->name));
+            fl_message("using SANE device: '%s'", this->device_name());
+            break;
+        default:
+            // let the user choose from a list
+            int win_width = 500,
+                win_height = 300,
+                horizontal_margin = 10,
+                vertical_margin = 10,
+                browser_height = 200,
+                button_width = 100,
+                button_height = 20,
+                button_y = win_height - vertical_margin - button_height;
+            if(!devices_win) {
+                devices_win = new Fl_Window(win_width, win_height, "Select SANE device");
+            }
+            if(!browser) {
+                browser = new Fl_Hold_Browser(horizontal_margin, vertical_margin, win_width - 2 * horizontal_margin, browser_height, "Select the SANE device you wish to use");
+            }
+            browser->clear();
+            int selected = 1;
+            const int max_line_len = 100;
+            char s[max_line_len];
+            for(int i=0; this->sane_devlist[i]; i++) {
+                snprintf(s, max_line_len, "%s %s %s (%s)", this->sane_devlist[i]->vendor, this->sane_devlist[i]->model, this->sane_devlist[i]->type, this->sane_devlist[i]->name);
+                browser->add(s);
+                if(this->device_name() &&!strcmp(this->sane_devlist[i]->name, this->device_name())) {
+                    selected = i + 1;
+                }
+            }
+            browser->select(selected);
+            Fl_Button *ok_button = new Fl_Button(horizontal_margin, button_y, button_width, button_height, "Select");
+            ok_button->callback(cb_sane_device_select, (void*)this);
+            Fl_Button *cancel_button = new Fl_Button(win_width - button_width - horizontal_margin, button_y, button_width, button_height, "Cancel");
+            cancel_button->callback(cb_sane_device_cancel);
+            devices_win->end();
+            devices_win->set_modal();
+            devices_win->show();
+            while(devices_win->shown()) {
+                Fl::wait();
+            }
 
+            if(!this->device_name()) {
+                return NG;
+            }
+            break;
+    }
     return OK;
+}
+
+void cb_setup_sane_device(Fl_Widget *w, void *data) {
+    iip_scan *scan = (iip_scan*)data;
+    scan->open();
+    if(scan->device_select() == OK) {
+        scan->setup_unit();
+        scan->get_physical_param();
+    }
+    scan->close();
 }
 
 int iip_scan::setup_unit(void) {
@@ -59,11 +161,22 @@ int iip_scan::setup_unit(void) {
     }
 
     if(!this->_device_name) {
-        if(this->device_search() != OK) {
+        if(this->device_select() != OK) {
             return NG;
         }
     }
 
+    // insert the menu item
+    const char *label = "Setup/Select SANE device";
+    Fl_Menu_Bar* menubar = (Fl_Menu_Bar*)cl_gts_gui.window_opengl->array()[0];
+    Fl_Menu_Item *setup_item = (Fl_Menu_Item*)menubar->find_item("Setup");
+    const Fl_Menu_Item *sane_item = menubar->find_item(label);
+    if(setup_item && !sane_item) {
+        setup_item->add(label, 0, cb_setup_sane_device, (void*)this, 0);
+    }
+
+    // open the device
+    // if it doesn't work, we probably have an old one from the config file, so run the device selection
     int first_run = 1;
     for(;;) {
         status = sane_open(this->_device_name, &this->sane_handle);
@@ -71,7 +184,7 @@ int iip_scan::setup_unit(void) {
             pri_funct_msg_v("iip_scan::setup_unit() - sane_open() failed with: %s\n", sane_strstatus(status));
             if(this->_device_name && first_run) {
                 pri_funct_msg_v("trying a new device search\n");
-                if(this->device_search() != OK) {
+                if(this->device_select() != OK) {
                     return NG;
                 }
             } else {
@@ -634,6 +747,8 @@ int iip_scan::close( void )
         sane_close(this->sane_handle);
     }
     sane_exit();
+    this->sane_devlist = NULL;
+    this->sane_num_devices = 0;
     return OK;
 }
 
