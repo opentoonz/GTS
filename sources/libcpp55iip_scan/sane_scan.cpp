@@ -272,6 +272,11 @@ void* iip_scan::option_get_value(ScannerOption *option) {
         pri_funct_msg_ttvr("type=%d, unit=%d, size=%d, cap=%d, constraint_type=%d", option->desc->type, option->desc->unit, option->desc->size, option->desc->cap, option->desc->constraint_type);
     }
 
+    if(!(option->desc->cap & SANE_CAP_SOFT_DETECT)) {
+        pri_funct_msg_v("SANE option '%s' can not be read\n", option->desc->name);
+        return value;
+    }
+
     switch(option->desc->type) {
         case SANE_TYPE_STRING:
             value_size = option->desc->size * sizeof(SANE_Char);
@@ -293,7 +298,7 @@ void* iip_scan::option_get_value(ScannerOption *option) {
     }
     status = sane_control_option(this->sane_handle, option->num, SANE_ACTION_GET_VALUE, value, NULL);
     if(status != SANE_STATUS_GOOD) {
-        fl_message("iip_scan::option_get_value() - sane_control_option() failed with: %s", sane_strstatus(status));
+        pri_funct_msg_v("iip_scan::option_get_value() - sane_control_option() failed with: %s\n", sane_strstatus(status));
     }
     if(option->desc->type == SANE_TYPE_FIXED) {
         *((SANE_Word*)value) = SANE_UNFIX(*((SANE_Fixed*)value));
@@ -316,6 +321,7 @@ void* iip_scan::option_get_value(ScannerOption *option) {
 
 void iip_scan::option_set_value(ScannerOption *option, void *value) {
     SANE_Status status;
+    SANE_Int outcome;
 
     if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("SANE option_set_value() for '%s'", option->desc->name);
@@ -332,6 +338,11 @@ void iip_scan::option_set_value(ScannerOption *option, void *value) {
         pri_funct_msg_ttvr("type=%d, unit=%d, size=%d, cap=%d, constraint_type=%d", option->desc->type, option->desc->unit, option->desc->size, option->desc->cap, option->desc->constraint_type);
     }
 
+    if(!(option->desc->cap & SANE_CAP_SOFT_SELECT)) {
+        pri_funct_msg_v("SANE option '%s' can not be set\n", option->desc->name);
+        return;
+    }
+
     if(option->desc->type == SANE_TYPE_FIXED) {
         *((SANE_Word*)value) = SANE_FIX(*((SANE_Word*)value));
     }
@@ -342,9 +353,13 @@ void iip_scan::option_set_value(ScannerOption *option, void *value) {
             *((SANE_Word*)value) = option->desc->constraint.range->max;
         }
     }
-    status = sane_control_option(this->sane_handle, option->num, SANE_ACTION_SET_VALUE, value, NULL);
+    status = sane_control_option(this->sane_handle, option->num, SANE_ACTION_SET_VALUE, value, &outcome);
     if(status != SANE_STATUS_GOOD) {
         pri_funct_msg_v("iip_scan::option_set_value() - sane_control_option() failed with: %s\n", sane_strstatus(status));
+    } else {
+        if(outcome & SANE_INFO_RELOAD_OPTIONS) {
+            this->option_get_info();
+        }
     }
 }
 
