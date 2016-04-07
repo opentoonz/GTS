@@ -108,13 +108,16 @@ int iip_scan::device_select(void) {
                 button_y = win_height - vertical_margin - button_height;
             if(!devices_win) {
                 devices_win = new Fl_Window(win_width, win_height, "Select SANE device");
-            }
-            if(!browser) {
                 browser = new Fl_Hold_Browser(horizontal_margin, vertical_margin, win_width - 2 * horizontal_margin, browser_height, "Select the SANE device you wish to use");
+                Fl_Button *ok_button = new Fl_Button(horizontal_margin, button_y, button_width, button_height, "Select");
+                ok_button->callback(cb_sane_device_select, (void*)this);
+                Fl_Button *cancel_button = new Fl_Button(win_width - button_width - horizontal_margin, button_y, button_width, button_height, "Cancel");
+                cancel_button->callback(cb_sane_device_cancel);
+                devices_win->end();
             }
             browser->clear();
             int selected = 1;
-            const int max_line_len = 100;
+            const int max_line_len = 1000;
             char s[max_line_len];
             for(int i=0; this->sane_devlist[i]; i++) {
                 snprintf(s, max_line_len, "%s %s %s (%s)", this->sane_devlist[i]->vendor, this->sane_devlist[i]->model, this->sane_devlist[i]->type, this->sane_devlist[i]->name);
@@ -124,11 +127,6 @@ int iip_scan::device_select(void) {
                 }
             }
             browser->select(selected);
-            Fl_Button *ok_button = new Fl_Button(horizontal_margin, button_y, button_width, button_height, "Select");
-            ok_button->callback(cb_sane_device_select, (void*)this);
-            Fl_Button *cancel_button = new Fl_Button(win_width - button_width - horizontal_margin, button_y, button_width, button_height, "Cancel");
-            cancel_button->callback(cb_sane_device_cancel);
-            devices_win->end();
             devices_win->set_modal();
             devices_win->show();
             while(devices_win->shown()) {
