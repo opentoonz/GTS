@@ -9,12 +9,16 @@
 #include <windows.h>
 #endif
 
-# if defined(HAVE_GL_GLU_H)
-#  include <GL/glu.h>
-# elif defined(HAVE_OPENGL_GLU_H)
-#  include <OpenGL/glu.h>
+# if defined(HAVE_CONFIG_H)
+#  if defined(HAVE_GL_GLU_H)
+#   include <GL/glu.h>
+#  elif defined(HAVE_OPENGL_GLU_H)
+#   include <OpenGL/glu.h>
+#  else
+#   error no glu.h
+#  endif
 # else
-// don't break the non-autotools build
+// non-autotools build
 #  include <GL/glu.h>
 # endif
 
