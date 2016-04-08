@@ -292,6 +292,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Color Trace Enhancement...", 0xffc6,  (Fl_Callback*)gts_gui::cb_menite_color_trace, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"File Number ...", 0xffc7,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Color Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Channels", 0,  0, 0, 80, FL_NORMAL_LABEL, 0, 14, 0},
  {"FullColor", 0,  (Fl_Callback*)gts_gui::cb_FullColor, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
@@ -331,7 +332,8 @@ Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 16;
 Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 17;
 Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 18;
 Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 19;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 43;
+Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 20;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 44;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );

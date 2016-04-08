@@ -164,13 +164,10 @@ int iip_scan::setup_unit(void) {
         }
     }
 
-    // insert the menu item
-    const char *label = "Setup/Select SANE device";
-    Fl_Menu_Bar* menubar = (Fl_Menu_Bar*)cl_gts_gui.window_opengl->array()[0];
-    Fl_Menu_Item *setup_item = (Fl_Menu_Item*)menubar->find_item("Setup");
-    const Fl_Menu_Item *sane_item = menubar->find_item(label);
-    if(setup_item && !sane_item) {
-        setup_item->add(label, 0, cb_setup_sane_device, (void*)this, 0);
+    // show the SANE-specific menu item and attach a callback
+    if(!gts_gui::menite_sane_device->visible()) {
+        gts_gui::menite_sane_device->show();
+        gts_gui::menite_sane_device->callback(cb_setup_sane_device, (void*)this);
     }
 
     // open the device
