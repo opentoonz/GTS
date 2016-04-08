@@ -39,6 +39,8 @@ if test "$on_windows" = "no"; then
     AC_SUBST(SANE_LIBS, `$SANE_CONFIG --libs`)
 fi
 
+AC_DEFINE_UNQUOTED(CONFIGURATION_DATE, ["`date '+%Y-%m-%d'`"], [configuration date])
+
 AC_CONFIG_FILES([
                  Makefile
                  ])

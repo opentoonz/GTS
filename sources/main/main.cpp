@@ -11,6 +11,10 @@
 #include "gts_gui.h"
 #include "memory_desktop.h"
 
+# if defined(HAVE_CONFIG_H)
+#  include <config.h>
+# endif
+
 static void print_version( char *title )
 {
 pri_funct_msg_vr( "%s  %s  %s",
@@ -115,7 +119,11 @@ namespace {
 }
 
 /* リリース名、版、日付 */
+# ifdef PACKAGE_NAME
+gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
+# else
 gts_master cl_gts_master( "gts" ,"2.3.0" ,"2016-3-23" );
+# endif
 
 int main( int argc, char **argv )
 {
