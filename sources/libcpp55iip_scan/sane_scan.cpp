@@ -454,7 +454,6 @@ int iip_scan::get_physical_param(void) {
             this->_d_physical_width /= 10;
             break;
     }
-    return OK;
 
     // get other options
     if(this->_option_info.threshold.num != -1) {
@@ -479,6 +478,7 @@ int iip_scan::get_physical_param(void) {
         }
     }
 
+    return OK;
 }
 
 double iip_scan::gts_coord_to_sane(double x, double res) {
@@ -491,18 +491,10 @@ double iip_scan::gts_coord_to_sane(double x, double res) {
     }
 }
 
-int iip_scan::setup_action(void) {
-    if (ON == this->get_i_mv_sw()) {
-        pri_funct_msg_ttvr("iip_scan::setup_action()");
-    }
-
-    const SANE_Option_Descriptor *option;
-    void *value;
-    SANE_Int i;
+SANE_String_Const pixeltype_to_sane_mode(E_PIXELTYPE pixeltype) {
     SANE_String_Const mode;
-    SANE_Word word_value;
 
-    switch (this->_e_pixeltype) {
+    switch (pixeltype) {
         case E_PIXELTYPE_BW:
             mode = SANE_VALUE_SCAN_MODE_LINEART;
             break;
@@ -513,6 +505,19 @@ int iip_scan::setup_action(void) {
             mode = SANE_VALUE_SCAN_MODE_COLOR;
             break;
     }
+    return mode;
+}
+
+int iip_scan::setup_action(void) {
+    if (ON == this->get_i_mv_sw()) {
+        pri_funct_msg_ttvr("iip_scan::setup_action()");
+    }
+
+    const SANE_Option_Descriptor *option;
+    void *value;
+    SANE_Int i;
+    SANE_String_Const mode = pixeltype_to_sane_mode(this->e_pixeltype());
+    SANE_Word word_value;
 
     // set mode
     this->option_set_value(&this->_option_info.mode, (void*)mode);
@@ -564,8 +569,21 @@ int iip_scan::setup_action(void) {
 
 int iip_scan::print_all(void) {
     // TODO: print more info here
-    pri_funct_msg_vr("native_resolution x %.16g y %.16g", this->_d_x_native_resolution, this->_d_y_native_resolution);
-    pri_funct_msg_vr("physical_area     x %.16g y %.16g", this->_d_physical_width, this->_d_physical_height);
+    pri_funct_msg_vr("SANE device: %s", this->device_name());
+    pri_funct_msg_vr("scanning mode: %s", pixeltype_to_sane_mode(this->e_pixeltype()));
+    pri_funct_msg_vr("native resolution: %gx%g DPI", this->d_x_native_resolution(), this->d_y_native_resolution());
+    pri_funct_msg_vr("used resolution: %gx%g DPI", this->d_x_resolution(), this->d_y_resolution());
+    pri_funct_msg_vr("physical area: %gx%g cm", this->d_physical_width(), this->d_physical_height());
+    pri_funct_msg_vr("used area: left = %g, right = %g, top = %g, bottom = %g (cm)", this->d_left(), this->d_right(), this->d_top(), this->d_bottom());
+    if(this->_option_info.threshold.num != -1) {
+        pri_funct_msg_vr("lineart(B/W) threshold: %g", this->d_threshold());
+    }
+    if(this->_option_info.brightness.num != -1) {
+        pri_funct_msg_vr("grayscale/color brightness: %g", this->d_brightness());
+    }
+    if(this->_option_info.contrast.num != -1) {
+        pri_funct_msg_vr("grayscale/color contrast: %g", this->d_contrast());
+    }
 
     return OK;
 }
