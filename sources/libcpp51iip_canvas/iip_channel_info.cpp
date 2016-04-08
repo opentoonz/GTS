@@ -40,12 +40,12 @@ void iip_channel_info::set_e_ch_num_type( E_CH_NUM_TYPE e_type )
 		break;
 	}
 
-    this->_e_type = e_type;
+	this->_e_type = e_type;
 }
 
 E_CH_NUM_TYPE iip_channel_info::get_e_ch_num_type( void )
 {
-    return this->_e_type;
+	return this->_e_type;
 }
 
 /* get_cp_ch_num_type()は、関数のオーバーロードやってます。

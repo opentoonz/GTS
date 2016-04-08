@@ -198,13 +198,13 @@ namespace {
 
  void file_path_from_dir_(std::string& dir_path, const char *file_name) {
 	if (dir_path.empty()) {
-        return;
-    }
+		return;
+	}
 
 	dir_path += ptbl_get_cp_path_separeter();
 	dir_path += file_name;
 	if (!exist_file(dir_path.c_str())) {
-        dir_path = std::string();
+		dir_path = std::string();
 	}
  }
 
@@ -224,25 +224,25 @@ namespace {
 	=         "C:\Users\user1\_gts-scan_area.txt"
 	*/
 	std::string fpath_user;
-    get_user_home_(fpath_user);
+	get_user_home_(fpath_user);
 # ifndef _WIN32
-    fpath_user += ptbl_get_cp_path_separeter();
-    fpath_user += STR_DESKTOP_DIR;
-    if(!ptbl_dir_or_file_is_exist((char *)fpath_user.c_str())) {
-        ptbl_mkdir(fpath_user.c_str());
-    }
+	fpath_user += ptbl_get_cp_path_separeter();
+	fpath_user += STR_DESKTOP_DIR;
+	if(!ptbl_dir_or_file_is_exist((char *)fpath_user.c_str())) {
+		ptbl_mkdir(fpath_user.c_str());
+	}
 # endif
-    file_path_from_dir_(fpath_user, file_name);
+	file_path_from_dir_(fpath_user, file_name);
 	if(!fpath_user.empty()) {
-        return fpath_user;
-    }
+		return fpath_user;
+	}
 
 # ifdef PKGDATADIR
-    std::string fpath_data(PKGDATADIR);
-    file_path_from_dir_(fpath_data, file_name);
-    if(!fpath_data.empty()) {
-        return fpath_data;
-    }
+	std::string fpath_data(PKGDATADIR);
+	file_path_from_dir_(fpath_data, file_name);
+	if(!fpath_data.empty()) {
+		return fpath_data;
+	}
 # endif
 
 	/* 優先度B  全ユーザープロファイルのホームにあるなら
@@ -252,29 +252,29 @@ namespace {
 		Windows7では一般ユーザーが書き込めないので使えない
 	*/
 	std::string fpath_prof;
-    getenv_("ALLUSERSPROFILE", fpath_prof);
-    file_path_from_dir_(fpath_prof, file_name);
+	getenv_("ALLUSERSPROFILE", fpath_prof);
+	file_path_from_dir_(fpath_prof, file_name);
 	if (!fpath_prof.empty()) {
-        return fpath_prof;
-    }
+		return fpath_prof;
+	}
 
 	/* 優先度C  共有のホームにあるなら
- 	-->       %PUBLIC%\_gts-scan_area.txt"
+	-->	%PUBLIC%\_gts-scan_area.txt"
 	= "C:\Users\Public\_gts-scan_area.txt" at Windows7
 	*/
 	std::string fpath_publ;
-    getenv_("PUBLIC", fpath_publ);
-    file_path_from_dir_(fpath_publ, file_name);
+	getenv_("PUBLIC", fpath_publ);
+	file_path_from_dir_(fpath_publ, file_name);
 	if (!fpath_publ.empty()) {
-        return fpath_publ;
-    }
+		return fpath_publ;
+	}
 
 	/* 優先度D  .exeと同じ場所にあるなら */
-    std::string fpath_dexe(get_dexe_home_(comm));
-    file_path_from_dir_(fpath_dexe, file_name);
+	std::string fpath_dexe(get_dexe_home_(comm));
+	file_path_from_dir_(fpath_dexe, file_name);
 	if(!fpath_dexe.empty()) {
-        return fpath_dexe;
-    }
+		return fpath_dexe;
+	}
 
 	/* A,B,Cどれのファイルもないならなにもしない */
 	return std::string();
@@ -282,7 +282,7 @@ namespace {
 
  std::string gts_scan_area_file_path_( const char *comm ) {
 	const char *file_name = "_gts-scan_area.txt";
-    return gts_file_path(comm, file_name);
+	return gts_file_path(comm, file_name);
  }
 
 //----------------------------------------------------------------------

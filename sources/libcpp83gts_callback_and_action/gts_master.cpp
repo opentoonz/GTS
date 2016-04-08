@@ -366,7 +366,7 @@ int gts_master::exec( const char *comm )
 	/* set_non_model()は始めにshowしたwindowがメイン */
 	cl_gts_gui.window_opengl->show();
 	cl_gts_gui.window_opengl->wait_for_expose();
-    Fl::flush();
+	Fl::flush();
 
 	/*------------------------------------------------*/
 	/* window TWAINのためにウインドウハンドルを設定する */

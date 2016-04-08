@@ -13,7 +13,7 @@ extern "C" {
 extern int ptbl_cpu_is_little_endian( void );
 
 /* ディレクトリあるいはファイルが存在すれば 1 を、なければ 0 を返す */
-extern int ptbl_dir_or_file_is_exist(char *cp_path );
+extern int ptbl_dir_or_file_is_exist( char *cp_path );
 
 /* ホスト名を得る、ホスト名が見つからないときはNULLを戻す */
 extern char *ptbl_get_cp_hostname( void );
@@ -30,7 +30,7 @@ extern char *ptbl_get_cp_username( void );
 extern char *ptbl_get_cp_userrealname( void );
 
 /* ディレクトリを１個作成する(戻り値 0:成功,-1:失敗) */
-extern int ptbl_mkdir(const char *cp_dirpath );
+extern int ptbl_mkdir( const char *cp_dirpath );
 
 /* ファイルパスからファイル名のみ得る(尻の.exe等は残る) */
 extern char *ptbl_get_cp_filename_from_path( char *cp_filepath );
