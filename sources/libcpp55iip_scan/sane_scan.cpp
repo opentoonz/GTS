@@ -220,6 +220,10 @@ void iip_scan::option_get_info() {
     this->_option_info.mode.desc = NULL;
     this->_option_info.threshold.num = -1;
     this->_option_info.threshold.desc = NULL;
+    this->_option_info.brightness.num = -1;
+    this->_option_info.brightness.desc = NULL;
+    this->_option_info.contrast.num = -1;
+    this->_option_info.contrast.desc = NULL;
 
     const SANE_Option_Descriptor *option;
     SANE_Int i;
@@ -260,6 +264,12 @@ void iip_scan::option_get_info() {
         } else if(!strcmp(option->name, SANE_NAME_THRESHOLD)) {
             this->_option_info.threshold.num = i;
             this->_option_info.threshold.desc = option;
+        } else if(!strcmp(option->name, SANE_NAME_BRIGHTNESS)) {
+            this->_option_info.brightness.num = i;
+            this->_option_info.brightness.desc = option;
+        } else if(!strcmp(option->name, SANE_NAME_CONTRAST)) {
+            this->_option_info.contrast.num = i;
+            this->_option_info.contrast.desc = option;
         }
     }
 }
@@ -454,6 +464,20 @@ int iip_scan::get_physical_param(void) {
             free(value);
         }
     }
+    if(this->_option_info.brightness.num != -1) {
+        value = this->option_get_value(&this->_option_info.brightness);
+        if(value){
+            this->_d_brightness = *((SANE_Word*)value);
+            free(value);
+        }
+    }
+    if(this->_option_info.contrast.num != -1) {
+        value = this->option_get_value(&this->_option_info.contrast);
+        if(value){
+            this->_d_contrast = *((SANE_Word*)value);
+            free(value);
+        }
+    }
 
 }
 
@@ -525,6 +549,14 @@ int iip_scan::setup_action(void) {
     if(this->_option_info.threshold.num != -1) {
         word_value = this->_d_threshold;
         this->option_set_value(&this->_option_info.threshold, &word_value);
+    }
+    if(this->_option_info.brightness.num != -1) {
+        word_value = this->_d_brightness;
+        this->option_set_value(&this->_option_info.brightness, &word_value);
+    }
+    if(this->_option_info.contrast.num != -1) {
+        word_value = this->_d_contrast;
+        this->option_set_value(&this->_option_info.contrast, &word_value);
     }
 
     return OK;

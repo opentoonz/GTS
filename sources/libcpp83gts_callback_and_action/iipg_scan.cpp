@@ -275,6 +275,14 @@ int gts_master::_iipg_scan_get_scanner_info( void )
     }
     cl_gts_gui.valinp_bw_threshold->value(this->cl_iip_scan.d_threshold());
     cl_gts_gui.scrbar_bw_threshold->value(this->cl_iip_scan.d_threshold());
+    cl_gts_gui.valinp_grays_brightness->value(this->cl_iip_scan.d_brightness());
+    cl_gts_gui.scrbar_grays_brightness->value(this->cl_iip_scan.d_brightness());
+    cl_gts_gui.valinp_rgb_brightness->value(this->cl_iip_scan.d_brightness());
+    cl_gts_gui.scrbar_rgb_brightness->value(this->cl_iip_scan.d_brightness());
+    cl_gts_gui.valinp_grays_contrast->value(this->cl_iip_scan.d_contrast());
+    cl_gts_gui.scrbar_grays_contrast->value(this->cl_iip_scan.d_contrast());
+    cl_gts_gui.valinp_rgb_contrast->value(this->cl_iip_scan.d_contrast());
+    cl_gts_gui.scrbar_rgb_contrast->value(this->cl_iip_scan.d_contrast());
 
 	/* ...メニューにセット */
 	this->_iipg_scan_set_physical_param();
