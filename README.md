@@ -46,15 +46,16 @@ In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
 
 ```sh
 ./autogen.sh && ./configure && make
+# run it with
+./gts
+# or with more verbose output
+./gts -bv
 ```
 
 If you're a developer and you need a debug build, do it like this:
 ```sh
 ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
-```
-
-Now you can use gdb:
-```sh
+# now you can use gdb:
 gdb --args ./gts -bv
 ```
 
