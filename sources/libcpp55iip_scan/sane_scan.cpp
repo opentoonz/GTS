@@ -331,6 +331,48 @@ void* iip_scan::option_get_value(ScannerOption *option) {
     return value;
 }
 
+void adjust_option_value(ScannerOption *option, SANE_Word *value) {
+    int i, len;
+    SANE_Word current_value;
+    SANE_Word previous_value = 0;
+
+    switch(option->desc->constraint_type) {
+        case SANE_CONSTRAINT_WORD_LIST:
+            len = option->desc->constraint.word_list[0];
+            for(i=1; i<=len; i++) {
+                current_value = option->desc->constraint.word_list[i];
+                if(option->desc->type == SANE_TYPE_FIXED) {
+                    current_value = SANE_UNFIX(current_value);
+                }
+
+                if(i == 1 && *value < current_value) {
+                    *value = current_value;
+                    return;
+                } else if(i == len && *value > current_value) {
+                    *value = current_value;
+                    return;
+                } else if(*value > previous_value && *value < current_value) {
+                    if((*value - previous_value) < ((current_value - previous_value) / 2)) {
+                        *value = previous_value;
+                    } else {
+                        *value = current_value;
+                    }
+                    return;
+                }
+                previous_value = current_value;
+            }
+            break;
+        case SANE_CONSTRAINT_RANGE:
+            if(*value < option->desc->constraint.range->min) {
+                *value = option->desc->constraint.range->min;
+            } else if(*value > option->desc->constraint.range->max) {
+                *value = option->desc->constraint.range->max;
+            }
+            // TODO: support quantized ranges
+            break;
+    }
+}
+
 void iip_scan::option_set_value(ScannerOption *option, void *value) {
     SANE_Status status;
     SANE_Int outcome;
@@ -358,13 +400,9 @@ void iip_scan::option_set_value(ScannerOption *option, void *value) {
     if(option->desc->type == SANE_TYPE_FIXED) {
         *((SANE_Word*)value) = SANE_FIX(*((SANE_Word*)value));
     }
-    if(option->desc->constraint_type == SANE_CONSTRAINT_RANGE) {
-        if(*((SANE_Word*)value) < option->desc->constraint.range->min) {
-            *((SANE_Word*)value) = option->desc->constraint.range->min;
-        } else if(*((SANE_Word*)value) > option->desc->constraint.range->max) {
-            *((SANE_Word*)value) = option->desc->constraint.range->max;
-        }
-    }
+
+    adjust_option_value(option, (SANE_Word*)value);
+
     status = sane_control_option(this->sane_handle, option->num, SANE_ACTION_SET_VALUE, value, &outcome);
     if(status != SANE_STATUS_GOOD) {
         pri_funct_msg_v("iip_scan::option_set_value() - sane_control_option() failed with: %s\n", sane_strstatus(status));
@@ -589,43 +627,10 @@ int iip_scan::print_all(void) {
 }
 
 void iip_scan::adjust_resolution(ScannerOption *option, double *res) {
-    int i, len;
-    SANE_Word current_value;
-    SANE_Word previous_value = 0;
-
     if(option->num == -1) {
         option = &this->_option_info.resolution;
     }
-    switch(option->desc->constraint_type) {
-        case SANE_CONSTRAINT_WORD_LIST:
-            len = option->desc->constraint.word_list[0];
-            for(i=1; i<=len; i++) {
-                current_value = option->desc->constraint.word_list[i];
-                if(option->desc->type == SANE_TYPE_FIXED) {
-                    current_value = SANE_UNFIX(current_value);
-                }
-
-                if(i == 1 && *res < current_value) {
-                    *res = current_value;
-                    return;
-                } else if(i == len && *res > current_value) {
-                    *res = current_value;
-                    return;
-                } else if(*res > previous_value && *res < current_value) {
-                    if((*res - previous_value) < ((current_value - previous_value) / 2)) {
-                        *res = previous_value;
-                    } else {
-                        *res = current_value;
-                    }
-                    return;
-                }
-                previous_value = current_value;
-            }
-            break;
-        case SANE_CONSTRAINT_RANGE:
-            pri_funct_msg_v("Error: resolutions with SANE_CONSTRAINT_RANGE are not supported yet.\n");
-            break;
-    }
+    adjust_option_value(option, (SANE_Word*)res);
 }
 
 void iip_scan::d_x_resolution(double res) {
