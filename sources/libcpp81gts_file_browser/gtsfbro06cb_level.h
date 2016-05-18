@@ -1,23 +1,25 @@
-#ifndef __gtsfbro06cb_level_h__
-#define __gtsfbro06cb_level_h__
+#ifndef gtsfbro06cb_level_h
+#define gtsfbro06cb_level_h
 
+#include <vector>
+#include <string>
 #include <time.h>	/* for time_t */
 #include "gtsfbro05list_level.h"
 
 class gtsfbro06cb_level : public gtsfbro05list_level {
 public:
 	gtsfbro06cb_level()
+		:_i_start_memory(0)
+		,_i_end_memory(0)
+		,_i_view_sw_memory(0)
+		,_i_x1view_sw_memory(0)
+		,_i_rgb_scan_browse_sw_memory(0)
+		,_i_info_rgb_sub_sw_memory(0)
+		,_i_list_form_memory(0)
+		,_i_save_color_trace_level_sw_memory(0)
 	{
-		this->level_filename_memory_[0] = '\0';
-		this->_i_start_memory = 0;
-		this->_i_end_memory = 0;
+		this->level_filename_memory_[0]  = '\0';
 		this->_ca_rgb_scan_dir_memory[0] = '\0';
-		this->_i_view_sw_memory = 0;
-		this->_i_x1view_sw_memory = 0;
-		this->_i_rgb_scan_browse_sw_memory = 0;
-		this->_i_info_rgb_sub_sw_memory = 0;
-		this->_i_list_form_memory = 0;
-		this->_i_save_color_trace_level_sw_memory = 0;
 	}
 	int i_init( void );
 
@@ -45,6 +47,7 @@ public:
 	char *cp_filepath_full( int i_number );
 	char *cp_levelname( void );
 	void level_filename_memory( const char *ccp_fname );
+
 protected:
 private:
 	void _cancel( void );
@@ -95,4 +98,4 @@ private:
 		_i_save_color_trace_level_sw_memory;
 };
 
-#endif /* !__gtsfbro06cb_level_h__ */
+#endif /* !gtsfbro06cb_level_h */

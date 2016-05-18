@@ -21,7 +21,12 @@ gts_master::gts_master(
 	cb_config_load_ok(),cb_level_ok()の時も
 	んだ設定に合わせること */
 	,_i_rotate_per_90(0)
-{}
+{
+	this->cl_bro_level.add_imagefile_extension( ".tif" );
+	this->cl_bro_level.add_imagefile_extension( ".tga" );
+	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
+	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
+}
 
 int  gts_master::i_mv_sw( void ) const
 {  return this->_i_mv_sw; }
