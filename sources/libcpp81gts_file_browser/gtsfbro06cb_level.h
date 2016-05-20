@@ -48,6 +48,8 @@ public:
 	char *cp_levelname( void );
 	void level_filename_memory( const char *ccp_fname );
 
+	void cb_set_image_file_extension( void );
+
 protected:
 private:
 	void _cancel( void );
