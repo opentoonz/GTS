@@ -1,6 +1,8 @@
 #ifndef __memory_desktop_h__
 #define __memory_desktop_h__
 
+#define STR_CONFIG_DIR			"config_dir"
+
 #define STR_WINDOW_OPENGL		 "window_main"
 
 #define STR_WINDOW_CONFIG_LOAD		 "window_config_load"
