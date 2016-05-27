@@ -67,18 +67,12 @@ void gts_master::i_cv_sw( int sw ) {
 
 const char *const gts_master::cp_release_name( void ) const
 {   return this->_cp_release_name; }
-/***void  gts_master::cp_release_name( char *cp_name )
-{	   this->_cp_release_name = cp_name; }***/
 
 const char *const gts_master::cp_release_date( void ) const
 {   return this->_cp_release_date; }
-/***void  gts_master::cp_release_date( char *cp_date )
-{	   this->_cp_release_date = cp_date; }***/
 
 const char *const gts_master::cp_release_number( void ) const
 {   return this->_cp_release_number; }
-/***void  gts_master::cp_release_number( char *cp_num )
-{	   this->_cp_release_number = cp_num; }***/
 
 // this is used to stop Esc from exiting the program:
 /***static int handle_to_steel_shortcut_event(int e) {
@@ -353,6 +347,12 @@ int gts_master::exec( const char *comm )
 	 "Error : this->cl_bro_trace_batch.i_init() returns NG");
 		return NG;
 	}
+
+	/* image file format TIFF/TGA */
+	cl_gts_gui.choice_level_image_file_format->value(
+	 this->cl_bro_level.get_current_imagefile_extension()
+	);
+	//ct_gts_master.cl_bro_level.cb_set_image_file_extension();
 
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
