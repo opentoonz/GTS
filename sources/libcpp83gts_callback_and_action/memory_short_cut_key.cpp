@@ -1,7 +1,7 @@
 //#include <iostream>
 #include <string>
 #include <cstring>
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 //#include "enumerations.h"
 #include "gts_gui.h"
 //#include "gts_master.h"
