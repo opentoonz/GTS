@@ -336,6 +336,10 @@ void adjust_option_value(ScannerOption *option, SANE_Word *value) {
     SANE_Word current_value;
     SANE_Word previous_value = 0;
 
+    if(option->desc == NULL) {
+        return;
+    }
+
     switch(option->desc->constraint_type) {
         case SANE_CONSTRAINT_WORD_LIST:
             len = option->desc->constraint.word_list[0];
@@ -376,6 +380,10 @@ void adjust_option_value(ScannerOption *option, SANE_Word *value) {
 void iip_scan::option_set_value(ScannerOption *option, void *value) {
     SANE_Status status;
     SANE_Int outcome;
+
+    if(option->desc == NULL) {
+        return;
+    }
 
     if (ON == this->get_i_mv_sw()) {
         pri_funct_msg_ttvr("SANE option_set_value() for '%s'", option->desc->name);
