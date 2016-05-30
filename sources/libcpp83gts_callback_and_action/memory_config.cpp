@@ -24,6 +24,8 @@ const char* memory_config::str_level_rgb_scan_dir_
 			     ="level_rgb_scan_dir";
 const char* memory_config::str_level_rgb_trace_save_sw_
 			     ="level_rgb_trace_save_sw";
+const char* memory_config::str_level_rgb_full_save_sw_
+			     ="level_rgb_full_save_sw";
 
 const char* memory_config::str_level_image_file_format_
 			     ="level_image_file_format";

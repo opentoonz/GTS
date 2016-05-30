@@ -109,16 +109,22 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 		}
 	}
 
-	/* スキャン画像の保存(BW,Grayscale,RGB、つまり全部) */
-	if (OK != this->_iipg_save(
+	/* スキャン画像保存(BW,GrayscaleあるいはRGBでSWが入っている場合) */
+	if ((this->cl_iip_ro90.get_l_channels() < 3L) ||//BW or Grayscale
+	    (this->cl_iip_ro90.get_l_channels() == 3L &&//RGB & SW is ON
+	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value() ==1
+	    )
+	) {
+	 if (OK != this->_iipg_save(
 		&(this->cl_iip_ro90),
 		cp_path,
 		cl_gts_gui.valinp_area_reso->value()
 		/* 回転値はゼロ固定にする */
-	) ) {
+	 ) ) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iip_save(-) returns NG" );
 		return NG;
+	 }
 	}
 
 	/*------------------------------------------------*/
@@ -388,7 +394,7 @@ fl_alert("Input level name!");
 void gts_master::cb_scan_and_save_start( void )
 {
 	_i_rgb_trace_save_sw =
-		cl_gts_gui.chkbtn_level_color_trace_save_sw->value();
+		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value();
 	this->_cb_scan_and_save_start();
 }
 void gts_master::cb_scan_and_trace_and_save_start( void )
