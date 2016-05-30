@@ -2285,9 +2285,9 @@ Fl_Double_Window* gts_gui::make_window() {
       Fl_Group::current()->resizable(o);
     } // Fl_Tile* o
     { Fl_Group* o = new Fl_Group(0, 425, 380, 25);
-      { new Fl_Box(0, 425, 40, 25);
+      { new Fl_Box(0, 425, 50, 25);
       } // Fl_Box* o
-      { strinp_level_file = new Fl_Input(40, 425, 340, 25, "Level");
+      { strinp_level_file = new Fl_Input(50, 425, 330, 25, "Level");
         strinp_level_file->box(FL_BORDER_BOX);
         strinp_level_file->callback((Fl_Callback*)cb_strinp_level_file);
         strinp_level_file->when(FL_WHEN_CHANGED);
@@ -2296,19 +2296,19 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 455, 380, 25);
-      { valinp_level_start = new Fl_Value_Input(40, 455, 40, 25, "Start");
+      { valinp_level_start = new Fl_Value_Input(50, 455, 40, 25, "Start");
         valinp_level_start->box(FL_BORDER_BOX);
         valinp_level_start->minimum(1);
         valinp_level_start->maximum(9999);
         valinp_level_start->value(1);
       } // Fl_Value_Input* valinp_level_start
-      { valinp_level_end = new Fl_Value_Input(110, 455, 40, 25, "End");
+      { valinp_level_end = new Fl_Value_Input(120, 455, 40, 25, "End");
         valinp_level_end->box(FL_BORDER_BOX);
         valinp_level_end->minimum(1);
         valinp_level_end->maximum(9999);
         valinp_level_end->value(1);
       } // Fl_Value_Input* valinp_level_end
-      { Fl_Box* o = new Fl_Box(150, 455, 90, 25);
+      { Fl_Box* o = new Fl_Box(160, 455, 80, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { ligbut_level_image_x1_sw = new Fl_Light_Button(240, 455, 35, 25, "x1");
@@ -2320,12 +2320,12 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 485, 380, 25);
-      { choice_level_image_file_format = new Fl_Choice(40, 485, 65, 25, "Form");
+      { choice_level_image_file_format = new Fl_Choice(50, 485, 65, 25, "Format");
         choice_level_image_file_format->down_box(FL_BORDER_BOX);
         choice_level_image_file_format->callback((Fl_Callback*)cb_choice_level_image_file_format);
         choice_level_image_file_format->menu(menu_choice_level_image_file_format);
       } // Fl_Choice* choice_level_image_file_format
-      { Fl_Box* o = new Fl_Box(103, 485, 277, 25);
+      { Fl_Box* o = new Fl_Box(113, 485, 267, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       o->end();
@@ -2739,7 +2739,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->set_non_modal();
     window_pixel_type_and_bright->end();
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_fnum_list = new Fl_Double_Window(116, 350, "Number");
+  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
     window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
       o->menu(menu_2);
