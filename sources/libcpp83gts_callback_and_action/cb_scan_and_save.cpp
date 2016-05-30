@@ -388,7 +388,7 @@ fl_alert("Input level name!");
 void gts_master::cb_scan_and_save_start( void )
 {
 	_i_rgb_trace_save_sw =
-		cl_gts_gui.chkbtn_level_trace_save_sw->value();
+		cl_gts_gui.chkbtn_level_color_trace_save_sw->value();
 	this->_cb_scan_and_save_start();
 }
 void gts_master::cb_scan_and_trace_and_save_start( void )

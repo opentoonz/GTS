@@ -264,7 +264,8 @@ private:
   inline void cb_filinp_level_rgb_scan_dir_i(Fl_File_Input*, void*);
   static void cb_filinp_level_rgb_scan_dir(Fl_File_Input*, void*);
 public:
-  Fl_Check_Button *chkbtn_level_trace_save_sw;
+  Fl_Check_Button *chkbtn_level_color_trace_save_sw;
+  Fl_Check_Button *chkbtn_level_rgb_full_save_sw;
   Fl_Light_Button *ligbut_level_rgb_scan_browse_sw;
 private:
   inline void cb_ligbut_level_rgb_scan_browse_sw_i(Fl_Light_Button*, void*);

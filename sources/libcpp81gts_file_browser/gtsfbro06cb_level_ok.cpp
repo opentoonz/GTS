@@ -137,7 +137,7 @@ void gtsfbro06cb_level::cb_ok( void )
 
 	/* 09. RGBスキャン時、トレスを実行し保存するスイッチ */
 	this->_i_save_color_trace_level_sw_memory =
-		cl_gts_gui.chkbtn_level_trace_save_sw->value();
+		cl_gts_gui.chkbtn_level_color_trace_save_sw->value();
 
 	/* 10. dirパス/_full dirパスのブラウジング切替えスイッチ */
 	this->_i_rgb_scan_browse_sw_memory =

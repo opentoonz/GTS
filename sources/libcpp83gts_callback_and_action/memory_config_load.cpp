@@ -127,7 +127,7 @@ std::cout << std::endl;
 		}
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_rgb_trace_save_sw_)) {
-			cl_gts_gui.chkbtn_level_trace_save_sw->value(
+			cl_gts_gui.chkbtn_level_color_trace_save_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);
 		}

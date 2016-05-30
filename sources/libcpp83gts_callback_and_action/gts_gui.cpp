@@ -2331,21 +2331,26 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 515, 380, 50);
-      { filinp_level_rgb_scan_dir = new Fl_File_Input(0, 530, 190, 35, "RGB scan dir");
+      { filinp_level_rgb_scan_dir = new Fl_File_Input(0, 530, 125, 35, "RGB scan dir");
         filinp_level_rgb_scan_dir->callback((Fl_Callback*)cb_filinp_level_rgb_scan_dir);
         filinp_level_rgb_scan_dir->align(Fl_Align(FL_ALIGN_TOP_LEFT));
         filinp_level_rgb_scan_dir->when(FL_WHEN_CHANGED);
         filinp_level_rgb_scan_dir->deactivate();
         Fl_Group::current()->resizable(filinp_level_rgb_scan_dir);
       } // Fl_File_Input* filinp_level_rgb_scan_dir
-      { chkbtn_level_trace_save_sw = new Fl_Check_Button(190, 545, 55, 20, "S.C.T.");
-        chkbtn_level_trace_save_sw->tooltip("Save Color Trace level");
-        chkbtn_level_trace_save_sw->down_box(FL_DOWN_BOX);
-      } // Fl_Check_Button* chkbtn_level_trace_save_sw
+      { chkbtn_level_color_trace_save_sw = new Fl_Check_Button(125, 545, 70, 20, "S.Trace");
+        chkbtn_level_color_trace_save_sw->tooltip("Save Color Trace level");
+        chkbtn_level_color_trace_save_sw->down_box(FL_DOWN_BOX);
+      } // Fl_Check_Button* chkbtn_level_color_trace_save_sw
+      { chkbtn_level_rgb_full_save_sw = new Fl_Check_Button(195, 545, 60, 20, "S.Full");
+        chkbtn_level_rgb_full_save_sw->tooltip("Save RGB Full  level");
+        chkbtn_level_rgb_full_save_sw->down_box(FL_DOWN_BOX);
+        chkbtn_level_rgb_full_save_sw->value(1);
+      } // Fl_Check_Button* chkbtn_level_rgb_full_save_sw
       { ligbut_level_rgb_scan_browse_sw = new Fl_Light_Button(255, 540, 70, 25, "Browse");
         ligbut_level_rgb_scan_browse_sw->callback((Fl_Callback*)cb_ligbut_level_rgb_scan_browse_sw);
       } // Fl_Light_Button* ligbut_level_rgb_scan_browse_sw
-      { ligbut_level_info_rgb_sub_sw = new Fl_Light_Button(330, 540, 50, 25, "Full");
+      { ligbut_level_info_rgb_sub_sw = new Fl_Light_Button(325, 540, 50, 25, "Full");
         ligbut_level_info_rgb_sub_sw->callback((Fl_Callback*)cb_ligbut_level_info_rgb_sub_sw);
         ligbut_level_info_rgb_sub_sw->hide();
       } // Fl_Light_Button* ligbut_level_info_rgb_sub_sw

@@ -407,7 +407,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_level {
       label {Browse Level}
       callback {cl_gts_master.cl_bro_level.cb_cancel();} open
-      xywh {-950 -295 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
+      xywh {-917 -296 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -581,17 +581,21 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           xywh {103 485 277 25} resizable
         }
       }
-      Fl_Group {} {
+      Fl_Group {} {open
         xywh {0 515 380 50}
       } {
         Fl_File_Input filinp_level_rgb_scan_dir {
           label {RGB scan dir}
           callback {cl_gts_master.cl_bro_level.cb_rgb_scan_dir();}
-          xywh {0 530 190 35} align 5 when 1 deactivate resizable
+          xywh {0 530 125 35} align 5 when 1 deactivate resizable
         }
-        Fl_Check_Button chkbtn_level_trace_save_sw {
-          label {S.C.T.}
-          tooltip {Save Color Trace level} xywh {190 545 55 20} down_box DOWN_BOX
+        Fl_Check_Button chkbtn_level_color_trace_save_sw {
+          label {S.Trace}
+          tooltip {Save Color Trace level} xywh {125 545 70 20} down_box DOWN_BOX
+        }
+        Fl_Check_Button chkbtn_level_rgb_full_save_sw {
+          label {S.Full} selected
+          tooltip {Save RGB Full  level} xywh {195 545 60 20} down_box DOWN_BOX value 1
         }
         Fl_Light_Button ligbut_level_rgb_scan_browse_sw {
           label Browse
@@ -601,7 +605,7 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
         Fl_Light_Button ligbut_level_info_rgb_sub_sw {
           label Full
           callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
-          xywh {330 540 50 25} hide
+          xywh {325 540 50 25} hide
         }
       }
       Fl_Group {} {
@@ -1023,8 +1027,8 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();} selected
-      xywh {50 50 80 350} type Double resizable non_modal visible
+cl_gts_gui.menite_fnum_list->clear();}
+      xywh {50 50 116 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 80 25}
