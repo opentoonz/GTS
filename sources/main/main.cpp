@@ -121,7 +121,7 @@ namespace {
 }
 
 /* リリース名、版、日付 */
-gts_master cl_gts_master( "gts" ,"2.3.0" ,"2016-3-23" );
+gts_master cl_gts_master( "gts" ,"2.3.2" ,"2016-5-17" );
 
 int main( int argc, char **argv )
 {
