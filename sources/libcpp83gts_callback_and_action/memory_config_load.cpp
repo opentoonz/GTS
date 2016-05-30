@@ -11,7 +11,7 @@
 
 int memory_config::_chk_ON_OFF( char *cp_scan )
 {
-	if (!strcmp( this->_ccp_on, cp_scan ) ) {
+	if (!strcmp( this->str_on_, cp_scan ) ) {
 		return 1;
 	}
 	return 0;
@@ -79,17 +79,17 @@ std::cout << std::endl;
 			continue;
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_LEVEL_DIR )) {
+		!strcmp( ca_scan1, this->str_level_dir_ )) {
 			cl_gts_master.cl_bro_level.init_level_dir(ca_scan2);
 			i_level_list_redisplay_sw = ON;
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_LEVEL_FILE )) {
+		!strcmp( ca_scan1, this->str_level_file_ )) {
 			cl_gts_master.cl_bro_level.level_filename_memory(ca_scan2);
 			cl_gts_gui.strinp_level_file->value(ca_scan2);
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_LEVEL_LIST_FORM )) {
+		!strcmp( ca_scan1, this->str_level_list_form_ )) {
 			cl_gts_gui.choice_level_list_form->value(
 				atoi(ca_scan2));
 
@@ -105,18 +105,18 @@ std::cout << std::endl;
 		 }
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_LEVEL_NUM_START )) {
+		!strcmp( ca_scan1, this->str_level_num_start_ )) {
 			cl_gts_gui.valinp_level_start->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_LEVEL_NUM_END )) {
+		!strcmp( ca_scan1, this->str_level_num_end_ )) {
 			cl_gts_gui.valinp_level_end->value(
 				atof(ca_scan2));
 		}
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_LEVEL_RGB_SCAN_DIR )) {
+		!strcmp( ca_scan1, this->str_level_rgb_scan_dir_ )) {
 			cl_gts_gui.filinp_level_rgb_scan_dir->value(
 				ca_scan2);
 			cl_gts_gui.filinp_level_rgb_scan_dir->position(
@@ -126,31 +126,39 @@ std::cout << std::endl;
 			i_level_list_redisplay_sw = ON;
 		}
 		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,STR_LEVEL_RGB_TRACE_SAVE_SW)) {
+		!strcmp(ca_scan1,this->str_level_rgb_trace_save_sw_)) {
 			cl_gts_gui.chkbtn_level_trace_save_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);
+		}
+		else if ((2 == i_ret) &&
+		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
+			const int idx =
+	cl_gts_gui.choice_level_image_file_format->find_index(ca_scan2);
+			if (idx != -1) {
+				cl_gts_gui.choice_level_image_file_format->value(idx);
+			}
 		}
 
 		/*------------------------------------------------*/
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_SELECT )) {
+		!strcmp( ca_scan1, this->str_area_select_ )) {
 		 cl_gts_gui.choice_area_selecter->value(
 		  cl_gts_gui.choice_area_selecter->find_item(ca_scan2)
 		 );
 		 cl_gts_master.cb_area_selecter();
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_X_POS )) {
+		!strcmp( ca_scan1, this->str_area_x_pos_ )) {
 		 cl_gts_gui.valinp_area_x_pos->value(atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_Y_POS )) {
+		!strcmp( ca_scan1, this->str_area_y_pos_ )) {
 		 cl_gts_gui.valinp_area_y_pos->value(atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_ASPECT_RATIO_SELECT )) {
+		!strcmp( ca_scan1, this->str_area_aspect_ratio_select_ )) {
 		 const Fl_Menu_Item *item =
 		  cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
 		   ca_scan2);
@@ -166,30 +174,30 @@ std::cout
 		 }
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_X_SIZE )) {
+		!strcmp( ca_scan1, this->str_area_x_size_ )) {
 		 cl_gts_gui.valinp_area_x_size->value(atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_Y_SIZE )) {
+		!strcmp( ca_scan1, this->str_area_y_size_ )) {
 		 cl_gts_gui.valinp_area_y_size->value(atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_X_PIXEL )) {
+		!strcmp( ca_scan1, this->str_area_x_pixel_ )) {
 			cl_gts_gui.valinp_area_x_pixel->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_Y_PIXEL )) {
+		!strcmp( ca_scan1, this->str_area_y_pixel_ )) {
 			cl_gts_gui.valinp_area_y_pixel->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_AREA_RESOLUTION_DPI )) {
+		!strcmp( ca_scan1, this->str_area_resolution_dpi_ )) {
 			cl_gts_gui.valinp_area_reso->value(atof(ca_scan2));
 		}
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_ROTATE_PER_90 )) {
+		!strcmp( ca_scan1, this->str_rotate_per_90_ )) {
 			cl_gts_gui.choice_rot90->value(atoi(ca_scan2));
 
 			/* 回転値(システム設定値)をメモリする */
@@ -197,23 +205,23 @@ std::cout
 				cl_gts_gui.choice_rot90->value() );
 		}
 
-		else if (!strcmp( ca_scan1, STR_SCANNER_TYPE )) {
+		else if (!strcmp( ca_scan1, this->str_scanner_type_ )) {
 			/* 空白ある文字列を考慮 */
 			cl_gts_gui.txtout_scanner_type->value(ca_scan2);
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_SCANNER_X_MAX )) {
+		!strcmp( ca_scan1, this->str_scanner_x_max_ )) {
 			cl_gts_gui.valout_scanner_width_max->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_SCANNER_Y_MAX )) {
+		!strcmp( ca_scan1, this->str_scanner_y_max_ )) {
 			cl_gts_gui.valout_scanner_height_max->value(
 				atof(ca_scan2));
 		}
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_PIXEL_TYPE )) {
+		!strcmp( ca_scan1, this->str_pixel_type_ )) {
 			cl_gts_gui.choice_pixel_type->value(
 				atoi(ca_scan2));
 			switch (cl_gts_gui.choice_pixel_type->value()) {
@@ -236,7 +244,7 @@ std::cout
 		}
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_BW_THRESHOLD )) {
+		!strcmp( ca_scan1, this->str_bw_threshold_ )) {
 			cl_gts_gui.valinp_bw_threshold->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_bw_threshold)->value(
@@ -244,21 +252,21 @@ std::cout
 		}
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_GRAYS_BRIGHTNESS )) {
+		!strcmp( ca_scan1, this->str_grayscale_brightness_ )) {
 			cl_gts_gui.valinp_grays_brightness->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_grays_brightness)->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_GRAYS_CONTRAST )) {
+		!strcmp( ca_scan1, this->str_grayscale_contrast_ )) {
 			cl_gts_gui.valinp_grays_contrast->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_grays_contrast)->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_GRAYS_GAMMA )) {
+		!strcmp( ca_scan1, this->str_grayscale_gamma_ )) {
 			cl_gts_gui.valinp_grays_gamma->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_grays_gamma)->value(
@@ -266,21 +274,21 @@ std::cout
 		}
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_RGB_BRIGHTNESS )) {
+		!strcmp( ca_scan1, this->str_rgb_brightness_ )) {
 			cl_gts_gui.valinp_rgb_brightness->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_brightness)->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_RGB_CONTRAST )) {
+		!strcmp( ca_scan1, this->str_rgb_contrast_ )) {
 			cl_gts_gui.valinp_rgb_contrast->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_contrast)->value(
 				atof(ca_scan2));
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_RGB_GAMMA )) {
+		!strcmp( ca_scan1, this->str_rgb_gamma_ )) {
 			cl_gts_gui.valinp_rgb_gamma->value(
 				atof(ca_scan2));
 	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_gamma)->value(
@@ -290,13 +298,13 @@ std::cout
 		/*-- other ---*/
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_COLOR_TRACE_ERASE_1DOT )) {
+		!strcmp( ca_scan1, this->str_color_trace_erase_1dot_ )) {
 			 cl_gts_gui.chkbtn_color_trace_erase_1dot->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_COLOR_TRACE_REAL_TIME )) {
+		!strcmp( ca_scan1, this->str_color_trace_real_time_ )) {
 			 cl_gts_gui.chkbtn_color_trace_real_time->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);
@@ -305,17 +313,17 @@ std::cout
 		/*------------------------------------------------*/
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_CONFIG_DIR )) {
+		!strcmp( ca_scan1, this->str_config_dir_ )) {
 			cl_gts_master.cl_bro_config.init_config_dir(
 				ca_scan2);
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_CONFIG_LOAD_FILE )) {
+		!strcmp( ca_scan1, this->str_config_load_file_ )) {
 			cl_gts_gui.strinp_config_load_file->value(
 				ca_scan2);
 		}
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, STR_CONFIG_SAVE_AS_FILE )) {
+		!strcmp( ca_scan1, this->str_config_save_as_file_ )) {
 			cl_gts_gui.strinp_config_save_as_file->value(
 				ca_scan2);
 		}
@@ -323,7 +331,7 @@ std::cout
 		/*------------------------------------------------*/
 
 		else if (((2==i_ret) || (3==i_ret) || (4==i_ret)) &&
-		!strcmp( ca_scan1, STR_FRAME_NUMBER_LIST)) {
+		!strcmp( ca_scan1, this->str_frame_number_list_)) {
 			/* ファイル番号リストの一番始めにやること */
 			if (OFF == i_fnum_list_sw) {
 			 /* ファイル番号リストの存在の有無 */
@@ -339,8 +347,8 @@ std::cout
 
 			/* 選択状態の再現 */
 			if (
-			!strcmp( ca_scan3,STR_FRAME_NUMBER_SELECTED ) ||
-			!strcmp( ca_scan4,STR_FRAME_NUMBER_SELECTED )
+			!strcmp( ca_scan3,this->str_frame_number_selected_ ) ||
+			!strcmp( ca_scan4,this->str_frame_number_selected_ )
 			) {
 				cl_gts_gui.selbro_fnum_list->select(
 				 cl_gts_gui.selbro_fnum_list->size());
@@ -350,14 +358,14 @@ std::cout
 		/*------------------------------------------------*/
 
 		else if ( (2 == i_ret) &&
-		!strcmp( ca_scan1, STR_TRACE_BATCH_DIR )) {
+		!strcmp( ca_scan1, this->str_trace_batch_dir_ )) {
 			if (ON != i_load_trace_batch_sw) { continue; }
 
 			cl_gts_master.cl_bro_trace_batch.init_trace_batch_dir(ca_scan2);
 		}
 
 		else if ( ((2==i_ret) || (3==i_ret)) &&
-		!strcmp( ca_scan1, STR_TRACE_BATCH_LIST)) {
+		!strcmp( ca_scan1, this->str_trace_batch_list_)) {
 			if (ON != i_load_trace_batch_sw) { continue; }
 
 			/* ファイル番号リストの一番始めにやること */
@@ -434,19 +442,20 @@ std::cout
 
 	return OK;
 }
-int memory_config::load( char *cp_file_path, int i_load_trace_batch_sw )
+int memory_config::load( const char *cp_file_path, int i_load_trace_batch_sw )
 {
 	FILE *fp;
+	char current_path[PTBL_PATH_MAX];
 
 	/* ファイル名の一時記憶 */
-	strncpy( this->_ca_current_path,cp_file_path,PTBL_PATH_MAX );
-	this->_ca_current_path[PTBL_PATH_MAX-1] = '\0';
+	strncpy( current_path,cp_file_path,PTBL_PATH_MAX );
+	current_path[PTBL_PATH_MAX-1] = '\0';
 
 	/* ファイル開く */
-	fp = fopen( this->_ca_current_path, "r" );
+	fp = fopen( current_path, "r" );
 	if (NULL == fp) {
 		pri_funct_err_bttvr(
-		"fopen(%s,r) returns NULL.",this->_ca_current_path);
+		"fopen(%s,r) returns NULL.",current_path);
 		return NG;
 	} 
 
@@ -464,7 +473,7 @@ int memory_config::load( char *cp_file_path, int i_load_trace_batch_sw )
 	}
 
 	/* 正常に設定したなら、ファイル名の記憶 */
-	strcpy( this->_ca_memory_path, this->_ca_current_path );
+	this->memory_of_path = current_path;
 
 	/* ファイル名を表示する */
 	cl_gts_master._print_window_headline();

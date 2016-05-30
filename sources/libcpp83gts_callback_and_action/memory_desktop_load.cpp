@@ -6,7 +6,6 @@
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"
 #include "memory_desktop.h"
-#include "memory_config.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
