@@ -136,7 +136,9 @@ std::cout << std::endl;
 			const int idx =
 	cl_gts_gui.choice_level_image_file_format->find_index(ca_scan2);
 			if (idx != -1) {
-				cl_gts_gui.choice_level_image_file_format->value(idx);
+ cl_gts_gui.choice_level_image_file_format->value(idx);
+ /* 必ずchoice_level_image_file_format->value(idx)の後で実行すること */
+ cl_gts_master.cl_bro_level.cb_set_image_file_extension();
 			}
 		}
 
