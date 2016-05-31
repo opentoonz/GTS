@@ -2331,14 +2331,14 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 515, 380, 50);
-      { filinp_level_rgb_scan_dir = new Fl_File_Input(0, 530, 125, 35, "RGB scan dir");
+      { filinp_level_rgb_scan_dir = new Fl_File_Input(0, 530, 135, 35, "RGB scan dir");
         filinp_level_rgb_scan_dir->callback((Fl_Callback*)cb_filinp_level_rgb_scan_dir);
         filinp_level_rgb_scan_dir->align(Fl_Align(FL_ALIGN_TOP_LEFT));
         filinp_level_rgb_scan_dir->when(FL_WHEN_CHANGED);
         filinp_level_rgb_scan_dir->deactivate();
         Fl_Group::current()->resizable(filinp_level_rgb_scan_dir);
       } // Fl_File_Input* filinp_level_rgb_scan_dir
-      { chkbtn_level_rgb_trace_save_sw = new Fl_Check_Button(125, 545, 70, 20, "S.Trace");
+      { chkbtn_level_rgb_trace_save_sw = new Fl_Check_Button(135, 545, 60, 20, "S.C.T.");
         chkbtn_level_rgb_trace_save_sw->tooltip("Save Color Trace level");
         chkbtn_level_rgb_trace_save_sw->down_box(FL_DOWN_BOX);
       } // Fl_Check_Button* chkbtn_level_rgb_trace_save_sw
