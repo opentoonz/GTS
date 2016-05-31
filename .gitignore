@@ -36,5 +36,5 @@ thirdparty/fltk/
 thirdparty/libtiff/
 thirdparty/twain/
 
-#
+# other
 tests/

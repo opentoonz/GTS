@@ -127,9 +127,25 @@ std::cout << std::endl;
 		}
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_rgb_trace_save_sw_)) {
-			cl_gts_gui.chkbtn_level_trace_save_sw->value(
+			 cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
-			);
+			 );
+		}
+		else if ((2 == i_ret) &&
+		!strcmp(ca_scan1,this->str_level_rgb_full_save_sw_)) {
+			 cl_gts_gui.chkbtn_level_rgb_full_save_sw->value(
+				this->_chk_ON_OFF( ca_scan2 )
+			 );
+		}
+		else if ((2 == i_ret) &&
+		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
+			const int idx =
+	cl_gts_gui.choice_level_image_file_format->find_index(ca_scan2);
+			if (idx != -1) {
+ cl_gts_gui.choice_level_image_file_format->value(idx);
+ /* 必ずchoice_level_image_file_format->value(idx)の後で実行すること */
+ cl_gts_master.cl_bro_level.cb_set_image_file_extension();
+			}
 		}
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
