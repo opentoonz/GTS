@@ -147,14 +147,6 @@ std::cout << std::endl;
  cl_gts_master.cl_bro_level.cb_set_image_file_extension();
 			}
 		}
-		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
-			const int idx =
-	cl_gts_gui.choice_level_image_file_format->find_index(ca_scan2);
-			if (idx != -1) {
-				cl_gts_gui.choice_level_image_file_format->value(idx);
-			}
-		}
 
 		/*------------------------------------------------*/
 

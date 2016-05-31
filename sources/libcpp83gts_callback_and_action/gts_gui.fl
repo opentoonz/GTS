@@ -523,7 +523,7 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           }
         }
       }
-      Fl_Group {} {
+      Fl_Group {} {open
         xywh {0 425 380 25}
       } {
         Fl_Box {} {
