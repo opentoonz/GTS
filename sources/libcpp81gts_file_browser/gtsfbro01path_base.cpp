@@ -17,7 +17,7 @@ const char *gtsfbro01path_base::ccp_num4_and_ext(const char *ccp_file)
 	/* ".0000.tif"は9文字 */
 	t_len = strlen(ccp_file);
 	if (	(9 < t_len) &&
-		(0 == strcmp(	this->ccp_image_file_ext(),
+		(0 == strcmp(	this->get_imagefile_extension(),
 				&(ccp_file[t_len-4]) )) &&
 		isdigit(ccp_file[t_len-5]) &&
 		isdigit(ccp_file[t_len-6]) &&
@@ -412,4 +412,31 @@ char *gtsfbro01path_base::cp_memory( void )
 {
 	/* nullパス("")の場合もあり */
 	return this->_ca_memory;
+}
+
+
+const char* gtsfbro01path_base::get_imagefile_extension( void ) const
+{
+	return this->imagefile_extensions_.at(
+		this->current_imagefile_extension_
+	).c_str();
+}
+void gtsfbro01path_base::add_imagefile_extension( const std::string& ext )
+{
+	this->imagefile_extensions_.push_back( ext );
+}
+const int gtsfbro01path_base::get_current_imagefile_extension( void ) const
+{
+	return this->current_imagefile_extension_;
+}
+void gtsfbro01path_base::set_current_imagefile_extension( const int current )
+{
+	if (
+	 current < 0 ||
+	 static_cast<int>(this->imagefile_extensions_.size()) <= current
+	) {
+		return;
+	}
+
+	this->current_imagefile_extension_ = current;
 }

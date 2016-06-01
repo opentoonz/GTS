@@ -7,98 +7,78 @@
 
 int gts_master::_print_window_headline( void )
 {
-	char *cp_config_file, *cp_level_head;
-	int i_len;
-	long l_zoom;
-	const char	*ccp_nothing = "nothing";
-	char ca_buf[PTBL_PATH_MAX];
+	const char* nothing_str = "nothing";
 
-	/* configファイル名
-		過去にloadしたconfigファイルで一番最新の名前 */
-	cp_config_file = this->cl_memo_config.cp_memory_path();
-	if (	(NULL != cp_config_file) &&
-		(NULL != strrchr(cp_config_file, '/'))
-	) {
-	 cp_config_file = strrchr( cp_config_file, '/' );
-	 ++cp_config_file;
+	/* configファイル名 過去にloadしたconfigファイルで一番最新の名前 */
+	std::string config_filename( this->cl_memo_config.memory_of_path );
+	if ( !config_filename.empty() ) {
+		auto pos = config_filename.rfind('/');
+		if (std::string::npos != pos) {
+			config_filename.erase( 0 ,pos+1 );
+		}
+	}
+	if (config_filename.empty()) {/* セットできないときはnothing表示 */
+		config_filename = nothing_str;
 	}
 
-	/* 名前がセットできないときはnothing表示 */
-	if (	(NULL == cp_config_file) ||
-		('\0' == cp_config_file[0])
-	) {
-		cp_config_file = (char *)ccp_nothing;
-	}
-
-	/* levelファイル名
-		menuのlevel file名の項目からとって来る */
-	/******if (OK != this->cl_bro_level.i_lpath_cpy_head_means_level(
-		cl_gts_gui.strinp_level_file->value(),ON
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_lpath_cpy_head_means_level(%s,%d) returns NG",
-		cl_gts_gui.strinp_level_file->value(),ON
-		);
-		return NG;
-	}
-	cp_level_head = this->cl_bro_level.cp_path();*********/
-
-	cp_level_head  = this->cl_bro_level.cp_levelname();
-	if (NULL == cp_level_head) {
+	/* level名 */ 
+	if (NULL ==      this->cl_bro_level.cp_levelname()) {
 		pri_funct_err_bttvr(
 		"Error : this->cl_bro_level.cp_levelname() returns NG"
 		);
 		return NG;
 	}
 
-	if (	(NULL == cp_level_head) ||
-		('\0' == cp_level_head[0])
-	) {
-		cp_level_head = (char *)ccp_nothing;
+	std::string level_name(
+		this->cl_bro_level.cp_levelname()
+	);
+	if (level_name.empty()) { /* セットできないときはnothing表示 */
+		level_name = nothing_str;
 	}
 
 	/* zoom値 */
-	l_zoom = this->cl_ogl_view.get_l_zoom();
+	long l_zoom = this->cl_ogl_view.get_l_zoom();
 
-	i_len = strlen(cl_gts_master.cp_release_name());
+	int i_len = strlen(cl_gts_master.cp_release_name());
 	i_len += strlen( "-0000  " );
 	i_len += strlen( "Config " );
-	i_len += strlen(cp_config_file);
+	i_len += config_filename.length();
 	i_len += strlen( "  Level " );
-	i_len += strlen(cp_level_head);
+	i_len += level_name.length();
 	i_len += strlen( "  Zoom " );
 	i_len += 3L;
 	if (PTBL_PATH_MAX <= i_len) { /* 大きすぎ */
 		pri_funct_err_bttvr(
 		"Error : too long<%d> directroy path<%s%s%s%s%sx%ld>",
 			i_len,
-			"Config ", cp_config_file,
-			"  Level ", cp_level_head,
+			"Config ", config_filename.c_str(),
+			"  Level ", level_name.c_str(),
 			"  Zoom ", l_zoom );
 		return NG;
 	}
 
+	char ca_buf[PTBL_PATH_MAX];
 	if (0L == l_zoom) {
 		(void)sprintf( ca_buf,
 			"%s-%s  Config %s  Level %s",
 			cl_gts_master.cp_release_name(),
 			cl_gts_master.cp_release_number(),
-			cp_config_file, cp_level_head);
+			config_filename.c_str(), level_name.c_str());
 	} else if (0L < l_zoom) {
 		(void)sprintf( ca_buf,
 			"%s-%s  Config %s  Level %s  Zoom x%ld",
 			cl_gts_master.cp_release_name(),
 			cl_gts_master.cp_release_number(),
-			cp_config_file, cp_level_head, l_zoom);
+			config_filename.c_str(), level_name.c_str(), l_zoom);
 	} else {
 		(void)sprintf( ca_buf,
 			"%s-%s  Config %s  Level %s  Zoom x1/%ld",
 			cl_gts_master.cp_release_name(),
 			cl_gts_master.cp_release_number(),
-			cp_config_file, cp_level_head, -l_zoom);
+			config_filename.c_str(), level_name.c_str(), -l_zoom);
 	}
 
 	cl_gts_gui.window_opengl->label(ca_buf);
 
-	return OK; 
+	return OK;
 }

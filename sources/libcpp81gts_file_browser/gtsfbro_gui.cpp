@@ -620,7 +620,7 @@ Fl_Double_Window* gts_gui::make_window() {
         o->deactivate();
         Fl_Group::current()->resizable(o);
       }
-      { Fl_Check_Button* o = chkbtn_level_trace_save_sw = new Fl_Check_Button(165, 515, 55, 20, "S.C.T.");
+      { Fl_Check_Button* o = chkbtn_level_rgb_trace_save_sw = new Fl_Check_Button(165, 515, 55, 20, "S.C.T.");
         o->tooltip("Save Color Trace level");
         o->down_box(FL_DOWN_BOX);
       }
