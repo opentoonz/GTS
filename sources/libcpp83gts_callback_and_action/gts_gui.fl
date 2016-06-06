@@ -151,6 +151,15 @@ cl_gts_master.cb_quit();}
 }}
             xywh {0 0 100 20} type Toggle
           }
+          MenuItem menite_thickness {
+            label {Thickness...}
+            callback {if (cl_gts_gui.menite_thickness->value()) {
+    cl_gts_gui.window_thickness->show();
+} else {
+    cl_gts_gui.window_thickness->hide();
+}}
+            xywh {0 0 30 20} type Toggle
+          }
         }
         Submenu {} {
           label Channels
@@ -406,8 +415,8 @@ fl_message( ost.str().c_str() );}
     }
     Fl_Window window_level {
       label {Browse Level}
-      callback {cl_gts_master.cl_bro_level.cb_cancel();} open
-      xywh {-917 -296 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
+      callback {cl_gts_master.cl_bro_level.cb_cancel();}
+      xywh {50 50 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -1027,8 +1036,8 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();} selected
-      xywh {50 50 80 350} type Double resizable non_modal visible
+cl_gts_gui.menite_fnum_list->clear();}
+      xywh {50 50 116 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 80 25}
@@ -1073,7 +1082,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
       callback {cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_color_trace->clear();}
+cl_gts_gui.menite_color_trace->clear();} open
       xywh {50 50 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
@@ -1086,8 +1095,12 @@ cl_gts_gui.menite_color_trace->clear();}
         Fl_Check_Button chkbtn_color_trace_01_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_01grp->activate();
+    cl_gts_gui.chkbtn_thickness_01_chk->value(1);
+    cl_gts_gui.group_thickness_01grp->activate();
 } else {
     cl_gts_gui.group_color_trace_01grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_01_chk->value(0);
+    cl_gts_gui.group_thickness_01grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 10 20 20} down_box DOWN_BOX value 1
@@ -1886,6 +1899,77 @@ cl_gts_master.cb_color_trace_tgt_edit_rgb();}
       }
       Fl_Output norout_next_scan_number {
         xywh {180 40 145 60} align 6 textsize 60
+      }
+    }
+    Fl_Window window_thickness {
+      label Thickness open
+      xywh {-880 250 300 120} type Double non_modal visible
+    } {
+      Fl_Group {} {open
+        xywh {5 10 320 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_01_chk {
+          label 1
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_01grp->activate();
+    cl_gts_gui.chkbtn_color_trace_01_chk->value(1);
+    cl_gts_gui.group_thickness_01grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_01grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_01_chk->value(0);
+    cl_gts_gui.group_thickness_01grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 10 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_01grp {open
+          xywh {35 10 290 20}
+        } {
+          Fl_Choice choice_thickness_01_tgt_src_preset {open
+            xywh {35 10 45 20} down_box BORDER_BOX
+          } {
+            MenuItem {} {
+              label BL
+              xywh {0 0 30 20}
+            }
+            MenuItem {} {
+              label R
+              xywh {0 0 30 20}
+            }
+            MenuItem {} {
+              label G
+              xywh {0 0 30 20}
+            }
+            MenuItem {} {
+              label B
+              xywh {0 0 30 20}
+            }
+          }
+          Fl_Scrollbar scrbar_thickness_01 {
+            callback {// Rewrite for Switching color trace number
+valinp_thickness_01->value(((Fl_Valuator *)o)->value());
+valinp_color_trace_01_src_hh_min->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();}
+            xywh {85 10 140 20} type Horizontal box BORDER_BOX align 4 maximum 100
+          }
+          Fl_Value_Input valinp_thickness_01 {
+            callback {// Rewrite for Switching color trace number
+((Fl_Valuator *)scrbar_thickness_01)->value(o->value());
+valinp_color_trace_01_src_hh_min->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();}
+            xywh {230 10 35 20} box BORDER_BOX align 8 maximum 100
+          }
+          Fl_Button button_thickness_01_src {
+            label src
+            callback {cl_gts_master.cb_color_trace_src_open_01();}
+            xywh {270 10 25 20} align 21
+          }
+        }
+      }
+      Fl_Scrollbar {} {selected
+        xywh {85 35 140 20} type Horizontal maximum 100
       }
     }
   }

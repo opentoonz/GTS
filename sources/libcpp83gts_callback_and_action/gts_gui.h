@@ -93,6 +93,11 @@ public:
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_thickness;
+private:
+  inline void cb_menite_thickness_i(Fl_Menu_*, void*);
+  static void cb_menite_thickness(Fl_Menu_*, void*);
   inline void cb_FullColor_i(Fl_Menu_*, void*);
   static void cb_FullColor(Fl_Menu_*, void*);
   inline void cb_Red_i(Fl_Menu_*, void*);
@@ -1056,6 +1061,29 @@ public:
   Fl_Output *norout_crnt_scan_level;
   Fl_Output *norout_crnt_scan_number;
   Fl_Output *norout_next_scan_number;
+  Fl_Double_Window *window_thickness;
+  Fl_Check_Button *chkbtn_thickness_01_chk;
+private:
+  inline void cb_chkbtn_thickness_01_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_01_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_01grp;
+  Fl_Choice *choice_thickness_01_tgt_src_preset;
+  static Fl_Menu_Item menu_choice_thickness_01_tgt_src_preset[];
+  Fl_Scrollbar *scrbar_thickness_01;
+private:
+  inline void cb_scrbar_thickness_01_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_01(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_01;
+private:
+  inline void cb_valinp_thickness_01_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_01(Fl_Value_Input*, void*);
+public:
+  Fl_Button *button_thickness_01_src;
+private:
+  inline void cb_button_thickness_01_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_01_src(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif
