@@ -1,6 +1,9 @@
 #
 browser_directory_path "C:\"
 #
+# TIFF/TGA
+image_file_format	TIFF
+#
 # Short Cut Key for "Next Scan" (Space,"",Enter,Esc only)
 short_cut_key_start_scan	Enter
 short_cut_key_rescan		Space

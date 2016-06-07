@@ -68,6 +68,7 @@ gtsfbro06cb_level_rename_level_tif.cpp\
 gtsfbro06cb_level_renumber.cpp\
 gtsfbro06cb_level_renumber_level_tif.cpp\
 gtsfbro06cb_level_rgb_scan_dir.cpp\
+gtsfbro06cb_level_set_image_file_ext.cpp\
 gtsfbro06cb_level_wintgl.cpp\
 gtsfbro06cb_level_x1view.cpp\
 gtsfbro06cb_trace_batch_add.cpp\
