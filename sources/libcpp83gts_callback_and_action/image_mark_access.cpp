@@ -206,6 +206,11 @@ void image_mark_access::append_fnum_list_with_chk_mark( int i_file_num )
 		cl_gts_gui.selbro_fnum_list->size()+1,
 		ca8_tmp
 	);
+
+	// GUI Scroll
+	cl_gts_gui.selbro_fnum_list->middleline(
+		cl_gts_gui.selbro_fnum_list->size()
+	);
 }
 
 /* 指定のファイル番号の範囲で、リストを設定し
