@@ -36,199 +36,230 @@ int memory_config::_save_comment_by_fp( FILE *fp )
 	return OK;
 }
 
-int memory_config::_save_by_fp( FILE *fp )
+int memory_config::_save_config_by_fp( FILE *fp )
 {
 	int i_ret;
 
-	/*------------------------------------------------*/
 	/* config loadとsave saとsaveは同じdirを示す */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_CONFIG_DIR,
+			this->str_config_dir_,
 		cl_gts_gui.filinp_config_load_dir->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_CONFIG_LOAD_FILE,
+			this->str_config_load_file_,
 		cl_gts_gui.strinp_config_load_file->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_CONFIG_SAVE_AS_FILE,
+			this->str_config_save_as_file_,
 		cl_gts_gui.strinp_config_save_as_file->value() );
 	if (i_ret < 0) { return NG; }
 
-	/*------------------------------------------------*/
+	return OK;
+}
+
+int memory_config::_save_level_by_fp( FILE *fp )
+{
+	int i_ret;
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_LEVEL_DIR,
+			this->str_level_dir_,
 		cl_gts_gui.filinp_level_dir->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %d\n",
-			STR_LEVEL_LIST_FORM,
+			this->str_level_list_form_,
 		cl_gts_gui.choice_level_list_form->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_LEVEL_FILE,
+			this->str_level_file_,
 		cl_gts_gui.strinp_level_file->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_LEVEL_NUM_START,
+			this->str_level_num_start_,
 		cl_gts_gui.valinp_level_start->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_LEVEL_NUM_END,
+			this->str_level_num_end_,
 		cl_gts_gui.valinp_level_end->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %s\n",
-			STR_LEVEL_RGB_TRACE_SAVE_SW,
-			cl_gts_gui.chkbtn_level_trace_save_sw->value()?
-			this->_ccp_on:this->_ccp_off );
+			this->str_level_rgb_trace_save_sw_,
+		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value()?
+			this->str_on_:this->str_off_ );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-24s %s\n",
+			this->str_level_rgb_full_save_sw_,
+		cl_gts_gui.chkbtn_level_rgb_full_save_sw->value()?
+			this->str_on_:this->str_off_ );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_LEVEL_RGB_SCAN_DIR,
+			this->str_level_rgb_scan_dir_,
 		cl_gts_gui.filinp_level_rgb_scan_dir->value() );
 	if (i_ret < 0) { return NG; }
 
-	/*------------------------------------------------*/
+	const Fl_Menu_Item &item = 
+	 cl_gts_gui.choice_level_image_file_format->menu()[
+	  cl_gts_gui.choice_level_image_file_format->value()
+	 ];
+	i_ret = fprintf(fp, "%-24s \"%s\"\n",
+			this->str_level_image_file_format_,
+			item.label() );
+	if (i_ret < 0) { return NG; }
+
+	return OK;
+}
+
+int memory_config::_save_area_by_fp( FILE *fp )
+{
+	int i_ret;
 
 	i_ret = fprintf(fp, "%-24s %s\n",
-			STR_AREA_SELECT,
+			this->str_area_select_,
 		cl_gts_gui.choice_area_selecter->text()
 	);
 	if (i_ret < 0) { return NG; }
 
-	/* Default(Custom)のときはエリア値を保存 */
-	//if (0 == cl_gts_gui.choice_area_selecter->value()) {
-
-	/* Presetのときも、マウスドラッグやRotateでエリア値は変化する
-	のですべての値は保存し再現する2014-03-18 */
-
 		i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_X_POS,
+			this->str_area_x_pos_,
 			cl_gts_gui.valinp_area_x_pos->value() );
 		if (i_ret < 0) { return NG; }
 
 		i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_Y_POS,
+			this->str_area_y_pos_,
 			cl_gts_gui.valinp_area_y_pos->value() );
 		if (i_ret < 0) { return NG; }
 
 		i_ret = fprintf(fp, "%-24s %s\n",
-				STR_AREA_ASPECT_RATIO_SELECT,
+				this->str_area_aspect_ratio_select_,
 			cl_gts_gui.choice_area_aspect_ratio_selecter->text()
 		);
 		if (i_ret < 0) { return NG; }
 
 		i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_X_SIZE,
+			this->str_area_x_size_,
 			cl_gts_gui.valinp_area_x_size->value() );
 		if (i_ret < 0) { return NG; }
 
 		i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_Y_SIZE,
+			this->str_area_y_size_,
 			cl_gts_gui.valinp_area_y_size->value() );
 		if (i_ret < 0) { return NG; }
-	//}
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_X_PIXEL,
+			this->str_area_x_pixel_,
 		cl_gts_gui.valinp_area_x_pixel->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_Y_PIXEL,
+			this->str_area_y_pixel_,
 		cl_gts_gui.valinp_area_y_pixel->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_AREA_RESOLUTION_DPI,
+			this->str_area_resolution_dpi_,
 		cl_gts_gui.valinp_area_reso->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %d\n",
-			STR_ROTATE_PER_90,
+			this->str_rotate_per_90_,
 		cl_gts_gui.choice_rot90->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_SCANNER_TYPE,
+			this->str_scanner_type_,
 		cl_gts_gui.txtout_scanner_type->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_SCANNER_X_MAX,
+			this->str_scanner_x_max_,
 		cl_gts_gui.valout_scanner_width_max->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_SCANNER_Y_MAX,
+			this->str_scanner_y_max_,
 		cl_gts_gui.valout_scanner_height_max->value() );
 	if (i_ret < 0) { return NG; }
 
+	return OK;
+}
+
+int memory_config::_save_pixel_type_by_fp( FILE *fp )
+{
+	int i_ret;
+
 	i_ret = fprintf(fp, "%-24s %d\n",
-			STR_PIXEL_TYPE,
+			this->str_pixel_type_,
 		cl_gts_gui.choice_pixel_type->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_BW_THRESHOLD,
+			this->str_bw_threshold_,
 		cl_gts_gui.valinp_bw_threshold->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_GRAYS_BRIGHTNESS,
+			this->str_grayscale_brightness_,
 		cl_gts_gui.valinp_grays_brightness->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_GRAYS_CONTRAST,
+			this->str_grayscale_contrast_,
 		cl_gts_gui.valinp_grays_contrast->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_GRAYS_GAMMA,
+			this->str_grayscale_gamma_,
 		cl_gts_gui.valinp_grays_gamma->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_RGB_BRIGHTNESS,
+			this->str_rgb_brightness_,
 		cl_gts_gui.valinp_rgb_brightness->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_RGB_CONTRAST,
+			this->str_rgb_contrast_,
 		cl_gts_gui.valinp_rgb_contrast->value() );
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",
-			STR_RGB_GAMMA,
+			this->str_rgb_gamma_,
 		cl_gts_gui.valinp_rgb_gamma->value() );
 	if (i_ret < 0) { return NG; }
+
+	return OK;
+}
+
+int memory_config::_save_trace_by_fp( FILE *fp )
+{
+	int i_ret;
 
 	/*- color trace window other ----*/
 
 	i_ret = fprintf(fp, "%-24s %s\n",
-			STR_COLOR_TRACE_ERASE_1DOT,
+			this->str_color_trace_erase_1dot_,
 			cl_gts_gui.chkbtn_color_trace_erase_1dot->value()?
-			this->_ccp_on:this->_ccp_off);
+			this->str_on_:this->str_off_);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %s\n",
-			STR_COLOR_TRACE_REAL_TIME,
+			this->str_color_trace_real_time_,
 			cl_gts_gui.chkbtn_color_trace_real_time->value()?
-			this->_ccp_on:this->_ccp_off);
+			this->str_on_:this->str_off_);
 	if (i_ret < 0) { return NG; }
 
 	/*------------------------------------------------*/
 
 	/******i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_FRAME_NUMBER_INSERT,
+			this->str_frame_number_insert_,
 		cl_gts_gui.norinp_fnum_insert->value() );
 	if (i_ret < 0) { return NG; }**********/
 
@@ -245,13 +276,13 @@ int memory_config::_save_fnum_by_fp( FILE *fp )
 	/* リストを全てサーチ */
 	for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
 		i_ret = fprintf(fp, "%s %s",
-			STR_FRAME_NUMBER_LIST,
+			this->str_frame_number_list_,
 			cl_gts_gui.selbro_fnum_list->text(ii) );
 		if (i_ret < 0) { return NG; }
 
 		if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
 			i_ret = fprintf(fp, " %s\n",
-				STR_FRAME_NUMBER_SELECTED );
+				this->str_frame_number_selected_ );
 		} else {
 			i_ret = fprintf(fp, "\n");
 		}
@@ -267,7 +298,7 @@ int memory_config::_save_trace_batch_by_fp( FILE *fp )
 	int ii;
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			STR_TRACE_BATCH_DIR,
+			this->str_trace_batch_dir_,
 		cl_gts_gui.filinp_trace_batch_dir->value() );
 	if (i_ret < 0) { return NG; }
 
@@ -275,7 +306,7 @@ int memory_config::_save_trace_batch_by_fp( FILE *fp )
 	for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();
 	++ii) {
 		i_ret = fprintf(fp, "%s \"%s\"\n",
-			STR_TRACE_BATCH_LIST,
+			this->str_trace_batch_list_,
 			cl_gts_gui.selbro_trace_batch_run_list->text(ii) );
 		if (i_ret < 0) { return NG; }
 	}
@@ -283,19 +314,20 @@ int memory_config::_save_trace_batch_by_fp( FILE *fp )
 	return OK;
 }
 
-int memory_config::save( char *cp_file_path )
+int memory_config::save( const char *cp_file_path )
 {
 	FILE *fp;
+	char current_path[PTBL_PATH_MAX];
 
 	/* ファイル名の一時記憶 */
-	strncpy( this->_ca_current_path,cp_file_path,PTBL_PATH_MAX );
-	this->_ca_current_path[PTBL_PATH_MAX-1] = '\0';
+	strncpy( current_path,cp_file_path,PTBL_PATH_MAX );
+	current_path[PTBL_PATH_MAX-1] = '\0';
 
 	/* ファイル開く */
-	fp = fopen( this->_ca_current_path, "w" );
+	fp = fopen( current_path, "w" );
 	if (NULL == fp) {
 		pri_funct_err_bttvr(
-		"fopen(%s,w) returns NULL.",this->_ca_current_path);
+		"fopen(%s,w) returns NULL.",current_path);
 		return NG;
 	} 
 	/* ファイルに設定保存 */
@@ -304,9 +336,29 @@ int memory_config::save( char *cp_file_path )
 	"memory_config::_save_comment_by_fp(-) returns NG.");
 		return NG;
 	}
-	if (OK != this->_save_by_fp( fp )) {
+	if (OK != this->_save_config_by_fp( fp )) {
 		pri_funct_err_bttvr(
-	"memory_config::_save_by_fp(-) returns NG.");
+	"memory_config::_save_config_by_fp(-) returns NG.");
+		return NG;
+	}
+	if (OK != this->_save_level_by_fp( fp )) {
+		pri_funct_err_bttvr(
+	"memory_config::_save_level_by_fp(-) returns NG.");
+		return NG;
+	}
+	if (OK != this->_save_area_by_fp( fp )) {
+		pri_funct_err_bttvr(
+	"memory_config::_save_area_by_fp(-) returns NG.");
+		return NG;
+	}
+	if (OK != this->_save_pixel_type_by_fp( fp )) {
+		pri_funct_err_bttvr(
+	"memory_config::_save_pixel_type_by_fp(-) returns NG.");
+		return NG;
+	}
+	if (OK != this->_save_trace_by_fp( fp )) {
+		pri_funct_err_bttvr(
+	"memory_config::_save_trace_by_fp(-) returns NG.");
 		return NG;
 	}
 	if (OK != this->_save_trace_src_hsv_by_fp( fp )) {
@@ -331,7 +383,7 @@ int memory_config::save( char *cp_file_path )
 	}
 
 	/* 正常に設定したなら、ファイル名の記憶 */
-	strcpy( this->_ca_memory_path, this->_ca_current_path );
+	this->memory_of_path = current_path;
 
 	/* ファイル名を表示する */
 	cl_gts_master._print_window_headline();
