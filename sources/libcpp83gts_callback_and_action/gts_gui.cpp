@@ -2347,6 +2347,11 @@ Fl_Double_Window* gts_gui::make_window() {
         chkbtn_level_rgb_full_save_sw->down_box(FL_DOWN_BOX);
         chkbtn_level_rgb_full_save_sw->value(1);
       } // Fl_Check_Button* chkbtn_level_rgb_full_save_sw
+      { chkbtn_level_rgb_with_full_sw = new Fl_Check_Button(195, 523, 75, 20, "With_full");
+        chkbtn_level_rgb_with_full_sw->tooltip("With _full in RGB full name");
+        chkbtn_level_rgb_with_full_sw->down_box(FL_DOWN_BOX);
+        chkbtn_level_rgb_with_full_sw->value(1);
+      } // Fl_Check_Button* chkbtn_level_rgb_with_full_sw
       { ligbut_level_rgb_scan_browse_sw = new Fl_Light_Button(255, 540, 70, 25, "Browse");
         ligbut_level_rgb_scan_browse_sw->callback((Fl_Callback*)cb_ligbut_level_rgb_scan_browse_sw);
       } // Fl_Light_Button* ligbut_level_rgb_scan_browse_sw
