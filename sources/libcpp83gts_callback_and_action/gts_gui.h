@@ -271,6 +271,7 @@ private:
 public:
   Fl_Check_Button *chkbtn_level_rgb_trace_save_sw;
   Fl_Check_Button *chkbtn_level_rgb_full_save_sw;
+  Fl_Check_Button *chkbtn_level_rgb_with_full_sw;
   Fl_Light_Button *ligbut_level_rgb_scan_browse_sw;
 private:
   inline void cb_ligbut_level_rgb_scan_browse_sw_i(Fl_Light_Button*, void*);
