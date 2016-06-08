@@ -100,6 +100,12 @@ int memory_config::_save_level_by_fp( FILE *fp )
 			this->str_on_:this->str_off_ );
 	if (i_ret < 0) { return NG; }
 
+	i_ret = fprintf(fp, "%-24s %s\n",
+			this->str_level_rgb_with_full_sw_,
+		cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()?
+			this->str_on_:this->str_off_ );
+	if (i_ret < 0) { return NG; }
+
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
 			this->str_level_rgb_scan_dir_,
 		cl_gts_gui.filinp_level_rgb_scan_dir->value() );

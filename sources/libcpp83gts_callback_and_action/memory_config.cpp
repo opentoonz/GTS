@@ -26,11 +26,10 @@ const char* memory_config::str_level_rgb_trace_save_sw_
 			     ="level_rgb_trace_save_sw";
 const char* memory_config::str_level_rgb_full_save_sw_
 			     ="level_rgb_full_save_sw";
-
+const char* memory_config::str_level_rgb_with_full_sw_
+			     ="level_rgb_with_full_sw";
 const char* memory_config::str_level_image_file_format_
 			     ="level_image_file_format";
-const char* memory_config::str_level_save_full_image_sw_
-			     ="level_save_full_image_sw";
 
 const char* memory_config::str_area_select_
 			     ="area_select";
