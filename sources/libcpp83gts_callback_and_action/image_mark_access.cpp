@@ -217,5 +217,10 @@ void image_mark_access::make_fnum_list_with_chk_mark( int i_start, int i_end )
 	for (ii = i_start; ii <= i_end; ++ii) { 
 		this->append_fnum_list_with_chk_mark( ii );
 	}
+
+	// GUI Scroll
+/*	cl_gts_gui.selbro_fnum_list->middleline(
+		cl_gts_gui.selbro_fnum_list->size()
+	);*/
 }
 
