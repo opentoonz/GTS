@@ -18,7 +18,7 @@ typedef struct st_dir_or_file_info {
 	int	is_chk;
 } ST_DIR_OR_FILE_INFO;
 
-#include <FL/filename.h>	/* dirent */
+#include <FL/filename.H>	/* dirent */
 #include "gtsfbro01path_base.h"
 
 class gtsfbro02list_base : public gtsfbro01path_base {

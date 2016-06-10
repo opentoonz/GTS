@@ -349,10 +349,6 @@ int gts_master::exec( const char *comm )
 		return NG;
 	}
 
-	/* fltk windowのうちmain画面は必ず表示する */
-	/* set_non_model()は始めにshowしたwindowがメイン */
-	cl_gts_gui.window_opengl->show();
-
 	/* fltk window位置とサイズを復元 */
 	if (OK != this->cl_memo_desktop.load()) {
 		pri_funct_err_bttvr(
@@ -365,6 +361,12 @@ int gts_master::exec( const char *comm )
 	 "Error : this->cl_memo_scan_area.load() returns NG" );
 		return NG;
 	}
+
+	/* fltk windowのうちmain画面は必ず表示する */
+	/* set_non_model()は始めにshowしたwindowがメイン */
+	cl_gts_gui.window_opengl->show();
+	cl_gts_gui.window_opengl->wait_for_expose();
+	Fl::flush();
 
 	/*------------------------------------------------*/
 	/* window TWAINのためにウインドウハンドルを設定する */

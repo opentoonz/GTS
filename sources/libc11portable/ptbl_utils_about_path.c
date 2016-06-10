@@ -1,6 +1,7 @@
 #include <stdlib.h>	/* getenv() */
 #include <string.h>	/* strrchr() */
 #include <assert.h>	/* assert() */
+#include <stdio.h>
 
 #include "ptbl_funct.h"
 
@@ -26,5 +27,35 @@ char *ptbl_get_cp_path_separeter( void )
 #else
 	return "/";
 #endif
+}
+
+char *ptbl_getenv(const char *name) {
+	size_t length = 0;
+	char *value = (char*)malloc(_MAX_ENV);
+    if (value == NULL) {
+        printf("malloc() failure\n");
+        exit(-1);
+    }
+	value[0] = '\0';
+# ifdef _WIN32
+	errno_t err_no = getenv_s(&length, value, _MAX_ENV, name);
+	if (err_no != 0) {
+		printf("getenv_s() returned an error (%d)\n", err_no);
+	}
+	if ((length <= 0) || (length >= _MAX_ENV)) {
+		printf("getenv_s() got a bad length (%d)\n", length);
+	}
+# else
+    const char* env_ptr = getenv(name);
+    if(env_ptr != NULL) {
+        length = strlen(env_ptr);
+        if (length >= _MAX_ENV) {
+            length = _MAX_ENV - 1;
+        }
+        strncpy(value, env_ptr, length);
+    }
+# endif
+	value[length] = '\0';
+	return value;
 }
 
