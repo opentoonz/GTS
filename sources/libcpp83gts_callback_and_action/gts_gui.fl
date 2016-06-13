@@ -480,8 +480,7 @@ fl_message( ost.str().c_str() );}
     }
     ::CloseHandle(pi.hProcess);
     ::CloseHandle(pi.hThread);
-\# endif
-    }
+\# endif}
           xywh {315 60 60 25}
           code0 {\#include <iostream>}
         }
@@ -1009,8 +1008,8 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();}
-      xywh {50 50 116 350} type Double resizable non_modal visible
+cl_gts_gui.menite_fnum_list->clear();} selected
+      xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 80 25}
@@ -1055,7 +1054,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
       callback {cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_color_trace->clear();} open selected
+cl_gts_gui.menite_color_trace->clear();}
       xywh {-955 -653 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
