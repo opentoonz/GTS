@@ -1,4 +1,4 @@
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "color_trace_enhancement.h"

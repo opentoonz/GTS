@@ -49,6 +49,11 @@
 
 #define STR_TRACE_BATCH_DIR		"trace_batch_dir"
 #define STR_TRACE_BATCH_LIST		"batch"
+
+# ifndef _WIN32
+#  define STR_SANE_DEVICE_NAME  "sane_device_name"
+# endif
+
 /*					 12345678901234567890123 */
 
 typedef enum {

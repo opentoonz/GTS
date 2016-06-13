@@ -1,6 +1,10 @@
 #ifndef __ptbl_funct_h__
 #define __ptbl_funct_h__
 
+# ifndef _MAX_ENV
+#  define _MAX_ENV 32767
+# endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -26,13 +30,15 @@ extern char *ptbl_get_cp_username( void );
 extern char *ptbl_get_cp_userrealname( void );
 
 /* ディレクトリを１個作成する(戻り値 0:成功,-1:失敗) */
-extern int ptbl_mkdir( char *cp_dirpath );
+extern int ptbl_mkdir( const char *cp_dirpath );
 
 /* ファイルパスからファイル名のみ得る(尻の.exe等は残る) */
 extern char *ptbl_get_cp_filename_from_path( char *cp_filepath );
 
 /* パスの区切り文字を得る(文字列の方が使いやすいので) */
 extern char *ptbl_get_cp_path_separeter( void );
+
+char *ptbl_getenv(const char *name);
 
 #ifdef __cplusplus
 }

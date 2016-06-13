@@ -1,50 +1,69 @@
-﻿#	GTS
+# Description
 
-## これは何？
+[GTS](https://opentoonz.github.io/e/index.html) is a scanning tool developed by Studio Ghibli. It's specialized in hand-drawn animation frames and it uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-紙に描かれた動画を、Windows PC と TWAIN ドライバーソフトで動作するスキャナーを使って、「連番」でスキャンし、ファイルに保存するソフトウェアです。
-画像の２値化も行います。
+The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
 
-## 動作条件
+GTS's interface is in English and scanned images are saved as TIFF.
 
-Windows 32-bit アプリケーションです（64-bit OS でも動作します）。
-メニュー表記は英語のみ。保存する画像はTIFFです。
+# Installation
 
-## インストール
+## Windows binary
 
-https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip ファイルをダウンロードし、解凍してください。
+Download and unzip the most recent GTS-x.y.z.zip file from https://github.com/opentoonz/GTS/releases.
 
-## 開発者向け
+## From source
 
-### ソースコードから実行プログラムを生成するには
+Get the source code from Github:
+```sh
+$ git clone https://github.com/opentoonz/GTS.git
+```
 
-1. 環境を準備
+### Requirements
 
-  Windows 7 Enterprise SP1 と Microsoft Visual C++ 2013 を用意します。
-  この環境で動作確認をしており、他の環境については未確認です。
+#### Windows
 
-2. ソースコードを準備
+* Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
+* third party libraries unarchived in:
+ * `GTS/thirdparty/fltk/fltk-1.3.3/`
+ * `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
-  git で clone してソースコードを手元に持ってきます。
+#### Linux, OS X, etc.
+
+* fltk-1.x with OpenGL support
+* tiff-4.x
+* sane-backends-1.x
+
+### Build
+
+#### Windows
+
+After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2013.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
   
-  ```sh
-  $ git clone https://github.com/opentoonz/GTS.git
-  ```
+In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
 
-3. ビルドに必要なライブラリを用意し、それぞれ以下にセットしビルドしておきます。
+#### Linux, OS X, etc.
 
-  - `GTS/thirdparty/fltk/fltk-1.3.3/`
-  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
-  - `GTS/thirdparty/twain/twain-2.3/twain.h`
+```sh
+./autogen.sh && ./configure && make
+# run it with
+./gts
+# or with more verbose output
+./gts -bv
+```
 
-4. ビルドする
+If you're a developer and you need a debug build, do it like this:
+```sh
+./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+# now you can use gdb:
+gdb --args ./gts -bv
+```
 
-  `GTS/sources/` へ移動し、ビルドバッチファイル `one_step_build_vc2013.bat` を実行します。
+Note for distribution packagers: change *browser_directory_path* to "." in `sources/main/gts_install_setup.txt` before installation.
 
-5. 動作確認
+If you're not using a proper package manager, do the change yourself and copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
 
-  `GTS/x86_release/` にある、`gts.exe` を実行して動作を確かめてください。
+# License
 
-### ライセンス
+[New BSD License](LICENSE.txt)
 
-[New BSD License](https://github.com/opentoonz/GTS/blob/master/LICENSE.txt)
