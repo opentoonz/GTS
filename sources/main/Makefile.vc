@@ -43,7 +43,7 @@ $(DPATH_LIBR)\libc16image_rw_tif.lib\
 $(DPATH_LIBR)\libc14image_rw_base.lib\
 $(DPATH_LIBR)\libc12pri.lib\
 $(DPATH_LIBR)\libc11portable.lib\
-$(DPATH_TIFF)\lib\libtiff.lib\
+$(DPATH_TIFF)\libtiff\libtiff.lib\
 $(DPATH_FLTK)\lib\fltk.lib\
 $(DPATH_FLTK)\lib\fltkgl.lib\
 glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib\
