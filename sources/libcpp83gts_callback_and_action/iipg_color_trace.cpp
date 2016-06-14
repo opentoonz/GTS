@@ -1,4 +1,4 @@
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 
 #include "ptbl_returncode.h"
 #include "pri.h"

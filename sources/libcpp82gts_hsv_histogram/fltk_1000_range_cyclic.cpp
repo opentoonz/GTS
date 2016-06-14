@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>	/* floor() */
-#include <FL/Fl.h>
-#include <FL/fl_draw.h>
+#include <FL/Fl.H>
+#include <FL/fl_draw.H>
 #include "ptbl_returncode.h"
 #include "fltk_1000_range_cyclic.h"
 #if !defined GTS_DEBUG

@@ -93,6 +93,9 @@ public:
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_sane_device;
+private:
   inline void cb_FullColor_i(Fl_Menu_*, void*);
   static void cb_FullColor(Fl_Menu_*, void*);
   inline void cb_Red_i(Fl_Menu_*, void*);

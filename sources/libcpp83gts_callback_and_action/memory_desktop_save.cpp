@@ -6,6 +6,7 @@
 #include "pri.h"
 #include "memory_desktop.h"
 #include "gts_gui.h"
+#include "gts_master.h"
 
 int memory_desktop::_save_by_fp( FILE *fp )
 {
@@ -108,6 +109,15 @@ int memory_desktop::_save_by_fp( FILE *fp )
 		cl_gts_gui.window_next_scan->x(),
 		cl_gts_gui.window_next_scan->y() );
 	if (i_ret < 0) { return NG; }
+
+# ifndef _WIN32
+    if(cl_gts_master.cl_iip_scan.device_name()) {
+        i_ret = fprintf(fp, "%-24s \"%s\"\n", STR_SANE_DEVICE_NAME, cl_gts_master.cl_iip_scan.device_name());
+        if(i_ret < 0) {
+            return NG;
+        }
+    }
+# endif
 
 	return OK;
 }
