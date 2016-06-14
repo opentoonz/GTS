@@ -36,6 +36,7 @@ private:
 	static const char* str_level_num_end_;
 	static const char* str_level_rgb_scan_dir_;
 	static const char* str_level_rgb_trace_save_sw_;
+	static const char* str_level_rgb_full_save_sw_;
 
 	static const char* str_level_image_file_format_;//2016-05-24
 	static const char* str_level_save_full_image_sw_;//2016-05-24

@@ -316,7 +316,7 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           callback {cl_gts_master.cl_bro_level.cb_rgb_scan_dir();}
           xywh {0 500 165 35} align 5 when 1 deactivate resizable
         }
-        Fl_Check_Button chkbtn_level_trace_save_sw {
+        Fl_Check_Button chkbtn_level_rgb_trace_save_sw {
           label {S.C.T.}
           tooltip {Save Color Trace level} xywh {165 515 55 20} down_box DOWN_BOX
         }
