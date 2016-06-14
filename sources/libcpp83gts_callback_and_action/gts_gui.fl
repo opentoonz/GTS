@@ -603,6 +603,10 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           label {S.Full}
           tooltip {Save RGB Full  level} xywh {195 545 60 20} down_box DOWN_BOX value 1
         }
+        Fl_Check_Button chkbtn_level_rgb_with_full_sw {
+          label With_full
+          tooltip {With _full in RGB full name} xywh {195 523 75 20} down_box DOWN_BOX value 1
+        }
         Fl_Light_Button ligbut_level_rgb_scan_browse_sw {
           label Browse
           callback {cl_gts_master.cl_bro_level.cb_browse_sw();}

@@ -40,7 +40,9 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 	/*------------------------------------------------*/
 
 	/* 保存する(番号に対する)ファイルパスを得る */
-	if (3L <= this->cl_iip_ro90.get_l_channels()) {
+	if (3L <= this->cl_iip_ro90.get_l_channels() &&
+	cl_gts_gui.chkbtn_level_rgb_with_full_sw->value() == 1
+	) {
 		/* RGB画像のときは専用の名前(A_full.0001.tif)で保存 */
 		/* 読み込み(番号に対する)ファイルパスを得る */
 
