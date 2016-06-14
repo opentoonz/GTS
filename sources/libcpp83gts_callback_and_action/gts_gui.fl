@@ -411,7 +411,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_level {
       label {Browse Level}
       callback {cl_gts_master.cl_bro_level.cb_cancel();} open
-      xywh {-917 -296 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
+      xywh {50 50 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -480,8 +480,7 @@ fl_message( ost.str().c_str() );}
     }
     ::CloseHandle(pi.hProcess);
     ::CloseHandle(pi.hThread);
-\# endif
-    }
+\# endif}
           xywh {315 60 60 25}
           code0 {\#include <iostream>}
         }
