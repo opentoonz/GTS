@@ -1,60 +1,10 @@
-#ifndef __memory_config_h__
-#define __memory_config_h__
+#ifndef memory_config_h
+#define memory_config_h
 
 #include <stdio.h>
+#include <string>
 #include "ptbl_path_max.h"
 #include "ptbl_returncode.h"
-
-#define STR_CONFIG_DIR			"config_dir"
-#define STR_CONFIG_LOAD_FILE		"config_load_file"
-#define STR_CONFIG_SAVE_AS_FILE		"config_save_as_file"
-
-#define STR_LEVEL_DIR			"level_dir"
-#define STR_LEVEL_LIST_FORM		"level_list_form"
-#define STR_LEVEL_FILE			"level_file"
-#define STR_LEVEL_NUM_START		"level_num_start"
-#define STR_LEVEL_NUM_END		"level_num_end"
-#define STR_LEVEL_RGB_SCAN_DIR		"level_rgb_scan_dir"
-#define STR_LEVEL_RGB_TRACE_SAVE_SW	"level_rgb_trace_save_sw"
-
-#define STR_AREA_SELECT			"area_select"
-#define STR_AREA_X_POS			"area_x_pos"
-#define STR_AREA_Y_POS			"area_y_pos"
-#define STR_AREA_ASPECT_RATIO_SELECT	"area_aspect_ratio_select"
-#define STR_AREA_X_SIZE			"area_x_size"
-#define STR_AREA_Y_SIZE			"area_y_size"
-#define STR_AREA_X_PIXEL		"area_x_pixel"
-#define STR_AREA_Y_PIXEL		"area_y_pixel"
-#define STR_AREA_RESOLUTION_DPI		"area_resolution_dpi"
-#define STR_ROTATE_PER_90		"rotate_per_90"
-#define STR_SCANNER_TYPE		"scanner_type"
-#define STR_SCANNER_X_MAX		"scanner_x_max"
-#define STR_SCANNER_Y_MAX		"scanner_y_max"
-
-#define STR_PIXEL_TYPE			"pixel_type"
-#define STR_BW_THRESHOLD		"bw_threshold"
-#define STR_GRAYS_BRIGHTNESS		"grayscale_brightness"
-#define STR_GRAYS_CONTRAST		"grayscale_contrast"
-#define STR_GRAYS_GAMMA			"grayscale_gamma"
-#define STR_RGB_BRIGHTNESS		"rgb_brightness"
-#define STR_RGB_CONTRAST		"rgb_contrast"
-#define STR_RGB_GAMMA			"rgb_gamma"
-
-#define STR_COLOR_TRACE_ERASE_1DOT	"color_trace_erase_1dot"
-#define STR_COLOR_TRACE_REAL_TIME	"color_trace_real_time"
-
-#define STR_FRAME_NUMBER_INSERT		"frame_number_insert"
-#define STR_FRAME_NUMBER_LIST		"frame"
-#define STR_FRAME_NUMBER_SELECTED	"selected"
-
-#define STR_TRACE_BATCH_DIR		"trace_batch_dir"
-#define STR_TRACE_BATCH_LIST		"batch"
-
-# ifndef _WIN32
-#  define STR_SANE_DEVICE_NAME  "sane_device_name"
-# endif
-
-/*					 12345678901234567890123 */
 
 typedef enum {
 	E_MEMORY_CONFIG_LOAD_MATCH = 1,
@@ -66,27 +16,124 @@ class memory_config {
 public:
 	memory_config()
 	{
-		this->_ccp_on  = "ON";
-		this->_ccp_off = "OFF";
-		this->_ca_current_path[0] = '\0';
-		this->_ca_memory_path[0] = '\0';
 	}
-	int save( char *cp_file_path );
-	int load( char *cp_file_path, int i_load_trace_batch_sw=ON );
+	int save( const char *cp_file_path );
+	int load( const char *cp_file_path, int i_load_trace_batch_sw=ON );
 
-	/****char *cp_current_filepath( void ) const {
-		return this->_ca_current_path; }***/
-	char *cp_memory_path( void ) {
-		return this->_ca_memory_path; }
+	std::string memory_of_path;
 private:
-	const char	*_ccp_on,
-			*_ccp_off;
+	static const char* str_on_;
+	static const char* str_off_;
 
-	char	_ca_current_path[PTBL_PATH_MAX];
-	char	_ca_memory_path[PTBL_PATH_MAX];
+	static const char* str_config_dir_;
+	static const char* str_config_load_file_;
+	static const char* str_config_save_as_file_;
+
+	static const char* str_level_dir_;
+	static const char* str_level_list_form_;
+	static const char* str_level_file_;
+	static const char* str_level_num_start_;
+	static const char* str_level_num_end_;
+	static const char* str_level_rgb_scan_dir_;
+	static const char* str_level_rgb_trace_save_sw_;
+
+	static const char* str_level_image_file_format_;//2016-05-24
+	static const char* str_level_save_full_image_sw_;//2016-05-24
+
+	static const char* str_area_select_;
+	static const char* str_area_x_pos_;
+	static const char* str_area_y_pos_;
+	static const char* str_area_aspect_ratio_select_;
+	static const char* str_area_x_size_;
+	static const char* str_area_y_size_;
+	static const char* str_area_x_pixel_;
+	static const char* str_area_y_pixel_;
+	static const char* str_area_resolution_dpi_;
+	static const char* str_rotate_per_90_;
+	static const char* str_scanner_type_;
+	static const char* str_scanner_x_max_;
+	static const char* str_scanner_y_max_;
+
+	static const char* str_pixel_type_;
+	static const char* str_bw_threshold_;
+	static const char* str_grayscale_brightness_;
+	static const char* str_grayscale_contrast_;
+	static const char* str_grayscale_gamma_;
+	static const char* str_rgb_brightness_;
+	static const char* str_rgb_contrast_;
+	static const char* str_rgb_gamma_;
+
+	static const char* str_color_trace_erase_1dot_;
+	static const char* str_color_trace_real_time_;
+	static const char* str_frame_number_insert_;
+	static const char* str_frame_number_list_;
+	static const char* str_frame_number_selected_;
+
+	static const char* str_trace_batch_dir_;
+	static const char* str_trace_batch_list_;
+
+	static const char* str_color_trace_01_chk_;
+	static const char* str_color_trace_01_src_hh_min_;
+	static const char* str_color_trace_01_src_hh_max_;
+	static const char* str_color_trace_01_src_aa_min_;
+	static const char* str_color_trace_01_src_aa_max_;
+	static const char* str_color_trace_01_src_bb_min_;
+	static const char* str_color_trace_01_src_bb_max_;
+	static const char* str_color_trace_01_tgt_rgb_;
+
+	static const char* str_color_trace_02_chk_;
+	static const char* str_color_trace_02_src_hh_min_;
+	static const char* str_color_trace_02_src_hh_max_;
+	static const char* str_color_trace_02_src_aa_min_;
+	static const char* str_color_trace_02_src_aa_max_;
+	static const char* str_color_trace_02_src_bb_min_;
+	static const char* str_color_trace_02_src_bb_max_;
+	static const char* str_color_trace_02_tgt_rgb_;
+
+	static const char* str_color_trace_03_chk_;
+	static const char* str_color_trace_03_src_hh_min_;
+	static const char* str_color_trace_03_src_hh_max_;
+	static const char* str_color_trace_03_src_aa_min_;
+	static const char* str_color_trace_03_src_aa_max_;
+	static const char* str_color_trace_03_src_bb_min_;
+	static const char* str_color_trace_03_src_bb_max_;
+	static const char* str_color_trace_03_tgt_rgb_;
+
+	static const char* str_color_trace_04_chk_;
+	static const char* str_color_trace_04_src_hh_min_;
+	static const char* str_color_trace_04_src_hh_max_;
+	static const char* str_color_trace_04_src_aa_min_;
+	static const char* str_color_trace_04_src_aa_max_;
+	static const char* str_color_trace_04_src_bb_min_;
+	static const char* str_color_trace_04_src_bb_max_;
+	static const char* str_color_trace_04_tgt_rgb_;
+
+	static const char* str_color_trace_05_chk_;
+	static const char* str_color_trace_05_src_hh_min_;
+	static const char* str_color_trace_05_src_hh_max_;
+	static const char* str_color_trace_05_src_aa_min_;
+	static const char* str_color_trace_05_src_aa_max_;
+	static const char* str_color_trace_05_src_bb_min_;
+	static const char* str_color_trace_05_src_bb_max_;
+	static const char* str_color_trace_05_tgt_rgb_;
+
+	static const char* str_color_trace_06_chk_;
+	static const char* str_color_trace_06_src_hh_min_;
+	static const char* str_color_trace_06_src_hh_max_;
+	static const char* str_color_trace_06_src_aa_min_;
+	static const char* str_color_trace_06_src_aa_max_;
+	static const char* str_color_trace_06_src_bb_min_;
+	static const char* str_color_trace_06_src_bb_max_;
+	static const char* str_color_trace_06_tgt_rgb_;
+
+	//-------------------------------------
 
 	int _save_comment_by_fp( FILE *fp );
-	int _save_by_fp( FILE *fp );
+	int _save_config_by_fp( FILE *fp );
+	int _save_level_by_fp( FILE *fp );
+	int _save_area_by_fp( FILE *fp );
+	int _save_pixel_type_by_fp( FILE *fp );
+	int _save_trace_by_fp( FILE *fp );
 	int _save_fnum_by_fp( FILE *fp );
 	int _save_trace_batch_by_fp( FILE *fp );
 	int _save_trace_src_hsv_by_fp( FILE *fp );
@@ -96,4 +143,4 @@ private:
 	E_MEMORY_CONFIG_LOAD_RET _load_trace_src_hsv_by_fp( int i_num, char *cp1, char *cp2, char *cp3, char *cp4 );
 };
 
-#endif /* !__memory_config_h__ */
+#endif /* !memory_config_h */

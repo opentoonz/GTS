@@ -96,6 +96,13 @@ namespace {
 	cl_gts_master.cl_bro_trace_batch.setup_path(words.at(1).c_str());
 
 			} else
+			if (words.at(0) == "image_file_format") {
+				if (words.at(1) == "TIFF") {
+	cl_gts_master.cl_bro_level.set_current_imagefile_extension(0);
+				} else if (words.at(1) == "TGA") {
+	cl_gts_master.cl_bro_level.set_current_imagefile_extension(1);
+				}
+			} else
 			if (words.at(0) == "short_cut_key_start_scan") {
 				// start_scan	Enter(Default)
  cl_gts_master.cl_memo_short_cut_key.setup_start_scan(words.at(1).c_str());
@@ -122,7 +129,7 @@ namespace {
 # ifdef PACKAGE_NAME
 gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
 # else
-gts_master cl_gts_master( "gts" ,"2.3.2" ,"2016-6-13" );
+gts_master cl_gts_master( "gts" ,"2.3.3" ,"2016-6-13" );
 # endif
 
 int main( int argc, char **argv )

@@ -26,7 +26,7 @@ public:
 	gtsfbro02list_base() :
 		/* 静的でないconstメンバ変数の初期化 */
 		_ccp_text_file_ext(".txt"),
-		/*** _ccp_image_file_ext(".tif"), ***/
+		/*** imagefile_extension_(".tif"), ***/
 		_ccp_dir_mark("<Dir>   "),
 		_ccp_mark_not_tracing_rgb("_full")
 	{
@@ -42,8 +42,8 @@ public:
 protected:
 	const char *ccp_text_file_ext( void ) const
 	{ return this->_ccp_text_file_ext; }
-	/*** const char *ccp_image_file_ext( void ) const
-	{ return this->_ccp_image_file_ext; } ***/
+	/*** const char *get_imagefile_extension( void ) const
+	{ return this->imagefile_extension_; } ***/
 	const char *ccp_dir_mark( void ) const
 	{ return this->_ccp_dir_mark; }
 	const char *ccp_mark_not_tracing_rgb( void ) const
@@ -75,7 +75,7 @@ protected:
 
 private:
 	const char *_ccp_text_file_ext;
-	/*** const char *_ccp_image_file_ext; ***/
+	/*** const char *imagefile_extension_; ***/
 	const char *_ccp_dir_mark;
 	const char *_ccp_mark_not_tracing_rgb;
 

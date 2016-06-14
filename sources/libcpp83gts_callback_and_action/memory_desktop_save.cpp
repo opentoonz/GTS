@@ -5,7 +5,6 @@
 #include "ptbl_funct.h"
 #include "pri.h"
 #include "memory_desktop.h"
-#include "memory_config.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -169,40 +168,6 @@ int memory_desktop::_save_by_fname( const char *cp_fname )
 
 int memory_desktop::save( void )
 {
-#if 0//-----------------------------------------------------------
-	int	i_len;
-	char ca_home[FILENAME_MAX];
-
-	// char *cp_home;
-	// cp_home = getenv( "HOME" );
-	/* 環境変数がない */
-	/******if (NULL == cp_home) {
-		pri_funct_err_bttvr("getenv(HOME) returns NULL.");
-		return NG;
-	}******/
-
-	std::string dir_path;
-	igs::resource::get_user_home(dir_path);
-	if (dir_path.empty()) {
-		pri_funct_err_bttvr(
-		"igs::resource::get_user_home(-) can not get dir");
-		return NG;
-	}
-	const char *cp_home = dir_path.c_str();
-
-	i_len = strlen( cp_home );
-	i_len += strlen( ptbl_get_cp_path_separeter() );
-	i_len += strlen( STR_DESKTOP_FILENAME );
-	if (FILENAME_MAX <= i_len) {
-		pri_funct_err_bttvr(
-		"over FILENAME_MAX<%d>.", FILENAME_MAX);
-		return NG;
-	}
-
-	(void)strcpy( ca_home, cp_home );
-	(void)strcat( ca_home, ptbl_get_cp_path_separeter() );
-	(void)strcat( ca_home, STR_DESKTOP_FILENAME );
-#endif//----------------------------------------------------------
 	if (this->set_desktop_file_path_() != OK) {
 		pri_funct_err_bttvr(
 		 "set_desktop_file_path_(-) can not set dir");

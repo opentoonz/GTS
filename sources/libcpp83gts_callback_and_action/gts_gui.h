@@ -256,6 +256,12 @@ private:
   inline void cb_ligbut_level_view_sw_i(Fl_Light_Button*, void*);
   static void cb_ligbut_level_view_sw(Fl_Light_Button*, void*);
 public:
+  Fl_Choice *choice_level_image_file_format;
+private:
+  inline void cb_choice_level_image_file_format_i(Fl_Choice*, void*);
+  static void cb_choice_level_image_file_format(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_level_image_file_format[];
+public:
   Fl_File_Input *filinp_level_rgb_scan_dir;
 private:
   inline void cb_filinp_level_rgb_scan_dir_i(Fl_File_Input*, void*);
