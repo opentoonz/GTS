@@ -1,7 +1,7 @@
 #ifndef __fltk_1000x100_histogram_h__
 #define __fltk_1000x100_histogram_h__
 
-#include <FL/Fl_Box.h>
+#include <FL/Fl_Box.H>
 
 class fltk_1000x100_histogram : public Fl_Box {
 public:

@@ -1,7 +1,7 @@
 #ifndef __fltk_1000_range_cyclic_h__
 #define __fltk_1000_range_cyclic_h__
 
-#include <FL/Fl_Box.h>
+#include <FL/Fl_Box.H>
 
 #ifndef _E_MIN_MAX_SELECT_TYPE_
 #define _E_MIN_MAX_SELECT_TYPE_

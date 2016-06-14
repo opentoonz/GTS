@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
-#include <FL/Fl.h>
-#include <FL/fl_draw.h>
+#include <FL/Fl.H>
+#include <FL/fl_draw.H>
 #include "fltk_1000x100_histogram.h"
 
 fltk_1000x100_histogram::fltk_1000x100_histogram(int x,int y,int w,int h,const char *l) : Fl_Box(x,y,w,h,l)

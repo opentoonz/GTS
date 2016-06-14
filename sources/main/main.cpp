@@ -9,6 +9,11 @@
 #include "pri.h"
 #include "gts_master.h"
 #include "gts_gui.h"
+#include "memory_desktop.h"
+
+# if defined(HAVE_CONFIG_H)
+#  include <config.h>
+# endif
 
 static void print_version( char *title )
 {
@@ -69,15 +74,8 @@ static int argument_analyzer( int argc, char *argv[], char *cp_comm, gts_master 
 #include "igs_lex_white_space_and_double_quote.h"
 namespace {
  void setup_gts_( const char *comm ) {
-	std::string path(comm);
-	const char *const setup_file = "gts_install_setup.txt";
-	std::string::size_type index = path.find_last_of("/\\");
-	if (std::string::npos != index) {
-		path.erase(index+1);
-		path += setup_file;
-	} else {
-		path  = setup_file;
-	}
+	const char *setup_file = "gts_install_setup.txt";
+	std::string path = gts_file_path(comm, setup_file);
 
 	std::ifstream ifs( path.c_str() );
 	if (!ifs) { return; } /* ファイルがないのでなにもしない */
@@ -128,7 +126,11 @@ namespace {
 }
 
 /* リリース名、版、日付 */
-gts_master cl_gts_master( "gts" ,"2.3.4" ,"2016-5-31" );
+# ifdef PACKAGE_NAME
+gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
+# else
+gts_master cl_gts_master( "gts" ,"2.3.4" ,"2016-6-14" );
+# endif
 
 int main( int argc, char **argv )
 {
