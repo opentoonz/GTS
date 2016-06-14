@@ -1,4 +1,4 @@
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>

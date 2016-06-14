@@ -1,7 +1,7 @@
 //#include <iostream>
 #include <string>
 #include <cstring>
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 //#include "enumerations.h"
 #include "gts_gui.h"
 //#include "gts_master.h"
@@ -101,9 +101,11 @@ void memory_short_cut_key::set_shortcut( void ) {
 	}
 }
 void memory_short_cut_key::set_space_key_focus_in_next_scan( void ) {
-	switch (this->focus_number_) {
- case this->f_n_rescan_   : Fl::focus( cl_gts_gui.button_rescan );    break;
- case this->f_n_next_scan_: Fl::focus( cl_gts_gui.button_next_scan ); break;
- case this->f_n_stop_scan_: Fl::focus( cl_gts_gui.button_stop_scan ); break;
-	}
+    if(this->focus_number_ == this->f_n_rescan_) {
+        Fl::focus( cl_gts_gui.button_rescan );
+    } else if(this->focus_number_ == this->f_n_next_scan_) {
+        Fl::focus( cl_gts_gui.button_next_scan );
+    } else if(this->focus_number_ == this->f_n_stop_scan_) {
+        Fl::focus( cl_gts_gui.button_stop_scan );
+    }
 }

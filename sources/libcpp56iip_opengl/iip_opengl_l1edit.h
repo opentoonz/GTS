@@ -1,11 +1,27 @@
 #ifndef __iip_opengl_l1edit_h__
 #define __iip_opengl_l1edit_h__
 
+# if defined(HAVE_CONFIG_H)
+#  include <config.h>
+# endif
+
 #if defined _WIN32
 #include <windows.h>
 #endif
 
-#include <GL/glu.h>
+# if defined(HAVE_CONFIG_H)
+#  if defined(HAVE_GL_GLU_H)
+#   include <GL/glu.h>
+#  elif defined(HAVE_OPENGL_GLU_H)
+#   include <OpenGL/glu.h>
+#  else
+#   error no glu.h
+#  endif
+# else
+// non-autotools build
+#  include <GL/glu.h>
+# endif
+
 #include "iip_canvas.h"
 
 /* iip_canvas.h CH_RED,CH_GRE,CH_BLU,CH_ALP,and... */
