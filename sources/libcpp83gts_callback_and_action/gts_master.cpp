@@ -357,6 +357,8 @@ int gts_master::exec( const char *comm )
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
 	cl_gts_gui.window_opengl->show();
+	cl_gts_gui.window_opengl->wait_for_expose();
+	Fl::flush();
 
 	/* fltk window位置とサイズを復元 */
 	if (OK != this->cl_memo_desktop.load()) {

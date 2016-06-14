@@ -11,7 +11,7 @@
 #if defined _WIN32
 #include "tw_win_l4_scan.h"
 #else
-#include "tw_dmy_l1_scan.h"
+#include "sane_scan.h"
 #endif
 
 #include "iip_rot90.h"

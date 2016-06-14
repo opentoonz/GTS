@@ -2,6 +2,7 @@
 #include <string.h>
 #include <string>
 #include <fstream>
+#include <cerrno>
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"
@@ -10,42 +11,44 @@
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
 
-namespace {
- int getenv_(const char *const key ,std::string&val) {
-	size_t length=0;
-	char ca_env[_MAX_ENV];	// _MAX_ENV is 32,767 at vc2005 stdlib.h
-	ca_env[0] = '\0';
-	errno_t err_no = getenv_s(&length,ca_env,_MAX_ENV,key);
-	if (err_no != 0) {
-		pri_funct_err_bttvr("getenv_s() returns error(%d)" ,err_no);
-		return NG;
-	}
-	if ( (length <= 0) || (length >= _MAX_ENV) ) {
-		pri_funct_err_bttvr("getenv_s() get bad length(%d)",length);
-		return NG;
-	}
-	ca_env[length] = '\0';
-	val = ca_env;
-	return OK;
- }
- int get_user_home_( std::string&user_home ) {
-	std::string homedrive ,homepath;
-	const int ret1 = getenv_("HOMEDRIVE",homedrive);
-	const int ret2 = getenv_("HOMEPATH" ,homepath);
-	if (ret1 != OK || ret2 != OK) { return NG; }
-	user_home = homedrive;
-	user_home += homepath;
-	return OK;
- }
+
+void getenv_(const char *name, std::string& dest) {
+    char *value = ptbl_getenv(name);
+    dest = value; // does a copy
+    free(value);
 }
+
+int get_user_home_(std::string& user_home){
+# ifdef _WIN32
+    std::string homedrive, homepath;
+    getenv_("HOMEDRIVE", homedrive);
+    getenv_("HOMEPATH" , homepath);
+    if (homedrive.empty() || homepath.empty()) {
+        return NG;
+    }
+    user_home = homedrive;
+    user_home += homepath;
+# else
+    getenv_("HOME", user_home);
+# endif
+    return OK;
+}
+
 int memory_desktop::set_desktop_file_path_( void ) {
 	int ret = OK;
-	if ( this->user_home_.empty() ) {
-		ret = get_user_home_( this->user_home_ );
+	if(this->user_home_.empty()) {
+		ret = get_user_home_(this->user_home_);
 	}
-	if ( this->desktop_file_path_.empty() ) {
+	if(this->desktop_file_path_.empty()) {
 		this->desktop_file_path_ = this->user_home_;
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+# ifndef _WIN32
+		this->desktop_file_path_ += STR_DESKTOP_DIR;
+		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+        if(!ptbl_dir_or_file_is_exist((char *)this->desktop_file_path_.c_str())) {
+            ptbl_mkdir(this->desktop_file_path_.c_str());
+        }
+# endif
 		this->desktop_file_path_ += STR_DESKTOP_FILENAME2;
 	}
 	return ret;
@@ -126,6 +129,11 @@ int memory_desktop::load( void ) {
 		} else
 		if ((STR_CONFIG_DIR == key) && (2 == ret)) {
 		cl_gts_master.cl_bro_config.init_config_dir(di.c_str());
+# ifndef _WIN32
+		} else
+		if ((STR_SANE_DEVICE_NAME == key) && (2 == ret)) {
+        cl_gts_master.cl_iip_scan.device_name((char*)di.c_str());
+# endif
 		} else
 		if (  (STR_WINDOW_CROP_AREA_AND_ROT90==key)&&(4==ret)) {
 			if (di == "show") {

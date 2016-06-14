@@ -1,8 +1,8 @@
 #ifndef __color_trace_enhancement_h__
 #define __color_trace_enhancement_h__
 
-#include <Fl/Fl_Value_Input.h>
-#include <Fl/Fl_Valuator.h>
+#include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Valuator.H>
 #include "calcu_color_trace_hab.h"
 
 class color_trace_enhancement {

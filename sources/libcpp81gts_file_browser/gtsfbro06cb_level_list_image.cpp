@@ -1,6 +1,6 @@
 #include <time.h>	/* clock() */
 #include <math.h>	/* for pow() */
-#include <FL/Fl_Image.h>
+#include <FL/Fl_Image.H>
 #include "ptbl_funct.h"
 #include "iip_precision.h"
 #include "iip_read.h"

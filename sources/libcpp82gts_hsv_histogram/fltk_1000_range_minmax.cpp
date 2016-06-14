@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <FL/Fl.h>
-#include <FL/fl_draw.h>
+#include <FL/Fl.H>
+#include <FL/fl_draw.H>
 #include "fltk_1000_range_minmax.h"
 #if !defined GTS_DEBUG
 #include "gts_master.h"
