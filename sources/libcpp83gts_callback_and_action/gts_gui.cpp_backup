@@ -345,8 +345,8 @@ Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 17;
 Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 18;
 Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 19;
 Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 20;
-Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 21;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 45;
+Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 20;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 44;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );
@@ -2818,7 +2818,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->set_non_modal();
     window_pixel_type_and_bright->end();
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
+  { window_fnum_list = new Fl_Double_Window(116, 350, "Number");
     window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
       o->menu(menu_2);
@@ -3722,6 +3722,7 @@ Fl_Double_Window* gts_gui::make_window() {
         } // Fl_Choice* choice_thickness_01_tgt_src_preset
         { scrbar_thickness_01 = new Fl_Scrollbar(85, 10, 140, 20);
           scrbar_thickness_01->type(1);
+          scrbar_thickness_01->step(1);
           scrbar_thickness_01->box(FL_BORDER_BOX);
           scrbar_thickness_01->maximum(100);
           scrbar_thickness_01->callback((Fl_Callback*)cb_scrbar_thickness_01);
