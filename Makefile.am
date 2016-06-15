@@ -28,7 +28,8 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libcpp82gts_hsv_histogram \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
-				   $(FLTK_CPPFLAGS)
+				   $(FLTK_CPPFLAGS) \
+				   -std=c++11
 
 libgts_la_SOURCES = \
 					sources/libc11portable/ptbl_cpu_is_little_endian.c \
@@ -176,6 +177,7 @@ libgts_la_SOURCES = \
 					sources/libcpp81gts_file_browser/gtsfbro06cb_level_renumber.cpp \
 					sources/libcpp81gts_file_browser/gtsfbro06cb_level_renumber_level_tif.cpp \
 					sources/libcpp81gts_file_browser/gtsfbro06cb_level_rgb_scan_dir.cpp \
+					sources/libcpp81gts_file_browser/gtsfbro06cb_level_set_image_file_ext.cpp \
 					sources/libcpp81gts_file_browser/gtsfbro06cb_level_wintgl.cpp \
 					sources/libcpp81gts_file_browser/gtsfbro06cb_level_x1view.cpp \
 					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_add.cpp \

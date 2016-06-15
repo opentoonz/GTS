@@ -60,7 +60,6 @@ iipg_scan.cpp\
 iipg_view.cpp\
 image_mark_access.cpp\
 list_access.cpp\
-memory_config.cpp\
 memory_config_load.cpp\
 memory_config_save.cpp\
 memory_config_trace_src_hsv_load.cpp\
