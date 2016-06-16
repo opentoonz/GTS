@@ -18,6 +18,11 @@
 #define STR_WINDOW_FNUM_LIST		 "window_fnum_list"
 
 #define STR_WINDOW_NEXT_SCAN		 "window_next_scan"
+
+# ifndef _WIN32
+#  define STR_SANE_DEVICE_NAME		 "sane_device_name"
+# endif
+
 /*                                        1234567890123456789012345678 */
 
 #define STR_WINDOW_SHOW	"show"

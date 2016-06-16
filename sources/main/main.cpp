@@ -129,7 +129,7 @@ namespace {
 # ifdef PACKAGE_NAME
 gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
 # else
-gts_master cl_gts_master( "gts" ,"2.3.6" ,"2016-6-14" );
+gts_master cl_gts_master( "gts" ,"2.3.7" ,"2016-6-15" );
 # endif
 
 int main( int argc, char **argv )
