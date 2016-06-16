@@ -2099,11 +2099,22 @@ Fl_Menu_Item gts_gui::menu_choice_thickness_01_tgt_src_preset[] = {
  {0,0,0,0,0,0,0,0,0}
 };
 
+void gts_gui::cb_button_thickness_01_src_i(Fl_Button*, void*) {
+  if (   !cl_gts_gui.window_hab_histogram->shown()) {
+	cl_gts_master.cb_color_trace_src_open_01();
+} else {
+	cl_gts_gui.window_hab_histogram->hide();
+};
+}
+void gts_gui::cb_button_thickness_01_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_src_i(o,v);
+}
+
 void gts_gui::cb_scrbar_thickness_01_i(Fl_Scrollbar* o, void*) {
   // Rewrite for Switching color trace number
 valinp_thickness_01->value(((Fl_Valuator *)o)->value());
-valinp_color_trace_01_src_hh_min->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
+valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_thickness_01(Fl_Scrollbar* o, void* v) {
@@ -2113,19 +2124,183 @@ void gts_gui::cb_scrbar_thickness_01(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_valinp_thickness_01_i(Fl_Value_Input* o, void*) {
   // Rewrite for Switching color trace number
 ((Fl_Valuator *)scrbar_thickness_01)->value(o->value());
-valinp_color_trace_01_src_hh_min->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
+valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_thickness_01(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_01_i(o,v);
 }
 
-void gts_gui::cb_button_thickness_01_src_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_src_open_01();
+void gts_gui::cb_chkbtn_thickness_02_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_02grp->activate();
+    cl_gts_gui.chkbtn_color_trace_02_chk->value(1);
+    cl_gts_gui.group_thickness_02grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_02grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_02_chk->value(0);
+    cl_gts_gui.group_thickness_02grp->deactivate();
 }
-void gts_gui::cb_button_thickness_01_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_src_i(o,v);
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_02_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_02_chk_i(o,v);
+}
+
+Fl_Menu_Item gts_gui::menu_choice_thickness_02_tgt_src_preset[] = {
+ {"BL", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"R", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"G", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"B", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+void gts_gui::cb_button_thickness_02_src_i(Fl_Button*, void*) {
+  if (   !cl_gts_gui.window_hab_histogram->shown()) {
+	cl_gts_master.cb_color_trace_src_open_02();
+} else {
+	cl_gts_gui.window_hab_histogram->hide();
+};
+}
+void gts_gui::cb_button_thickness_02_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_02_i(Fl_Scrollbar* o, void*) {
+  // Rewrite for Switching color trace number
+valinp_thickness_02->value(((Fl_Valuator *)o)->value());
+valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();
+}
+void gts_gui::cb_scrbar_thickness_02(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_02_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_02_i(Fl_Value_Input* o, void*) {
+  // Rewrite for Switching color trace number
+((Fl_Valuator *)scrbar_thickness_02)->value(o->value());
+valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();
+}
+void gts_gui::cb_valinp_thickness_02(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_02_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_03_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_03grp->activate();
+    cl_gts_gui.chkbtn_color_trace_03_chk->value(1);
+    cl_gts_gui.group_thickness_03grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_03grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_03_chk->value(0);
+    cl_gts_gui.group_thickness_03grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_03_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_03_chk_i(o,v);
+}
+
+Fl_Menu_Item gts_gui::menu_choice_thickness_03_tgt_src_preset[] = {
+ {"BL", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"R", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"G", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"B", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+void gts_gui::cb_button_thickness_03_src_i(Fl_Button*, void*) {
+  if (   !cl_gts_gui.window_hab_histogram->shown()) {
+	cl_gts_master.cb_color_trace_src_open_03();
+} else {
+	cl_gts_gui.window_hab_histogram->hide();
+};
+}
+void gts_gui::cb_button_thickness_03_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_03_i(Fl_Scrollbar* o, void*) {
+  // Rewrite for Switching color trace number
+valinp_thickness_03->value(((Fl_Valuator *)o)->value());
+valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();
+}
+void gts_gui::cb_scrbar_thickness_03(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_03_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_03_i(Fl_Value_Input* o, void*) {
+  // Rewrite for Switching color trace number
+((Fl_Valuator *)scrbar_thickness_03)->value(o->value());
+valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();
+}
+void gts_gui::cb_valinp_thickness_03(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_03_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_04_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_04grp->activate();
+    cl_gts_gui.chkbtn_color_trace_04_chk->value(1);
+    cl_gts_gui.group_thickness_04grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_04grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_04_chk->value(0);
+    cl_gts_gui.group_thickness_04grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_04_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_04_chk_i(o,v);
+}
+
+Fl_Menu_Item gts_gui::menu_choice_thickness_04_tgt_src_preset[] = {
+ {"BL", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"R", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"G", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"B", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+void gts_gui::cb_button_thickness_04_src_i(Fl_Button*, void*) {
+  if (   !cl_gts_gui.window_hab_histogram->shown()) {
+	cl_gts_master.cb_color_trace_src_open_04();
+} else {
+	cl_gts_gui.window_hab_histogram->hide();
+};
+}
+void gts_gui::cb_button_thickness_04_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_04_i(Fl_Scrollbar* o, void*) {
+  // Rewrite for Switching color trace number
+valinp_thickness_04->value(((Fl_Valuator *)o)->value());
+valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();
+}
+void gts_gui::cb_scrbar_thickness_04(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_04_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_04_i(Fl_Value_Input* o, void*) {
+  // Rewrite for Switching color trace number
+((Fl_Valuator *)scrbar_thickness_04)->value(o->value());
+valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
+((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
+cl_gts_master.cb_color_trace_src_edit_value();
+}
+void gts_gui::cb_valinp_thickness_04(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_04_i(o,v);
 }
 
 Fl_Double_Window* gts_gui::make_window() {
@@ -2818,7 +2993,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->set_non_modal();
     window_pixel_type_and_bright->end();
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
+  { window_fnum_list = new Fl_Double_Window(116, 350, "Number");
     window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
       o->menu(menu_2);
@@ -3706,47 +3881,156 @@ Fl_Double_Window* gts_gui::make_window() {
     window_next_scan->set_modal();
     window_next_scan->end();
   } // Fl_Double_Window* window_next_scan
-  { window_thickness = new Fl_Double_Window(300, 120, "Thickness");
+  { window_thickness = new Fl_Double_Window(330, 105, "Thickness");
     window_thickness->user_data((void*)(this));
-    { Fl_Group* o = new Fl_Group(5, 10, 320, 20);
-      { chkbtn_thickness_01_chk = new Fl_Check_Button(15, 10, 20, 20, "1");
+    { Fl_Group* o = new Fl_Group(0, 5, 330, 20);
+      { chkbtn_thickness_01_chk = new Fl_Check_Button(15, 5, 20, 20, "1");
         chkbtn_thickness_01_chk->down_box(FL_DOWN_BOX);
         chkbtn_thickness_01_chk->value(1);
         chkbtn_thickness_01_chk->callback((Fl_Callback*)cb_chkbtn_thickness_01_chk);
         chkbtn_thickness_01_chk->align(Fl_Align(FL_ALIGN_LEFT));
       } // Fl_Check_Button* chkbtn_thickness_01_chk
-      { group_thickness_01grp = new Fl_Group(35, 10, 290, 20);
-        { choice_thickness_01_tgt_src_preset = new Fl_Choice(35, 10, 45, 20);
+      { group_thickness_01grp = new Fl_Group(35, 5, 290, 20);
+        { choice_thickness_01_tgt_src_preset = new Fl_Choice(35, 5, 45, 20);
           choice_thickness_01_tgt_src_preset->down_box(FL_BORDER_BOX);
           choice_thickness_01_tgt_src_preset->menu(menu_choice_thickness_01_tgt_src_preset);
+          choice_thickness_01_tgt_src_preset->value(0);
         } // Fl_Choice* choice_thickness_01_tgt_src_preset
-        { scrbar_thickness_01 = new Fl_Scrollbar(85, 10, 140, 20);
+        { button_thickness_01_src = new Fl_Button(85, 5, 30, 20, "src");
+          button_thickness_01_src->callback((Fl_Callback*)cb_button_thickness_01_src);
+          button_thickness_01_src->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        } // Fl_Button* button_thickness_01_src
+        { scrbar_thickness_01 = new Fl_Scrollbar(120, 5, 160, 20);
           scrbar_thickness_01->type(1);
           scrbar_thickness_01->box(FL_BORDER_BOX);
           scrbar_thickness_01->maximum(100);
           scrbar_thickness_01->callback((Fl_Callback*)cb_scrbar_thickness_01);
           scrbar_thickness_01->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_thickness_01);
         } // Fl_Scrollbar* scrbar_thickness_01
-        { valinp_thickness_01 = new Fl_Value_Input(230, 10, 35, 20);
+        { valinp_thickness_01 = new Fl_Value_Input(285, 5, 40, 20);
           valinp_thickness_01->box(FL_BORDER_BOX);
           valinp_thickness_01->maximum(100);
           valinp_thickness_01->callback((Fl_Callback*)cb_valinp_thickness_01);
           valinp_thickness_01->align(Fl_Align(FL_ALIGN_RIGHT));
         } // Fl_Value_Input* valinp_thickness_01
-        { button_thickness_01_src = new Fl_Button(270, 10, 25, 20, "src");
-          button_thickness_01_src->callback((Fl_Callback*)cb_button_thickness_01_src);
-          button_thickness_01_src->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-        } // Fl_Button* button_thickness_01_src
         group_thickness_01grp->end();
+        Fl_Group::current()->resizable(group_thickness_01grp);
       } // Fl_Group* group_thickness_01grp
       o->end();
     } // Fl_Group* o
-    { Fl_Scrollbar* o = new Fl_Scrollbar(85, 35, 140, 20);
-      o->type(1);
-      o->maximum(100);
-    } // Fl_Scrollbar* o
+    { Fl_Group* o = new Fl_Group(0, 30, 330, 20);
+      { chkbtn_thickness_02_chk = new Fl_Check_Button(15, 30, 20, 20, "2");
+        chkbtn_thickness_02_chk->down_box(FL_DOWN_BOX);
+        chkbtn_thickness_02_chk->value(1);
+        chkbtn_thickness_02_chk->callback((Fl_Callback*)cb_chkbtn_thickness_02_chk);
+        chkbtn_thickness_02_chk->align(Fl_Align(FL_ALIGN_LEFT));
+      } // Fl_Check_Button* chkbtn_thickness_02_chk
+      { group_thickness_02grp = new Fl_Group(35, 30, 290, 20);
+        { choice_thickness_02_tgt_src_preset = new Fl_Choice(35, 30, 45, 20);
+          choice_thickness_02_tgt_src_preset->down_box(FL_BORDER_BOX);
+          choice_thickness_02_tgt_src_preset->menu(menu_choice_thickness_02_tgt_src_preset);
+          choice_thickness_02_tgt_src_preset->value(1);
+        } // Fl_Choice* choice_thickness_02_tgt_src_preset
+        { button_thickness_02_src = new Fl_Button(85, 30, 30, 20, "src");
+          button_thickness_02_src->callback((Fl_Callback*)cb_button_thickness_02_src);
+          button_thickness_02_src->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        } // Fl_Button* button_thickness_02_src
+        { scrbar_thickness_02 = new Fl_Scrollbar(120, 30, 160, 20);
+          scrbar_thickness_02->type(1);
+          scrbar_thickness_02->box(FL_BORDER_BOX);
+          scrbar_thickness_02->maximum(100);
+          scrbar_thickness_02->callback((Fl_Callback*)cb_scrbar_thickness_02);
+          scrbar_thickness_02->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_thickness_02);
+        } // Fl_Scrollbar* scrbar_thickness_02
+        { valinp_thickness_02 = new Fl_Value_Input(285, 30, 40, 20);
+          valinp_thickness_02->box(FL_BORDER_BOX);
+          valinp_thickness_02->maximum(100);
+          valinp_thickness_02->callback((Fl_Callback*)cb_valinp_thickness_02);
+          valinp_thickness_02->align(Fl_Align(FL_ALIGN_RIGHT));
+        } // Fl_Value_Input* valinp_thickness_02
+        group_thickness_02grp->end();
+        Fl_Group::current()->resizable(group_thickness_02grp);
+      } // Fl_Group* group_thickness_02grp
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(0, 55, 330, 20);
+      { chkbtn_thickness_03_chk = new Fl_Check_Button(15, 55, 20, 20, "3");
+        chkbtn_thickness_03_chk->down_box(FL_DOWN_BOX);
+        chkbtn_thickness_03_chk->value(1);
+        chkbtn_thickness_03_chk->callback((Fl_Callback*)cb_chkbtn_thickness_03_chk);
+        chkbtn_thickness_03_chk->align(Fl_Align(FL_ALIGN_LEFT));
+      } // Fl_Check_Button* chkbtn_thickness_03_chk
+      { group_thickness_03grp = new Fl_Group(35, 55, 290, 20);
+        { choice_thickness_03_tgt_src_preset = new Fl_Choice(35, 55, 45, 20);
+          choice_thickness_03_tgt_src_preset->down_box(FL_BORDER_BOX);
+          choice_thickness_03_tgt_src_preset->menu(menu_choice_thickness_03_tgt_src_preset);
+          choice_thickness_03_tgt_src_preset->value(2);
+        } // Fl_Choice* choice_thickness_03_tgt_src_preset
+        { button_thickness_03_src = new Fl_Button(85, 55, 30, 20, "src");
+          button_thickness_03_src->callback((Fl_Callback*)cb_button_thickness_03_src);
+          button_thickness_03_src->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        } // Fl_Button* button_thickness_03_src
+        { scrbar_thickness_03 = new Fl_Scrollbar(120, 55, 160, 20);
+          scrbar_thickness_03->type(1);
+          scrbar_thickness_03->box(FL_BORDER_BOX);
+          scrbar_thickness_03->maximum(100);
+          scrbar_thickness_03->callback((Fl_Callback*)cb_scrbar_thickness_03);
+          scrbar_thickness_03->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_thickness_03);
+        } // Fl_Scrollbar* scrbar_thickness_03
+        { valinp_thickness_03 = new Fl_Value_Input(285, 55, 40, 20);
+          valinp_thickness_03->box(FL_BORDER_BOX);
+          valinp_thickness_03->maximum(100);
+          valinp_thickness_03->callback((Fl_Callback*)cb_valinp_thickness_03);
+          valinp_thickness_03->align(Fl_Align(FL_ALIGN_RIGHT));
+        } // Fl_Value_Input* valinp_thickness_03
+        group_thickness_03grp->end();
+        Fl_Group::current()->resizable(group_thickness_03grp);
+      } // Fl_Group* group_thickness_03grp
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(0, 80, 330, 20);
+      { chkbtn_thickness_04_chk = new Fl_Check_Button(15, 80, 20, 20, "4");
+        chkbtn_thickness_04_chk->down_box(FL_DOWN_BOX);
+        chkbtn_thickness_04_chk->value(1);
+        chkbtn_thickness_04_chk->callback((Fl_Callback*)cb_chkbtn_thickness_04_chk);
+        chkbtn_thickness_04_chk->align(Fl_Align(FL_ALIGN_LEFT));
+      } // Fl_Check_Button* chkbtn_thickness_04_chk
+      { group_thickness_04grp = new Fl_Group(35, 80, 290, 20);
+        { choice_thickness_04_tgt_src_preset = new Fl_Choice(35, 80, 45, 20);
+          choice_thickness_04_tgt_src_preset->down_box(FL_BORDER_BOX);
+          choice_thickness_04_tgt_src_preset->menu(menu_choice_thickness_04_tgt_src_preset);
+          choice_thickness_04_tgt_src_preset->value(3);
+        } // Fl_Choice* choice_thickness_04_tgt_src_preset
+        { button_thickness_04_src = new Fl_Button(85, 80, 30, 20, "src");
+          button_thickness_04_src->callback((Fl_Callback*)cb_button_thickness_04_src);
+          button_thickness_04_src->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        } // Fl_Button* button_thickness_04_src
+        { scrbar_thickness_04 = new Fl_Scrollbar(120, 80, 160, 20);
+          scrbar_thickness_04->type(1);
+          scrbar_thickness_04->box(FL_BORDER_BOX);
+          scrbar_thickness_04->maximum(100);
+          scrbar_thickness_04->callback((Fl_Callback*)cb_scrbar_thickness_04);
+          scrbar_thickness_04->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_thickness_04);
+        } // Fl_Scrollbar* scrbar_thickness_04
+        { valinp_thickness_04 = new Fl_Value_Input(285, 80, 40, 20);
+          valinp_thickness_04->box(FL_BORDER_BOX);
+          valinp_thickness_04->maximum(100);
+          valinp_thickness_04->callback((Fl_Callback*)cb_valinp_thickness_04);
+          valinp_thickness_04->align(Fl_Align(FL_ALIGN_RIGHT));
+        } // Fl_Value_Input* valinp_thickness_04
+        group_thickness_04grp->end();
+        Fl_Group::current()->resizable(group_thickness_04grp);
+      } // Fl_Group* group_thickness_04grp
+      o->end();
+    } // Fl_Group* o
     window_thickness->set_non_modal();
+    window_thickness->size_range(230, 106, 600, 106);
     window_thickness->end();
+    window_thickness->resizable(window_thickness);
   } // Fl_Double_Window* window_thickness
   return window_thickness;
 }

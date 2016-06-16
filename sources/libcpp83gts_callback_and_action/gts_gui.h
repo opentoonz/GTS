@@ -1074,6 +1074,11 @@ public:
   Fl_Group *group_thickness_01grp;
   Fl_Choice *choice_thickness_01_tgt_src_preset;
   static Fl_Menu_Item menu_choice_thickness_01_tgt_src_preset[];
+  Fl_Button *button_thickness_01_src;
+private:
+  inline void cb_button_thickness_01_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_01_src(Fl_Button*, void*);
+public:
   Fl_Scrollbar *scrbar_thickness_01;
 private:
   inline void cb_scrbar_thickness_01_i(Fl_Scrollbar*, void*);
@@ -1084,10 +1089,74 @@ private:
   inline void cb_valinp_thickness_01_i(Fl_Value_Input*, void*);
   static void cb_valinp_thickness_01(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_thickness_01_src;
+  Fl_Check_Button *chkbtn_thickness_02_chk;
 private:
-  inline void cb_button_thickness_01_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_01_src(Fl_Button*, void*);
+  inline void cb_chkbtn_thickness_02_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_02_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_02grp;
+  Fl_Choice *choice_thickness_02_tgt_src_preset;
+  static Fl_Menu_Item menu_choice_thickness_02_tgt_src_preset[];
+  Fl_Button *button_thickness_02_src;
+private:
+  inline void cb_button_thickness_02_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_02_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_02;
+private:
+  inline void cb_scrbar_thickness_02_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_02(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_02;
+private:
+  inline void cb_valinp_thickness_02_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_02(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_03_chk;
+private:
+  inline void cb_chkbtn_thickness_03_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_03_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_03grp;
+  Fl_Choice *choice_thickness_03_tgt_src_preset;
+  static Fl_Menu_Item menu_choice_thickness_03_tgt_src_preset[];
+  Fl_Button *button_thickness_03_src;
+private:
+  inline void cb_button_thickness_03_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_03_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_03;
+private:
+  inline void cb_scrbar_thickness_03_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_03(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_03;
+private:
+  inline void cb_valinp_thickness_03_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_03(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_04_chk;
+private:
+  inline void cb_chkbtn_thickness_04_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_04_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_04grp;
+  Fl_Choice *choice_thickness_04_tgt_src_preset;
+  static Fl_Menu_Item menu_choice_thickness_04_tgt_src_preset[];
+  Fl_Button *button_thickness_04_src;
+private:
+  inline void cb_button_thickness_04_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_04_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_04;
+private:
+  inline void cb_scrbar_thickness_04_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_04(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_04;
+private:
+  inline void cb_valinp_thickness_04_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_04(Fl_Value_Input*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

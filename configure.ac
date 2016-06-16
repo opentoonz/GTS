@@ -1,4 +1,4 @@
-AC_INIT([GTS], [2.3.7], [], [GTS], [https://github.com/opentoonz/GTS])
+AC_INIT([GTS], [2.3.8], [], [GTS], [https://github.com/opentoonz/GTS])
 
 AM_INIT_AUTOMAKE([subdir-objects foreign])
 AC_CONFIG_HEADER([config.h])
