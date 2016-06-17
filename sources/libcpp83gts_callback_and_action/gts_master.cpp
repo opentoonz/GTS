@@ -354,6 +354,9 @@ int gts_master::exec( const char *comm )
 	);
 	//ct_gts_master.cl_bro_level.cb_set_image_file_extension();
 
+	/* 二値化処理の初期設定 */
+	this->cl_color_trace_thickness.init();
+
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
 	cl_gts_gui.window_opengl->show();

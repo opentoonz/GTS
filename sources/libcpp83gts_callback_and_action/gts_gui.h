@@ -1066,6 +1066,10 @@ public:
   Fl_Output *norout_crnt_scan_number;
   Fl_Output *norout_next_scan_number;
   Fl_Double_Window *window_thickness;
+private:
+  inline void cb_window_thickness_i(Fl_Double_Window*, void*);
+  static void cb_window_thickness(Fl_Double_Window*, void*);
+public:
   Fl_Check_Button *chkbtn_thickness_01_chk;
 private:
   inline void cb_chkbtn_thickness_01_chk_i(Fl_Check_Button*, void*);
@@ -1073,7 +1077,11 @@ private:
 public:
   Fl_Group *group_thickness_01grp;
   Fl_Choice *choice_thickness_01_tgt_src_preset;
+private:
+  inline void cb_choice_thickness_01_tgt_src_preset_i(Fl_Choice*, void*);
+  static void cb_choice_thickness_01_tgt_src_preset(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_thickness_01_tgt_src_preset[];
+public:
   Fl_Button *button_thickness_01_src;
 private:
   inline void cb_button_thickness_01_src_i(Fl_Button*, void*);
@@ -1096,7 +1104,11 @@ private:
 public:
   Fl_Group *group_thickness_02grp;
   Fl_Choice *choice_thickness_02_tgt_src_preset;
+private:
+  inline void cb_choice_thickness_02_tgt_src_preset_i(Fl_Choice*, void*);
+  static void cb_choice_thickness_02_tgt_src_preset(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_thickness_02_tgt_src_preset[];
+public:
   Fl_Button *button_thickness_02_src;
 private:
   inline void cb_button_thickness_02_src_i(Fl_Button*, void*);
@@ -1119,7 +1131,11 @@ private:
 public:
   Fl_Group *group_thickness_03grp;
   Fl_Choice *choice_thickness_03_tgt_src_preset;
+private:
+  inline void cb_choice_thickness_03_tgt_src_preset_i(Fl_Choice*, void*);
+  static void cb_choice_thickness_03_tgt_src_preset(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_thickness_03_tgt_src_preset[];
+public:
   Fl_Button *button_thickness_03_src;
 private:
   inline void cb_button_thickness_03_src_i(Fl_Button*, void*);
@@ -1142,7 +1158,11 @@ private:
 public:
   Fl_Group *group_thickness_04grp;
   Fl_Choice *choice_thickness_04_tgt_src_preset;
+private:
+  inline void cb_choice_thickness_04_tgt_src_preset_i(Fl_Choice*, void*);
+  static void cb_choice_thickness_04_tgt_src_preset(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_thickness_04_tgt_src_preset[];
+public:
   Fl_Button *button_thickness_04_src;
 private:
   inline void cb_button_thickness_04_src_i(Fl_Button*, void*);

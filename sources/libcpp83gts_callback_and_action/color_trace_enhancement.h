@@ -47,6 +47,15 @@ public:
 	void tgt_set_uchar_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num,
 		int i_red, int i_gre, int i_blu );
 
+	int fl_color_table_from_trace_list_pos(
+		E_COLOR_TRACE_HAB_COLORS e_num
+	);
+	int set_fl_color_of_table(
+		int i_color_number
+		, unsigned char uchar_red
+		, unsigned char uchar_gre
+		, unsigned char uchar_blu
+	);
 private:
 	E_COLOR_TRACE_HAB_COLORS _e_source_color_range;
 	E_COLOR_TRACE_HAB_COLORS _e_target_rgb_color;
@@ -65,11 +74,7 @@ private:
 		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
 	int _src_set_crnt_to_histogram( E_COLOR_TRACE_HAB_COLORS e_num );
 
-	int _tgt_get_i_color_number( E_COLOR_TRACE_HAB_COLORS e_num );
 	int _tgt_set_rgb_color( int i_color_number );
-	int _tgt_set_uchar_rgb_color( int i_color_number,
-		unsigned char uchar_red, unsigned char uchar_gre,
-		unsigned char uchar_blu );
 	int _tgt_redraw_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num );
 	int _tgt_get_uchar_rgb_color( int i_color_number, unsigned char *ucharp_red, unsigned char *ucharp_gre, unsigned char *ucharp_blu );
 	void _tgt_set_uchar_edit_color( unsigned char uchar_red, unsigned char uchar_gre, unsigned char uchar_blu );

@@ -27,6 +27,7 @@
 #include "list_access.h"
 #include "image_mark_access.h"
 #include "color_trace_enhancement.h"
+#include "cb_color_trace_thickness.h"
 #include "memory_scan_area.h"
 #include "memory_short_cut_key.h"
 
@@ -186,6 +187,7 @@ public:
 	list_access		cl_list_access; /* file number list */
 	image_mark_access	cl_image_mark_access;
 	color_trace_enhancement	cl_color_trace_enhancement;
+	cb_color_trace_thickness	cl_color_trace_thickness;
 
 	iip_scan	cl_iip_scan;	/* 画像読み込み */
 	iip_read	cl_iip_read;	/* 画像読込み */
