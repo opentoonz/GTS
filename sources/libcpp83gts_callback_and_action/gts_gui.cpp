@@ -2114,7 +2114,7 @@ void gts_gui::cb_chkbtn_thickness_01_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_choice_thickness_01_tgt_src_preset_i(Fl_Choice* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_preset01(o->value());
+  cl_gts_master.cl_color_trace_thickness.cb_preset_01(o->value());
 }
 void gts_gui::cb_choice_thickness_01_tgt_src_preset(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_thickness_01_tgt_src_preset_i(o,v);
@@ -2129,33 +2129,21 @@ Fl_Menu_Item gts_gui::menu_choice_thickness_01_tgt_src_preset[] = {
 };
 
 void gts_gui::cb_button_thickness_01_src_i(Fl_Button*, void*) {
-  if (   !cl_gts_gui.window_hab_histogram->shown()) {
-	cl_gts_master.cb_color_trace_src_open_01();
-} else {
-	cl_gts_gui.window_hab_histogram->hide();
-};
+  cl_gts_master.cl_color_trace_thickness.cb_src_01();
 }
 void gts_gui::cb_button_thickness_01_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_src_i(o,v);
 }
 
 void gts_gui::cb_scrbar_thickness_01_i(Fl_Scrollbar* o, void*) {
-  // Rewrite for Switching color trace number
-valinp_thickness_01->value(((Fl_Valuator *)o)->value());
-valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_01(o->value());
 }
 void gts_gui::cb_scrbar_thickness_01(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_01_i(o,v);
 }
 
 void gts_gui::cb_valinp_thickness_01_i(Fl_Value_Input* o, void*) {
-  // Rewrite for Switching color trace number
-((Fl_Valuator *)scrbar_thickness_01)->value(o->value());
-valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_01(o->value());
 }
 void gts_gui::cb_valinp_thickness_01(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_01_i(o,v);
@@ -2178,7 +2166,7 @@ void gts_gui::cb_chkbtn_thickness_02_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_choice_thickness_02_tgt_src_preset_i(Fl_Choice* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_preset02(o->value());
+  cl_gts_master.cl_color_trace_thickness.cb_preset_02(o->value());
 }
 void gts_gui::cb_choice_thickness_02_tgt_src_preset(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_thickness_02_tgt_src_preset_i(o,v);
@@ -2193,33 +2181,21 @@ Fl_Menu_Item gts_gui::menu_choice_thickness_02_tgt_src_preset[] = {
 };
 
 void gts_gui::cb_button_thickness_02_src_i(Fl_Button*, void*) {
-  if (   !cl_gts_gui.window_hab_histogram->shown()) {
-	cl_gts_master.cb_color_trace_src_open_02();
-} else {
-	cl_gts_gui.window_hab_histogram->hide();
-};
+  cl_gts_master.cl_color_trace_thickness.cb_src_02();
 }
 void gts_gui::cb_button_thickness_02_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_src_i(o,v);
 }
 
 void gts_gui::cb_scrbar_thickness_02_i(Fl_Scrollbar* o, void*) {
-  // Rewrite for Switching color trace number
-valinp_thickness_02->value(((Fl_Valuator *)o)->value());
-valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_02(o->value());
 }
 void gts_gui::cb_scrbar_thickness_02(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_02_i(o,v);
 }
 
 void gts_gui::cb_valinp_thickness_02_i(Fl_Value_Input* o, void*) {
-  // Rewrite for Switching color trace number
-((Fl_Valuator *)scrbar_thickness_02)->value(o->value());
-valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_02(o->value());
 }
 void gts_gui::cb_valinp_thickness_02(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_02_i(o,v);
@@ -2242,7 +2218,7 @@ void gts_gui::cb_chkbtn_thickness_03_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_choice_thickness_03_tgt_src_preset_i(Fl_Choice* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_preset03(o->value());
+  cl_gts_master.cl_color_trace_thickness.cb_preset_03(o->value());
 }
 void gts_gui::cb_choice_thickness_03_tgt_src_preset(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_thickness_03_tgt_src_preset_i(o,v);
@@ -2257,33 +2233,21 @@ Fl_Menu_Item gts_gui::menu_choice_thickness_03_tgt_src_preset[] = {
 };
 
 void gts_gui::cb_button_thickness_03_src_i(Fl_Button*, void*) {
-  if (   !cl_gts_gui.window_hab_histogram->shown()) {
-	cl_gts_master.cb_color_trace_src_open_03();
-} else {
-	cl_gts_gui.window_hab_histogram->hide();
-};
+  cl_gts_master.cl_color_trace_thickness.cb_src_03();
 }
 void gts_gui::cb_button_thickness_03_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_src_i(o,v);
 }
 
 void gts_gui::cb_scrbar_thickness_03_i(Fl_Scrollbar* o, void*) {
-  // Rewrite for Switching color trace number
-valinp_thickness_03->value(((Fl_Valuator *)o)->value());
-valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_03(o->value());
 }
 void gts_gui::cb_scrbar_thickness_03(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_03_i(o,v);
 }
 
 void gts_gui::cb_valinp_thickness_03_i(Fl_Value_Input* o, void*) {
-  // Rewrite for Switching color trace number
-((Fl_Valuator *)scrbar_thickness_03)->value(o->value());
-valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_03(o->value());
 }
 void gts_gui::cb_valinp_thickness_03(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_03_i(o,v);
@@ -2306,7 +2270,7 @@ void gts_gui::cb_chkbtn_thickness_04_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_choice_thickness_04_tgt_src_preset_i(Fl_Choice* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_preset04(o->value());
+  cl_gts_master.cl_color_trace_thickness.cb_preset_04(o->value());
 }
 void gts_gui::cb_choice_thickness_04_tgt_src_preset(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_thickness_04_tgt_src_preset_i(o,v);
@@ -2321,33 +2285,21 @@ Fl_Menu_Item gts_gui::menu_choice_thickness_04_tgt_src_preset[] = {
 };
 
 void gts_gui::cb_button_thickness_04_src_i(Fl_Button*, void*) {
-  if (   !cl_gts_gui.window_hab_histogram->shown()) {
-	cl_gts_master.cb_color_trace_src_open_04();
-} else {
-	cl_gts_gui.window_hab_histogram->hide();
-};
+  cl_gts_master.cl_color_trace_thickness.cb_src_04();
 }
 void gts_gui::cb_button_thickness_04_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_src_i(o,v);
 }
 
 void gts_gui::cb_scrbar_thickness_04_i(Fl_Scrollbar* o, void*) {
-  // Rewrite for Switching color trace number
-valinp_thickness_04->value(((Fl_Valuator *)o)->value());
-valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_04(o->value());
 }
 void gts_gui::cb_scrbar_thickness_04(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_04_i(o,v);
 }
 
 void gts_gui::cb_valinp_thickness_04_i(Fl_Value_Input* o, void*) {
-  // Rewrite for Switching color trace number
-((Fl_Valuator *)scrbar_thickness_04)->value(o->value());
-valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
-((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_04(o->value());
 }
 void gts_gui::cb_valinp_thickness_04(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_04_i(o,v);
@@ -3955,7 +3907,6 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_thickness_01->type(1);
           scrbar_thickness_01->box(FL_BORDER_BOX);
           scrbar_thickness_01->maximum(100);
-          scrbar_thickness_01->step(0.1);
           scrbar_thickness_01->callback((Fl_Callback*)cb_scrbar_thickness_01);
           scrbar_thickness_01->align(Fl_Align(FL_ALIGN_LEFT));
           Fl_Group::current()->resizable(scrbar_thickness_01);
@@ -3994,7 +3945,6 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_thickness_02->type(1);
           scrbar_thickness_02->box(FL_BORDER_BOX);
           scrbar_thickness_02->maximum(100);
-          scrbar_thickness_02->step(0.1);
           scrbar_thickness_02->callback((Fl_Callback*)cb_scrbar_thickness_02);
           scrbar_thickness_02->align(Fl_Align(FL_ALIGN_LEFT));
           Fl_Group::current()->resizable(scrbar_thickness_02);
@@ -4033,7 +3983,6 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_thickness_03->type(1);
           scrbar_thickness_03->box(FL_BORDER_BOX);
           scrbar_thickness_03->maximum(100);
-          scrbar_thickness_03->step(0.1);
           scrbar_thickness_03->callback((Fl_Callback*)cb_scrbar_thickness_03);
           scrbar_thickness_03->align(Fl_Align(FL_ALIGN_LEFT));
           Fl_Group::current()->resizable(scrbar_thickness_03);
@@ -4072,7 +4021,6 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_thickness_04->type(1);
           scrbar_thickness_04->box(FL_BORDER_BOX);
           scrbar_thickness_04->maximum(100);
-          scrbar_thickness_04->step(0.1);
           scrbar_thickness_04->callback((Fl_Callback*)cb_scrbar_thickness_04);
           scrbar_thickness_04->align(Fl_Align(FL_ALIGN_LEFT));
           Fl_Group::current()->resizable(scrbar_thickness_04);
@@ -4090,7 +4038,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     window_thickness->set_non_modal();
-    window_thickness->size_range(230, 106, 1280, 106);
+    window_thickness->size_range(230, 106, 1230, 106);
     window_thickness->end();
     window_thickness->resizable(window_thickness);
   } // Fl_Double_Window* window_thickness
