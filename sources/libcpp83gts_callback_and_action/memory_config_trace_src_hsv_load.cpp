@@ -11,13 +11,16 @@ E_MEMORY_CONFIG_LOAD_RET memory_config::_load_trace_src_hsv_by_fp( int i_num, ch
 
 	if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_01_chk_)) {
-		cl_gts_gui.chkbtn_color_trace_01_chk->value(
-			this->_chk_ON_OFF( cp2 )
-		);
+		const int chk = this->_chk_ON_OFF( cp2 );
+		cl_gts_gui.chkbtn_color_trace_01_chk->value( chk );
+		cl_gts_gui.chkbtn_thickness_01_chk->value( chk );
+
 		if (cl_gts_gui.chkbtn_color_trace_01_chk->value()) {
 			cl_gts_gui.group_color_trace_01grp->activate();
+			cl_gts_gui.group_thickness_01grp->activate();
 		} else {
 			cl_gts_gui.group_color_trace_01grp->deactivate();
+			cl_gts_gui.group_thickness_01grp->deactivate();
 		}
 	}
 	else if ((2 == i_num) &&
@@ -40,6 +43,8 @@ E_MEMORY_CONFIG_LOAD_RET memory_config::_load_trace_src_hsv_by_fp( int i_num, ch
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_aa_min)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_01);
 	}
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_01_src_aa_max_ )) {
@@ -61,6 +66,8 @@ E_MEMORY_CONFIG_LOAD_RET memory_config::_load_trace_src_hsv_by_fp( int i_num, ch
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_bb_max)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_01);
 	}
 	else if ((4 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_01_tgt_rgb_ )) {
@@ -72,18 +79,29 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_01_tgt_rgb->redraw();
 	}
+	else if ((2 == i_num) &&
+	!strcmp( cp1,this->str_color_trace_01_tgt_color_ )) {
+		 cl_gts_gui.choice_thickness_01_tgt_src_preset->value(
+		  cl_gts_gui.choice_thickness_01_tgt_src_preset->find_index(
+		   cp2
+		  )
+		 );
+	}
 
 	/* 02 ------------------------------------------------*/
 
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_02_chk_)) {
-		cl_gts_gui.chkbtn_color_trace_02_chk->value(
-			this->_chk_ON_OFF( cp2 )
-		);
+		const int chk = this->_chk_ON_OFF( cp2 );
+		cl_gts_gui.chkbtn_color_trace_02_chk->value( chk );
+		cl_gts_gui.chkbtn_thickness_02_chk->value( chk );
+
 		if (cl_gts_gui.chkbtn_color_trace_02_chk->value()) {
 			cl_gts_gui.group_color_trace_02grp->activate();
+			cl_gts_gui.group_thickness_02grp->activate();
 		} else {
 			cl_gts_gui.group_color_trace_02grp->deactivate();
+			cl_gts_gui.group_thickness_02grp->deactivate();
 		}
 	}
 	else if ((2 == i_num) &&
@@ -106,6 +124,8 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_aa_min)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_02);
 	}
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_02_src_aa_max_ )) {
@@ -127,6 +147,8 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_bb_max)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_02);
 	}
 	else if ((4 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_02_tgt_rgb_ )) {
@@ -138,18 +160,29 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_02_tgt_rgb->redraw();
 	}
+	else if ((2 == i_num) &&
+	!strcmp( cp1,this->str_color_trace_02_tgt_color_ )) {
+		 cl_gts_gui.choice_thickness_02_tgt_src_preset->value(
+		  cl_gts_gui.choice_thickness_02_tgt_src_preset->find_index(
+		   cp2
+		  )
+		 );
+	}
 
 	/* 03 ------------------------------------------------*/
 
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_03_chk_)) {
-		cl_gts_gui.chkbtn_color_trace_03_chk->value(
-			this->_chk_ON_OFF( cp2 )
-		);
+		const int chk = this->_chk_ON_OFF( cp2 );
+		cl_gts_gui.chkbtn_color_trace_03_chk->value( chk );
+		cl_gts_gui.chkbtn_thickness_03_chk->value( chk );
+
 		if (cl_gts_gui.chkbtn_color_trace_03_chk->value()) {
 			cl_gts_gui.group_color_trace_03grp->activate();
+			cl_gts_gui.group_thickness_03grp->activate();
 		} else {
 			cl_gts_gui.group_color_trace_03grp->deactivate();
+			cl_gts_gui.group_thickness_03grp->deactivate();
 		}
 	}
 	else if ((2 == i_num) &&
@@ -172,6 +205,8 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_aa_min)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_03);
 	}
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_03_src_aa_max_ )) {
@@ -193,6 +228,8 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_bb_max)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_03);
 	}
 	else if ((4 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_03_tgt_rgb_ )) {
@@ -204,18 +241,29 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_03_tgt_rgb->redraw();
 	}
+	else if ((2 == i_num) &&
+	!strcmp( cp1,this->str_color_trace_03_tgt_color_ )) {
+		 cl_gts_gui.choice_thickness_03_tgt_src_preset->value(
+		  cl_gts_gui.choice_thickness_03_tgt_src_preset->find_index(
+		   cp2
+		  )
+		 );
+	}
 
 	/* 04 ------------------------------------------------*/
 
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_04_chk_)) {
-		cl_gts_gui.chkbtn_color_trace_04_chk->value(
-			this->_chk_ON_OFF( cp2 )
-		);
+		const int chk = this->_chk_ON_OFF( cp2 );
+		cl_gts_gui.chkbtn_color_trace_04_chk->value( chk );
+		cl_gts_gui.chkbtn_thickness_04_chk->value( chk );
+
 		if (cl_gts_gui.chkbtn_color_trace_04_chk->value()) {
 			cl_gts_gui.group_color_trace_04grp->activate();
+			cl_gts_gui.group_thickness_04grp->activate();
 		} else {
 			cl_gts_gui.group_color_trace_04grp->deactivate();
+			cl_gts_gui.group_thickness_04grp->deactivate();
 		}
 	}
 	else if ((2 == i_num) &&
@@ -238,6 +286,8 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_aa_min)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_04);
 	}
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_04_src_aa_max_ )) {
@@ -259,6 +309,8 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atof(cp2));
 ((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_bb_max)->value(
 			atof(cp2));
+		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
+			E_COLOR_TRACE_HAB_04);
 	}
 	else if ((4 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_04_tgt_rgb_ )) {
@@ -270,14 +322,22 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_04_tgt_rgb->redraw();
 	}
+	else if ((2 == i_num) &&
+	!strcmp( cp1,this->str_color_trace_04_tgt_color_ )) {
+		 cl_gts_gui.choice_thickness_04_tgt_src_preset->value(
+		  cl_gts_gui.choice_thickness_04_tgt_src_preset->find_index(
+		   cp2
+		  )
+		 );
+	}
 
 	/* 05 ------------------------------------------------*/
 
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_05_chk_)) {
-		cl_gts_gui.chkbtn_color_trace_05_chk->value(
-			this->_chk_ON_OFF( cp2 )
-		);
+		const int chk = this->_chk_ON_OFF( cp2 );
+		cl_gts_gui.chkbtn_color_trace_05_chk->value( chk );
+
 		if (cl_gts_gui.chkbtn_color_trace_05_chk->value()) {
 			cl_gts_gui.group_color_trace_05grp->activate();
 		} else {
@@ -341,9 +401,9 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 
 	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_06_chk_)) {
-		cl_gts_gui.chkbtn_color_trace_06_chk->value(
-			this->_chk_ON_OFF( cp2 )
-		);
+		const int chk = this->_chk_ON_OFF( cp2 );
+		cl_gts_gui.chkbtn_color_trace_06_chk->value( chk );
+
 		if (cl_gts_gui.chkbtn_color_trace_06_chk->value()) {
 			cl_gts_gui.group_color_trace_06grp->activate();
 		} else {

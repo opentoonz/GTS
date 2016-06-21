@@ -36,6 +36,8 @@ public:
 	void cb_enh_03( void );
 	void cb_enh_04( void );
 
+	void set_scrbar_inpval( E_COLOR_TRACE_HAB_COLORS col_tra_num );
+
 private:
 	// BL
 	double src_bl_hmin_=  0.;

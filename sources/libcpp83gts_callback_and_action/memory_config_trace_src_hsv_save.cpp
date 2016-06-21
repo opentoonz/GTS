@@ -7,6 +7,7 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 	const char *ccp_chk = "%-24s %s\n";
 	const char *ccp_src = "%-24s %.16g\n";
 	const char *ccp_tgt = "%-24s %d %d %d\n";
+	const char *ccp_col = "%-24s \"%s\"\n";
 
 	int	i_ret;
 	unsigned char uchar_red, uchar_gre, uchar_blu;
@@ -45,9 +46,15 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
 		E_COLOR_TRACE_HAB_01,
 		&uchar_red, &uchar_gre, &uchar_blu );
-
 	i_ret = fprintf(fp, ccp_tgt, this->str_color_trace_01_tgt_rgb_,
 		uchar_red, uchar_gre, uchar_blu );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_01_tgt_color_,
+		cl_gts_gui.choice_thickness_01_tgt_src_preset->text(
+		 cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
+		)
+	);
 	if (i_ret < 0) { return NG; }
 
 	/* 02 ------------------------------------------------*/
@@ -88,6 +95,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_02_tgt_color_,
+		cl_gts_gui.choice_thickness_02_tgt_src_preset->text(
+		 cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
+		)
+	);
+	if (i_ret < 0) { return NG; }
+
 	/* 03 ------------------------------------------------*/
 
 	i_ret = fprintf(fp, ccp_chk, this->str_color_trace_03_chk_,
@@ -126,6 +140,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_03_tgt_color_,
+		cl_gts_gui.choice_thickness_03_tgt_src_preset->text(
+		 cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
+		)
+	);
+	if (i_ret < 0) { return NG; }
+
 	/* 04 ------------------------------------------------*/
 
 	i_ret = fprintf(fp, ccp_chk, this->str_color_trace_04_chk_,
@@ -162,6 +183,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		&uchar_red, &uchar_gre, &uchar_blu );
 	i_ret = fprintf(fp, ccp_tgt, this->str_color_trace_04_tgt_rgb_,
 		uchar_red, uchar_gre, uchar_blu );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_04_tgt_color_,
+		cl_gts_gui.choice_thickness_04_tgt_src_preset->text(
+		 cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
+		)
+	);
 	if (i_ret < 0) { return NG; }
 
 	/* 05 ------------------------------------------------*/

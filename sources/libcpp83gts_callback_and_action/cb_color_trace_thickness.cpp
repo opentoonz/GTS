@@ -611,3 +611,17 @@ void cb_color_trace_thickness::cb_enh_04( void )
 		,cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
 	);
 }
+
+//----------
+void cb_color_trace_thickness::set_scrbar_inpval(
+	E_COLOR_TRACE_HAB_COLORS col_tra_num
+)
+{
+	switch (col_tra_num) {
+	case E_COLOR_TRACE_HAB_01: this->cb_enh_01(); break;
+	case E_COLOR_TRACE_HAB_02: this->cb_enh_02(); break;
+	case E_COLOR_TRACE_HAB_03: this->cb_enh_03(); break;
+	case E_COLOR_TRACE_HAB_04: this->cb_enh_04(); break;
+	}
+}
+//----------
