@@ -2,6 +2,7 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
+/* "Color Trace Enhancement"ウインドウの各tgtボタンの色を設定して再表示 */
 void cb_color_trace_thickness::set_tgt_color_(
 	const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	, const int color_choice_from_gui
@@ -52,6 +53,8 @@ void cb_color_trace_thickness::set_tgt_color_(
  cl_gts_gui.button_color_trace_04_tgt_rgb->redraw(); break;
 	}
 }
+
+/* "Color Trace Enhancement"ウインドウの各scr,val値を設定再表示 */
 void cb_color_trace_thickness::set_src_color_(
 	const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	, const int color_choice_from_gui
@@ -214,6 +217,9 @@ void cb_color_trace_thickness::set_src_color_(
 	scrbar_vmin->value(vmin); valinp_vmin->value(vmin);
 	scrbar_vmax->value(vmax); valinp_vmax->value(vmax);
 }
+
+/* "Color Trace Enhancement"ウインドウの各val値を、
+"Thickness"ウインドウの各値に移し再表示 */
 void cb_color_trace_thickness::set_thickness_(
 	const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	, const int color_choice_from_gui
@@ -226,16 +232,16 @@ void cb_color_trace_thickness::set_thickness_(
 		switch (trace_list_pos)
 		{
 		case E_COLOR_TRACE_HAB_01:
-	thickness = cl_gts_gui.scrbar_color_trace_01_src_bb_max->value();
+	thickness = cl_gts_gui.valinp_color_trace_01_src_bb_max->value();
 			break;
 		case E_COLOR_TRACE_HAB_02:
-	thickness = cl_gts_gui.scrbar_color_trace_02_src_bb_max->value();
+	thickness = cl_gts_gui.valinp_color_trace_02_src_bb_max->value();
 			break;
 		case E_COLOR_TRACE_HAB_03:
-	thickness = cl_gts_gui.scrbar_color_trace_03_src_bb_max->value();
+	thickness = cl_gts_gui.valinp_color_trace_03_src_bb_max->value();
 			break;
 		case E_COLOR_TRACE_HAB_04:
-	thickness = cl_gts_gui.scrbar_color_trace_04_src_bb_max->value();
+	thickness = cl_gts_gui.valinp_color_trace_04_src_bb_max->value();
 			break;
 		}
 		break;
@@ -245,20 +251,22 @@ void cb_color_trace_thickness::set_thickness_(
 		switch (trace_list_pos)
 		{
 		case E_COLOR_TRACE_HAB_01:
-	thickness = cl_gts_gui.scrbar_color_trace_01_src_aa_min->value();
+	thickness = cl_gts_gui.valinp_color_trace_01_src_aa_min->value();
 			break;
 		case E_COLOR_TRACE_HAB_02:
-	thickness = cl_gts_gui.scrbar_color_trace_02_src_aa_min->value();
+	thickness = cl_gts_gui.valinp_color_trace_02_src_aa_min->value();
 			break;
 		case E_COLOR_TRACE_HAB_03:
-	thickness = cl_gts_gui.scrbar_color_trace_03_src_aa_min->value();
+	thickness = cl_gts_gui.valinp_color_trace_03_src_aa_min->value();
 			break;
 		case E_COLOR_TRACE_HAB_04:
-	thickness = cl_gts_gui.scrbar_color_trace_04_src_aa_min->value();
+	thickness = cl_gts_gui.valinp_color_trace_04_src_aa_min->value();
 			break;
 		}
 		break;
  	}
+
+	thickness = 100.0 - thickness;
 
 	switch (trace_list_pos)
 	{
@@ -280,67 +288,11 @@ void cb_color_trace_thickness::set_thickness_(
 		break;
 	}
 }
-//-----------------------------------------------------------
-void cb_color_trace_thickness::init( void )
-{
-	this->cb_preset_01(
-		cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
-	);
-	this->cb_preset_02(
-		cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
-	);
-	this->cb_preset_03(
-		cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
-	);
-	this->cb_preset_04(
-		cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
-	);
-}
 
-void cb_color_trace_thickness::cb_preset_01( const int choice )
-{
-	this->set_tgt_color_( E_COLOR_TRACE_HAB_01 ,choice );
-	this->set_src_color_( E_COLOR_TRACE_HAB_01 ,choice );
-	this->set_thickness_( E_COLOR_TRACE_HAB_01 ,choice );
-
-	/* "Edit HSV-MinMax"の表示変更 */
-	cl_gts_master.cb_color_trace_src_edit_value();
-}
-
-void cb_color_trace_thickness::cb_preset_02( const int choice )
-{
-	this->set_tgt_color_( E_COLOR_TRACE_HAB_02 ,choice );
-	this->set_src_color_( E_COLOR_TRACE_HAB_02 ,choice );
-	this->set_thickness_( E_COLOR_TRACE_HAB_02 ,choice );
-
-	/* "Edit HSV-MinMax"の表示変更 */
-	cl_gts_master.cb_color_trace_src_edit_value();
-}
-
-void cb_color_trace_thickness::cb_preset_03( const int choice )
-{
-	this->set_tgt_color_( E_COLOR_TRACE_HAB_03 ,choice );
-	this->set_src_color_( E_COLOR_TRACE_HAB_03 ,choice );
-	this->set_thickness_( E_COLOR_TRACE_HAB_03 ,choice );
-
-	/* "Edit HSV-MinMax"の表示変更 */
-	cl_gts_master.cb_color_trace_src_edit_value();
-}
-
-void cb_color_trace_thickness::cb_preset_04( const int choice )
-{
-	this->set_tgt_color_( E_COLOR_TRACE_HAB_04 ,choice );
-	this->set_src_color_( E_COLOR_TRACE_HAB_04 ,choice );
-	this->set_thickness_( E_COLOR_TRACE_HAB_04 ,choice );
-
-	/* "Edit HSV-MinMax"の表示変更 */
-	cl_gts_master.cb_color_trace_src_edit_value();
-}
-
-//--------------------------------------------------------------
-
+//----------
 namespace {
- void set_val_and_scr(
+ /* 指定値で"Color Trace Enhancement"ウインドウの各scr,val値を設定再表示 */
+ void set_enh_val_and_scr(
 	const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	, const int color_choice_from_gui
 	, double value
@@ -400,7 +352,67 @@ namespace {
  }
 }
 
-//-----------------------------
+//----------------------------------------------------------------------
+
+//----------
+void cb_color_trace_thickness::init( void )
+{
+	this->cb_preset_01(
+		cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
+	);
+	this->cb_preset_02(
+		cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
+	);
+	this->cb_preset_03(
+		cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
+	);
+	this->cb_preset_04(
+		cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
+	);
+}
+
+//----------
+void cb_color_trace_thickness::cb_preset_01( const int choice )
+{
+	this->set_tgt_color_( E_COLOR_TRACE_HAB_01 ,choice );
+	this->set_src_color_( E_COLOR_TRACE_HAB_01 ,choice );
+	this->set_thickness_( E_COLOR_TRACE_HAB_01 ,choice );
+
+	/* "Edit HSV-MinMax"の表示変更 */
+	cl_gts_master.cb_color_trace_src_edit_value();
+}
+
+void cb_color_trace_thickness::cb_preset_02( const int choice )
+{
+	this->set_tgt_color_( E_COLOR_TRACE_HAB_02 ,choice );
+	this->set_src_color_( E_COLOR_TRACE_HAB_02 ,choice );
+	this->set_thickness_( E_COLOR_TRACE_HAB_02 ,choice );
+
+	/* "Edit HSV-MinMax"の表示変更 */
+	cl_gts_master.cb_color_trace_src_edit_value();
+}
+
+void cb_color_trace_thickness::cb_preset_03( const int choice )
+{
+	this->set_tgt_color_( E_COLOR_TRACE_HAB_03 ,choice );
+	this->set_src_color_( E_COLOR_TRACE_HAB_03 ,choice );
+	this->set_thickness_( E_COLOR_TRACE_HAB_03 ,choice );
+
+	/* "Edit HSV-MinMax"の表示変更 */
+	cl_gts_master.cb_color_trace_src_edit_value();
+}
+
+void cb_color_trace_thickness::cb_preset_04( const int choice )
+{
+	this->set_tgt_color_( E_COLOR_TRACE_HAB_04 ,choice );
+	this->set_src_color_( E_COLOR_TRACE_HAB_04 ,choice );
+	this->set_thickness_( E_COLOR_TRACE_HAB_04 ,choice );
+
+	/* "Edit HSV-MinMax"の表示変更 */
+	cl_gts_master.cb_color_trace_src_edit_value();
+}
+
+//----------
 void cb_color_trace_thickness::cb_src_01( void )
 {
 	/* トレス番号を取っておく */
@@ -478,11 +490,11 @@ void cb_color_trace_thickness::cb_src_04( void )
 	}
 }
 
-//-----------------------------
+//----------
 void cb_color_trace_thickness::cb_scrbar_01( const double value )
 {
 	cl_gts_gui.valinp_thickness_01->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_01
 		,cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
 		,value
@@ -493,7 +505,7 @@ void cb_color_trace_thickness::cb_valinp_01( const double value )
 {
 	((Fl_Valuator *)
 	cl_gts_gui.scrbar_thickness_01)->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_01
 		,cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
 		,value
@@ -504,7 +516,7 @@ void cb_color_trace_thickness::cb_valinp_01( const double value )
 void cb_color_trace_thickness::cb_scrbar_02( const double value )
 {
 	cl_gts_gui.valinp_thickness_02->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_02
 		,cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
 		,value
@@ -515,7 +527,7 @@ void cb_color_trace_thickness::cb_valinp_02( const double value )
 {
 	((Fl_Valuator *)
 	cl_gts_gui.scrbar_thickness_02)->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_02
 		,cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
 		,value
@@ -526,7 +538,7 @@ void cb_color_trace_thickness::cb_valinp_02( const double value )
 void cb_color_trace_thickness::cb_scrbar_03( const double value )
 {
 	cl_gts_gui.valinp_thickness_03->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_03
 		,cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
 		,value
@@ -537,7 +549,7 @@ void cb_color_trace_thickness::cb_valinp_03( const double value )
 {
 	((Fl_Valuator *)
 	cl_gts_gui.scrbar_thickness_03)->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_03
 		,cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
 		,value
@@ -548,7 +560,7 @@ void cb_color_trace_thickness::cb_valinp_03( const double value )
 void cb_color_trace_thickness::cb_scrbar_04( const double value )
 {
 	cl_gts_gui.valinp_thickness_04->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_04
 		,cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
 		,value
@@ -559,10 +571,43 @@ void cb_color_trace_thickness::cb_valinp_04( const double value )
 {
 	((Fl_Valuator *)
 	cl_gts_gui.scrbar_thickness_04)->value(value);
-	set_val_and_scr(
+	set_enh_val_and_scr(
 		E_COLOR_TRACE_HAB_04
 		,cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
 		,value
 	);
 	cl_gts_master.cb_color_trace_src_edit_value();
+}
+
+//----------
+void cb_color_trace_thickness::cb_enh_01( void )
+{
+	this->set_thickness_(
+		E_COLOR_TRACE_HAB_01
+		,cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
+	);
+}
+
+void cb_color_trace_thickness::cb_enh_02( void )
+{
+	this->set_thickness_(
+		E_COLOR_TRACE_HAB_02
+		,cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
+	);
+}
+
+void cb_color_trace_thickness::cb_enh_03( void )
+{
+	this->set_thickness_(
+		E_COLOR_TRACE_HAB_03
+		,cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
+	);
+}
+
+void cb_color_trace_thickness::cb_enh_04( void )
+{
+	this->set_thickness_(
+		E_COLOR_TRACE_HAB_04
+		,cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
+	);
 }

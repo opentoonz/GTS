@@ -29,6 +29,13 @@ public:
 	void cb_valinp_03( const double value );
 	void cb_valinp_04( const double value );
 
+	//-------------------------------------
+
+	void cb_enh_01( void );
+	void cb_enh_02( void );
+	void cb_enh_03( void );
+	void cb_enh_04( void );
+
 private:
 	// BL
 	double src_bl_hmin_=  0.;
@@ -74,14 +81,20 @@ private:
 	const int tgt_b_gre_ =  0;
 	const int tgt_b_blu_ =0xff;
 
+	/* "Color Trace Enhancement"ウインドウの各tgtボタン色設定し再表示 */
 	void set_tgt_color_(
 		const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 		, const int color_choice_from_gui
 	);
+
+	/* "Color Trace Enhancement"ウインドウの各scr,val値を設定再表示 */
 	void set_src_color_(
 		const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 		, const int color_choice_from_gui
 	);
+
+	/* "Color Trace Enhancement"ウインドウの各val値を、
+	"Thickness"ウインドウの各値に移し再表示 */
 	void set_thickness_(
 		const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 		, const int color_choice_from_gui

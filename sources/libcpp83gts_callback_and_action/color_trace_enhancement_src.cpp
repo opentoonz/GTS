@@ -284,6 +284,25 @@ int color_trace_enhancement::src_edit_hh( E_COLOR_TRACE_HAB_COLORS e_num, double
 	scrp_max->value(d_max);
 	return OK;
 }
+namespace {
+ void set_thickness_srcbar_inpval_( E_COLOR_TRACE_HAB_COLORS e_num )
+ {
+	switch (e_num) {
+	case E_COLOR_TRACE_HAB_01:
+		cl_gts_master.cl_color_trace_thickness.cb_enh_01();
+		break;
+	case E_COLOR_TRACE_HAB_02:
+		cl_gts_master.cl_color_trace_thickness.cb_enh_02();
+		break;
+	case E_COLOR_TRACE_HAB_03:
+		cl_gts_master.cl_color_trace_thickness.cb_enh_03();
+		break;
+	case E_COLOR_TRACE_HAB_04:
+		cl_gts_master.cl_color_trace_thickness.cb_enh_04();
+		break;
+	}
+ }
+}
 int color_trace_enhancement::src_edit_aa( E_COLOR_TRACE_HAB_COLORS e_num, double d_min, double d_max )
 {
 	Fl_Value_Input	*inpp_min, *inpp_max;
@@ -307,6 +326,10 @@ int color_trace_enhancement::src_edit_aa( E_COLOR_TRACE_HAB_COLORS e_num, double
 	scrp_min->value(d_min*100.0);
 	inpp_max->value(d_max*100.0);
 	scrp_max->value(d_max*100.0);
+
+	/* 元値の変更に合わせて"thickness"ウインドウのGUIの変更 */
+	set_thickness_srcbar_inpval_(e_num);
+
 	return OK;
 }
 int color_trace_enhancement::src_edit_bb( E_COLOR_TRACE_HAB_COLORS e_num, double d_min, double d_max )
@@ -332,6 +355,10 @@ int color_trace_enhancement::src_edit_bb( E_COLOR_TRACE_HAB_COLORS e_num, double
 	scrp_min->value(d_min*100.0);
 	inpp_max->value(d_max*100.0);
 	scrp_max->value(d_max*100.0);
+
+	/* 元値の変更に合わせて"thickness"ウインドウのGUIの変更 */
+	set_thickness_srcbar_inpval_(e_num);
+
 	return OK;
 }
 

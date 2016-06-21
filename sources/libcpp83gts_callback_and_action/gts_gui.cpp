@@ -1050,6 +1050,7 @@ void gts_gui::cb_scrbar_color_trace_01_src_hh_max(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_01_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_aa_min->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_01_src_aa_min(Fl_Scrollbar* o, void* v) {
@@ -1074,6 +1075,7 @@ void gts_gui::cb_scrbar_color_trace_01_src_bb_min(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_01_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_01_src_bb_max(Fl_Scrollbar* o, void* v) {
@@ -1261,6 +1263,7 @@ void gts_gui::cb_valinp_color_trace_01_src_hh_max(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_01_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_aa_min)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_01_src_aa_min(Fl_Value_Input* o, void* v) {
@@ -1285,6 +1288,7 @@ void gts_gui::cb_valinp_color_trace_01_src_bb_min(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_01_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_01_src_bb_max(Fl_Value_Input* o, void* v) {
@@ -1339,6 +1343,7 @@ void gts_gui::cb_scrbar_color_trace_02_src_hh_max(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_02_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_aa_min->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_02_src_aa_min(Fl_Scrollbar* o, void* v) {
@@ -1363,6 +1368,7 @@ void gts_gui::cb_scrbar_color_trace_02_src_bb_min(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_02_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_02_src_bb_max(Fl_Scrollbar* o, void* v) {
@@ -1387,6 +1393,7 @@ void gts_gui::cb_valinp_color_trace_02_src_hh_max(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_02_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_aa_min)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_02_src_aa_min(Fl_Value_Input* o, void* v) {
@@ -1411,6 +1418,7 @@ void gts_gui::cb_valinp_color_trace_02_src_bb_min(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_02_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_02_src_bb_max(Fl_Value_Input* o, void* v) {
@@ -1465,6 +1473,7 @@ void gts_gui::cb_scrbar_color_trace_03_src_hh_max(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_03_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_aa_min->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_03_src_aa_min(Fl_Scrollbar* o, void* v) {
@@ -1489,6 +1498,7 @@ void gts_gui::cb_scrbar_color_trace_03_src_bb_min(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_03_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_03_src_bb_max(Fl_Scrollbar* o, void* v) {
@@ -1513,6 +1523,7 @@ void gts_gui::cb_valinp_color_trace_03_src_hh_max(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_03_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_aa_min)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_03_src_aa_min(Fl_Value_Input* o, void* v) {
@@ -1537,6 +1548,7 @@ void gts_gui::cb_valinp_color_trace_03_src_bb_min(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_03_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_03_src_bb_max(Fl_Value_Input* o, void* v) {
@@ -1591,6 +1603,7 @@ void gts_gui::cb_scrbar_color_trace_04_src_hh_max(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_04_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_aa_min->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_04_src_aa_min(Fl_Scrollbar* o, void* v) {
@@ -1615,6 +1628,7 @@ void gts_gui::cb_scrbar_color_trace_04_src_bb_min(Fl_Scrollbar* o, void* v) {
 
 void gts_gui::cb_scrbar_color_trace_04_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_scrbar_color_trace_04_src_bb_max(Fl_Scrollbar* o, void* v) {
@@ -1639,6 +1653,7 @@ void gts_gui::cb_valinp_color_trace_04_src_hh_max(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_04_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_aa_min)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_04_src_aa_min(Fl_Value_Input* o, void* v) {
@@ -1663,6 +1678,7 @@ void gts_gui::cb_valinp_color_trace_04_src_bb_min(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_valinp_color_trace_04_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
+cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
 }
 void gts_gui::cb_valinp_color_trace_04_src_bb_max(Fl_Value_Input* o, void* v) {
