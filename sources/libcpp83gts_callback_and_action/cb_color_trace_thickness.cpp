@@ -226,9 +226,8 @@ void cb_color_trace_thickness::set_thickness_(
 )
 {
 	double thickness;
-	switch (color_choice_from_gui)
+	if (color_choice_from_gui == 0) // BL
 	{
-	case 0: // BL
 		switch (trace_list_pos)
 		{
 		case E_COLOR_TRACE_HAB_01:
@@ -244,10 +243,8 @@ void cb_color_trace_thickness::set_thickness_(
 	thickness = cl_gts_gui.valinp_color_trace_04_src_bb_max->value();
 			break;
 		}
-		break;
-	case 1: // R
-	case 2: // G
-	case 3: // B
+	}
+	else { // R,G,B
 		switch (trace_list_pos)
 		{
 		case E_COLOR_TRACE_HAB_01:
@@ -263,10 +260,8 @@ void cb_color_trace_thickness::set_thickness_(
 	thickness = cl_gts_gui.valinp_color_trace_04_src_aa_min->value();
 			break;
 		}
-		break;
+		thickness = 100.0 - thickness;
  	}
-
-	thickness = 100.0 - thickness;
 
 	switch (trace_list_pos)
 	{
@@ -323,7 +318,8 @@ namespace {
 		cl_gts_gui.scrbar_color_trace_04_src_bb_max)->value(value);
 		break;
 	 }
-	} else { // R,G,B
+	}
+	else { // R,G,B
 	 value = 100.0 - value;
 	 switch (trace_list_pos)
 	 {
