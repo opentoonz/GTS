@@ -225,7 +225,7 @@ void cb_color_trace_thickness::set_thickness_(
 	, const int color_choice_from_gui
 )
 {
-	int thickness;
+	double thickness;
 	switch (color_choice_from_gui)
 	{
 	case 0: // BL
@@ -271,19 +271,19 @@ void cb_color_trace_thickness::set_thickness_(
 	switch (trace_list_pos)
 	{
 	case E_COLOR_TRACE_HAB_01:
-		cl_gts_gui.scrbar_thickness_01->value(thickness);
+		((Fl_Valuator *)cl_gts_gui.scrbar_thickness_01)->value(thickness);
 		cl_gts_gui.valinp_thickness_01->value(thickness);
 		break;
 	case E_COLOR_TRACE_HAB_02:
-		cl_gts_gui.scrbar_thickness_02->value(thickness);
+		((Fl_Valuator *)cl_gts_gui.scrbar_thickness_02)->value(thickness);
 		cl_gts_gui.valinp_thickness_02->value(thickness);
 		break;
 	case E_COLOR_TRACE_HAB_03:
-		cl_gts_gui.scrbar_thickness_03->value(thickness);
+		((Fl_Valuator *)cl_gts_gui.scrbar_thickness_03)->value(thickness);
 		cl_gts_gui.valinp_thickness_03->value(thickness);
 		break;
 	case E_COLOR_TRACE_HAB_04:
-		cl_gts_gui.scrbar_thickness_04->value(thickness);
+		((Fl_Valuator *)cl_gts_gui.scrbar_thickness_04)->value(thickness);
 		cl_gts_gui.valinp_thickness_04->value(thickness);
 		break;
 	}

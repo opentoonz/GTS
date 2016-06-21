@@ -190,7 +190,15 @@ int memory_desktop::load( void ) {
 		//cl_gts_gui.menite_next_scan->set();
 			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
-		} else {
+		} else
+		if (  (STR_WINDOW_THICKNESS==key) && (6==ret)) {
+			if (di == "show") {
+		cl_gts_gui.window_thickness->show();
+		cl_gts_gui.menite_thickness->set();
+			}
+		cl_gts_gui.window_thickness->resize(xx,yy,ww,hh);
+		} else
+		{
 			pri_funct_err_bttvr(
 				"Warning : bad line<%s>", buf );
 			return NG;

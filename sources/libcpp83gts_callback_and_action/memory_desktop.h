@@ -23,6 +23,8 @@
 #  define STR_SANE_DEVICE_NAME		 "sane_device_name"
 # endif
 
+#define STR_WINDOW_THICKNESS		 "window_thickness"
+
 /*                                        1234567890123456789012345678 */
 
 #define STR_WINDOW_SHOW	"show"
