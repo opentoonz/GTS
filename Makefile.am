@@ -237,6 +237,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_config_trace_src_hsv_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
+					sources/libcpp83gts_callback_and_action/memory_install_setup.cpp \
 					sources/libcpp83gts_callback_and_action/memory_scan_area.cpp \
 					sources/libcpp83gts_callback_and_action/memory_short_cut_key.cpp
 

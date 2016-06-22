@@ -8,6 +8,34 @@ public:
 	cb_color_trace_thickness()
 	{
 	}
+	void set_bla_hue_min(const double val) {this->src_bla_hue_min_=val;}
+	void set_bla_hue_max(const double val) {this->src_bla_hue_max_=val;}
+	void set_bla_sat_min(const double val) {this->src_bla_sat_min_=val;}
+	void set_bla_sat_max(const double val) {this->src_bla_sat_max_=val;}
+	void set_bla_val_min(const double val) {this->src_bla_val_min_=val;}
+	void set_bla_val_max(const double val) {this->src_bla_val_max_=val;}
+
+	void set_red_hue_min(const double val) {this->src_red_hue_min_=val;}
+	void set_red_hue_max(const double val) {this->src_red_hue_max_=val;}
+	void set_red_sat_min(const double val) {this->src_red_sat_min_=val;}
+	void set_red_sat_max(const double val) {this->src_red_sat_max_=val;}
+	void set_red_val_min(const double val) {this->src_red_val_min_=val;}
+	void set_red_val_max(const double val) {this->src_red_val_max_=val;}
+
+	void set_gre_hue_min(const double val) {this->src_gre_hue_min_=val;}
+	void set_gre_hue_max(const double val) {this->src_gre_hue_max_=val;}
+	void set_gre_sat_min(const double val) {this->src_gre_sat_min_=val;}
+	void set_gre_sat_max(const double val) {this->src_gre_sat_max_=val;}
+	void set_gre_val_min(const double val) {this->src_gre_val_min_=val;}
+	void set_gre_val_max(const double val) {this->src_gre_val_max_=val;}
+
+	void set_blu_hue_min(const double val) {this->src_blu_hue_min_=val;}
+	void set_blu_hue_max(const double val) {this->src_blu_hue_max_=val;}
+	void set_blu_sat_min(const double val) {this->src_blu_sat_min_=val;}
+	void set_blu_sat_max(const double val) {this->src_blu_sat_max_=val;}
+	void set_blu_val_min(const double val) {this->src_blu_val_min_=val;}
+	void set_blu_val_max(const double val) {this->src_blu_val_max_=val;}
+
 	void init( void );
 	void cb_preset_01( const int choice );
 	void cb_preset_02( const int choice );
@@ -40,48 +68,48 @@ public:
 
 private:
 	// BL
-	double src_bl_hmin_=  0.;
-	double src_bl_hmax_=360.;
-	double src_bl_smin_=  0.;
-	double src_bl_smax_=100.;
-	double src_bl_vmin_=  0.;
-	double src_bl_vmax_= 50.;
-	const int tgt_bl_red_ =  0;
-	const int tgt_bl_gre_ =  0;
-	const int tgt_bl_blu_ =  0;
+	double src_bla_hue_min_=  0.;
+	double src_bla_hue_max_=  0.;
+	double src_bla_sat_min_=  0.;
+	double src_bla_sat_max_=  0.;
+	double src_bla_val_min_=  0.;
+	double src_bla_val_max_=  0.;
+	const int tgt_bla_red_ =  0;
+	const int tgt_bla_gre_ =  0;
+	const int tgt_bla_blu_ =  0;
 
 	// R
-	double src_r_hmin_=300.;
-	double src_r_hmax_= 60.;
-	double src_r_smin_= 50.;
-	double src_r_smax_=100.;
-	double src_r_vmin_=  0.;
-	double src_r_vmax_=100.;
-	const int tgt_r_red_ =0xff;
-	const int tgt_r_gre_ =  0;
-	const int tgt_r_blu_ =  0;
+	double src_red_hue_min_=  0.;
+	double src_red_hue_max_=  0.;
+	double src_red_sat_min_=  0.;
+	double src_red_sat_max_=  0.;
+	double src_red_val_min_=  0.;
+	double src_red_val_max_=  0.;
+	const int tgt_red_red_ =0xff;
+	const int tgt_red_gre_ =  0;
+	const int tgt_red_blu_ =  0;
 
 	// G
-	double src_g_hmin_= 60.;
-	double src_g_hmax_=180.;
-	double src_g_smin_= 50.;
-	double src_g_smax_=100.;
-	double src_g_vmin_=  0.;
-	double src_g_vmax_=100.;
-	const int tgt_g_red_ =  0;
-	const int tgt_g_gre_ =0xff;
-	const int tgt_g_blu_ =  0;
+	double src_gre_hue_min_=  0.;
+	double src_gre_hue_max_=  0.;
+	double src_gre_sat_min_=  0.;
+	double src_gre_sat_max_=  0.;
+	double src_gre_val_min_=  0.;
+	double src_gre_val_max_=  0.;
+	const int tgt_gre_red_ =  0;
+	const int tgt_gre_gre_ =0xff;
+	const int tgt_gre_blu_ =  0;
 
 	// B
-	double src_b_hmin_=180.;
-	double src_b_hmax_=300.;
-	double src_b_smin_= 50.;
-	double src_b_smax_=100.;
-	double src_b_vmin_=  0.;
-	double src_b_vmax_=100.;
-	const int tgt_b_red_ =  0;
-	const int tgt_b_gre_ =  0;
-	const int tgt_b_blu_ =0xff;
+	double src_blu_hue_min_=  0.;
+	double src_blu_hue_max_=  0.;
+	double src_blu_sat_min_=  0.;
+	double src_blu_sat_max_=  0.;
+	double src_blu_val_min_=  0.;
+	double src_blu_val_max_=  0.;
+	const int tgt_blu_red_ =  0;
+	const int tgt_blu_gre_ =  0;
+	const int tgt_blu_blu_ =0xff;
 
 	/* "Color Trace Enhancement"ウインドウの各tgtボタン色設定し再表示 */
 	void set_tgt_color_(

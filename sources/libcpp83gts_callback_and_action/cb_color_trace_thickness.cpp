@@ -15,24 +15,24 @@ void cb_color_trace_thickness::set_tgt_color_(
 	switch (color_choice_from_gui)
 	{
 	case 0: // BL
-		tgt_r = this->tgt_bl_red_;
-		tgt_g = this->tgt_bl_gre_;
-		tgt_b = this->tgt_bl_blu_;
+		tgt_r = this->tgt_bla_red_;
+		tgt_g = this->tgt_bla_gre_;
+		tgt_b = this->tgt_bla_blu_;
 		break;
 	case 1: // R
-		tgt_r = this->tgt_r_red_;
-		tgt_g = this->tgt_r_gre_;
-		tgt_b = this->tgt_r_blu_;
+		tgt_r = this->tgt_red_red_;
+		tgt_g = this->tgt_red_gre_;
+		tgt_b = this->tgt_red_blu_;
 		break;
 	case 2: // G
-		tgt_r = this->tgt_g_red_;
-		tgt_g = this->tgt_g_gre_;
-		tgt_b = this->tgt_g_blu_;
+		tgt_r = this->tgt_gre_red_;
+		tgt_g = this->tgt_gre_gre_;
+		tgt_b = this->tgt_gre_blu_;
 		break;
 	case 3: // B
-		tgt_r = this->tgt_b_red_;
-		tgt_g = this->tgt_b_gre_;
-		tgt_b = this->tgt_b_blu_;
+		tgt_r = this->tgt_blu_red_;
+		tgt_g = this->tgt_blu_gre_;
+		tgt_b = this->tgt_blu_blu_;
 		break;
 	}
 	/* "color trace enhancement"ウインドウの"tgt"ボタンの色を設定 */
@@ -67,24 +67,24 @@ void cb_color_trace_thickness::set_src_color_(
 	switch (color_choice_from_gui)
 	{
 	case 0: // BL
-		hmin = this->src_bl_hmin_; hmax = this->src_bl_hmax_;
-		smin = this->src_bl_smin_; smax = this->src_bl_smax_;
-		vmin = this->src_bl_vmin_; vmax = this->src_bl_vmax_;
+		hmin = this->src_bla_hue_min_; hmax= this->src_bla_hue_max_;
+		smin = this->src_bla_sat_min_; smax= this->src_bla_sat_max_;
+		vmin = this->src_bla_val_min_; vmax= this->src_bla_val_max_;
 		break;
 	case 1: // R
-		hmin = this->src_r_hmin_; hmax = this->src_r_hmax_;
-		smin = this->src_r_smin_; smax = this->src_r_smax_;
-		vmin = this->src_r_vmin_; vmax = this->src_r_vmax_;
+		hmin = this->src_red_hue_min_; hmax= this->src_red_hue_max_;
+		smin = this->src_red_sat_min_; smax= this->src_red_sat_max_;
+		vmin = this->src_red_val_min_; vmax= this->src_red_val_max_;
 		break;
 	case 2: // G
-		hmin = this->src_g_hmin_; hmax = this->src_g_hmax_;
-		smin = this->src_g_smin_; smax = this->src_g_smax_;
-		vmin = this->src_g_vmin_; vmax = this->src_g_vmax_;
+		hmin = this->src_gre_hue_min_; hmax= this->src_gre_hue_max_;
+		smin = this->src_gre_sat_min_; smax= this->src_gre_sat_max_;
+		vmin = this->src_gre_val_min_; vmax= this->src_gre_val_max_;
 		break;
 	case 3: // B
-		hmin = this->src_b_hmin_; hmax = this->src_b_hmax_;
-		smin = this->src_b_smin_; smax = this->src_b_smax_;
-		vmin = this->src_b_vmin_; vmax = this->src_b_vmax_;
+		hmin = this->src_blu_hue_min_; hmax= this->src_blu_hue_max_;
+		smin = this->src_blu_sat_min_; smax= this->src_blu_sat_max_;
+		vmin = this->src_blu_val_min_; vmax= this->src_blu_val_max_;
 		break;
 	}
 	/* "color trace enhancement"ウインドウの"src"色範囲を設定 */

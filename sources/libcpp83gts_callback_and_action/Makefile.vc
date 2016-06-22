@@ -67,6 +67,7 @@ memory_config_trace_src_hsv_load.cpp\
 memory_config_trace_src_hsv_save.cpp\
 memory_desktop_load.cpp\
 memory_desktop_save.cpp\
+memory_install_setup.cpp\
 memory_scan_area.cpp\
 memory_short_cut_key.cpp
 TARG = $(NAME).lib
