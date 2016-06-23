@@ -2738,14 +2738,12 @@ Fl_Double_Window* gts_gui::make_window() {
           { valinp_area_x_pos = new Fl_Value_Input(50, 40, 60, 25, "X");
             valinp_area_x_pos->box(FL_BORDER_BOX);
             valinp_area_x_pos->maximum(60);
-            valinp_area_x_pos->value(60);
             valinp_area_x_pos->callback((Fl_Callback*)cb_valinp_area_x_pos);
             valinp_area_x_pos->when(FL_WHEN_RELEASE);
           } // Fl_Value_Input* valinp_area_x_pos
           { valinp_area_y_pos = new Fl_Value_Input(125, 40, 60, 25, "Y");
             valinp_area_y_pos->box(FL_BORDER_BOX);
             valinp_area_y_pos->maximum(60);
-            valinp_area_y_pos->value(60);
             valinp_area_y_pos->callback((Fl_Callback*)cb_valinp_area_y_pos);
             valinp_area_y_pos->when(FL_WHEN_RELEASE);
           } // Fl_Value_Input* valinp_area_y_pos
@@ -2768,14 +2766,12 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_area_x_size = new Fl_Value_Input(50, 101, 60, 25, "W");
               valinp_area_x_size->box(FL_BORDER_BOX);
               valinp_area_x_size->maximum(60);
-              valinp_area_x_size->value(60);
               valinp_area_x_size->callback((Fl_Callback*)cb_valinp_area_x_size);
               valinp_area_x_size->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_x_size
             { valinp_area_y_size = new Fl_Value_Input(125, 101, 60, 25, "H");
               valinp_area_y_size->box(FL_BORDER_BOX);
               valinp_area_y_size->maximum(60);
-              valinp_area_y_size->value(60);
               valinp_area_y_size->callback((Fl_Callback*)cb_valinp_area_y_size);
               valinp_area_y_size->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_y_size
@@ -2789,14 +2785,12 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_area_x_pixel = new Fl_Value_Input(40, 131, 60, 25, "W");
               valinp_area_x_pixel->box(FL_BORDER_BOX);
               valinp_area_x_pixel->maximum(10000);
-              valinp_area_x_pixel->value(10000);
               valinp_area_x_pixel->callback((Fl_Callback*)cb_valinp_area_x_pixel);
               valinp_area_x_pixel->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_x_pixel
             { valinp_area_y_pixel = new Fl_Value_Input(115, 131, 60, 25, "H");
               valinp_area_y_pixel->box(FL_BORDER_BOX);
               valinp_area_y_pixel->maximum(10000);
-              valinp_area_y_pixel->value(10000);
               valinp_area_y_pixel->callback((Fl_Callback*)cb_valinp_area_y_pixel);
               valinp_area_y_pixel->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_y_pixel
@@ -2816,7 +2810,7 @@ Fl_Double_Window* gts_gui::make_window() {
             valinp_area_reso->box(FL_BORDER_BOX);
             valinp_area_reso->minimum(50);
             valinp_area_reso->maximum(600);
-            valinp_area_reso->value(600);
+            valinp_area_reso->value(50);
             valinp_area_reso->callback((Fl_Callback*)cb_valinp_area_reso);
             valinp_area_reso->align(Fl_Align(FL_ALIGN_RIGHT));
             valinp_area_reso->when(FL_WHEN_RELEASE);
@@ -2898,6 +2892,7 @@ Fl_Double_Window* gts_gui::make_window() {
         scrbar_bw_threshold->maximum(255);
         scrbar_bw_threshold->callback((Fl_Callback*)cb_scrbar_bw_threshold);
         scrbar_bw_threshold->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        scrbar_bw_threshold->linesize(1);
       } // Fl_Scrollbar* scrbar_bw_threshold
       { valinp_bw_threshold = new Fl_Value_Input(225, 50, 35, 25);
         valinp_bw_threshold->box(FL_BORDER_BOX);
@@ -2916,6 +2911,7 @@ Fl_Double_Window* gts_gui::make_window() {
         scrbar_grays_brightness->maximum(1000);
         scrbar_grays_brightness->callback((Fl_Callback*)cb_scrbar_grays_brightness);
         scrbar_grays_brightness->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        scrbar_grays_brightness->linesize(1);
       } // Fl_Scrollbar* scrbar_grays_brightness
       { valinp_grays_brightness = new Fl_Value_Input(215, 50, 45, 25);
         valinp_grays_brightness->box(FL_BORDER_BOX);
@@ -2930,6 +2926,7 @@ Fl_Double_Window* gts_gui::make_window() {
         scrbar_grays_contrast->maximum(1000);
         scrbar_grays_contrast->callback((Fl_Callback*)cb_scrbar_grays_contrast);
         scrbar_grays_contrast->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        scrbar_grays_contrast->linesize(1);
       } // Fl_Scrollbar* scrbar_grays_contrast
       { valinp_grays_contrast = new Fl_Value_Input(215, 90, 45, 25);
         valinp_grays_contrast->box(FL_BORDER_BOX);
@@ -2964,6 +2961,7 @@ Fl_Double_Window* gts_gui::make_window() {
         scrbar_rgb_brightness->maximum(1000);
         scrbar_rgb_brightness->callback((Fl_Callback*)cb_scrbar_rgb_brightness);
         scrbar_rgb_brightness->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        scrbar_rgb_brightness->linesize(1);
       } // Fl_Scrollbar* scrbar_rgb_brightness
       { valinp_rgb_brightness = new Fl_Value_Input(215, 50, 45, 25);
         valinp_rgb_brightness->box(FL_BORDER_BOX);
@@ -2978,6 +2976,7 @@ Fl_Double_Window* gts_gui::make_window() {
         scrbar_rgb_contrast->maximum(1000);
         scrbar_rgb_contrast->callback((Fl_Callback*)cb_scrbar_rgb_contrast);
         scrbar_rgb_contrast->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        scrbar_rgb_contrast->linesize(1);
       } // Fl_Scrollbar* scrbar_rgb_contrast
       { valinp_rgb_contrast = new Fl_Value_Input(215, 90, 45, 25);
         valinp_rgb_contrast->box(FL_BORDER_BOX);
@@ -3047,6 +3046,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_01_src_hh_min->maximum(360);
           scrbar_color_trace_01_src_hh_min->callback((Fl_Callback*)cb_scrbar_color_trace_01_src_hh_min);
           scrbar_color_trace_01_src_hh_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_01_src_hh_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_01_src_hh_min
         { scrbar_color_trace_01_src_hh_max = new Fl_Scrollbar(75, 27, 160, 17, "max");
           scrbar_color_trace_01_src_hh_max->type(1);
@@ -3054,6 +3054,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_01_src_hh_max->maximum(360);
           scrbar_color_trace_01_src_hh_max->callback((Fl_Callback*)cb_scrbar_color_trace_01_src_hh_max);
           scrbar_color_trace_01_src_hh_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_01_src_hh_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_01_src_hh_max
         { scrbar_color_trace_01_src_aa_min = new Fl_Scrollbar(75, 47, 160, 17, "Smin");
           scrbar_color_trace_01_src_aa_min->type(1);
@@ -3061,6 +3062,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_01_src_aa_min->maximum(100);
           scrbar_color_trace_01_src_aa_min->callback((Fl_Callback*)cb_scrbar_color_trace_01_src_aa_min);
           scrbar_color_trace_01_src_aa_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_01_src_aa_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_01_src_aa_min
         { scrbar_color_trace_01_src_aa_max = new Fl_Scrollbar(75, 67, 160, 17, "max");
           scrbar_color_trace_01_src_aa_max->type(1);
@@ -3068,6 +3070,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_01_src_aa_max->maximum(100);
           scrbar_color_trace_01_src_aa_max->callback((Fl_Callback*)cb_scrbar_color_trace_01_src_aa_max);
           scrbar_color_trace_01_src_aa_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_01_src_aa_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_01_src_aa_max
         { scrbar_color_trace_01_src_bb_min = new Fl_Scrollbar(75, 87, 160, 17, "Vmin");
           scrbar_color_trace_01_src_bb_min->type(1);
@@ -3075,6 +3078,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_01_src_bb_min->maximum(100);
           scrbar_color_trace_01_src_bb_min->callback((Fl_Callback*)cb_scrbar_color_trace_01_src_bb_min);
           scrbar_color_trace_01_src_bb_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_01_src_bb_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_01_src_bb_min
         { scrbar_color_trace_01_src_bb_max = new Fl_Scrollbar(75, 107, 160, 17, "max");
           scrbar_color_trace_01_src_bb_max->type(1);
@@ -3082,6 +3086,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_01_src_bb_max->maximum(100);
           scrbar_color_trace_01_src_bb_max->callback((Fl_Callback*)cb_scrbar_color_trace_01_src_bb_max);
           scrbar_color_trace_01_src_bb_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_01_src_bb_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_01_src_bb_max
         { Fl_Box* o = new Fl_Box(91, 24, 127, 3);
           o->image(image_slider_backdrop_hue_127x3);
@@ -3157,6 +3162,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_02_src_hh_min->maximum(360);
           scrbar_color_trace_02_src_hh_min->callback((Fl_Callback*)cb_scrbar_color_trace_02_src_hh_min);
           scrbar_color_trace_02_src_hh_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_02_src_hh_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_02_src_hh_min
         { scrbar_color_trace_02_src_hh_max = new Fl_Scrollbar(75, 152, 160, 17, "max");
           scrbar_color_trace_02_src_hh_max->type(1);
@@ -3164,6 +3170,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_02_src_hh_max->maximum(360);
           scrbar_color_trace_02_src_hh_max->callback((Fl_Callback*)cb_scrbar_color_trace_02_src_hh_max);
           scrbar_color_trace_02_src_hh_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_02_src_hh_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_02_src_hh_max
         { scrbar_color_trace_02_src_aa_min = new Fl_Scrollbar(75, 172, 160, 17, "Smin");
           scrbar_color_trace_02_src_aa_min->type(1);
@@ -3171,6 +3178,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_02_src_aa_min->maximum(100);
           scrbar_color_trace_02_src_aa_min->callback((Fl_Callback*)cb_scrbar_color_trace_02_src_aa_min);
           scrbar_color_trace_02_src_aa_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_02_src_aa_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_02_src_aa_min
         { scrbar_color_trace_02_src_aa_max = new Fl_Scrollbar(75, 192, 160, 17, "max");
           scrbar_color_trace_02_src_aa_max->type(1);
@@ -3178,6 +3186,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_02_src_aa_max->maximum(100);
           scrbar_color_trace_02_src_aa_max->callback((Fl_Callback*)cb_scrbar_color_trace_02_src_aa_max);
           scrbar_color_trace_02_src_aa_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_02_src_aa_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_02_src_aa_max
         { scrbar_color_trace_02_src_bb_min = new Fl_Scrollbar(75, 212, 160, 17, "Vmin");
           scrbar_color_trace_02_src_bb_min->type(1);
@@ -3185,6 +3194,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_02_src_bb_min->maximum(100);
           scrbar_color_trace_02_src_bb_min->callback((Fl_Callback*)cb_scrbar_color_trace_02_src_bb_min);
           scrbar_color_trace_02_src_bb_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_02_src_bb_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_02_src_bb_min
         { scrbar_color_trace_02_src_bb_max = new Fl_Scrollbar(75, 232, 160, 17, "max");
           scrbar_color_trace_02_src_bb_max->type(1);
@@ -3192,6 +3202,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_02_src_bb_max->maximum(100);
           scrbar_color_trace_02_src_bb_max->callback((Fl_Callback*)cb_scrbar_color_trace_02_src_bb_max);
           scrbar_color_trace_02_src_bb_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_02_src_bb_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_02_src_bb_max
         { Fl_Box* o = new Fl_Box(91, 149, 127, 3);
           o->image(image_slider_backdrop_hue_127x3);
@@ -3267,6 +3278,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_03_src_hh_min->maximum(360);
           scrbar_color_trace_03_src_hh_min->callback((Fl_Callback*)cb_scrbar_color_trace_03_src_hh_min);
           scrbar_color_trace_03_src_hh_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_03_src_hh_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_03_src_hh_min
         { scrbar_color_trace_03_src_hh_max = new Fl_Scrollbar(75, 277, 160, 17, "max");
           scrbar_color_trace_03_src_hh_max->type(1);
@@ -3274,6 +3286,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_03_src_hh_max->maximum(360);
           scrbar_color_trace_03_src_hh_max->callback((Fl_Callback*)cb_scrbar_color_trace_03_src_hh_max);
           scrbar_color_trace_03_src_hh_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_03_src_hh_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_03_src_hh_max
         { scrbar_color_trace_03_src_aa_min = new Fl_Scrollbar(75, 297, 160, 17, "Smin");
           scrbar_color_trace_03_src_aa_min->type(1);
@@ -3281,6 +3294,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_03_src_aa_min->maximum(100);
           scrbar_color_trace_03_src_aa_min->callback((Fl_Callback*)cb_scrbar_color_trace_03_src_aa_min);
           scrbar_color_trace_03_src_aa_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_03_src_aa_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_03_src_aa_min
         { scrbar_color_trace_03_src_aa_max = new Fl_Scrollbar(75, 317, 160, 17, "max");
           scrbar_color_trace_03_src_aa_max->type(1);
@@ -3288,6 +3302,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_03_src_aa_max->maximum(100);
           scrbar_color_trace_03_src_aa_max->callback((Fl_Callback*)cb_scrbar_color_trace_03_src_aa_max);
           scrbar_color_trace_03_src_aa_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_03_src_aa_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_03_src_aa_max
         { scrbar_color_trace_03_src_bb_min = new Fl_Scrollbar(75, 337, 160, 17, "Vmin");
           scrbar_color_trace_03_src_bb_min->type(1);
@@ -3295,6 +3310,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_03_src_bb_min->maximum(100);
           scrbar_color_trace_03_src_bb_min->callback((Fl_Callback*)cb_scrbar_color_trace_03_src_bb_min);
           scrbar_color_trace_03_src_bb_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_03_src_bb_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_03_src_bb_min
         { scrbar_color_trace_03_src_bb_max = new Fl_Scrollbar(75, 357, 160, 17, "max");
           scrbar_color_trace_03_src_bb_max->type(1);
@@ -3302,6 +3318,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_03_src_bb_max->maximum(100);
           scrbar_color_trace_03_src_bb_max->callback((Fl_Callback*)cb_scrbar_color_trace_03_src_bb_max);
           scrbar_color_trace_03_src_bb_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_03_src_bb_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_03_src_bb_max
         { Fl_Box* o = new Fl_Box(91, 274, 127, 3);
           o->image(image_slider_backdrop_hue_127x3);
@@ -3377,6 +3394,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_04_src_hh_min->maximum(360);
           scrbar_color_trace_04_src_hh_min->callback((Fl_Callback*)cb_scrbar_color_trace_04_src_hh_min);
           scrbar_color_trace_04_src_hh_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_04_src_hh_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_04_src_hh_min
         { scrbar_color_trace_04_src_hh_max = new Fl_Scrollbar(75, 402, 160, 17, "max");
           scrbar_color_trace_04_src_hh_max->type(1);
@@ -3384,6 +3402,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_04_src_hh_max->maximum(360);
           scrbar_color_trace_04_src_hh_max->callback((Fl_Callback*)cb_scrbar_color_trace_04_src_hh_max);
           scrbar_color_trace_04_src_hh_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_04_src_hh_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_04_src_hh_max
         { scrbar_color_trace_04_src_aa_min = new Fl_Scrollbar(75, 422, 160, 17, "Smin");
           scrbar_color_trace_04_src_aa_min->type(1);
@@ -3391,6 +3410,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_04_src_aa_min->maximum(100);
           scrbar_color_trace_04_src_aa_min->callback((Fl_Callback*)cb_scrbar_color_trace_04_src_aa_min);
           scrbar_color_trace_04_src_aa_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_04_src_aa_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_04_src_aa_min
         { scrbar_color_trace_04_src_aa_max = new Fl_Scrollbar(75, 442, 160, 17, "max");
           scrbar_color_trace_04_src_aa_max->type(1);
@@ -3398,6 +3418,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_04_src_aa_max->maximum(100);
           scrbar_color_trace_04_src_aa_max->callback((Fl_Callback*)cb_scrbar_color_trace_04_src_aa_max);
           scrbar_color_trace_04_src_aa_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_04_src_aa_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_04_src_aa_max
         { scrbar_color_trace_04_src_bb_min = new Fl_Scrollbar(75, 462, 160, 17, "Vmin");
           scrbar_color_trace_04_src_bb_min->type(1);
@@ -3405,6 +3426,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_04_src_bb_min->maximum(100);
           scrbar_color_trace_04_src_bb_min->callback((Fl_Callback*)cb_scrbar_color_trace_04_src_bb_min);
           scrbar_color_trace_04_src_bb_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_04_src_bb_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_04_src_bb_min
         { scrbar_color_trace_04_src_bb_max = new Fl_Scrollbar(75, 482, 160, 17, "max");
           scrbar_color_trace_04_src_bb_max->type(1);
@@ -3412,6 +3434,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_04_src_bb_max->maximum(100);
           scrbar_color_trace_04_src_bb_max->callback((Fl_Callback*)cb_scrbar_color_trace_04_src_bb_max);
           scrbar_color_trace_04_src_bb_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_04_src_bb_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_04_src_bb_max
         { Fl_Box* o = new Fl_Box(91, 399, 127, 3);
           o->image(image_slider_backdrop_hue_127x3);
@@ -3487,6 +3510,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_05_src_hh_min->maximum(360);
           scrbar_color_trace_05_src_hh_min->callback((Fl_Callback*)cb_scrbar_color_trace_05_src_hh_min);
           scrbar_color_trace_05_src_hh_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_05_src_hh_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_05_src_hh_min
         { scrbar_color_trace_05_src_hh_max = new Fl_Scrollbar(75, 527, 160, 17, "max");
           scrbar_color_trace_05_src_hh_max->type(1);
@@ -3494,6 +3518,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_05_src_hh_max->maximum(360);
           scrbar_color_trace_05_src_hh_max->callback((Fl_Callback*)cb_scrbar_color_trace_05_src_hh_max);
           scrbar_color_trace_05_src_hh_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_05_src_hh_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_05_src_hh_max
         { scrbar_color_trace_05_src_aa_min = new Fl_Scrollbar(75, 547, 160, 17, "Smin");
           scrbar_color_trace_05_src_aa_min->type(1);
@@ -3501,6 +3526,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_05_src_aa_min->maximum(100);
           scrbar_color_trace_05_src_aa_min->callback((Fl_Callback*)cb_scrbar_color_trace_05_src_aa_min);
           scrbar_color_trace_05_src_aa_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_05_src_aa_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_05_src_aa_min
         { scrbar_color_trace_05_src_aa_max = new Fl_Scrollbar(75, 567, 160, 17, "max");
           scrbar_color_trace_05_src_aa_max->type(1);
@@ -3508,6 +3534,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_05_src_aa_max->maximum(100);
           scrbar_color_trace_05_src_aa_max->callback((Fl_Callback*)cb_scrbar_color_trace_05_src_aa_max);
           scrbar_color_trace_05_src_aa_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_05_src_aa_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_05_src_aa_max
         { scrbar_color_trace_05_src_bb_min = new Fl_Scrollbar(75, 587, 160, 17, "Vmin");
           scrbar_color_trace_05_src_bb_min->type(1);
@@ -3515,6 +3542,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_05_src_bb_min->maximum(100);
           scrbar_color_trace_05_src_bb_min->callback((Fl_Callback*)cb_scrbar_color_trace_05_src_bb_min);
           scrbar_color_trace_05_src_bb_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_05_src_bb_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_05_src_bb_min
         { scrbar_color_trace_05_src_bb_max = new Fl_Scrollbar(75, 607, 160, 17, "max");
           scrbar_color_trace_05_src_bb_max->type(1);
@@ -3522,6 +3550,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_05_src_bb_max->maximum(100);
           scrbar_color_trace_05_src_bb_max->callback((Fl_Callback*)cb_scrbar_color_trace_05_src_bb_max);
           scrbar_color_trace_05_src_bb_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_05_src_bb_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_05_src_bb_max
         { Fl_Box* o = new Fl_Box(91, 524, 127, 3);
           o->image(image_slider_backdrop_hue_127x3);
@@ -3597,6 +3626,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_06_src_hh_min->maximum(360);
           scrbar_color_trace_06_src_hh_min->callback((Fl_Callback*)cb_scrbar_color_trace_06_src_hh_min);
           scrbar_color_trace_06_src_hh_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_06_src_hh_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_06_src_hh_min
         { scrbar_color_trace_06_src_hh_max = new Fl_Scrollbar(75, 652, 160, 17, "max");
           scrbar_color_trace_06_src_hh_max->type(1);
@@ -3604,6 +3634,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_06_src_hh_max->maximum(360);
           scrbar_color_trace_06_src_hh_max->callback((Fl_Callback*)cb_scrbar_color_trace_06_src_hh_max);
           scrbar_color_trace_06_src_hh_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_06_src_hh_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_06_src_hh_max
         { scrbar_color_trace_06_src_aa_min = new Fl_Scrollbar(75, 672, 160, 17, "Smin");
           scrbar_color_trace_06_src_aa_min->type(1);
@@ -3611,6 +3642,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_06_src_aa_min->maximum(100);
           scrbar_color_trace_06_src_aa_min->callback((Fl_Callback*)cb_scrbar_color_trace_06_src_aa_min);
           scrbar_color_trace_06_src_aa_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_06_src_aa_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_06_src_aa_min
         { scrbar_color_trace_06_src_aa_max = new Fl_Scrollbar(75, 692, 160, 17, "max");
           scrbar_color_trace_06_src_aa_max->type(1);
@@ -3618,6 +3650,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_06_src_aa_max->maximum(100);
           scrbar_color_trace_06_src_aa_max->callback((Fl_Callback*)cb_scrbar_color_trace_06_src_aa_max);
           scrbar_color_trace_06_src_aa_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_06_src_aa_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_06_src_aa_max
         { scrbar_color_trace_06_src_bb_min = new Fl_Scrollbar(75, 712, 160, 17, "Vmin");
           scrbar_color_trace_06_src_bb_min->type(1);
@@ -3625,6 +3658,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_06_src_bb_min->maximum(100);
           scrbar_color_trace_06_src_bb_min->callback((Fl_Callback*)cb_scrbar_color_trace_06_src_bb_min);
           scrbar_color_trace_06_src_bb_min->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_06_src_bb_min->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_06_src_bb_min
         { scrbar_color_trace_06_src_bb_max = new Fl_Scrollbar(75, 732, 160, 17, "max");
           scrbar_color_trace_06_src_bb_max->type(1);
@@ -3632,6 +3666,7 @@ Fl_Double_Window* gts_gui::make_window() {
           scrbar_color_trace_06_src_bb_max->maximum(100);
           scrbar_color_trace_06_src_bb_max->callback((Fl_Callback*)cb_scrbar_color_trace_06_src_bb_max);
           scrbar_color_trace_06_src_bb_max->align(Fl_Align(FL_ALIGN_LEFT));
+          scrbar_color_trace_06_src_bb_max->linesize(1);
         } // Fl_Scrollbar* scrbar_color_trace_06_src_bb_max
         { Fl_Box* o = new Fl_Box(91, 649, 127, 3);
           o->image(image_slider_backdrop_hue_127x3);
@@ -3697,6 +3732,7 @@ Fl_Double_Window* gts_gui::make_window() {
     } // Fl_Check_Button* chkbtn_color_trace_erase_1dot
     { chkbtn_color_trace_real_time = new Fl_Check_Button(15, 780, 90, 25, "Real Time");
       chkbtn_color_trace_real_time->down_box(FL_DOWN_BOX);
+      chkbtn_color_trace_real_time->value(1);
       chkbtn_color_trace_real_time->callback((Fl_Callback*)cb_chkbtn_color_trace_real_time);
     } // Fl_Check_Button* chkbtn_color_trace_real_time
     { Fl_Button* o = new Fl_Button(145, 755, 130, 25, "Preview Trace File");
@@ -3719,6 +3755,7 @@ Fl_Double_Window* gts_gui::make_window() {
       scrbar_edit_color_red->maximum(255);
       scrbar_edit_color_red->callback((Fl_Callback*)cb_scrbar_edit_color_red);
       scrbar_edit_color_red->align(Fl_Align(FL_ALIGN_LEFT));
+      scrbar_edit_color_red->linesize(1);
     } // Fl_Scrollbar* scrbar_edit_color_red
     { scrbar_edit_color_gre = new Fl_Scrollbar(45, 35, 296, 20, "Green");
       scrbar_edit_color_gre->type(1);
@@ -3726,6 +3763,7 @@ Fl_Double_Window* gts_gui::make_window() {
       scrbar_edit_color_gre->maximum(255);
       scrbar_edit_color_gre->callback((Fl_Callback*)cb_scrbar_edit_color_gre);
       scrbar_edit_color_gre->align(Fl_Align(FL_ALIGN_LEFT));
+      scrbar_edit_color_gre->linesize(1);
     } // Fl_Scrollbar* scrbar_edit_color_gre
     { scrbar_edit_color_blu = new Fl_Scrollbar(45, 60, 296, 20, "Blue");
       scrbar_edit_color_blu->type(1);
@@ -3733,6 +3771,7 @@ Fl_Double_Window* gts_gui::make_window() {
       scrbar_edit_color_blu->maximum(255);
       scrbar_edit_color_blu->callback((Fl_Callback*)cb_scrbar_edit_color_blu);
       scrbar_edit_color_blu->align(Fl_Align(FL_ALIGN_LEFT));
+      scrbar_edit_color_blu->linesize(1);
     } // Fl_Scrollbar* scrbar_edit_color_blu
     { valinp_edit_color_red = new Fl_Value_Input(345, 5, 35, 25);
       valinp_edit_color_red->box(FL_BORDER_BOX);
