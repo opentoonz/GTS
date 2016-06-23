@@ -1,4 +1,4 @@
-# Description
+# Description  ([日本語](./README.jp.md))
 
 [GTS](https://opentoonz.github.io/e/index.html) is a scanning tool developed by Studio Ghibli. It's specialized in hand-drawn animation frames and it uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
