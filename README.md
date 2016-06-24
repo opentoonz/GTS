@@ -95,7 +95,7 @@ Windows版実行プログラムのみ。
  $ rm m4/ax_check_glu.m4
  $ ./autogen.sh && ./configure && make
  ```
- makeの最後で`ln`エラーとなるので、`ln`の実行コマンドラインに`-lGLU -lGU`を付加して再実行します。
+ makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lGLU -lGL`を付加して再実行します。
 
 5. 動作準備
 
@@ -104,7 +104,7 @@ Windows版実行プログラムのみ。
  - `gts`
  - `sources/main/gts_install_setup.txt`
 
- `sources/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を"."に変更します。
+ `sources/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を`"/home"`に変更します。
 
 6. 動作確認
 
