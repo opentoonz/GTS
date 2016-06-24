@@ -12,7 +12,7 @@ TWAIN規格によるスキャナーアクセス。
 
 メニュー表記は英語のみ。
 
-保存する画像はTIFF/TGAの2種類です。
+保存する画像はTIFFです。
 
 ## インストール
 
@@ -46,14 +46,15 @@ Windows版実行プログラムのみ。
 
 3. 外部ライブラリを準備
 
+ ソースコードを以下の場所にフォルダー構成そのままに置きます。
  - `GTS/thirdparty/fltk/fltk-1.3.3/`
  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
 4. ビルドする
 
- 32-bit アプリケーションとしてビルドします（32/64-bit両OSで動作します）。
+ 32-bitアプリケーションとしてビルドします。
 
- 先に、外部ライブラリを32-bitビルドします。
+ 先に、外部ライブラリを、32-bitでビルドします。
 
  `GTS/sources/` へ移動し、本体ビルドバッチファイル `one_step_build_vc2013.bat` を実行します。
 
@@ -102,6 +103,7 @@ Windows版実行プログラムのみ。
  - `sources/main/_gts-scan_area.txt`
  - `gts`
  - `sources/main/gts_install_setup.txt`
+
  `sources/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を"."に変更します。
 
 6. 動作確認
