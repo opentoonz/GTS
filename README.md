@@ -13,15 +13,14 @@ TWAIN規格によるスキャナーアクセス。
 
 ## インストール
 
-(Windows版実行プログラムのみ)
+Windows版実行プログラムのみ。
 https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip ファイルをダウンロードし、解凍してください。
 解凍してできたフォルダーを任意の場所に移動して使用します。
 
 ## 実行方法
 
-(Windows版実行プログラムのみ)
-各ファイルはそのままにして、
-フォルダー内にて ".\gts" を実行します。
+Windows版実行プログラムのみ。
+フォルダー内にて、各ファイルはそのままにして、".\gts" を実行します。
 
 ## ビルド方法(Windows)
 
@@ -46,7 +45,7 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
 4. ビルドする
 
  32-bit アプリケーションとしてビルドします（32/64-bit両OSで動作します）。
- 外部ライブラリを32-bitビルドします。
+ 先に、外部ライブラリを32-bitビルドします。
  `GTS/sources/` へ移動し、本体ビルドバッチファイル `one_step_build_vc2013.bat` を実行します。
 
 5. 動作準備
@@ -66,22 +65,26 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
 
 2. ソースコードを準備
 
- Windowsと同じ
+ git で clone してソースコードを手元に持ってきます。
 
 3. 外部ライブラリを準備
 
- `sudo apt install autoconf`
- `sudo apt install libtool`
- `sudo apt install autoconf-archive`
- `sudo apt install libtiff5-dev`
- `sudo apt install libfltk1.3-dev`
- `sudo apt install libsane-dev`
+ ```sh
+ $ sudo apt install autoconf
+ $ sudo apt install libtool
+ $ sudo apt install autoconf-archive
+ $ sudo apt install libtiff5-dev
+ $ sudo apt install libfltk1.3-dev
+ $ sudo apt install libsane-dev
+ ```
 
 4. ビルドする
 
- `rm m4/ax_check_glu.m4`
- `./autogen.sh && ./configure && make`
- makeの最後にlinkでエラーがでるので、`ln`の実行コマンドラインに`-lGLU -lGU`を付加して実行する。
+ ```sh
+ $ rm m4/ax_check_glu.m4
+ $ ./autogen.sh && ./configure && make
+ ```
+ makeの最後で`ln`エラーとなるので、`ln`の実行コマンドラインに`-lGLU -lGU`を付加して再実行します。
 
 5. 動作準備
 
@@ -89,39 +92,36 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
  - `sources/main/_gts-scan_area.txt`
  - `gts`
  - `sources/main/gts_install_setup.txt`
-
- `sources/main/gts_install_setup.txt`ファイルの中、
- browser_directory_path行の値を"."に変更します。
+ `sources/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を"."に変更します。
 
 6. 動作確認
 
- 用紙したディレクトリに移動し、
- `./gts` を実行します。
+ 用意したディレクトリに移動し`./gts` を実行します。
 
 ## ビルド方法(Max OS X)
 
 1. 環境を準備
 
-  Mac OS X 10.x
+ Mac OS X 10.x
 
 2. ソースコードを準備
 
- Windowsと同じ
+ git で clone してソースコードを手元に持ってきます。
 
 3. 外部ライブラリを準備
 
- Windowsと同じ
+ ```sh
+ $ brew install automake
+ $ brew install autoconf-archive
+ $ sudo port install fltk-devel #not in homebrew
+ ```
 
 4. ビルドする
 
- 32/64-bit どちらかでビルドします。
-
-
-brew install automake
-brew install autoconf-archive
-rm m4/ax_check_glu.m4 #it seems broken?
-sudo port install fltk-devel #not in homebrew
-./autogen.sh && ./configure && make
+ ```sh
+ $ rm m4/ax_check_glu.m4 #it seems broken?
+ $ ./autogen.sh && ./configure && make
+ ```
 
 5. 動作準備
 
@@ -129,8 +129,7 @@ sudo port install fltk-devel #not in homebrew
 
 6. 動作確認
 
- 用紙したディレクトリに移動し、
- `./gts` を実行します。
+ Linuxと同じ
 
 ## ライセンス
 
