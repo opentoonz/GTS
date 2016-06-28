@@ -100,8 +100,6 @@ Execute "./gts" in unziped folder.
  ```sh
  # run it with
  ./gts
- # or with more verbose output
- ./gts -bv
  ```
 
  If you're a developer and you need a debug build, do it like this:
@@ -144,8 +142,6 @@ Execute "./gts" in unziped folder.
  ```sh
  # run it with
  ./gts
- # or with more verbose output
- ./gts -bv
  ```
 
 ## License

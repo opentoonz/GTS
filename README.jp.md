@@ -16,7 +16,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 ## 推奨環境
 
-[OpenToonzのサイト](https://opentoonz.github.io/e/index.html)を参照してください。
+[OpenToonzのサイト](https://opentoonz.github.io/index.html)を参照してください。
 
 ## インストール(Windows)
 
@@ -95,6 +95,12 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  ```
  makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lGLU -lGL`を付加して再実行します。
 
+ デバッグビルドをしたいときは以下のようにします。
+ ```sh
+ $ rm m4/ax_check_glu.m4
+ $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ ```
+
 5. 動作準備
 
  `source/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を`"/home"`に変更します。
@@ -103,10 +109,15 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  - `sources/main/gts_install_setup.txt`
  を`~/.GTS`にコピーします。
 
-
 6. 動作確認
 
  `./gts` を実行します。
+
+ デバッグビルドをしたときは以下のように実行します。
+ ```sh
+ # now you can use gdb:
+ gdb --args ./gts -bv
+ ```
 
 ## ビルド方法(Max OS X)
 
@@ -139,7 +150,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 6. 動作確認
 
- Linuxと同じ
+ `./gts` を実行します。
 
 ## ライセンス
 
