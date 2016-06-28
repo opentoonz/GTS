@@ -1,4 +1,4 @@
-# [GTS]((https://opentoonz.github.io/index.html)  ([日本語](./README.jp.md))
+# [GTS](https://opentoonz.github.io/index.html)  ([日本語](./README.jp.md))
 
 ## What is GTS?
 
