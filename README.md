@@ -1,84 +1,71 @@
-﻿# GTS  ([English](./README_en.md))
+# [GTS]((https://opentoonz.github.io/index.html)  ([日本語](./README.jp.md))
 
-## これは何？
+## What is GTS?
 
-紙に描かれた動画を、パソコンと TWAINドライバーソフトで動作するスキャナーを使って、「連番」でスキャンし、ファイルに保存するソフトウェアです。
+GTS is a scanning tool developed by Studio Ghibli.
+It's specialized in hand-drawn animation frames.
 
-画像の２値化も行います。
+## Specification
 
-## 仕様
+GTS's uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-TWAIN規格によるスキャナーアクセス。
+Interface is in English and scanned images are saved as TIFF.
 
-メニュー表記は英語のみ。
+## Requirements
 
-保存する画像はTIFFです。
+Please refer to the OpenToonz site at https://opentoonz.github.io/e/index.html.
 
-## インストール
+## Installation(Windows)
 
-Windows版実行プログラムのみ。
+Download and unzip the most recent GTS-x.y.z.zip file from https://github.com/opentoonz/GTS/releases.
 
-https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip ファイルをダウンロードし、解凍してください。
+## How to Execute(Windows)
 
-解凍してできたフォルダーを任意の場所に移動して使用します。
+Execute "./gts" in unziped folder.
 
-## 実行方法
+## How to Build Locally(Windows)
 
-Windows版実行プログラムのみ。
+1. Environment for development
 
-フォルダー内にて、各ファイルはそのままにして、".\gts" を実行します。
+ Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
 
-## ビルド方法(Windows)
+2. Get source code
 
-1. 環境を準備
-
- Windows 7 Enterprise SP1 と Microsoft Visual C++ 2013 を用意します。
-
- この環境で動作確認をしており、他の環境については未確認です。
-
-2. ソースコードを準備
-
- git で clone してソースコードを手元に持ってきます。
- 
+ Get the source code from Github:
  ```sh
  $ git clone https://github.com/opentoonz/GTS.git
  ```
 
-3. 外部ライブラリを準備
+3. Get third party libraries
 
- ソースコードを以下の場所にフォルダー構成そのままに置きます。
- - `GTS/thirdparty/fltk/fltk-1.3.3/`
- - `GTS/thirdparty/libtiff/tiff-4.0.3/`
+ third party libraries unarchived in:
+ `GTS/thirdparty/fltk/fltk-1.3.3/`
+ `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
-4. ビルドする
+4. How to build
 
- 32-bitアプリケーションとしてビルドします。
+ The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
+ After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2013.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
 
- 先に、外部ライブラリを、32-bitでビルドします。
+5. Preparation for Execute
 
- `GTS/sources/` へ移動し、本体ビルドバッチファイル `one_step_build_vc2013.bat` を実行します。
+ Nothing
 
-5. 動作準備
+6. How to Execute
 
- なし
+ In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
 
-6. 動作確認
+## How to Build Locally(Linux)
 
- `GTS/x86_release/` にある、`gts.exe` を実行して動作を確かめてください。
+1. Environment for development
 
-## ビルド方法(Linux)
+ Tested on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.1.1 Player)on a Windows 7 Enterprise SP1))
 
-1. 環境を準備
+2. Get source code
 
- Ubuntu 16.04-desktop 64bits (on VMware Workstation 12.1.1 Player(on Windows 7 Enterprise SP1)) を用意します。
+ Same as Windows.
 
- この環境で動作確認をしており、他の環境については未確認です。
-
-2. ソースコードを準備
-
- git で clone してソースコードを手元に持ってきます。
-
-3. 外部ライブラリを準備
+3. Get third party libraries
 
  ```sh
  $ sudo apt install autoconf
@@ -89,7 +76,7 @@ Windows版実行プログラムのみ。
  $ sudo apt install libsane-dev
  ```
 
-4. ビルドする
+4. How to build
 
  ```sh
  $ rm m4/ax_check_glu.m4
@@ -97,30 +84,43 @@ Windows版実行プログラムのみ。
  ```
  makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lGLU -lGL`を付加して再実行します。
 
-5. 動作準備
+ If you're a developer and you need a debug build, do it like this:
+ ```sh
+ $ rm m4/ax_check_glu.m4
+ $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ ```
 
- 任意のディレクトリを用意し、そこに以下のファイルをコピーします。
- - `sources/main/_gts-scan_area.txt`
- - `gts`
- - `sources/main/gts_install_setup.txt`
+5. Preparation for Execute
 
- `sources/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を`"/home"`に変更します。
+ Change *browser_directory_path* to "/home" in `sources/main/gts_install_setup.txt` before installation.
+ If you're not using a proper package manager, do the change yourself and copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
 
-6. 動作確認
+6. How to Execute
 
- 用意したディレクトリに移動し`./gts` を実行します。
+ ```sh
+ # run it with
+ ./gts
+ # or with more verbose output
+ ./gts -bv
+ ```
 
-## ビルド方法(Max OS X)
+ If you're a developer and you need a debug build, do it like this:
+ ```sh
+ # now you can use gdb:
+ gdb --args ./gts -bv
+ ```
 
-1. 環境を準備
+## How to Build Locally(Max OS X)
+
+1. Environment for development
 
  Mac OS X 10.x
 
-2. ソースコードを準備
+2. Get source code
 
- git で clone してソースコードを手元に持ってきます。
+ Same as Windows.
 
-3. 外部ライブラリを準備
+3. Get third party libraries
 
  ```sh
  $ brew install automake
@@ -128,21 +128,22 @@ Windows版実行プログラムのみ。
  $ sudo port install fltk-devel #not in homebrew
  ```
 
-4. ビルドする
+4. How to build
 
  ```sh
  $ rm m4/ax_check_glu.m4 #it seems broken?
  $ ./autogen.sh && ./configure && make
  ```
 
-5. 動作準備
+5. Preparation for Execute
 
- Linuxと同じ
+ Same as linux.
 
-6. 動作確認
+6. How to Execute
 
- Linuxと同じ
+ Same as linux.
 
-## ライセンス
+## License
 
-[New BSD License](https://github.com/opentoonz/GTS/blob/master/LICENSE.txt)
+[New BSD License](LICENSE.txt)
+
