@@ -1,4 +1,4 @@
-# [GTS](https://opentoonz.github.io/index.html)  ([日本語](./README.jp.md))
+# [GTS](https://opentoonz.github.io/e/index.html)  ([日本語](./README.jp.md))
 
 ## What is GTS?
 
@@ -13,11 +13,11 @@ Interface is in English and scanned images are saved as TIFF.
 
 ## Requirements
 
-Please refer to the OpenToonz site at https://opentoonz.github.io/e/index.html.
+Please refer to the [OpenToonz site](https://opentoonz.github.io/e/index.html).
 
 ## Installation(Windows)
 
-Download and unzip the most recent GTS-x.y.z.zip file from https://github.com/opentoonz/GTS/releases.
+[Download](https://github.com/opentoonz/GTS/releases) and unzip the most recent GTS-x.y.z.zip file.
 
 ## How to Execute(Windows)
 
@@ -39,8 +39,8 @@ Execute "./gts" in unziped folder.
 3. Get third party libraries
 
  third party libraries unarchived in:
- `GTS/thirdparty/fltk/fltk-1.3.3/`
- `GTS/thirdparty/libtiff/tiff-4.0.3/`
+ - `GTS/thirdparty/fltk/fltk-1.3.3/`
+ - `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
 4. How to build
 
@@ -82,7 +82,7 @@ Execute "./gts" in unziped folder.
  $ rm m4/ax_check_glu.m4
  $ ./autogen.sh && ./configure && make
  ```
- makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lGLU -lGL`を付加して再実行します。
+ The last(link) of make is an error, and then re-run by adding `-lGLU -lGL` in the run command line.
 
  If you're a developer and you need a debug build, do it like this:
  ```sh
@@ -141,9 +141,13 @@ Execute "./gts" in unziped folder.
 
 6. How to Execute
 
- Same as linux.
+ ```sh
+ # run it with
+ ./gts
+ # or with more verbose output
+ ./gts -bv
+ ```
 
 ## License
 
 [New BSD License](LICENSE.txt)
-

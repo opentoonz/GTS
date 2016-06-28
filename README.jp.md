@@ -1,4 +1,4 @@
-﻿# GTS  ([English](./README.md))
+﻿# [GTS](https://opentoonz.github.io/index.html)  ([English](./README.md))
 
 ## これは何？
 
@@ -8,7 +8,7 @@
 
 ## 仕様
 
-TWAIN規格(Windows)SANE規格(Linux,Mac OS X)によるスキャナーアクセス。
+TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセス。
 
 メニュー表記は英語のみ。
 
@@ -16,17 +16,15 @@ TWAIN規格(Windows)SANE規格(Linux,Mac OS X)によるスキャナーアクセ�
 
 ## 推奨環境
 
-OpenToonz のサイトである https://opentoonz.github.io/e/index.html を参照してください。
+[OpenToonzのサイト](https://opentoonz.github.io/e/index.html)を参照してください。
 
 ## インストール(Windows)
 
-https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip ファイルをダウンロードし、解凍してください。
-
-解凍してできたフォルダーを任意の場所に移動して使用します。
+最新版の GTS-x.y.z.zip ファイルを[ダウンロード](https://github.com/opentoonz/GTS/releases)し、解凍してください。
 
 ## 実行方法(Windows)
 
-フォルダー内にて、各ファイルはそのままにして、".\gts" を実行します。
+解凍したフォルダー内にて、".\gts" を実行します。
 
 ## ビルド方法(Windows)
 
@@ -76,7 +74,7 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
 
 2. ソースコードを準備
 
- git で clone してソースコードを手元に持ってきます。
+ Windowsと同じ
 
 3. 外部ライブラリを準備
 
@@ -99,16 +97,16 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
 
 5. 動作準備
 
- 任意のディレクトリを用意し、そこに以下のファイルをコピーします。
+ `source/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を`"/home"`に変更します。
+ 以下のファイル、
  - `sources/main/_gts-scan_area.txt`
- - `gts`
  - `sources/main/gts_install_setup.txt`
+ を`~/.GTS`にコピーします。
 
- `gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を`"/home"`に変更します。
 
 6. 動作確認
 
- 用意したディレクトリに移動し`./gts` を実行します。
+ `./gts` を実行します。
 
 ## ビルド方法(Max OS X)
 
@@ -118,7 +116,7 @@ https://github.com/opentoonz/GTS/releases から、最新版の GTS-x.y.z.zip �
 
 2. ソースコードを準備
 
- git で clone してソースコードを手元に持ってきます。
+ Windowsと同じ
 
 3. 外部ライブラリを準備
 
