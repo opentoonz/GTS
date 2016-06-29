@@ -3,6 +3,7 @@
 ## What is GTS?
 
 GTS is a scanning tool developed by Studio Ghibli.
+
 It's specialized in hand-drawn animation frames.
 
 ## Specification
@@ -93,7 +94,7 @@ Execute "./gts" in unziped folder.
 5. Preparation for Execute
 
  Change *browser_directory_path* to "/home" in `sources/main/gts_install_setup.txt` before installation.
- If you're not using a proper package manager, do the change yourself and copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
+ Copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
 
 6. How to Execute
 
