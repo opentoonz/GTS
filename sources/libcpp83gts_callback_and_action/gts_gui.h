@@ -1004,7 +1004,6 @@ private:
   static void cb_menite_limit_bb(Fl_Menu_*, void*);
 public:
   fltk_1000x100_histogram *fltkp_hh_histogram;
-  Fl_Box *fltkp_hh_belt;
   fltk_hh_cyclic *fltkp_hh_cyclic;
   Fl_Value_Input *valinp_hab_histogram_hh_min;
 private:
@@ -1017,7 +1016,6 @@ private:
   static void cb_valinp_hab_histogram_hh_max(Fl_Value_Input*, void*);
 public:
   fltk_1000x100_histogram *fltkp_aa_histogram;
-  Fl_Box *fltkp_aa_belt;
   fltk_aa_minmax *fltkp_aa_minmax;
   Fl_Value_Input *valinp_hab_histogram_aa_min;
 private:
@@ -1030,7 +1028,6 @@ private:
   static void cb_valinp_hab_histogram_aa_max(Fl_Value_Input*, void*);
 public:
   fltk_1000x100_histogram *fltkp_bb_histogram;
-  Fl_Box *fltkp_bb_belt;
   fltk_bb_minmax *fltkp_bb_minmax;
   Fl_Value_Input *valinp_hab_histogram_bb_min;
 private:

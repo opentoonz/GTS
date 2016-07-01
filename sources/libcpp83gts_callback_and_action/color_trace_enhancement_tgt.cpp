@@ -64,7 +64,7 @@ void color_trace_enhancement::tgt_fl_set_color(
 }
 
 /* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
-void color_trace_enhancement::_tgt_fl_get_color(
+void color_trace_enhancement::tgt_fl_get_color_(
 	int color_number
 	, unsigned char *red
 	, unsigned char *gre
@@ -121,7 +121,7 @@ void color_trace_enhancement::tgt_get_uchar_rgb_color(
 	, unsigned char *ucharp_blu
 )
 {
-	this->_tgt_fl_get_color(
+	this->tgt_fl_get_color_(
 	 this->tgt_fl_color_number_from_trace_list_pos( trace_list_pos )
 	 , ucharp_red, ucharp_gre, ucharp_blu
 	);
@@ -161,7 +161,7 @@ void color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS trac
 
 	/* 指定のFlカラーテーブルのrgb値を得る */
 	unsigned char red, gre, blu;
-	this->_tgt_fl_get_color(
+	this->tgt_fl_get_color_(
 		color_number, &red, &gre, &blu
 	);
 

@@ -101,7 +101,7 @@ public:
 
 private:
 	/* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
-	void _tgt_fl_get_color(
+	void tgt_fl_get_color_(
 		int color_number
 		, unsigned char *red, unsigned char *gre, unsigned char *blu
 	);

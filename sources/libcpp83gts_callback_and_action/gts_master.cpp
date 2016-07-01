@@ -131,7 +131,7 @@ int gts_master::exec( const char *comm )
 	//cl_gts_gui.window_next_scan->position(390,362);
 
 	/* HLS Min-Max windowの色ベルト画像表示設定 */
-	this->make_hab_belt_image();
+//	this->make_hab_belt_image();
 
 	/* short cut key設定 */
 	this->cl_memo_short_cut_key.set_shortcut();

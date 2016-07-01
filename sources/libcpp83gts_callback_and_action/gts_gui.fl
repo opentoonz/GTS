@@ -1052,7 +1052,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
 cl_gts_gui.menite_fnum_list->clear();}
-      xywh {50 50 116 350} type Double resizable non_modal visible
+      xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 80 25}
@@ -1167,13 +1167,13 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {scrbar_color_trace_01_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 24 127 3}
+            image {color_belt127x3hue.png} xywh {91 24 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 64 127 3}
+            image {color_belt127x3sat.png} xywh {91 64 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 104 127 3}
+            image {color_belt127x3val.png} xywh {91 104 127 3}
           }
           Fl_Value_Input valinp_color_trace_01_src_hh_min {
             callback {((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
@@ -1287,13 +1287,13 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {scrbar_color_trace_02_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 149 127 3}
+            image {color_belt127x3hue.png} xywh {91 149 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 189 127 3}
+            image {color_belt127x3sat.png} xywh {91 189 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 229 127 3}
+            image {color_belt127x3val.png} xywh {91 229 127 3}
           }
           Fl_Value_Input valinp_color_trace_02_src_hh_min {
             callback {((Fl_Valuator *)scrbar_color_trace_02_src_hh_min)->value(o->value());
@@ -1407,13 +1407,13 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {scrbar_color_trace_03_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 274 127 3}
+            image {color_belt127x3hue.png} xywh {91 274 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 314 127 3}
+            image {color_belt127x3sat.png} xywh {91 314 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 354 127 3}
+            image {color_belt127x3val.png} xywh {91 354 127 3}
           }
           Fl_Value_Input valinp_color_trace_03_src_hh_min {
             callback {((Fl_Valuator *)scrbar_color_trace_03_src_hh_min)->value(o->value());
@@ -1527,13 +1527,13 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {scrbar_color_trace_04_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 399 127 3}
+            image {color_belt127x3hue.png} xywh {91 399 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 439 127 3}
+            image {color_belt127x3sat.png} xywh {91 439 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 479 127 3}
+            image {color_belt127x3val.png} xywh {91 479 127 3}
           }
           Fl_Value_Input valinp_color_trace_04_src_hh_min {
             callback {((Fl_Valuator *)scrbar_color_trace_04_src_hh_min)->value(o->value());
@@ -1647,13 +1647,13 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {scrbar_color_trace_05_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 524 127 3}
+            image {color_belt127x3hue.png} xywh {91 524 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 564 127 3}
+            image {color_belt127x3sat.png} xywh {91 564 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 604 127 3}
+            image {color_belt127x3val.png} xywh {91 604 127 3}
           }
           Fl_Value_Input valinp_color_trace_05_src_hh_min {
             callback {((Fl_Valuator *)scrbar_color_trace_05_src_hh_min)->value(o->value());
@@ -1767,13 +1767,13 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {scrbar_color_trace_06_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 649 127 3}
+            image {color_belt127x3hue.png} xywh {91 649 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 689 127 3}
+            image {color_belt127x3sat.png} xywh {91 689 127 3}
           }
-          Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 729 127 3}
+          Fl_Box {} {selected
+            image {color_belt127x3val.png} xywh {91 729 127 3}
           }
           Fl_Value_Input valinp_color_trace_06_src_hh_min {
             callback {((Fl_Valuator *)scrbar_color_trace_06_src_hh_min)->value(o->value());
@@ -1847,7 +1847,7 @@ cl_gts_master.cb_color_trace_src_edit_value();}
     }
     Fl_Window window_hab_histogram {
       label {Edit HSV-MinMax}
-      callback {cl_gts_gui.window_hab_histogram->hide();} selected
+      callback {cl_gts_gui.window_hab_histogram->hide();}
       xywh {50 50 1000 565} type Double non_modal visible
     } {
       Fl_Menu_Bar {} {open
@@ -1890,8 +1890,8 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box fltkp_hh_belt {
-            xywh {0 125 1000 10}
+          Fl_Box {} {
+            image {color_belt1000x10hue.png} xywh {0 125 1000 10}
           }
           Fl_Box fltkp_hh_cyclic {
             xywh {0 135 1000 50}
@@ -1917,8 +1917,8 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box fltkp_aa_belt {
-            xywh {0 305 1000 10}
+          Fl_Box {} {
+            image {color_belt1000x10sat.png} xywh {0 305 1000 10}
           }
           Fl_Box fltkp_aa_minmax {
             xywh {0 315 1000 50}
@@ -1945,8 +1945,8 @@ cl_gts_master.cb_color_trace_src_edit_value();}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box fltkp_bb_belt {
-            xywh {0 485 1000 10}
+          Fl_Box {} {
+            image {color_belt1000x10val.png} xywh {0 485 1000 10}
           }
           Fl_Box fltkp_bb_minmax {
             xywh {0 495 1000 50}
