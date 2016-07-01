@@ -229,6 +229,15 @@ int color_trace_enhancement::_src_set_crnt_to_histogram( E_COLOR_TRACE_HAB_COLOR
 		flp_src_bb_min->value() / flp_src_bb_min->maximum(),
 		flp_src_bb_max->value() / flp_src_bb_max->maximum()
 	);
+
+	/* ValueInputに表示する */
+ cl_gts_gui.valinp_hab_histogram_hh_min->value( flp_src_hh_min->value() );
+ cl_gts_gui.valinp_hab_histogram_hh_max->value( flp_src_hh_max->value() );
+ cl_gts_gui.valinp_hab_histogram_aa_min->value( flp_src_aa_min->value() );
+ cl_gts_gui.valinp_hab_histogram_aa_max->value( flp_src_aa_max->value() );
+ cl_gts_gui.valinp_hab_histogram_bb_min->value( flp_src_bb_min->value() );
+ cl_gts_gui.valinp_hab_histogram_bb_max->value( flp_src_bb_max->value() );
+
 	return OK;
 }
 

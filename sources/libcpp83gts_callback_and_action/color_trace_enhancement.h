@@ -55,6 +55,11 @@ public:
 		int color_number
 		, unsigned char red , unsigned char gre , unsigned char blu
 	);
+	/* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
+	void tgt_fl_get_color(
+		int color_number
+		, unsigned char *red, unsigned char *gre, unsigned char *blu
+	);
 
 	/*
 	rgb値を、
@@ -100,12 +105,6 @@ public:
 	}
 
 private:
-	/* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
-	void tgt_fl_get_color_(
-		int color_number
-		, unsigned char *red, unsigned char *gre, unsigned char *blu
-	);
-
 	int _src_get_p_hh_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
 		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
 	int _src_get_p_aa_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,

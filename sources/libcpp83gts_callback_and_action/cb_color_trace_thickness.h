@@ -36,12 +36,12 @@ public:
 	void set_blu_val_min(const double val) {this->src_blu_val_min_=val;}
 	void set_blu_val_max(const double val) {this->src_blu_val_max_=val;}
 
-	void cb_src_01( void );
-	void cb_src_02( void );
-	void cb_src_03( void );
-	void cb_src_04( void );
-	void cb_src_05( void );
-	void cb_src_06( void );
+	void cb_src_show_hide_01( void );
+	void cb_src_show_hide_02( void );
+	void cb_src_show_hide_03( void );
+	void cb_src_show_hide_04( void );
+	void cb_src_show_hide_05( void );
+	void cb_src_show_hide_06( void );
 
 	void cb_scrbar_01( const double value );
 	void cb_scrbar_02( const double value );
@@ -75,6 +75,27 @@ public:
 	void tgt_redraw_rgb_color(
 		E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	);
+
+	/*
+	edit color windowを設定して表示/隠す
+	*/
+	void cb_tgt_show_hide_01( void );
+	void cb_tgt_show_hide_02( void );
+	void cb_tgt_show_hide_03( void );
+	void cb_tgt_show_hide_04( void );
+	void cb_tgt_show_hide_05( void );
+	void cb_tgt_show_hide_06( void );
+
+	/*
+	edit color windowを設定して表示/隠す
+	*/
+	void cb_tgt_change_black_01( void );
+	void cb_tgt_change_black_02( void );
+	void cb_tgt_change_black_03( void );
+	void cb_tgt_change_black_04( void );
+	void cb_tgt_change_black_05( void );
+	void cb_tgt_change_black_06( void );
+
 private:
 	// BL
 	double src_bla_hue_min_=  0.;
@@ -126,6 +147,9 @@ private:
 		const E_COLOR_TRACE_HAB_COLORS trace_list_pos
 		, const bool black_line_sw
 	);
+
+	void tgt_open_edit_color_(E_COLOR_TRACE_HAB_COLORS trace_list_pos);
+	void tgt_change_black_( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
 };
 
 #endif /* !cb_color_trace_thickness_h */

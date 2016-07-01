@@ -1034,6 +1034,9 @@ void gts_gui::cb_chkbtn_color_trace_01_chk(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_01_src_hh_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_hh_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_01_src_hh_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_01_src_hh_min_i(o,v);
@@ -1042,6 +1045,9 @@ void gts_gui::cb_scrbar_color_trace_01_src_hh_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_01_src_hh_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_hh_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_01_src_hh_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_01_src_hh_max_i(o,v);
@@ -1051,6 +1057,9 @@ void gts_gui::cb_scrbar_color_trace_01_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_aa_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_01_src_aa_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_01_src_aa_min_i(o,v);
@@ -1059,6 +1068,9 @@ void gts_gui::cb_scrbar_color_trace_01_src_aa_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_01_src_aa_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_aa_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_01_src_aa_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_01_src_aa_max_i(o,v);
@@ -1067,6 +1079,9 @@ void gts_gui::cb_scrbar_color_trace_01_src_aa_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_01_src_bb_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_bb_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_01_src_bb_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_01_src_bb_min_i(o,v);
@@ -1076,6 +1091,9 @@ void gts_gui::cb_scrbar_color_trace_01_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_01_src_bb_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_01_src_bb_max_i(o,v);
@@ -1247,6 +1265,9 @@ static Fl_RGB_Image image_color_belt127x3val(idata_color_belt127x3val, 127, 3, 3
 void gts_gui::cb_valinp_color_trace_01_src_hh_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_01_src_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_01_src_hh_min_i(o,v);
@@ -1255,6 +1276,9 @@ void gts_gui::cb_valinp_color_trace_01_src_hh_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_01_src_hh_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_hh_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_01_src_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_01_src_hh_max_i(o,v);
@@ -1264,6 +1288,9 @@ void gts_gui::cb_valinp_color_trace_01_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_aa_min)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_01_src_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_01_src_aa_min_i(o,v);
@@ -1272,6 +1299,9 @@ void gts_gui::cb_valinp_color_trace_01_src_aa_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_01_src_aa_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_aa_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_01_src_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_01_src_aa_max_i(o,v);
@@ -1280,6 +1310,9 @@ void gts_gui::cb_valinp_color_trace_01_src_aa_max(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_01_src_bb_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_bb_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_01_src_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_01_src_bb_min_i(o,v);
@@ -1289,6 +1322,9 @@ void gts_gui::cb_valinp_color_trace_01_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_01 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_01_src_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_01_src_bb_max_i(o,v);
@@ -1327,6 +1363,9 @@ void gts_gui::cb_chkbtn_color_trace_02_chk(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_02_src_hh_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_hh_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_02_src_hh_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_02_src_hh_min_i(o,v);
@@ -1335,6 +1374,9 @@ void gts_gui::cb_scrbar_color_trace_02_src_hh_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_02_src_hh_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_hh_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_02_src_hh_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_02_src_hh_max_i(o,v);
@@ -1344,6 +1386,9 @@ void gts_gui::cb_scrbar_color_trace_02_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_aa_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_02_src_aa_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_02_src_aa_min_i(o,v);
@@ -1352,6 +1397,9 @@ void gts_gui::cb_scrbar_color_trace_02_src_aa_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_02_src_aa_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_aa_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_02_src_aa_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_02_src_aa_max_i(o,v);
@@ -1360,6 +1408,9 @@ void gts_gui::cb_scrbar_color_trace_02_src_aa_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_02_src_bb_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_bb_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_02_src_bb_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_02_src_bb_min_i(o,v);
@@ -1369,6 +1420,9 @@ void gts_gui::cb_scrbar_color_trace_02_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_02_src_bb_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_02_src_bb_max_i(o,v);
@@ -1377,6 +1431,9 @@ void gts_gui::cb_scrbar_color_trace_02_src_bb_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_valinp_color_trace_02_src_hh_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_hh_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_02_src_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_02_src_hh_min_i(o,v);
@@ -1385,6 +1442,9 @@ void gts_gui::cb_valinp_color_trace_02_src_hh_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_02_src_hh_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_hh_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_02_src_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_02_src_hh_max_i(o,v);
@@ -1394,6 +1454,9 @@ void gts_gui::cb_valinp_color_trace_02_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_aa_min)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_02_src_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_02_src_aa_min_i(o,v);
@@ -1402,6 +1465,9 @@ void gts_gui::cb_valinp_color_trace_02_src_aa_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_02_src_aa_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_aa_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_02_src_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_02_src_aa_max_i(o,v);
@@ -1410,6 +1476,9 @@ void gts_gui::cb_valinp_color_trace_02_src_aa_max(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_02_src_bb_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_bb_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_02_src_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_02_src_bb_min_i(o,v);
@@ -1419,6 +1488,9 @@ void gts_gui::cb_valinp_color_trace_02_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_02 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_02_src_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_02_src_bb_max_i(o,v);
@@ -1457,6 +1529,9 @@ void gts_gui::cb_chkbtn_color_trace_03_chk(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_03_src_hh_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_hh_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_03_src_hh_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_03_src_hh_min_i(o,v);
@@ -1465,6 +1540,9 @@ void gts_gui::cb_scrbar_color_trace_03_src_hh_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_03_src_hh_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_hh_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_03_src_hh_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_03_src_hh_max_i(o,v);
@@ -1474,6 +1552,9 @@ void gts_gui::cb_scrbar_color_trace_03_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_aa_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_03_src_aa_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_03_src_aa_min_i(o,v);
@@ -1482,6 +1563,9 @@ void gts_gui::cb_scrbar_color_trace_03_src_aa_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_03_src_aa_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_aa_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_03_src_aa_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_03_src_aa_max_i(o,v);
@@ -1490,6 +1574,9 @@ void gts_gui::cb_scrbar_color_trace_03_src_aa_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_03_src_bb_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_bb_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_03_src_bb_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_03_src_bb_min_i(o,v);
@@ -1499,6 +1586,9 @@ void gts_gui::cb_scrbar_color_trace_03_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_03_src_bb_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_03_src_bb_max_i(o,v);
@@ -1507,6 +1597,9 @@ void gts_gui::cb_scrbar_color_trace_03_src_bb_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_valinp_color_trace_03_src_hh_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_hh_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_03_src_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_03_src_hh_min_i(o,v);
@@ -1515,6 +1608,9 @@ void gts_gui::cb_valinp_color_trace_03_src_hh_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_03_src_hh_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_hh_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_03_src_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_03_src_hh_max_i(o,v);
@@ -1524,6 +1620,9 @@ void gts_gui::cb_valinp_color_trace_03_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_aa_min)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_03_src_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_03_src_aa_min_i(o,v);
@@ -1532,6 +1631,9 @@ void gts_gui::cb_valinp_color_trace_03_src_aa_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_03_src_aa_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_aa_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_03_src_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_03_src_aa_max_i(o,v);
@@ -1540,6 +1642,9 @@ void gts_gui::cb_valinp_color_trace_03_src_aa_max(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_03_src_bb_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_bb_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_03_src_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_03_src_bb_min_i(o,v);
@@ -1549,6 +1654,9 @@ void gts_gui::cb_valinp_color_trace_03_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_03();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_03 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_03_src_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_03_src_bb_max_i(o,v);
@@ -1587,6 +1695,9 @@ void gts_gui::cb_chkbtn_color_trace_04_chk(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_04_src_hh_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_hh_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_04_src_hh_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_04_src_hh_min_i(o,v);
@@ -1595,6 +1706,9 @@ void gts_gui::cb_scrbar_color_trace_04_src_hh_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_04_src_hh_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_hh_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_04_src_hh_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_04_src_hh_max_i(o,v);
@@ -1604,6 +1718,9 @@ void gts_gui::cb_scrbar_color_trace_04_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_aa_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_04_src_aa_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_04_src_aa_min_i(o,v);
@@ -1612,6 +1729,9 @@ void gts_gui::cb_scrbar_color_trace_04_src_aa_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_04_src_aa_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_aa_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_04_src_aa_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_04_src_aa_max_i(o,v);
@@ -1620,6 +1740,9 @@ void gts_gui::cb_scrbar_color_trace_04_src_aa_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_04_src_bb_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_bb_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_04_src_bb_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_04_src_bb_min_i(o,v);
@@ -1629,6 +1752,9 @@ void gts_gui::cb_scrbar_color_trace_04_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_04_src_bb_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_04_src_bb_max_i(o,v);
@@ -1637,6 +1763,9 @@ void gts_gui::cb_scrbar_color_trace_04_src_bb_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_valinp_color_trace_04_src_hh_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_hh_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_04_src_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_04_src_hh_min_i(o,v);
@@ -1645,6 +1774,9 @@ void gts_gui::cb_valinp_color_trace_04_src_hh_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_04_src_hh_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_hh_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_04_src_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_04_src_hh_max_i(o,v);
@@ -1654,6 +1786,9 @@ void gts_gui::cb_valinp_color_trace_04_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_aa_min)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_04_src_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_04_src_aa_min_i(o,v);
@@ -1662,6 +1797,9 @@ void gts_gui::cb_valinp_color_trace_04_src_aa_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_04_src_aa_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_aa_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_04_src_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_04_src_aa_max_i(o,v);
@@ -1670,6 +1808,9 @@ void gts_gui::cb_valinp_color_trace_04_src_aa_max(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_04_src_bb_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_bb_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_04_src_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_04_src_bb_min_i(o,v);
@@ -1679,6 +1820,9 @@ void gts_gui::cb_valinp_color_trace_04_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_04 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_04_src_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_04_src_bb_max_i(o,v);
@@ -1717,6 +1861,9 @@ void gts_gui::cb_chkbtn_color_trace_05_chk(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_05_src_hh_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_05_src_hh_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_05_src_hh_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_05_src_hh_min_i(o,v);
@@ -1725,6 +1872,9 @@ void gts_gui::cb_scrbar_color_trace_05_src_hh_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_05_src_hh_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_05_src_hh_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_05_src_hh_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_05_src_hh_max_i(o,v);
@@ -1734,6 +1884,9 @@ void gts_gui::cb_scrbar_color_trace_05_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_05_src_aa_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_05_src_aa_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_05_src_aa_min_i(o,v);
@@ -1742,6 +1895,9 @@ void gts_gui::cb_scrbar_color_trace_05_src_aa_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_05_src_aa_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_05_src_aa_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_05_src_aa_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_05_src_aa_max_i(o,v);
@@ -1750,6 +1906,9 @@ void gts_gui::cb_scrbar_color_trace_05_src_aa_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_05_src_bb_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_05_src_bb_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_05_src_bb_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_05_src_bb_min_i(o,v);
@@ -1759,6 +1918,9 @@ void gts_gui::cb_scrbar_color_trace_05_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_05_src_bb_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_05_src_bb_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_05_src_bb_max_i(o,v);
@@ -1767,6 +1929,9 @@ void gts_gui::cb_scrbar_color_trace_05_src_bb_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_valinp_color_trace_05_src_hh_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_05_src_hh_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_05_src_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_05_src_hh_min_i(o,v);
@@ -1775,6 +1940,9 @@ void gts_gui::cb_valinp_color_trace_05_src_hh_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_05_src_hh_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_05_src_hh_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_05_src_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_05_src_hh_max_i(o,v);
@@ -1784,6 +1952,9 @@ void gts_gui::cb_valinp_color_trace_05_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_05_src_aa_min)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_05_src_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_05_src_aa_min_i(o,v);
@@ -1792,6 +1963,9 @@ void gts_gui::cb_valinp_color_trace_05_src_aa_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_05_src_aa_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_05_src_aa_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_05_src_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_05_src_aa_max_i(o,v);
@@ -1800,6 +1974,9 @@ void gts_gui::cb_valinp_color_trace_05_src_aa_max(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_05_src_bb_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_05_src_bb_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_05_src_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_05_src_bb_min_i(o,v);
@@ -1809,6 +1986,9 @@ void gts_gui::cb_valinp_color_trace_05_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_05_src_bb_max)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_05 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_05_src_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_05_src_bb_max_i(o,v);
@@ -1847,6 +2027,9 @@ void gts_gui::cb_chkbtn_color_trace_06_chk(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_06_src_hh_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_06_src_hh_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_06_src_hh_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_06_src_hh_min_i(o,v);
@@ -1855,6 +2038,9 @@ void gts_gui::cb_scrbar_color_trace_06_src_hh_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_06_src_hh_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_06_src_hh_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_06_src_hh_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_06_src_hh_max_i(o,v);
@@ -1864,6 +2050,9 @@ void gts_gui::cb_scrbar_color_trace_06_src_aa_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_06_src_aa_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_06_src_aa_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_06_src_aa_min_i(o,v);
@@ -1872,6 +2061,9 @@ void gts_gui::cb_scrbar_color_trace_06_src_aa_min(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_06_src_aa_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_06_src_aa_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_06_src_aa_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_06_src_aa_max_i(o,v);
@@ -1880,6 +2072,9 @@ void gts_gui::cb_scrbar_color_trace_06_src_aa_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_scrbar_color_trace_06_src_bb_min_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_06_src_bb_min->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_06_src_bb_min(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_06_src_bb_min_i(o,v);
@@ -1889,6 +2084,9 @@ void gts_gui::cb_scrbar_color_trace_06_src_bb_max_i(Fl_Scrollbar* o, void*) {
   valinp_color_trace_06_src_bb_max->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_scrbar_color_trace_06_src_bb_max(Fl_Scrollbar* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_color_trace_06_src_bb_max_i(o,v);
@@ -1897,6 +2095,9 @@ void gts_gui::cb_scrbar_color_trace_06_src_bb_max(Fl_Scrollbar* o, void* v) {
 void gts_gui::cb_valinp_color_trace_06_src_hh_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_06_src_hh_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_06_src_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_06_src_hh_min_i(o,v);
@@ -1905,6 +2106,9 @@ void gts_gui::cb_valinp_color_trace_06_src_hh_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_06_src_hh_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_06_src_hh_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_hh_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_06_src_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_06_src_hh_max_i(o,v);
@@ -1914,6 +2118,9 @@ void gts_gui::cb_valinp_color_trace_06_src_aa_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_06_src_aa_min)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_06_src_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_06_src_aa_min_i(o,v);
@@ -1922,6 +2129,9 @@ void gts_gui::cb_valinp_color_trace_06_src_aa_min(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_06_src_aa_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_06_src_aa_max)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_aa_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_06_src_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_06_src_aa_max_i(o,v);
@@ -1930,6 +2140,9 @@ void gts_gui::cb_valinp_color_trace_06_src_aa_max(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_valinp_color_trace_06_src_bb_min_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_06_src_bb_min)->value(o->value());
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_min->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_06_src_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_06_src_bb_min_i(o,v);
@@ -1939,6 +2152,9 @@ void gts_gui::cb_valinp_color_trace_06_src_bb_max_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_color_trace_06_src_bb_max)->value(o->value());
 cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 cl_gts_master.cb_color_trace_src_edit_value();
+if (E_COLOR_TRACE_HAB_06 == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
+	cl_gts_gui.valinp_hab_histogram_bb_max->value(((Fl_Valuator *)o)->value());
+};
 }
 void gts_gui::cb_valinp_color_trace_06_src_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_color_trace_06_src_bb_max_i(o,v);
@@ -3247,16 +3463,20 @@ static const unsigned char idata_color_belt1000x10hue[] =
 static Fl_RGB_Image image_color_belt1000x10hue(idata_color_belt1000x10hue, 1000, 10, 3, 0);
 
 void gts_gui::cb_valinp_hab_histogram_hh_min_i(Fl_Value_Input* o, void*) {
-  ((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cb_color_trace_src_edit_hh(
+	o->value()
+	,cl_gts_gui.fltkp_hh_cyclic->get_d360_x_max()
+);
 }
 void gts_gui::cb_valinp_hab_histogram_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_hh_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input* o, void*) {
-  ((Fl_Valuator *)scrbar_color_trace_01_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cb_color_trace_src_edit_hh(
+	cl_gts_gui.fltkp_hh_cyclic->get_d360_x_min()
+	,o->value()
+);
 }
 void gts_gui::cb_valinp_hab_histogram_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_hh_max_i(o,v);
@@ -4661,17 +4881,20 @@ static const unsigned char idata_color_belt1000x10sat[] =
 static Fl_RGB_Image image_color_belt1000x10sat(idata_color_belt1000x10sat, 1000, 10, 3, 0);
 
 void gts_gui::cb_valinp_hab_histogram_aa_min_i(Fl_Value_Input* o, void*) {
-  ((Fl_Valuator *)scrbar_color_trace_01_src_aa_min)->value(o->value());
-cl_gts_master.cl_color_trace_thickness.cb_enh_01();
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cb_color_trace_src_edit_aa(
+	o->value()
+	,cl_gts_gui.fltkp_aa_minmax->get_d_x_max()
+);
 }
 void gts_gui::cb_valinp_hab_histogram_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_aa_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input* o, void*) {
-  ((Fl_Valuator *)scrbar_color_trace_01_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cb_color_trace_src_edit_aa(
+	cl_gts_gui.fltkp_aa_minmax->get_d_x_min()
+	,o->value()
+);
 }
 void gts_gui::cb_valinp_hab_histogram_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_aa_max_i(o,v);
@@ -6032,17 +6255,20 @@ static const unsigned char idata_color_belt1000x10val[] =
 static Fl_RGB_Image image_color_belt1000x10val(idata_color_belt1000x10val, 1000, 10, 3, 0);
 
 void gts_gui::cb_valinp_hab_histogram_bb_min_i(Fl_Value_Input* o, void*) {
-  ((Fl_Valuator *)scrbar_color_trace_01_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cb_color_trace_src_edit_bb(
+	o->value()
+	,cl_gts_gui.fltkp_bb_minmax->get_d_x_max()
+);
 }
 void gts_gui::cb_valinp_hab_histogram_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_bb_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input* o, void*) {
-  ((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
-cl_gts_master.cl_color_trace_thickness.cb_enh_01();
-cl_gts_master.cb_color_trace_src_edit_value();
+  cl_gts_master.cb_color_trace_src_edit_bb(
+	cl_gts_gui.fltkp_bb_minmax->get_d_x_min()
+	,o->value()
+);
 }
 void gts_gui::cb_valinp_hab_histogram_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_bb_max_i(o,v);
@@ -6127,6 +6353,7 @@ void gts_gui::cb_button_stop_scan(Fl_Button* o, void* v) {
 void gts_gui::cb_window_thickness_i(Fl_Double_Window*, void*) {
   cl_gts_gui.window_thickness->hide();
 cl_gts_gui.window_edit_color->hide();
+cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_thickness->clear();
 }
 void gts_gui::cb_window_thickness(Fl_Double_Window* o, void* v) {
@@ -6150,25 +6377,21 @@ void gts_gui::cb_chkbtn_thickness_01_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_button_thickness_01_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_tgt_open_01();
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_01();
 }
 void gts_gui::cb_button_thickness_01_tgt_rgb(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_tgt_rgb_i(o,v);
 }
 
 void gts_gui::cb_roubut_thickness_01_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  roubut_thickness_02_tgt_is_bl->value(0);
-roubut_thickness_03_tgt_is_bl->value(0);
-roubut_thickness_04_tgt_is_bl->value(0);
-roubut_thickness_05_tgt_is_bl->value(0);
-roubut_thickness_06_tgt_is_bl->value(0);
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_01();
 }
 void gts_gui::cb_roubut_thickness_01_tgt_is_bl(Fl_Round_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_01_tgt_is_bl_i(o,v);
 }
 
 void gts_gui::cb_button_thickness_01_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_01();
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_01();
 }
 void gts_gui::cb_button_thickness_01_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_src_i(o,v);
@@ -6205,25 +6428,21 @@ void gts_gui::cb_chkbtn_thickness_02_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_button_thickness_02_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_tgt_open_02();
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_02();
 }
 void gts_gui::cb_button_thickness_02_tgt_rgb(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_tgt_rgb_i(o,v);
 }
 
 void gts_gui::cb_roubut_thickness_02_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  roubut_thickness_01_tgt_is_bl->value(0);
-roubut_thickness_03_tgt_is_bl->value(0);
-roubut_thickness_04_tgt_is_bl->value(0);
-roubut_thickness_05_tgt_is_bl->value(0);
-roubut_thickness_06_tgt_is_bl->value(0);
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_02();
 }
 void gts_gui::cb_roubut_thickness_02_tgt_is_bl(Fl_Round_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_02_tgt_is_bl_i(o,v);
 }
 
 void gts_gui::cb_button_thickness_02_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_02();
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_02();
 }
 void gts_gui::cb_button_thickness_02_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_src_i(o,v);
@@ -6260,25 +6479,21 @@ void gts_gui::cb_chkbtn_thickness_03_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_button_thickness_03_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_tgt_open_03();
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_03();
 }
 void gts_gui::cb_button_thickness_03_tgt_rgb(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_tgt_rgb_i(o,v);
 }
 
 void gts_gui::cb_roubut_thickness_03_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  roubut_thickness_01_tgt_is_bl->value(0);
-roubut_thickness_02_tgt_is_bl->value(0);
-roubut_thickness_04_tgt_is_bl->value(0);
-roubut_thickness_05_tgt_is_bl->value(0);
-roubut_thickness_06_tgt_is_bl->value(0);
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_03();
 }
 void gts_gui::cb_roubut_thickness_03_tgt_is_bl(Fl_Round_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_03_tgt_is_bl_i(o,v);
 }
 
 void gts_gui::cb_button_thickness_03_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_03();
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_03();
 }
 void gts_gui::cb_button_thickness_03_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_src_i(o,v);
@@ -6315,25 +6530,21 @@ void gts_gui::cb_chkbtn_thickness_04_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_button_thickness_04_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_tgt_open_04();
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_04();
 }
 void gts_gui::cb_button_thickness_04_tgt_rgb(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_tgt_rgb_i(o,v);
 }
 
 void gts_gui::cb_roubut_thickness_04_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  roubut_thickness_01_tgt_is_bl->value(0);
-roubut_thickness_02_tgt_is_bl->value(0);
-roubut_thickness_03_tgt_is_bl->value(0);
-roubut_thickness_05_tgt_is_bl->value(0);
-roubut_thickness_06_tgt_is_bl->value(0);
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_04();
 }
 void gts_gui::cb_roubut_thickness_04_tgt_is_bl(Fl_Round_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_04_tgt_is_bl_i(o,v);
 }
 
 void gts_gui::cb_button_thickness_04_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_04();
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_04();
 }
 void gts_gui::cb_button_thickness_04_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_src_i(o,v);
@@ -6370,25 +6581,21 @@ void gts_gui::cb_chkbtn_thickness_05_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_button_thickness_05_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_tgt_open_05();
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_05();
 }
 void gts_gui::cb_button_thickness_05_tgt_rgb(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_05_tgt_rgb_i(o,v);
 }
 
 void gts_gui::cb_roubut_thickness_05_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  roubut_thickness_01_tgt_is_bl->value(0);
-roubut_thickness_02_tgt_is_bl->value(0);
-roubut_thickness_03_tgt_is_bl->value(0);
-roubut_thickness_04_tgt_is_bl->value(0);
-roubut_thickness_06_tgt_is_bl->value(0);
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_05();
 }
 void gts_gui::cb_roubut_thickness_05_tgt_is_bl(Fl_Round_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_05_tgt_is_bl_i(o,v);
 }
 
 void gts_gui::cb_button_thickness_05_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_05();
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_05();
 }
 void gts_gui::cb_button_thickness_05_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_05_src_i(o,v);
@@ -6425,25 +6632,21 @@ void gts_gui::cb_chkbtn_thickness_06_chk(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_button_thickness_06_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cb_color_trace_tgt_open_06();
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_06();
 }
 void gts_gui::cb_button_thickness_06_tgt_rgb(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_06_tgt_rgb_i(o,v);
 }
 
 void gts_gui::cb_roubut_thickness_06_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  roubut_thickness_01_tgt_is_bl->value(0);
-roubut_thickness_02_tgt_is_bl->value(0);
-roubut_thickness_03_tgt_is_bl->value(0);
-roubut_thickness_04_tgt_is_bl->value(0);
-roubut_thickness_05_tgt_is_bl->value(0);
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_06();
 }
 void gts_gui::cb_roubut_thickness_06_tgt_is_bl(Fl_Round_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_06_tgt_is_bl_i(o,v);
 }
 
 void gts_gui::cb_button_thickness_06_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_06();
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_06();
 }
 void gts_gui::cb_button_thickness_06_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_06_src_i(o,v);

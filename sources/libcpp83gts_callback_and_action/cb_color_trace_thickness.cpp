@@ -173,7 +173,7 @@ namespace {
 }
 
 //----------
-void cb_color_trace_thickness::cb_src_01( void )
+void cb_color_trace_thickness::cb_src_show_hide_01( void )
 {
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
@@ -192,7 +192,7 @@ void cb_color_trace_thickness::cb_src_01( void )
 		cl_gts_gui.window_hab_histogram->hide();
 	}
 }
-void cb_color_trace_thickness::cb_src_02( void )
+void cb_color_trace_thickness::cb_src_show_hide_02( void )
 {
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
@@ -211,7 +211,7 @@ void cb_color_trace_thickness::cb_src_02( void )
 		cl_gts_gui.window_hab_histogram->hide();
 	}
 }
-void cb_color_trace_thickness::cb_src_03( void )
+void cb_color_trace_thickness::cb_src_show_hide_03( void )
 {
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
@@ -230,7 +230,7 @@ void cb_color_trace_thickness::cb_src_03( void )
 		cl_gts_gui.window_hab_histogram->hide();
 	}
 }
-void cb_color_trace_thickness::cb_src_04( void )
+void cb_color_trace_thickness::cb_src_show_hide_04( void )
 {
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
@@ -249,7 +249,7 @@ void cb_color_trace_thickness::cb_src_04( void )
 		cl_gts_gui.window_hab_histogram->hide();
 	}
 }
-void cb_color_trace_thickness::cb_src_05( void )
+void cb_color_trace_thickness::cb_src_show_hide_05( void )
 {
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
@@ -268,7 +268,7 @@ void cb_color_trace_thickness::cb_src_05( void )
 		cl_gts_gui.window_hab_histogram->hide();
 	}
 }
-void cb_color_trace_thickness::cb_src_06( void )
+void cb_color_trace_thickness::cb_src_show_hide_06( void )
 {
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
@@ -509,3 +509,159 @@ void cb_color_trace_thickness::tgt_redraw_rgb_color(
 	case E_COLOR_TRACE_HAB_NOT_SELECT: break;
 	}
 }
+
+/*
+edit color windowを設定して表示/隠す
+*/
+void cb_color_trace_thickness::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
+{
+	color_trace_enhancement &cte(
+ 		cl_gts_master.cl_color_trace_enhancement
+	);
+
+	/* fltkカラーテーブル番号を得る */
+	const int color_number =
+	cte.tgt_fl_color_number_from_trace_list_pos( trace_list_pos );
+	if (color_number < 0) { return; } /* 未選択はキャンセル */
+
+	/* トレス番号を取っておく */
+	E_COLOR_TRACE_HAB_COLORS col = 
+	cl_gts_master.cl_color_trace_enhancement.tgt_get_e_rgb_color();
+
+	/* 表示状態を取っておく */
+	const int before_shown_sw=cl_gts_gui.window_edit_color->shown();
+
+	/* 使用中トレス色番号を設定 */
+	cte.tgt_set_e_rgb_color( trace_list_pos );
+
+	/* 指定のFlカラーテーブルのrgb値を得る */
+	unsigned char red, gre, blu;
+	cte.tgt_fl_get_color( color_number, &red, &gre, &blu );
+
+	/* rgb値を、edit color windowに設定 */
+	cl_gts_gui.valinp_edit_color_red->value(
+		(double)red);
+	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_red)->value(
+		(double)red);
+
+	cl_gts_gui.valinp_edit_color_gre->value(
+		(double)gre);
+	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_gre)->value(
+		(double)gre);
+
+	cl_gts_gui.valinp_edit_color_blu->value(
+		(double)blu);
+	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_blu)->value(
+		(double)blu);
+
+	/* edit color windowを表示 */
+	cl_gts_gui.window_edit_color->show();
+
+	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
+	if ( before_shown_sw &&
+ col == cl_gts_master.cl_color_trace_enhancement.tgt_get_e_rgb_color()
+	) {
+		cl_gts_gui.window_edit_color->hide();
+	}
+}
+
+void cb_color_trace_thickness::cb_tgt_show_hide_01( void )
+{
+	this->tgt_open_edit_color_(   E_COLOR_TRACE_HAB_01 );
+}
+void cb_color_trace_thickness::cb_tgt_show_hide_02( void )
+{
+	this->tgt_open_edit_color_(   E_COLOR_TRACE_HAB_02 );
+}
+void cb_color_trace_thickness::cb_tgt_show_hide_03( void )
+{
+	this->tgt_open_edit_color_(   E_COLOR_TRACE_HAB_03 );
+}
+void cb_color_trace_thickness::cb_tgt_show_hide_04( void )
+{
+	this->tgt_open_edit_color_(   E_COLOR_TRACE_HAB_04 );
+}
+void cb_color_trace_thickness::cb_tgt_show_hide_05( void )
+{
+	this->tgt_open_edit_color_(   E_COLOR_TRACE_HAB_05 );
+}
+void cb_color_trace_thickness::cb_tgt_show_hide_06( void )
+{
+	this->tgt_open_edit_color_(   E_COLOR_TRACE_HAB_06 );
+}
+
+//----------
+/*
+edit color windowを設定して表示/隠す
+*/
+void cb_color_trace_thickness::tgt_change_black_( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
+{
+	/* black off */
+	if (	      E_COLOR_TRACE_HAB_01 != trace_list_pos
+	 && cl_gts_gui.roubut_thickness_01_tgt_is_bl->value()) {
+	    cl_gts_gui.roubut_thickness_01_tgt_is_bl->value(0);
+			   this->cb_enh_01();
+	}
+	if (	      E_COLOR_TRACE_HAB_02 != trace_list_pos
+	 && cl_gts_gui.roubut_thickness_02_tgt_is_bl->value()) {
+	    cl_gts_gui.roubut_thickness_02_tgt_is_bl->value(0);
+			   this->cb_enh_02();
+	}
+	if (	      E_COLOR_TRACE_HAB_03 != trace_list_pos
+	 && cl_gts_gui.roubut_thickness_03_tgt_is_bl->value()) {
+	    cl_gts_gui.roubut_thickness_03_tgt_is_bl->value(0);
+			   this->cb_enh_03();
+	}
+	if (	      E_COLOR_TRACE_HAB_04 != trace_list_pos
+	 && cl_gts_gui.roubut_thickness_04_tgt_is_bl->value()) {
+	    cl_gts_gui.roubut_thickness_04_tgt_is_bl->value(0);
+			   this->cb_enh_04();
+	}
+	if (	      E_COLOR_TRACE_HAB_05 != trace_list_pos
+	 && cl_gts_gui.roubut_thickness_05_tgt_is_bl->value()) {
+	    cl_gts_gui.roubut_thickness_05_tgt_is_bl->value(0);
+			   this->cb_enh_05();
+	}
+	if (	      E_COLOR_TRACE_HAB_06 != trace_list_pos
+	 && cl_gts_gui.roubut_thickness_06_tgt_is_bl->value()) {
+	    cl_gts_gui.roubut_thickness_06_tgt_is_bl->value(0);
+			   this->cb_enh_06();
+	}
+	/* black on */
+	switch (trace_list_pos)
+	{
+	case E_COLOR_TRACE_HAB_01: this->cb_enh_01(); break;
+	case E_COLOR_TRACE_HAB_02: this->cb_enh_02(); break;
+	case E_COLOR_TRACE_HAB_03: this->cb_enh_03(); break;
+	case E_COLOR_TRACE_HAB_04: this->cb_enh_04(); break;
+	case E_COLOR_TRACE_HAB_05: this->cb_enh_05(); break;
+	case E_COLOR_TRACE_HAB_06: this->cb_enh_06(); break;
+	}
+}
+
+void cb_color_trace_thickness::cb_tgt_change_black_01( void )
+{
+	this->tgt_change_black_(   E_COLOR_TRACE_HAB_01 );
+}
+void cb_color_trace_thickness::cb_tgt_change_black_02( void )
+{
+	this->tgt_change_black_(   E_COLOR_TRACE_HAB_02 );
+}
+void cb_color_trace_thickness::cb_tgt_change_black_03( void )
+{
+	this->tgt_change_black_(   E_COLOR_TRACE_HAB_03 );
+}
+void cb_color_trace_thickness::cb_tgt_change_black_04( void )
+{
+	this->tgt_change_black_(   E_COLOR_TRACE_HAB_04 );
+}
+void cb_color_trace_thickness::cb_tgt_change_black_05( void )
+{
+	this->tgt_change_black_(   E_COLOR_TRACE_HAB_05 );
+}
+void cb_color_trace_thickness::cb_tgt_change_black_06( void )
+{
+	this->tgt_change_black_(   E_COLOR_TRACE_HAB_06 );
+}
+
+/*--------------------------------------------------------*/
