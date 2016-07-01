@@ -197,6 +197,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
 					sources/libcpp83gts_callback_and_action/cb_choice_pixel_type.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_full_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_tgt.cpp \

@@ -27,6 +27,7 @@ gts_gui.cpp\
 gts_master.cpp\
 cb_change_view.cpp\
 cb_choice_pixel_type.cpp\
+cb_color_trace_edit_color.cpp\
 cb_color_trace_full_area.cpp\
 cb_color_trace_src.cpp\
 cb_color_trace_tgt.cpp\

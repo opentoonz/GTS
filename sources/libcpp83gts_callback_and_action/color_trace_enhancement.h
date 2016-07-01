@@ -15,13 +15,13 @@ public:
 
 	E_COLOR_TRACE_HAB_COLORS src_get_e_color_range( void )
 	{	   return this->_e_source_color_range; }
-	int src_open_histogram_window( E_COLOR_TRACE_HAB_COLORS e_num );
-	int src_set_histogram_window( E_COLOR_TRACE_HAB_COLORS e_num );
-	int src_edit_hh( E_COLOR_TRACE_HAB_COLORS e_num,
+	int src_open_histogram_window( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
+	int src_set_histogram_window( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
+	int src_edit_hh( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
 		double d_min, double d_max );
-	int src_edit_aa( E_COLOR_TRACE_HAB_COLORS e_num,
+	int src_edit_aa( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
 		double d_min, double d_max );
-	int src_edit_bb( E_COLOR_TRACE_HAB_COLORS e_num,
+	int src_edit_bb( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
 		double d_min, double d_max );
 
 	void src_set_histogram_max( void );
@@ -35,49 +35,93 @@ public:
 	void src_init_histogram_window( void );
 	void src_set_from_gui( void );
 
-	void tgt_set_e_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num )
-	{ this->_e_target_rgb_color = e_num; }
-	E_COLOR_TRACE_HAB_COLORS tgt_get_e_rgb_color( void )
-	{	   return this->_e_target_rgb_color; }
-	void tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS e_num );
-	void tgt_edit_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num );
-	void tgt_get_uchar_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num,
-		unsigned char *ucharp_red, unsigned char *ucharp_gre,
-		unsigned char *ucharp_blu );
-	void tgt_set_uchar_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num,
-		int i_red, int i_gre, int i_blu );
+	/*
+	トレス色番号から、fltkカラーテーブル番号を得る
+	トレス色番号を選択してない場合は-1を返す
+	*/
+	int tgt_fl_color_number_from_trace_list_pos(
+		E_COLOR_TRACE_HAB_COLORS trace_list_pos
+	);
+	/*
+	トレス色番号から、GUIのボタン(色)を再表示
+	トレス色番号を選択してない場合はなにもしない
+	*/
+	void tgt_redraw_rgb_color(
+		E_COLOR_TRACE_HAB_COLORS trace_list_pos
+	);
 
-	int fl_color_table_from_trace_list_pos(
-		E_COLOR_TRACE_HAB_COLORS e_num
+	/* 各8-bitのrgb値を、fltkカラーテーブル指定色に設定する */
+	void tgt_fl_set_color(
+		int color_number
+		, unsigned char red , unsigned char gre , unsigned char blu
 	);
-	int set_fl_color_of_table(
-		int i_color_number
-		, unsigned char uchar_red
-		, unsigned char uchar_gre
-		, unsigned char uchar_blu
+
+	/*
+	rgb値を、
+	トレス色番号に対応する、fltkカラーテーブル指定色に設定する
+	*/
+	void tgt_set_uchar_rgb_color(
+		E_COLOR_TRACE_HAB_COLORS trace_list_pos
+		, int red, int gre, int blu
 	);
+	/*
+	トレス色番号に対応する、fltkカラーテーブル指定色から
+	rgb値を得る
+	*/
+	void tgt_get_uchar_rgb_color(
+		E_COLOR_TRACE_HAB_COLORS trace_list_pos
+		, unsigned char *red
+		, unsigned char *gre
+		, unsigned char *blu
+	);
+
+	/*
+	edit color windowで値を変えたとき
+	トレス色番号に対応する、fltkカラーテーブル指定色を設定する
+	void color_trace_enhancement::tgt_redraw_rgb_color(-)も実行必要
+	*/
+	void tgt_edit_rgb_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
+
+	/*
+	edit color windowを設定して表示する
+	*/
+	void tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
+
+	/*
+	トレス色番号のゲッター/セッター
+	*/
+	void tgt_set_e_rgb_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
+	{
+		this->_e_target_rgb_color = trace_list_pos;
+	}
+	E_COLOR_TRACE_HAB_COLORS tgt_get_e_rgb_color( void ) const
+	{
+		return this->_e_target_rgb_color;
+	}
+
 private:
+	/* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
+	void _tgt_fl_get_color(
+		int color_number
+		, unsigned char *red, unsigned char *gre, unsigned char *blu
+	);
+
+	int _src_get_p_hh_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
+		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
+	int _src_get_p_aa_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
+		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
+	int _src_get_p_bb_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
+		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
+	int _src_get_p_hh_scrbar( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
+		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
+	int _src_get_p_aa_scrbar( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
+		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
+	int _src_get_p_bb_scrbar( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
+		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
+	int _src_set_crnt_to_histogram( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
+
 	E_COLOR_TRACE_HAB_COLORS _e_source_color_range;
 	E_COLOR_TRACE_HAB_COLORS _e_target_rgb_color;
-
-	int _src_get_p_hh_valinp( E_COLOR_TRACE_HAB_COLORS e_num,
-		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
-	int _src_get_p_aa_valinp( E_COLOR_TRACE_HAB_COLORS e_num,
-		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
-	int _src_get_p_bb_valinp( E_COLOR_TRACE_HAB_COLORS e_num,
-		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );
-	int _src_get_p_hh_scrbar( E_COLOR_TRACE_HAB_COLORS e_num,
-		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
-	int _src_get_p_aa_scrbar( E_COLOR_TRACE_HAB_COLORS e_num,
-		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
-	int _src_get_p_bb_scrbar( E_COLOR_TRACE_HAB_COLORS e_num,
-		Fl_Valuator **pp_min, Fl_Valuator **pp_max );
-	int _src_set_crnt_to_histogram( E_COLOR_TRACE_HAB_COLORS e_num );
-
-	int _tgt_set_rgb_color( int i_color_number );
-	int _tgt_redraw_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num );
-	int _tgt_get_uchar_rgb_color( int i_color_number, unsigned char *ucharp_red, unsigned char *ucharp_gre, unsigned char *ucharp_blu );
-	void _tgt_set_uchar_edit_color( unsigned char uchar_red, unsigned char uchar_gre, unsigned char uchar_blu );
 };
 
 #endif /* !__color_trace_enhancement_h__ */

@@ -50,12 +50,12 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, ccp_col, this->str_color_trace_01_tgt_color_,
+/*	i_ret = fprintf(fp, ccp_col, this->str_color_trace_01_tgt_color_,
 		cl_gts_gui.choice_thickness_01_tgt_src_preset->text(
 		 cl_gts_gui.choice_thickness_01_tgt_src_preset->value()
 		)
 	);
-	if (i_ret < 0) { return NG; }
+	if (i_ret < 0) { return NG; }*/
 
 	/* 02 ------------------------------------------------*/
 
@@ -95,12 +95,12 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, ccp_col, this->str_color_trace_02_tgt_color_,
+/*	i_ret = fprintf(fp, ccp_col, this->str_color_trace_02_tgt_color_,
 		cl_gts_gui.choice_thickness_02_tgt_src_preset->text(
 		 cl_gts_gui.choice_thickness_02_tgt_src_preset->value()
 		)
 	);
-	if (i_ret < 0) { return NG; }
+	if (i_ret < 0) { return NG; }*/
 
 	/* 03 ------------------------------------------------*/
 
@@ -140,12 +140,12 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, ccp_col, this->str_color_trace_03_tgt_color_,
+/*	i_ret = fprintf(fp, ccp_col, this->str_color_trace_03_tgt_color_,
 		cl_gts_gui.choice_thickness_03_tgt_src_preset->text(
 		 cl_gts_gui.choice_thickness_03_tgt_src_preset->value()
 		)
 	);
-	if (i_ret < 0) { return NG; }
+	if (i_ret < 0) { return NG; }*/
 
 	/* 04 ------------------------------------------------*/
 
@@ -185,12 +185,12 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, ccp_col, this->str_color_trace_04_tgt_color_,
+/*	i_ret = fprintf(fp, ccp_col, this->str_color_trace_04_tgt_color_,
 		cl_gts_gui.choice_thickness_04_tgt_src_preset->text(
 		 cl_gts_gui.choice_thickness_04_tgt_src_preset->value()
 		)
 	);
-	if (i_ret < 0) { return NG; }
+	if (i_ret < 0) { return NG; }*/
 
 	/* 05 ------------------------------------------------*/
 

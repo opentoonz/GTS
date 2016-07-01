@@ -79,14 +79,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_01_tgt_rgb->redraw();
 	}
-	else if ((2 == i_num) &&
+/*	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_01_tgt_color_ )) {
 		 cl_gts_gui.choice_thickness_01_tgt_src_preset->value(
 		  cl_gts_gui.choice_thickness_01_tgt_src_preset->find_index(
 		   cp2
 		  )
 		 );
-	}
+	}*/
 
 	/* 02 ------------------------------------------------*/
 
@@ -160,14 +160,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_02_tgt_rgb->redraw();
 	}
-	else if ((2 == i_num) &&
+/*	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_02_tgt_color_ )) {
 		 cl_gts_gui.choice_thickness_02_tgt_src_preset->value(
 		  cl_gts_gui.choice_thickness_02_tgt_src_preset->find_index(
 		   cp2
 		  )
 		 );
-	}
+	}*/
 
 	/* 03 ------------------------------------------------*/
 
@@ -241,14 +241,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_03_tgt_rgb->redraw();
 	}
-	else if ((2 == i_num) &&
+/*	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_03_tgt_color_ )) {
 		 cl_gts_gui.choice_thickness_03_tgt_src_preset->value(
 		  cl_gts_gui.choice_thickness_03_tgt_src_preset->find_index(
 		   cp2
 		  )
 		 );
-	}
+	}*/
 
 	/* 04 ------------------------------------------------*/
 
@@ -322,14 +322,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 		);
 		cl_gts_gui.button_color_trace_04_tgt_rgb->redraw();
 	}
-	else if ((2 == i_num) &&
+/*	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_04_tgt_color_ )) {
 		 cl_gts_gui.choice_thickness_04_tgt_src_preset->value(
 		  cl_gts_gui.choice_thickness_04_tgt_src_preset->find_index(
 		   cp2
 		  )
 		 );
-	}
+	}*/
 
 	/* 05 ------------------------------------------------*/
 

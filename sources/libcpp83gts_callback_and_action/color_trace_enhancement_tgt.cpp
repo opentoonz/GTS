@@ -4,10 +4,15 @@
 #include "color_trace_enhancement.h"
 #include "gts_gui.h"
 
-/* 使用中トレス色番号から、Flカラーテーブルのアドレス番号を得る */
-int color_trace_enhancement::fl_color_table_from_trace_list_pos( E_COLOR_TRACE_HAB_COLORS e_num )
+/*
+トレス色番号から、fltkカラーテーブル番号を得る
+トレス色番号を選択してない場合は-1を返す
+*/
+int color_trace_enhancement::tgt_fl_color_number_from_trace_list_pos(
+	E_COLOR_TRACE_HAB_COLORS trace_list_pos
+)
 {
-	switch (e_num) {
+	switch (trace_list_pos) {
 	case E_COLOR_TRACE_HAB_01: return FL_FREE_COLOR + 0;
 	case E_COLOR_TRACE_HAB_02: return FL_FREE_COLOR + 1;
 	case E_COLOR_TRACE_HAB_03: return FL_FREE_COLOR + 2;
@@ -15,53 +20,20 @@ int color_trace_enhancement::fl_color_table_from_trace_list_pos( E_COLOR_TRACE_H
 	case E_COLOR_TRACE_HAB_05: return FL_FREE_COLOR + 4;
 	case E_COLOR_TRACE_HAB_06: return FL_FREE_COLOR + 5;
 	case E_COLOR_TRACE_HAB_NOT_SELECT:
-		pri_funct_err_bttvr(
-			"Error : e_num is E_COLOR_TRACE_HAB_NOT_SELECT");
 		return -1;
 	}
 	return -1;
 }
 
-/* rgb値を
-指定のFlカラーテーブルのアドレス番号に設定する */
-int color_trace_enhancement::set_fl_color_of_table( int i_color_number, unsigned char uchar_red, unsigned char uchar_gre, unsigned char uchar_blu )
+/*
+トレス色番号から、GUIのボタン(色)を再表示
+トレス色番号を選択してない場合はなにもしない
+*/
+void color_trace_enhancement::tgt_redraw_rgb_color(
+	E_COLOR_TRACE_HAB_COLORS trace_list_pos
+)
 {
-	if (-1 == i_color_number) {
-		pri_funct_err_bttvr(
-			"Error : i_color_number is -1");
-		return NG;
-	}
-	Fl::set_color(
-		Fl_Color(i_color_number),
-		uchar_red,
-		uchar_gre,
-		uchar_blu
-	);
-	return OK;
-}
-
-//--------------------------------------------------------
-
-/* edit color windowのrgb値を
-指定のFlカラーテーブルのアドレス番号に設定する */
-int color_trace_enhancement::_tgt_set_rgb_color( int i_color_number )
-{
-	if (OK != this->set_fl_color_of_table( i_color_number,
-		(unsigned char)(cl_gts_gui.valinp_edit_color_red->value()),
-		(unsigned char)(cl_gts_gui.valinp_edit_color_gre->value()),
-		(unsigned char)(cl_gts_gui.valinp_edit_color_blu->value())
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->set_fl_color_of_table(-) returns NG");
-		return NG;
-	}
-	return OK;
-}
-
-/* 指定のトレス色番号を再表示 */
-int color_trace_enhancement::_tgt_redraw_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num )
-{
-	switch (e_num) {
+	switch (trace_list_pos) {
 	case E_COLOR_TRACE_HAB_01:
  cl_gts_gui.button_color_trace_01_tgt_rgb->redraw(); break;
 	case E_COLOR_TRACE_HAB_02:
@@ -74,179 +46,143 @@ int color_trace_enhancement::_tgt_redraw_rgb_color( E_COLOR_TRACE_HAB_COLORS e_n
  cl_gts_gui.button_color_trace_05_tgt_rgb->redraw(); break;
 	case E_COLOR_TRACE_HAB_06:
  cl_gts_gui.button_color_trace_06_tgt_rgb->redraw(); break;
-	case E_COLOR_TRACE_HAB_NOT_SELECT:
-		pri_funct_err_bttvr(
-			"Error : e_num is E_COLOR_TRACE_HAB_NOT_SELECT");
-		return NG;
-	}
-	return OK;
-}
-
-/* 指定のFlカラーテーブルのrgb値を得る */
-int color_trace_enhancement::_tgt_get_uchar_rgb_color( int i_color_number, unsigned char *ucharp_red, unsigned char *ucharp_gre, unsigned char *ucharp_blu )
-{
-	if (-1 == i_color_number) {
-		pri_funct_err_bttvr(
-			"Error : i_color_number is -1");
-		return NG;
-	}
-	Fl::get_color(
-		Fl_Color(i_color_number),
-		*ucharp_red,
-		*ucharp_gre,
-		*ucharp_blu
-	);
-	return OK;
-}
-
-/* rgb値を、edit color windowに設定 */
-void color_trace_enhancement::_tgt_set_uchar_edit_color( unsigned char uchar_red, unsigned char uchar_gre, unsigned char uchar_blu )
-{
-	cl_gts_gui.valinp_edit_color_red->value(
-		(double)uchar_red);
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_red)->value(
-		(double)uchar_red);
-
-	cl_gts_gui.valinp_edit_color_gre->value(
-		(double)uchar_gre);
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_gre)->value(
-		(double)uchar_gre);
-
-	cl_gts_gui.valinp_edit_color_blu->value(
-		(double)uchar_blu);
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_blu)->value(
-		(double)uchar_blu);
-}
-
-/*--------------------------------------------------------*/
-
-void color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS e_num )
-{
-	int	i_num;
-	unsigned char
-		uchar_red,
-		uchar_gre,
-		uchar_blu;
-
-	/* 使用中トレス色番号を設定 */
-	this->tgt_set_e_rgb_color(e_num);
-
-	/* Flカラーテーブルのアドレス番号を得る */
-	i_num = this->fl_color_table_from_trace_list_pos( e_num );
-	if (i_num < 0) {
-		pri_funct_err_bttvr(
-	"Error : this->fl_color_table_from_trace_list_pos(-) returns minus");
-		return;
-	}
-
-	/* 指定のFlカラーテーブルのrgb値を得る */
-	if (OK != this->_tgt_get_uchar_rgb_color(
-		i_num, &uchar_red, &uchar_gre, &uchar_blu
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->_tgt_get_uchar_rgb_color() returns NG");
-		return;
-	}
-
-	/* rgb値を、edit color windowに設定 */
-	this->_tgt_set_uchar_edit_color(
-		uchar_red, uchar_gre, uchar_blu
-	);
-
-	/* edit color windowを表示 */
-	cl_gts_gui.window_edit_color->show();
-}
-
-/* edit color windowで値を変えたとき */
-void color_trace_enhancement::tgt_edit_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num )
-{
-	int	i_color_number;
-
-	/* 使用中トレス色番号から、
-	Flカラーテーブルのアドレス番号を得る */
-	i_color_number = this->fl_color_table_from_trace_list_pos( e_num );
-	if (i_color_number < 0) {
-		pri_funct_err_bttvr(
-	"Error : this->fl_color_table_from_trace_list_pos(-) returns minus");
-		return;
-	}
-
-	/* edit color windowのrgb値を
-	指定のFlカラーテーブルのアドレス番号に設定する */
-	if (OK != this->_tgt_set_rgb_color( i_color_number )) {
-		pri_funct_err_bttvr(
-	"Error : this->_tgt_set_rgb_color(-) returns minus");
-		return;
-	}
-
-	/* 指定のトレス色番号を再表示 */
-	if (OK != this->_tgt_redraw_rgb_color( e_num )) {
-		pri_funct_err_bttvr(
-	"Error : this->_tgt_redraw_rgb_color(-) returns minus");
-		return;
+	case E_COLOR_TRACE_HAB_NOT_SELECT: break;
 	}
 }
 
-/*--------------------------------------------------------*/
+//------------------------------
 
-void color_trace_enhancement::tgt_get_uchar_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num, unsigned char *ucharp_red, unsigned char *ucharp_gre, unsigned char *ucharp_blu )
+/* 各8-bitのrgb値を、fltkカラーテーブル指定色に設定する */
+void color_trace_enhancement::tgt_fl_set_color(
+	int color_number
+	, unsigned char red, unsigned char gre, unsigned char blu
+)
 {
-	int	i_color_number;
-
-	/* 使用中トレス色番号から、
-	Flカラーテーブルのアドレス番号を得る */
-	i_color_number = this->fl_color_table_from_trace_list_pos( e_num );
-	if (i_color_number < 0) {
-		pri_funct_err_bttvr(
-	"Error : this->fl_color_table_from_trace_list_pos(-) returns minus");
-		return;
-	}
-
-	/* 指定のFlカラーテーブルのrgb値を得る */
-	if (OK != this->_tgt_get_uchar_rgb_color(
-	i_color_number, ucharp_red, ucharp_gre, ucharp_blu )) {
-		pri_funct_err_bttvr(
-	 "Error : this->_tgt_get_uchar_rgb_color(-) returns NG");
-		return;
+	if (-1 < color_number) {
+	 Fl::set_color( static_cast<Fl_Color>(color_number), red, gre, blu );
 	}
 }
-void color_trace_enhancement::tgt_set_uchar_rgb_color( E_COLOR_TRACE_HAB_COLORS e_num, int i_red, int i_gre, int i_blu )
+
+/* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
+void color_trace_enhancement::_tgt_fl_get_color(
+	int color_number
+	, unsigned char *red
+	, unsigned char *gre
+	, unsigned char *blu
+)
 {
-	int	i_color_number;
+	if (-1 < color_number) {
+	 Fl::get_color(static_cast<Fl_Color>(color_number),*red,*gre,*blu);
+	}
+}
 
-	/* 使用中トレス色番号から、
-	Flカラーテーブルのアドレス番号を得る */
-	i_color_number = this->fl_color_table_from_trace_list_pos( e_num );
-	if (i_color_number < 0) {
-		pri_funct_err_bttvr(
-	"Error : this->fl_color_table_from_trace_list_pos(-) returns minus");
-		return;
-	}
+//------------------------------
 
-	/* 色の値のチェック */
-	if ((i_red < 0) || (0xff < i_red)) {
-		pri_funct_err_bttvr( "Error : i_red<%d>",i_red);
+/*
+rgb値を、
+トレス色番号に対応する、fltkカラーテーブル指定色に設定する
+*/
+void color_trace_enhancement::tgt_set_uchar_rgb_color(
+	E_COLOR_TRACE_HAB_COLORS trace_list_pos
+	, int red, int gre, int blu
+)
+{
+	if ((red < 0) || (0xff < red)) {
+		pri_funct_err_bttvr( "Error : red<%d>",red);
 		return;
 	}
-	if ((i_gre < 0) || (0xff < i_gre)) {
-		pri_funct_err_bttvr( "Error : i_gre<%d>",i_gre);
+	if ((gre < 0) || (0xff < gre)) {
+		pri_funct_err_bttvr( "Error : gre<%d>",gre);
 		return;
 	}
-	if ((i_blu < 0) || (0xff < i_blu)) {
-		pri_funct_err_bttvr( "Error : i_blu<%d>",i_blu);
+	if ((blu < 0) || (0xff < blu)) {
+		pri_funct_err_bttvr( "Error : blu<%d>",blu);
 		return;
 	}
 
 	/* rgb値を
 	指定のFlカラーテーブルのアドレス番号に設定する */
-	if (OK != this->set_fl_color_of_table( i_color_number,
-		(unsigned char)i_red,
-		(unsigned char)i_gre,
-		(unsigned char)i_blu
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->set_fl_color_of_table(-) returns NG");
-		return;
-	}
+	this->tgt_fl_set_color(
+	 this->tgt_fl_color_number_from_trace_list_pos( trace_list_pos )
+	 , static_cast<unsigned char>(red)
+	 , static_cast<unsigned char>(gre)
+	 , static_cast<unsigned char>(blu)
+	);
 }
+
+/*
+トレス色番号に対応する、fltkカラーテーブル指定色から
+rgb値を得る
+*/
+void color_trace_enhancement::tgt_get_uchar_rgb_color(
+	E_COLOR_TRACE_HAB_COLORS trace_list_pos
+	, unsigned char *ucharp_red
+	, unsigned char *ucharp_gre
+	, unsigned char *ucharp_blu
+)
+{
+	this->_tgt_fl_get_color(
+	 this->tgt_fl_color_number_from_trace_list_pos( trace_list_pos )
+	 , ucharp_red, ucharp_gre, ucharp_blu
+	);
+}
+
+//------------------------------
+
+/*
+edit color windowで値を変えたとき
+トレス色番号に対応する、fltkカラーテーブル指定色を設定する
+void color_trace_enhancement::tgt_redraw_rgb_color(-)も実行必要
+*/
+void color_trace_enhancement::tgt_edit_rgb_color(
+	E_COLOR_TRACE_HAB_COLORS trace_list_pos
+)
+{
+	this->tgt_set_uchar_rgb_color(
+	 trace_list_pos
+	 , static_cast<int>(cl_gts_gui.valinp_edit_color_red->value())
+	 , static_cast<int>(cl_gts_gui.valinp_edit_color_gre->value())
+	 , static_cast<int>(cl_gts_gui.valinp_edit_color_blu->value())
+	);
+}
+
+/*
+edit color windowを設定して表示する
+*/
+void color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
+{
+	/* fltkカラーテーブル番号を得る */
+	const int color_number =
+	 this->tgt_fl_color_number_from_trace_list_pos( trace_list_pos );
+	if (color_number < 0) { return; } /* 未選択はキャンセル */
+
+	/* 使用中トレス色番号を設定 */
+	this->tgt_set_e_rgb_color(trace_list_pos);
+
+	/* 指定のFlカラーテーブルのrgb値を得る */
+	unsigned char red, gre, blu;
+	this->_tgt_fl_get_color(
+		color_number, &red, &gre, &blu
+	);
+
+	/* rgb値を、edit color windowに設定 */
+	cl_gts_gui.valinp_edit_color_red->value(
+		(double)red);
+	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_red)->value(
+		(double)red);
+
+	cl_gts_gui.valinp_edit_color_gre->value(
+		(double)gre);
+	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_gre)->value(
+		(double)gre);
+
+	cl_gts_gui.valinp_edit_color_blu->value(
+		(double)blu);
+	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_blu)->value(
+		(double)blu);
+
+	/* edit color windowを表示 */
+	cl_gts_gui.window_edit_color->show();
+}
+
 /*--------------------------------------------------------*/

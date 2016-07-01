@@ -30,11 +30,3 @@ void  gts_master::cb_color_trace_tgt_open_06( void )
 			E_COLOR_TRACE_HAB_06 );
 }
 
-/* edit color windowで値を変えたとき */
-void gts_master::cb_color_trace_tgt_edit_rgb( void )
-{
-	this->cl_color_trace_enhancement.tgt_edit_rgb_color(
-	 this->cl_color_trace_enhancement.tgt_get_e_rgb_color()
-	);
-}
-

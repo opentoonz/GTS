@@ -28,6 +28,7 @@
 #include "image_mark_access.h"
 #include "color_trace_enhancement.h"
 #include "cb_color_trace_thickness.h"
+#include "cb_color_trace_edit_color.h"
 #include "memory_scan_area.h"
 #include "memory_short_cut_key.h"
 #include "memory_install_setup.h"
@@ -190,6 +191,7 @@ public:
 	image_mark_access	cl_image_mark_access;
 	color_trace_enhancement	cl_color_trace_enhancement;
 	cb_color_trace_thickness	cl_color_trace_thickness;
+	cb_color_trace_edit_color	cl_color_trace_edit_color;
 
 	iip_scan	cl_iip_scan;	/* 画像読み込み */
 	iip_read	cl_iip_read;	/* 画像読込み */
