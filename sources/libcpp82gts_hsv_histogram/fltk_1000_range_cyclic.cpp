@@ -403,7 +403,7 @@ void fltk_1000_range_cyclic::_mouse_push( int i_mouse_button, long l_mouse_x, lo
 }
 void fltk_1000_range_cyclic::_mouse_drag( long l_mouse_x )
 {
-	l_mouse_x -= x();
+	l_mouse_x -= x(); /* このwidget内のローカル座標値にする */
 
 	switch (this->_e_select_type) {
 	case E_NO_SELECT_TYPE:
@@ -555,7 +555,7 @@ int fltk_hh_cyclic::handle(int event)
 	case FL_DRAG:
 		this->_mouse_drag( (long)(Fl::event_x()) );
 #if !defined GTS_DEBUG
-		cl_gts_master.cb_color_trace_src_edit_hh(
+		cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_minmax(
 			this->get_d360_x_min(),
 			this->get_d360_x_max()
 		);

@@ -183,7 +183,7 @@ void cb_color_trace_thickness::cb_src_show_hide_01( void )
 	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
-	cl_gts_master.cb_color_trace_src_open_01();
+	cl_gts_master.cl_color_trace_enhancement.cb_src_show_01();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&
@@ -202,7 +202,7 @@ void cb_color_trace_thickness::cb_src_show_hide_02( void )
 	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
-	cl_gts_master.cb_color_trace_src_open_02();
+	cl_gts_master.cl_color_trace_enhancement.cb_src_show_02();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&
@@ -221,7 +221,7 @@ void cb_color_trace_thickness::cb_src_show_hide_03( void )
 	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
-	cl_gts_master.cb_color_trace_src_open_03();
+	cl_gts_master.cl_color_trace_enhancement.cb_src_show_03();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&
@@ -240,7 +240,7 @@ void cb_color_trace_thickness::cb_src_show_hide_04( void )
 	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
-	cl_gts_master.cb_color_trace_src_open_04();
+	cl_gts_master.cl_color_trace_enhancement.cb_src_show_04();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&
@@ -259,7 +259,7 @@ void cb_color_trace_thickness::cb_src_show_hide_05( void )
 	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
-	cl_gts_master.cb_color_trace_src_open_05();
+	cl_gts_master.cl_color_trace_enhancement.cb_src_show_05();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&
@@ -278,7 +278,7 @@ void cb_color_trace_thickness::cb_src_show_hide_06( void )
 	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
-	cl_gts_master.cb_color_trace_src_open_06();
+	cl_gts_master.cl_color_trace_enhancement.cb_src_show_06();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&
@@ -515,7 +515,7 @@ edit color windowを設定して表示/隠す
 */
 void cb_color_trace_thickness::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
 {
-	color_trace_enhancement &cte(
+	cb_color_trace_enhancement &cte(
  		cl_gts_master.cl_color_trace_enhancement
 	);
 

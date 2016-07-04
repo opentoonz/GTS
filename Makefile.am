@@ -197,9 +197,11 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
 					sources/libcpp83gts_callback_and_action/cb_choice_pixel_type.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_hsv_minmax.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_src.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_tgt.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_full_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_tgt.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config_save.cpp \
@@ -213,8 +215,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_full_area_and_crop.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scnr_area.cpp \
-					sources/libcpp83gts_callback_and_action/color_trace_enhancement_src.cpp \
-					sources/libcpp83gts_callback_and_action/color_trace_enhancement_tgt.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_area_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_area_val_and_opengl_rect.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \

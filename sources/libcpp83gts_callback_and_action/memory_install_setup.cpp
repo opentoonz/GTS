@@ -49,8 +49,10 @@ void memory_install_setup::load( const std::string& exe_file_path )
 		if (words.at(0) == "short_cut_key_stop_scan") {
 			// stop_scan	Esc(Default)
  cl_gts_master.cl_memo_short_cut_key.setup_stop_scan(words.at(1).c_str());
+		}
+#if 0
 		//--------------------------------------------
-		} else
+		else
 		if (words.at(0) == "color_trace_bla_hue_min") {
      cl_gts_master.cl_color_trace_thickness.set_bla_hue_min(
 			stod(words.at(1)));
@@ -147,6 +149,7 @@ void memory_install_setup::load( const std::string& exe_file_path )
      cl_gts_master.cl_color_trace_thickness.set_blu_val_max(
 			stod(words.at(1)));
 		}
+#endif
 	}
 	ifs.close();/* ファイル閉じる */
 }

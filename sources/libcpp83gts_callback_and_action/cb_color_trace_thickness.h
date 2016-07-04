@@ -8,6 +8,7 @@ public:
 	cb_color_trace_thickness()
 	{
 	}
+#if 0
 	void set_bla_hue_min(const double val) {this->src_bla_hue_min_=val;}
 	void set_bla_hue_max(const double val) {this->src_bla_hue_max_=val;}
 	void set_bla_sat_min(const double val) {this->src_bla_sat_min_=val;}
@@ -35,6 +36,7 @@ public:
 	void set_blu_sat_max(const double val) {this->src_blu_sat_max_=val;}
 	void set_blu_val_min(const double val) {this->src_blu_val_min_=val;}
 	void set_blu_val_max(const double val) {this->src_blu_val_max_=val;}
+#endif
 
 	void cb_src_show_hide_01( void );
 	void cb_src_show_hide_02( void );
@@ -97,6 +99,7 @@ public:
 	void cb_tgt_change_black_06( void );
 
 private:
+#if 0
 	// BL
 	double src_bla_hue_min_=  0.;
 	double src_bla_hue_max_=  0.;
@@ -140,6 +143,7 @@ private:
 	const int tgt_blu_red_ =  0;
 	const int tgt_blu_gre_ =  0;
 	const int tgt_blu_blu_ =0xff;
+#endif
 
 	/* "Color Trace Enhancement"ウインドウの各val値を、
 	"Thickness"ウインドウの各値に移し再表示 */

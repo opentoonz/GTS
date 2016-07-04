@@ -334,7 +334,7 @@ int fltk_aa_minmax::handle(int event)
 			(long)(Fl::event_y())
 		);
 #if !defined GTS_DEBUG
-		cl_gts_master.cb_color_trace_src_edit_aa(
+		cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_minmax(
 			this->get_d_x_min(),
 			this->get_d_x_max()
 		);
@@ -380,7 +380,7 @@ int fltk_bb_minmax::handle(int event)
 			(long)(Fl::event_y())
 		);
 #if !defined GTS_DEBUG
-		cl_gts_master.cb_color_trace_src_edit_bb(
+		cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_minmax(
 			this->get_d_x_min(),
 			this->get_d_x_max()
 		);

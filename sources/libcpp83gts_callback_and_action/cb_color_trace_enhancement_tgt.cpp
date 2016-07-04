@@ -1,14 +1,14 @@
 #include <FL/Fl.H>
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "color_trace_enhancement.h"
+#include "cb_color_trace_enhancement.h"
 #include "gts_gui.h"
 
 /*
 トレス色番号から、fltkカラーテーブル番号を得る
 トレス色番号を選択してない場合は-1を返す
 */
-int color_trace_enhancement::tgt_fl_color_number_from_trace_list_pos(
+int cb_color_trace_enhancement::tgt_fl_color_number_from_trace_list_pos(
 	E_COLOR_TRACE_HAB_COLORS trace_list_pos
 )
 {
@@ -29,7 +29,7 @@ int color_trace_enhancement::tgt_fl_color_number_from_trace_list_pos(
 トレス色番号から、GUIのボタン(色)を再表示
 トレス色番号を選択してない場合はなにもしない
 */
-void color_trace_enhancement::tgt_redraw_rgb_color(
+void cb_color_trace_enhancement::tgt_redraw_rgb_color(
 	E_COLOR_TRACE_HAB_COLORS trace_list_pos
 )
 {
@@ -53,7 +53,7 @@ void color_trace_enhancement::tgt_redraw_rgb_color(
 //------------------------------
 
 /* 各8-bitのrgb値を、fltkカラーテーブル指定色に設定する */
-void color_trace_enhancement::tgt_fl_set_color(
+void cb_color_trace_enhancement::tgt_fl_set_color(
 	int color_number
 	, unsigned char red, unsigned char gre, unsigned char blu
 )
@@ -64,7 +64,7 @@ void color_trace_enhancement::tgt_fl_set_color(
 }
 
 /* fltkカラーテーブル指定色から、各8-bitのrgb値を得る */
-void color_trace_enhancement::tgt_fl_get_color(
+void cb_color_trace_enhancement::tgt_fl_get_color(
 	int color_number
 	, unsigned char *red
 	, unsigned char *gre
@@ -82,7 +82,7 @@ void color_trace_enhancement::tgt_fl_get_color(
 rgb値を、
 トレス色番号に対応する、fltkカラーテーブル指定色に設定する
 */
-void color_trace_enhancement::tgt_set_uchar_rgb_color(
+void cb_color_trace_enhancement::tgt_set_uchar_rgb_color(
 	E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	, int red, int gre, int blu
 )
@@ -114,7 +114,7 @@ void color_trace_enhancement::tgt_set_uchar_rgb_color(
 トレス色番号に対応する、fltkカラーテーブル指定色から
 rgb値を得る
 */
-void color_trace_enhancement::tgt_get_uchar_rgb_color(
+void cb_color_trace_enhancement::tgt_get_uchar_rgb_color(
 	E_COLOR_TRACE_HAB_COLORS trace_list_pos
 	, unsigned char *ucharp_red
 	, unsigned char *ucharp_gre
@@ -132,9 +132,9 @@ void color_trace_enhancement::tgt_get_uchar_rgb_color(
 /*
 edit color windowで値を変えたとき
 トレス色番号に対応する、fltkカラーテーブル指定色を設定する
-void color_trace_enhancement::tgt_redraw_rgb_color(-)も実行必要
+void cb_color_trace_enhancement::tgt_redraw_rgb_color(-)も実行必要
 */
-void color_trace_enhancement::tgt_edit_rgb_color(
+void cb_color_trace_enhancement::tgt_edit_rgb_color(
 	E_COLOR_TRACE_HAB_COLORS trace_list_pos
 )
 {
@@ -149,7 +149,7 @@ void color_trace_enhancement::tgt_edit_rgb_color(
 /*
 edit color windowを設定して表示する
 */
-void color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
+void cb_color_trace_enhancement::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
 {
 	/* fltkカラーテーブル番号を得る */
 	const int color_number =
@@ -183,6 +183,27 @@ void color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS trac
 
 	/* edit color windowを表示 */
 	cl_gts_gui.window_edit_color->show();
+}
+
+/* color trace enhancement windowから、
+番号指定してedit color windowを開く時 */
+void cb_color_trace_enhancement::cb_tgt_show_01( void )
+{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_01);
+}
+void cb_color_trace_enhancement::cb_tgt_show_02( void )
+{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_02);
+}
+void cb_color_trace_enhancement::cb_tgt_show_03( void )
+{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_03);
+}
+void cb_color_trace_enhancement::cb_tgt_show_04( void )
+{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_04);
+}
+void cb_color_trace_enhancement::cb_tgt_show_05( void )
+{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_05);
+}
+void cb_color_trace_enhancement::cb_tgt_show_06( void )
+{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_06);
 }
 
 /*--------------------------------------------------------*/
