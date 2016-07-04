@@ -109,6 +109,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  以下のファイル、
  - `sources/main/_gts-scan_area.txt`
  - `sources/main/gts_install_setup.txt`
+
  を`~/.GTS`にコピーします。
 
 6. 動作確認
