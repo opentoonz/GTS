@@ -283,18 +283,6 @@ void fltk_1000_range_cyclic::_select( long l_x, long l_y )
 	)) {
 		this->_e_select_type = E_CENTER_SELECT_TYPE;
 	}
-	else if ((-1000 != this->_l_x_min) && this->_select_mark(
-		this->_l_x_min, this->_l_y_pos,
-		this->_l_term_radius, l_x, l_y
-	)) {
-		this->_e_select_type = E_MIN_SELECT_TYPE;
-	}
-	else if ((-1000 != this->_l_x_min2) && this->_select_mark(
-		this->_l_x_min2, this->_l_y_pos,
-		this->_l_term_radius, l_x, l_y
-	)) {
-		this->_e_select_type = E_MIN_SELECT_TYPE;
-	}
 	else if ((-1000 != this->_l_x_max) && this->_select_mark(
 		this->_l_x_max, this->_l_y_pos,
 		this->_l_term_radius, l_x, l_y
@@ -306,6 +294,18 @@ void fltk_1000_range_cyclic::_select( long l_x, long l_y )
 		this->_l_term_radius, l_x, l_y
 	)) {
 		this->_e_select_type = E_MAX_SELECT_TYPE;
+	}
+	else if ((-1000 != this->_l_x_min) && this->_select_mark(
+		this->_l_x_min, this->_l_y_pos,
+		this->_l_term_radius, l_x, l_y
+	)) {
+		this->_e_select_type = E_MIN_SELECT_TYPE;
+	}
+	else if ((-1000 != this->_l_x_min2) && this->_select_mark(
+		this->_l_x_min2, this->_l_y_pos,
+		this->_l_term_radius, l_x, l_y
+	)) {
+		this->_e_select_type = E_MIN_SELECT_TYPE;
 	}
 }
 

@@ -184,15 +184,15 @@ void fltk_1000_range_minmax::_mouse_push( int i_mouse_button, long l_mouse_x, lo
 		this->_l_x_max_backup = this->_l_x_max;
 	}
 	else if (this->_select_minmax( l_mouse_x, l_mouse_y,
-				this->_l_x_min, this->_l_y_pos )) {
-		this->_e_select_type = E_MIN_SELECT_TYPE;
+				this->_l_x_max, this->_l_y_pos )) {
+		this->_e_select_type = E_MAX_SELECT_TYPE;
 		this->_l_x_drag_start = l_mouse_x;
 		this->_l_x_min_backup = this->_l_x_min;
 		this->_l_x_max_backup = this->_l_x_max;
 	}
 	else if (this->_select_minmax( l_mouse_x, l_mouse_y,
-				this->_l_x_max, this->_l_y_pos )) {
-		this->_e_select_type = E_MAX_SELECT_TYPE;
+				this->_l_x_min, this->_l_y_pos )) {
+		this->_e_select_type = E_MIN_SELECT_TYPE;
 		this->_l_x_drag_start = l_mouse_x;
 		this->_l_x_min_backup = this->_l_x_min;
 		this->_l_x_max_backup = this->_l_x_max;

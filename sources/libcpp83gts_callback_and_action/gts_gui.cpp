@@ -7037,7 +7037,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->set_non_modal();
     window_pixel_type_and_bright->end();
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_fnum_list = new Fl_Double_Window(116, 350, "Number");
+  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
     window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
       o->menu(menu_2);

@@ -515,15 +515,6 @@ edit color windowを設定して表示/隠す
 */
 void cb_color_trace_thickness::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
 {
-	cb_color_trace_enhancement &cte(
- 		cl_gts_master.cl_color_trace_enhancement
-	);
-
-	/* fltkカラーテーブル番号を得る */
-	const int color_number =
-	cte.tgt_fl_color_number_from_trace_list_pos( trace_list_pos );
-	if (color_number < 0) { return; } /* 未選択はキャンセル */
-
 	/* トレス番号を取っておく */
 	E_COLOR_TRACE_HAB_COLORS col = 
 	cl_gts_master.cl_color_trace_enhancement.tgt_get_e_rgb_color();
@@ -531,31 +522,9 @@ void cb_color_trace_thickness::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS tr
 	/* 表示状態を取っておく */
 	const int before_shown_sw=cl_gts_gui.window_edit_color->shown();
 
-	/* 使用中トレス色番号を設定 */
-	cte.tgt_set_e_rgb_color( trace_list_pos );
-
-	/* 指定のFlカラーテーブルのrgb値を得る */
-	unsigned char red, gre, blu;
-	cte.tgt_fl_get_color( color_number, &red, &gre, &blu );
-
-	/* rgb値を、edit color windowに設定 */
-	cl_gts_gui.valinp_edit_color_red->value(
-		(double)red);
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_red)->value(
-		(double)red);
-
-	cl_gts_gui.valinp_edit_color_gre->value(
-		(double)gre);
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_gre)->value(
-		(double)gre);
-
-	cl_gts_gui.valinp_edit_color_blu->value(
-		(double)blu);
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_blu)->value(
-		(double)blu);
-
-	/* edit color windowを表示 */
-	cl_gts_gui.window_edit_color->show();
+ 	cl_gts_master.cl_color_trace_enhancement.tgt_open_edit_color(
+		trace_list_pos
+	);
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
 	if ( before_shown_sw &&

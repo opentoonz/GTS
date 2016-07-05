@@ -146,10 +146,63 @@ void cb_color_trace_enhancement::tgt_edit_rgb_color(
 	);
 }
 
+namespace {
+ void resize_tgt_button_(
+	E_COLOR_TRACE_HAB_COLORS e_num
+	,const int mgn
+	,const char *label
+	,Fl_Boxtype btype
+ )
+ {
+ 	Fl_Button *tbut=nullptr;
+ 	Fl_Button *ebut=nullptr;
+	switch (e_num) {
+	case E_COLOR_TRACE_HAB_01:
+		tbut= cl_gts_gui.button_thickness_01_tgt_rgb;
+		ebut= cl_gts_gui.button_color_trace_01_tgt_rgb;
+		break;
+	case E_COLOR_TRACE_HAB_02:
+		tbut= cl_gts_gui.button_thickness_02_tgt_rgb;
+		ebut= cl_gts_gui.button_color_trace_02_tgt_rgb;
+		break;
+	case E_COLOR_TRACE_HAB_03:
+		tbut= cl_gts_gui.button_thickness_03_tgt_rgb;
+		ebut= cl_gts_gui.button_color_trace_03_tgt_rgb;
+		break;
+	case E_COLOR_TRACE_HAB_04:
+		tbut= cl_gts_gui.button_thickness_04_tgt_rgb;
+		ebut= cl_gts_gui.button_color_trace_04_tgt_rgb;
+		break;
+	case E_COLOR_TRACE_HAB_05:
+		tbut= cl_gts_gui.button_thickness_05_tgt_rgb;
+		ebut= cl_gts_gui.button_color_trace_05_tgt_rgb;
+		break;
+	case E_COLOR_TRACE_HAB_06:
+		tbut= cl_gts_gui.button_thickness_06_tgt_rgb;
+		ebut= cl_gts_gui.button_color_trace_06_tgt_rgb;
+		break;
+	case E_COLOR_TRACE_HAB_NOT_SELECT:
+		break;
+	}
+	if (tbut != nullptr) {
+		tbut->size( 30+mgn ,20+mgn );
+		tbut->label( label );
+		tbut->box( btype );
+		cl_gts_gui.window_thickness->redraw();
+	}
+	if (ebut != nullptr) {
+		ebut->size( 30+mgn ,45+mgn );
+		ebut->label( label );
+		ebut->box( btype );
+		cl_gts_gui.window_color_trace->redraw();
+	}
+ }
+}
+
 /*
 edit color windowを設定して表示する
 */
-void cb_color_trace_enhancement::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
+void cb_color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
 {
 	/* fltkカラーテーブル番号を得る */
 	const int color_number =
@@ -157,7 +210,18 @@ void cb_color_trace_enhancement::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS 
 	if (color_number < 0) { return; } /* 未選択はキャンセル */
 
 	/* 使用中トレス色番号を設定 */
-	this->tgt_set_e_rgb_color(trace_list_pos);
+	if (this->_e_target_rgb_color != trace_list_pos)
+	{
+		resize_tgt_button_(
+			this->_e_target_rgb_color
+			,0 ,"src" ,FL_UP_BOX
+		);
+		resize_tgt_button_(
+			trace_list_pos
+			,0 ,"src" ,FL_ROUND_UP_BOX
+		);
+		this->_e_target_rgb_color = trace_list_pos;
+	}
 
 	/* 指定のFlカラーテーブルのrgb値を得る */
 	unsigned char red, gre, blu;
@@ -188,22 +252,22 @@ void cb_color_trace_enhancement::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS 
 /* color trace enhancement windowから、
 番号指定してedit color windowを開く時 */
 void cb_color_trace_enhancement::cb_tgt_show_01( void )
-{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_01);
+{this->tgt_open_edit_color(E_COLOR_TRACE_HAB_01);
 }
 void cb_color_trace_enhancement::cb_tgt_show_02( void )
-{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_02);
+{this->tgt_open_edit_color(E_COLOR_TRACE_HAB_02);
 }
 void cb_color_trace_enhancement::cb_tgt_show_03( void )
-{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_03);
+{this->tgt_open_edit_color(E_COLOR_TRACE_HAB_03);
 }
 void cb_color_trace_enhancement::cb_tgt_show_04( void )
-{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_04);
+{this->tgt_open_edit_color(E_COLOR_TRACE_HAB_04);
 }
 void cb_color_trace_enhancement::cb_tgt_show_05( void )
-{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_05);
+{this->tgt_open_edit_color(E_COLOR_TRACE_HAB_05);
 }
 void cb_color_trace_enhancement::cb_tgt_show_06( void )
-{this->tgt_open_edit_color_(E_COLOR_TRACE_HAB_06);
+{this->tgt_open_edit_color(E_COLOR_TRACE_HAB_06);
 }
 
 /*--------------------------------------------------------*/

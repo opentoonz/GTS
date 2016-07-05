@@ -8,12 +8,12 @@
 class cb_color_trace_enhancement {
 public:
 	cb_color_trace_enhancement()
+		:_e_source_color_range(E_COLOR_TRACE_HAB_NOT_SELECT)
+		,_e_target_rgb_color(  E_COLOR_TRACE_HAB_NOT_SELECT)
 	{
-	 this->_e_source_color_range = E_COLOR_TRACE_HAB_NOT_SELECT;
-	 this->_e_target_rgb_color   = E_COLOR_TRACE_HAB_NOT_SELECT;
 	}
 
-	//-------------
+	//---------- color trace enhancedment scrbar
 	void cb_scrbar_src_hh_min_01( const double val );
 	void cb_scrbar_src_hh_max_01( const double val );
 	void cb_scrbar_src_aa_min_01( const double val );
@@ -56,7 +56,7 @@ public:
 	void cb_scrbar_src_bb_min_06( const double val );
 	void cb_scrbar_src_bb_max_06( const double val );
 
-	//-------------
+	//---------- color trace enhancedment valinp
 	void cb_valinp_src_hh_min_01( const double val );
 	void cb_valinp_src_hh_max_01( const double val );
 	void cb_valinp_src_aa_min_01( const double val );
@@ -99,49 +99,15 @@ public:
 	void cb_valinp_src_bb_min_06( const double val );
 	void cb_valinp_src_bb_max_06( const double val );
 
+	// Use edit hsv minmax valinp
+	void cb_src_hh_min( const double val );
+	void cb_src_hh_max( const double val );
+	void cb_src_aa_min( const double val );
+	void cb_src_aa_max( const double val );
+	void cb_src_bb_min( const double val );
+	void cb_src_bb_max( const double val );
+
 	//-------------
-	void cb_src_hh_min_01( const double val );
-	void cb_src_hh_max_01( const double val );
-	void cb_src_aa_min_01( const double val );
-	void cb_src_aa_max_01( const double val );
-	void cb_src_bb_min_01( const double val );
-	void cb_src_bb_max_01( const double val );
-
-	void cb_src_hh_min_02( const double val );
-	void cb_src_hh_max_02( const double val );
-	void cb_src_aa_min_02( const double val );
-	void cb_src_aa_max_02( const double val );
-	void cb_src_bb_min_02( const double val );
-	void cb_src_bb_max_02( const double val );
-
-	void cb_src_hh_min_03( const double val );
-	void cb_src_hh_max_03( const double val );
-	void cb_src_aa_min_03( const double val );
-	void cb_src_aa_max_03( const double val );
-	void cb_src_bb_min_03( const double val );
-	void cb_src_bb_max_03( const double val );
-
-	void cb_src_hh_min_04( const double val );
-	void cb_src_hh_max_04( const double val );
-	void cb_src_aa_min_04( const double val );
-	void cb_src_aa_max_04( const double val );
-	void cb_src_bb_min_04( const double val );
-	void cb_src_bb_max_04( const double val );
-
-	void cb_src_hh_min_05( const double val );
-	void cb_src_hh_max_05( const double val );
-	void cb_src_aa_min_05( const double val );
-	void cb_src_aa_max_05( const double val );
-	void cb_src_bb_min_05( const double val );
-	void cb_src_bb_max_05( const double val );
-
-	void cb_src_hh_min_06( const double val );
-	void cb_src_hh_max_06( const double val );
-	void cb_src_aa_min_06( const double val );
-	void cb_src_aa_max_06( const double val );
-	void cb_src_bb_min_06( const double val );
-	void cb_src_bb_max_06( const double val );
-
 	void cb_tgt_show_01( void );
 	void cb_tgt_show_02( void );
 	void cb_tgt_show_03( void );
@@ -149,6 +115,7 @@ public:
 	void cb_tgt_show_05( void );
 	void cb_tgt_show_06( void );
 
+ /* color trace enhancement windowから番号指定してhistogram windowを開く */
 	void cb_src_show_01( void );
 	void cb_src_show_02( void );
 	void cb_src_show_03( void );
@@ -158,7 +125,9 @@ public:
 
 	//-------------
 	E_COLOR_TRACE_HAB_COLORS src_get_e_color_range( void )
-	{	   return this->_e_source_color_range; }
+	{
+		return this->_e_source_color_range;
+	}
 	int src_set_histogram_window( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
 	int src_edit_hh( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
 		double d_min, double d_max );
@@ -233,14 +202,13 @@ public:
 	/*
 	トレス色番号のゲッター/セッター
 	*/
-	void tgt_set_e_rgb_color( E_COLOR_TRACE_HAB_COLORS trace_list_pos )
-	{
-		this->_e_target_rgb_color = trace_list_pos;
-	}
 	E_COLOR_TRACE_HAB_COLORS tgt_get_e_rgb_color( void ) const
 	{
 		return this->_e_target_rgb_color;
 	}
+
+	/* edit color windowを設定して表示する */
+	void tgt_open_edit_color(E_COLOR_TRACE_HAB_COLORS trace_list_pos);
 
 private:
 	int _src_get_p_hh_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
@@ -259,9 +227,6 @@ private:
 
 	/* edit hsv minmax windowを設定して表示する */
 	int src_open_histogram_window_( E_COLOR_TRACE_HAB_COLORS trace_list_pos );
-
-	/* edit color windowを設定して表示する */
-	void tgt_open_edit_color_(E_COLOR_TRACE_HAB_COLORS trace_list_pos);
 
 	E_COLOR_TRACE_HAB_COLORS _e_source_color_range;
 	E_COLOR_TRACE_HAB_COLORS _e_target_rgb_color;

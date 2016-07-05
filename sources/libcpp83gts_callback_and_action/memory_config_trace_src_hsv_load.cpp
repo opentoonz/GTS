@@ -78,15 +78,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atoi(cp4)
 		);
 		cl_gts_gui.button_color_trace_01_tgt_rgb->redraw();
+		cl_gts_gui.button_thickness_01_tgt_rgb->redraw();
 	}
-/*	else if ((2 == i_num) &&
+	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_01_tgt_color_ )) {
-		 cl_gts_gui.choice_thickness_01_tgt_src_preset->value(
-		  cl_gts_gui.choice_thickness_01_tgt_src_preset->find_index(
-		   cp2
-		  )
+		 cl_gts_gui.roubut_thickness_01_tgt_is_bl->value(
+			::strcmp( this->str_color_black_ ,cp2 )==0 ?1 :0
 		 );
-	}*/
+	}
 
 	/* 02 ------------------------------------------------*/
 
@@ -159,15 +158,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atoi(cp4)
 		);
 		cl_gts_gui.button_color_trace_02_tgt_rgb->redraw();
+		cl_gts_gui.button_thickness_02_tgt_rgb->redraw();
 	}
-/*	else if ((2 == i_num) &&
+	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_02_tgt_color_ )) {
-		 cl_gts_gui.choice_thickness_02_tgt_src_preset->value(
-		  cl_gts_gui.choice_thickness_02_tgt_src_preset->find_index(
-		   cp2
-		  )
+		 cl_gts_gui.roubut_thickness_02_tgt_is_bl->value(
+			::strcmp( this->str_color_black_ ,cp2 )==0 ?1 :0
 		 );
-	}*/
+	}
 
 	/* 03 ------------------------------------------------*/
 
@@ -240,15 +238,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atoi(cp4)
 		);
 		cl_gts_gui.button_color_trace_03_tgt_rgb->redraw();
+		cl_gts_gui.button_thickness_03_tgt_rgb->redraw();
 	}
-/*	else if ((2 == i_num) &&
+	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_03_tgt_color_ )) {
-		 cl_gts_gui.choice_thickness_03_tgt_src_preset->value(
-		  cl_gts_gui.choice_thickness_03_tgt_src_preset->find_index(
-		   cp2
-		  )
+		 cl_gts_gui.roubut_thickness_03_tgt_is_bl->value(
+			::strcmp( this->str_color_black_ ,cp2 )==0 ?1 :0
 		 );
-	}*/
+	}
 
 	/* 04 ------------------------------------------------*/
 
@@ -321,15 +318,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atoi(cp4)
 		);
 		cl_gts_gui.button_color_trace_04_tgt_rgb->redraw();
+		cl_gts_gui.button_thickness_04_tgt_rgb->redraw();
 	}
-/*	else if ((2 == i_num) &&
+	else if ((2 == i_num) &&
 	!strcmp( cp1,this->str_color_trace_04_tgt_color_ )) {
-		 cl_gts_gui.choice_thickness_04_tgt_src_preset->value(
-		  cl_gts_gui.choice_thickness_04_tgt_src_preset->find_index(
-		   cp2
-		  )
+		 cl_gts_gui.roubut_thickness_04_tgt_is_bl->value(
+			::strcmp( this->str_color_black_ ,cp2 )==0 ?1 :0
 		 );
-	}*/
+	}
 
 	/* 05 ------------------------------------------------*/
 
@@ -337,11 +333,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 	!strcmp( cp1,this->str_color_trace_05_chk_)) {
 		const int chk = this->_chk_ON_OFF( cp2 );
 		cl_gts_gui.chkbtn_color_trace_05_chk->value( chk );
+		cl_gts_gui.chkbtn_thickness_05_chk->value( chk );
 
 		if (cl_gts_gui.chkbtn_color_trace_05_chk->value()) {
 			cl_gts_gui.group_color_trace_05grp->activate();
+			cl_gts_gui.group_thickness_05grp->activate();
 		} else {
 			cl_gts_gui.group_color_trace_05grp->deactivate();
+			cl_gts_gui.group_thickness_05grp->deactivate();
 		}
 	}
 	else if ((2 == i_num) &&
@@ -395,6 +394,13 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atoi(cp4)
 		);
 		cl_gts_gui.button_color_trace_05_tgt_rgb->redraw();
+		cl_gts_gui.button_thickness_05_tgt_rgb->redraw();
+	}
+	else if ((2 == i_num) &&
+	!strcmp( cp1,this->str_color_trace_05_tgt_color_ )) {
+		 cl_gts_gui.roubut_thickness_05_tgt_is_bl->value(
+			::strcmp( this->str_color_black_ ,cp2 )==0 ?1 :0
+		 );
 	}
 
 	/* 06 ------------------------------------------------*/
@@ -403,11 +409,14 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 	!strcmp( cp1,this->str_color_trace_06_chk_)) {
 		const int chk = this->_chk_ON_OFF( cp2 );
 		cl_gts_gui.chkbtn_color_trace_06_chk->value( chk );
+		cl_gts_gui.chkbtn_thickness_06_chk->value( chk );
 
 		if (cl_gts_gui.chkbtn_color_trace_06_chk->value()) {
 			cl_gts_gui.group_color_trace_06grp->activate();
+			cl_gts_gui.group_thickness_06grp->activate();
 		} else {
 			cl_gts_gui.group_color_trace_06grp->deactivate();
+			cl_gts_gui.group_thickness_06grp->deactivate();
 		}
 	}
 	else if ((2 == i_num) &&
@@ -461,7 +470,15 @@ cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
 			atoi(cp4)
 		);
 		cl_gts_gui.button_color_trace_06_tgt_rgb->redraw();
-	} else {
+		cl_gts_gui.button_thickness_06_tgt_rgb->redraw();
+	}
+	else if ((2 == i_num) &&
+	!strcmp( cp1,this->str_color_trace_06_tgt_color_ )) {
+		 cl_gts_gui.roubut_thickness_06_tgt_is_bl->value(
+			::strcmp( this->str_color_black_ ,cp2 )==0 ?1 :0
+		 );
+	}
+	else {
 		return E_MEMORY_CONFIG_LOAD_NOTHING;
 	}
 

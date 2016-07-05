@@ -1,4 +1,5 @@
 #include <FL/Fl.H>
+#include <FL/Fl_Button.H>
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "cb_color_trace_enhancement.h"
@@ -243,9 +244,74 @@ int cb_color_trace_enhancement::_src_set_crnt_to_histogram( E_COLOR_TRACE_HAB_CO
 
 /*--------------------------------------------------------*/
 
+namespace {
+ void resize_src_button_(
+	E_COLOR_TRACE_HAB_COLORS e_num
+	,const int mgn
+	,const char *label
+	,Fl_Boxtype btype
+ )
+ {
+ 	Fl_Button *tbut=nullptr;
+ 	Fl_Button *ebut=nullptr;
+	switch (e_num) {
+	case E_COLOR_TRACE_HAB_01:
+		tbut= cl_gts_gui.button_thickness_01_src;
+		ebut= cl_gts_gui.button_color_trace_01_src;
+		break;
+	case E_COLOR_TRACE_HAB_02:
+		tbut= cl_gts_gui.button_thickness_02_src;
+		ebut= cl_gts_gui.button_color_trace_02_src;
+		break;
+	case E_COLOR_TRACE_HAB_03:
+		tbut= cl_gts_gui.button_thickness_03_src;
+		ebut= cl_gts_gui.button_color_trace_03_src;
+		break;
+	case E_COLOR_TRACE_HAB_04:
+		tbut= cl_gts_gui.button_thickness_04_src;
+		ebut= cl_gts_gui.button_color_trace_04_src;
+		break;
+	case E_COLOR_TRACE_HAB_05:
+		tbut= cl_gts_gui.button_thickness_05_src;
+		ebut= cl_gts_gui.button_color_trace_05_src;
+		break;
+	case E_COLOR_TRACE_HAB_06:
+		tbut= cl_gts_gui.button_thickness_06_src;
+		ebut= cl_gts_gui.button_color_trace_06_src;
+		break;
+	case E_COLOR_TRACE_HAB_NOT_SELECT:
+		break;
+	}
+	if (tbut != nullptr) {
+		tbut->size( 30+mgn ,20+mgn );
+		tbut->label( label );
+		tbut->box( btype );
+		cl_gts_gui.window_thickness->redraw();
+	}
+	if (ebut != nullptr) {
+		ebut->size( 30+mgn ,25+mgn );
+		ebut->label( label );
+		ebut->box( btype );
+		cl_gts_gui.window_color_trace->redraw();
+	}
+ }
+}
+
 int cb_color_trace_enhancement::src_open_histogram_window_( E_COLOR_TRACE_HAB_COLORS e_num )
 {
-	this->_e_source_color_range = e_num;
+	if (this->_e_source_color_range != e_num)
+	{
+		resize_src_button_(
+			this->_e_source_color_range
+			,0 ,"src" ,FL_UP_BOX
+		);
+		resize_src_button_(
+			e_num
+			,0 ,"src" ,FL_ROUND_UP_BOX
+		);
+		this->_e_source_color_range = e_num;
+	}
+
 
 	if (OK != this->_src_set_crnt_to_histogram( e_num )) {
 		pri_funct_err_bttvr(
@@ -610,10 +676,7 @@ void cb_color_trace_enhancement::src_set_from_gui( void )
 	clp_para->d_blu = (double)uchar_blu/0xff;
 }
 
-//----------
-
-/* color trace enhancement windowから、
-番号指定してhistogram windowを開く */
+/* color trace enhancement windowから番号指定してhistogram windowを開く */
 void cb_color_trace_enhancement::cb_src_show_01( void )
 { (void)this->src_open_histogram_window_(
 			   E_COLOR_TRACE_HAB_01 );
@@ -1245,119 +1308,24 @@ void cb_color_trace_enhancement::cb_valinp_src_bb_max_06(const double val )
 {				 cb_src_bb_max_(
 			     E_COLOR_TRACE_HAB_06 ,val,true,false ); }
 
-//---------- Notcolor trace enhancedment, Use edit hsv minmax valinp
-void cb_color_trace_enhancement::cb_src_hh_min_01( const double val )
+//---------- Use edit hsv minmax valinp
+void cb_color_trace_enhancement::cb_src_hh_min( const double val )
 {				 cb_src_hh_min_(
-			     E_COLOR_TRACE_HAB_01 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_hh_max_01( const double val )
+	this->src_get_e_color_range() ,val,true,true ); }
+void cb_color_trace_enhancement::cb_src_hh_max( const double val )
 {				 cb_src_hh_max_(
-			     E_COLOR_TRACE_HAB_01 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_min_01( const double val )
+	this->src_get_e_color_range() ,val,true,true ); }
+void cb_color_trace_enhancement::cb_src_aa_min( const double val )
 {				 cb_src_aa_min_(
-			     E_COLOR_TRACE_HAB_01 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_max_01( const double val )
+	this->src_get_e_color_range() ,val,true,true ); }
+void cb_color_trace_enhancement::cb_src_aa_max( const double val )
 {				 cb_src_aa_max_(
-			     E_COLOR_TRACE_HAB_01 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_min_01( const double val )
+	this->src_get_e_color_range() ,val,true,true ); }
+void cb_color_trace_enhancement::cb_src_bb_min( const double val )
 {				 cb_src_bb_min_(
-			     E_COLOR_TRACE_HAB_01 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_max_01( const double val )
+	this->src_get_e_color_range() ,val,true,true ); }
+void cb_color_trace_enhancement::cb_src_bb_max( const double val )
 {				 cb_src_bb_max_(
-			     E_COLOR_TRACE_HAB_01 ,val,true,true ); }
-
-void cb_color_trace_enhancement::cb_src_hh_min_02( const double val )
-{				 cb_src_hh_min_(
-			     E_COLOR_TRACE_HAB_02 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_hh_max_02( const double val )
-{				 cb_src_hh_max_(
-			     E_COLOR_TRACE_HAB_02 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_min_02( const double val )
-{				 cb_src_aa_min_(
-			     E_COLOR_TRACE_HAB_02 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_max_02( const double val )
-{				 cb_src_aa_max_(
-			     E_COLOR_TRACE_HAB_02 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_min_02( const double val )
-{				 cb_src_bb_min_(
-			     E_COLOR_TRACE_HAB_02 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_max_02( const double val )
-{				 cb_src_bb_max_(
-			     E_COLOR_TRACE_HAB_02 ,val,true,true ); }
-
-void cb_color_trace_enhancement::cb_src_hh_min_03( const double val )
-{				 cb_src_hh_min_(
-			     E_COLOR_TRACE_HAB_03 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_hh_max_03( const double val )
-{				 cb_src_hh_max_(
-			     E_COLOR_TRACE_HAB_03 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_min_03( const double val )
-{				 cb_src_aa_min_(
-			     E_COLOR_TRACE_HAB_03 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_max_03( const double val )
-{				 cb_src_aa_max_(
-			     E_COLOR_TRACE_HAB_03 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_min_03( const double val )
-{				 cb_src_bb_min_(
-			     E_COLOR_TRACE_HAB_03 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_max_03( const double val )
-{				 cb_src_bb_max_(
-			     E_COLOR_TRACE_HAB_03 ,val,true,true ); }
-
-void cb_color_trace_enhancement::cb_src_hh_min_04( const double val )
-{				 cb_src_hh_min_(
-			     E_COLOR_TRACE_HAB_04 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_hh_max_04( const double val )
-{				 cb_src_hh_max_(
-			     E_COLOR_TRACE_HAB_04 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_min_04( const double val )
-{				 cb_src_aa_min_(
-			     E_COLOR_TRACE_HAB_04 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_max_04( const double val )
-{				 cb_src_aa_max_(
-			     E_COLOR_TRACE_HAB_04 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_min_04( const double val )
-{				 cb_src_bb_min_(
-			     E_COLOR_TRACE_HAB_04 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_max_04( const double val )
-{				 cb_src_bb_max_(
-			     E_COLOR_TRACE_HAB_04 ,val,true,true ); }
-
-void cb_color_trace_enhancement::cb_src_hh_min_05( const double val )
-{				 cb_src_hh_min_(
-			     E_COLOR_TRACE_HAB_05 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_hh_max_05( const double val )
-{				 cb_src_hh_max_(
-			     E_COLOR_TRACE_HAB_05 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_min_05( const double val )
-{				 cb_src_aa_min_(
-			     E_COLOR_TRACE_HAB_05 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_max_05( const double val )
-{				 cb_src_aa_max_(
-			     E_COLOR_TRACE_HAB_05 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_min_05( const double val )
-{				 cb_src_bb_min_(
-			     E_COLOR_TRACE_HAB_05 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_max_05( const double val )
-{				 cb_src_bb_max_(
-			     E_COLOR_TRACE_HAB_05 ,val,true,true ); }
-
-void cb_color_trace_enhancement::cb_src_hh_min_06( const double val )
-{				 cb_src_hh_min_(
-			     E_COLOR_TRACE_HAB_06 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_hh_max_06( const double val )
-{				 cb_src_hh_max_(
-			     E_COLOR_TRACE_HAB_06 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_min_06( const double val )
-{				 cb_src_aa_min_(
-			     E_COLOR_TRACE_HAB_06 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_aa_max_06( const double val )
-{				 cb_src_aa_max_(
-			     E_COLOR_TRACE_HAB_06 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_min_06( const double val )
-{				 cb_src_bb_min_(
-			     E_COLOR_TRACE_HAB_06 ,val,true,true ); }
-void cb_color_trace_enhancement::cb_src_bb_max_06( const double val )
-{				 cb_src_bb_max_(
-			     E_COLOR_TRACE_HAB_06 ,val,true,true ); }
+	this->src_get_e_color_range() ,val,true,true ); }
 
 //----------

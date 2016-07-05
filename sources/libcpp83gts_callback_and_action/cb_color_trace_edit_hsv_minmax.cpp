@@ -70,19 +70,25 @@ void cb_color_trace_edit_hsv_minmax::cb_bb_minmax( double minval, double maxval 
 }
 void cb_color_trace_edit_hsv_minmax::cb_hh_min( double minval )
 {
+	cl_gts_master.cl_color_trace_enhancement.cb_src_hh_min( minval );
 }
 void cb_color_trace_edit_hsv_minmax::cb_hh_max( double maxval )
 {
+	cl_gts_master.cl_color_trace_enhancement.cb_src_hh_max( maxval );
 }
 void cb_color_trace_edit_hsv_minmax::cb_aa_min( double minval )
 {
+	cl_gts_master.cl_color_trace_enhancement.cb_src_aa_min( minval );
 }
 void cb_color_trace_edit_hsv_minmax::cb_aa_max( double maxval )
 {
+	cl_gts_master.cl_color_trace_enhancement.cb_src_aa_max( maxval );
 }
 void cb_color_trace_edit_hsv_minmax::cb_bb_min( double minval )
 {
+	cl_gts_master.cl_color_trace_enhancement.cb_src_bb_min( minval );
 }
 void cb_color_trace_edit_hsv_minmax::cb_bb_max( double maxval )
 {
+	cl_gts_master.cl_color_trace_enhancement.cb_src_bb_max( maxval );
 }

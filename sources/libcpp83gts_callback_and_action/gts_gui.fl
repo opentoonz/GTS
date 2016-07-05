@@ -1052,7 +1052,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
 cl_gts_gui.menite_fnum_list->clear();}
-      xywh {50 50 116 350} type Double resizable non_modal visible
+      xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 80 25}
@@ -1096,7 +1096,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
       label {Color Trace Enhancement}
       callback {cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_color_trace->clear();}
+cl_gts_gui.menite_color_trace->clear();} open
       xywh {50 50 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
@@ -1198,7 +1198,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           }
           Fl_Button button_color_trace_01_src {
             label src
-            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_01();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_01();} selected
             xywh {5 80 30 25} align 21
           }
         }
