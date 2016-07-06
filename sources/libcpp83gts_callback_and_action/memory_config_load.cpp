@@ -454,9 +454,7 @@ std::cout
 		cl_gts_gui.filinp_level_rgb_scan_dir->value()
 	);******/
 
-	/* 二値化処理の初期設定
-	thicknessウインドウの初期値を
-	Color Trace Enhancementウインドウから設定する */
+	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_02();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_03();

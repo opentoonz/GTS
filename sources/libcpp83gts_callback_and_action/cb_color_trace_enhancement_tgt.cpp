@@ -185,14 +185,14 @@ namespace {
 		break;
 	}
 	if (tbut != nullptr) {
-		tbut->size( 30+mgn ,20+mgn );
-		tbut->label( label );
+		//tbut->size( 30+mgn ,20+mgn );
+		//tbut->label( label );
 		tbut->box( btype );
 		cl_gts_gui.window_thickness->redraw();
 	}
 	if (ebut != nullptr) {
-		ebut->size( 30+mgn ,45+mgn );
-		ebut->label( label );
+		//ebut->size( 30+mgn ,45+mgn );
+		//ebut->label( label );
 		ebut->box( btype );
 		cl_gts_gui.window_color_trace->redraw();
 	}
@@ -214,11 +214,11 @@ void cb_color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS t
 	{
 		resize_tgt_button_(
 			this->_e_target_rgb_color
-			,0 ,"src" ,FL_UP_BOX
+			,0 ,"tgt" ,FL_UP_BOX
 		);
 		resize_tgt_button_(
 			trace_list_pos
-			,0 ,"src" ,FL_ROUND_UP_BOX
+			,0 ,"tgt" ,FL_ROUND_UP_BOX
 		);
 		this->_e_target_rgb_color = trace_list_pos;
 	}

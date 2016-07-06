@@ -283,14 +283,14 @@ namespace {
 		break;
 	}
 	if (tbut != nullptr) {
-		tbut->size( 30+mgn ,20+mgn );
-		tbut->label( label );
+		//tbut->size( 30+mgn ,20+mgn );
+		//tbut->label( label );
 		tbut->box( btype );
 		cl_gts_gui.window_thickness->redraw();
 	}
 	if (ebut != nullptr) {
-		ebut->size( 30+mgn ,25+mgn );
-		ebut->label( label );
+		//ebut->size( 30+mgn ,25+mgn );
+		//ebut->label( label );
 		ebut->box( btype );
 		cl_gts_gui.window_color_trace->redraw();
 	}
@@ -386,7 +386,7 @@ int cb_color_trace_enhancement::src_edit_aa( E_COLOR_TRACE_HAB_COLORS e_num, dou
 	inpp_max->value(d_max*100.0);
 	scrp_max->value(d_max*100.0);
 
-	/* 元値の変更に合わせて"thickness"ウインドウのGUIの変更 */
+	/* "指定のトレス番号の値を"Color Trace Enhancement"で再表示 */
 	cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(e_num);
 
 	return OK;
@@ -415,7 +415,7 @@ int cb_color_trace_enhancement::src_edit_bb( E_COLOR_TRACE_HAB_COLORS e_num, dou
 	inpp_max->value(d_max*100.0);
 	scrp_max->value(d_max*100.0);
 
-	/* 元値の変更に合わせて"thickness"ウインドウのGUIの変更 */
+	/* "指定のトレス番号の値を"Color Trace Enhancement"で再表示 */
 	cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(e_num);
 
 	return OK;
