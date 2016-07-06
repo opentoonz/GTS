@@ -56,11 +56,11 @@ Execute "./gts" in unziped folder.
 
  In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
 
-## How to Build Locally(Linux)
+## How to Build Locally(Linux)(*Not sure about the operation)
 
 1. Environment for development
 
- Tested on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.1.1 Player(on a Windows 7 Enterprise SP1))
+ Tested simply on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.1.1 Player(on a Windows 7 Enterprise SP1))
 
 2. Get source code
 
@@ -109,7 +109,7 @@ Execute "./gts" in unziped folder.
  gdb --args ./gts -bv
  ```
 
-## How to Build Locally(Max OS X)
+## How to Build Locally(Max OS X)(*Not sure about the operation)
 
 1. Environment for development
 

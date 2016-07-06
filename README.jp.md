@@ -66,13 +66,13 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
  `GTS/x86_release/` にある、`gts.exe` を実行して動作を確かめてください。
 
-## ビルド方法(Linux)
+## ビルド方法(Linux)(※ビルド後の実行詳細については未確認)
 
 1. 環境を準備
 
  Ubuntu 16.04-desktop 64bits (on VMware Workstation 12.1.1 Player(on Windows 7 Enterprise SP1)) を用意します。
 
- この環境で動作確認をしており、他の環境については未確認です。
+ この環境で簡単な動作確認をしており、他の環境については未確認です。
 
 2. ソースコードを準備
 
@@ -122,7 +122,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  gdb --args ./gts -bv
  ```
 
-## ビルド方法(Max OS X)
+## ビルド方法(Max OS X)(※ビルド後の実行詳細については未確認)
 
 1. 環境を準備
 
