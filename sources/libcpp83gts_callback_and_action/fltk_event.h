@@ -151,6 +151,7 @@ public:
 	int         get_i_mouse_middle_dragging( void )
 	{ return this->_i_mouse_middle_dragging; }
 
+	bool clicked_mouse_middle_button( void );
 private:
 	E_ACT	_e_act;
 

@@ -38,6 +38,7 @@ public:
 
 		this->_clp_main = NULL;
 		this->_clp_sub = NULL;
+		this->is_clicked_mouse_middle_button_ = false;
 	}
 	void set_i_mv_sw( int sw ) {
 		this->_i_mv_sw = sw;
@@ -160,6 +161,9 @@ public:
 	E_WVIEW_TYPE get_e_wview_type( void )
 	{  return this->_e_wview_type; }
 
+	void set_clicked_mouse_middle_button(bool sw)
+	{ this->is_clicked_mouse_middle_button_ = sw; }
+
 private:
 	int	_i_mv_sw,
 		_i_pv_sw,
@@ -181,6 +185,9 @@ private:
 
 	/* ２分割画面の本体 */
 	iip_opengl_l2data _cl_unt_view[2];
+
+	/* 2値化表示を同位置でスキャン画像に切替表示するためのスイッチ */
+	bool is_clicked_mouse_middle_button_;
 
 	void _draw_separeter( void );
 	void _draw_main_no_hamidasi_by_sub_view( void );

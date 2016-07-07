@@ -1,5 +1,7 @@
+#include <iostream>
 #include "fltk_opengl.h"
 #include "gts_master.h"
+#include "gts_gui.h"
 
 int fltk_opengl::handle( int event )
 {
@@ -76,6 +78,13 @@ int fltk_opengl::handle( int event )
 		/* マウスの記憶から実行イベントを記憶 */
 		cl_gts_master.cl_fltk_event.set_mouse_to_act();
 
+std::cout << __FILE__ << ":" << __LINE__ << ":clicked_mouse_middle_button=" <<  cl_gts_master.cl_fltk_event.clicked_mouse_middle_button() << std::endl;
+
+		/* クリックした瞬間2値化画像をscan画像に切替る */
+		cl_gts_master.cl_ogl_view.set_clicked_mouse_middle_button(
+		 cl_gts_master.cl_fltk_event.clicked_mouse_middle_button()
+		);
+
 		/* 実行イベントと、idle callbackを設定 */
 		//cl_gts_master.reserve(
 		cl_gts_master.action(
@@ -102,6 +111,11 @@ int fltk_opengl::handle( int event )
 		//cl_gts_master.reserve(
 		cl_gts_master.action(
 		 cl_gts_master.cl_fltk_event.get_e_act()
+		);
+
+		/* クリックした瞬間2値化画像をscan画像に切替る */
+		cl_gts_master.cl_ogl_view.set_clicked_mouse_middle_button(
+			false
 		);
 
 		return 1;

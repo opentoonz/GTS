@@ -1,3 +1,4 @@
+#include <iostream>
 #include "pri.h"
 #include "fltk_opengl.h"
 #include "gts_master.h"
@@ -43,6 +44,7 @@ void fltk_opengl::draw()
 	}
 
 	if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
+std::cout << __FILE__ << ":" << __LINE__ << ":clicked_mouse_middle_button=" <<  cl_gts_master.cl_fltk_event.clicked_mouse_middle_button() << std::endl;
 		/* subエリアのトレス線表示 */
 		cl_gts_master.color_trace_in_view_area();
 
