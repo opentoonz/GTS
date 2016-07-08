@@ -161,7 +161,12 @@ void iip_opengl_l3event::draw_opengl( void )
 		if (1L < this->_clp_main->get_l_zoom()) {
 			this->_draw_main_no_hamidasi_by_sub_view();
 		}
-		this->_clp_sub->draw_opengl();
+
+		if (this->is_clicked_mouse_middle_button_) {
+		 this->_clp_main->draw_opengl();
+		} else {
+		 this->_clp_sub->draw_opengl();
+		}
 
 		this->_cl_all.reshape_opengl();
 		this->_draw_separeter();
