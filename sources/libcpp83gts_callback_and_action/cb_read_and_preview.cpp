@@ -106,7 +106,7 @@ void gts_master::cb_read_rgb_preview( void )
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return;
 	}
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 
 	/* RGB画像の処理となるので、モードを自動切替えする */
 	cl_gts_gui.choice_pixel_type->value(2);

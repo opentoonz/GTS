@@ -184,15 +184,15 @@ void fltk_1000_range_minmax::_mouse_push( int i_mouse_button, long l_mouse_x, lo
 		this->_l_x_max_backup = this->_l_x_max;
 	}
 	else if (this->_select_minmax( l_mouse_x, l_mouse_y,
-				this->_l_x_min, this->_l_y_pos )) {
-		this->_e_select_type = E_MIN_SELECT_TYPE;
+				this->_l_x_max, this->_l_y_pos )) {
+		this->_e_select_type = E_MAX_SELECT_TYPE;
 		this->_l_x_drag_start = l_mouse_x;
 		this->_l_x_min_backup = this->_l_x_min;
 		this->_l_x_max_backup = this->_l_x_max;
 	}
 	else if (this->_select_minmax( l_mouse_x, l_mouse_y,
-				this->_l_x_max, this->_l_y_pos )) {
-		this->_e_select_type = E_MAX_SELECT_TYPE;
+				this->_l_x_min, this->_l_y_pos )) {
+		this->_e_select_type = E_MIN_SELECT_TYPE;
 		this->_l_x_drag_start = l_mouse_x;
 		this->_l_x_min_backup = this->_l_x_min;
 		this->_l_x_max_backup = this->_l_x_max;
@@ -334,7 +334,7 @@ int fltk_aa_minmax::handle(int event)
 			(long)(Fl::event_y())
 		);
 #if !defined GTS_DEBUG
-		cl_gts_master.cb_color_trace_src_edit_aa(
+		cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_minmax(
 			this->get_d_x_min(),
 			this->get_d_x_max()
 		);
@@ -380,7 +380,7 @@ int fltk_bb_minmax::handle(int event)
 			(long)(Fl::event_y())
 		);
 #if !defined GTS_DEBUG
-		cl_gts_master.cb_color_trace_src_edit_bb(
+		cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_minmax(
 			this->get_d_x_min(),
 			this->get_d_x_max()
 		);

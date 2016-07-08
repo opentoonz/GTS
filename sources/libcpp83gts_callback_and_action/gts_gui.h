@@ -27,6 +27,7 @@
 #include "fltk_1000x100_histogram.h"
 #include "fltk_1000_range_cyclic.h"
 #include "fltk_1000_range_minmax.h"
+#include <FL/Fl_Round_Button.H>
 
 class gts_gui {
 public:
@@ -93,6 +94,11 @@ public:
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_thickness;
+private:
+  inline void cb_menite_thickness_i(Fl_Menu_*, void*);
+  static void cb_menite_thickness(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
@@ -971,6 +977,68 @@ private:
   inline void cb_All2_i(Fl_Button*, void*);
   static void cb_All2(Fl_Button*, void*);
 public:
+  Fl_Double_Window *window_hab_histogram;
+private:
+  inline void cb_window_hab_histogram_i(Fl_Double_Window*, void*);
+  static void cb_window_hab_histogram(Fl_Double_Window*, void*);
+  static Fl_Menu_Item menu_3[];
+public:
+  static Fl_Menu_Item *menite_limit_nothing;
+private:
+  inline void cb_menite_limit_nothing_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_nothing(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_limit_hh;
+private:
+  inline void cb_menite_limit_hh_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_hh(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_limit_aa;
+private:
+  inline void cb_menite_limit_aa_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_aa(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_limit_bb;
+private:
+  inline void cb_menite_limit_bb_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_bb(Fl_Menu_*, void*);
+public:
+  fltk_1000x100_histogram *fltkp_hh_histogram;
+  fltk_hh_cyclic *fltkp_hh_cyclic;
+  Fl_Value_Input *valinp_hab_histogram_hh_min;
+private:
+  inline void cb_valinp_hab_histogram_hh_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_hh_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_hab_histogram_hh_max;
+private:
+  inline void cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_hh_max(Fl_Value_Input*, void*);
+public:
+  fltk_1000x100_histogram *fltkp_aa_histogram;
+  fltk_aa_minmax *fltkp_aa_minmax;
+  Fl_Value_Input *valinp_hab_histogram_aa_min;
+private:
+  inline void cb_valinp_hab_histogram_aa_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_aa_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_hab_histogram_aa_max;
+private:
+  inline void cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_aa_max(Fl_Value_Input*, void*);
+public:
+  fltk_1000x100_histogram *fltkp_bb_histogram;
+  fltk_bb_minmax *fltkp_bb_minmax;
+  Fl_Value_Input *valinp_hab_histogram_bb_min;
+private:
+  inline void cb_valinp_hab_histogram_bb_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_bb_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_hab_histogram_bb_max;
+private:
+  inline void cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_bb_max(Fl_Value_Input*, void*);
+public:
   Fl_Double_Window *window_edit_color;
 private:
   inline void cb_window_edit_color_i(Fl_Double_Window*, void*);
@@ -1006,41 +1074,6 @@ private:
   inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
   static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
 public:
-  Fl_Double_Window *window_hab_histogram;
-private:
-  inline void cb_window_hab_histogram_i(Fl_Double_Window*, void*);
-  static void cb_window_hab_histogram(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_3[];
-public:
-  static Fl_Menu_Item *menite_limit_nothing;
-private:
-  inline void cb_menite_limit_nothing_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_nothing(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_hh;
-private:
-  inline void cb_menite_limit_hh_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_hh(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_aa;
-private:
-  inline void cb_menite_limit_aa_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_aa(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_bb;
-private:
-  inline void cb_menite_limit_bb_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_bb(Fl_Menu_*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_hh_histogram;
-  Fl_Box *fltkp_hh_belt;
-  fltk_hh_cyclic *fltkp_hh_cyclic;
-  fltk_1000x100_histogram *fltkp_aa_histogram;
-  Fl_Box *fltkp_aa_belt;
-  fltk_aa_minmax *fltkp_aa_minmax;
-  fltk_1000x100_histogram *fltkp_bb_histogram;
-  Fl_Box *fltkp_bb_belt;
-  fltk_bb_minmax *fltkp_bb_minmax;
   Fl_Double_Window *window_next_scan;
   Fl_Button *button_rescan;
 private:
@@ -1060,6 +1093,196 @@ public:
   Fl_Output *norout_crnt_scan_level;
   Fl_Output *norout_crnt_scan_number;
   Fl_Output *norout_next_scan_number;
+  Fl_Double_Window *window_thickness;
+private:
+  inline void cb_window_thickness_i(Fl_Double_Window*, void*);
+  static void cb_window_thickness(Fl_Double_Window*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_01_chk;
+private:
+  inline void cb_chkbtn_thickness_01_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_01_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_01grp;
+  Fl_Button *button_thickness_01_tgt_rgb;
+private:
+  inline void cb_button_thickness_01_tgt_rgb_i(Fl_Button*, void*);
+  static void cb_button_thickness_01_tgt_rgb(Fl_Button*, void*);
+public:
+  Fl_Round_Button *roubut_thickness_01_tgt_is_bl;
+private:
+  inline void cb_roubut_thickness_01_tgt_is_bl_i(Fl_Round_Button*, void*);
+  static void cb_roubut_thickness_01_tgt_is_bl(Fl_Round_Button*, void*);
+public:
+  Fl_Button *button_thickness_01_src;
+private:
+  inline void cb_button_thickness_01_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_01_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_01;
+private:
+  inline void cb_scrbar_thickness_01_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_01(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_01;
+private:
+  inline void cb_valinp_thickness_01_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_01(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_02_chk;
+private:
+  inline void cb_chkbtn_thickness_02_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_02_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_02grp;
+  Fl_Button *button_thickness_02_tgt_rgb;
+private:
+  inline void cb_button_thickness_02_tgt_rgb_i(Fl_Button*, void*);
+  static void cb_button_thickness_02_tgt_rgb(Fl_Button*, void*);
+public:
+  Fl_Round_Button *roubut_thickness_02_tgt_is_bl;
+private:
+  inline void cb_roubut_thickness_02_tgt_is_bl_i(Fl_Round_Button*, void*);
+  static void cb_roubut_thickness_02_tgt_is_bl(Fl_Round_Button*, void*);
+public:
+  Fl_Button *button_thickness_02_src;
+private:
+  inline void cb_button_thickness_02_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_02_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_02;
+private:
+  inline void cb_scrbar_thickness_02_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_02(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_02;
+private:
+  inline void cb_valinp_thickness_02_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_02(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_03_chk;
+private:
+  inline void cb_chkbtn_thickness_03_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_03_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_03grp;
+  Fl_Button *button_thickness_03_tgt_rgb;
+private:
+  inline void cb_button_thickness_03_tgt_rgb_i(Fl_Button*, void*);
+  static void cb_button_thickness_03_tgt_rgb(Fl_Button*, void*);
+public:
+  Fl_Round_Button *roubut_thickness_03_tgt_is_bl;
+private:
+  inline void cb_roubut_thickness_03_tgt_is_bl_i(Fl_Round_Button*, void*);
+  static void cb_roubut_thickness_03_tgt_is_bl(Fl_Round_Button*, void*);
+public:
+  Fl_Button *button_thickness_03_src;
+private:
+  inline void cb_button_thickness_03_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_03_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_03;
+private:
+  inline void cb_scrbar_thickness_03_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_03(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_03;
+private:
+  inline void cb_valinp_thickness_03_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_03(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_04_chk;
+private:
+  inline void cb_chkbtn_thickness_04_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_04_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_04grp;
+  Fl_Button *button_thickness_04_tgt_rgb;
+private:
+  inline void cb_button_thickness_04_tgt_rgb_i(Fl_Button*, void*);
+  static void cb_button_thickness_04_tgt_rgb(Fl_Button*, void*);
+public:
+  Fl_Round_Button *roubut_thickness_04_tgt_is_bl;
+private:
+  inline void cb_roubut_thickness_04_tgt_is_bl_i(Fl_Round_Button*, void*);
+  static void cb_roubut_thickness_04_tgt_is_bl(Fl_Round_Button*, void*);
+public:
+  Fl_Button *button_thickness_04_src;
+private:
+  inline void cb_button_thickness_04_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_04_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_04;
+private:
+  inline void cb_scrbar_thickness_04_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_04(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_04;
+private:
+  inline void cb_valinp_thickness_04_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_04(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_05_chk;
+private:
+  inline void cb_chkbtn_thickness_05_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_05_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_05grp;
+  Fl_Button *button_thickness_05_tgt_rgb;
+private:
+  inline void cb_button_thickness_05_tgt_rgb_i(Fl_Button*, void*);
+  static void cb_button_thickness_05_tgt_rgb(Fl_Button*, void*);
+public:
+  Fl_Round_Button *roubut_thickness_05_tgt_is_bl;
+private:
+  inline void cb_roubut_thickness_05_tgt_is_bl_i(Fl_Round_Button*, void*);
+  static void cb_roubut_thickness_05_tgt_is_bl(Fl_Round_Button*, void*);
+public:
+  Fl_Button *button_thickness_05_src;
+private:
+  inline void cb_button_thickness_05_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_05_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_05;
+private:
+  inline void cb_scrbar_thickness_05_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_05(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_05;
+private:
+  inline void cb_valinp_thickness_05_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_05(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *chkbtn_thickness_06_chk;
+private:
+  inline void cb_chkbtn_thickness_06_chk_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_thickness_06_chk(Fl_Check_Button*, void*);
+public:
+  Fl_Group *group_thickness_06grp;
+  Fl_Button *button_thickness_06_tgt_rgb;
+private:
+  inline void cb_button_thickness_06_tgt_rgb_i(Fl_Button*, void*);
+  static void cb_button_thickness_06_tgt_rgb(Fl_Button*, void*);
+public:
+  Fl_Round_Button *roubut_thickness_06_tgt_is_bl;
+private:
+  inline void cb_roubut_thickness_06_tgt_is_bl_i(Fl_Round_Button*, void*);
+  static void cb_roubut_thickness_06_tgt_is_bl(Fl_Round_Button*, void*);
+public:
+  Fl_Button *button_thickness_06_src;
+private:
+  inline void cb_button_thickness_06_src_i(Fl_Button*, void*);
+  static void cb_button_thickness_06_src(Fl_Button*, void*);
+public:
+  Fl_Scrollbar *scrbar_thickness_06;
+private:
+  inline void cb_scrbar_thickness_06_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_thickness_06(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_thickness_06;
+private:
+  inline void cb_valinp_thickness_06_i(Fl_Value_Input*, void*);
+  static void cb_valinp_thickness_06(Fl_Value_Input*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

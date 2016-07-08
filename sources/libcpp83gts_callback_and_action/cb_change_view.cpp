@@ -57,7 +57,7 @@ void gts_master::cb_change_view_main_or_lr_or_sub( void )
 	}
 
 	/* 表示 */
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 }
 
 void gts_master::cb_change_view_lr_or_ud( void )
@@ -111,7 +111,7 @@ void gts_master::cb_change_view_lr_or_ud( void )
 	}
 
 	/* 表示 */
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 }
 
 void gts_master::cb_real_time_on_off( void )
@@ -153,9 +153,9 @@ void gts_master::cb_real_time_on_off( void )
 	switch (this->cl_ogl_view.get_e_wview_type()) {
 	case E_WVIEW_TYPE_NOTHING: break;
 	case E_WVIEW_TYPE_MAIN: break;
-	case E_WVIEW_TYPE_SUB: this->_iipg_view_redraw(); break;
-	case E_WVIEW_TYPE_LR_PARALLEL: this->_iipg_view_redraw(); break;
-	case E_WVIEW_TYPE_UD_PARALLEL: this->_iipg_view_redraw(); break;
+	case E_WVIEW_TYPE_SUB: this->iipg_view_redraw_(); break;
+	case E_WVIEW_TYPE_LR_PARALLEL: this->iipg_view_redraw_(); break;
+	case E_WVIEW_TYPE_UD_PARALLEL: this->iipg_view_redraw_(); break;
 	case E_WVIEW_TYPE_LR_ONION: break;
 	case E_WVIEW_TYPE_UD_ONION: break;
 	}

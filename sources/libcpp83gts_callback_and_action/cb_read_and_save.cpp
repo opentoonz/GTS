@@ -171,7 +171,7 @@ this->cl_iip_read.get_d_tif_dpi_x()
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return NG;
 	}
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 
 	return OK;
 }

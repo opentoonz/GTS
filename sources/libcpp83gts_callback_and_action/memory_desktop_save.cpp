@@ -119,6 +119,15 @@ int memory_desktop::_save_by_fp( FILE *fp )
     }
 # endif
 
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n",
+		STR_WINDOW_THICKNESS,
+		cl_gts_gui.window_thickness->visible()?ccp_show:ccp_hide,
+		cl_gts_gui.window_thickness->x(),
+		cl_gts_gui.window_thickness->y(),
+		cl_gts_gui.window_thickness->w(),
+		cl_gts_gui.window_thickness->h() );
+	if (i_ret < 0) { return NG; }
+
 	return OK;
 }
 int memory_desktop::_save_startup_path_by_fp( FILE *fp )

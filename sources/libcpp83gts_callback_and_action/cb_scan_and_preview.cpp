@@ -30,5 +30,5 @@ void gts_master::cb_scan_and_preview( void )
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return;
 	}
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 }

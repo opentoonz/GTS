@@ -108,24 +108,13 @@ int gts_master::exec( const char *comm )
 	}
 
 	/*------------------------------------------------*/
-	// Fl::set_font(FL_HELVETICA, "Kochi Gothic");
-	/*
-		Windows版のブラウザー上、日本語で、
-		フォルダーを表示移動可能となる(日本語入力はできない)
-		現在は対応しない(2009-07-13)
-		詳細はhistory.txtへ
-	*/
-
-	/*------------------------------------------------*/
-	/* GUI生成                                        */
+	/* GUI(fltk)生成 */
 
 	/***Fl::add_handler(handle_to_steel_shortcut_event);***/
-
-	/* fltk window and gui生成 */ 
 	(void)cl_gts_gui.make_window();
 
 	/*------------------------------------------------*/
-	/* GUI設定                                        */
+	/* GUI設定 */
 
 	/* color trace enhancement */
 	this->cl_color_trace_enhancement.src_init_histogram_window();
@@ -141,189 +130,8 @@ int gts_master::exec( const char *comm )
 	/* fltk windowのうちwindow_next_scan画面は必ず中央表示する */
 	//cl_gts_gui.window_next_scan->position(390,362);
 
-	/* fltk設定各種 --- ここから */
-	cl_gts_gui.scrbar_bw_threshold->linesize(1);
-
-	((Fl_Valuator *)cl_gts_gui.scrbar_bw_threshold)->value(
-			cl_gts_gui.valinp_bw_threshold->value()
-	);
-
-	cl_gts_gui.scrbar_grays_brightness->linesize(1);
-	cl_gts_gui.scrbar_grays_contrast->linesize(1);
-	((Fl_Valuator *)cl_gts_gui.scrbar_grays_brightness)->value(
-			cl_gts_gui.valinp_grays_brightness->value() );
-	((Fl_Valuator *)cl_gts_gui.scrbar_grays_contrast)->value(
-			cl_gts_gui.valinp_grays_contrast->value() );
-	((Fl_Valuator *)cl_gts_gui.scrbar_grays_gamma)->value(
-			cl_gts_gui.valinp_grays_gamma->value() );
-
-	cl_gts_gui.scrbar_rgb_brightness->linesize(1);
-	cl_gts_gui.scrbar_rgb_contrast->linesize(1);
-	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_brightness)->value(
-			cl_gts_gui.valinp_rgb_brightness->value() );
-	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_contrast)->value(
-			cl_gts_gui.valinp_rgb_contrast->value() );
-	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_gamma)->value(
-			cl_gts_gui.valinp_rgb_gamma->value() );
-
-	cl_gts_gui.scrbar_color_trace_01_src_hh_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_01_src_hh_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_01_src_aa_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_01_src_aa_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_01_src_bb_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_01_src_bb_max->linesize(1);
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_hh_min)->value(
-		cl_gts_gui.valinp_color_trace_01_src_hh_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_hh_max)->value(
-		cl_gts_gui.valinp_color_trace_01_src_hh_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_aa_min)->value(
-		cl_gts_gui.valinp_color_trace_01_src_aa_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_aa_max)->value(
-		cl_gts_gui.valinp_color_trace_01_src_aa_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_bb_min)->value(
-		cl_gts_gui.valinp_color_trace_01_src_bb_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_bb_max)->value(
-		cl_gts_gui.valinp_color_trace_01_src_bb_max->value());
-
-	cl_gts_gui.scrbar_color_trace_02_src_hh_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_02_src_hh_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_02_src_aa_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_02_src_aa_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_02_src_bb_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_02_src_bb_max->linesize(1);
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_hh_min)->value(
-		cl_gts_gui.valinp_color_trace_02_src_hh_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_hh_max)->value(
-		cl_gts_gui.valinp_color_trace_02_src_hh_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_aa_min)->value(
-		cl_gts_gui.valinp_color_trace_02_src_aa_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_aa_max)->value(
-		cl_gts_gui.valinp_color_trace_02_src_aa_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_bb_min)->value(
-		cl_gts_gui.valinp_color_trace_02_src_bb_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_bb_max)->value(
-		cl_gts_gui.valinp_color_trace_02_src_bb_max->value());
-
-	cl_gts_gui.scrbar_color_trace_03_src_hh_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_03_src_hh_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_03_src_aa_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_03_src_aa_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_03_src_bb_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_03_src_bb_max->linesize(1);
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_hh_min)->value(
-		cl_gts_gui.valinp_color_trace_03_src_hh_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_hh_max)->value(
-		cl_gts_gui.valinp_color_trace_03_src_hh_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_aa_min)->value(
-		cl_gts_gui.valinp_color_trace_03_src_aa_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_aa_max)->value(
-		cl_gts_gui.valinp_color_trace_03_src_aa_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_bb_min)->value(
-		cl_gts_gui.valinp_color_trace_03_src_bb_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_bb_max)->value(
-		cl_gts_gui.valinp_color_trace_03_src_bb_max->value());
-
-	cl_gts_gui.scrbar_color_trace_04_src_hh_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_04_src_hh_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_04_src_aa_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_04_src_aa_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_04_src_bb_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_04_src_bb_max->linesize(1);
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_hh_min)->value(
-		cl_gts_gui.valinp_color_trace_04_src_hh_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_hh_max)->value(
-		cl_gts_gui.valinp_color_trace_04_src_hh_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_aa_min)->value(
-		cl_gts_gui.valinp_color_trace_04_src_aa_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_aa_max)->value(
-		cl_gts_gui.valinp_color_trace_04_src_aa_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_bb_min)->value(
-		cl_gts_gui.valinp_color_trace_04_src_bb_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_bb_max)->value(
-		cl_gts_gui.valinp_color_trace_04_src_bb_max->value());
-
-	cl_gts_gui.scrbar_color_trace_05_src_hh_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_05_src_hh_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_05_src_aa_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_05_src_aa_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_05_src_bb_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_05_src_bb_max->linesize(1);
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_hh_min)->value(
-		cl_gts_gui.valinp_color_trace_05_src_hh_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_hh_max)->value(
-		cl_gts_gui.valinp_color_trace_05_src_hh_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_aa_min)->value(
-		cl_gts_gui.valinp_color_trace_05_src_aa_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_aa_max)->value(
-		cl_gts_gui.valinp_color_trace_05_src_aa_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_bb_min)->value(
-		cl_gts_gui.valinp_color_trace_05_src_bb_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_bb_max)->value(
-		cl_gts_gui.valinp_color_trace_05_src_bb_max->value());
-
-	cl_gts_gui.scrbar_color_trace_06_src_hh_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_06_src_hh_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_06_src_aa_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_06_src_aa_max->linesize(1);
-	cl_gts_gui.scrbar_color_trace_06_src_bb_min->linesize(1);
-	cl_gts_gui.scrbar_color_trace_06_src_bb_max->linesize(1);
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_hh_min)->value(
-		cl_gts_gui.valinp_color_trace_06_src_hh_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_hh_max)->value(
-		cl_gts_gui.valinp_color_trace_06_src_hh_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_aa_min)->value(
-		cl_gts_gui.valinp_color_trace_06_src_aa_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_aa_max)->value(
-		cl_gts_gui.valinp_color_trace_06_src_aa_max->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_bb_min)->value(
-		cl_gts_gui.valinp_color_trace_06_src_bb_min->value());
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_bb_max)->value(
-		cl_gts_gui.valinp_color_trace_06_src_bb_max->value());
-
-	cl_gts_gui.scrbar_edit_color_red->linesize(1);
-	cl_gts_gui.scrbar_edit_color_gre->linesize(1);
-	cl_gts_gui.scrbar_edit_color_blu->linesize(1);
-	/******((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_red)->value(
-			cl_gts_gui.valinp_edit_color_red->value());
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_gre)->value(
-			cl_gts_gui.valinp_edit_color_gre->value());
-	((Fl_Valuator *)cl_gts_gui.scrbar_edit_color_blu)->value(
-			cl_gts_gui.valinp_edit_color_blu->value());*****/
-
-	/* 6番目のtgt色を黒に初期化する */
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_06, 0,0,0
-	);
-
-	cl_gts_gui.valinp_area_x_pos->value(0.0);
-	cl_gts_gui.valinp_area_y_pos->value(0.0);
-	cl_gts_gui.valinp_area_x_size->value(0.0);
-	cl_gts_gui.valinp_area_y_size->value(0.0);
-	cl_gts_gui.valinp_area_x_pixel->value(0.0);
-	cl_gts_gui.valinp_area_y_pixel->value(0.0);
-	cl_gts_gui.valinp_area_reso->value(50);
-
-	/* Sub windowの設定
-	Redhat9ではfluidでセットすれば正常だが
-	WindowsXpでは正常にはうごかない */
-// #if !defined _WIN32
-	//cl_gts_gui.window_opengl->set_non_modal();
-
-	/***cl_gts_gui.window_level->set_non_modal();
-	cl_gts_gui.window_config_load->set_non_modal();
-	cl_gts_gui.window_config_save_as->set_non_modal();
-	cl_gts_gui.window_crop_area_and_rot90->set_non_modal();
-	cl_gts_gui.window_pixel_type_and_bright->set_non_modal();
-	cl_gts_gui.window_color_trace->set_non_modal();
-	cl_gts_gui.window_edit_color->set_non_modal();
-	cl_gts_gui.window_fnum_list->set_non_modal();
-	cl_gts_gui.window_trace_batch->set_non_modal();***/
-
-	//cl_gts_gui.window_next_scan->set_non_modal();
-// #endif
-
 	/* HLS Min-Max windowの色ベルト画像表示設定 */
-	this->make_hab_belt_image();
+//	this->make_hab_belt_image();
 
 	/* short cut key設定 */
 	this->cl_memo_short_cut_key.set_shortcut();
@@ -353,6 +161,14 @@ int gts_master::exec( const char *comm )
 	 this->cl_bro_level.get_current_imagefile_extension()
 	);
 	//ct_gts_master.cl_bro_level.cb_set_image_file_extension();
+
+	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
+	this->cl_color_trace_thickness.cb_enh_01();
+	this->cl_color_trace_thickness.cb_enh_02();
+	this->cl_color_trace_thickness.cb_enh_03();
+	this->cl_color_trace_thickness.cb_enh_04();
+	this->cl_color_trace_thickness.cb_enh_05();
+	this->cl_color_trace_thickness.cb_enh_06();
 
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
@@ -399,7 +215,7 @@ int gts_master::exec( const char *comm )
 	Fl::dnd_text_ops(0);
 
 	/*------------------------------------------------*/
-
 	/* fltkイベントループ */
+
 	return Fl::run();
 }

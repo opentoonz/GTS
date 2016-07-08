@@ -192,14 +192,17 @@ libgts_la_SOURCES = \
 					sources/libcpp82gts_hsv_histogram/fltk_1000_range_cyclic.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000_range_minmax.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000x100_histogram.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000x10_hsv_belt_image.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
 					sources/libcpp83gts_callback_and_action/cb_choice_pixel_type.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_hsv_minmax.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_src.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_tgt.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_full_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_tgt.cpp \
+					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config_save.cpp \
 					sources/libcpp83gts_callback_and_action/cb_fnum_edit_insert.cpp \
@@ -212,8 +215,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_full_area_and_crop.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scnr_area.cpp \
-					sources/libcpp83gts_callback_and_action/color_trace_enhancement_src.cpp \
-					sources/libcpp83gts_callback_and_action/color_trace_enhancement_tgt.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_area_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_area_val_and_opengl_rect.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
@@ -236,6 +237,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_config_trace_src_hsv_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
+					sources/libcpp83gts_callback_and_action/memory_install_setup.cpp \
 					sources/libcpp83gts_callback_and_action/memory_scan_area.cpp \
 					sources/libcpp83gts_callback_and_action/memory_short_cut_key.cpp
 
