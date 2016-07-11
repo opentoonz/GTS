@@ -381,13 +381,13 @@ private:
   inline void cb_valinp_area_y_pixel_i(Fl_Value_Input*, void*);
   static void cb_valinp_area_y_pixel(Fl_Value_Input*, void*);
 public:
+  Fl_Button *radbut_area_reso_fix_cm;
+  Fl_Button *radbut_area_reso_fix_pixel;
   Fl_Value_Input *valinp_area_reso;
 private:
   inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
   static void cb_valinp_area_reso(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chkbtn_area_reso_fix_cm;
-  Fl_Check_Button *chkbtn_area_reso_fix_pixel;
   Fl_Choice *choice_rot90;
 private:
   inline void cb_choice_rot90_i(Fl_Choice*, void*);

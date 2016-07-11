@@ -170,7 +170,7 @@ int iip_scan::setup_unit(void) {
         gts_gui::menite_sane_device->callback(cb_setup_sane_device, (void*)this);
     }
     // hide some widgets
-    Fl_Group *fix_for_res = cl_gts_gui.chkbtn_area_reso_fix_cm->parent();
+    Fl_Group *fix_for_res = cl_gts_gui.radbut_area_reso_fix_cm->parent();
     if(fix_for_res->visible()) {
         fix_for_res->hide();
     }
