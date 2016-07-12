@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();} selected
+      callback {cl_gts_master.cb_quit();}
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -295,7 +295,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_config_load {
       label {Load Config}
       callback {cl_gts_master.cl_bro_config.cb_load_cancel();}
-      xywh {50 50 300 390} type Double resizable non_modal size_range {180 125 0 0} visible
+      xywh {50 50 300 390} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_config.cb_load_dir_up();}
@@ -357,7 +357,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_config_save_as {
       label {Save As Config}
       callback {cl_gts_master.cl_bro_config.cb_save_as_cancel();}
-      xywh {50 50 300 390} type Double resizable non_modal size_range {180 125 0 0} visible
+      xywh {50 50 300 390} type Double resizable non_modal size_range {210 130 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_config.cb_save_as_dir_up();}
@@ -420,7 +420,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_level {
       label {Browse Level}
       callback {cl_gts_master.cl_bro_level.cb_cancel();}
-      xywh {50 50 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
+      xywh {50 50 380 600} type Double resizable non_modal size_range {370 300 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -431,7 +431,7 @@ fl_message( ost.str().c_str() );}
         callback {cl_gts_master.cl_bro_level.cb_dir();}
         xywh {0 20 380 35} box BORDER_BOX align 5 when 1
       }
-      Fl_Group {} {
+      Fl_Group {} {open
         xywh {0 60 380 25}
       } {
         Fl_Choice choice_level_list_form {
@@ -661,7 +661,7 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
     Fl_Window window_trace_batch {
       label {Color Trace Batch}
       callback {cl_gts_master.cl_bro_trace_batch.cb_cancel();}
-      xywh {50 50 300 415} type Double resizable non_modal size_range {180 125 0 0} visible
+      xywh {50 50 300 415} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_trace_batch.cb_dir_up();}
@@ -757,55 +757,55 @@ for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();) {
       label {Area and Rot90}
       callback {cl_gts_gui.window_crop_area_and_rot90->hide();
 cl_gts_gui.menite_crop_area_and_rot90->clear();}
-      xywh {50 50 200 240} type Double non_modal visible
+      xywh {50 50 200 265} type Double non_modal visible
     } {
+      Fl_Button {} {
+        label Crop
+        callback {cl_gts_gui.choice_area_selecter->value(0);
+cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
+cl_gts_gui.group_area_crop->activate();
+cl_gts_master.cb_scan_full_area_and_crop();}
+        xywh {135 5 60 25}
+      }
       Fl_Group {} {open
-        xywh {0 5 200 200} labeltype ENGRAVED_LABEL align 5
+        xywh {0 30 200 195} labeltype ENGRAVED_LABEL align 5
       } {
         Fl_Choice choice_area_selecter {
           label Area
           callback {cl_gts_master.cb_area_selecter();} open
-          xywh {35 10 100 25} down_box BORDER_BOX align 13
+          xywh {35 35 105 25} down_box BORDER_BOX align 13
         } {
           MenuItem {} {
             label Custom
             xywh {0 0 100 20}
           }
         }
-        Fl_Button {} {
-          label Crop
-          callback {cl_gts_gui.choice_area_selecter->value(0);
-cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
-cl_gts_gui.group_area_crop->activate();
-cl_gts_master.cb_scan_full_area_and_crop();}
-          xywh {140 5 55 25}
-        }
         Fl_Group group_area_crop {open
-          xywh {1 35 198 137} box BORDER_FRAME color 41 labeltype NO_LABEL align 5
+          xywh {1 60 198 137} box BORDER_FRAME color 41 labeltype NO_LABEL align 5
         } {
           Fl_Group {} {
             label Start open
-            xywh {3 40 194 25} align 20
+            xywh {3 65 194 25} align 20
           } {
             Fl_Value_Input valinp_area_x_pos {
               label X
               callback {cl_gts_master.cb_scnr_area_x_pos();}
-              xywh {53 40 55 25} box BORDER_BOX when 4 maximum 60
+              xywh {53 65 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Value_Input valinp_area_y_pos {
               label Y
               callback {cl_gts_master.cb_scnr_area_y_pos();}
-              xywh {124 40 55 25} box BORDER_BOX when 4 maximum 60
+              xywh {124 65 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Text_Display {} {
               label cm
-              xywh {179 45 0 0} align 6
+              xywh {179 70 0 0} align 6
             }
           }
           Fl_Choice choice_area_aspect_ratio_selecter {
             label {Aspect Ratio}
             callback {cl_gts_master.cb_area_aspect_ratio_selecter();} open
-            xywh {90 70 100 25} down_box BORDER_BOX align 13
+            xywh {90 95 105 25} down_box BORDER_BOX align 13
           } {
             MenuItem {} {
               label Custom
@@ -813,72 +813,72 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             }
           }
           Fl_Group {} {open
-            xywh {3 95 194 75} box BORDER_FRAME color 41
+            xywh {3 120 194 75} box BORDER_FRAME color 41
           } {
             Fl_Text_Display {} {
               label Size
-              xywh {5 95 0 0} align 6
+              xywh {5 120 0 0} align 6
             }
             Fl_Group {} {open
-              xywh {5 110 150 25} align 20
+              xywh {5 135 150 25} align 20
             } {
               Fl_Value_Input valinp_area_x_size {
                 label W
                 callback {cl_gts_master.cb_scnr_area_x_size();}
-                xywh {30 110 55 25} box BORDER_BOX when 4 maximum 60
+                xywh {30 135 55 25} box BORDER_BOX when 4 maximum 60
               }
               Fl_Value_Input valinp_area_y_size {
                 label H
                 callback {cl_gts_master.cb_scnr_area_y_size();}
-                xywh {100 110 55 25} box BORDER_BOX when 4 maximum 60
+                xywh {100 135 55 25} box BORDER_BOX when 4 maximum 60
               }
             }
             Fl_Group {} {open
-              xywh {5 140 150 25} align 20
+              xywh {5 165 150 25} align 20
             } {
               Fl_Value_Input valinp_area_x_pixel {
                 label W
                 callback {cl_gts_master.cb_scnr_area_x_pixel();}
-                xywh {30 140 55 25} box BORDER_BOX when 4 maximum 10000
+                xywh {30 165 55 25} box BORDER_BOX when 4 maximum 10000
               }
               Fl_Value_Input valinp_area_y_pixel {
                 label H
                 callback {cl_gts_master.cb_scnr_area_y_pixel();}
-                xywh {100 140 55 25} box BORDER_BOX when 4 maximum 10000
+                xywh {100 165 55 25} box BORDER_BOX when 4 maximum 10000
               }
             }
             Fl_Group {} {open
-              xywh {158 110 35 55} align 21
+              xywh {158 135 35 55} align 21
             } {
               Fl_Button radbut_area_reso_fix_cm {
                 label cm
-                xywh {158 110 35 25} type Radio value 1
+                xywh {158 135 35 25} type Radio value 1
               }
               Fl_Button radbut_area_reso_fix_pixel {
                 label pixel
-                xywh {158 140 35 25} type Radio
+                xywh {158 165 35 25} type Radio
               }
             }
           }
         }
         Fl_Group {} {
           label Resolution open
-          xywh {1 175 198 25} align 20
+          xywh {1 200 198 25} align 20
         } {
           Fl_Value_Input valinp_area_reso {
             label DPI
             callback {cl_gts_master.cb_scnr_area_reso();}
-            xywh {75 175 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 50
+            xywh {75 200 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 50
           }
         }
       }
       Fl_Group {} {open
-        xywh {0 210 200 25} labeltype ENGRAVED_LABEL align 5
+        xywh {0 235 200 25} labeltype ENGRAVED_LABEL align 5
       } {
         Fl_Choice choice_rot90 {
           label Rotate
           callback {cl_gts_master.cb_rotate_per_90();} open
-          xywh {50 210 60 25} box BORDER_BOX down_box BORDER_BOX
+          xywh {50 235 60 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
             label {-90}
@@ -899,31 +899,31 @@ cl_gts_master.cb_scan_full_area_and_crop();}
         }
         Fl_Text_Display {} {
           label degree
-          xywh {111 215 0 0} align 6
+          xywh {111 240 0 0} align 6
         }
       }
       Fl_Group {} {
         label Information open
-        xywh {0 255 200 50} labeltype ENGRAVED_LABEL align 5
+        xywh {0 280 200 50} labeltype ENGRAVED_LABEL align 5
       } {
         Fl_Output txtout_scanner_type {
-          xywh {5 255 190 25} box NO_BOX color 49
+          xywh {5 280 190 25} box NO_BOX color 49
         }
         Fl_Group {} {
           label {Max.} open
-          xywh {2 280 193 25} align 20
+          xywh {2 305 193 25} align 20
         } {
           Fl_Value_Output valout_scanner_width_max {
             label W
-            xywh {55 280 55 25} box FLAT_BOX maximum 60 value 10.01
+            xywh {55 305 55 25} box FLAT_BOX maximum 60 value 10.01
           }
           Fl_Value_Output valout_scanner_height_max {
             label H
-            xywh {125 280 55 25} box FLAT_BOX maximum 60 value 10.01
+            xywh {125 305 55 25} box FLAT_BOX maximum 60 value 10.01
           }
           Fl_Text_Display {} {
             label cm
-            xywh {180 285 0 0} align 6
+            xywh {180 310 0 0} align 6
           }
         }
       }
@@ -932,110 +932,157 @@ cl_gts_master.cb_scan_full_area_and_crop();}
       label {Pixel Type and Bright}
       callback {cl_gts_gui.window_pixel_type_and_bright->hide();
 cl_gts_gui.menite_pixel_type_and_bright->clear();}
-      xywh {50 50 265 160} type Double non_modal visible
+      xywh {50 50 265 190} type Double resizable non_modal size_range {200 190 1000 190} visible
     } {
-      Fl_Choice choice_pixel_type {
-        label {Pixel Type}
-        callback {cl_gts_master.cb_choice_pixel_type();} open
-        xywh {75 5 100 25} box BORDER_BOX down_box BORDER_BOX
+      Fl_Group {} {open
+        xywh {0 5 265 25}
       } {
-        MenuItem {} {
-          label BW
-          xywh {5 5 100 20}
+        Fl_Box {} {
+          xywh {0 5 200 25} resizable
         }
-        MenuItem {} {
-          label Grayscale
-          xywh {10 10 100 20}
+        Fl_Button {} {
+          label Preview
+          callback {cl_gts_master.cb_scan_and_preview();}
+          xywh {200 5 60 25}
         }
-        MenuItem {} {
-          label RGB
-          xywh {10 10 100 20}
+      }
+      Fl_Group {} {open
+        xywh {0 35 265 25}
+      } {
+        Fl_Box {} {
+          xywh {0 35 75 25}
+        }
+        Fl_Choice choice_pixel_type {
+          label {Pixel Type}
+          callback {cl_gts_master.cb_choice_pixel_type();} open
+          xywh {75 35 100 25} box BORDER_BOX down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label BW
+            xywh {20 20 100 20}
+          }
+          MenuItem {} {
+            label Grayscale
+            xywh {25 25 100 20}
+          }
+          MenuItem {} {
+            label RGB
+            xywh {25 25 100 20}
+          }
+        }
+        Fl_Box {} {
+          xywh {175 35 90 25} resizable
         }
       }
       Fl_Group group_bw {open
-        xywh {5 50 255 25}
+        xywh {0 80 265 110}
       } {
-        Fl_Scrollbar scrbar_bw_threshold {
-          label {B&W Threshold}
-          callback {valinp_bw_threshold->value(o->value());}
-          xywh {5 55 215 20} type Horizontal box BORDER_BOX align 5 maximum 255
-          code0 {scrbar_bw_threshold->linesize(1);}
-        }
-        Fl_Value_Input valinp_bw_threshold {
-          callback {((Fl_Valuator *)scrbar_bw_threshold)->value(o->value());}
-          xywh {225 50 35 25} box BORDER_BOX maximum 255 value 180
+        Fl_Group {} {open
+          xywh {0 80 265 25} resizable
+        } {
+          Fl_Scrollbar scrbar_bw_threshold {
+            label {B&W Threshold}
+            callback {valinp_bw_threshold->value(o->value());}
+            xywh {5 85 215 20} type Horizontal box BORDER_BOX align 5 maximum 255 value 180 resizable
+            code0 {scrbar_bw_threshold->linesize(1);}
+          }
+          Fl_Value_Input valinp_bw_threshold {
+            callback {((Fl_Valuator *)scrbar_bw_threshold)->value(o->value());}
+            xywh {225 80 35 25} box BORDER_BOX maximum 255 value 180
+          }
         }
       }
       Fl_Group group_grays {open
-        xywh {5 50 255 105} hide
+        xywh {0 80 265 110} hide
       } {
-        Fl_Scrollbar scrbar_grays_brightness {
-          label Brightness
-          callback {valinp_grays_brightness->value(o->value());}
-          xywh {5 55 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
-          code0 {scrbar_grays_brightness->linesize(1);}
+        Fl_Group {} {open
+          xywh {0 80 265 25}
+        } {
+          Fl_Scrollbar scrbar_grays_brightness {
+            label Brightness
+            callback {valinp_grays_brightness->value(o->value());}
+            xywh {5 85 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
+            code0 {scrbar_grays_brightness->linesize(1);}
+          }
+          Fl_Value_Input valinp_grays_brightness {
+            callback {((Fl_Valuator *)scrbar_grays_brightness)->value(o->value());}
+            xywh {215 80 45 25} box BORDER_BOX minimum -1000 maximum 1000
+          }
         }
-        Fl_Value_Input valinp_grays_brightness {
-          callback {((Fl_Valuator *)scrbar_grays_brightness)->value(o->value());}
-          xywh {215 50 45 25} box BORDER_BOX minimum -1000 maximum 1000
+        Fl_Group {} {open
+          xywh {0 120 265 25}
+        } {
+          Fl_Scrollbar scrbar_grays_contrast {
+            label Contrast
+            callback {valinp_grays_contrast->value(o->value());}
+            xywh {5 125 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
+            code0 {scrbar_grays_contrast->linesize(1);}
+          }
+          Fl_Value_Input valinp_grays_contrast {
+            callback {((Fl_Valuator *)scrbar_grays_contrast)->value(o->value());}
+            xywh {215 120 45 25} box BORDER_BOX minimum -1000 maximum 1000
+          }
         }
-        Fl_Scrollbar scrbar_grays_contrast {
-          label Contrast
-          callback {valinp_grays_contrast->value(o->value());}
-          xywh {5 95 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
-          code0 {scrbar_grays_contrast->linesize(1);}
-        }
-        Fl_Value_Input valinp_grays_contrast {
-          callback {((Fl_Valuator *)scrbar_grays_contrast)->value(o->value());}
-          xywh {215 90 45 25} box BORDER_BOX minimum -1000 maximum 1000
-        }
-        Fl_Scrollbar scrbar_grays_gamma {
-          label Gamma
-          callback {valinp_grays_gamma->value(((Fl_Valuator *)o)->value());}
-          xywh {5 135 205 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01
-        }
-        Fl_Value_Input valinp_grays_gamma {
-          callback {((Fl_Valuator *)scrbar_grays_gamma)->value(o->value());}
-          xywh {215 130 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
+        Fl_Group {} {open
+          xywh {0 160 265 25}
+        } {
+          Fl_Scrollbar scrbar_grays_gamma {
+            label Gamma
+            callback {valinp_grays_gamma->value(((Fl_Valuator *)o)->value());}
+            xywh {5 165 205 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01 value 1 resizable
+            code0 {scrbar_grays_gamma->linesize(1);}
+          }
+          Fl_Value_Input valinp_grays_gamma {
+            callback {((Fl_Valuator *)scrbar_grays_gamma)->value(o->value());}
+            xywh {215 160 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
+          }
         }
       }
       Fl_Group group_rgb {open
-        xywh {5 50 255 105} hide
+        xywh {0 80 265 110} hide
       } {
-        Fl_Scrollbar scrbar_rgb_brightness {
-          label Brightness
-          callback {valinp_rgb_brightness->value(o->value());}
-          xywh {5 55 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
-          code0 {scrbar_rgb_brightness->linesize(1);}
+        Fl_Group {} {open
+          xywh {0 80 265 25}
+        } {
+          Fl_Scrollbar scrbar_rgb_brightness {
+            label Brightness
+            callback {valinp_rgb_brightness->value(o->value());}
+            xywh {5 85 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
+            code0 {scrbar_rgb_brightness->linesize(1);}
+          }
+          Fl_Value_Input valinp_rgb_brightness {
+            callback {((Fl_Valuator *)scrbar_rgb_brightness)->value(o->value());}
+            xywh {215 80 45 25} box BORDER_BOX minimum -1000 maximum 1000
+          }
         }
-        Fl_Value_Input valinp_rgb_brightness {
-          callback {((Fl_Valuator *)scrbar_rgb_brightness)->value(o->value());}
-          xywh {215 50 45 25} box BORDER_BOX minimum -1000 maximum 1000
+        Fl_Group {} {open
+          xywh {0 120 265 25}
+        } {
+          Fl_Scrollbar scrbar_rgb_contrast {
+            label Contrast
+            callback {valinp_rgb_contrast->value(o->value());}
+            xywh {5 125 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
+            code0 {scrbar_rgb_contrast->linesize(1);}
+          }
+          Fl_Value_Input valinp_rgb_contrast {
+            callback {((Fl_Valuator *)scrbar_rgb_contrast)->value(o->value());}
+            xywh {215 120 45 25} box BORDER_BOX minimum -1000 maximum 1000
+          }
         }
-        Fl_Scrollbar scrbar_rgb_contrast {
-          label Contrast
-          callback {valinp_rgb_contrast->value(o->value());}
-          xywh {5 95 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
-          code0 {scrbar_rgb_contrast->linesize(1);}
+        Fl_Group {} {open
+          xywh {0 160 265 25}
+        } {
+          Fl_Scrollbar scrbar_rgb_gamma {
+            label Gamma
+            callback {valinp_rgb_gamma->value(((Fl_Valuator *)o)->value());}
+            xywh {5 165 205 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01 value 1 resizable
+            code0 {scrbar_rgb_gamma->linesize(1);}
+          }
+          Fl_Value_Input valinp_rgb_gamma {
+            callback {((Fl_Valuator *)scrbar_rgb_gamma)->value(o->value());}
+            xywh {215 160 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
+          }
         }
-        Fl_Value_Input valinp_rgb_contrast {
-          callback {((Fl_Valuator *)scrbar_rgb_contrast)->value(o->value());}
-          xywh {215 90 45 25} box BORDER_BOX minimum -1000 maximum 1000
-        }
-        Fl_Scrollbar scrbar_rgb_gamma {
-          label Gamma
-          callback {valinp_rgb_gamma->value(((Fl_Valuator *)o)->value());}
-          xywh {5 135 205 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01
-        }
-        Fl_Value_Input valinp_rgb_gamma {
-          callback {((Fl_Valuator *)scrbar_rgb_gamma)->value(o->value());}
-          xywh {215 130 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
-        }
-      }
-      Fl_Button {} {
-        label Preview
-        callback {cl_gts_master.cb_scan_and_preview();}
-        xywh {190 5 60 25}
       }
     }
     Fl_Window window_fnum_list {
@@ -1086,6 +1133,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
       label {Color Trace Enhancement}
       callback {cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.window_edit_color->hide();
+cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_color_trace->clear();}
       xywh {50 50 285 815} type Double non_modal visible
     } {
@@ -1872,43 +1920,67 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
     Fl_Window window_edit_color {
       label {Edit Color}
       callback {cl_gts_gui.window_edit_color->hide();}
-      xywh {50 50 385 85} type Double non_modal visible
+      xywh {50 50 385 100} type Double resizable non_modal size_range {200 100 1000 100} visible
     } {
-      Fl_Scrollbar scrbar_edit_color_red {
-        label Red
-        callback {valinp_edit_color_red->value(((Fl_Valuator *)o)->value());
+      Fl_Group {} {open
+        xywh {0 10 385 20}
+      } {
+        Fl_Group {} {open
+          xywh {0 10 340 20} resizable
+        } {
+          Fl_Scrollbar scrbar_edit_color_red {
+            label Red
+            callback {valinp_edit_color_red->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-        xywh {45 10 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
-        code0 {scrbar_edit_color_red->linesize(1);}
+            xywh {45 10 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
+            code0 {scrbar_edit_color_red->linesize(1);}
+          }
+        }
+        Fl_Value_Input valinp_edit_color_red {
+          callback {((Fl_Valuator *)scrbar_edit_color_red)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+          xywh {345 10 35 20} box BORDER_BOX maximum 255 step 1
+        }
       }
-      Fl_Scrollbar scrbar_edit_color_gre {
-        label Green
-        callback {valinp_edit_color_gre->value(((Fl_Valuator *)o)->value());
+      Fl_Group {} {open
+        xywh {0 40 385 20}
+      } {
+        Fl_Group {} {open
+          xywh {0 40 340 20} resizable
+        } {
+          Fl_Scrollbar scrbar_edit_color_gre {
+            label Green
+            callback {valinp_edit_color_gre->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-        xywh {45 35 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
-        code0 {scrbar_edit_color_gre->linesize(1);}
+            xywh {45 40 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
+            code0 {scrbar_edit_color_gre->linesize(1);}
+          }
+        }
+        Fl_Value_Input valinp_edit_color_gre {
+          callback {((Fl_Valuator *)scrbar_edit_color_gre)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+          xywh {345 40 35 20} box BORDER_BOX maximum 255 step 1
+        }
       }
-      Fl_Scrollbar scrbar_edit_color_blu {
-        label Blue
-        callback {valinp_edit_color_blu->value(((Fl_Valuator *)o)->value());
+      Fl_Group {} {open
+        xywh {0 70 385 20}
+      } {
+        Fl_Group {} {open
+          xywh {0 70 340 20} resizable
+        } {
+          Fl_Scrollbar scrbar_edit_color_blu {
+            label Blue
+            callback {valinp_edit_color_blu->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-        xywh {45 60 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
-        code0 {scrbar_edit_color_blu->linesize(1);}
-      }
-      Fl_Value_Input valinp_edit_color_red {
-        callback {((Fl_Valuator *)scrbar_edit_color_red)->value(o->value());
+            xywh {45 70 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
+            code0 {scrbar_edit_color_blu->linesize(1);}
+          }
+        }
+        Fl_Value_Input valinp_edit_color_blu {
+          callback {((Fl_Valuator *)scrbar_edit_color_blu)->value(o->value());
 cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-        xywh {345 5 35 25} box BORDER_BOX maximum 255 value 255
-      }
-      Fl_Value_Input valinp_edit_color_gre {
-        callback {((Fl_Valuator *)scrbar_edit_color_gre)->value(o->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-        xywh {345 30 35 25} box BORDER_BOX maximum 255 value 255
-      }
-      Fl_Value_Input valinp_edit_color_blu {
-        callback {((Fl_Valuator *)scrbar_edit_color_blu)->value(o->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-        xywh {345 55 35 25} box BORDER_BOX maximum 255 value 255
+          xywh {345 70 35 20} box BORDER_BOX maximum 255 step 1
+        }
       }
     }
     Fl_Window window_next_scan {
@@ -1945,8 +2017,8 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
       callback {cl_gts_gui.window_thickness->hide();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_thickness->clear();}
-      xywh {500 50 330 225} type Double resizable non_modal size_range {230 225 1000 225} visible
+cl_gts_gui.menite_thickness->clear();} selected
+      xywh {500 50 330 225} type Double resizable non_modal size_range {200 225 1000 225} visible
     } {
       Fl_Group {} {open
         xywh {0 15 330 20}

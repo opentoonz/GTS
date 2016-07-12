@@ -335,14 +335,14 @@ public:
 private:
   inline void cb_window_crop_area_and_rot90_i(Fl_Double_Window*, void*);
   static void cb_window_crop_area_and_rot90(Fl_Double_Window*, void*);
+  inline void cb_Crop_i(Fl_Button*, void*);
+  static void cb_Crop(Fl_Button*, void*);
 public:
   Fl_Choice *choice_area_selecter;
 private:
   inline void cb_choice_area_selecter_i(Fl_Choice*, void*);
   static void cb_choice_area_selecter(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_area_selecter[];
-  inline void cb_Crop_i(Fl_Button*, void*);
-  static void cb_Crop(Fl_Button*, void*);
 public:
   Fl_Group *group_area_crop;
   Fl_Value_Input *valinp_area_x_pos;
@@ -401,6 +401,8 @@ public:
 private:
   inline void cb_window_pixel_type_and_bright_i(Fl_Double_Window*, void*);
   static void cb_window_pixel_type_and_bright(Fl_Double_Window*, void*);
+  inline void cb_Preview2_i(Fl_Button*, void*);
+  static void cb_Preview2(Fl_Button*, void*);
 public:
   Fl_Choice *choice_pixel_type;
 private:
@@ -480,8 +482,6 @@ public:
 private:
   inline void cb_valinp_rgb_gamma_i(Fl_Value_Input*, void*);
   static void cb_valinp_rgb_gamma(Fl_Value_Input*, void*);
-  inline void cb_Preview2_i(Fl_Button*, void*);
-  static void cb_Preview2(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_fnum_list;
 private:
@@ -1049,25 +1049,25 @@ private:
   inline void cb_scrbar_edit_color_red_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_edit_color_red(Fl_Scrollbar*, void*);
 public:
-  Fl_Scrollbar *scrbar_edit_color_gre;
-private:
-  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_blu;
-private:
-  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
-public:
   Fl_Value_Input *valinp_edit_color_red;
 private:
   inline void cb_valinp_edit_color_red_i(Fl_Value_Input*, void*);
   static void cb_valinp_edit_color_red(Fl_Value_Input*, void*);
 public:
+  Fl_Scrollbar *scrbar_edit_color_gre;
+private:
+  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
+public:
   Fl_Value_Input *valinp_edit_color_gre;
 private:
   inline void cb_valinp_edit_color_gre_i(Fl_Value_Input*, void*);
   static void cb_valinp_edit_color_gre(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_blu;
+private:
+  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
 public:
   Fl_Value_Input *valinp_edit_color_blu;
 private:
