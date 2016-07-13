@@ -66,7 +66,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
  `GTS/x86_release/` にある、`gts.exe` を実行して動作を確かめてください。
 
-## ビルド方法(Linux)(※ビルド後の実行詳細については未確認)
+## ビルド方法(Linux)
 
 1. 環境を準備
 
@@ -122,7 +122,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  gdb --args ./gts -bv
  ```
 
-## ビルド方法(Max OS X)(※ビルド後の実行詳細については未確認)
+## ビルド方法(Max OS X)
 
 1. 環境を準備
 
