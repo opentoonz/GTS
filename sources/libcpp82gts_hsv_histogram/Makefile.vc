@@ -26,8 +26,7 @@ INCS =\
 SRCS =\
 fltk_1000_range_cyclic.cpp\
 fltk_1000_range_minmax.cpp\
-fltk_1000x100_histogram.cpp\
-fltk_1000x10_hsv_belt_image.cpp
+fltk_1000x100_histogram.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty

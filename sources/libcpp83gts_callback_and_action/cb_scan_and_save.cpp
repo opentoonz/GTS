@@ -158,7 +158,7 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 		 "Error : this->_iipg_view_setup() returns NG" );
 			return NG;
 		}
-		this->_iipg_view_redraw();
+		this->iipg_view_redraw_();
 		return OK;
 	}
 
@@ -243,7 +243,7 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return NG;
 	}
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 
 	return OK;
 }

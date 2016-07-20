@@ -71,65 +71,12 @@ static int argument_analyzer( int argc, char *argv[], char *cp_comm, gts_master 
 	}
 	return OK;
 }
-#include "igs_lex_white_space_and_double_quote.h"
-namespace {
- void setup_gts_( const char *comm ) {
-	const char *setup_file = "gts_install_setup.txt";
-	std::string path = gts_file_path(comm, setup_file);
-
-	std::ifstream ifs( path.c_str() );
-	if (!ifs) { return; } /* ファイルがないのでなにもしない */
-	while (ifs) {
-		char buf[1000];
-		buf[0] = '\0';
-		ifs.getline(buf,1000);
-		if ('#' == buf[0]) { continue; }
-		if ('\0' == buf[0]) { continue; }
-
-		std::vector< std::string > words;
-		igs::lex::white_space_and_double_quote(buf,words);
-
-		if (words.size() == 2) {
-			if (words.at(0) == "browser_directory_path") {
-	cl_gts_master.cl_bro_config.setup_path(words.at(1).c_str());
-	cl_gts_master.cl_bro_level.setup_path(words.at(1).c_str());
-	cl_gts_master.cl_bro_trace_batch.setup_path(words.at(1).c_str());
-
-			} else
-			if (words.at(0) == "image_file_format") {
-				if (words.at(1) == "TIFF") {
-	cl_gts_master.cl_bro_level.set_current_imagefile_extension(0);
-				} else if (words.at(1) == "TGA") {
-	cl_gts_master.cl_bro_level.set_current_imagefile_extension(1);
-				}
-			} else
-			if (words.at(0) == "short_cut_key_start_scan") {
-				// start_scan	Enter(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_start_scan(words.at(1).c_str());
-			} else
-			if (words.at(0) == "short_cut_key_rescan") {
-				// rescan	Space(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_rescan(words.at(1).c_str());
-			} else
-			if (words.at(0) == "short_cut_key_next_scan") {
-				// next_scan	Enter(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_next_scan(words.at(1).c_str());
-			} else
-			if (words.at(0) == "short_cut_key_stop_scan") {
-				// stop_scan	Esc(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_stop_scan(words.at(1).c_str());
-			}
-		}
-	}
-	ifs.close();
- }
-}
 
 /* リリース名、版、日付 */
 # ifdef PACKAGE_NAME
 gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
 # else
-gts_master cl_gts_master( "gts" ,"2.3.7" ,"2016-6-15" );
+gts_master cl_gts_master( "gts" ,"2.3.9" ,"2016-7-6" );
 # endif
 
 int main( int argc, char **argv )
@@ -138,7 +85,8 @@ int main( int argc, char **argv )
 	pri_funct_set_cp_title( (char *)cl_gts_master.cp_release_name() );
 
 	/* 初期化設定を設定ファイルから行なう */
-	setup_gts_( argv[0] );
+	//setup_gts_( argv[0] );
+	cl_gts_master.cl_memo_install_setup.load( argv[0] );
 
 	/* 引数による設定や実行 */
 	if (OK != argument_analyzer(

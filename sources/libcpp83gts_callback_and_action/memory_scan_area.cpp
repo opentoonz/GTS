@@ -218,7 +218,7 @@ namespace {
  }
 }
 
- std::string gts_file_path(const char *comm, const char *file_name) {
+std::string gts_file_path(const char *comm, const char *file_name) {
 	/* 優先度A  各ユーザーのホームにあるなら
 	--> %HOMEDRIVE%%HOMEPATH%\_gts-scan_area.txt"
 	=         "C:\Users\user1\_gts-scan_area.txt"
@@ -278,12 +278,12 @@ namespace {
 
 	/* A,B,Cどれのファイルもないならなにもしない */
 	return std::string();
- }
+}
 
- std::string gts_scan_area_file_path_( const char *comm ) {
+std::string gts_scan_area_file_path_( const char *comm ) {
 	const char *file_name = "_gts-scan_area.txt";
 	return gts_file_path(comm, file_name);
- }
+}
 
 //----------------------------------------------------------------------
 int memory_scan_area::load( const char *comm ) {

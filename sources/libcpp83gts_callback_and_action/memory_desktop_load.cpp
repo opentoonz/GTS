@@ -157,17 +157,15 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_color_trace->position(xx,yy);
 		} else
 		if (  (STR_WINDOW_EDIT_COLOR==key) && (4==ret)) {
-			if (di == "show") {
+			/*if (di == "show") {
 		cl_gts_gui.window_edit_color->show();
-		//cl_gts_gui.menite_edit_color->set();
-			}
+			}*/
 		cl_gts_gui.window_edit_color->position(xx,yy);
 		} else
 		if (  (STR_WINDOW_EDIT_HAB_MIN_MAX==key) && (4==ret)) {
-			if (di == "show") {
+			/*if (di == "show") {
 		cl_gts_gui.window_hab_histogram->show();
-		//cl_gts_gui.menite_hab_histogram->set();
-			}
+			}*/
 		cl_gts_gui.window_hab_histogram->position(xx,yy);
 		} else
 		if (  (STR_WINDOW_FNUM_LIST==key) && (6==ret)) {
@@ -190,7 +188,15 @@ int memory_desktop::load( void ) {
 		//cl_gts_gui.menite_next_scan->set();
 			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
-		} else {
+		} else
+		if (  (STR_WINDOW_THICKNESS==key) && (6==ret)) {
+			if (di == "show") {
+		cl_gts_gui.window_thickness->show();
+		cl_gts_gui.menite_thickness->set();
+			}
+		cl_gts_gui.window_thickness->resize(xx,yy,ww,hh);
+		} else
+		{
 			pri_funct_err_bttvr(
 				"Warning : bad line<%s>", buf );
 			return NG;

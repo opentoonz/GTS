@@ -55,7 +55,7 @@ int gts_master::rotate_per_90( void )
 		 "Error : this->_iipg_view_setup(-) returns NG" );
 			return NG;
 		}
-		this->_iipg_view_redraw();
+		this->iipg_view_redraw_();
 	}
 
 	/* menuからopengl rect値をセットする
