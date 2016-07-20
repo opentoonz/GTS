@@ -1,69 +1,150 @@
-# Description
+# [GTS](https://opentoonz.github.io/e/index.html)  ([日本語](./README_ja.md))
 
-[GTS](https://opentoonz.github.io/e/index.html) is a scanning tool developed by Studio Ghibli. It's specialized in hand-drawn animation frames and it uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
+## What is GTS?
 
-The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
+GTS is a scanning tool developed by Studio Ghibli.
 
-GTS's interface is in English and scanned images are saved as TIFF.
+It's specialized in hand-drawn animation frames.
 
-# Installation
+## Specification
 
-## Windows binary
+GTS's uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-Download and unzip the most recent GTS-x.y.z.zip file from https://github.com/opentoonz/GTS/releases.
+Interface is in English and scanned images are saved as TIFF.
 
-## From source
+## Requirements
 
-Get the source code from Github:
-```sh
-$ git clone https://github.com/opentoonz/GTS.git
-```
+Please refer to the [OpenToonz site](https://opentoonz.github.io/e/index.html).
 
-### Requirements
+## Installation(Windows)
 
-#### Windows
+[Download](https://github.com/opentoonz/GTS/releases) and unzip the most recent GTS-x.y.z.zip file.
 
-* Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
-* third party libraries unarchived in:
- * `GTS/thirdparty/fltk/fltk-1.3.3/`
- * `GTS/thirdparty/libtiff/tiff-4.0.3/`
+## How to Execute(Windows)
 
-#### Linux, OS X, etc.
+Execute "./gts" in unziped folder.
 
-* fltk-1.x with OpenGL support
-* tiff-4.x
-* sane-backends-1.x
+## How to Build Locally(Windows)
 
-### Build
+1. Environment for development
 
-#### Windows
+ Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
 
-After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2013.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
-  
-In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
+2. Get source code
 
-#### Linux, OS X, etc.
+ Get the source code from Github:
+ ```sh
+ $ git clone https://github.com/opentoonz/GTS.git
+ ```
 
-```sh
-./autogen.sh && ./configure && make
-# run it with
-./gts
-# or with more verbose output
-./gts -bv
-```
+3. Get third party libraries
 
-If you're a developer and you need a debug build, do it like this:
-```sh
-./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
-# now you can use gdb:
-gdb --args ./gts -bv
-```
+ third party libraries unarchived in:
+ - `GTS/thirdparty/fltk/fltk-1.3.3/`
+ - `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
-Note for distribution packagers: change *browser_directory_path* to "." in `sources/main/gts_install_setup.txt` before installation.
+4. How to build
 
-If you're not using a proper package manager, do the change yourself and copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
+ The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
+ After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2013.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
 
-# License
+5. Preparation for Execute
+
+ Nothing
+
+6. How to Execute
+
+ In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
+
+## How to Build Locally(Linux)
+
+1. Environment for development
+
+ Tested simply on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.1.1 Player(on a Windows 7 Enterprise SP1))
+
+2. Get source code
+
+ Same as Windows.
+
+3. Get third party libraries
+
+ ```sh
+ $ sudo apt install autoconf
+ $ sudo apt install libtool
+ $ sudo apt install autoconf-archive
+ $ sudo apt install libtiff5-dev
+ $ sudo apt install libfltk1.3-dev
+ $ sudo apt install libsane-dev
+ ```
+
+4. How to build
+
+ ```sh
+ $ rm m4/ax_check_glu.m4
+ $ ./autogen.sh && ./configure && make
+ ```
+ The last(link) of make is an error, and then re-run by adding `-lGLU -lGL` in the run command line.
+
+ If you're a developer and you need a debug build, do it like this:
+ ```sh
+ $ rm m4/ax_check_glu.m4
+ $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ ```
+
+5. Preparation for Execute
+
+ Change *browser_directory_path* to "/home" in `sources/main/gts_install_setup.txt` before installation.
+ Copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
+
+6. How to Execute
+
+ ```sh
+ # run it with
+ ./gts
+ ```
+
+ If you're a developer and you need a debug build, do it like this:
+ ```sh
+ # now you can use gdb:
+ gdb --args ./gts -bv
+ ```
+
+## How to Build Locally(Max OS X)
+
+1. Environment for development
+
+ Mac OS X 10.x
+
+2. Get source code
+
+ Same as Windows.
+
+3. Get third party libraries
+
+ ```sh
+ $ brew install automake
+ $ brew install autoconf-archive
+ $ sudo port install fltk-devel #not in homebrew
+ ```
+
+4. How to build
+
+ ```sh
+ $ rm m4/ax_check_glu.m4 #it seems broken?
+ $ ./autogen.sh && ./configure && make
+ ```
+
+5. Preparation for Execute
+
+ Same as linux.
+
+6. How to Execute
+
+ ```sh
+ # run it with
+ ./gts
+ ```
+
+## License
 
 [New BSD License](LICENSE.txt)
-

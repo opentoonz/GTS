@@ -10,30 +10,3 @@ short_cut_key_rescan		Space
 short_cut_key_next_scan		Enter
 short_cut_key_stop_scan		Esc
 #
-color_trace_bla_hue_min	0
-color_trace_bla_hue_max	360.0
-color_trace_bla_sat_min	0.0
-color_trace_bla_sat_max	50.0
-color_trace_bla_val_min	0.0
-color_trace_bla_val_max	50.0
-#
-color_trace_red_hue_min	300.0
-color_trace_red_hue_max	60.0
-color_trace_red_sat_min	50.0
-color_trace_red_sat_max	100.0
-color_trace_red_val_min	50.0
-color_trace_red_val_max	100.0
-#
-color_trace_gre_hue_min	60.0
-color_trace_gre_hue_max	180.0
-color_trace_gre_sat_min	50.0
-color_trace_gre_sat_max	100.0
-color_trace_gre_val_min	50.0
-color_trace_gre_val_max	100.0
-#
-color_trace_blu_hue_min	180.0
-color_trace_blu_hue_max	300.0
-color_trace_blu_sat_min	50.0
-color_trace_blu_sat_max	100.0
-color_trace_blu_val_min	50.0
-color_trace_blu_val_max	100.0
