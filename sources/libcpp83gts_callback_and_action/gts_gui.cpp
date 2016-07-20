@@ -6494,7 +6494,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     window_config_save_as->set_non_modal();
-    window_config_save_as->size_range(210, 130);
+    window_config_save_as->size_range(200, 130);
     window_config_save_as->end();
   } // Fl_Double_Window* window_config_save_as
   { window_level = new Fl_Double_Window(380, 600, "Browse Level");

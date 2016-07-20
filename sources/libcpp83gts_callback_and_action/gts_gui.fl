@@ -357,7 +357,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_config_save_as {
       label {Save As Config}
       callback {cl_gts_master.cl_bro_config.cb_save_as_cancel();}
-      xywh {50 50 300 390} type Double resizable non_modal size_range {210 130 0 0} visible
+      xywh {50 50 300 390} type Double resizable non_modal size_range {200 130 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_config.cb_save_as_dir_up();}
@@ -1088,7 +1088,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();}
+cl_gts_gui.menite_fnum_list->clear();} selected
       xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
@@ -2017,7 +2017,7 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
       callback {cl_gts_gui.window_thickness->hide();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_thickness->clear();} selected
+cl_gts_gui.menite_thickness->clear();}
       xywh {500 50 330 225} type Double resizable non_modal size_range {200 225 1000 225} visible
     } {
       Fl_Group {} {open
