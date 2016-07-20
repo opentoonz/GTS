@@ -1,5 +1,6 @@
 #include "fltk_opengl.h"
 #include "gts_master.h"
+#include "gts_gui.h"
 
 int fltk_opengl::handle( int event )
 {
@@ -82,6 +83,14 @@ int fltk_opengl::handle( int event )
 		 cl_gts_master.cl_fltk_event.get_e_act()
 		);
 
+		/* (クリックした瞬間)2値化画像をscan画像に切替る指示 */
+		cl_gts_master.cl_ogl_view.set_clicked_mouse_middle_button(
+		 cl_gts_master.cl_fltk_event.clicked_mouse_middle_button()
+		);
+
+		/* ここで再表示 */
+		cl_gts_gui.opengl_view->flush();
+
 		return 1;
 
 	case FL_RELEASE: /* A mouse button has been released. */
@@ -102,6 +111,11 @@ int fltk_opengl::handle( int event )
 		//cl_gts_master.reserve(
 		cl_gts_master.action(
 		 cl_gts_master.cl_fltk_event.get_e_act()
+		);
+
+		/* (クリックした瞬間)2値化画像に(scan画像から)戻す */
+		cl_gts_master.cl_ogl_view.set_clicked_mouse_middle_button(
+			false
 		);
 
 		return 1;

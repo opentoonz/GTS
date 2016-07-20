@@ -81,6 +81,12 @@ void fltk_event::set_mouse_to_act( void )
 
 	this->_e_act = e_act;
 }
+bool fltk_event::clicked_mouse_middle_button( void )
+{
+	 return this->_i_mouse_which_button == FL_MIDDLE_MOUSE &&
+		this->_i_mouse_button_state == FL_PUSH
+		;
+}
 
 /*--------------------------------------------------------*/
 

@@ -418,8 +418,8 @@ std::cout
 			 )
 			) {
 				pri_funct_err_bttvr(
-			"Warning : ignore bad line '%s' at number %d",
-					ca_str, ii );
+	"Warning : memory_config::_load_by_fp(-) : ignore '%s' at line %d"
+				,ca_str ,ii );
 			}
 		}
 	}

@@ -81,8 +81,8 @@ int memory_desktop::load( void ) {
 		/* 古いファイルがある */
 		old_type_sw = true;
 	}
-
-	while (ifs) {
+ 
+	for (int ii = 1 ;ifs ;++ii) {
 		char buf[1000];
 		buf[0] = '\0';
 		ifs.getline(buf,1000);
@@ -198,8 +198,8 @@ int memory_desktop::load( void ) {
 		} else
 		{
 			pri_funct_err_bttvr(
-				"Warning : bad line<%s>", buf );
-			return NG;
+ 	"Warning : memory_desktop::load() : ignore '%s' at line %d"
+			,buf ,ii );
 		}
 	}
 
