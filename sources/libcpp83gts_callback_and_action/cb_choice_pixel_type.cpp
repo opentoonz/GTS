@@ -33,7 +33,7 @@ void gts_master::_change_view_main( void )
 	}
 
 	/* 表示 */
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 }
 void gts_master::cb_choice_pixel_type( void )
 {

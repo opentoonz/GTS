@@ -151,6 +151,15 @@ cl_gts_master.cb_quit();}
 }}
             xywh {0 0 100 20} type Toggle
           }
+          MenuItem menite_thickness {
+            label {Thickness...}
+            callback {if (cl_gts_gui.menite_thickness->value()) {
+    cl_gts_gui.window_thickness->show();
+} else {
+    cl_gts_gui.window_thickness->hide();
+}}
+            xywh {0 0 30 20} type Toggle
+          }
           MenuItem menite_sane_device {
             label {Select SANE device...}
             xywh {0 0 100 20} hide
@@ -410,7 +419,7 @@ fl_message( ost.str().c_str() );}
     }
     Fl_Window window_level {
       label {Browse Level}
-      callback {cl_gts_master.cl_bro_level.cb_cancel();} open
+      callback {cl_gts_master.cl_bro_level.cb_cancel();}
       xywh {50 50 380 600} type Double resizable non_modal size_range {310 265 0 0} visible
     } {
       Fl_Button {} {
@@ -781,12 +790,12 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             Fl_Value_Input valinp_area_x_pos {
               label X
               callback {cl_gts_master.cb_scnr_area_x_pos();}
-              xywh {50 40 60 25} box BORDER_BOX when 4 maximum 60 value 60
+              xywh {50 40 60 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Value_Input valinp_area_y_pos {
               label Y
               callback {cl_gts_master.cb_scnr_area_y_pos();}
-              xywh {125 40 60 25} box BORDER_BOX when 4 maximum 60 value 60
+              xywh {125 40 60 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Text_Display {} {
               label cm
@@ -813,12 +822,12 @@ cl_gts_master.cb_scan_full_area_and_crop();}
               Fl_Value_Input valinp_area_x_size {
                 label W
                 callback {cl_gts_master.cb_scnr_area_x_size();}
-                xywh {50 101 60 25} box BORDER_BOX when 4 maximum 60 value 60
+                xywh {50 101 60 25} box BORDER_BOX when 4 maximum 60
               }
               Fl_Value_Input valinp_area_y_size {
                 label H
                 callback {cl_gts_master.cb_scnr_area_y_size();}
-                xywh {125 101 60 25} box BORDER_BOX when 4 maximum 60 value 60
+                xywh {125 101 60 25} box BORDER_BOX when 4 maximum 60
               }
               Fl_Text_Display {} {
                 label cm
@@ -831,12 +840,12 @@ cl_gts_master.cb_scan_full_area_and_crop();}
               Fl_Value_Input valinp_area_x_pixel {
                 label W
                 callback {cl_gts_master.cb_scnr_area_x_pixel();}
-                xywh {40 131 60 25} box BORDER_BOX when 4 maximum 10000 value 10000
+                xywh {40 131 60 25} box BORDER_BOX when 4 maximum 10000
               }
               Fl_Value_Input valinp_area_y_pixel {
                 label H
                 callback {cl_gts_master.cb_scnr_area_y_pixel();}
-                xywh {115 131 60 25} box BORDER_BOX when 4 maximum 10000 value 10000
+                xywh {115 131 60 25} box BORDER_BOX when 4 maximum 10000
               }
               Fl_Text_Display {} {
                 label pixel
@@ -855,7 +864,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             Fl_Value_Input valinp_area_reso {
               label DPI
               callback {cl_gts_master.cb_scnr_area_reso();}
-              xywh {75 168 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 600
+              xywh {75 168 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 50
             }
           }
           Fl_Group {} {
@@ -937,7 +946,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     } {
       Fl_Choice choice_pixel_type {
         label {Pixel Type}
-        callback {cl_gts_master.cb_choice_pixel_type();}
+        callback {cl_gts_master.cb_choice_pixel_type();} open
         xywh {75 5 100 25} box BORDER_BOX down_box BORDER_BOX
       } {
         MenuItem {} {
@@ -960,6 +969,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           label {B&W Threshold}
           callback {valinp_bw_threshold->value(o->value());}
           xywh {5 55 215 20} type Horizontal box BORDER_BOX align 5 maximum 255
+          code0 {scrbar_bw_threshold->linesize(1);}
         }
         Fl_Value_Input valinp_bw_threshold {
           callback {((Fl_Valuator *)scrbar_bw_threshold)->value(o->value());}
@@ -973,6 +983,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           label Brightness
           callback {valinp_grays_brightness->value(o->value());}
           xywh {5 55 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
+          code0 {scrbar_grays_brightness->linesize(1);}
         }
         Fl_Value_Input valinp_grays_brightness {
           callback {((Fl_Valuator *)scrbar_grays_brightness)->value(o->value());}
@@ -982,6 +993,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           label Contrast
           callback {valinp_grays_contrast->value(o->value());}
           xywh {5 95 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
+          code0 {scrbar_grays_contrast->linesize(1);}
         }
         Fl_Value_Input valinp_grays_contrast {
           callback {((Fl_Valuator *)scrbar_grays_contrast)->value(o->value());}
@@ -1004,6 +1016,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           label Brightness
           callback {valinp_rgb_brightness->value(o->value());}
           xywh {5 55 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
+          code0 {scrbar_rgb_brightness->linesize(1);}
         }
         Fl_Value_Input valinp_rgb_brightness {
           callback {((Fl_Valuator *)scrbar_rgb_brightness)->value(o->value());}
@@ -1013,6 +1026,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           label Contrast
           callback {valinp_rgb_contrast->value(o->value());}
           xywh {5 95 205 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000
+          code0 {scrbar_rgb_contrast->linesize(1);}
         }
         Fl_Value_Input valinp_rgb_contrast {
           callback {((Fl_Valuator *)scrbar_rgb_contrast)->value(o->value());}
@@ -1037,7 +1051,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();} selected
+cl_gts_gui.menite_fnum_list->clear();}
       xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
@@ -1082,8 +1096,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
       label {Color Trace Enhancement}
       callback {cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_color_trace->clear();}
+cl_gts_gui.menite_color_trace->clear();} open
       xywh {50 50 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
@@ -1096,8 +1109,12 @@ cl_gts_gui.menite_color_trace->clear();}
         Fl_Check_Button chkbtn_color_trace_01_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_01grp->activate();
+    cl_gts_gui.chkbtn_thickness_01_chk->value(1);
+    cl_gts_gui.group_thickness_01grp->activate();
 } else {
     cl_gts_gui.group_color_trace_01grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_01_chk->value(0);
+    cl_gts_gui.group_thickness_01grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 10 20 20} down_box DOWN_BOX value 1
@@ -1107,93 +1124,87 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         } {
           Fl_Scrollbar scrbar_color_trace_01_src_hh_min {
             label Hmin
-            callback {valinp_color_trace_01_src_hh_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_min_01(((Fl_Valuator *)o)->value());}
             xywh {75 7 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_01_src_hh_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_01_src_hh_max {
             label max
-            callback {valinp_color_trace_01_src_hh_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_max_01(((Fl_Valuator *)o)->value());}
             xywh {75 27 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_01_src_hh_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_01_src_aa_min {
             label Smin
-            callback {valinp_color_trace_01_src_aa_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_min_01(((Fl_Valuator *)o)->value());}
             xywh {75 47 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_01_src_aa_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_01_src_aa_max {
             label max
-            callback {valinp_color_trace_01_src_aa_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_max_01(((Fl_Valuator *)o)->value());}
             xywh {75 67 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_01_src_aa_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_01_src_bb_min {
             label Vmin
-            callback {valinp_color_trace_01_src_bb_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_min_01(((Fl_Valuator *)o)->value());}
             xywh {75 87 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_01_src_bb_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_01_src_bb_max {
             label max
-            callback {valinp_color_trace_01_src_bb_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_max_01(((Fl_Valuator *)o)->value());}
             xywh {75 107 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_01_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 24 127 3}
+            image {color_belt127x3hue.png} xywh {91 24 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 64 127 3}
+            image {color_belt127x3sat.png} xywh {91 64 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 104 127 3}
+            image {color_belt127x3val.png} xywh {91 104 127 3}
           }
           Fl_Value_Input valinp_color_trace_01_src_hh_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_01_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_min_01(((Fl_Valuator *)o)->value());}
             xywh {240 5 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_01_src_hh_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_01_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 25 40 20} box BORDER_BOX align 8 maximum 360 value 360
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_max_01(((Fl_Valuator *)o)->value());}
+            xywh {240 25 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_01_src_aa_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_01_src_aa_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_min_01(((Fl_Valuator *)o)->value());}
             xywh {240 45 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_01_src_aa_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_01_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 65 40 20} box BORDER_BOX align 8 maximum 100 value 50
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_max_01(((Fl_Valuator *)o)->value());}
+            xywh {240 65 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_01_src_bb_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_01_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_min_01(((Fl_Valuator *)o)->value());}
             xywh {240 85 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_01_src_bb_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_01_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 105 40 20} box BORDER_BOX align 8 maximum 100 value 40
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_max_01(((Fl_Valuator *)o)->value());}
+            xywh {240 105 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Button button_color_trace_01_tgt_rgb {
             label tgt
-            callback {cl_gts_master.cb_color_trace_tgt_open_01();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_tgt_show_01();}
             xywh {5 30 30 45} color 16 align 21
           }
           Fl_Button button_color_trace_01_src {
             label src
-            callback {cl_gts_master.cb_color_trace_src_open_01();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_01();} selected
             xywh {5 80 30 25} align 21
           }
         }
       }
       Fl_Group {} {open
-        xywh {5 34 280 216}
+        xywh {5 130 280 120}
       } {
         Fl_Text_Display {} {
           label 2
@@ -1202,104 +1213,102 @@ cl_gts_master.cb_color_trace_src_edit_value();}
         Fl_Check_Button chkbtn_color_trace_02_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_02grp->activate();
+    cl_gts_gui.chkbtn_thickness_02_chk->value(1);
+    cl_gts_gui.group_thickness_02grp->activate();
 } else {
     cl_gts_gui.group_color_trace_02grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_02_chk->value(0);
+    cl_gts_gui.group_thickness_02grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 135 20 20} down_box DOWN_BOX value 1
         }
         Fl_Group group_color_trace_02grp {open
-          xywh {5 34 280 216}
+          xywh {5 130 280 120}
         } {
           Fl_Scrollbar scrbar_color_trace_02_src_hh_min {
             label Hmin
-            callback {valinp_color_trace_02_src_hh_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_min_02(((Fl_Valuator *)o)->value());}
             xywh {75 132 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_02_src_hh_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_02_src_hh_max {
             label max
-            callback {valinp_color_trace_02_src_hh_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_max_02(((Fl_Valuator *)o)->value());}
             xywh {75 152 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_02_src_hh_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_02_src_aa_min {
             label Smin
-            callback {valinp_color_trace_02_src_aa_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_min_02(((Fl_Valuator *)o)->value());}
             xywh {75 172 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_02_src_aa_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_02_src_aa_max {
             label max
-            callback {valinp_color_trace_02_src_aa_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_max_02(((Fl_Valuator *)o)->value());}
             xywh {75 192 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_02_src_aa_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_02_src_bb_min {
             label Vmin
-            callback {valinp_color_trace_02_src_bb_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_min_02(((Fl_Valuator *)o)->value());}
             xywh {75 212 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_02_src_bb_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_02_src_bb_max {
             label max
-            callback {valinp_color_trace_02_src_bb_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_max_02(((Fl_Valuator *)o)->value());}
             xywh {75 232 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_02_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 149 127 3}
+            image {color_belt127x3hue.png} xywh {91 149 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 189 127 3}
+            image {color_belt127x3sat.png} xywh {91 189 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 229 127 3}
+            image {color_belt127x3val.png} xywh {91 229 127 3}
           }
           Fl_Value_Input valinp_color_trace_02_src_hh_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_02_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 130 40 20} box BORDER_BOX align 8 maximum 360 value 300
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_min_02(((Fl_Valuator *)o)->value());}
+            xywh {240 130 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_02_src_hh_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_02_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 150 40 20} box BORDER_BOX align 8 maximum 360 value 60
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_max_02(((Fl_Valuator *)o)->value());}
+            xywh {240 150 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_02_src_aa_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_02_src_aa_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 170 40 20} box BORDER_BOX align 8 maximum 100 value 10
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_min_02(((Fl_Valuator *)o)->value());}
+            xywh {240 170 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_02_src_aa_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_02_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 190 40 20} box BORDER_BOX align 8 maximum 100 value 90
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_max_02(((Fl_Valuator *)o)->value());}
+            xywh {240 190 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_02_src_bb_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_02_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 210 40 20} box BORDER_BOX align 8 maximum 100 value 40
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_min_02(((Fl_Valuator *)o)->value());}
+            xywh {240 210 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_02_src_bb_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_02_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 230 40 20} box BORDER_BOX align 8 maximum 100 value 100
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_max_02(((Fl_Valuator *)o)->value());}
+            xywh {240 230 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Button button_color_trace_02_tgt_rgb {
             label tgt
-            callback {cl_gts_master.cb_color_trace_tgt_open_02();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_tgt_show_02();}
             xywh {5 155 30 45} color 17 align 21
           }
           Fl_Button button_color_trace_02_src {
             label src
-            callback {cl_gts_master.cb_color_trace_src_open_02();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_02();}
             xywh {5 205 30 25} align 21
           }
         }
       }
       Fl_Group {} {open
-        xywh {5 159 280 216}
+        xywh {5 255 280 120}
       } {
         Fl_Text_Display {} {
           label 3
@@ -1308,104 +1317,102 @@ cl_gts_master.cb_color_trace_src_edit_value();}
         Fl_Check_Button chkbtn_color_trace_03_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_03grp->activate();
+    cl_gts_gui.chkbtn_thickness_03_chk->value(1);
+    cl_gts_gui.group_thickness_03grp->activate();
 } else {
     cl_gts_gui.group_color_trace_03grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_03_chk->value(0);
+    cl_gts_gui.group_thickness_03grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 255 20 20} down_box DOWN_BOX value 1
         }
         Fl_Group group_color_trace_03grp {open
-          xywh {5 159 280 216}
+          xywh {5 255 280 120}
         } {
           Fl_Scrollbar scrbar_color_trace_03_src_hh_min {
             label Hmin
-            callback {valinp_color_trace_03_src_hh_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_min_03(((Fl_Valuator *)o)->value());}
             xywh {75 257 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_03_src_hh_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_03_src_hh_max {
             label max
-            callback {valinp_color_trace_03_src_hh_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_max_03(((Fl_Valuator *)o)->value());}
             xywh {75 277 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_03_src_hh_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_03_src_aa_min {
             label Smin
-            callback {valinp_color_trace_03_src_aa_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_min_03(((Fl_Valuator *)o)->value());}
             xywh {75 297 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_03_src_aa_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_03_src_aa_max {
             label max
-            callback {valinp_color_trace_03_src_aa_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_max_03(((Fl_Valuator *)o)->value());}
             xywh {75 317 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_03_src_aa_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_03_src_bb_min {
             label Vmin
-            callback {valinp_color_trace_03_src_bb_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_min_03(((Fl_Valuator *)o)->value());}
             xywh {75 337 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_03_src_bb_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_03_src_bb_max {
             label max
-            callback {valinp_color_trace_03_src_bb_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_max_03(((Fl_Valuator *)o)->value());}
             xywh {75 357 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_03_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 274 127 3}
+            image {color_belt127x3hue.png} xywh {91 274 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 314 127 3}
+            image {color_belt127x3sat.png} xywh {91 314 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 354 127 3}
+            image {color_belt127x3val.png} xywh {91 354 127 3}
           }
           Fl_Value_Input valinp_color_trace_03_src_hh_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_03_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 255 40 20} box BORDER_BOX align 8 maximum 360 value 60
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_min_03(((Fl_Valuator *)o)->value());}
+            xywh {240 255 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_03_src_hh_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_03_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 275 40 20} box BORDER_BOX align 8 maximum 360 value 180
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_max_03(((Fl_Valuator *)o)->value());}
+            xywh {240 275 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_03_src_aa_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_03_src_aa_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 295 40 20} box BORDER_BOX align 8 maximum 100 value 10
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_min_03(((Fl_Valuator *)o)->value());}
+            xywh {240 295 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_03_src_aa_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_03_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 315 40 20} box BORDER_BOX align 8 maximum 100 value 90
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_max_03(((Fl_Valuator *)o)->value());}
+            xywh {240 315 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_03_src_bb_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_03_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 335 40 20} box BORDER_BOX align 8 maximum 100 value 40
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_min_03(((Fl_Valuator *)o)->value());}
+            xywh {240 335 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_03_src_bb_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_03_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 355 40 20} box BORDER_BOX align 8 maximum 100 value 100
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_max_03(((Fl_Valuator *)o)->value());}
+            xywh {240 355 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Button button_color_trace_03_tgt_rgb {
             label tgt
-            callback {cl_gts_master.cb_color_trace_tgt_open_03();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_tgt_show_03();}
             xywh {5 275 30 45} color 18 align 21
           }
           Fl_Button button_color_trace_03_src {
             label src
-            callback {cl_gts_master.cb_color_trace_src_open_03();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_03();}
             xywh {5 325 30 25} align 21
           }
         }
       }
       Fl_Group {} {open
-        xywh {5 284 280 216}
+        xywh {5 380 280 120}
       } {
         Fl_Text_Display {} {
           label 4
@@ -1414,104 +1421,102 @@ cl_gts_master.cb_color_trace_src_edit_value();}
         Fl_Check_Button chkbtn_color_trace_04_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_04grp->activate();
+    cl_gts_gui.chkbtn_thickness_04_chk->value(1);
+    cl_gts_gui.group_thickness_04grp->activate();
 } else {
     cl_gts_gui.group_color_trace_04grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_04_chk->value(0);
+    cl_gts_gui.group_thickness_04grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 380 20 20} down_box DOWN_BOX value 1
         }
         Fl_Group group_color_trace_04grp {open
-          xywh {5 284 280 216}
+          xywh {5 380 280 120}
         } {
           Fl_Scrollbar scrbar_color_trace_04_src_hh_min {
             label Hmin
-            callback {valinp_color_trace_04_src_hh_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_min_04(((Fl_Valuator *)o)->value());}
             xywh {75 382 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_04_src_hh_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_04_src_hh_max {
             label max
-            callback {valinp_color_trace_04_src_hh_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_max_04(((Fl_Valuator *)o)->value());}
             xywh {75 402 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_04_src_hh_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_04_src_aa_min {
             label Smin
-            callback {valinp_color_trace_04_src_aa_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_min_04(((Fl_Valuator *)o)->value());}
             xywh {75 422 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_04_src_aa_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_04_src_aa_max {
             label max
-            callback {valinp_color_trace_04_src_aa_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_max_04(((Fl_Valuator *)o)->value());}
             xywh {75 442 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_04_src_aa_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_04_src_bb_min {
             label Vmin
-            callback {valinp_color_trace_04_src_bb_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_min_04(((Fl_Valuator *)o)->value());}
             xywh {75 462 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_04_src_bb_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_04_src_bb_max {
             label max
-            callback {valinp_color_trace_04_src_bb_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_max_04(((Fl_Valuator *)o)->value());}
             xywh {75 482 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_04_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 399 127 3}
+            image {color_belt127x3hue.png} xywh {91 399 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 439 127 3}
+            image {color_belt127x3sat.png} xywh {91 439 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 479 127 3}
+            image {color_belt127x3val.png} xywh {91 479 127 3}
           }
           Fl_Value_Input valinp_color_trace_04_src_hh_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_04_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 380 40 20} box BORDER_BOX align 8 maximum 360 value 180
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_min_04(((Fl_Valuator *)o)->value());}
+            xywh {240 380 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_04_src_hh_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_04_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 400 40 20} box BORDER_BOX align 8 maximum 360 value 300
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_max_04(((Fl_Valuator *)o)->value());}
+            xywh {240 400 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_04_src_aa_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_04_src_aa_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 420 40 20} box BORDER_BOX align 8 maximum 100 value 10
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_min_04(((Fl_Valuator *)o)->value());}
+            xywh {240 420 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_04_src_aa_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_04_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 440 40 20} box BORDER_BOX align 8 maximum 100 value 90
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_max_04(((Fl_Valuator *)o)->value());}
+            xywh {240 440 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_04_src_bb_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_04_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 460 40 20} box BORDER_BOX align 8 maximum 100 value 40
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_min_04(((Fl_Valuator *)o)->value());}
+            xywh {240 460 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_04_src_bb_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_04_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 480 40 20} box BORDER_BOX align 8 maximum 100 value 100
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_max_04(((Fl_Valuator *)o)->value());}
+            xywh {240 480 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Button button_color_trace_04_tgt_rgb {
             label tgt
-            callback {cl_gts_master.cb_color_trace_tgt_open_04();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_tgt_show_04();}
             xywh {5 400 30 45} color 19 align 21
           }
           Fl_Button button_color_trace_04_src {
             label src
-            callback {cl_gts_master.cb_color_trace_src_open_04();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_04();}
             xywh {5 450 30 25} align 21
           }
         }
       }
       Fl_Group {} {open
-        xywh {5 409 280 216}
+        xywh {5 505 280 120}
       } {
         Fl_Text_Display {} {
           label 5
@@ -1520,104 +1525,102 @@ cl_gts_master.cb_color_trace_src_edit_value();}
         Fl_Check_Button chkbtn_color_trace_05_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_05grp->activate();
+    cl_gts_gui.chkbtn_thickness_05_chk->value(1);
+    cl_gts_gui.group_thickness_05grp->activate();
 } else {
     cl_gts_gui.group_color_trace_05grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_05_chk->value(0);
+    cl_gts_gui.group_thickness_05grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 505 20 20} down_box DOWN_BOX value 1
         }
         Fl_Group group_color_trace_05grp {open
-          xywh {5 409 280 216}
+          xywh {5 505 280 120}
         } {
           Fl_Scrollbar scrbar_color_trace_05_src_hh_min {
             label Hmin
-            callback {valinp_color_trace_05_src_hh_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_min_05(((Fl_Valuator *)o)->value());}
             xywh {75 507 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_05_src_hh_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_05_src_hh_max {
             label max
-            callback {valinp_color_trace_05_src_hh_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_max_05(((Fl_Valuator *)o)->value());}
             xywh {75 527 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_05_src_hh_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_05_src_aa_min {
             label Smin
-            callback {valinp_color_trace_05_src_aa_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_min_05(((Fl_Valuator *)o)->value());}
             xywh {75 547 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_05_src_aa_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_05_src_aa_max {
             label max
-            callback {valinp_color_trace_05_src_aa_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_max_05(((Fl_Valuator *)o)->value());}
             xywh {75 567 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_05_src_aa_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_05_src_bb_min {
             label Vmin
-            callback {valinp_color_trace_05_src_bb_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_min_05(((Fl_Valuator *)o)->value());}
             xywh {75 587 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_05_src_bb_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_05_src_bb_max {
             label max
-            callback {valinp_color_trace_05_src_bb_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_max_05(((Fl_Valuator *)o)->value());}
             xywh {75 607 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_05_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 524 127 3}
+            image {color_belt127x3hue.png} xywh {91 524 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 564 127 3}
+            image {color_belt127x3sat.png} xywh {91 564 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 604 127 3}
+            image {color_belt127x3val.png} xywh {91 604 127 3}
           }
           Fl_Value_Input valinp_color_trace_05_src_hh_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_05_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 505 40 20} box BORDER_BOX align 8 maximum 360 value 180
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_min_05(((Fl_Valuator *)o)->value());}
+            xywh {240 505 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_05_src_hh_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_05_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 525 40 20} box BORDER_BOX align 8 maximum 360 value 300
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_max_05(((Fl_Valuator *)o)->value());}
+            xywh {240 525 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_05_src_aa_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_05_src_aa_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 545 40 20} box BORDER_BOX align 8 maximum 100 value 10
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_min_05(((Fl_Valuator *)o)->value());}
+            xywh {240 545 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_05_src_aa_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_05_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 565 40 20} box BORDER_BOX align 8 maximum 100 value 90
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_max_05(((Fl_Valuator *)o)->value());}
+            xywh {240 565 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_05_src_bb_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_05_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 585 40 20} box BORDER_BOX align 8 maximum 100 value 40
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_min_05(((Fl_Valuator *)o)->value());}
+            xywh {240 585 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_05_src_bb_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_05_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 605 40 20} box BORDER_BOX align 8 maximum 100 value 100
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_max_05(((Fl_Valuator *)o)->value());}
+            xywh {240 605 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Button button_color_trace_05_tgt_rgb {
             label tgt
-            callback {cl_gts_master.cb_color_trace_tgt_open_05();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_tgt_show_05();}
             xywh {5 525 30 45} color 20 align 21
           }
           Fl_Button button_color_trace_05_src {
             label src
-            callback {cl_gts_master.cb_color_trace_src_open_05();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_05();}
             xywh {5 575 30 25} align 21
           }
         }
       }
       Fl_Group {} {open
-        xywh {5 534 280 216}
+        xywh {5 630 280 120}
       } {
         Fl_Text_Display {} {
           label 6
@@ -1626,98 +1629,96 @@ cl_gts_master.cb_color_trace_src_edit_value();}
         Fl_Check_Button chkbtn_color_trace_06_chk {
           callback {if (o->value()) {
     cl_gts_gui.group_color_trace_06grp->activate();
+    cl_gts_gui.chkbtn_thickness_06_chk->value(1);
+    cl_gts_gui.group_thickness_06grp->activate();
 } else {
     cl_gts_gui.group_color_trace_06grp->deactivate();
+    cl_gts_gui.chkbtn_thickness_06_chk->value(0);
+    cl_gts_gui.group_thickness_06grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();}
           xywh {15 630 20 20} down_box DOWN_BOX value 1
         }
         Fl_Group group_color_trace_06grp {open
-          xywh {5 534 280 216}
+          xywh {5 630 280 120}
         } {
           Fl_Scrollbar scrbar_color_trace_06_src_hh_min {
             label Hmin
-            callback {valinp_color_trace_06_src_hh_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_min_06(((Fl_Valuator *)o)->value());}
             xywh {75 632 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_06_src_hh_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_06_src_hh_max {
             label max
-            callback {valinp_color_trace_06_src_hh_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_hh_max_06(((Fl_Valuator *)o)->value());}
             xywh {75 652 160 17} type Horizontal box BORDER_BOX align 4 maximum 360
+            code0 {scrbar_color_trace_06_src_hh_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_06_src_aa_min {
             label Smin
-            callback {valinp_color_trace_06_src_aa_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_min_06(((Fl_Valuator *)o)->value());}
             xywh {75 672 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_06_src_aa_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_06_src_aa_max {
             label max
-            callback {valinp_color_trace_06_src_aa_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_aa_max_06(((Fl_Valuator *)o)->value());}
             xywh {75 692 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_06_src_aa_max->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_06_src_bb_min {
             label Vmin
-            callback {valinp_color_trace_06_src_bb_min->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_min_06(((Fl_Valuator *)o)->value());}
             xywh {75 712 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_06_src_bb_min->linesize(1);}
           }
           Fl_Scrollbar scrbar_color_trace_06_src_bb_max {
             label max
-            callback {valinp_color_trace_06_src_bb_max->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_scrbar_src_bb_max_06(((Fl_Valuator *)o)->value());}
             xywh {75 732 160 17} type Horizontal box BORDER_BOX align 4 maximum 100
+            code0 {scrbar_color_trace_06_src_bb_max->linesize(1);}
           }
           Fl_Box {} {
-            image {slider_backdrop_hue_127x3.png} xywh {91 649 127 3}
+            image {color_belt127x3hue.png} xywh {91 649 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_sat_127x3.png} xywh {91 689 127 3}
+            image {color_belt127x3sat.png} xywh {91 689 127 3}
           }
           Fl_Box {} {
-            image {slider_backdrop_val_127x3.png} xywh {91 729 127 3}
+            image {color_belt127x3val.png} xywh {91 729 127 3}
           }
           Fl_Value_Input valinp_color_trace_06_src_hh_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_06_src_hh_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 630 40 20} box BORDER_BOX align 8 maximum 360 value 180
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_min_06(((Fl_Valuator *)o)->value());}
+            xywh {240 630 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_06_src_hh_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_06_src_hh_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 650 40 20} box BORDER_BOX align 8 maximum 360 value 300
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_hh_max_06(((Fl_Valuator *)o)->value());}
+            xywh {240 650 40 20} box BORDER_BOX align 8 maximum 360
           }
           Fl_Value_Input valinp_color_trace_06_src_aa_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_06_src_aa_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 670 40 20} box BORDER_BOX align 8 maximum 100 value 10
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_min_06(((Fl_Valuator *)o)->value());}
+            xywh {240 670 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_06_src_aa_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_06_src_aa_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 690 40 20} box BORDER_BOX align 8 maximum 100 value 90
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_aa_max_06(((Fl_Valuator *)o)->value());}
+            xywh {240 690 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_06_src_bb_min {
-            callback {((Fl_Valuator *)scrbar_color_trace_06_src_bb_min)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 710 40 20} box BORDER_BOX align 8 maximum 100 value 40
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_min_06(((Fl_Valuator *)o)->value());}
+            xywh {240 710 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Value_Input valinp_color_trace_06_src_bb_max {
-            callback {((Fl_Valuator *)scrbar_color_trace_06_src_bb_max)->value(o->value());
-cl_gts_master.cb_color_trace_src_edit_value();}
-            xywh {240 730 40 20} box BORDER_BOX align 8 maximum 100 value 100
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_valinp_src_bb_max_06(((Fl_Valuator *)o)->value());}
+            xywh {240 730 40 20} box BORDER_BOX align 8 maximum 100
           }
           Fl_Button button_color_trace_06_tgt_rgb {
             label tgt
-            callback {cl_gts_master.cb_color_trace_tgt_open_06();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_tgt_show_06();}
             xywh {5 650 30 45} color 21 align 21
           }
           Fl_Button button_color_trace_06_src {
             label src
-            callback {cl_gts_master.cb_color_trace_src_open_06();}
+            callback {cl_gts_master.cl_color_trace_enhancement.cb_src_show_06();}
             xywh {5 700 30 25} align 21
           }
         }
@@ -1730,7 +1731,7 @@ cl_gts_master.cb_color_trace_src_edit_value();}
       Fl_Check_Button chkbtn_color_trace_real_time {
         label {Real Time}
         callback {cl_gts_master.cb_real_time_on_off();}
-        xywh {15 780 90 25} down_box DOWN_BOX
+        xywh {15 780 90 25} down_box DOWN_BOX value 1
       }
       Fl_Button {} {
         label {Preview Trace File}
@@ -1748,49 +1749,10 @@ cl_gts_master.cb_color_trace_src_edit_value();}
         xywh {205 785 70 25}
       }
     }
-    Fl_Window window_edit_color {
-      label {Edit Color}
-      callback {cl_gts_gui.window_edit_color->hide();}
-      xywh {50 50 385 85} type Double non_modal visible
-    } {
-      Fl_Scrollbar scrbar_edit_color_red {
-        label Red
-        callback {valinp_edit_color_red->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_tgt_edit_rgb();}
-        xywh {45 10 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
-      }
-      Fl_Scrollbar scrbar_edit_color_gre {
-        label Green
-        callback {valinp_edit_color_gre->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_tgt_edit_rgb();}
-        xywh {45 35 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
-      }
-      Fl_Scrollbar scrbar_edit_color_blu {
-        label Blue
-        callback {valinp_edit_color_blu->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cb_color_trace_tgt_edit_rgb();}
-        xywh {45 60 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
-      }
-      Fl_Value_Input valinp_edit_color_red {
-        callback {((Fl_Valuator *)scrbar_edit_color_red)->value(o->value());
-cl_gts_master.cb_color_trace_tgt_edit_rgb();}
-        xywh {345 5 35 25} box BORDER_BOX maximum 255 value 255
-      }
-      Fl_Value_Input valinp_edit_color_gre {
-        callback {((Fl_Valuator *)scrbar_edit_color_gre)->value(o->value());
-cl_gts_master.cb_color_trace_tgt_edit_rgb();}
-        xywh {345 30 35 25} box BORDER_BOX maximum 255 value 255
-      }
-      Fl_Value_Input valinp_edit_color_blu {
-        callback {((Fl_Valuator *)scrbar_edit_color_blu)->value(o->value());
-cl_gts_master.cb_color_trace_tgt_edit_rgb();}
-        xywh {345 55 35 25} box BORDER_BOX maximum 255 value 255
-      }
-    }
     Fl_Window window_hab_histogram {
       label {Edit HSV-MinMax}
       callback {cl_gts_gui.window_hab_histogram->hide();}
-      xywh {50 50 1000 505} type Double non_modal visible
+      xywh {50 50 1000 565} type Double non_modal visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 1000 25}
@@ -1822,51 +1784,141 @@ cl_gts_master.cb_color_trace_tgt_edit_rgb();}
         }
       }
       Fl_Scroll {} {open
-        xywh {0 25 1000 480}
+        xywh {0 25 1000 540}
       } {
         Fl_Pack {} {open
-          xywh {0 25 1000 480}
+          xywh {0 25 1000 540}
         } {
           Fl_Box fltkp_hh_histogram {
             xywh {0 25 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box fltkp_hh_belt {
-            xywh {0 125 1000 10}
+          Fl_Box {} {
+            image {color_belt1000x10hue.png} xywh {0 125 1000 10}
           }
           Fl_Box fltkp_hh_cyclic {
             xywh {0 135 1000 50}
             code0 {\#include "fltk_1000_range_cyclic.h"}
             class fltk_hh_cyclic
           }
+          Fl_Group {} {open
+            xywh {0 185 1000 20}
+          } {
+            Fl_Value_Input valinp_hab_histogram_hh_min {
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_min(
+	o->value()
+);}
+              xywh {0 185 40 20} box BORDER_BOX align 8 maximum 360
+            }
+            Fl_Value_Input valinp_hab_histogram_hh_max {
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_max(
+	o->value()
+);}
+              xywh {960 185 40 20} box BORDER_BOX align 8 maximum 360
+            }
+          }
           Fl_Box fltkp_aa_histogram {
-            xywh {0 185 1000 100}
+            xywh {0 205 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box fltkp_aa_belt {
-            xywh {0 285 1000 10}
+          Fl_Box {} {
+            image {color_belt1000x10sat.png} xywh {0 305 1000 10}
           }
           Fl_Box fltkp_aa_minmax {
-            xywh {0 295 1000 50}
+            xywh {0 315 1000 50}
             code0 {\#include "fltk_1000_range_minmax.h"}
             class fltk_aa_minmax
           }
+          Fl_Group {} {open
+            xywh {0 365 1000 20}
+          } {
+            Fl_Value_Input valinp_hab_histogram_aa_min {
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_min(
+	o->value()
+);}
+              xywh {0 365 40 20} box BORDER_BOX align 8 maximum 100
+            }
+            Fl_Value_Input valinp_hab_histogram_aa_max {
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_max(
+	o->value()
+);}
+              xywh {960 365 40 20} box BORDER_BOX align 8 maximum 100
+            }
+          }
           Fl_Box fltkp_bb_histogram {
-            xywh {0 345 1000 100}
+            xywh {0 385 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box fltkp_bb_belt {
-            xywh {0 445 1000 10}
+          Fl_Box {} {
+            image {color_belt1000x10val.png} xywh {0 485 1000 10}
           }
           Fl_Box fltkp_bb_minmax {
-            xywh {0 455 1000 50}
+            xywh {0 495 1000 50}
             code0 {\#include "fltk_1000_range_minmax.h"}
             class fltk_bb_minmax
           }
+          Fl_Group {} {open
+            xywh {0 545 1000 20}
+          } {
+            Fl_Value_Input valinp_hab_histogram_bb_min {
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_min(
+	o->value()
+);}
+              xywh {0 545 40 20} box BORDER_BOX align 8 maximum 100
+            }
+            Fl_Value_Input valinp_hab_histogram_bb_max {
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_max(
+	o->value()
+);}
+              xywh {960 545 40 20} box BORDER_BOX align 8 maximum 100
+            }
+          }
         }
+      }
+    }
+    Fl_Window window_edit_color {
+      label {Edit Color}
+      callback {cl_gts_gui.window_edit_color->hide();}
+      xywh {50 50 385 85} type Double non_modal visible
+    } {
+      Fl_Scrollbar scrbar_edit_color_red {
+        label Red
+        callback {valinp_edit_color_red->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+        xywh {45 10 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
+        code0 {scrbar_edit_color_red->linesize(1);}
+      }
+      Fl_Scrollbar scrbar_edit_color_gre {
+        label Green
+        callback {valinp_edit_color_gre->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+        xywh {45 35 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
+        code0 {scrbar_edit_color_gre->linesize(1);}
+      }
+      Fl_Scrollbar scrbar_edit_color_blu {
+        label Blue
+        callback {valinp_edit_color_blu->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+        xywh {45 60 296 20} type Horizontal box BORDER_BOX align 4 maximum 255
+        code0 {scrbar_edit_color_blu->linesize(1);}
+      }
+      Fl_Value_Input valinp_edit_color_red {
+        callback {((Fl_Valuator *)scrbar_edit_color_red)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+        xywh {345 5 35 25} box BORDER_BOX maximum 255 value 255
+      }
+      Fl_Value_Input valinp_edit_color_gre {
+        callback {((Fl_Valuator *)scrbar_edit_color_gre)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+        xywh {345 30 35 25} box BORDER_BOX maximum 255 value 255
+      }
+      Fl_Value_Input valinp_edit_color_blu {
+        callback {((Fl_Valuator *)scrbar_edit_color_blu)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+        xywh {345 55 35 25} box BORDER_BOX maximum 255 value 255
       }
     }
     Fl_Window window_next_scan {
@@ -1896,6 +1948,285 @@ cl_gts_master.cb_color_trace_tgt_edit_rgb();}
       }
       Fl_Output norout_next_scan_number {
         xywh {180 40 145 60} align 6 textsize 60
+      }
+    }
+    Fl_Window window_thickness {
+      label Thickness
+      callback {cl_gts_gui.window_thickness->hide();
+cl_gts_gui.window_edit_color->hide();
+cl_gts_gui.window_hab_histogram->hide();
+cl_gts_gui.menite_thickness->clear();}
+      xywh {500 50 330 225} type Double resizable non_modal size_range {230 225 1000 225} visible
+    } {
+      Fl_Group {} {open
+        xywh {0 15 330 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_01_chk {
+          label 1
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_01grp->activate();
+    cl_gts_gui.chkbtn_color_trace_01_chk->value(1);
+    cl_gts_gui.group_thickness_01grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_01grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_01_chk->value(0);
+    cl_gts_gui.group_thickness_01grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 15 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_01grp {open
+          xywh {35 15 290 20} resizable
+        } {
+          Fl_Button button_thickness_01_tgt_rgb {
+            label tgt
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_01();}
+            xywh {35 15 30 20} color 16 align 21
+          }
+          Fl_Round_Button roubut_thickness_01_tgt_is_bl {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_01();}
+            xywh {65 15 20 20} type Radio down_box ROUND_DOWN_BOX
+          }
+          Fl_Button button_thickness_01_src {
+            label src
+            callback {cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_01();}
+            xywh {85 15 30 20} align 21
+          }
+          Fl_Scrollbar scrbar_thickness_01 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_scrbar_01(o->value());}
+            xywh {120 15 160 20} type Horizontal box BORDER_BOX align 4 maximum 100 resizable
+            code0 {scrbar_thickness_01->linesize(1);}
+          }
+          Fl_Value_Input valinp_thickness_01 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_valinp_01(o->value());}
+            xywh {285 15 40 20} box BORDER_BOX align 8 maximum 100
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 50 330 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_02_chk {
+          label 2
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_02grp->activate();
+    cl_gts_gui.chkbtn_color_trace_02_chk->value(1);
+    cl_gts_gui.group_thickness_02grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_02grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_02_chk->value(0);
+    cl_gts_gui.group_thickness_02grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 50 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_02grp {open
+          xywh {35 50 290 20} resizable
+        } {
+          Fl_Button button_thickness_02_tgt_rgb {
+            label tgt
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_02();}
+            xywh {35 50 30 20} color 17 align 21
+          }
+          Fl_Round_Button roubut_thickness_02_tgt_is_bl {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_02();}
+            xywh {65 50 20 20} type Radio down_box ROUND_DOWN_BOX value 1
+          }
+          Fl_Button button_thickness_02_src {
+            label src
+            callback {cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_02();}
+            xywh {85 50 30 20} align 21
+          }
+          Fl_Scrollbar scrbar_thickness_02 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_scrbar_02(o->value());}
+            xywh {120 50 160 20} type Horizontal box BORDER_BOX align 4 maximum 100 resizable
+            code0 {scrbar_thickness_02->linesize(1);}
+          }
+          Fl_Value_Input valinp_thickness_02 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_valinp_02(o->value());}
+            xywh {285 50 40 20} box BORDER_BOX align 8 maximum 100
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 85 330 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_03_chk {
+          label 3
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_03grp->activate();
+    cl_gts_gui.chkbtn_color_trace_03_chk->value(1);
+    cl_gts_gui.group_thickness_03grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_03grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_03_chk->value(0);
+    cl_gts_gui.group_thickness_03grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 85 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_03grp {open
+          xywh {35 85 290 20} resizable
+        } {
+          Fl_Button button_thickness_03_tgt_rgb {
+            label tgt
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_03();}
+            xywh {35 85 30 20} color 18 align 21
+          }
+          Fl_Round_Button roubut_thickness_03_tgt_is_bl {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_03();}
+            xywh {65 85 20 20} type Radio down_box ROUND_DOWN_BOX
+          }
+          Fl_Button button_thickness_03_src {
+            label src
+            callback {cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_03();}
+            xywh {85 85 30 20} align 21
+          }
+          Fl_Scrollbar scrbar_thickness_03 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_scrbar_03(o->value());}
+            xywh {120 85 160 20} type Horizontal box BORDER_BOX align 4 maximum 100 resizable
+            code0 {scrbar_thickness_03->linesize(1);}
+          }
+          Fl_Value_Input valinp_thickness_03 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_valinp_03(o->value());}
+            xywh {285 85 40 20} box BORDER_BOX align 8 maximum 100
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 120 330 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_04_chk {
+          label 4
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_04grp->activate();
+    cl_gts_gui.chkbtn_color_trace_04_chk->value(1);
+    cl_gts_gui.group_thickness_04grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_04grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_04_chk->value(0);
+    cl_gts_gui.group_thickness_04grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 120 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_04grp {open
+          xywh {35 120 290 20} resizable
+        } {
+          Fl_Button button_thickness_04_tgt_rgb {
+            label tgt
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_04();}
+            xywh {35 120 30 20} color 19 align 21
+          }
+          Fl_Round_Button roubut_thickness_04_tgt_is_bl {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_04();}
+            xywh {65 120 20 20} type Radio down_box ROUND_DOWN_BOX
+          }
+          Fl_Button button_thickness_04_src {
+            label src
+            callback {cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_04();}
+            xywh {85 120 30 20} align 21
+          }
+          Fl_Scrollbar scrbar_thickness_04 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_scrbar_04(o->value());}
+            xywh {120 120 160 20} type Horizontal box BORDER_BOX align 4 maximum 100 resizable
+            code0 {scrbar_thickness_04->linesize(1);}
+          }
+          Fl_Value_Input valinp_thickness_04 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_valinp_04(o->value());}
+            xywh {285 120 40 20} box BORDER_BOX align 8 maximum 100
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 155 330 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_05_chk {
+          label 5
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_05grp->activate();
+    cl_gts_gui.chkbtn_color_trace_05_chk->value(1);
+    cl_gts_gui.group_thickness_05grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_05grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_05_chk->value(0);
+    cl_gts_gui.group_thickness_05grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 155 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_05grp {open
+          xywh {35 155 290 20} resizable
+        } {
+          Fl_Button button_thickness_05_tgt_rgb {
+            label tgt
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_05();}
+            xywh {35 155 30 20} color 20 align 21
+          }
+          Fl_Round_Button roubut_thickness_05_tgt_is_bl {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_05();}
+            xywh {65 155 20 20} type Radio down_box ROUND_DOWN_BOX
+          }
+          Fl_Button button_thickness_05_src {
+            label src
+            callback {cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_05();}
+            xywh {85 155 30 20} align 21
+          }
+          Fl_Scrollbar scrbar_thickness_05 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_scrbar_05(o->value());}
+            xywh {120 155 160 20} type Horizontal box BORDER_BOX align 4 maximum 100 resizable
+            code0 {scrbar_thickness_05->linesize(1);}
+          }
+          Fl_Value_Input valinp_thickness_05 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_valinp_05(o->value());}
+            xywh {285 155 40 20} box BORDER_BOX align 8 maximum 100
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 190 330 20}
+      } {
+        Fl_Check_Button chkbtn_thickness_06_chk {
+          label 6
+          callback {if (o->value()) {
+    cl_gts_gui.group_color_trace_06grp->activate();
+    cl_gts_gui.chkbtn_color_trace_06_chk->value(1);
+    cl_gts_gui.group_thickness_06grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_06grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_06_chk->value(0);
+    cl_gts_gui.group_thickness_06grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();}
+          xywh {15 190 20 20} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Group group_thickness_06grp {open
+          xywh {35 190 290 20} resizable
+        } {
+          Fl_Button button_thickness_06_tgt_rgb {
+            label tgt
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_06();}
+            xywh {35 190 30 20} color 21 align 21
+          }
+          Fl_Round_Button roubut_thickness_06_tgt_is_bl {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_06();}
+            xywh {65 190 20 20} type Radio down_box ROUND_DOWN_BOX
+          }
+          Fl_Button button_thickness_06_src {
+            label src
+            callback {cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_06();}
+            xywh {85 190 30 20} align 21
+          }
+          Fl_Scrollbar scrbar_thickness_06 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_scrbar_06(o->value());}
+            xywh {120 190 160 20} type Horizontal box BORDER_BOX align 4 maximum 100 resizable
+            code0 {scrbar_thickness_06->linesize(1);}
+          }
+          Fl_Value_Input valinp_thickness_06 {
+            callback {cl_gts_master.cl_color_trace_thickness.cb_valinp_06(o->value());}
+            xywh {285 190 40 20} box BORDER_BOX align 8 maximum 100
+          }
+        }
       }
     }
   }

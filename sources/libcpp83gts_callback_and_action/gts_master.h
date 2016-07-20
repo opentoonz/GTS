@@ -26,9 +26,13 @@
 #include "memory_config.h"
 #include "list_access.h"
 #include "image_mark_access.h"
-#include "color_trace_enhancement.h"
+#include "cb_color_trace_edit_color.h"
+#include "cb_color_trace_edit_hsv_minmax.h"
+#include "cb_color_trace_enhancement.h"
+#include "cb_color_trace_thickness.h"
 #include "memory_scan_area.h"
 #include "memory_short_cut_key.h"
+#include "memory_install_setup.h"
 
 class gts_master {
 public:
@@ -106,29 +110,12 @@ public:
 
 	void cb_color_trace_full_area( void );
 
-	void cb_color_trace_src_open_01( void );
-	void cb_color_trace_src_open_02( void );
-	void cb_color_trace_src_open_03( void );
-	void cb_color_trace_src_open_04( void );
-	void cb_color_trace_src_open_05( void );
-	void cb_color_trace_src_open_06( void );
 	void cb_color_trace_src_edit_value( void );
-	void cb_color_trace_src_edit_hh( double d_min, double d_max );
-	void cb_color_trace_src_edit_aa( double d_min, double d_max );
-	void cb_color_trace_src_edit_bb( double d_min, double d_max );
 	void cb_color_trace_src_redraw_image( void );
 	void cb_color_trace_src_limit_nothing( void );
 	void cb_color_trace_src_limit_hh( void );
 	void cb_color_trace_src_limit_aa( void );
 	void cb_color_trace_src_limit_bb( void );
-
-	void cb_color_trace_tgt_open_01( void );
-	void cb_color_trace_tgt_open_02( void );
-	void cb_color_trace_tgt_open_03( void );
-	void cb_color_trace_tgt_open_04( void );
-	void cb_color_trace_tgt_open_05( void );
-	void cb_color_trace_tgt_open_06( void );
-	void cb_color_trace_tgt_edit_rgb( void );
 
 	void cb_change_view_main_or_lr_or_sub( void );
 	void cb_change_view_lr_or_ud( void );
@@ -182,10 +169,14 @@ public:
 	memory_config	cl_memo_config;	/* 各パラメータの再現 */
 	memory_scan_area	cl_memo_scan_area;
 	memory_short_cut_key	cl_memo_short_cut_key;
+	memory_install_setup	cl_memo_install_setup;
 
 	list_access		cl_list_access; /* file number list */
 	image_mark_access	cl_image_mark_access;
-	color_trace_enhancement	cl_color_trace_enhancement;
+	cb_color_trace_edit_color	cl_color_trace_edit_color;
+	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;
+	cb_color_trace_enhancement	cl_color_trace_enhancement;
+	cb_color_trace_thickness	cl_color_trace_thickness;
 
 	iip_scan	cl_iip_scan;	/* 画像読み込み */
 	iip_read	cl_iip_read;	/* 画像読込み */
@@ -292,7 +283,7 @@ private:
 	int _iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, int i_rot90 = 0, iip_read *clp_read = NULL );
 
 	int _iipg_view_setup( int i_max_area_sw=OFF );
-	void _iipg_view_redraw( void );
+	void iipg_view_redraw_( void );
 
 	void _iipg_scan_set_physical_param( void );
 	void _iipg_scan_get_from_gui( void );

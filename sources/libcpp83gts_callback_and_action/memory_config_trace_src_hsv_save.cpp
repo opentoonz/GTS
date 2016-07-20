@@ -7,6 +7,7 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 	const char *ccp_chk = "%-24s %s\n";
 	const char *ccp_src = "%-24s %.16g\n";
 	const char *ccp_tgt = "%-24s %d %d %d\n";
+	const char *ccp_col = "%-24s \"%s\"\n";
 
 	int	i_ret;
 	unsigned char uchar_red, uchar_gre, uchar_blu;
@@ -45,9 +46,15 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
 		E_COLOR_TRACE_HAB_01,
 		&uchar_red, &uchar_gre, &uchar_blu );
-
 	i_ret = fprintf(fp, ccp_tgt, this->str_color_trace_01_tgt_rgb_,
 		uchar_red, uchar_gre, uchar_blu );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_01_tgt_color_,
+		cl_gts_gui.roubut_thickness_01_tgt_is_bl->value() == 1
+		? this->str_color_black_
+		: this->str_color_not_black_
+	);
 	if (i_ret < 0) { return NG; }
 
 	/* 02 ------------------------------------------------*/
@@ -88,6 +95,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_02_tgt_color_,
+		cl_gts_gui.roubut_thickness_02_tgt_is_bl->value() == 1
+		? this->str_color_black_
+		: this->str_color_not_black_
+	);
+	if (i_ret < 0) { return NG; }
+
 	/* 03 ------------------------------------------------*/
 
 	i_ret = fprintf(fp, ccp_chk, this->str_color_trace_03_chk_,
@@ -124,6 +138,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		&uchar_red, &uchar_gre, &uchar_blu );
 	i_ret = fprintf(fp, ccp_tgt, this->str_color_trace_03_tgt_rgb_,
 		uchar_red, uchar_gre, uchar_blu );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_03_tgt_color_,
+		cl_gts_gui.roubut_thickness_03_tgt_is_bl->value() == 1
+		? this->str_color_black_
+		: this->str_color_not_black_
+	);
 	if (i_ret < 0) { return NG; }
 
 	/* 04 ------------------------------------------------*/
@@ -164,6 +185,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_04_tgt_color_,
+		cl_gts_gui.roubut_thickness_04_tgt_is_bl->value() == 1
+		? this->str_color_black_
+		: this->str_color_not_black_
+	);
+	if (i_ret < 0) { return NG; }
+
 	/* 05 ------------------------------------------------*/
 
 	i_ret = fprintf(fp, ccp_chk, this->str_color_trace_05_chk_,
@@ -202,6 +230,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		uchar_red, uchar_gre, uchar_blu );
 	if (i_ret < 0) { return NG; }
 
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_05_tgt_color_,
+		cl_gts_gui.roubut_thickness_05_tgt_is_bl->value() == 1
+		? this->str_color_black_
+		: this->str_color_not_black_
+	);
+	if (i_ret < 0) { return NG; }
+
 	/* 06 ------------------------------------------------*/
 
 	i_ret = fprintf(fp, ccp_chk, this->str_color_trace_06_chk_,
@@ -238,6 +273,13 @@ int memory_config::_save_trace_src_hsv_by_fp( FILE *fp )
 		&uchar_red, &uchar_gre, &uchar_blu );
 	i_ret = fprintf(fp, ccp_tgt, this->str_color_trace_06_tgt_rgb_,
 		uchar_red, uchar_gre, uchar_blu );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, ccp_col, this->str_color_trace_06_tgt_color_,
+		cl_gts_gui.roubut_thickness_06_tgt_is_bl->value() == 1
+		? this->str_color_black_
+		: this->str_color_not_black_
+	);
 	if (i_ret < 0) { return NG; }
 
 	/*------------------------------------------------*/

@@ -24,6 +24,9 @@ public:
 private:
 	const char* str_on_  ="ON";
 	const char* str_off_ ="OFF";
+
+	const char* str_color_black_    ="black";
+	const char* str_color_not_black_ ="not black";
 	
 	const char* str_config_dir_
 		      ="config_dir";
@@ -129,6 +132,8 @@ private:
 		      ="color_trace_01_src_val_max";
 	const char* str_color_trace_01_tgt_rgb_
 		      ="color_trace_01_tgt_rgb";
+	const char* str_color_trace_01_tgt_color_
+		      ="color_trace_01_tgt_color";
 	
 	const char* str_color_trace_02_chk_
 		      ="color_trace_02_chk";
@@ -146,6 +151,8 @@ private:
 		      ="color_trace_02_src_val_max";
 	const char* str_color_trace_02_tgt_rgb_
 		      ="color_trace_02_tgt_rgb";
+	const char* str_color_trace_02_tgt_color_
+		      ="color_trace_02_tgt_color";
 	
 	const char* str_color_trace_03_chk_
 		      ="color_trace_03_chk";
@@ -163,6 +170,8 @@ private:
 		      ="color_trace_03_src_val_max";
 	const char* str_color_trace_03_tgt_rgb_
 		      ="color_trace_03_tgt_rgb";
+	const char* str_color_trace_03_tgt_color_
+		      ="color_trace_03_tgt_color";
 	
 	const char* str_color_trace_04_chk_
 		      ="color_trace_04_chk";
@@ -180,6 +189,8 @@ private:
 		      ="color_trace_04_src_val_max";
 	const char* str_color_trace_04_tgt_rgb_
 		      ="color_trace_04_tgt_rgb";
+	const char* str_color_trace_04_tgt_color_
+		      ="color_trace_04_tgt_color";
 	
 	const char* str_color_trace_05_chk_
 		      ="color_trace_05_chk";
@@ -197,6 +208,8 @@ private:
 		      ="color_trace_05_src_val_max";
 	const char* str_color_trace_05_tgt_rgb_
 		      ="color_trace_05_tgt_rgb";
+	const char* str_color_trace_05_tgt_color_
+		      ="color_trace_05_tgt_color";
 	
 	const char* str_color_trace_06_chk_
 		      ="color_trace_06_chk";
@@ -214,6 +227,8 @@ private:
 		      ="color_trace_06_src_val_max";
 	const char* str_color_trace_06_tgt_rgb_
 		      ="color_trace_06_tgt_rgb";
+	const char* str_color_trace_06_tgt_color_
+		      ="color_trace_06_tgt_color";
 
 	//-------------------------------------
 

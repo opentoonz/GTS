@@ -36,7 +36,7 @@ void gts_master::cb_color_trace_full_area( void )
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return;
 	}
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 
 	/* color trace histogram maxの設定 */
 	this->cl_color_trace_enhancement.src_set_histogram_max();

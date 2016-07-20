@@ -454,6 +454,14 @@ std::cout
 		cl_gts_gui.filinp_level_rgb_scan_dir->value()
 	);******/
 
+	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
+	cl_gts_master.cl_color_trace_thickness.cb_enh_01();
+	cl_gts_master.cl_color_trace_thickness.cb_enh_02();
+	cl_gts_master.cl_color_trace_thickness.cb_enh_03();
+	cl_gts_master.cl_color_trace_thickness.cb_enh_04();
+	cl_gts_master.cl_color_trace_thickness.cb_enh_05();
+	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
+
 	return OK;
 }
 int memory_config::load( const char *cp_file_path, int i_load_trace_batch_sw )
@@ -462,7 +470,7 @@ int memory_config::load( const char *cp_file_path, int i_load_trace_batch_sw )
 	char current_path[PTBL_PATH_MAX];
 
 	/* ファイル名の一時記憶 */
-	strncpy( current_path,cp_file_path,PTBL_PATH_MAX );
+	strncpy( current_path ,cp_file_path,PTBL_PATH_MAX );
 	current_path[PTBL_PATH_MAX-1] = '\0';
 
 	/* ファイル開く */

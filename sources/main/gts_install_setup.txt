@@ -9,3 +9,4 @@ short_cut_key_start_scan	Enter
 short_cut_key_rescan		Space
 short_cut_key_next_scan		Enter
 short_cut_key_stop_scan		Esc
+#

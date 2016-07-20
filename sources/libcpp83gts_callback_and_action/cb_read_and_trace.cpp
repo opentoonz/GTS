@@ -122,7 +122,7 @@ void gts_master::cb_read_and_trace( void )
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return;
 	}
-	this->_iipg_view_redraw();
+	this->iipg_view_redraw_();
 
 	/* color trace histogram maxの設定 */
 	this->cl_color_trace_enhancement.src_set_histogram_max();
