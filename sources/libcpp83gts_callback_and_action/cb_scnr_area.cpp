@@ -97,7 +97,7 @@ void gts_master::cb_scnr_area_y_pixel( void ) {
 	this->_from_area_val_to_opengl_rect();
 }
 void gts_master::cb_scnr_area_reso( void ) {
-	if (cl_gts_gui.chkbtn_area_reso_fix_cm->value()) {
+	if (cl_gts_gui.radbut_area_reso_fix_cm->value()) {
 		cl_gts_gui.valinp_area_x_pixel->value( 
 		cl_gts_gui.valinp_area_x_size->value()
 		* cl_gts_gui.valinp_area_reso->value() / 2.54 );
@@ -115,5 +115,3 @@ void gts_master::cb_scnr_area_reso( void ) {
 	this->_from_area_val_to_opengl_rect();
 }
 
-// void gts_master::cb_scnr_area_reso_fix_cm( void ) { ; }
-// void gts_master::cb_scnr_area_reso_fix_pixel( void ) { ; }

@@ -103,8 +103,6 @@ public:
 	void cb_scnr_area_y_pixel( void );
 	void cb_scnr_area_reso( void );
 	void cb_area_aspect_ratio_selecter( void );
-	//void cb_scnr_area_reso_fix_cm( void );
-	//void cb_scnr_area_reso_fix_pixel( void );
 	void cb_scan_full_area_and_crop( void );
 	void cb_rotate_per_90( void );
 
