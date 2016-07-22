@@ -45,7 +45,7 @@ public:
 	}
 
 	void init( long l_w, long l_h );
-	void add( double d_hh, double d_aa, double d_bb );
+	void add( bool gray_sw ,double d_hh, double d_aa, double d_bb );
 
 	long l_add_pixel_w;
 	long l_add_pixel_h;
