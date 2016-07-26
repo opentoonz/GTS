@@ -44,23 +44,32 @@ void calcu_histogram_hab::init( long l_w, long l_h )
 	this->cl_bb.init();
 }
 
-void calcu_histogram_hab::add( double d_hh, double d_aa, double d_bb )
+void calcu_histogram_hab::add( bool gray_sw ,double d_hh, double d_aa, double d_bb )
 {
 	switch (this->e_hab_is) {
 	case E_HAB_FREE:
-		this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		if (!gray_sw) {/* 色味がある時のみ色相histogramに追加する */
+		 this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		}
 		this->cl_aa.add(d_aa); ++ this->l_aa_count;
 		this->cl_bb.add(d_bb); ++ this->l_bb_count;
 		break;
 	case E_HH:
-		this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
-		if (this->d_hh_min < this->d_hh_max){
-		 if((this->d_hh_min<=d_hh)&&(d_hh<=this->d_hh_max)){
+		if (!gray_sw) {/* 色味がある時のみ色相histogramに追加する */
+		 this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		}
+		if (this->d_hh_min < this->d_hh_max){	/* min<maxの時 */
+		 if (gray_sw ||				/* 色味なし or */
+		 (this->d_hh_min<=d_hh) && (d_hh<=this->d_hh_max) ) {
+		 		/* 色味があってかつ min<hh<max */
 		  this->cl_aa.add(d_aa); ++ this->l_aa_count;
 		  this->cl_bb.add(d_bb); ++ this->l_bb_count;
 		 }
-		} else {
-		 if((this->d_hh_min<=d_hh)||(d_hh<=this->d_hh_max)){
+		}
+		else {					/* max<minの時 */
+		 if (gray_sw ||				/* 色味なし or */
+		 (d_hh<=this->d_hh_max) || (this->d_hh_min<=d_hh) ) {
+		 		/* 色味があってかつ hh<max||min<hh */
 		  this->cl_aa.add(d_aa); ++ this->l_aa_count;
 		  this->cl_bb.add(d_bb); ++ this->l_bb_count;
 		 }
@@ -68,15 +77,19 @@ void calcu_histogram_hab::add( double d_hh, double d_aa, double d_bb )
 		break;
 	case E_AA:
 		this->cl_aa.add(d_aa); ++ this->l_aa_count;
-		if ((this->d_aa_min<=d_aa)&&(d_aa<=this->d_aa_max)){
-		 this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		if ( (this->d_aa_min<=d_aa) && (d_aa<=this->d_aa_max) ) {
+		 if (!gray_sw){/* 色味がある時のみ色相histogramに追加する */
+		  this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		 }
 		 this->cl_bb.add(d_bb); ++ this->l_bb_count;
 		}
 		break;
 	case E_BB:
 		this->cl_bb.add(d_bb); ++ this->l_bb_count;
 		if ((this->d_bb_min<=d_bb)&&(d_bb<=this->d_bb_max)){
-		 this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		 if (!gray_sw){/* 色味がある時のみ色相histogramに追加する */
+		  this->cl_hh.add(d_hh / 360.0); ++ this->l_hh_count;
+		 }
 		 this->cl_aa.add(d_aa); ++ this->l_aa_count;
 		}
 		break;

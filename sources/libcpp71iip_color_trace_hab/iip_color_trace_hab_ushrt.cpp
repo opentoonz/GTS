@@ -38,7 +38,11 @@ void iip_color_trace_hab::_exec_ushrt( long l_width, long l_height, long l_area_
 			&d_hh, &d_aa, &d_bb );
 
 		/* histogramを設定する */
-		this->cl_hab_hist.add(d_hh,d_aa,d_bb);
+		this->cl_hab_hist.add(
+			ushrtp_in_x[CH_RED] == ushrtp_in_x[CH_GRE] &&
+			ushrtp_in_x[CH_GRE] == ushrtp_in_x[CH_BLU]
+			,d_hh,d_aa,d_bb
+		);
 
 		clp_calcu_color_trace_hab->exec(
 			 d_hh,  d_aa,  d_bb,
