@@ -1830,9 +1830,10 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           Fl_Box fltkp_hh_histogram {
             xywh {0 25 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
+            code1 {fltkp_hh_histogram->set_color_belt_image(box_hh_color_belt->deimage());}
             class fltk_1000x100_histogram
           }
-          Fl_Box {} {
+          Fl_Box box_hh_color_belt {
             image {color_belt1000x10hue.png} xywh {0 125 1000 10}
           }
           Fl_Box fltkp_hh_cyclic {
@@ -1864,16 +1865,17 @@ fltkp_hh_histogram->redraw();}
             Fl_Button {} {
               label {Adjust Histogram Average}
               callback {fltkp_hh_histogram->set_l_average_from_histogram();
-fltkp_hh_histogram->redraw();} selected
+fltkp_hh_histogram->redraw();}
               xywh {225 185 170 20}
             }
           }
           Fl_Box fltkp_aa_histogram {
             xywh {0 205 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
+            code1 {fltkp_aa_histogram->set_color_belt_image(box_aa_color_belt->deimage());}
             class fltk_1000x100_histogram
           }
-          Fl_Box {} {
+          Fl_Box box_aa_color_belt {
             image {color_belt1000x10sat.png} xywh {0 305 1000 10}
           }
           Fl_Box fltkp_aa_minmax {
@@ -1909,12 +1911,13 @@ fltkp_aa_histogram->redraw();}
               xywh {225 365 170 20}
             }
           }
-          Fl_Box fltkp_bb_histogram {
+          Fl_Box fltkp_bb_histogram {selected
             xywh {0 385 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
+            code1 {fltkp_bb_histogram->set_color_belt_image(box_bb_color_belt->deimage());}
             class fltk_1000x100_histogram
           }
-          Fl_Box {} {
+          Fl_Box box_bb_color_belt {
             image {color_belt1000x10val.png} xywh {0 485 1000 10}
           }
           Fl_Box fltkp_bb_minmax {

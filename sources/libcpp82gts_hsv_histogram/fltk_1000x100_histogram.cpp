@@ -6,16 +6,16 @@
 
 #define HISTOGRAM_MINIMUM_COUNT 10
 
-fltk_1000x100_histogram::fltk_1000x100_histogram(int x,int y,int w,int h,const char *l) : Fl_Box(x,y,w,h,l)
+fltk_1000x100_histogram::fltk_1000x100_histogram(int x,int y,int w,int h,const char *l)
+	:Fl_Box(x,y,w,h,l)
+	,_l_size(0L)
+	,_l_max(0L)
+	,_l_max_valuator(0L)
+	,_l_max_valuator_backup(0L)
+	,_l_max_drag_start(-1000L)
+	,_lp1000(nullptr)
+	,color_belt_image_(nullptr)
 {
-	this->_l_size = 0L;
-	this->_l_max = 0L;
-	this->_l_max_valuator = 0L;
-
-	this->_l_max_valuator_backup = 0L;
-	this->_l_max_drag_start = -1000L;
-
-	this->_lp1000 = NULL;
 }
 
 void fltk_1000x100_histogram::set_histogram( long l_size, long l_max, long *lp1000 )
@@ -68,6 +68,11 @@ void fltk_1000x100_histogram::set_l_average_from_histogram( void )
 	}
 }
 
+void fltk_1000x100_histogram::set_color_belt_image(const Fl_Image* image)
+{
+	this->color_belt_image_ = image;
+}
+
 void fltk_1000x100_histogram::draw()
 {
 	double	dd;
@@ -80,11 +85,46 @@ void fltk_1000x100_histogram::draw()
 	//fl_color(FL_DARK1);
 	fl_rectf(x(),y(),w(),h());
 
-	/* 描画色 */
-	fl_color(FL_BLACK);
+#if 0
+	if (this->color_belt_image_ != nullptr &&
+	this->color_belt_image_->data() != nullptr &&
+	this->_l_size <=
+	this->color_belt_image_->w() * this->color_belt_image_->d()
+	) {
+	 const char *const* image_p = this->color_belt_image_->data();
+	 int depth = this->color_belt_image_->d();
 
-	/* histogram */
-	for (ii = 0L; ii < this->_l_size; ++ii) {
+	 /* histogram */
+	 for (ii = 0L; ii < this->_l_size; ++ii) {
+		dd =	(double)(this->_lp1000[ii]) *
+			h() /				/* 0...h() */
+			this->_l_max_valuator +
+			0.999999;
+		if ((h()-1) < dd) {
+			ll = h()-1;
+		} else {
+			ll = (long)dd;
+		}
+
+		Fl_Color rr= static_cast<Fl_Color>(image_p[0][ii*depth+0]);
+		Fl_Color gg= static_cast<Fl_Color>(image_p[0][ii*depth+1]);
+		Fl_Color bb= static_cast<Fl_Color>(image_p[0][ii*depth+2]);
+		fl_color( (rr<<24) | (gg<<16) | (bb<<8) );
+
+		fl_yxline(
+			x()+ii,
+			y() + h()-1,
+			y() + h()-1 - ll
+		);
+	 }
+	}
+	else {
+#endif
+	 /* 描画色 */
+	 fl_color(FL_BLACK);
+
+	 /* histogram */
+	 for (ii = 0L; ii < this->_l_size; ++ii) {
 		dd =	(double)(this->_lp1000[ii]) *
 			h() /				/* 0...h() */
 			this->_l_max_valuator +
@@ -99,7 +139,8 @@ void fltk_1000x100_histogram::draw()
 			y() + h()-1,
 			y() + h()-1 - ll
 		);
-	}
+	 }
+//	}
 
 	/* 文字色 */
 	fl_color(FL_DARK3);
