@@ -1,5 +1,5 @@
-#ifndef __fltk_1000x100_histogram_h__
-#define __fltk_1000x100_histogram_h__
+#ifndef fltk_1000x100_histogram_h
+#define fltk_1000x100_histogram_h
 
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Image.H>
@@ -27,4 +27,4 @@ private:
 	const Fl_Image* color_belt_image_;
 };
 
-#endif /* !__fltk_1000x100_histogram_h__ */
+#endif /* !fltk_1000x100_histogram_h */

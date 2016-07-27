@@ -3152,37 +3152,46 @@ static const unsigned char idata_color_belt1000x10hue[] =
 static Fl_RGB_Image image_color_belt1000x10hue(idata_color_belt1000x10hue, 1000, 10, 3, 0);
 
 void gts_gui::cb_valinp_hab_histogram_hh_min_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_min(
-	o->value()
-);
+  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_min(o->value());
 }
 void gts_gui::cb_valinp_hab_histogram_hh_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_hh_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_max(
-	o->value()
-);
+  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_max(o->value());
 }
 void gts_gui::cb_valinp_hab_histogram_hh_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_hh_max_i(o,v);
 }
 
-void gts_gui::cb_Adjust_i(Fl_Button*, void*) {
+void gts_gui::cb_Max_i(Fl_Button*, void*) {
   fltkp_hh_histogram->set_l_max_from_histogram();
 fltkp_hh_histogram->redraw();
 }
-void gts_gui::cb_Adjust(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Adjust_i(o,v);
+void gts_gui::cb_Max(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Max_i(o,v);
 }
 
-void gts_gui::cb_Adjust1_i(Fl_Button*, void*) {
+void gts_gui::cb_Average_i(Fl_Button*, void*) {
   fltkp_hh_histogram->set_l_average_from_histogram();
 fltkp_hh_histogram->redraw();
 }
-void gts_gui::cb_Adjust1(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Adjust1_i(o,v);
+void gts_gui::cb_Average(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Average_i(o,v);
+}
+
+void gts_gui::cb_Color_i(Fl_Light_Button* o, void*) {
+  if (o->value() == 0) {
+ fltkp_hh_histogram->set_color_belt_image(nullptr);
+}
+else {
+ fltkp_hh_histogram->set_color_belt_image(box_hh_color_belt->image());
+}
+fltkp_hh_histogram->redraw();
+}
+void gts_gui::cb_Color(Fl_Light_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Color_i(o,v);
 }
 
 static const unsigned char idata_color_belt1000x10sat[] =
@@ -4584,37 +4593,46 @@ static const unsigned char idata_color_belt1000x10sat[] =
 static Fl_RGB_Image image_color_belt1000x10sat(idata_color_belt1000x10sat, 1000, 10, 3, 0);
 
 void gts_gui::cb_valinp_hab_histogram_aa_min_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_min(
-	o->value()
-);
+  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_min(o->value());
 }
 void gts_gui::cb_valinp_hab_histogram_aa_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_aa_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_max(
-	o->value()
-);
+  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_max(o->value());
 }
 void gts_gui::cb_valinp_hab_histogram_aa_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_aa_max_i(o,v);
 }
 
-void gts_gui::cb_Adjust2_i(Fl_Button*, void*) {
+void gts_gui::cb_Max1_i(Fl_Button*, void*) {
   fltkp_aa_histogram->set_l_max_from_histogram();
 fltkp_aa_histogram->redraw();
 }
-void gts_gui::cb_Adjust2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Adjust2_i(o,v);
+void gts_gui::cb_Max1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Max1_i(o,v);
 }
 
-void gts_gui::cb_Adjust3_i(Fl_Button*, void*) {
+void gts_gui::cb_Average1_i(Fl_Button*, void*) {
   fltkp_aa_histogram->set_l_average_from_histogram();
 fltkp_aa_histogram->redraw();
 }
-void gts_gui::cb_Adjust3(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Adjust3_i(o,v);
+void gts_gui::cb_Average1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Average1_i(o,v);
+}
+
+void gts_gui::cb_Color1_i(Fl_Light_Button* o, void*) {
+  if (o->value() == 0) {
+ fltkp_aa_histogram->set_color_belt_image(nullptr);
+}
+else {
+ fltkp_aa_histogram->set_color_belt_image(box_aa_color_belt->image());
+}
+fltkp_aa_histogram->redraw();
+}
+void gts_gui::cb_Color1(Fl_Light_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Color1_i(o,v);
 }
 
 static const unsigned char idata_color_belt1000x10val[] =
@@ -5972,37 +5990,46 @@ static const unsigned char idata_color_belt1000x10val[] =
 static Fl_RGB_Image image_color_belt1000x10val(idata_color_belt1000x10val, 1000, 10, 3, 0);
 
 void gts_gui::cb_valinp_hab_histogram_bb_min_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_min(
-	o->value()
-);
+  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_min(o->value());
 }
 void gts_gui::cb_valinp_hab_histogram_bb_min(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_bb_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_max(
-	o->value()
-);
+  cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_max(o->value());
 }
 void gts_gui::cb_valinp_hab_histogram_bb_max(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_hab_histogram_bb_max_i(o,v);
 }
 
-void gts_gui::cb_Adjust4_i(Fl_Button*, void*) {
+void gts_gui::cb_Max2_i(Fl_Button*, void*) {
   fltkp_bb_histogram->set_l_max_from_histogram();
 fltkp_bb_histogram->redraw();
 }
-void gts_gui::cb_Adjust4(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Adjust4_i(o,v);
+void gts_gui::cb_Max2(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Max2_i(o,v);
 }
 
-void gts_gui::cb_Adjust5_i(Fl_Button*, void*) {
+void gts_gui::cb_Average2_i(Fl_Button*, void*) {
   fltkp_bb_histogram->set_l_average_from_histogram();
 fltkp_bb_histogram->redraw();
 }
-void gts_gui::cb_Adjust5(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Adjust5_i(o,v);
+void gts_gui::cb_Average2(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Average2_i(o,v);
+}
+
+void gts_gui::cb_Color2_i(Fl_Light_Button* o, void*) {
+  if (o->value() == 0) {
+ fltkp_bb_histogram->set_color_belt_image(nullptr);
+}
+else {
+ fltkp_bb_histogram->set_color_belt_image(box_bb_color_belt->image());
+}
+fltkp_bb_histogram->redraw();
+}
+void gts_gui::cb_Color2(Fl_Light_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Color2_i(o,v);
 }
 
 void gts_gui::cb_window_edit_color_i(Fl_Double_Window*, void*) {
@@ -7884,7 +7911,6 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_hh_histogram->labelcolor(FL_FOREGROUND_COLOR);
           fltkp_hh_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_hh_histogram->when(FL_WHEN_RELEASE);
-          fltkp_hh_histogram->set_color_belt_image(box_hh_color_belt->deimage());
         } // fltk_1000x100_histogram* fltkp_hh_histogram
         { box_hh_color_belt = new Fl_Box(0, 125, 1000, 10);
           box_hh_color_belt->image(image_color_belt1000x10hue);
@@ -7914,12 +7940,18 @@ Fl_Double_Window* gts_gui::make_window() {
             valinp_hab_histogram_hh_max->callback((Fl_Callback*)cb_valinp_hab_histogram_hh_max);
             valinp_hab_histogram_hh_max->align(Fl_Align(FL_ALIGN_RIGHT));
           } // Fl_Value_Input* valinp_hab_histogram_hh_max
-          { Fl_Button* o = new Fl_Button(50, 185, 170, 20, "Adjust Histogram Max");
-            o->callback((Fl_Callback*)cb_Adjust);
+          { Fl_Text_Display* o = new Fl_Text_Display(90, 185, 0, 0, "Histogram View");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Button* o = new Fl_Button(195, 185, 40, 20, "Max");
+            o->callback((Fl_Callback*)cb_Max);
           } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(225, 185, 170, 20, "Adjust Histogram Average");
-            o->callback((Fl_Callback*)cb_Adjust1);
+          { Fl_Button* o = new Fl_Button(240, 185, 60, 20, "Average");
+            o->callback((Fl_Callback*)cb_Average);
           } // Fl_Button* o
+          { Fl_Light_Button* o = new Fl_Light_Button(305, 185, 60, 20, "Color");
+            o->callback((Fl_Callback*)cb_Color);
+          } // Fl_Light_Button* o
           o->end();
         } // Fl_Group* o
         { fltkp_aa_histogram = new fltk_1000x100_histogram(0, 205, 1000, 100);
@@ -7932,7 +7964,6 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_aa_histogram->labelcolor(FL_FOREGROUND_COLOR);
           fltkp_aa_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_aa_histogram->when(FL_WHEN_RELEASE);
-          fltkp_aa_histogram->set_color_belt_image(box_aa_color_belt->deimage());
         } // fltk_1000x100_histogram* fltkp_aa_histogram
         { box_aa_color_belt = new Fl_Box(0, 305, 1000, 10);
           box_aa_color_belt->image(image_color_belt1000x10sat);
@@ -7962,12 +7993,18 @@ Fl_Double_Window* gts_gui::make_window() {
             valinp_hab_histogram_aa_max->callback((Fl_Callback*)cb_valinp_hab_histogram_aa_max);
             valinp_hab_histogram_aa_max->align(Fl_Align(FL_ALIGN_RIGHT));
           } // Fl_Value_Input* valinp_hab_histogram_aa_max
-          { Fl_Button* o = new Fl_Button(50, 365, 170, 20, "Adjust Histogram Max");
-            o->callback((Fl_Callback*)cb_Adjust2);
+          { Fl_Text_Display* o = new Fl_Text_Display(90, 365, 0, 0, "Histogram View");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Button* o = new Fl_Button(195, 365, 40, 20, "Max");
+            o->callback((Fl_Callback*)cb_Max1);
           } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(225, 365, 170, 20, "Adjust Histogram Average");
-            o->callback((Fl_Callback*)cb_Adjust3);
+          { Fl_Button* o = new Fl_Button(240, 365, 60, 20, "Average");
+            o->callback((Fl_Callback*)cb_Average1);
           } // Fl_Button* o
+          { Fl_Light_Button* o = new Fl_Light_Button(305, 365, 60, 20, "Color");
+            o->callback((Fl_Callback*)cb_Color1);
+          } // Fl_Light_Button* o
           o->end();
         } // Fl_Group* o
         { fltkp_bb_histogram = new fltk_1000x100_histogram(0, 385, 1000, 100);
@@ -7980,7 +8017,6 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_bb_histogram->labelcolor(FL_FOREGROUND_COLOR);
           fltkp_bb_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_bb_histogram->when(FL_WHEN_RELEASE);
-          fltkp_bb_histogram->set_color_belt_image(box_bb_color_belt->deimage());
         } // fltk_1000x100_histogram* fltkp_bb_histogram
         { box_bb_color_belt = new Fl_Box(0, 485, 1000, 10);
           box_bb_color_belt->image(image_color_belt1000x10val);
@@ -8010,12 +8046,18 @@ Fl_Double_Window* gts_gui::make_window() {
             valinp_hab_histogram_bb_max->callback((Fl_Callback*)cb_valinp_hab_histogram_bb_max);
             valinp_hab_histogram_bb_max->align(Fl_Align(FL_ALIGN_RIGHT));
           } // Fl_Value_Input* valinp_hab_histogram_bb_max
-          { Fl_Button* o = new Fl_Button(50, 545, 170, 20, "Adjust Histogram Max");
-            o->callback((Fl_Callback*)cb_Adjust4);
+          { Fl_Text_Display* o = new Fl_Text_Display(90, 545, 0, 0, "Histogram View");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Button* o = new Fl_Button(195, 545, 40, 20, "Max");
+            o->callback((Fl_Callback*)cb_Max2);
           } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(225, 545, 170, 20, "Adjust Histogram Average");
-            o->callback((Fl_Callback*)cb_Adjust5);
+          { Fl_Button* o = new Fl_Button(240, 545, 60, 20, "Average");
+            o->callback((Fl_Callback*)cb_Average2);
           } // Fl_Button* o
+          { Fl_Light_Button* o = new Fl_Light_Button(305, 545, 60, 20, "Color");
+            o->callback((Fl_Callback*)cb_Color2);
+          } // Fl_Light_Button* o
           o->end();
         } // Fl_Group* o
         o->end();

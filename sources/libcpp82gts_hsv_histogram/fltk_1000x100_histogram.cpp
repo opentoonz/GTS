@@ -85,13 +85,15 @@ void fltk_1000x100_histogram::draw()
 	//fl_color(FL_DARK1);
 	fl_rectf(x(),y(),w(),h());
 
-#if 0
 	if (this->color_belt_image_ != nullptr &&
 	this->color_belt_image_->data() != nullptr &&
 	this->_l_size <=
 	this->color_belt_image_->w() * this->color_belt_image_->d()
 	) {
-	 const char *const* image_p = this->color_belt_image_->data();
+	 const unsigned char *const* image_p =
+	 	reinterpret_cast<const unsigned char *const*>(
+			this->color_belt_image_->data()
+		);
 	 int depth = this->color_belt_image_->d();
 
 	 /* histogram */
@@ -119,7 +121,6 @@ void fltk_1000x100_histogram::draw()
 	 }
 	}
 	else {
-#endif
 	 /* 描画色 */
 	 fl_color(FL_BLACK);
 
@@ -140,7 +141,7 @@ void fltk_1000x100_histogram::draw()
 			y() + h()-1 - ll
 		);
 	 }
-//	}
+	}
 
 	/* 文字色 */
 	fl_color(FL_DARK3);
