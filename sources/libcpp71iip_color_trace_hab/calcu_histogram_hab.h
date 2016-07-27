@@ -34,7 +34,7 @@ public:
 	{
 		this->init(0,0);
 
-		this->e_hab_is = E_HH;
+		this->e_hab_is = E_HAB_FREE;
 
 		this->d_hh_min = 0.0;
 		this->d_hh_max = 360.0;
