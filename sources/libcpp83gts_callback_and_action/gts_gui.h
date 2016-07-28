@@ -26,6 +26,7 @@
 #include <FL/Fl_Pack.H>
 #include "fltk_1000x100_histogram.h"
 #include "fltk_1000_range_cyclic.h"
+#include "fltk_1000x10_color_belt.h"
 #include "fltk_1000_range_minmax.h"
 #include <FL/Fl_Round_Button.H>
 
@@ -1023,7 +1024,7 @@ private:
   static void cb_Color(Fl_Light_Button*, void*);
 public:
   fltk_1000x100_histogram *fltkp_aa_histogram;
-  Fl_Box *box_aa_color_belt;
+  fltk_1000x10_color_belt *fltkp_aa_color_belt;
   fltk_aa_minmax *fltkp_aa_minmax;
   Fl_Value_Input *valinp_hab_histogram_aa_min;
 private:
