@@ -1934,8 +1934,8 @@ void gts_gui::cb_menite_limit_bb(Fl_Menu_* o, void* v) {
 }
 
 Fl_Menu_Item gts_gui::menu_3[] = {
- {"Limit Histogram", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"HSV All", 0,  (Fl_Callback*)gts_gui::cb_menite_limit_nothing, 0, 12, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Histogram Limit", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
+ {"No Limit", 0,  (Fl_Callback*)gts_gui::cb_menite_limit_nothing, 0, 12, FL_NORMAL_LABEL, 0, 14, 0},
  {"Hue", 0,  (Fl_Callback*)gts_gui::cb_menite_limit_hh, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
  {"Saturation", 0,  (Fl_Callback*)gts_gui::cb_menite_limit_aa, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
  {"Value(Brightness)", 0,  (Fl_Callback*)gts_gui::cb_menite_limit_bb, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},

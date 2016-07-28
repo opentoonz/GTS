@@ -1796,11 +1796,11 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         xywh {0 0 1000 25}
       } {
         Submenu {} {
-          label {Limit Histogram} open
+          label {Histogram Limit} open
           xywh {0 0 100 20}
         } {
           MenuItem menite_limit_nothing {
-            label {HSV All}
+            label {No Limit}
             callback {cl_gts_master.cb_color_trace_src_limit_nothing();}
             xywh {0 0 100 20} type Radio value 1
           }

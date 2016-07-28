@@ -82,9 +82,9 @@ void fltk_1000x100_histogram::draw()
 
 	/* 画面クリア */
 	fl_color(FL_BACKGROUND_COLOR);
-	//fl_color(FL_DARK1);
 	fl_rectf(x(),y(),w(),h());
 
+	/* ヒストグラム */
 	if (this->color_belt_image_ != nullptr &&
 	this->color_belt_image_->data() != nullptr &&
 	this->_l_size <=
@@ -96,7 +96,7 @@ void fltk_1000x100_histogram::draw()
 		);
 	 int depth = this->color_belt_image_->d();
 
-	 /* histogram */
+	 /* color histogram */
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
 		dd =	(double)(this->_lp1000[ii]) *
 			h() /				/* 0...h() */
@@ -121,10 +121,8 @@ void fltk_1000x100_histogram::draw()
 	 }
 	}
 	else {
-	 /* 描画色 */
+	 /* bw histogram */
 	 fl_color(FL_BLACK);
-
-	 /* histogram */
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
 		dd =	(double)(this->_lp1000[ii]) *
 			h() /				/* 0...h() */
@@ -143,10 +141,9 @@ void fltk_1000x100_histogram::draw()
 	 }
 	}
 
-	/* 文字色 */
+	/* 高さ幅でのピクセル表示数 */
 	fl_color(FL_DARK3);
-
-	sprintf( ca_buf, "%ld", this->_l_max_valuator );
+	sprintf( ca_buf, "%ld pixel high", this->_l_max_valuator );
 	fl_draw( ca_buf, x()+4,y()+16 );
 }
 
