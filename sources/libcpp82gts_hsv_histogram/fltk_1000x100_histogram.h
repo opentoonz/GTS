@@ -21,6 +21,9 @@ public:
 		,const int lr , const int lg , const int lb
 		, const int rr , const int rg , const int rb
 	);
+	bool is_color_left_right(void) {
+		return this->modified_gradation_sw_;
+	}
 private:
 	long _l_size;
 	long _l_max;

@@ -6522,7 +6522,7 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_hh_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_hh_histogram->when(FL_WHEN_RELEASE);
         } // fltk_1000x100_histogram* fltkp_hh_histogram
-        { box_hh_color_belt = new Fl_Box(0, 125, 1000, 10);
+        { box_hh_color_belt = new Fl_Box(0, 127, 1000, 10);
           box_hh_color_belt->image(image_color_belt1000x10hue);
         } // Fl_Box* box_hh_color_belt
         { fltkp_hh_cyclic = new fltk_hh_cyclic(0, 135, 1000, 50);
@@ -6575,7 +6575,7 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_aa_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_aa_histogram->when(FL_WHEN_RELEASE);
         } // fltk_1000x100_histogram* fltkp_aa_histogram
-        { fltkp_aa_color_belt = new fltk_1000x10_color_belt(0, 305, 1000, 10);
+        { fltkp_aa_color_belt = new fltk_1000x10_color_belt(0, 307, 1000, 10);
           fltkp_aa_color_belt->box(FL_NO_BOX);
           fltkp_aa_color_belt->color(FL_BACKGROUND_COLOR);
           fltkp_aa_color_belt->selection_color(FL_BACKGROUND_COLOR);
@@ -6636,7 +6636,7 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_bb_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_bb_histogram->when(FL_WHEN_RELEASE);
         } // fltk_1000x100_histogram* fltkp_bb_histogram
-        { box_bb_color_belt = new Fl_Box(0, 485, 1000, 10);
+        { box_bb_color_belt = new Fl_Box(0, 487, 1000, 10);
           box_bb_color_belt->image(image_color_belt1000x10val);
         } // Fl_Box* box_bb_color_belt
         { fltkp_bb_minmax = new fltk_bb_minmax(0, 495, 1000, 50);

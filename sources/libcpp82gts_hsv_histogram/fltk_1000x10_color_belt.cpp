@@ -24,7 +24,7 @@ void fltk_1000x10_color_belt::draw()
 	//fl_color(FL_BACKGROUND_COLOR);
 	//fl_rectf(x(),y(),w(),h());
 
-	/* グラディーションヒストグラム */
+	/* グラディーション表示 */
 	for (long ii = 0L; ii < this->w(); ++ii) {
 		fl_color(
 		static_cast<uchar>(
@@ -38,7 +38,7 @@ void fltk_1000x10_color_belt::draw()
 		)
 		);
 		fl_yxline(
-			this->x()+ii , this->y() , this->y() + this->h() - 1
+			this->x()+ ii , this->y() , this->y()+ this->h()- 1
 		);
 	}
 }

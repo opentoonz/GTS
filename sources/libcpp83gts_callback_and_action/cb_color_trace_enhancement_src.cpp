@@ -1,3 +1,5 @@
+#include <iostream>
+#include <cmath>
 #include <FL/Fl.H>
 #include <FL/Fl_Button.H>
 #include "ptbl_returncode.h"
@@ -703,6 +705,91 @@ void cb_color_trace_enhancement::cb_src_show_06( void )
 }
 
 //----------
+/* Saturationの色変化 GUIの値を見て再表示する */
+void cb_color_trace_enhancement::reset_saturation_belt_when_modify_hue_min_or_max(void)
+{
+	const E_COLOR_TRACE_HAB_COLORS num = this->src_get_e_color_range();
+	double h_min = 0.0;
+	double h_max = 0.0;
+	switch (num) {
+	case E_COLOR_TRACE_HAB_01:
+	h_min = cl_gts_gui.valinp_color_trace_01_src_hh_min->value();
+	h_max = cl_gts_gui.valinp_color_trace_01_src_hh_max->value();
+		break;
+	case E_COLOR_TRACE_HAB_02:
+	h_min = cl_gts_gui.valinp_color_trace_02_src_hh_min->value();
+	h_max = cl_gts_gui.valinp_color_trace_02_src_hh_max->value();
+		break;
+	case E_COLOR_TRACE_HAB_03:
+	h_min = cl_gts_gui.valinp_color_trace_03_src_hh_min->value();
+	h_max = cl_gts_gui.valinp_color_trace_03_src_hh_max->value();
+		break;
+	case E_COLOR_TRACE_HAB_04:
+	h_min = cl_gts_gui.valinp_color_trace_04_src_hh_min->value();
+	h_max = cl_gts_gui.valinp_color_trace_04_src_hh_max->value();
+		break;
+	case E_COLOR_TRACE_HAB_05:
+	h_min = cl_gts_gui.valinp_color_trace_05_src_hh_min->value();
+	h_max = cl_gts_gui.valinp_color_trace_05_src_hh_max->value();
+		break;
+	case E_COLOR_TRACE_HAB_06:
+	h_min = cl_gts_gui.valinp_color_trace_06_src_hh_min->value();
+	h_max = cl_gts_gui.valinp_color_trace_06_src_hh_max->value();
+ 		break;
+	}
+
+	const unsigned char *const* image_p =
+		reinterpret_cast<const unsigned char *const*>(
+			cl_gts_gui.box_hh_color_belt->image()->data()
+		);
+	int depth = cl_gts_gui.box_hh_color_belt->image()->d();
+	int width = cl_gts_gui.box_hh_color_belt->image()->w();
+
+	/* 0〜1の範囲をヒストグラム配列の範囲に変更 */
+	double h_middle = 0.0;
+	if (h_min <= h_max) {
+		h_middle =  (h_min + h_max) / 2.0;
+	}
+	else {
+		h_middle =  std::fmod(
+			((h_min + h_max + 360.0) / 2.0) , 360.0
+		);
+	}
+	const int i_pos = static_cast<int>(
+		(width + 0.999999) * h_middle / 360.0
+	);
+
+	unsigned char rr = image_p[0][i_pos*depth+0];
+	unsigned char gg = image_p[0][i_pos*depth+1];
+	unsigned char bb = image_p[0][i_pos*depth+2];
+
+std::cout << __FILE__ << __LINE__
+<< " min=" << h_min
+<< " max=" << h_max
+<< " middle=" << (h_min + h_max) / 2.0 / 360.0
+<< " rr=" << (int)rr
+<< " gg=" << (int)gg
+<< " bb=" << (int)bb
+<< std::endl;
+
+	cl_gts_gui.fltkp_aa_color_belt->set_right_color(rr,gg,bb);
+	//cl_gts_gui.window_hab_histogram->redraw();
+	cl_gts_gui.fltkp_aa_color_belt->redraw();
+
+	if (cl_gts_gui.fltkp_aa_histogram->is_color_left_right()) {
+		cl_gts_gui.fltkp_aa_histogram->set_color_left_right(
+		 	true
+			,cl_gts_gui.fltkp_aa_color_belt->get_left_r()
+			,cl_gts_gui.fltkp_aa_color_belt->get_left_g()
+			,cl_gts_gui.fltkp_aa_color_belt->get_left_b()
+			,cl_gts_gui.fltkp_aa_color_belt->get_right_r()
+			,cl_gts_gui.fltkp_aa_color_belt->get_right_g()
+			,cl_gts_gui.fltkp_aa_color_belt->get_right_b()
+		);
+		cl_gts_gui.fltkp_aa_histogram->redraw();
+	}
+}
+
 namespace {
 void cb_src_hh_min_(
 	E_COLOR_TRACE_HAB_COLORS num
@@ -753,10 +840,14 @@ void cb_src_hh_min_(
  cl_gts_gui.valinp_color_trace_06_src_hh_min->value(val);
  		break;
 	}
+
 	cl_gts_master.cb_color_trace_src_edit_value();
 	if (num ==
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
 		cl_gts_gui.valinp_hab_histogram_hh_min->value(val);
+
+		/* Saturationの色変化 */
+	 cl_gts_master.cl_color_trace_enhancement.reset_saturation_belt_when_modify_hue_min_or_max();
 	}
 }
 void cb_src_hh_max_(
@@ -812,6 +903,9 @@ void cb_src_hh_max_(
 	if (num ==
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()) {
 		cl_gts_gui.valinp_hab_histogram_hh_max->value(val);
+
+		/* Saturationの色変化 */
+	 cl_gts_master.cl_color_trace_enhancement.reset_saturation_belt_when_modify_hue_min_or_max();
 	}
 }
 

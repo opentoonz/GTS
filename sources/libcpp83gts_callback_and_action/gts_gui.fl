@@ -1789,7 +1789,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
     }
     Fl_Window window_hab_histogram {
       label {Edit HSV-MinMax}
-      callback {cl_gts_gui.window_hab_histogram->hide();} open
+      callback {cl_gts_gui.window_hab_histogram->hide();}
       xywh {50 50 1000 565} type Double non_modal visible
     } {
       Fl_Menu_Bar {} {open
@@ -1833,7 +1833,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             class fltk_1000x100_histogram
           }
           Fl_Box box_hh_color_belt {
-            image {color_belt1000x10hue.png} xywh {0 125 1000 10}
+            image {color_belt1000x10hue.png} xywh {0 127 1000 10}
           }
           Fl_Box fltkp_hh_cyclic {
             xywh {0 135 1000 50}
@@ -1885,7 +1885,7 @@ fltkp_hh_histogram->redraw();}
             class fltk_1000x100_histogram
           }
           Fl_Box fltkp_aa_color_belt {
-            xywh {0 305 1000 10}
+            xywh {0 307 1000 10}
             code0 {\#include "fltk_1000x10_color_belt.h"}
             class fltk_1000x10_color_belt
           }
@@ -1937,7 +1937,7 @@ else {
 	,fltkp_aa_color_belt->get_right_b()
  );
 }
-fltkp_aa_histogram->redraw();} selected
+fltkp_aa_histogram->redraw();}
               xywh {305 365 60 20}
             }
           }
@@ -1947,7 +1947,7 @@ fltkp_aa_histogram->redraw();} selected
             class fltk_1000x100_histogram
           }
           Fl_Box box_bb_color_belt {
-            image {color_belt1000x10val.png} xywh {0 485 1000 10}
+            image {color_belt1000x10val.png} xywh {0 487 1000 10}
           }
           Fl_Box fltkp_bb_minmax {
             xywh {0 495 1000 50}
