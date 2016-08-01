@@ -116,12 +116,13 @@ void fltk_1000x100_histogram::draw()
 
 	 /* color histogram */
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
-		dd =	(double)(this->_lp1000[ii]) *
-			h() /				/* 0...h() */
-			this->_l_max_valuator +
-			0.999999;
-		if ((h()-1) < dd) { ll = h()-1; }
-		else		  { ll = (long)dd; }
+	 	if (this->_lp1000[ii] <= 0) {
+			continue;
+		}
+		dd = static_cast<double>(h())
+			* this->_lp1000[ii] / this->_l_max_valuator;
+		if (h() <= dd)	{ ll = h() - 1; }
+		else		{ ll = static_cast<long>(dd); }
 
 		fl_color(
 			image_p[0][ii*depth+0]
@@ -130,9 +131,9 @@ void fltk_1000x100_histogram::draw()
 		);
 
 		fl_yxline(
-			x() + ii,
-			y() + h() - 1,
-			y() + h() - 1 - ll
+			x() + ii
+			, y() + h() - 1
+			, y() + h() - 1 - ll
 		);
 	 }
 	}
@@ -140,15 +141,14 @@ void fltk_1000x100_histogram::draw()
 	else if (this->modified_gradation_sw_) {
 	 /* bw histogram */
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
-		dd =	(double)(this->_lp1000[ii]) *
-			h() /				/* 0...h() */
-			this->_l_max_valuator +
-			0.999999;
-		if ((h()-1) < dd) {
-			ll = h()-1;
-		} else {
-			ll = (long)dd;
+	 	if (this->_lp1000[ii] <= 0) {
+			continue;
 		}
+		dd = static_cast<double>(h())
+			* this->_lp1000[ii] / this->_l_max_valuator;
+		if (h() <= dd)	{ ll = h() - 1; }
+		else		{ ll = static_cast<long>(dd); }
+
 		fl_color(
 		static_cast<uchar>(
 this->left_r_ + ( this->right_r_- this->left_r_ ) * ii / (this->_l_size- 1)
@@ -161,9 +161,9 @@ this->left_b_ + ( this->right_b_- this->left_b_ ) * ii / (this->_l_size- 1)
 		)
 		);
 		fl_yxline(
-			x()+ii,
-			y() + h()-1,
-			y() + h()-1 - ll
+			x() + ii
+			, y() + h() - 1
+			, y() + h() - 1 - ll
 		);
 	 }
 	}
@@ -172,19 +172,18 @@ this->left_b_ + ( this->right_b_- this->left_b_ ) * ii / (this->_l_size- 1)
 	 /* bw histogram */
 	 fl_color(FL_BLACK);
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
-		dd =	(double)(this->_lp1000[ii]) *
-			h() /				/* 0...h() */
-			this->_l_max_valuator +
-			0.999999;
-		if ((h()-1) < dd) {
-			ll = h()-1;
-		} else {
-			ll = (long)dd;
+	 	if (this->_lp1000[ii] <= 0) {
+			continue;
 		}
+		dd = static_cast<double>(h())
+			* this->_lp1000[ii] / this->_l_max_valuator;
+		if (h() <= dd)	{ ll = h() - 1; }
+		else		{ ll = static_cast<long>(dd); }
+
 		fl_yxline(
-			x()+ii,
-			y() + h()-1,
-			y() + h()-1 - ll
+			x() + ii
+			, y() + h() - 1
+			, y() + h() - 1 - ll
 		);
 	 }
 	}

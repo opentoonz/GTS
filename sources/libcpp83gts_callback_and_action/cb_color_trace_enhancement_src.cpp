@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cmath>
 #include <FL/Fl.H>
 #include <FL/Fl_Button.H>
@@ -763,18 +762,18 @@ void cb_color_trace_enhancement::reset_saturation_belt_when_modify_hue_min_or_ma
 	unsigned char gg = image_p[0][i_pos*depth+1];
 	unsigned char bb = image_p[0][i_pos*depth+2];
 
-std::cout << __FILE__ << __LINE__
-<< " min=" << h_min
-<< " max=" << h_max
-<< " middle=" << (h_min + h_max) / 2.0 / 360.0
-<< " rr=" << (int)rr
-<< " gg=" << (int)gg
-<< " bb=" << (int)bb
-<< std::endl;
-
 	cl_gts_gui.fltkp_aa_color_belt->set_right_color(rr,gg,bb);
+
 	//cl_gts_gui.window_hab_histogram->redraw();
 	cl_gts_gui.fltkp_aa_color_belt->redraw();
+/*
+Bug	2016-08-01
+	画像を表示せず、histogramを非表示の場合、
+	cl_gts_gui.fltkp_aa_color_belt->redraw();で、
+	fltk_1000x10_color_belt::draw();を実行するはずが実行しない。
+	cl_gts_gui.window_hab_histogram->redraw();に替えても同じ。
+	原因不明。重要性低く今のところ保留
+*/
 
 	if (cl_gts_gui.fltkp_aa_histogram->is_color_left_right()) {
 		cl_gts_gui.fltkp_aa_histogram->set_color_left_right(

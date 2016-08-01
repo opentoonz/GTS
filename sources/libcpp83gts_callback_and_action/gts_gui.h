@@ -23,7 +23,6 @@
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Value_Output.H>
-#include <FL/Fl_Pack.H>
 #include "fltk_1000x100_histogram.h"
 #include "fltk_1000_range_cyclic.h"
 #include "fltk_1000x10_color_belt.h"

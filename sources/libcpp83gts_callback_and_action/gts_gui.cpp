@@ -5061,6 +5061,7 @@ Fl_Double_Window* gts_gui::make_window() {
       scrbar_view_y->box(FL_BORDER_BOX);
       scrbar_view_y->callback((Fl_Callback*)cb_scrbar_view_y);
     } // Fl_Scrollbar* scrbar_view_y
+    window_opengl->set_non_modal();
     window_opengl->end();
   } // Fl_Double_Window* window_opengl
   { window_config_load = new Fl_Double_Window(300, 390, "Load Config");
@@ -5179,7 +5180,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     window_config_save_as->set_non_modal();
-    window_config_save_as->size_range(200, 130);
+    window_config_save_as->size_range(200, 125);
     window_config_save_as->end();
   } // Fl_Double_Window* window_config_save_as
   { window_level = new Fl_Double_Window(380, 600, "Browse Level");
@@ -5363,6 +5364,7 @@ Fl_Double_Window* gts_gui::make_window() {
     { scroll_level_x1view = new Fl_Scroll(0, 0, 300, 300);
       scroll_level_x1view->align(Fl_Align(FL_ALIGN_CENTER));
       { box_level_x1view = new Fl_Box(0, 0, 300, 300);
+        Fl_Group::current()->resizable(box_level_x1view);
       } // Fl_Box* box_level_x1view
       scroll_level_x1view->end();
       Fl_Group::current()->resizable(scroll_level_x1view);
@@ -6509,8 +6511,8 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 1000, 25);
       o->menu(menu_3);
     } // Fl_Menu_Bar* o
-    { Fl_Scroll* o = new Fl_Scroll(0, 25, 1000, 542);
-      { Fl_Pack* o = new Fl_Pack(0, 25, 1000, 542);
+    { Fl_Scroll* o = new Fl_Scroll(0, 25, 1000, 540);
+      { Fl_Group* o = new Fl_Group(0, 25, 1000, 180);
         { fltkp_hh_histogram = new fltk_1000x100_histogram(0, 25, 1000, 100);
           fltkp_hh_histogram->box(FL_NO_BOX);
           fltkp_hh_histogram->color(FL_BACKGROUND_COLOR);
@@ -6522,7 +6524,7 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_hh_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_hh_histogram->when(FL_WHEN_RELEASE);
         } // fltk_1000x100_histogram* fltkp_hh_histogram
-        { box_hh_color_belt = new Fl_Box(0, 127, 1000, 10);
+        { box_hh_color_belt = new Fl_Box(0, 126, 1000, 10);
           box_hh_color_belt->image(image_color_belt1000x10hue);
         } // Fl_Box* box_hh_color_belt
         { fltkp_hh_cyclic = new fltk_hh_cyclic(0, 135, 1000, 50);
@@ -6564,6 +6566,9 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Light_Button* o
           o->end();
         } // Fl_Group* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Group* o = new Fl_Group(0, 205, 1000, 180);
         { fltkp_aa_histogram = new fltk_1000x100_histogram(0, 205, 1000, 100);
           fltkp_aa_histogram->box(FL_NO_BOX);
           fltkp_aa_histogram->color(FL_BACKGROUND_COLOR);
@@ -6575,7 +6580,7 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_aa_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_aa_histogram->when(FL_WHEN_RELEASE);
         } // fltk_1000x100_histogram* fltkp_aa_histogram
-        { fltkp_aa_color_belt = new fltk_1000x10_color_belt(0, 307, 1000, 10);
+        { fltkp_aa_color_belt = new fltk_1000x10_color_belt(0, 306, 1000, 10);
           fltkp_aa_color_belt->box(FL_NO_BOX);
           fltkp_aa_color_belt->color(FL_BACKGROUND_COLOR);
           fltkp_aa_color_belt->selection_color(FL_BACKGROUND_COLOR);
@@ -6625,6 +6630,9 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Light_Button* o
           o->end();
         } // Fl_Group* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Group* o = new Fl_Group(0, 385, 1000, 180);
         { fltkp_bb_histogram = new fltk_1000x100_histogram(0, 385, 1000, 100);
           fltkp_bb_histogram->box(FL_NO_BOX);
           fltkp_bb_histogram->color(FL_BACKGROUND_COLOR);
@@ -6636,7 +6644,7 @@ Fl_Double_Window* gts_gui::make_window() {
           fltkp_bb_histogram->align(Fl_Align(FL_ALIGN_CENTER));
           fltkp_bb_histogram->when(FL_WHEN_RELEASE);
         } // fltk_1000x100_histogram* fltkp_bb_histogram
-        { box_bb_color_belt = new Fl_Box(0, 487, 1000, 10);
+        { box_bb_color_belt = new Fl_Box(0, 486, 1000, 10);
           box_bb_color_belt->image(image_color_belt1000x10val);
         } // Fl_Box* box_bb_color_belt
         { fltkp_bb_minmax = new fltk_bb_minmax(0, 495, 1000, 50);
@@ -6679,7 +6687,7 @@ Fl_Double_Window* gts_gui::make_window() {
           o->end();
         } // Fl_Group* o
         o->end();
-      } // Fl_Pack* o
+      } // Fl_Group* o
       o->end();
     } // Fl_Scroll* o
     window_hab_histogram->set_non_modal();

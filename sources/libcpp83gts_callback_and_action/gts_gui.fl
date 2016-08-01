@@ -20,7 +20,7 @@ class gts_gui {open
     Fl_Window window_opengl {
       label GTS
       callback {cl_gts_master.cb_quit();}
-      xywh {-32000 -32000 720 565} type Double hide resizable
+      xywh {50 50 720 565} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 720 25}
@@ -295,7 +295,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_config_load {
       label {Load Config}
       callback {cl_gts_master.cl_bro_config.cb_load_cancel();}
-      xywh {-32000 -32000 300 390} type Double hide resizable non_modal size_range {200 125 0 0}
+      xywh {50 50 300 390} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_config.cb_load_dir_up();}
@@ -357,7 +357,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_config_save_as {
       label {Save As Config}
       callback {cl_gts_master.cl_bro_config.cb_save_as_cancel();}
-      xywh {-32000 -32000 300 390} type Double hide resizable non_modal size_range {200 130 0 0}
+      xywh {50 50 300 390} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_config.cb_save_as_dir_up();}
@@ -420,7 +420,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_level {
       label {Browse Level}
       callback {cl_gts_master.cl_bro_level.cb_cancel();}
-      xywh {-32000 -32000 380 600} type Double hide resizable non_modal size_range {370 300 0 0}
+      xywh {50 50 380 600} type Double resizable non_modal size_range {370 300 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -648,20 +648,20 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
     Fl_Window window_x1view {
       label x1
       callback {cl_gts_master.cl_bro_level.cb_x1view_cancel();}
-      xywh {-32000 -32000 300 300} type Double align 0 hide resizable non_modal
+      xywh {50 50 300 300} type Double align 0 resizable non_modal visible
     } {
       Fl_Scroll scroll_level_x1view {open
         xywh {0 0 300 300} align 0 resizable
       } {
         Fl_Box box_level_x1view {
-          xywh {0 0 300 300}
+          xywh {0 0 300 300} resizable
         }
       }
     }
     Fl_Window window_trace_batch {
       label {Color Trace Batch}
       callback {cl_gts_master.cl_bro_trace_batch.cb_cancel();}
-      xywh {-32000 -32000 300 415} type Double hide resizable non_modal size_range {200 125 0 0}
+      xywh {50 50 300 415} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_trace_batch.cb_dir_up();}
@@ -757,7 +757,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();) {
       label {Area and Rot90}
       callback {cl_gts_gui.window_crop_area_and_rot90->hide();
 cl_gts_gui.menite_crop_area_and_rot90->clear();}
-      xywh {-32000 -32000 200 265} type Double hide non_modal
+      xywh {50 50 200 265} type Double non_modal visible
     } {
       Fl_Button {} {
         label Crop
@@ -932,7 +932,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
       label {Pixel Type and Bright}
       callback {cl_gts_gui.window_pixel_type_and_bright->hide();
 cl_gts_gui.menite_pixel_type_and_bright->clear();}
-      xywh {-32000 -32000 265 190} type Double hide resizable non_modal size_range {200 190 1000 190}
+      xywh {50 50 265 190} type Double resizable non_modal size_range {200 190 1000 190} visible
     } {
       Fl_Group {} {open
         xywh {0 5 265 25}
@@ -1089,7 +1089,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
 cl_gts_gui.menite_fnum_list->clear();}
-      xywh {-32000 -32000 80 350} type Double hide resizable non_modal
+      xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 80 25}
@@ -1135,7 +1135,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_color_trace->clear();}
-      xywh {-32000 -32000 285 815} type Double hide non_modal
+      xywh {50 50 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
         xywh {5 5 280 120}
@@ -1822,10 +1822,10 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         }
       }
       Fl_Scroll {} {open
-        xywh {0 25 1000 542}
+        xywh {0 25 1000 540}
       } {
-        Fl_Pack {} {open
-          xywh {0 25 1000 542}
+        Fl_Group {} {open
+          xywh {0 25 1000 180}
         } {
           Fl_Box fltkp_hh_histogram {
             xywh {0 25 1000 100}
@@ -1833,7 +1833,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             class fltk_1000x100_histogram
           }
           Fl_Box box_hh_color_belt {
-            image {color_belt1000x10hue.png} xywh {0 127 1000 10}
+            image {color_belt1000x10hue.png} xywh {0 126 1000 10}
           }
           Fl_Box fltkp_hh_cyclic {
             xywh {0 135 1000 50}
@@ -1879,13 +1879,17 @@ fltkp_hh_histogram->redraw();}
               xywh {305 185 60 20}
             }
           }
+        }
+        Fl_Group {} {open
+          xywh {0 205 1000 180}
+        } {
           Fl_Box fltkp_aa_histogram {
             xywh {0 205 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
           Fl_Box fltkp_aa_color_belt {
-            xywh {0 307 1000 10}
+            xywh {0 306 1000 10}
             code0 {\#include "fltk_1000x10_color_belt.h"}
             class fltk_1000x10_color_belt
           }
@@ -1941,13 +1945,17 @@ fltkp_aa_histogram->redraw();}
               xywh {305 365 60 20}
             }
           }
+        }
+        Fl_Group {} {open
+          xywh {0 385 1000 180}
+        } {
           Fl_Box fltkp_bb_histogram {
             xywh {0 385 1000 100}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
           Fl_Box box_bb_color_belt {
-            image {color_belt1000x10val.png} xywh {0 487 1000 10}
+            image {color_belt1000x10val.png} xywh {0 486 1000 10}
           }
           Fl_Box fltkp_bb_minmax {
             xywh {0 495 1000 50}
@@ -1999,7 +2007,7 @@ fltkp_bb_histogram->redraw();}
     Fl_Window window_edit_color {
       label {Edit Color}
       callback {cl_gts_gui.window_edit_color->hide();}
-      xywh {-32000 -32000 385 100} type Double hide resizable non_modal size_range {200 100 1000 100}
+      xywh {50 50 385 100} type Double resizable non_modal size_range {200 100 1000 100} visible
     } {
       Fl_Group {} {open
         xywh {0 10 385 20}
@@ -2064,7 +2072,7 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
     }
     Fl_Window window_next_scan {
       label {Next Scan}
-      xywh {-32000 -32000 545 100} type Double hide modal
+      xywh {50 50 545 100} type Double modal visible
     } {
       Fl_Button button_rescan {
         label Rescan
@@ -2097,7 +2105,7 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_thickness->clear();}
-      xywh {-32000 -32000 330 225} type Double hide resizable non_modal size_range {200 225 1000 225}
+      xywh {50 50 330 225} type Double resizable non_modal size_range {200 225 1000 225} visible
     } {
       Fl_Group {} {open
         xywh {0 15 330 20}
