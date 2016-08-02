@@ -15,6 +15,9 @@ fltk_1000x100_histogram::fltk_1000x100_histogram(int x,int y,int w,int h,const c
 	,_l_max_drag_start(-1000L)
 	,_lp1000(nullptr)
 	,color_belt_image_(nullptr)
+	,modified_gradation_sw_(false)
+	,left_r_ (0) ,left_g_(0)  ,left_b_(0)
+	,right_r_(0) ,right_g_(0) ,right_b_(0)
 {
 }
 
@@ -73,6 +76,21 @@ void fltk_1000x100_histogram::set_color_belt_image(const Fl_Image* image)
 	this->color_belt_image_ = image;
 }
 
+void fltk_1000x100_histogram::set_color_left_right(
+	const bool sw
+	,const int lr , const int lg , const int lb
+	, const int rr , const int rg , const int rb
+)
+{
+	this->modified_gradation_sw_ = sw;
+	this->left_r_ = lr;
+	this->left_g_ = lg;
+	this->left_b_ = lb;
+	this->right_r_ = rr;
+	this->right_g_ = rg;
+	this->right_b_ = rb;
+}
+
 void fltk_1000x100_histogram::draw()
 {
 	double	dd;
@@ -84,7 +102,7 @@ void fltk_1000x100_histogram::draw()
 	fl_color(FL_BACKGROUND_COLOR);
 	fl_rectf(x(),y(),w(),h());
 
-	/* ヒストグラム */
+	/* カラーヒストグラム */
 	if (this->color_belt_image_ != nullptr &&
 	this->color_belt_image_->data() != nullptr &&
 	this->_l_size <=
@@ -98,45 +116,74 @@ void fltk_1000x100_histogram::draw()
 
 	 /* color histogram */
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
-		dd =	(double)(this->_lp1000[ii]) *
-			h() /				/* 0...h() */
-			this->_l_max_valuator +
-			0.999999;
-		if ((h()-1) < dd) {
-			ll = h()-1;
-		} else {
-			ll = (long)dd;
+	 	if (this->_lp1000[ii] <= 0) {
+			continue;
 		}
+		dd = static_cast<double>(h())
+			* this->_lp1000[ii] / this->_l_max_valuator;
+		if (h() <= dd)	{ ll = h() - 1; }
+		else		{ ll = static_cast<long>(dd); }
 
-		Fl_Color rr= static_cast<Fl_Color>(image_p[0][ii*depth+0]);
-		Fl_Color gg= static_cast<Fl_Color>(image_p[0][ii*depth+1]);
-		Fl_Color bb= static_cast<Fl_Color>(image_p[0][ii*depth+2]);
-		fl_color( (rr<<24) | (gg<<16) | (bb<<8) );
+		fl_color(
+			image_p[0][ii*depth+0]
+			,image_p[0][ii*depth+1]
+			,image_p[0][ii*depth+2]
+		);
 
 		fl_yxline(
-			x()+ii,
-			y() + h()-1,
-			y() + h()-1 - ll
+			x() + ii
+			, y() + h() - 1
+			, y() + h() - 1 - ll
 		);
 	 }
 	}
+	/* Left-Right Gradationヒストグラム */
+	else if (this->modified_gradation_sw_) {
+	 /* bw histogram */
+	 for (ii = 0L; ii < this->_l_size; ++ii) {
+	 	if (this->_lp1000[ii] <= 0) {
+			continue;
+		}
+		dd = static_cast<double>(h())
+			* this->_lp1000[ii] / this->_l_max_valuator;
+		if (h() <= dd)	{ ll = h() - 1; }
+		else		{ ll = static_cast<long>(dd); }
+
+		fl_color(
+		static_cast<uchar>(
+this->left_r_ + ( this->right_r_- this->left_r_ ) * ii / (this->_l_size- 1)
+		)
+		,static_cast<uchar>(
+this->left_g_ + ( this->right_g_- this->left_g_ ) * ii / (this->_l_size- 1)
+		)
+		,static_cast<uchar>(
+this->left_b_ + ( this->right_b_- this->left_b_ ) * ii / (this->_l_size- 1)
+		)
+		);
+		fl_yxline(
+			x() + ii
+			, y() + h() - 1
+			, y() + h() - 1 - ll
+		);
+	 }
+	}
+	/* B/Wヒストグラム */
 	else {
 	 /* bw histogram */
 	 fl_color(FL_BLACK);
 	 for (ii = 0L; ii < this->_l_size; ++ii) {
-		dd =	(double)(this->_lp1000[ii]) *
-			h() /				/* 0...h() */
-			this->_l_max_valuator +
-			0.999999;
-		if ((h()-1) < dd) {
-			ll = h()-1;
-		} else {
-			ll = (long)dd;
+	 	if (this->_lp1000[ii] <= 0) {
+			continue;
 		}
+		dd = static_cast<double>(h())
+			* this->_lp1000[ii] / this->_l_max_valuator;
+		if (h() <= dd)	{ ll = h() - 1; }
+		else		{ ll = static_cast<long>(dd); }
+
 		fl_yxline(
-			x()+ii,
-			y() + h()-1,
-			y() + h()-1 - ll
+			x() + ii
+			, y() + h() - 1
+			, y() + h() - 1 - ll
 		);
 	 }
 	}

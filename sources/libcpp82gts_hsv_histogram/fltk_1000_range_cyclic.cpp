@@ -250,6 +250,9 @@ void fltk_1000_range_cyclic::draw()
 
 	/* mark */
 	this->_draw_all_mark();
+
+	/* Saturationの色変化 GUIの値を見て再表示する */
+	cl_gts_master.cl_color_trace_enhancement.reset_saturation_belt_when_modify_hue_min_or_max();
 }
 
 /*--------------------------------------------------------*/

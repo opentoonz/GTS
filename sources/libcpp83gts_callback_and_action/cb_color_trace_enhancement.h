@@ -210,6 +210,10 @@ public:
 	/* edit color windowを設定して表示する */
 	void tgt_open_edit_color(E_COLOR_TRACE_HAB_COLORS trace_list_pos);
 
+	/* Hueのmin or maxの変化に合わせて、
+	SaturationのColor Belt右色を変えて、Gradationを変化させ、
+	ヒストグラム色も合わせて変化する */
+	void reset_saturation_belt_when_modify_hue_min_or_max(void);
 private:
 	int _src_get_p_hh_valinp( E_COLOR_TRACE_HAB_COLORS trace_list_pos,
 		Fl_Value_Input **pp_min, Fl_Value_Input **pp_max );

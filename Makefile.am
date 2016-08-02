@@ -192,6 +192,7 @@ libgts_la_SOURCES = \
 					sources/libcpp82gts_hsv_histogram/fltk_1000_range_cyclic.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000_range_minmax.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000x100_histogram.cpp \
+					sources/libcpp82gts_hsv_histogram/fltk_1000x10_color_belt.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
