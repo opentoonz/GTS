@@ -4,6 +4,8 @@
 #include <FL/fl_draw.H>
 #include "fltk_1000x100_histogram.h"
 
+#define HISTOGRAM_MINIMUM_COUNT 10
+
 fltk_1000x100_histogram::fltk_1000x100_histogram(int x,int y,int w,int h,const char *l) : Fl_Box(x,y,w,h,l)
 {
 	this->_l_size = 0L;
@@ -38,7 +40,12 @@ void fltk_1000x100_histogram::set_l_max_from_histogram( void )
 			l_max = this->_lp1000[ii];
 		}
 	}
-	this->_l_max_valuator = this->_l_max = l_max;
+	if (l_max < HISTOGRAM_MINIMUM_COUNT) {
+		this->_l_max_valuator= HISTOGRAM_MINIMUM_COUNT;
+	}
+	else {
+		this->_l_max_valuator = this->_l_max = l_max;
+	}
 }
 void fltk_1000x100_histogram::set_l_average_from_histogram( void )
 {
@@ -52,8 +59,13 @@ void fltk_1000x100_histogram::set_l_average_from_histogram( void )
 		d_max += this->_lp1000[ii];
 	}
 
-	this->_l_max_valuator = this->_l_max =
-				(long)(d_max/this->_l_size);
+	long	l_max = (long)(d_max/this->_l_size);
+	if (l_max < HISTOGRAM_MINIMUM_COUNT) {
+		this->_l_max_valuator= HISTOGRAM_MINIMUM_COUNT;
+	}
+	else {
+		this->_l_max_valuator = this->_l_max = l_max;
+	}
 }
 
 void fltk_1000x100_histogram::draw()
@@ -113,8 +125,8 @@ int fltk_1000x100_histogram::handle(int event)
 					this->_l_max_drag_start) / h() ;
 		 
 			/* limit */
-			if (this->_l_max_valuator < 10) {
-				this->_l_max_valuator = 10;
+			if (this->_l_max_valuator<HISTOGRAM_MINIMUM_COUNT) {
+			 this->_l_max_valuator = HISTOGRAM_MINIMUM_COUNT;
 			}
 			else if ((LONG_MAX/h())<this->_l_max_valuator) {
 				this->_l_max_valuator = LONG_MAX/h();

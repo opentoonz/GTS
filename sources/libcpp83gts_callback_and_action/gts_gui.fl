@@ -1088,7 +1088,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();} selected
+cl_gts_gui.menite_fnum_list->clear();}
       xywh {50 50 80 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {
@@ -1789,14 +1789,14 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
     }
     Fl_Window window_hab_histogram {
       label {Edit HSV-MinMax}
-      callback {cl_gts_gui.window_hab_histogram->hide();}
+      callback {cl_gts_gui.window_hab_histogram->hide();} open
       xywh {50 50 1000 565} type Double non_modal visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 1000 25}
       } {
         Submenu {} {
-          label Limit open
+          label {Limit Histogram} open
           xywh {0 0 100 20}
         } {
           MenuItem menite_limit_nothing {
@@ -1822,10 +1822,10 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         }
       }
       Fl_Scroll {} {open
-        xywh {0 25 1000 540}
+        xywh {0 25 1000 542}
       } {
         Fl_Pack {} {open
-          xywh {0 25 1000 540}
+          xywh {0 25 1000 542}
         } {
           Fl_Box fltkp_hh_histogram {
             xywh {0 25 1000 100}
@@ -1841,19 +1841,31 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             class fltk_hh_cyclic
           }
           Fl_Group {} {open
-            xywh {0 185 1000 20}
+            xywh {0 185 1000 20} box UP_BOX
           } {
             Fl_Value_Input valinp_hab_histogram_hh_min {
               callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_min(
 	o->value()
 );}
-              xywh {0 185 40 20} box BORDER_BOX align 8 maximum 360
+              xywh {5 185 40 20} box BORDER_BOX align 8 maximum 360
             }
             Fl_Value_Input valinp_hab_histogram_hh_max {
               callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_max(
 	o->value()
 );}
-              xywh {960 185 40 20} box BORDER_BOX align 8 maximum 360
+              xywh {955 185 40 20} box BORDER_BOX align 8 maximum 360
+            }
+            Fl_Button {} {
+              label {Adjust Histogram Max}
+              callback {fltkp_hh_histogram->set_l_max_from_histogram();
+fltkp_hh_histogram->redraw();}
+              xywh {50 185 170 20}
+            }
+            Fl_Button {} {
+              label {Adjust Histogram Average}
+              callback {fltkp_hh_histogram->set_l_average_from_histogram();
+fltkp_hh_histogram->redraw();} selected
+              xywh {225 185 170 20}
             }
           }
           Fl_Box fltkp_aa_histogram {
@@ -1870,19 +1882,31 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             class fltk_aa_minmax
           }
           Fl_Group {} {open
-            xywh {0 365 1000 20}
+            xywh {0 365 1000 20} box UP_BOX
           } {
             Fl_Value_Input valinp_hab_histogram_aa_min {
               callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_min(
 	o->value()
 );}
-              xywh {0 365 40 20} box BORDER_BOX align 8 maximum 100
+              xywh {5 365 40 20} box BORDER_BOX align 8 maximum 100
             }
             Fl_Value_Input valinp_hab_histogram_aa_max {
               callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_max(
 	o->value()
 );}
-              xywh {960 365 40 20} box BORDER_BOX align 8 maximum 100
+              xywh {955 365 40 20} box BORDER_BOX align 8 maximum 100
+            }
+            Fl_Button {} {
+              label {Adjust Histogram Max}
+              callback {fltkp_aa_histogram->set_l_max_from_histogram();
+fltkp_aa_histogram->redraw();}
+              xywh {50 365 170 20}
+            }
+            Fl_Button {} {
+              label {Adjust Histogram Average}
+              callback {fltkp_aa_histogram->set_l_average_from_histogram();
+fltkp_aa_histogram->redraw();}
+              xywh {225 365 170 20}
             }
           }
           Fl_Box fltkp_bb_histogram {
@@ -1899,19 +1923,31 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             class fltk_bb_minmax
           }
           Fl_Group {} {open
-            xywh {0 545 1000 20}
+            xywh {0 545 1000 20} box UP_BOX
           } {
             Fl_Value_Input valinp_hab_histogram_bb_min {
               callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_min(
 	o->value()
 );}
-              xywh {0 545 40 20} box BORDER_BOX align 8 maximum 100
+              xywh {5 545 40 20} box BORDER_BOX align 8 maximum 100
             }
             Fl_Value_Input valinp_hab_histogram_bb_max {
               callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_max(
 	o->value()
 );}
-              xywh {960 545 40 20} box BORDER_BOX align 8 maximum 100
+              xywh {955 545 40 20} box BORDER_BOX align 8 maximum 100
+            }
+            Fl_Button {} {
+              label {Adjust Histogram Max}
+              callback {fltkp_bb_histogram->set_l_max_from_histogram();
+fltkp_bb_histogram->redraw();}
+              xywh {50 545 170 20}
+            }
+            Fl_Button {} {
+              label {Adjust Histogram Average}
+              callback {fltkp_bb_histogram->set_l_average_from_histogram();
+fltkp_bb_histogram->redraw();}
+              xywh {225 545 170 20}
             }
           }
         }
