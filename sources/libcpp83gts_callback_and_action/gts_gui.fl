@@ -1789,18 +1789,18 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
     }
     Fl_Window window_hab_histogram {
       label {Edit HSV-MinMax}
-      callback {cl_gts_gui.window_hab_histogram->hide();} open
+      callback {cl_gts_gui.window_hab_histogram->hide();}
       xywh {50 50 1000 565} type Double non_modal visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 1000 25}
       } {
         Submenu {} {
-          label {Limit Histogram} open
+          label {Histogram Limit} open
           xywh {0 0 100 20}
         } {
           MenuItem menite_limit_nothing {
-            label {HSV All}
+            label {No Limit}
             callback {cl_gts_master.cb_color_trace_src_limit_nothing();}
             xywh {0 0 100 20} type Radio value 1
           }
@@ -1832,7 +1832,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box {} {
+          Fl_Box box_hh_color_belt {
             image {color_belt1000x10hue.png} xywh {0 125 1000 10}
           }
           Fl_Box fltkp_hh_cyclic {
@@ -1844,28 +1844,39 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
             xywh {0 185 1000 20} box UP_BOX
           } {
             Fl_Value_Input valinp_hab_histogram_hh_min {
-              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_min(
-	o->value()
-);}
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_min(o->value());}
               xywh {5 185 40 20} box BORDER_BOX align 8 maximum 360
             }
             Fl_Value_Input valinp_hab_histogram_hh_max {
-              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_max(
-	o->value()
-);}
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_hh_max(o->value());}
               xywh {955 185 40 20} box BORDER_BOX align 8 maximum 360
             }
-            Fl_Button {} {
-              label {Adjust Histogram Max}
-              callback {fltkp_hh_histogram->set_l_max_from_histogram();
-fltkp_hh_histogram->redraw();}
-              xywh {50 185 170 20}
+            Fl_Text_Display {} {
+              label {Histogram View}
+              xywh {90 185 0 0} align 6
             }
             Fl_Button {} {
-              label {Adjust Histogram Average}
+              label Max
+              callback {fltkp_hh_histogram->set_l_max_from_histogram();
+fltkp_hh_histogram->redraw();}
+              xywh {195 185 40 20}
+            }
+            Fl_Button {} {
+              label Average
               callback {fltkp_hh_histogram->set_l_average_from_histogram();
-fltkp_hh_histogram->redraw();} selected
-              xywh {225 185 170 20}
+fltkp_hh_histogram->redraw();}
+              xywh {240 185 60 20}
+            }
+            Fl_Light_Button {} {
+              label Color
+              callback {if (o->value() == 0) {
+ fltkp_hh_histogram->set_color_belt_image(nullptr);
+}
+else {
+ fltkp_hh_histogram->set_color_belt_image(box_hh_color_belt->image());
+}
+fltkp_hh_histogram->redraw();}
+              xywh {305 185 60 20}
             }
           }
           Fl_Box fltkp_aa_histogram {
@@ -1873,7 +1884,7 @@ fltkp_hh_histogram->redraw();} selected
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box {} {
+          Fl_Box box_aa_color_belt {
             image {color_belt1000x10sat.png} xywh {0 305 1000 10}
           }
           Fl_Box fltkp_aa_minmax {
@@ -1885,28 +1896,39 @@ fltkp_hh_histogram->redraw();} selected
             xywh {0 365 1000 20} box UP_BOX
           } {
             Fl_Value_Input valinp_hab_histogram_aa_min {
-              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_min(
-	o->value()
-);}
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_min(o->value());}
               xywh {5 365 40 20} box BORDER_BOX align 8 maximum 100
             }
             Fl_Value_Input valinp_hab_histogram_aa_max {
-              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_max(
-	o->value()
-);}
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_aa_max(o->value());}
               xywh {955 365 40 20} box BORDER_BOX align 8 maximum 100
             }
-            Fl_Button {} {
-              label {Adjust Histogram Max}
-              callback {fltkp_aa_histogram->set_l_max_from_histogram();
-fltkp_aa_histogram->redraw();}
-              xywh {50 365 170 20}
+            Fl_Text_Display {} {
+              label {Histogram View}
+              xywh {90 365 0 0} align 6
             }
             Fl_Button {} {
-              label {Adjust Histogram Average}
+              label Max
+              callback {fltkp_aa_histogram->set_l_max_from_histogram();
+fltkp_aa_histogram->redraw();}
+              xywh {195 365 40 20}
+            }
+            Fl_Button {} {
+              label Average
               callback {fltkp_aa_histogram->set_l_average_from_histogram();
 fltkp_aa_histogram->redraw();}
-              xywh {225 365 170 20}
+              xywh {240 365 60 20}
+            }
+            Fl_Light_Button {} {
+              label Color
+              callback {if (o->value() == 0) {
+ fltkp_aa_histogram->set_color_belt_image(nullptr);
+}
+else {
+ fltkp_aa_histogram->set_color_belt_image(box_aa_color_belt->image());
+}
+fltkp_aa_histogram->redraw();}
+              xywh {305 365 60 20}
             }
           }
           Fl_Box fltkp_bb_histogram {
@@ -1914,7 +1936,7 @@ fltkp_aa_histogram->redraw();}
             code0 {\#include "fltk_1000x100_histogram.h"}
             class fltk_1000x100_histogram
           }
-          Fl_Box {} {
+          Fl_Box box_bb_color_belt {
             image {color_belt1000x10val.png} xywh {0 485 1000 10}
           }
           Fl_Box fltkp_bb_minmax {
@@ -1926,28 +1948,39 @@ fltkp_aa_histogram->redraw();}
             xywh {0 545 1000 20} box UP_BOX
           } {
             Fl_Value_Input valinp_hab_histogram_bb_min {
-              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_min(
-	o->value()
-);}
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_min(o->value());}
               xywh {5 545 40 20} box BORDER_BOX align 8 maximum 100
             }
             Fl_Value_Input valinp_hab_histogram_bb_max {
-              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_max(
-	o->value()
-);}
+              callback {cl_gts_master.cl_color_trace_edit_hsv_minmax.cb_bb_max(o->value());}
               xywh {955 545 40 20} box BORDER_BOX align 8 maximum 100
             }
-            Fl_Button {} {
-              label {Adjust Histogram Max}
-              callback {fltkp_bb_histogram->set_l_max_from_histogram();
-fltkp_bb_histogram->redraw();}
-              xywh {50 545 170 20}
+            Fl_Text_Display {} {
+              label {Histogram View}
+              xywh {90 545 0 0} align 6
             }
             Fl_Button {} {
-              label {Adjust Histogram Average}
+              label Max
+              callback {fltkp_bb_histogram->set_l_max_from_histogram();
+fltkp_bb_histogram->redraw();}
+              xywh {195 545 40 20}
+            }
+            Fl_Button {} {
+              label Average
               callback {fltkp_bb_histogram->set_l_average_from_histogram();
 fltkp_bb_histogram->redraw();}
-              xywh {225 545 170 20}
+              xywh {240 545 60 20}
+            }
+            Fl_Light_Button {} {
+              label Color
+              callback {if (o->value() == 0) {
+ fltkp_bb_histogram->set_color_belt_image(nullptr);
+}
+else {
+ fltkp_bb_histogram->set_color_belt_image(box_bb_color_belt->image());
+}
+fltkp_bb_histogram->redraw();}
+              xywh {305 545 60 20}
             }
           }
         }

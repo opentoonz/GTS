@@ -1,7 +1,8 @@
-#ifndef __fltk_1000x100_histogram_h__
-#define __fltk_1000x100_histogram_h__
+#ifndef fltk_1000x100_histogram_h
+#define fltk_1000x100_histogram_h
 
 #include <FL/Fl_Box.H>
+#include <FL/Fl_Image.H>
 
 class fltk_1000x100_histogram : public Fl_Box {
 public:
@@ -13,6 +14,8 @@ public:
 
 	void set_l_max_from_histogram( void );
 	void set_l_average_from_histogram( void );
+
+	void set_color_belt_image(const Fl_Image* image);
 private:
 	long _l_size;
 	long _l_max;
@@ -20,6 +23,8 @@ private:
 	long _l_max_valuator_backup;
 	long _l_max_drag_start;
 	long *_lp1000;
+
+	const Fl_Image* color_belt_image_;
 };
 
-#endif /* !__fltk_1000x100_histogram_h__ */
+#endif /* !fltk_1000x100_histogram_h */

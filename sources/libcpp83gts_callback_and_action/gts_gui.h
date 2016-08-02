@@ -1004,6 +1004,7 @@ private:
   static void cb_menite_limit_bb(Fl_Menu_*, void*);
 public:
   fltk_1000x100_histogram *fltkp_hh_histogram;
+  Fl_Box *box_hh_color_belt;
   fltk_hh_cyclic *fltkp_hh_cyclic;
   Fl_Value_Input *valinp_hab_histogram_hh_min;
 private:
@@ -1014,12 +1015,15 @@ public:
 private:
   inline void cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_hab_histogram_hh_max(Fl_Value_Input*, void*);
-  inline void cb_Adjust_i(Fl_Button*, void*);
-  static void cb_Adjust(Fl_Button*, void*);
-  inline void cb_Adjust1_i(Fl_Button*, void*);
-  static void cb_Adjust1(Fl_Button*, void*);
+  inline void cb_Max_i(Fl_Button*, void*);
+  static void cb_Max(Fl_Button*, void*);
+  inline void cb_Average_i(Fl_Button*, void*);
+  static void cb_Average(Fl_Button*, void*);
+  inline void cb_Color_i(Fl_Light_Button*, void*);
+  static void cb_Color(Fl_Light_Button*, void*);
 public:
   fltk_1000x100_histogram *fltkp_aa_histogram;
+  Fl_Box *box_aa_color_belt;
   fltk_aa_minmax *fltkp_aa_minmax;
   Fl_Value_Input *valinp_hab_histogram_aa_min;
 private:
@@ -1030,12 +1034,15 @@ public:
 private:
   inline void cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_hab_histogram_aa_max(Fl_Value_Input*, void*);
-  inline void cb_Adjust2_i(Fl_Button*, void*);
-  static void cb_Adjust2(Fl_Button*, void*);
-  inline void cb_Adjust3_i(Fl_Button*, void*);
-  static void cb_Adjust3(Fl_Button*, void*);
+  inline void cb_Max1_i(Fl_Button*, void*);
+  static void cb_Max1(Fl_Button*, void*);
+  inline void cb_Average1_i(Fl_Button*, void*);
+  static void cb_Average1(Fl_Button*, void*);
+  inline void cb_Color1_i(Fl_Light_Button*, void*);
+  static void cb_Color1(Fl_Light_Button*, void*);
 public:
   fltk_1000x100_histogram *fltkp_bb_histogram;
+  Fl_Box *box_bb_color_belt;
   fltk_bb_minmax *fltkp_bb_minmax;
   Fl_Value_Input *valinp_hab_histogram_bb_min;
 private:
@@ -1046,10 +1053,12 @@ public:
 private:
   inline void cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_hab_histogram_bb_max(Fl_Value_Input*, void*);
-  inline void cb_Adjust4_i(Fl_Button*, void*);
-  static void cb_Adjust4(Fl_Button*, void*);
-  inline void cb_Adjust5_i(Fl_Button*, void*);
-  static void cb_Adjust5(Fl_Button*, void*);
+  inline void cb_Max2_i(Fl_Button*, void*);
+  static void cb_Max2(Fl_Button*, void*);
+  inline void cb_Average2_i(Fl_Button*, void*);
+  static void cb_Average2(Fl_Button*, void*);
+  inline void cb_Color2_i(Fl_Light_Button*, void*);
+  static void cb_Color2(Fl_Light_Button*, void*);
 public:
   Fl_Double_Window *window_edit_color;
 private:
