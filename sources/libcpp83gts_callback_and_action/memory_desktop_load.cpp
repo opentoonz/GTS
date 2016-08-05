@@ -105,98 +105,100 @@ int memory_desktop::load( void ) {
 
 		if (  (STR_WINDOW_OPENGL==key) && (6==ret)) {
 		cl_gts_gui.window_opengl->resize(xx,yy,ww,hh);
-		} else
-		if (  (STR_WINDOW_LEVEL==key) && (6==ret)) {
+		}
+		else if (  (STR_WINDOW_LEVEL==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_level->show();
-		cl_gts_gui.menite_level->set();
+		//cl_gts_gui.menite_level->set();
+		//cl_gts_gui.window_level->show();
 			}
 		cl_gts_gui.window_level->resize(xx,yy,ww,hh);
-		} else
-		if (  (STR_WINDOW_CONFIG_LOAD==key) && (6==ret)) {
+		}
+		else if (  (STR_WINDOW_CONFIG_LOAD==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_config_load->show();
-		cl_gts_gui.menite_config_load->set();
+		//cl_gts_gui.menite_config_load->set();
+		//cl_gts_gui.window_config_load->show();
 			}
 		cl_gts_gui.window_config_load->resize(xx,yy,ww,hh);
-		} else
-		if (  (STR_WINDOW_CONFIG_SAVE_AS==key) && (6==ret)) {
+		}
+		else if (  (STR_WINDOW_CONFIG_SAVE_AS==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_config_save_as->show();
-		cl_gts_gui.menite_config_save_as->set();
+		//cl_gts_gui.menite_config_save_as->set();
+		//cl_gts_gui.window_config_save_as->show();
 			}
 		cl_gts_gui.window_config_save_as->resize(xx,yy,ww,hh);
-		} else
-		if ((STR_CONFIG_DIR == key) && (2 == ret)) {
+		}
+		else if ((STR_CONFIG_DIR == key) && (2 == ret)) {
 		cl_gts_master.cl_bro_config.init_config_dir(di.c_str());
+		}
 # ifndef _WIN32
-		} else
-		if ((STR_SANE_DEVICE_NAME == key) && (2 == ret)) {
-        cl_gts_master.cl_iip_scan.device_name((char*)di.c_str());
+		else if ((STR_SANE_DEVICE_NAME == key) && (2 == ret)) {
+		cl_gts_master.cl_iip_scan.device_name((char*)di.c_str());
+		}
 # endif
-		} else
-		if (  (STR_WINDOW_CROP_AREA_AND_ROT90==key)&&(4==ret)) {
+		else if (  (STR_WINDOW_CROP_AREA_AND_ROT90==key)&&(4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_crop_area_and_rot90->show();
-		cl_gts_gui.menite_crop_area_and_rot90->set();
+		//cl_gts_gui.menite_crop_area_and_rot90->set();
+		//cl_gts_gui.window_crop_area_and_rot90->show();
 			}
 		cl_gts_gui.window_crop_area_and_rot90->position(xx,yy);
-		} else
-		if (  (STR_WINDOW_PIXEL_TYPE_AND_BRIGHT==key)&&(4==ret)) {
+		}
+		else if (  (STR_WINDOW_PIXEL_TYPE_AND_BRIGHT==key)&&(4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_pixel_type_and_bright->show();
-		cl_gts_gui.menite_pixel_type_and_bright->set();
+		//cl_gts_gui.menite_pixel_type_and_bright->set();
+		//cl_gts_gui.window_pixel_type_and_bright->show();
 			}
 		cl_gts_gui.window_pixel_type_and_bright->position(xx,yy);
-		} else
-		if (  (STR_WINDOW_COLOR_TRACE==key) && (4==ret)) {
+		}
+		else if (  (STR_WINDOW_COLOR_TRACE==key) && (4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_color_trace->show();
-		cl_gts_gui.menite_color_trace->set();
+		//cl_gts_gui.menite_color_trace->set();
+		//cl_gts_gui.window_color_trace->show();
 			}
 		cl_gts_gui.window_color_trace->position(xx,yy);
-		} else
-		if (  (STR_WINDOW_EDIT_COLOR==key) && (4==ret)) {
-			/*if (di == "show") {
-		cl_gts_gui.window_edit_color->show();
-			}*/
-		cl_gts_gui.window_edit_color->position(xx,yy);
-		} else
-		if (  (STR_WINDOW_EDIT_HAB_MIN_MAX==key) && (4==ret)) {
-			/*if (di == "show") {
-		cl_gts_gui.window_hab_histogram->show();
-			}*/
-		cl_gts_gui.window_hab_histogram->position(xx,yy);
-		} else
-		if (  (STR_WINDOW_FNUM_LIST==key) && (6==ret)) {
+		}
+		else if (  (STR_WINDOW_EDIT_COLOR==key) && (4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_fnum_list->show();
-		cl_gts_gui.menite_fnum_list->set();
+		//cl_gts_gui.menite_edit_color->set();
+		//cl_gts_gui.window_edit_color->show();
+			}
+		cl_gts_gui.window_edit_color->position(xx,yy);
+		}
+		else if (  (STR_WINDOW_EDIT_HAB_MIN_MAX==key) && (4==ret)) {
+			if (di == "show") {
+		//cl_gts_gui.menite_edit_hsv_min_max->set();
+		//cl_gts_gui.window_hab_histogram->show();
+			}
+		cl_gts_gui.window_hab_histogram->position(xx,yy);
+		}
+		else if (  (STR_WINDOW_FNUM_LIST==key) && (6==ret)) {
+			if (di == "show") {
+		//cl_gts_gui.menite_fnum_list->set();
+		//cl_gts_gui.window_fnum_list->show();
 			}
 		cl_gts_gui.window_fnum_list->resize(xx,yy,ww,hh);
-		} else
-		if (  (STR_WINDOW_TRACE_BATCH==key) && (6==ret)) {
+		}
+		else if (  (STR_WINDOW_TRACE_BATCH==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_trace_batch->show();
-		cl_gts_gui.menite_trace_batch->set();
+		//cl_gts_gui.menite_trace_batch->set();
+		//cl_gts_gui.window_trace_batch->show();
 			}
 		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
-		} else
-		if (  (STR_WINDOW_NEXT_SCAN==key) && (4==ret)) {
+		}
+		else if (  (STR_WINDOW_NEXT_SCAN==key) && (4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_next_scan->show();
-		//cl_gts_gui.menite_next_scan->set();
+		////cl_gts_gui.menite_next_scan->set();
+		//cl_gts_gui.window_next_scan->show();
 			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
-		} else
-		if (  (STR_WINDOW_THICKNESS==key) && (6==ret)) {
+		}
+		else if (  (STR_WINDOW_THICKNESS==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.window_thickness->show();
-		cl_gts_gui.menite_thickness->set();
+		//cl_gts_gui.menite_thickness->set();
+		//cl_gts_gui.window_thickness->show();
 			}
 		cl_gts_gui.window_thickness->resize(xx,yy,ww,hh);
-		} else
-		{
+		}
+		else {
 			pri_funct_err_bttvr(
  	"Warning : memory_desktop::load() : ignore '%s' at line %d"
 			,buf ,ii );

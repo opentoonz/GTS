@@ -246,7 +246,7 @@ void cb_color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS t
 		(double)blu);
 
 	/* edit color windowを表示 */
-	cl_gts_gui.window_edit_color->show();
+	//cl_gts_gui.window_edit_color->show();
 }
 
 /* color trace enhancement windowから、

@@ -321,7 +321,7 @@ int cb_color_trace_enhancement::src_open_histogram_window_( E_COLOR_TRACE_HAB_CO
 		return NG;
 	}
 	cl_gts_gui.window_hab_histogram->redraw();
-	cl_gts_gui.window_hab_histogram->show();
+	//cl_gts_gui.window_hab_histogram->show();
 	return OK;
 }
 int cb_color_trace_enhancement::src_set_histogram_window( E_COLOR_TRACE_HAB_COLORS e_num )
