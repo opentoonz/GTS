@@ -38,10 +38,12 @@ char *ptbl_getenv(const char *name) {
     }
 	value[0] = '\0';
 # ifdef _WIN32
-	errno_t err_no = getenv_s(&length, value, _MAX_ENV, name);
-	if (err_no != 0) {
+	{ // for vc2010
+	 errno_t err_no = getenv_s(&length, value, _MAX_ENV, name);
+	 if (err_no != 0) {
 		printf("getenv_s() returned an error (%d)\n", err_no);
-	}
+	 }
+	} // for vc2010
 	if ((length <= 0) || (length >= _MAX_ENV)) {
 		printf("getenv_s() got a bad length (%d)\n", length);
 	}
