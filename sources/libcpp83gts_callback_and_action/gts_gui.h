@@ -80,20 +80,25 @@ private:
   inline void cb_menite_pixel_type_and_bright_i(Fl_Menu_*, void*);
   static void cb_menite_pixel_type_and_bright(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_fnum_list;
-private:
-  inline void cb_menite_fnum_list_i(Fl_Menu_*, void*);
-  static void cb_menite_fnum_list(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_color_trace;
 private:
   inline void cb_menite_color_trace_i(Fl_Menu_*, void*);
   static void cb_menite_color_trace(Fl_Menu_*, void*);
 public:
+  static Fl_Menu_Item *menite_fnum_list;
+private:
+  inline void cb_menite_fnum_list_i(Fl_Menu_*, void*);
+  static void cb_menite_fnum_list(Fl_Menu_*, void*);
+public:
   static Fl_Menu_Item *menite_trace_batch;
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_thickness;
+private:
+  inline void cb_menite_thickness_i(Fl_Menu_*, void*);
+  static void cb_menite_thickness(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_edit_color;
 private:
@@ -104,11 +109,6 @@ public:
 private:
   inline void cb_menite_edit_hsv_min_max_i(Fl_Menu_*, void*);
   static void cb_menite_edit_hsv_min_max(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_thickness;
-private:
-  inline void cb_menite_thickness_i(Fl_Menu_*, void*);
-  static void cb_menite_thickness(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
@@ -139,21 +139,12 @@ private:
   inline void cb_lr_to_ud_i(Fl_Menu_*, void*);
   static void cb_lr_to_ud(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_show_hide_window;
-private:
-  inline void cb_menite_show_hide_window_i(Fl_Menu_*, void*);
-  static void cb_menite_show_hide_window(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_help_about;
 private:
   inline void cb_menite_help_about_i(Fl_Menu_*, void*);
   static void cb_menite_help_about(Fl_Menu_*, void*);
   inline void cb_Show_i(Fl_Menu_*, void*);
   static void cb_Show(Fl_Menu_*, void*);
-  inline void cb_Hide_i(Fl_Menu_*, void*);
-  static void cb_Hide(Fl_Menu_*, void*);
-  inline void cb_Show1_i(Fl_Menu_*, void*);
-  static void cb_Show1(Fl_Menu_*, void*);
 public:
   fltk_opengl *opengl_view;
   Fl_Scrollbar *scrbar_view_x;

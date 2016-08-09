@@ -29,33 +29,46 @@ char *ptbl_get_cp_path_separeter( void )
 #endif
 }
 
-char *ptbl_getenv(const char *name) {
+//------------------------------------------------------------
+char *ptbl_getenv(const char *name)
+{
 	size_t length = 0;
-	char *value = (char*)malloc(_MAX_ENV);
-    if (value == NULL) {
-        printf("malloc() failure\n");
-        exit(-1);
-    }
-	value[0] = '\0';
+	char *value = (char*)calloc( _MAX_ENV ,sizeof(char) );
+	if (value == NULL) {
+		fprintf(stderr,"ptbl_getenv(-):malloc(_MAX_ENV) failure\n");
+		return NULL;
+	}
 # ifdef _WIN32
 	{ // for vc2010
 	 errno_t err_no = getenv_s(&length, value, _MAX_ENV, name);
 	 if (err_no != 0) {
-		printf("getenv_s() returned an error (%d)\n", err_no);
+		fprintf(stderr,"getenv_s(,,,%s) returned err_no (%d)\n"
+			,name ,err_no);
+		free(value);
+		return NULL;
 	 }
 	} // for vc2010
 	if ((length <= 0) || (length >= _MAX_ENV)) {
-		printf("getenv_s() got a bad length (%d)\n", length);
+		fprintf(stderr,"getenv_s(,,,%s) got a bad length (%d)\n"
+			,name ,length);
+		free(value);
+		return NULL;
 	}
 # else
-    const char* env_ptr = getenv(name);
-    if(env_ptr != NULL) {
+	const char* env_ptr = getenv(name);
+	if (env_ptr == NULL) {
+		fprintf(stderr,"getenv(%s) returned NULL\n", name);
+		free(value);
+		return NULL;
+	}
         length = strlen(env_ptr);
-        if (length >= _MAX_ENV) {
-            length = _MAX_ENV - 1;
-        }
-        strncpy(value, env_ptr, length);
-    }
+	if ((length <= 0) || (length >= _MAX_ENV)) {
+		fprintf(stderr,"getenv(%s) got a bad length (%d)\n"
+			,name ,length);
+		free(value);
+		return NULL;
+	}
+        strncpy( value ,env_ptr ,length );
 # endif
 	value[length] = '\0';
 	return value;

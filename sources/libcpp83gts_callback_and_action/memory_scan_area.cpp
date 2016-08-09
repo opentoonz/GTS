@@ -1,11 +1,10 @@
 #include <string.h>
 #include <fstream>
 #include <sstream>
-#include <cstdlib> /* getenv_s() */
+#include "ptbl_funct.h" // ptbl_getenv(-)
+#include "memory_scan_area.h"
 #include "gts_gui.h"
 #include "gts_master.h"
-#include "ptbl_funct.h"
-#include "memory_desktop.h"
 
 void gts_master::cb_area_selecter( void ) {
 	/* Areaセレクターで先頭のゼロを選択したときは"Custom" */
@@ -218,13 +217,34 @@ namespace {
  }
 }
 
+void ptbl_getenv(const char *name, std::string& env) {
+	char *value = ptbl_getenv(name);
+	env = value;
+	free(value);
+}
+
+void ptbl_get_user_home(std::string& user_home)
+{
+# ifdef _WIN32
+	std::string homedrive, homepath;
+	ptbl_getenv("HOMEDRIVE", homedrive);
+	ptbl_getenv("HOMEPATH" , homepath);
+	if (!homedrive.empty() && !homepath.empty()) {
+		user_home = homedrive;
+		user_home += homepath;
+	}
+# else
+	ptbl_getenv("HOME", user_home);
+# endif
+}
+
 std::string gts_file_path(const char *comm, const char *file_name) {
 	/* 優先度A  各ユーザーのホームにあるなら
 	--> %HOMEDRIVE%%HOMEPATH%\_gts-scan_area.txt"
 	=         "C:\Users\user1\_gts-scan_area.txt"
 	*/
 	std::string fpath_user;
-	get_user_home_(fpath_user);
+	ptbl_get_user_home(fpath_user);
 # ifndef _WIN32
 	fpath_user += ptbl_get_cp_path_separeter();
 	fpath_user += STR_DESKTOP_DIR;
@@ -252,7 +272,7 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 		Windows7では一般ユーザーが書き込めないので使えない
 	*/
 	std::string fpath_prof;
-	getenv_("ALLUSERSPROFILE", fpath_prof);
+	ptbl_getenv("ALLUSERSPROFILE", fpath_prof);
 	file_path_from_dir_(fpath_prof, file_name);
 	if (!fpath_prof.empty()) {
 		return fpath_prof;
@@ -263,7 +283,7 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 	= "C:\Users\Public\_gts-scan_area.txt" at Windows7
 	*/
 	std::string fpath_publ;
-	getenv_("PUBLIC", fpath_publ);
+	ptbl_getenv("PUBLIC", fpath_publ);
 	file_path_from_dir_(fpath_publ, file_name);
 	if (!fpath_publ.empty()) {
 		return fpath_publ;

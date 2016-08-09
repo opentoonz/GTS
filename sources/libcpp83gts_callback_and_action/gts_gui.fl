@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();} open
+      callback {cl_gts_master.cb_quit();}
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -37,7 +37,7 @@ class gts_gui {open
     cl_gts_gui.window_level->show();
 } else {
     cl_gts_gui.window_level->hide();
-}} selected
+}}
             xywh {5 5 100 20} type Toggle shortcut 0xffbf divider
           }
           MenuItem menite_config_load {
@@ -127,16 +127,6 @@ cl_gts_master.cb_quit();}
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc3
           }
-          MenuItem menite_fnum_list {
-            label {File Number ...}
-            callback {if (cl_gts_gui.menite_fnum_list->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_fnum_list->show();
-} else {
-    cl_gts_gui.window_fnum_list->hide();
-}}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc7
-          }
           MenuItem menite_color_trace {
             label {Color Trace Enhancement...}
             callback {if (cl_gts_gui.menite_color_trace->value()) {
@@ -147,6 +137,16 @@ cl_gts_master.cb_quit();}
 }}
             xywh {0 0 100 20} type Toggle shortcut 0xffc6
           }
+          MenuItem menite_fnum_list {
+            label {File Number ...}
+            callback {if (cl_gts_gui.menite_fnum_list->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_fnum_list->show();
+} else {
+    cl_gts_gui.window_fnum_list->hide();
+}}
+            xywh {5 5 100 20} type Toggle shortcut 0xffc7
+          }
           MenuItem menite_trace_batch {
             label {Color Trace Batch...}
             callback {if (cl_gts_gui.menite_trace_batch->value()) {
@@ -156,6 +156,16 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_trace_batch->hide();
 }}
             xywh {0 0 100 20} type Toggle
+          }
+          MenuItem menite_thickness {
+            label {Thickness...}
+            callback {if (cl_gts_gui.menite_thickness->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_thickness->show();
+} else {
+    cl_gts_gui.window_thickness->hide();
+}}
+            xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_edit_color {
             label {Edit Color...}
@@ -174,16 +184,6 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_hab_histogram->show();
 } else {
     cl_gts_gui.window_hab_histogram->hide();
-}}
-            xywh {0 0 30 20} type Toggle
-          }
-          MenuItem menite_thickness {
-            label {Thickness...}
-            callback {if (cl_gts_gui.menite_thickness->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_thickness->show();
-} else {
-    cl_gts_gui.window_thickness->hide();
 }}
             xywh {0 0 30 20} type Toggle
           }
@@ -276,60 +276,6 @@ cl_gts_master.cb_quit();}
               xywh {20 20 100 20} shortcut 0xffc9
             }
           }
-          MenuItem menite_show_hide_window {
-            label {Show/Hide Window}
-            callback {if (cl_gts_gui.menite_show_hide_window->value()) {
- if (cl_gts_gui.menite_level->value()) {
-    cl_gts_master.cl_bro_level.cb_level_name();
-    cl_gts_gui.window_level->show();
- }
- if (cl_gts_gui.menite_config_load->value()) {
-    cl_gts_gui.window_config_load->show();
- }
- if (cl_gts_gui.menite_config_save_as->value()) {
-    cl_gts_master.cl_bro_config.cb_save_as_file();
-    cl_gts_gui.window_config_save_as->show();
- }
- if (cl_gts_gui.menite_crop_area_and_rot90->value()) {
-    cl_gts_gui.window_crop_area_and_rot90->show();
- }
- if (cl_gts_gui.menite_pixel_type_and_bright->value()) {
-    cl_gts_gui.window_pixel_type_and_bright->show();
- }
- if (cl_gts_gui.menite_fnum_list->value()) {
-    cl_gts_gui.window_fnum_list->show();
- }
- if (cl_gts_gui.menite_color_trace->value()) {
-    cl_gts_gui.window_color_trace->show();
- }
- if (cl_gts_gui.menite_trace_batch->value()) {
-    cl_gts_gui.window_trace_batch->show();
- }
- if (cl_gts_gui.menite_thickness->value()) {
-    cl_gts_gui.window_thickness->show();
- }
- if (cl_gts_gui.menite_edit_color->value()) {
-    cl_gts_gui.window_edit_color->show();
- }
- if (cl_gts_gui.menite_edit_hsv_min_max->value()) {
-    cl_gts_gui.window_hab_histogram->show();
- }
-}
-else {
-    cl_gts_gui.window_level->hide();
-    cl_gts_gui.window_config_load->hide();
-    cl_gts_gui.window_config_save_as->hide();
-    cl_gts_gui.window_crop_area_and_rot90->hide();
-    cl_gts_gui.window_pixel_type_and_bright->hide();
-    cl_gts_gui.window_fnum_list->hide();
-    cl_gts_gui.window_color_trace->hide();
-    cl_gts_gui.window_trace_batch->hide();
-    cl_gts_gui.window_thickness->hide();
-    cl_gts_gui.window_edit_color->hide();
-    cl_gts_gui.window_hab_histogram->hide();
-}}
-            xywh {0 0 30 20} type Toggle hide
-          }
         }
         Submenu {} {
           label Help open
@@ -354,54 +300,6 @@ fl_message( ost.str().c_str() );}
           MenuItem {} {
             label {Show Next Scan}
             callback {cl_gts_gui.window_next_scan->show();}
-            xywh {0 0 30 20}
-          }
-          MenuItem {} {
-            label {Hide All}
-            callback {cl_gts_gui.window_level->hide();
-cl_gts_gui.window_config_load->hide();
-cl_gts_gui.window_config_save_as->hide();
-//cl_gts_gui.window_crop_area_and_rot90->hide();
-cl_gts_gui.window_pixel_type_and_bright->hide();
-cl_gts_gui.window_color_trace->hide();
-cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.window_trace_batch->hide();
-cl_gts_gui.window_thickness->hide();}
-            xywh {0 0 30 20}
-          }
-          MenuItem {} {
-            label {Show before All}
-            callback {if (cl_gts_gui.menite_level->value()) {
-    cl_gts_master.cl_bro_level.cb_level_name();
-    cl_gts_gui.window_level->show();
-}
-if (cl_gts_gui.menite_config_load->value()) {
-    cl_gts_gui.window_config_load->show();
-}
-if (cl_gts_gui.menite_config_save_as->value()) {
-    cl_gts_master.cl_bro_config.cb_save_as_file();
-    cl_gts_gui.window_config_save_as->show();
-}
-if (cl_gts_gui.menite_crop_area_and_rot90->value()) {
-    cl_gts_gui.window_crop_area_and_rot90->show();
-}
-if (cl_gts_gui.menite_pixel_type_and_bright->value()) {
-    cl_gts_gui.window_pixel_type_and_bright->show();
-}
-if (cl_gts_gui.menite_color_trace->value()) {
-    cl_gts_gui.window_color_trace->show();
-}
-if (cl_gts_gui.menite_fnum_list->value()) {
-    cl_gts_gui.window_fnum_list->show();
-}
-if (cl_gts_gui.menite_trace_batch->value()) {
-    cl_gts_gui.window_trace_batch->show();
-}
-if (cl_gts_gui.menite_thickness->value()) {
-    cl_gts_gui.window_thickness->show();
-}}
             xywh {0 0 30 20}
           }
         }
