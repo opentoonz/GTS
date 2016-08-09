@@ -179,18 +179,18 @@ void cb_color_trace_thickness::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS tr
 	cl_gts_master.cl_color_trace_enhancement.tgt_get_e_rgb_color();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_edit_color->shown();
+	const int before_shown_sw=cl_gts_gui.window_edit_color->shown();
 
  	cl_gts_master.cl_color_trace_enhancement.tgt_open_edit_color(
 		trace_list_pos
 	);
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.tgt_get_e_rgb_color()
 	) {
 		cl_gts_gui.window_edit_color->hide();
-	}*/
+	}
 }
 
 //----------
@@ -306,17 +306,17 @@ void cb_color_trace_thickness::cb_src_show_hide_01( void )
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
+	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
 	cl_gts_master.cl_color_trace_enhancement.cb_src_show_01();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
-	}*/
+	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_02( void )
 {
@@ -325,17 +325,17 @@ void cb_color_trace_thickness::cb_src_show_hide_02( void )
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
+	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
 	cl_gts_master.cl_color_trace_enhancement.cb_src_show_02();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
-	}*/
+	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_03( void )
 {
@@ -344,17 +344,17 @@ void cb_color_trace_thickness::cb_src_show_hide_03( void )
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
+	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
 	cl_gts_master.cl_color_trace_enhancement.cb_src_show_03();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
-	}*/
+	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_04( void )
 {
@@ -363,17 +363,17 @@ void cb_color_trace_thickness::cb_src_show_hide_04( void )
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
+	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
 	cl_gts_master.cl_color_trace_enhancement.cb_src_show_04();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
-	}*/
+	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_05( void )
 {
@@ -382,17 +382,17 @@ void cb_color_trace_thickness::cb_src_show_hide_05( void )
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
+	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
 	cl_gts_master.cl_color_trace_enhancement.cb_src_show_05();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
-	}*/
+	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_06( void )
 {
@@ -401,17 +401,17 @@ void cb_color_trace_thickness::cb_src_show_hide_06( void )
 	cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range();
 
 	/* 表示状態を取っておく */
-//	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
+	const int before_shown_sw=cl_gts_gui.window_hab_histogram->shown();
 
 	/* このトレス番号での表示を行い内部トレス番号も再セット */
 	cl_gts_master.cl_color_trace_enhancement.cb_src_show_06();
 
 	/* 既に、同じトレス番号で表示している場合、ウインドウを隠す */
-/*	if ( before_shown_sw &&
+	if ( before_shown_sw &&
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
-	}*/
+	}
 }
 
 //----------

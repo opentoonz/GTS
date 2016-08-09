@@ -21,6 +21,7 @@ void gts_gui::cb_window_opengl(Fl_Double_Window* o, void* v) {
 void gts_gui::cb_menite_level_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_level->value()) {
     cl_gts_master.cl_bro_level.cb_level_name();
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_level->show();
 } else {
     cl_gts_gui.window_level->hide();
@@ -32,6 +33,7 @@ void gts_gui::cb_menite_level(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_config_load_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_config_load->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_config_load->show();
 } else {
     cl_gts_gui.window_config_load->hide();
@@ -51,6 +53,7 @@ void gts_gui::cb_Save(Fl_Menu_* o, void* v) {
 void gts_gui::cb_menite_config_save_as_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_config_save_as->value()) {
     cl_gts_master.cl_bro_config.cb_save_as_file();
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_config_save_as->show();
 } else {
     cl_gts_gui.window_config_save_as->hide();
@@ -105,6 +108,7 @@ void gts_gui::cb_Trace(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_crop_area_and_rot90_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_crop_area_and_rot90->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_crop_area_and_rot90->show();
 } else {
     cl_gts_gui.window_crop_area_and_rot90->hide();
@@ -116,6 +120,7 @@ void gts_gui::cb_menite_crop_area_and_rot90(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_pixel_type_and_bright_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_pixel_type_and_bright->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_pixel_type_and_bright->show();
 } else {
     cl_gts_gui.window_pixel_type_and_bright->hide();
@@ -127,6 +132,7 @@ void gts_gui::cb_menite_pixel_type_and_bright(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_fnum_list_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_fnum_list->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_fnum_list->show();
 } else {
     cl_gts_gui.window_fnum_list->hide();
@@ -138,6 +144,7 @@ void gts_gui::cb_menite_fnum_list(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_color_trace_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_color_trace->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_color_trace->show();
 } else {
     cl_gts_gui.window_color_trace->hide();
@@ -149,6 +156,7 @@ void gts_gui::cb_menite_color_trace(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_batch->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_trace_batch->show();
 } else {
     cl_gts_gui.window_trace_batch->hide();
@@ -160,6 +168,7 @@ void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_edit_color_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_edit_color->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_edit_color->show();
 } else {
     cl_gts_gui.window_edit_color->hide();
@@ -171,6 +180,7 @@ void gts_gui::cb_menite_edit_color(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_edit_hsv_min_max_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_edit_hsv_min_max->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_hab_histogram->show();
 } else {
     cl_gts_gui.window_hab_histogram->hide();
@@ -182,6 +192,7 @@ void gts_gui::cb_menite_edit_hsv_min_max(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_thickness_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_thickness->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_thickness->show();
 } else {
     cl_gts_gui.window_thickness->hide();
@@ -412,10 +423,10 @@ void gts_gui::cb_Show1(Fl_Menu_* o, void* v) {
 
 Fl_Menu_Item gts_gui::menu_[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Level...", 0,  (Fl_Callback*)gts_gui::cb_menite_level, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
- {"Load Config...", 0,  (Fl_Callback*)gts_gui::cb_menite_config_load, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Level...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_level, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Load Config...", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_config_load, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"    Save Config", 0x53,  (Fl_Callback*)gts_gui::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Save As Config...", 0,  (Fl_Callback*)gts_gui::cb_menite_config_save_as, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Save As Config...", 0x50073,  (Fl_Callback*)gts_gui::cb_menite_config_save_as, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
  {"    Quit", 0x51,  (Fl_Callback*)gts_gui::cb_Quit, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Scanning", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -426,10 +437,10 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Trace Save", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Setup", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Area and Rot90...", 0,  (Fl_Callback*)gts_gui::cb_menite_crop_area_and_rot90, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Pixel Type and Bright...", 0,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"File Number ...", 0,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Color Trace Enhancement...", 0,  (Fl_Callback*)gts_gui::cb_menite_color_trace, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Area and Rot90...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_crop_area_and_rot90, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Pixel Type and Bright...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"File Number ...", 0xffc7,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Color Trace Enhancement...", 0xffc6,  (Fl_Callback*)gts_gui::cb_menite_color_trace, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Color Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Edit Color...", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Edit HSV Min Max", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_hsv_min_max, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},

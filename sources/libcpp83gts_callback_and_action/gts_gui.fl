@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();}
+      callback {cl_gts_master.cb_quit();} open
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -33,20 +33,22 @@ class gts_gui {open
             label {Level...}
             callback {if (cl_gts_gui.menite_level->value()) {
     cl_gts_master.cl_bro_level.cb_level_name();
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_level->show();
 } else {
     cl_gts_gui.window_level->hide();
-}}
-            xywh {5 5 100 20} type Toggle divider
+}} selected
+            xywh {5 5 100 20} type Toggle shortcut 0xffbf divider
           }
           MenuItem menite_config_load {
             label {Load Config...}
             callback {if (cl_gts_gui.menite_config_load->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_config_load->show();
 } else {
     cl_gts_gui.window_config_load->hide();
 }}
-            xywh {5 5 100 20} type Toggle
+            xywh {5 5 100 20} type Toggle shortcut 0xffbe
           }
           MenuItem {} {
             label {    Save Config}
@@ -57,11 +59,12 @@ class gts_gui {open
             label {Save As Config...}
             callback {if (cl_gts_gui.menite_config_save_as->value()) {
     cl_gts_master.cl_bro_config.cb_save_as_file();
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_config_save_as->show();
 } else {
     cl_gts_gui.window_config_save_as->hide();
 }}
-            xywh {5 5 100 20} type Toggle divider
+            xywh {5 5 100 20} type Toggle shortcut 0x50073 divider
           }
           MenuItem {} {
             label {    Quit}
@@ -107,42 +110,47 @@ cl_gts_master.cb_quit();}
           MenuItem menite_crop_area_and_rot90 {
             label {Area and Rot90...}
             callback {if (cl_gts_gui.menite_crop_area_and_rot90->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_crop_area_and_rot90->show();
 } else {
     cl_gts_gui.window_crop_area_and_rot90->hide();
 }}
-            xywh {5 5 100 20} type Toggle
+            xywh {5 5 100 20} type Toggle shortcut 0xffc2
           }
           MenuItem menite_pixel_type_and_bright {
             label {Pixel Type and Bright...}
             callback {if (cl_gts_gui.menite_pixel_type_and_bright->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_pixel_type_and_bright->show();
 } else {
     cl_gts_gui.window_pixel_type_and_bright->hide();
 }}
-            xywh {5 5 100 20} type Toggle
+            xywh {5 5 100 20} type Toggle shortcut 0xffc3
           }
           MenuItem menite_fnum_list {
             label {File Number ...}
             callback {if (cl_gts_gui.menite_fnum_list->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_fnum_list->show();
 } else {
     cl_gts_gui.window_fnum_list->hide();
 }}
-            xywh {5 5 100 20} type Toggle
+            xywh {5 5 100 20} type Toggle shortcut 0xffc7
           }
           MenuItem menite_color_trace {
             label {Color Trace Enhancement...}
             callback {if (cl_gts_gui.menite_color_trace->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_color_trace->show();
 } else {
     cl_gts_gui.window_color_trace->hide();
 }}
-            xywh {0 0 100 20} type Toggle
+            xywh {0 0 100 20} type Toggle shortcut 0xffc6
           }
           MenuItem menite_trace_batch {
             label {Color Trace Batch...}
             callback {if (cl_gts_gui.menite_trace_batch->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_trace_batch->show();
 } else {
     cl_gts_gui.window_trace_batch->hide();
@@ -152,6 +160,7 @@ cl_gts_master.cb_quit();}
           MenuItem menite_edit_color {
             label {Edit Color...}
             callback {if (cl_gts_gui.menite_edit_color->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_edit_color->show();
 } else {
     cl_gts_gui.window_edit_color->hide();
@@ -161,6 +170,7 @@ cl_gts_master.cb_quit();}
           MenuItem menite_edit_hsv_min_max {
             label {Edit HSV Min Max}
             callback {if (cl_gts_gui.menite_edit_hsv_min_max->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_hab_histogram->show();
 } else {
     cl_gts_gui.window_hab_histogram->hide();
@@ -170,6 +180,7 @@ cl_gts_master.cb_quit();}
           MenuItem menite_thickness {
             label {Thickness...}
             callback {if (cl_gts_gui.menite_thickness->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_thickness->show();
 } else {
     cl_gts_gui.window_thickness->hide();
