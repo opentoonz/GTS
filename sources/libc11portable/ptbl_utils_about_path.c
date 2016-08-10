@@ -38,7 +38,7 @@ char *ptbl_getenv(const char *name)
 		fprintf(stderr,"ptbl_getenv(-):malloc(_MAX_ENV) failure\n");
 		return NULL;
 	}
-# ifdef _WIN32
+#ifdef _WIN32
 	{ // for vc2010
 	 errno_t err_no = getenv_s(&length, value, _MAX_ENV, name);
 	 if (err_no != 0) {
@@ -54,22 +54,22 @@ char *ptbl_getenv(const char *name)
 		free(value);
 		return NULL;
 	}
-# else
+#else
 	const char* env_ptr = getenv(name);
 	if (env_ptr == NULL) {
 		fprintf(stderr,"getenv(%s) returned NULL\n", name);
 		free(value);
 		return NULL;
 	}
-        length = strlen(env_ptr);
+	length = strlen(env_ptr);
 	if ((length <= 0) || (length >= _MAX_ENV)) {
 		fprintf(stderr,"getenv(%s) got a bad length (%d)\n"
 			,name ,length);
 		free(value);
 		return NULL;
 	}
-        strncpy( value ,env_ptr ,length );
-# endif
+	strncpy( value ,env_ptr ,length );
+#endif
 	value[length] = '\0';
 	return value;
 }

@@ -136,6 +136,10 @@ void gts_gui::cb_menite_color_trace_i(Fl_Menu_*, void*) {
     cl_gts_gui.window_color_trace->show();
 } else {
     cl_gts_gui.window_color_trace->hide();
+    cl_gts_gui.window_edit_color->hide();
+    cl_gts_gui.menite_edit_color->clear();
+    cl_gts_gui.window_hab_histogram->hide();
+    cl_gts_gui.menite_edit_hsv_min_max->clear();
 };
 }
 void gts_gui::cb_menite_color_trace(Fl_Menu_* o, void* v) {
@@ -172,6 +176,10 @@ void gts_gui::cb_menite_thickness_i(Fl_Menu_*, void*) {
     cl_gts_gui.window_thickness->show();
 } else {
     cl_gts_gui.window_thickness->hide();
+    cl_gts_gui.window_edit_color->hide();
+    cl_gts_gui.menite_edit_color->clear();
+    cl_gts_gui.window_hab_histogram->hide();
+    cl_gts_gui.menite_edit_hsv_min_max->clear();
 };
 }
 void gts_gui::cb_menite_thickness(Fl_Menu_* o, void* v) {
@@ -335,8 +343,8 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"File Number ...", 0xffc7,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Color Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Thickness...", 0,  (Fl_Callback*)gts_gui::cb_menite_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Edit Color...", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Edit HSV Min Max", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_hsv_min_max, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Edit Color...", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_color, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Edit HSV Min Max", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_hsv_min_max, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Channels", 0,  0, 0, 80, FL_NORMAL_LABEL, 0, 14, 0},
@@ -929,54 +937,13 @@ void gts_gui::cb_valinp_rgb_gamma(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_rgb_gamma_i(o,v);
 }
 
-void gts_gui::cb_window_fnum_list_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();
-}
-void gts_gui::cb_window_fnum_list(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_fnum_list_i(o,v);
-}
-
-void gts_gui::cb_Select_i(Fl_Menu_*, void*) {
-  int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
-        cl_gts_gui.selbro_fnum_list->select(ii);
-};
-}
-void gts_gui::cb_Select(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Select_i(o,v);
-}
-
-void gts_gui::cb_Delete_i(Fl_Menu_*, void*) {
-  int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
-        if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
-                cl_gts_gui.selbro_fnum_list->remove(ii);
-        } else { ++ii; }
-};
-}
-void gts_gui::cb_Delete(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Delete_i(o,v);
-}
-
-Fl_Menu_Item gts_gui::menu_1[] = {
- {"Edit", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Select All", 0x40061,  (Fl_Callback*)gts_gui::cb_Select, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Delete", 0x40078,  (Fl_Callback*)gts_gui::cb_Delete, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0},
- {0,0,0,0,0,0,0,0,0}
-};
-
-void gts_gui::cb_norinp_fnum_insert_i(Fl_Input*, void*) {
-  cl_gts_master.cb_fnum_edit_insert();
-}
-void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);
-}
-
 void gts_gui::cb_window_color_trace_i(Fl_Double_Window*, void*) {
   cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.menite_color_trace->clear();
+cl_gts_gui.window_edit_color->hide();
+cl_gts_gui.menite_edit_color->clear();
+cl_gts_gui.window_hab_histogram->hide();
+cl_gts_gui.menite_edit_hsv_min_max->clear();
 }
 void gts_gui::cb_window_color_trace(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_color_trace_i(o,v);
@@ -1864,6 +1831,51 @@ void gts_gui::cb_All1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_All1_i(o,v);
 }
 
+void gts_gui::cb_window_fnum_list_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_fnum_list->hide();
+cl_gts_gui.menite_fnum_list->clear();
+}
+void gts_gui::cb_window_fnum_list(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_fnum_list_i(o,v);
+}
+
+void gts_gui::cb_Select_i(Fl_Menu_*, void*) {
+  int     ii;
+for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+        cl_gts_gui.selbro_fnum_list->select(ii);
+};
+}
+void gts_gui::cb_Select(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Select_i(o,v);
+}
+
+void gts_gui::cb_Delete_i(Fl_Menu_*, void*) {
+  int     ii;
+for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
+        if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
+                cl_gts_gui.selbro_fnum_list->remove(ii);
+        } else { ++ii; }
+};
+}
+void gts_gui::cb_Delete(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Delete_i(o,v);
+}
+
+Fl_Menu_Item gts_gui::menu_1[] = {
+ {"Edit", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Select All", 0x40061,  (Fl_Callback*)gts_gui::cb_Select, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Delete", 0x40078,  (Fl_Callback*)gts_gui::cb_Delete, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+void gts_gui::cb_norinp_fnum_insert_i(Fl_Input*, void*) {
+  cl_gts_master.cb_fnum_edit_insert();
+}
+void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);
+}
+
 void gts_gui::cb_window_trace_batch_i(Fl_Double_Window*, void*) {
   cl_gts_master.cl_bro_trace_batch.cb_cancel();
 }
@@ -1950,6 +1962,324 @@ void gts_gui::cb_Cancel3_i(Fl_Button*, void*) {
 }
 void gts_gui::cb_Cancel3(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Cancel3_i(o,v);
+}
+
+void gts_gui::cb_window_thickness_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_thickness->hide();
+cl_gts_gui.menite_thickness->clear();
+cl_gts_gui.window_edit_color->hide();
+cl_gts_gui.menite_edit_color->clear();
+cl_gts_gui.window_hab_histogram->hide();
+cl_gts_gui.menite_edit_hsv_min_max->clear();
+}
+void gts_gui::cb_window_thickness(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_thickness_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_01_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_01grp->activate();
+    cl_gts_gui.chkbtn_color_trace_01_chk->value(1);
+    cl_gts_gui.group_thickness_01grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_01grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_01_chk->value(0);
+    cl_gts_gui.group_thickness_01grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_01_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_01_chk_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_01_tgt_rgb_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_01();
+}
+void gts_gui::cb_button_thickness_01_tgt_rgb(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_tgt_rgb_i(o,v);
+}
+
+void gts_gui::cb_roubut_thickness_01_tgt_is_bl_i(Fl_Round_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_01();
+}
+void gts_gui::cb_roubut_thickness_01_tgt_is_bl(Fl_Round_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_01_tgt_is_bl_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_01_src_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_01();
+}
+void gts_gui::cb_button_thickness_01_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_01_i(Fl_Scrollbar* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_01(o->value());
+}
+void gts_gui::cb_scrbar_thickness_01(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_01_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_01_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_01(o->value());
+}
+void gts_gui::cb_valinp_thickness_01(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_01_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_02_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_02grp->activate();
+    cl_gts_gui.chkbtn_color_trace_02_chk->value(1);
+    cl_gts_gui.group_thickness_02grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_02grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_02_chk->value(0);
+    cl_gts_gui.group_thickness_02grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_02_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_02_chk_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_02_tgt_rgb_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_02();
+}
+void gts_gui::cb_button_thickness_02_tgt_rgb(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_tgt_rgb_i(o,v);
+}
+
+void gts_gui::cb_roubut_thickness_02_tgt_is_bl_i(Fl_Round_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_02();
+}
+void gts_gui::cb_roubut_thickness_02_tgt_is_bl(Fl_Round_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_02_tgt_is_bl_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_02_src_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_02();
+}
+void gts_gui::cb_button_thickness_02_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_02_i(Fl_Scrollbar* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_02(o->value());
+}
+void gts_gui::cb_scrbar_thickness_02(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_02_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_02_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_02(o->value());
+}
+void gts_gui::cb_valinp_thickness_02(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_02_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_03_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_03grp->activate();
+    cl_gts_gui.chkbtn_color_trace_03_chk->value(1);
+    cl_gts_gui.group_thickness_03grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_03grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_03_chk->value(0);
+    cl_gts_gui.group_thickness_03grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_03_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_03_chk_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_03_tgt_rgb_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_03();
+}
+void gts_gui::cb_button_thickness_03_tgt_rgb(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_tgt_rgb_i(o,v);
+}
+
+void gts_gui::cb_roubut_thickness_03_tgt_is_bl_i(Fl_Round_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_03();
+}
+void gts_gui::cb_roubut_thickness_03_tgt_is_bl(Fl_Round_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_03_tgt_is_bl_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_03_src_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_03();
+}
+void gts_gui::cb_button_thickness_03_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_03_i(Fl_Scrollbar* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_03(o->value());
+}
+void gts_gui::cb_scrbar_thickness_03(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_03_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_03_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_03(o->value());
+}
+void gts_gui::cb_valinp_thickness_03(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_03_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_04_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_04grp->activate();
+    cl_gts_gui.chkbtn_color_trace_04_chk->value(1);
+    cl_gts_gui.group_thickness_04grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_04grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_04_chk->value(0);
+    cl_gts_gui.group_thickness_04grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_04_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_04_chk_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_04_tgt_rgb_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_04();
+}
+void gts_gui::cb_button_thickness_04_tgt_rgb(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_tgt_rgb_i(o,v);
+}
+
+void gts_gui::cb_roubut_thickness_04_tgt_is_bl_i(Fl_Round_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_04();
+}
+void gts_gui::cb_roubut_thickness_04_tgt_is_bl(Fl_Round_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_04_tgt_is_bl_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_04_src_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_04();
+}
+void gts_gui::cb_button_thickness_04_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_04_i(Fl_Scrollbar* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_04(o->value());
+}
+void gts_gui::cb_scrbar_thickness_04(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_04_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_04_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_04(o->value());
+}
+void gts_gui::cb_valinp_thickness_04(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_04_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_05_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_05grp->activate();
+    cl_gts_gui.chkbtn_color_trace_05_chk->value(1);
+    cl_gts_gui.group_thickness_05grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_05grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_05_chk->value(0);
+    cl_gts_gui.group_thickness_05grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_05_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_05_chk_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_05_tgt_rgb_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_05();
+}
+void gts_gui::cb_button_thickness_05_tgt_rgb(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_05_tgt_rgb_i(o,v);
+}
+
+void gts_gui::cb_roubut_thickness_05_tgt_is_bl_i(Fl_Round_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_05();
+}
+void gts_gui::cb_roubut_thickness_05_tgt_is_bl(Fl_Round_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_05_tgt_is_bl_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_05_src_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_05();
+}
+void gts_gui::cb_button_thickness_05_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_05_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_05_i(Fl_Scrollbar* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_05(o->value());
+}
+void gts_gui::cb_scrbar_thickness_05(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_05_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_05_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_05(o->value());
+}
+void gts_gui::cb_valinp_thickness_05(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_05_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_thickness_06_chk_i(Fl_Check_Button* o, void*) {
+  if (o->value()) {
+    cl_gts_gui.group_color_trace_06grp->activate();
+    cl_gts_gui.chkbtn_color_trace_06_chk->value(1);
+    cl_gts_gui.group_thickness_06grp->activate();
+} else {
+    cl_gts_gui.group_color_trace_06grp->deactivate();
+    cl_gts_gui.chkbtn_color_trace_06_chk->value(0);
+    cl_gts_gui.group_thickness_06grp->deactivate();
+}
+cl_gts_master.cb_color_trace_src_redraw_image();
+}
+void gts_gui::cb_chkbtn_thickness_06_chk(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_06_chk_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_06_tgt_rgb_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_06();
+}
+void gts_gui::cb_button_thickness_06_tgt_rgb(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_06_tgt_rgb_i(o,v);
+}
+
+void gts_gui::cb_roubut_thickness_06_tgt_is_bl_i(Fl_Round_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_06();
+}
+void gts_gui::cb_roubut_thickness_06_tgt_is_bl(Fl_Round_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_06_tgt_is_bl_i(o,v);
+}
+
+void gts_gui::cb_button_thickness_06_src_i(Fl_Button*, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_06();
+}
+void gts_gui::cb_button_thickness_06_src(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_06_src_i(o,v);
+}
+
+void gts_gui::cb_scrbar_thickness_06_i(Fl_Scrollbar* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_scrbar_06(o->value());
+}
+void gts_gui::cb_scrbar_thickness_06(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_06_i(o,v);
+}
+
+void gts_gui::cb_valinp_thickness_06_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_color_trace_thickness.cb_valinp_06(o->value());
+}
+void gts_gui::cb_valinp_thickness_06(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_06_i(o,v);
 }
 
 void gts_gui::cb_window_edit_color_i(Fl_Double_Window*, void*) {
@@ -4753,320 +5083,6 @@ void gts_gui::cb_Color2(Fl_Light_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Color2_i(o,v);
 }
 
-void gts_gui::cb_window_thickness_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_thickness->hide();
-cl_gts_gui.menite_thickness->clear();
-}
-void gts_gui::cb_window_thickness(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_thickness_i(o,v);
-}
-
-void gts_gui::cb_chkbtn_thickness_01_chk_i(Fl_Check_Button* o, void*) {
-  if (o->value()) {
-    cl_gts_gui.group_color_trace_01grp->activate();
-    cl_gts_gui.chkbtn_color_trace_01_chk->value(1);
-    cl_gts_gui.group_thickness_01grp->activate();
-} else {
-    cl_gts_gui.group_color_trace_01grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_01_chk->value(0);
-    cl_gts_gui.group_thickness_01grp->deactivate();
-}
-cl_gts_master.cb_color_trace_src_redraw_image();
-}
-void gts_gui::cb_chkbtn_thickness_01_chk(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_01_chk_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_01_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_01();
-}
-void gts_gui::cb_button_thickness_01_tgt_rgb(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_tgt_rgb_i(o,v);
-}
-
-void gts_gui::cb_roubut_thickness_01_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_01();
-}
-void gts_gui::cb_roubut_thickness_01_tgt_is_bl(Fl_Round_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_01_tgt_is_bl_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_01_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_01();
-}
-void gts_gui::cb_button_thickness_01_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_01_src_i(o,v);
-}
-
-void gts_gui::cb_scrbar_thickness_01_i(Fl_Scrollbar* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_scrbar_01(o->value());
-}
-void gts_gui::cb_scrbar_thickness_01(Fl_Scrollbar* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_01_i(o,v);
-}
-
-void gts_gui::cb_valinp_thickness_01_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_valinp_01(o->value());
-}
-void gts_gui::cb_valinp_thickness_01(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_01_i(o,v);
-}
-
-void gts_gui::cb_chkbtn_thickness_02_chk_i(Fl_Check_Button* o, void*) {
-  if (o->value()) {
-    cl_gts_gui.group_color_trace_02grp->activate();
-    cl_gts_gui.chkbtn_color_trace_02_chk->value(1);
-    cl_gts_gui.group_thickness_02grp->activate();
-} else {
-    cl_gts_gui.group_color_trace_02grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_02_chk->value(0);
-    cl_gts_gui.group_thickness_02grp->deactivate();
-}
-cl_gts_master.cb_color_trace_src_redraw_image();
-}
-void gts_gui::cb_chkbtn_thickness_02_chk(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_02_chk_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_02_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_02();
-}
-void gts_gui::cb_button_thickness_02_tgt_rgb(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_tgt_rgb_i(o,v);
-}
-
-void gts_gui::cb_roubut_thickness_02_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_02();
-}
-void gts_gui::cb_roubut_thickness_02_tgt_is_bl(Fl_Round_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_02_tgt_is_bl_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_02_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_02();
-}
-void gts_gui::cb_button_thickness_02_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_02_src_i(o,v);
-}
-
-void gts_gui::cb_scrbar_thickness_02_i(Fl_Scrollbar* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_scrbar_02(o->value());
-}
-void gts_gui::cb_scrbar_thickness_02(Fl_Scrollbar* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_02_i(o,v);
-}
-
-void gts_gui::cb_valinp_thickness_02_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_valinp_02(o->value());
-}
-void gts_gui::cb_valinp_thickness_02(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_02_i(o,v);
-}
-
-void gts_gui::cb_chkbtn_thickness_03_chk_i(Fl_Check_Button* o, void*) {
-  if (o->value()) {
-    cl_gts_gui.group_color_trace_03grp->activate();
-    cl_gts_gui.chkbtn_color_trace_03_chk->value(1);
-    cl_gts_gui.group_thickness_03grp->activate();
-} else {
-    cl_gts_gui.group_color_trace_03grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_03_chk->value(0);
-    cl_gts_gui.group_thickness_03grp->deactivate();
-}
-cl_gts_master.cb_color_trace_src_redraw_image();
-}
-void gts_gui::cb_chkbtn_thickness_03_chk(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_03_chk_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_03_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_03();
-}
-void gts_gui::cb_button_thickness_03_tgt_rgb(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_tgt_rgb_i(o,v);
-}
-
-void gts_gui::cb_roubut_thickness_03_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_03();
-}
-void gts_gui::cb_roubut_thickness_03_tgt_is_bl(Fl_Round_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_03_tgt_is_bl_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_03_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_03();
-}
-void gts_gui::cb_button_thickness_03_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_03_src_i(o,v);
-}
-
-void gts_gui::cb_scrbar_thickness_03_i(Fl_Scrollbar* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_scrbar_03(o->value());
-}
-void gts_gui::cb_scrbar_thickness_03(Fl_Scrollbar* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_03_i(o,v);
-}
-
-void gts_gui::cb_valinp_thickness_03_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_valinp_03(o->value());
-}
-void gts_gui::cb_valinp_thickness_03(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_03_i(o,v);
-}
-
-void gts_gui::cb_chkbtn_thickness_04_chk_i(Fl_Check_Button* o, void*) {
-  if (o->value()) {
-    cl_gts_gui.group_color_trace_04grp->activate();
-    cl_gts_gui.chkbtn_color_trace_04_chk->value(1);
-    cl_gts_gui.group_thickness_04grp->activate();
-} else {
-    cl_gts_gui.group_color_trace_04grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_04_chk->value(0);
-    cl_gts_gui.group_thickness_04grp->deactivate();
-}
-cl_gts_master.cb_color_trace_src_redraw_image();
-}
-void gts_gui::cb_chkbtn_thickness_04_chk(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_04_chk_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_04_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_04();
-}
-void gts_gui::cb_button_thickness_04_tgt_rgb(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_tgt_rgb_i(o,v);
-}
-
-void gts_gui::cb_roubut_thickness_04_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_04();
-}
-void gts_gui::cb_roubut_thickness_04_tgt_is_bl(Fl_Round_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_04_tgt_is_bl_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_04_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_04();
-}
-void gts_gui::cb_button_thickness_04_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_04_src_i(o,v);
-}
-
-void gts_gui::cb_scrbar_thickness_04_i(Fl_Scrollbar* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_scrbar_04(o->value());
-}
-void gts_gui::cb_scrbar_thickness_04(Fl_Scrollbar* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_04_i(o,v);
-}
-
-void gts_gui::cb_valinp_thickness_04_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_valinp_04(o->value());
-}
-void gts_gui::cb_valinp_thickness_04(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_04_i(o,v);
-}
-
-void gts_gui::cb_chkbtn_thickness_05_chk_i(Fl_Check_Button* o, void*) {
-  if (o->value()) {
-    cl_gts_gui.group_color_trace_05grp->activate();
-    cl_gts_gui.chkbtn_color_trace_05_chk->value(1);
-    cl_gts_gui.group_thickness_05grp->activate();
-} else {
-    cl_gts_gui.group_color_trace_05grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_05_chk->value(0);
-    cl_gts_gui.group_thickness_05grp->deactivate();
-}
-cl_gts_master.cb_color_trace_src_redraw_image();
-}
-void gts_gui::cb_chkbtn_thickness_05_chk(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_05_chk_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_05_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_05();
-}
-void gts_gui::cb_button_thickness_05_tgt_rgb(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_05_tgt_rgb_i(o,v);
-}
-
-void gts_gui::cb_roubut_thickness_05_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_05();
-}
-void gts_gui::cb_roubut_thickness_05_tgt_is_bl(Fl_Round_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_05_tgt_is_bl_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_05_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_05();
-}
-void gts_gui::cb_button_thickness_05_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_05_src_i(o,v);
-}
-
-void gts_gui::cb_scrbar_thickness_05_i(Fl_Scrollbar* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_scrbar_05(o->value());
-}
-void gts_gui::cb_scrbar_thickness_05(Fl_Scrollbar* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_05_i(o,v);
-}
-
-void gts_gui::cb_valinp_thickness_05_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_valinp_05(o->value());
-}
-void gts_gui::cb_valinp_thickness_05(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_05_i(o,v);
-}
-
-void gts_gui::cb_chkbtn_thickness_06_chk_i(Fl_Check_Button* o, void*) {
-  if (o->value()) {
-    cl_gts_gui.group_color_trace_06grp->activate();
-    cl_gts_gui.chkbtn_color_trace_06_chk->value(1);
-    cl_gts_gui.group_thickness_06grp->activate();
-} else {
-    cl_gts_gui.group_color_trace_06grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_06_chk->value(0);
-    cl_gts_gui.group_thickness_06grp->deactivate();
-}
-cl_gts_master.cb_color_trace_src_redraw_image();
-}
-void gts_gui::cb_chkbtn_thickness_06_chk(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_06_chk_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_06_tgt_rgb_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_show_hide_06();
-}
-void gts_gui::cb_button_thickness_06_tgt_rgb(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_06_tgt_rgb_i(o,v);
-}
-
-void gts_gui::cb_roubut_thickness_06_tgt_is_bl_i(Fl_Round_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_tgt_change_black_06();
-}
-void gts_gui::cb_roubut_thickness_06_tgt_is_bl(Fl_Round_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_roubut_thickness_06_tgt_is_bl_i(o,v);
-}
-
-void gts_gui::cb_button_thickness_06_src_i(Fl_Button*, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_src_show_hide_06();
-}
-void gts_gui::cb_button_thickness_06_src(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_thickness_06_src_i(o,v);
-}
-
-void gts_gui::cb_scrbar_thickness_06_i(Fl_Scrollbar* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_scrbar_06(o->value());
-}
-void gts_gui::cb_scrbar_thickness_06(Fl_Scrollbar* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_scrbar_thickness_06_i(o,v);
-}
-
-void gts_gui::cb_valinp_thickness_06_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_color_trace_thickness.cb_valinp_06(o->value());
-}
-void gts_gui::cb_valinp_thickness_06(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_06_i(o,v);
-}
-
 Fl_Double_Window* gts_gui::make_window() {
   { window_opengl = new Fl_Double_Window(720, 565, "GTS");
     window_opengl->callback((Fl_Callback*)cb_window_opengl, (void*)(this));
@@ -5763,26 +5779,6 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->end();
     window_pixel_type_and_bright->resizable(window_pixel_type_and_bright);
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
-    window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
-    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
-      o->menu(menu_1);
-    } // Fl_Menu_Bar* o
-    { norinp_fnum_insert = new Fl_Input(0, 25, 80, 25);
-      norinp_fnum_insert->box(FL_BORDER_BOX);
-      norinp_fnum_insert->callback((Fl_Callback*)cb_norinp_fnum_insert);
-      norinp_fnum_insert->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      norinp_fnum_insert->when(FL_WHEN_ENTER_KEY);
-    } // Fl_Input* norinp_fnum_insert
-    { norout_crnt_scan_level_of_fnum = new Fl_Output(0, 50, 80, 25);
-    } // Fl_Output* norout_crnt_scan_level_of_fnum
-    { selbro_fnum_list = new Fl_Browser(0, 75, 80, 275);
-      selbro_fnum_list->type(3);
-      Fl_Group::current()->resizable(selbro_fnum_list);
-    } // Fl_Browser* selbro_fnum_list
-    window_fnum_list->set_non_modal();
-    window_fnum_list->end();
-  } // Fl_Double_Window* window_fnum_list
   { window_color_trace = new Fl_Double_Window(285, 815, "Color Trace Enhancement");
     window_color_trace->callback((Fl_Callback*)cb_window_color_trace, (void*)(this));
     { Fl_Group* o = new Fl_Group(5, 5, 280, 120);
@@ -6502,6 +6498,26 @@ Fl_Double_Window* gts_gui::make_window() {
     window_color_trace->set_non_modal();
     window_color_trace->end();
   } // Fl_Double_Window* window_color_trace
+  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
+    window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
+    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
+      o->menu(menu_1);
+    } // Fl_Menu_Bar* o
+    { norinp_fnum_insert = new Fl_Input(0, 25, 80, 25);
+      norinp_fnum_insert->box(FL_BORDER_BOX);
+      norinp_fnum_insert->callback((Fl_Callback*)cb_norinp_fnum_insert);
+      norinp_fnum_insert->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+      norinp_fnum_insert->when(FL_WHEN_ENTER_KEY);
+    } // Fl_Input* norinp_fnum_insert
+    { norout_crnt_scan_level_of_fnum = new Fl_Output(0, 50, 80, 25);
+    } // Fl_Output* norout_crnt_scan_level_of_fnum
+    { selbro_fnum_list = new Fl_Browser(0, 75, 80, 275);
+      selbro_fnum_list->type(3);
+      Fl_Group::current()->resizable(selbro_fnum_list);
+    } // Fl_Browser* selbro_fnum_list
+    window_fnum_list->set_non_modal();
+    window_fnum_list->end();
+  } // Fl_Double_Window* window_fnum_list
   { window_trace_batch = new Fl_Double_Window(300, 415, "Color Trace Batch");
     window_trace_batch->callback((Fl_Callback*)cb_window_trace_batch, (void*)(this));
     { Fl_Button* o = new Fl_Button(0, 0, 0, 0);
@@ -6561,266 +6577,6 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_batch->size_range(200, 125);
     window_trace_batch->end();
   } // Fl_Double_Window* window_trace_batch
-  { window_edit_color = new Fl_Double_Window(385, 100, "Edit Color");
-    window_edit_color->callback((Fl_Callback*)cb_window_edit_color, (void*)(this));
-    { Fl_Group* o = new Fl_Group(0, 10, 385, 20);
-      { Fl_Group* o = new Fl_Group(0, 10, 340, 20);
-        { scrbar_edit_color_red = new Fl_Scrollbar(45, 10, 295, 20, "Red");
-          scrbar_edit_color_red->type(1);
-          scrbar_edit_color_red->box(FL_BORDER_BOX);
-          scrbar_edit_color_red->maximum(255);
-          scrbar_edit_color_red->callback((Fl_Callback*)cb_scrbar_edit_color_red);
-          scrbar_edit_color_red->align(Fl_Align(FL_ALIGN_LEFT));
-          Fl_Group::current()->resizable(scrbar_edit_color_red);
-          scrbar_edit_color_red->linesize(1);
-        } // Fl_Scrollbar* scrbar_edit_color_red
-        o->end();
-        Fl_Group::current()->resizable(o);
-      } // Fl_Group* o
-      { valinp_edit_color_red = new Fl_Value_Input(345, 10, 35, 20);
-        valinp_edit_color_red->box(FL_BORDER_BOX);
-        valinp_edit_color_red->maximum(255);
-        valinp_edit_color_red->step(1);
-        valinp_edit_color_red->callback((Fl_Callback*)cb_valinp_edit_color_red);
-      } // Fl_Value_Input* valinp_edit_color_red
-      o->end();
-    } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 40, 385, 20);
-      { Fl_Group* o = new Fl_Group(0, 40, 340, 20);
-        { scrbar_edit_color_gre = new Fl_Scrollbar(45, 40, 295, 20, "Green");
-          scrbar_edit_color_gre->type(1);
-          scrbar_edit_color_gre->box(FL_BORDER_BOX);
-          scrbar_edit_color_gre->maximum(255);
-          scrbar_edit_color_gre->callback((Fl_Callback*)cb_scrbar_edit_color_gre);
-          scrbar_edit_color_gre->align(Fl_Align(FL_ALIGN_LEFT));
-          Fl_Group::current()->resizable(scrbar_edit_color_gre);
-          scrbar_edit_color_gre->linesize(1);
-        } // Fl_Scrollbar* scrbar_edit_color_gre
-        o->end();
-        Fl_Group::current()->resizable(o);
-      } // Fl_Group* o
-      { valinp_edit_color_gre = new Fl_Value_Input(345, 40, 35, 20);
-        valinp_edit_color_gre->box(FL_BORDER_BOX);
-        valinp_edit_color_gre->maximum(255);
-        valinp_edit_color_gre->step(1);
-        valinp_edit_color_gre->callback((Fl_Callback*)cb_valinp_edit_color_gre);
-      } // Fl_Value_Input* valinp_edit_color_gre
-      o->end();
-    } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 70, 385, 20);
-      { Fl_Group* o = new Fl_Group(0, 70, 340, 20);
-        { scrbar_edit_color_blu = new Fl_Scrollbar(45, 70, 295, 20, "Blue");
-          scrbar_edit_color_blu->type(1);
-          scrbar_edit_color_blu->box(FL_BORDER_BOX);
-          scrbar_edit_color_blu->maximum(255);
-          scrbar_edit_color_blu->callback((Fl_Callback*)cb_scrbar_edit_color_blu);
-          scrbar_edit_color_blu->align(Fl_Align(FL_ALIGN_LEFT));
-          Fl_Group::current()->resizable(scrbar_edit_color_blu);
-          scrbar_edit_color_blu->linesize(1);
-        } // Fl_Scrollbar* scrbar_edit_color_blu
-        o->end();
-        Fl_Group::current()->resizable(o);
-      } // Fl_Group* o
-      { valinp_edit_color_blu = new Fl_Value_Input(345, 70, 35, 20);
-        valinp_edit_color_blu->box(FL_BORDER_BOX);
-        valinp_edit_color_blu->maximum(255);
-        valinp_edit_color_blu->step(1);
-        valinp_edit_color_blu->callback((Fl_Callback*)cb_valinp_edit_color_blu);
-      } // Fl_Value_Input* valinp_edit_color_blu
-      o->end();
-    } // Fl_Group* o
-    window_edit_color->set_non_modal();
-    window_edit_color->size_range(200, 100, 1000, 100);
-    window_edit_color->end();
-    window_edit_color->resizable(window_edit_color);
-  } // Fl_Double_Window* window_edit_color
-  { window_hab_histogram = new Fl_Double_Window(1000, 565, "Edit HSV-MinMax");
-    window_hab_histogram->callback((Fl_Callback*)cb_window_hab_histogram, (void*)(this));
-    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 1000, 25);
-      o->menu(menu_3);
-    } // Fl_Menu_Bar* o
-    { Fl_Scroll* o = new Fl_Scroll(0, 25, 1000, 540);
-      { Fl_Group* o = new Fl_Group(0, 25, 1000, 180);
-        { fltkp_hh_histogram = new fltk_1000x100_histogram(0, 25, 1000, 100);
-          fltkp_hh_histogram->box(FL_NO_BOX);
-          fltkp_hh_histogram->color(FL_BACKGROUND_COLOR);
-          fltkp_hh_histogram->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_hh_histogram->labeltype(FL_NORMAL_LABEL);
-          fltkp_hh_histogram->labelfont(0);
-          fltkp_hh_histogram->labelsize(14);
-          fltkp_hh_histogram->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_hh_histogram->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_hh_histogram->when(FL_WHEN_RELEASE);
-        } // fltk_1000x100_histogram* fltkp_hh_histogram
-        { box_hh_color_belt = new Fl_Box(0, 126, 1000, 10);
-          box_hh_color_belt->image(image_color_belt1000x10hue);
-        } // Fl_Box* box_hh_color_belt
-        { fltkp_hh_cyclic = new fltk_hh_cyclic(0, 135, 1000, 50);
-          fltkp_hh_cyclic->box(FL_NO_BOX);
-          fltkp_hh_cyclic->color(FL_BACKGROUND_COLOR);
-          fltkp_hh_cyclic->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_hh_cyclic->labeltype(FL_NORMAL_LABEL);
-          fltkp_hh_cyclic->labelfont(0);
-          fltkp_hh_cyclic->labelsize(14);
-          fltkp_hh_cyclic->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_hh_cyclic->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_hh_cyclic->when(FL_WHEN_RELEASE);
-        } // fltk_hh_cyclic* fltkp_hh_cyclic
-        { Fl_Group* o = new Fl_Group(0, 185, 1000, 20);
-          o->box(FL_UP_BOX);
-          { valinp_hab_histogram_hh_min = new Fl_Value_Input(5, 185, 40, 20);
-            valinp_hab_histogram_hh_min->box(FL_BORDER_BOX);
-            valinp_hab_histogram_hh_min->maximum(360);
-            valinp_hab_histogram_hh_min->callback((Fl_Callback*)cb_valinp_hab_histogram_hh_min);
-            valinp_hab_histogram_hh_min->align(Fl_Align(FL_ALIGN_RIGHT));
-          } // Fl_Value_Input* valinp_hab_histogram_hh_min
-          { valinp_hab_histogram_hh_max = new Fl_Value_Input(955, 185, 40, 20);
-            valinp_hab_histogram_hh_max->box(FL_BORDER_BOX);
-            valinp_hab_histogram_hh_max->maximum(360);
-            valinp_hab_histogram_hh_max->callback((Fl_Callback*)cb_valinp_hab_histogram_hh_max);
-            valinp_hab_histogram_hh_max->align(Fl_Align(FL_ALIGN_RIGHT));
-          } // Fl_Value_Input* valinp_hab_histogram_hh_max
-          { Fl_Text_Display* o = new Fl_Text_Display(90, 185, 0, 0, "Histogram View");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Button* o = new Fl_Button(195, 185, 40, 20, "Max");
-            o->callback((Fl_Callback*)cb_Max);
-          } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(240, 185, 60, 20, "Average");
-            o->callback((Fl_Callback*)cb_Average);
-          } // Fl_Button* o
-          { Fl_Light_Button* o = new Fl_Light_Button(305, 185, 60, 20, "Color");
-            o->callback((Fl_Callback*)cb_Color);
-          } // Fl_Light_Button* o
-          o->end();
-        } // Fl_Group* o
-        o->end();
-      } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 205, 1000, 180);
-        { fltkp_aa_histogram = new fltk_1000x100_histogram(0, 205, 1000, 100);
-          fltkp_aa_histogram->box(FL_NO_BOX);
-          fltkp_aa_histogram->color(FL_BACKGROUND_COLOR);
-          fltkp_aa_histogram->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_aa_histogram->labeltype(FL_NORMAL_LABEL);
-          fltkp_aa_histogram->labelfont(0);
-          fltkp_aa_histogram->labelsize(14);
-          fltkp_aa_histogram->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_aa_histogram->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_aa_histogram->when(FL_WHEN_RELEASE);
-        } // fltk_1000x100_histogram* fltkp_aa_histogram
-        { fltkp_aa_color_belt = new fltk_1000x10_color_belt(0, 306, 1000, 10);
-          fltkp_aa_color_belt->box(FL_NO_BOX);
-          fltkp_aa_color_belt->color(FL_BACKGROUND_COLOR);
-          fltkp_aa_color_belt->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_aa_color_belt->labeltype(FL_NORMAL_LABEL);
-          fltkp_aa_color_belt->labelfont(0);
-          fltkp_aa_color_belt->labelsize(14);
-          fltkp_aa_color_belt->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_aa_color_belt->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_aa_color_belt->when(FL_WHEN_RELEASE);
-        } // fltk_1000x10_color_belt* fltkp_aa_color_belt
-        { fltkp_aa_minmax = new fltk_aa_minmax(0, 315, 1000, 50);
-          fltkp_aa_minmax->box(FL_NO_BOX);
-          fltkp_aa_minmax->color(FL_BACKGROUND_COLOR);
-          fltkp_aa_minmax->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_aa_minmax->labeltype(FL_NORMAL_LABEL);
-          fltkp_aa_minmax->labelfont(0);
-          fltkp_aa_minmax->labelsize(14);
-          fltkp_aa_minmax->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_aa_minmax->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_aa_minmax->when(FL_WHEN_RELEASE);
-        } // fltk_aa_minmax* fltkp_aa_minmax
-        { Fl_Group* o = new Fl_Group(0, 365, 1000, 20);
-          o->box(FL_UP_BOX);
-          { valinp_hab_histogram_aa_min = new Fl_Value_Input(5, 365, 40, 20);
-            valinp_hab_histogram_aa_min->box(FL_BORDER_BOX);
-            valinp_hab_histogram_aa_min->maximum(100);
-            valinp_hab_histogram_aa_min->callback((Fl_Callback*)cb_valinp_hab_histogram_aa_min);
-            valinp_hab_histogram_aa_min->align(Fl_Align(FL_ALIGN_RIGHT));
-          } // Fl_Value_Input* valinp_hab_histogram_aa_min
-          { valinp_hab_histogram_aa_max = new Fl_Value_Input(955, 365, 40, 20);
-            valinp_hab_histogram_aa_max->box(FL_BORDER_BOX);
-            valinp_hab_histogram_aa_max->maximum(100);
-            valinp_hab_histogram_aa_max->callback((Fl_Callback*)cb_valinp_hab_histogram_aa_max);
-            valinp_hab_histogram_aa_max->align(Fl_Align(FL_ALIGN_RIGHT));
-          } // Fl_Value_Input* valinp_hab_histogram_aa_max
-          { Fl_Text_Display* o = new Fl_Text_Display(90, 365, 0, 0, "Histogram View");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Button* o = new Fl_Button(195, 365, 40, 20, "Max");
-            o->callback((Fl_Callback*)cb_Max1);
-          } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(240, 365, 60, 20, "Average");
-            o->callback((Fl_Callback*)cb_Average1);
-          } // Fl_Button* o
-          { Fl_Light_Button* o = new Fl_Light_Button(305, 365, 60, 20, "Color");
-            o->callback((Fl_Callback*)cb_Color1);
-          } // Fl_Light_Button* o
-          o->end();
-        } // Fl_Group* o
-        o->end();
-      } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 385, 1000, 180);
-        { fltkp_bb_histogram = new fltk_1000x100_histogram(0, 385, 1000, 100);
-          fltkp_bb_histogram->box(FL_NO_BOX);
-          fltkp_bb_histogram->color(FL_BACKGROUND_COLOR);
-          fltkp_bb_histogram->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_bb_histogram->labeltype(FL_NORMAL_LABEL);
-          fltkp_bb_histogram->labelfont(0);
-          fltkp_bb_histogram->labelsize(14);
-          fltkp_bb_histogram->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_bb_histogram->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_bb_histogram->when(FL_WHEN_RELEASE);
-        } // fltk_1000x100_histogram* fltkp_bb_histogram
-        { box_bb_color_belt = new Fl_Box(0, 486, 1000, 10);
-          box_bb_color_belt->image(image_color_belt1000x10val);
-        } // Fl_Box* box_bb_color_belt
-        { fltkp_bb_minmax = new fltk_bb_minmax(0, 495, 1000, 50);
-          fltkp_bb_minmax->box(FL_NO_BOX);
-          fltkp_bb_minmax->color(FL_BACKGROUND_COLOR);
-          fltkp_bb_minmax->selection_color(FL_BACKGROUND_COLOR);
-          fltkp_bb_minmax->labeltype(FL_NORMAL_LABEL);
-          fltkp_bb_minmax->labelfont(0);
-          fltkp_bb_minmax->labelsize(14);
-          fltkp_bb_minmax->labelcolor(FL_FOREGROUND_COLOR);
-          fltkp_bb_minmax->align(Fl_Align(FL_ALIGN_CENTER));
-          fltkp_bb_minmax->when(FL_WHEN_RELEASE);
-        } // fltk_bb_minmax* fltkp_bb_minmax
-        { Fl_Group* o = new Fl_Group(0, 545, 1000, 20);
-          o->box(FL_UP_BOX);
-          { valinp_hab_histogram_bb_min = new Fl_Value_Input(5, 545, 40, 20);
-            valinp_hab_histogram_bb_min->box(FL_BORDER_BOX);
-            valinp_hab_histogram_bb_min->maximum(100);
-            valinp_hab_histogram_bb_min->callback((Fl_Callback*)cb_valinp_hab_histogram_bb_min);
-            valinp_hab_histogram_bb_min->align(Fl_Align(FL_ALIGN_RIGHT));
-          } // Fl_Value_Input* valinp_hab_histogram_bb_min
-          { valinp_hab_histogram_bb_max = new Fl_Value_Input(955, 545, 40, 20);
-            valinp_hab_histogram_bb_max->box(FL_BORDER_BOX);
-            valinp_hab_histogram_bb_max->maximum(100);
-            valinp_hab_histogram_bb_max->callback((Fl_Callback*)cb_valinp_hab_histogram_bb_max);
-            valinp_hab_histogram_bb_max->align(Fl_Align(FL_ALIGN_RIGHT));
-          } // Fl_Value_Input* valinp_hab_histogram_bb_max
-          { Fl_Text_Display* o = new Fl_Text_Display(90, 545, 0, 0, "Histogram View");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Button* o = new Fl_Button(195, 545, 40, 20, "Max");
-            o->callback((Fl_Callback*)cb_Max2);
-          } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(240, 545, 60, 20, "Average");
-            o->callback((Fl_Callback*)cb_Average2);
-          } // Fl_Button* o
-          { Fl_Light_Button* o = new Fl_Light_Button(305, 545, 60, 20, "Color");
-            o->callback((Fl_Callback*)cb_Color2);
-          } // Fl_Light_Button* o
-          o->end();
-        } // Fl_Group* o
-        o->end();
-      } // Fl_Group* o
-      o->end();
-    } // Fl_Scroll* o
-    window_hab_histogram->set_non_modal();
-    window_hab_histogram->end();
-  } // Fl_Double_Window* window_hab_histogram
   { window_thickness = new Fl_Double_Window(330, 225, "Thickness");
     window_thickness->callback((Fl_Callback*)cb_window_thickness, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 15, 330, 20);
@@ -7081,6 +6837,266 @@ Fl_Double_Window* gts_gui::make_window() {
     window_thickness->end();
     window_thickness->resizable(window_thickness);
   } // Fl_Double_Window* window_thickness
-  return window_thickness;
+  { window_edit_color = new Fl_Double_Window(385, 100, "Edit Color");
+    window_edit_color->callback((Fl_Callback*)cb_window_edit_color, (void*)(this));
+    { Fl_Group* o = new Fl_Group(0, 10, 385, 20);
+      { Fl_Group* o = new Fl_Group(0, 10, 340, 20);
+        { scrbar_edit_color_red = new Fl_Scrollbar(45, 10, 295, 20, "Red");
+          scrbar_edit_color_red->type(1);
+          scrbar_edit_color_red->box(FL_BORDER_BOX);
+          scrbar_edit_color_red->maximum(255);
+          scrbar_edit_color_red->callback((Fl_Callback*)cb_scrbar_edit_color_red);
+          scrbar_edit_color_red->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_edit_color_red);
+          scrbar_edit_color_red->linesize(1);
+        } // Fl_Scrollbar* scrbar_edit_color_red
+        o->end();
+        Fl_Group::current()->resizable(o);
+      } // Fl_Group* o
+      { valinp_edit_color_red = new Fl_Value_Input(345, 10, 35, 20);
+        valinp_edit_color_red->box(FL_BORDER_BOX);
+        valinp_edit_color_red->maximum(255);
+        valinp_edit_color_red->step(1);
+        valinp_edit_color_red->callback((Fl_Callback*)cb_valinp_edit_color_red);
+      } // Fl_Value_Input* valinp_edit_color_red
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(0, 40, 385, 20);
+      { Fl_Group* o = new Fl_Group(0, 40, 340, 20);
+        { scrbar_edit_color_gre = new Fl_Scrollbar(45, 40, 295, 20, "Green");
+          scrbar_edit_color_gre->type(1);
+          scrbar_edit_color_gre->box(FL_BORDER_BOX);
+          scrbar_edit_color_gre->maximum(255);
+          scrbar_edit_color_gre->callback((Fl_Callback*)cb_scrbar_edit_color_gre);
+          scrbar_edit_color_gre->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_edit_color_gre);
+          scrbar_edit_color_gre->linesize(1);
+        } // Fl_Scrollbar* scrbar_edit_color_gre
+        o->end();
+        Fl_Group::current()->resizable(o);
+      } // Fl_Group* o
+      { valinp_edit_color_gre = new Fl_Value_Input(345, 40, 35, 20);
+        valinp_edit_color_gre->box(FL_BORDER_BOX);
+        valinp_edit_color_gre->maximum(255);
+        valinp_edit_color_gre->step(1);
+        valinp_edit_color_gre->callback((Fl_Callback*)cb_valinp_edit_color_gre);
+      } // Fl_Value_Input* valinp_edit_color_gre
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(0, 70, 385, 20);
+      { Fl_Group* o = new Fl_Group(0, 70, 340, 20);
+        { scrbar_edit_color_blu = new Fl_Scrollbar(45, 70, 295, 20, "Blue");
+          scrbar_edit_color_blu->type(1);
+          scrbar_edit_color_blu->box(FL_BORDER_BOX);
+          scrbar_edit_color_blu->maximum(255);
+          scrbar_edit_color_blu->callback((Fl_Callback*)cb_scrbar_edit_color_blu);
+          scrbar_edit_color_blu->align(Fl_Align(FL_ALIGN_LEFT));
+          Fl_Group::current()->resizable(scrbar_edit_color_blu);
+          scrbar_edit_color_blu->linesize(1);
+        } // Fl_Scrollbar* scrbar_edit_color_blu
+        o->end();
+        Fl_Group::current()->resizable(o);
+      } // Fl_Group* o
+      { valinp_edit_color_blu = new Fl_Value_Input(345, 70, 35, 20);
+        valinp_edit_color_blu->box(FL_BORDER_BOX);
+        valinp_edit_color_blu->maximum(255);
+        valinp_edit_color_blu->step(1);
+        valinp_edit_color_blu->callback((Fl_Callback*)cb_valinp_edit_color_blu);
+      } // Fl_Value_Input* valinp_edit_color_blu
+      o->end();
+    } // Fl_Group* o
+    window_edit_color->set_non_modal();
+    window_edit_color->size_range(200, 100, 1000, 100);
+    window_edit_color->end();
+    window_edit_color->resizable(window_edit_color);
+  } // Fl_Double_Window* window_edit_color
+  { window_hab_histogram = new Fl_Double_Window(1000, 565, "Edit HSV-MinMax");
+    window_hab_histogram->callback((Fl_Callback*)cb_window_hab_histogram, (void*)(this));
+    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 1000, 25);
+      o->menu(menu_3);
+    } // Fl_Menu_Bar* o
+    { Fl_Scroll* o = new Fl_Scroll(0, 25, 1000, 540);
+      { Fl_Group* o = new Fl_Group(0, 25, 1000, 180);
+        { fltkp_hh_histogram = new fltk_1000x100_histogram(0, 25, 1000, 100);
+          fltkp_hh_histogram->box(FL_NO_BOX);
+          fltkp_hh_histogram->color(FL_BACKGROUND_COLOR);
+          fltkp_hh_histogram->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_hh_histogram->labeltype(FL_NORMAL_LABEL);
+          fltkp_hh_histogram->labelfont(0);
+          fltkp_hh_histogram->labelsize(14);
+          fltkp_hh_histogram->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_hh_histogram->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_hh_histogram->when(FL_WHEN_RELEASE);
+        } // fltk_1000x100_histogram* fltkp_hh_histogram
+        { box_hh_color_belt = new Fl_Box(0, 126, 1000, 10);
+          box_hh_color_belt->image(image_color_belt1000x10hue);
+        } // Fl_Box* box_hh_color_belt
+        { fltkp_hh_cyclic = new fltk_hh_cyclic(0, 135, 1000, 50);
+          fltkp_hh_cyclic->box(FL_NO_BOX);
+          fltkp_hh_cyclic->color(FL_BACKGROUND_COLOR);
+          fltkp_hh_cyclic->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_hh_cyclic->labeltype(FL_NORMAL_LABEL);
+          fltkp_hh_cyclic->labelfont(0);
+          fltkp_hh_cyclic->labelsize(14);
+          fltkp_hh_cyclic->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_hh_cyclic->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_hh_cyclic->when(FL_WHEN_RELEASE);
+        } // fltk_hh_cyclic* fltkp_hh_cyclic
+        { Fl_Group* o = new Fl_Group(0, 185, 1000, 20);
+          o->box(FL_UP_BOX);
+          { valinp_hab_histogram_hh_min = new Fl_Value_Input(5, 185, 40, 20);
+            valinp_hab_histogram_hh_min->box(FL_BORDER_BOX);
+            valinp_hab_histogram_hh_min->maximum(360);
+            valinp_hab_histogram_hh_min->callback((Fl_Callback*)cb_valinp_hab_histogram_hh_min);
+            valinp_hab_histogram_hh_min->align(Fl_Align(FL_ALIGN_RIGHT));
+          } // Fl_Value_Input* valinp_hab_histogram_hh_min
+          { valinp_hab_histogram_hh_max = new Fl_Value_Input(955, 185, 40, 20);
+            valinp_hab_histogram_hh_max->box(FL_BORDER_BOX);
+            valinp_hab_histogram_hh_max->maximum(360);
+            valinp_hab_histogram_hh_max->callback((Fl_Callback*)cb_valinp_hab_histogram_hh_max);
+            valinp_hab_histogram_hh_max->align(Fl_Align(FL_ALIGN_RIGHT));
+          } // Fl_Value_Input* valinp_hab_histogram_hh_max
+          { Fl_Text_Display* o = new Fl_Text_Display(90, 185, 0, 0, "Histogram View");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Button* o = new Fl_Button(195, 185, 40, 20, "Max");
+            o->callback((Fl_Callback*)cb_Max);
+          } // Fl_Button* o
+          { Fl_Button* o = new Fl_Button(240, 185, 60, 20, "Average");
+            o->callback((Fl_Callback*)cb_Average);
+          } // Fl_Button* o
+          { Fl_Light_Button* o = new Fl_Light_Button(305, 185, 60, 20, "Color");
+            o->callback((Fl_Callback*)cb_Color);
+          } // Fl_Light_Button* o
+          o->end();
+        } // Fl_Group* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Group* o = new Fl_Group(0, 205, 1000, 180);
+        { fltkp_aa_histogram = new fltk_1000x100_histogram(0, 205, 1000, 100);
+          fltkp_aa_histogram->box(FL_NO_BOX);
+          fltkp_aa_histogram->color(FL_BACKGROUND_COLOR);
+          fltkp_aa_histogram->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_aa_histogram->labeltype(FL_NORMAL_LABEL);
+          fltkp_aa_histogram->labelfont(0);
+          fltkp_aa_histogram->labelsize(14);
+          fltkp_aa_histogram->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_aa_histogram->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_aa_histogram->when(FL_WHEN_RELEASE);
+        } // fltk_1000x100_histogram* fltkp_aa_histogram
+        { fltkp_aa_color_belt = new fltk_1000x10_color_belt(0, 306, 1000, 10);
+          fltkp_aa_color_belt->box(FL_NO_BOX);
+          fltkp_aa_color_belt->color(FL_BACKGROUND_COLOR);
+          fltkp_aa_color_belt->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_aa_color_belt->labeltype(FL_NORMAL_LABEL);
+          fltkp_aa_color_belt->labelfont(0);
+          fltkp_aa_color_belt->labelsize(14);
+          fltkp_aa_color_belt->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_aa_color_belt->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_aa_color_belt->when(FL_WHEN_RELEASE);
+        } // fltk_1000x10_color_belt* fltkp_aa_color_belt
+        { fltkp_aa_minmax = new fltk_aa_minmax(0, 315, 1000, 50);
+          fltkp_aa_minmax->box(FL_NO_BOX);
+          fltkp_aa_minmax->color(FL_BACKGROUND_COLOR);
+          fltkp_aa_minmax->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_aa_minmax->labeltype(FL_NORMAL_LABEL);
+          fltkp_aa_minmax->labelfont(0);
+          fltkp_aa_minmax->labelsize(14);
+          fltkp_aa_minmax->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_aa_minmax->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_aa_minmax->when(FL_WHEN_RELEASE);
+        } // fltk_aa_minmax* fltkp_aa_minmax
+        { Fl_Group* o = new Fl_Group(0, 365, 1000, 20);
+          o->box(FL_UP_BOX);
+          { valinp_hab_histogram_aa_min = new Fl_Value_Input(5, 365, 40, 20);
+            valinp_hab_histogram_aa_min->box(FL_BORDER_BOX);
+            valinp_hab_histogram_aa_min->maximum(100);
+            valinp_hab_histogram_aa_min->callback((Fl_Callback*)cb_valinp_hab_histogram_aa_min);
+            valinp_hab_histogram_aa_min->align(Fl_Align(FL_ALIGN_RIGHT));
+          } // Fl_Value_Input* valinp_hab_histogram_aa_min
+          { valinp_hab_histogram_aa_max = new Fl_Value_Input(955, 365, 40, 20);
+            valinp_hab_histogram_aa_max->box(FL_BORDER_BOX);
+            valinp_hab_histogram_aa_max->maximum(100);
+            valinp_hab_histogram_aa_max->callback((Fl_Callback*)cb_valinp_hab_histogram_aa_max);
+            valinp_hab_histogram_aa_max->align(Fl_Align(FL_ALIGN_RIGHT));
+          } // Fl_Value_Input* valinp_hab_histogram_aa_max
+          { Fl_Text_Display* o = new Fl_Text_Display(90, 365, 0, 0, "Histogram View");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Button* o = new Fl_Button(195, 365, 40, 20, "Max");
+            o->callback((Fl_Callback*)cb_Max1);
+          } // Fl_Button* o
+          { Fl_Button* o = new Fl_Button(240, 365, 60, 20, "Average");
+            o->callback((Fl_Callback*)cb_Average1);
+          } // Fl_Button* o
+          { Fl_Light_Button* o = new Fl_Light_Button(305, 365, 60, 20, "Color");
+            o->callback((Fl_Callback*)cb_Color1);
+          } // Fl_Light_Button* o
+          o->end();
+        } // Fl_Group* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Group* o = new Fl_Group(0, 385, 1000, 180);
+        { fltkp_bb_histogram = new fltk_1000x100_histogram(0, 385, 1000, 100);
+          fltkp_bb_histogram->box(FL_NO_BOX);
+          fltkp_bb_histogram->color(FL_BACKGROUND_COLOR);
+          fltkp_bb_histogram->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_bb_histogram->labeltype(FL_NORMAL_LABEL);
+          fltkp_bb_histogram->labelfont(0);
+          fltkp_bb_histogram->labelsize(14);
+          fltkp_bb_histogram->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_bb_histogram->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_bb_histogram->when(FL_WHEN_RELEASE);
+        } // fltk_1000x100_histogram* fltkp_bb_histogram
+        { box_bb_color_belt = new Fl_Box(0, 486, 1000, 10);
+          box_bb_color_belt->image(image_color_belt1000x10val);
+        } // Fl_Box* box_bb_color_belt
+        { fltkp_bb_minmax = new fltk_bb_minmax(0, 495, 1000, 50);
+          fltkp_bb_minmax->box(FL_NO_BOX);
+          fltkp_bb_minmax->color(FL_BACKGROUND_COLOR);
+          fltkp_bb_minmax->selection_color(FL_BACKGROUND_COLOR);
+          fltkp_bb_minmax->labeltype(FL_NORMAL_LABEL);
+          fltkp_bb_minmax->labelfont(0);
+          fltkp_bb_minmax->labelsize(14);
+          fltkp_bb_minmax->labelcolor(FL_FOREGROUND_COLOR);
+          fltkp_bb_minmax->align(Fl_Align(FL_ALIGN_CENTER));
+          fltkp_bb_minmax->when(FL_WHEN_RELEASE);
+        } // fltk_bb_minmax* fltkp_bb_minmax
+        { Fl_Group* o = new Fl_Group(0, 545, 1000, 20);
+          o->box(FL_UP_BOX);
+          { valinp_hab_histogram_bb_min = new Fl_Value_Input(5, 545, 40, 20);
+            valinp_hab_histogram_bb_min->box(FL_BORDER_BOX);
+            valinp_hab_histogram_bb_min->maximum(100);
+            valinp_hab_histogram_bb_min->callback((Fl_Callback*)cb_valinp_hab_histogram_bb_min);
+            valinp_hab_histogram_bb_min->align(Fl_Align(FL_ALIGN_RIGHT));
+          } // Fl_Value_Input* valinp_hab_histogram_bb_min
+          { valinp_hab_histogram_bb_max = new Fl_Value_Input(955, 545, 40, 20);
+            valinp_hab_histogram_bb_max->box(FL_BORDER_BOX);
+            valinp_hab_histogram_bb_max->maximum(100);
+            valinp_hab_histogram_bb_max->callback((Fl_Callback*)cb_valinp_hab_histogram_bb_max);
+            valinp_hab_histogram_bb_max->align(Fl_Align(FL_ALIGN_RIGHT));
+          } // Fl_Value_Input* valinp_hab_histogram_bb_max
+          { Fl_Text_Display* o = new Fl_Text_Display(90, 545, 0, 0, "Histogram View");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Button* o = new Fl_Button(195, 545, 40, 20, "Max");
+            o->callback((Fl_Callback*)cb_Max2);
+          } // Fl_Button* o
+          { Fl_Button* o = new Fl_Button(240, 545, 60, 20, "Average");
+            o->callback((Fl_Callback*)cb_Average2);
+          } // Fl_Button* o
+          { Fl_Light_Button* o = new Fl_Light_Button(305, 545, 60, 20, "Color");
+            o->callback((Fl_Callback*)cb_Color2);
+          } // Fl_Light_Button* o
+          o->end();
+        } // Fl_Group* o
+        o->end();
+      } // Fl_Group* o
+      o->end();
+    } // Fl_Scroll* o
+    window_hab_histogram->set_non_modal();
+    window_hab_histogram->end();
+  } // Fl_Double_Window* window_hab_histogram
+  return window_hab_histogram;
 }
 gts_gui cl_gts_gui; 

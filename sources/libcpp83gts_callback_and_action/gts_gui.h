@@ -23,11 +23,11 @@
 #include <FL/Fl_Check_Button.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Value_Output.H>
+#include <FL/Fl_Round_Button.H>
 #include "fltk_1000x100_histogram.h"
 #include "fltk_1000_range_cyclic.h"
 #include "fltk_1000x10_color_belt.h"
 #include "fltk_1000_range_minmax.h"
-#include <FL/Fl_Round_Button.H>
 
 class gts_gui {
 public:
@@ -478,23 +478,6 @@ private:
   inline void cb_valinp_rgb_gamma_i(Fl_Value_Input*, void*);
   static void cb_valinp_rgb_gamma(Fl_Value_Input*, void*);
 public:
-  Fl_Double_Window *window_fnum_list;
-private:
-  inline void cb_window_fnum_list_i(Fl_Double_Window*, void*);
-  static void cb_window_fnum_list(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_1[];
-  inline void cb_Select_i(Fl_Menu_*, void*);
-  static void cb_Select(Fl_Menu_*, void*);
-  inline void cb_Delete_i(Fl_Menu_*, void*);
-  static void cb_Delete(Fl_Menu_*, void*);
-public:
-  Fl_Input *norinp_fnum_insert;
-private:
-  inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
-  static void cb_norinp_fnum_insert(Fl_Input*, void*);
-public:
-  Fl_Output *norout_crnt_scan_level_of_fnum;
-  Fl_Browser *selbro_fnum_list;
   Fl_Double_Window *window_color_trace;
 private:
   inline void cb_window_color_trace_i(Fl_Double_Window*, void*);
@@ -972,6 +955,23 @@ private:
   inline void cb_All1_i(Fl_Button*, void*);
   static void cb_All1(Fl_Button*, void*);
 public:
+  Fl_Double_Window *window_fnum_list;
+private:
+  inline void cb_window_fnum_list_i(Fl_Double_Window*, void*);
+  static void cb_window_fnum_list(Fl_Double_Window*, void*);
+  static Fl_Menu_Item menu_1[];
+  inline void cb_Select_i(Fl_Menu_*, void*);
+  static void cb_Select(Fl_Menu_*, void*);
+  inline void cb_Delete_i(Fl_Menu_*, void*);
+  static void cb_Delete(Fl_Menu_*, void*);
+public:
+  Fl_Input *norinp_fnum_insert;
+private:
+  inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
+  static void cb_norinp_fnum_insert(Fl_Input*, void*);
+public:
+  Fl_Output *norout_crnt_scan_level_of_fnum;
+  Fl_Browser *selbro_fnum_list;
   Fl_Double_Window *window_trace_batch;
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
@@ -1005,124 +1005,6 @@ private:
   static void cb_Run(Fl_Button*, void*);
   inline void cb_Cancel3_i(Fl_Button*, void*);
   static void cb_Cancel3(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_edit_color;
-private:
-  inline void cb_window_edit_color_i(Fl_Double_Window*, void*);
-  static void cb_window_edit_color(Fl_Double_Window*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_red;
-private:
-  inline void cb_scrbar_edit_color_red_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_red(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_red;
-private:
-  inline void cb_valinp_edit_color_red_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_red(Fl_Value_Input*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_gre;
-private:
-  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_gre;
-private:
-  inline void cb_valinp_edit_color_gre_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_gre(Fl_Value_Input*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_blu;
-private:
-  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_blu;
-private:
-  inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
-public:
-  Fl_Double_Window *window_hab_histogram;
-private:
-  inline void cb_window_hab_histogram_i(Fl_Double_Window*, void*);
-  static void cb_window_hab_histogram(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_3[];
-public:
-  static Fl_Menu_Item *menite_limit_nothing;
-private:
-  inline void cb_menite_limit_nothing_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_nothing(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_hh;
-private:
-  inline void cb_menite_limit_hh_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_hh(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_aa;
-private:
-  inline void cb_menite_limit_aa_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_aa(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_bb;
-private:
-  inline void cb_menite_limit_bb_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_bb(Fl_Menu_*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_hh_histogram;
-  Fl_Box *box_hh_color_belt;
-  fltk_hh_cyclic *fltkp_hh_cyclic;
-  Fl_Value_Input *valinp_hab_histogram_hh_min;
-private:
-  inline void cb_valinp_hab_histogram_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_hab_histogram_hh_max;
-private:
-  inline void cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_hh_max(Fl_Value_Input*, void*);
-  inline void cb_Max_i(Fl_Button*, void*);
-  static void cb_Max(Fl_Button*, void*);
-  inline void cb_Average_i(Fl_Button*, void*);
-  static void cb_Average(Fl_Button*, void*);
-  inline void cb_Color_i(Fl_Light_Button*, void*);
-  static void cb_Color(Fl_Light_Button*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_aa_histogram;
-  fltk_1000x10_color_belt *fltkp_aa_color_belt;
-  fltk_aa_minmax *fltkp_aa_minmax;
-  Fl_Value_Input *valinp_hab_histogram_aa_min;
-private:
-  inline void cb_valinp_hab_histogram_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_hab_histogram_aa_max;
-private:
-  inline void cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_aa_max(Fl_Value_Input*, void*);
-  inline void cb_Max1_i(Fl_Button*, void*);
-  static void cb_Max1(Fl_Button*, void*);
-  inline void cb_Average1_i(Fl_Button*, void*);
-  static void cb_Average1(Fl_Button*, void*);
-  inline void cb_Color1_i(Fl_Light_Button*, void*);
-  static void cb_Color1(Fl_Light_Button*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_bb_histogram;
-  Fl_Box *box_bb_color_belt;
-  fltk_bb_minmax *fltkp_bb_minmax;
-  Fl_Value_Input *valinp_hab_histogram_bb_min;
-private:
-  inline void cb_valinp_hab_histogram_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_hab_histogram_bb_max;
-private:
-  inline void cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_bb_max(Fl_Value_Input*, void*);
-  inline void cb_Max2_i(Fl_Button*, void*);
-  static void cb_Max2(Fl_Button*, void*);
-  inline void cb_Average2_i(Fl_Button*, void*);
-  static void cb_Average2(Fl_Button*, void*);
-  inline void cb_Color2_i(Fl_Light_Button*, void*);
-  static void cb_Color2(Fl_Light_Button*, void*);
 public:
   Fl_Double_Window *window_thickness;
 private:
@@ -1314,6 +1196,124 @@ public:
 private:
   inline void cb_valinp_thickness_06_i(Fl_Value_Input*, void*);
   static void cb_valinp_thickness_06(Fl_Value_Input*, void*);
+public:
+  Fl_Double_Window *window_edit_color;
+private:
+  inline void cb_window_edit_color_i(Fl_Double_Window*, void*);
+  static void cb_window_edit_color(Fl_Double_Window*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_red;
+private:
+  inline void cb_scrbar_edit_color_red_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_red(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_edit_color_red;
+private:
+  inline void cb_valinp_edit_color_red_i(Fl_Value_Input*, void*);
+  static void cb_valinp_edit_color_red(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_gre;
+private:
+  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_edit_color_gre;
+private:
+  inline void cb_valinp_edit_color_gre_i(Fl_Value_Input*, void*);
+  static void cb_valinp_edit_color_gre(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_blu;
+private:
+  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_edit_color_blu;
+private:
+  inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
+  static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
+public:
+  Fl_Double_Window *window_hab_histogram;
+private:
+  inline void cb_window_hab_histogram_i(Fl_Double_Window*, void*);
+  static void cb_window_hab_histogram(Fl_Double_Window*, void*);
+  static Fl_Menu_Item menu_3[];
+public:
+  static Fl_Menu_Item *menite_limit_nothing;
+private:
+  inline void cb_menite_limit_nothing_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_nothing(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_limit_hh;
+private:
+  inline void cb_menite_limit_hh_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_hh(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_limit_aa;
+private:
+  inline void cb_menite_limit_aa_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_aa(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_limit_bb;
+private:
+  inline void cb_menite_limit_bb_i(Fl_Menu_*, void*);
+  static void cb_menite_limit_bb(Fl_Menu_*, void*);
+public:
+  fltk_1000x100_histogram *fltkp_hh_histogram;
+  Fl_Box *box_hh_color_belt;
+  fltk_hh_cyclic *fltkp_hh_cyclic;
+  Fl_Value_Input *valinp_hab_histogram_hh_min;
+private:
+  inline void cb_valinp_hab_histogram_hh_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_hh_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_hab_histogram_hh_max;
+private:
+  inline void cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_hh_max(Fl_Value_Input*, void*);
+  inline void cb_Max_i(Fl_Button*, void*);
+  static void cb_Max(Fl_Button*, void*);
+  inline void cb_Average_i(Fl_Button*, void*);
+  static void cb_Average(Fl_Button*, void*);
+  inline void cb_Color_i(Fl_Light_Button*, void*);
+  static void cb_Color(Fl_Light_Button*, void*);
+public:
+  fltk_1000x100_histogram *fltkp_aa_histogram;
+  fltk_1000x10_color_belt *fltkp_aa_color_belt;
+  fltk_aa_minmax *fltkp_aa_minmax;
+  Fl_Value_Input *valinp_hab_histogram_aa_min;
+private:
+  inline void cb_valinp_hab_histogram_aa_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_aa_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_hab_histogram_aa_max;
+private:
+  inline void cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_aa_max(Fl_Value_Input*, void*);
+  inline void cb_Max1_i(Fl_Button*, void*);
+  static void cb_Max1(Fl_Button*, void*);
+  inline void cb_Average1_i(Fl_Button*, void*);
+  static void cb_Average1(Fl_Button*, void*);
+  inline void cb_Color1_i(Fl_Light_Button*, void*);
+  static void cb_Color1(Fl_Light_Button*, void*);
+public:
+  fltk_1000x100_histogram *fltkp_bb_histogram;
+  Fl_Box *box_bb_color_belt;
+  fltk_bb_minmax *fltkp_bb_minmax;
+  Fl_Value_Input *valinp_hab_histogram_bb_min;
+private:
+  inline void cb_valinp_hab_histogram_bb_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_bb_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_hab_histogram_bb_max;
+private:
+  inline void cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_hab_histogram_bb_max(Fl_Value_Input*, void*);
+  inline void cb_Max2_i(Fl_Button*, void*);
+  static void cb_Max2(Fl_Button*, void*);
+  inline void cb_Average2_i(Fl_Button*, void*);
+  static void cb_Average2(Fl_Button*, void*);
+  inline void cb_Color2_i(Fl_Light_Button*, void*);
+  static void cb_Color2(Fl_Light_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif
