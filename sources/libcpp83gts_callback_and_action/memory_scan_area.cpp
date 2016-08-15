@@ -219,8 +219,10 @@ namespace {
 
 void ptbl_getenv(const char *name, std::string& env) {
 	char *value = ptbl_getenv(name);
-	env = value;
-	free(value);
+	if (value != nullptr) {
+		env = value;
+		free(value);
+	}
 }
 
 void ptbl_get_user_home(std::string& user_home)
