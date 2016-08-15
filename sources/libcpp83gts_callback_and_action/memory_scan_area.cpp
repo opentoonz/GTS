@@ -225,7 +225,7 @@ void ptbl_getenv(const char *name, std::string& env) {
 
 void ptbl_get_user_home(std::string& user_home)
 {
-# ifdef _WIN32
+#ifdef _WIN32
 	std::string homedrive, homepath;
 	ptbl_getenv("HOMEDRIVE", homedrive);
 	ptbl_getenv("HOMEPATH" , homepath);
@@ -233,9 +233,9 @@ void ptbl_get_user_home(std::string& user_home)
 		user_home = homedrive;
 		user_home += homepath;
 	}
-# else
+#else
 	ptbl_getenv("HOME", user_home);
-# endif
+#endif
 }
 
 std::string gts_file_path(const char *comm, const char *file_name) {
@@ -245,25 +245,25 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 	*/
 	std::string fpath_user;
 	ptbl_get_user_home(fpath_user);
-# ifndef _WIN32
+#ifndef _WIN32
 	fpath_user += ptbl_get_cp_path_separeter();
-	fpath_user += STR_DESKTOP_DIR;
-	if(!ptbl_dir_or_file_is_exist((char *)fpath_user.c_str())) {
+	fpath_user += cl_gts_master.cl_memo_desktop.get_install_and_scan_area_and_desktop_dir();
+	if (!ptbl_dir_or_file_is_exist((char *)fpath_user.c_str())) {
 		ptbl_mkdir(fpath_user.c_str());
 	}
-# endif
+#endif
 	file_path_from_dir_(fpath_user, file_name);
-	if(!fpath_user.empty()) {
+	if (!fpath_user.empty()) {
 		return fpath_user;
 	}
 
-# ifdef PKGDATADIR
+#ifdef PKGDATADIR
 	std::string fpath_data(PKGDATADIR);
 	file_path_from_dir_(fpath_data, file_name);
-	if(!fpath_data.empty()) {
+	if (!fpath_data.empty()) {
 		return fpath_data;
 	}
-# endif
+#endif
 
 	/* 優先度B  全ユーザープロファイルのホームにあるなら
  	--> %ALLUSERSPROFILE%\_gts-scan_area.txt"
@@ -292,7 +292,7 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 	/* 優先度D  .exeと同じ場所にあるなら */
 	std::string fpath_dexe(get_dexe_home_(comm));
 	file_path_from_dir_(fpath_dexe, file_name);
-	if(!fpath_dexe.empty()) {
+	if (!fpath_dexe.empty()) {
 		return fpath_dexe;
 	}
 

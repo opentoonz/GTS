@@ -8,7 +8,6 @@ public:
 	memory_desktop()
 	:str_desktop_filename_( ".GTS-desktop" )
 	,str_desktop_filename2_( "_gts-desktop.txt" )
-	,str_desktop_dir_( ".GTS" )
 
 	,str_show_(
 	    "show" )
@@ -47,6 +46,7 @@ public:
 	,str_window_edit_hab_min_max_(
 	    "window_edit_hab_min_max" )
 # ifndef _WIN32
+	,str_desktop_dir_( ".GTS" )
 	,str_sane_device_name_(
 	    "sane_device_name" )
 # endif
@@ -56,10 +56,16 @@ public:
 	int save( void );
 	int load( void );
 
+# ifndef _WIN32
+	const char* get_install_and_scan_area_and_desktop_dir( void )
+	{
+		return this->str_desktop_dir_;
+	}
+# endif
+
 private:
 	const char* str_desktop_filename_;
 	const char* str_desktop_filename2_;
-	const char* str_desktop_dir_;
 
 	const char* str_show_;
 	const char* str_hide_;
@@ -82,6 +88,7 @@ private:
 	const char* str_window_edit_color_;
 	const char* str_window_edit_hab_min_max_;
 # ifndef _WIN32
+	const char* str_desktop_dir_;
 	const char* str_sane_device_name_;
 # endif
 

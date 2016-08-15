@@ -13,24 +13,33 @@
 
 int memory_desktop::set_desktop_file_path_( void ) {
 	int ret = OK;
-	if(this->user_home_.empty()) {
+
+	/* 初回実行時のみuser_homeを設定する */
+	if (this->user_home_.empty()) {
 		ptbl_get_user_home(this->user_home_);
 		if (this->user_home_.empty()) {
 			ret = NG;
 		}
 	}
-	if(this->desktop_file_path_.empty()) {
+
+	/* 初回実行時のみfile_pathを設定する */
+	if (this->desktop_file_path_.empty()) {
+		/* 場所はホームディレクトリ固定 */
 		this->desktop_file_path_ = this->user_home_;
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
-# ifndef _WIN32
-		this->desktop_file_path_ += this->str_desktop_dir_;
+#ifndef _WIN32
+		this->desktop_file_path_ +=
+			this->get_install_and_scan_area_and_desktop_dir();
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
-        if(!ptbl_dir_or_file_is_exist((char *)this->desktop_file_path_.c_str())) {
-            ptbl_mkdir(this->desktop_file_path_.c_str());
-        }
-# endif
+		if (!ptbl_dir_or_file_is_exist(
+			const_cast<char *>(this->desktop_file_path_.c_str())
+		)) {
+			ptbl_mkdir(this->desktop_file_path_.c_str());
+		}
+#endif
 		this->desktop_file_path_ += this->str_desktop_filename2_;
 	}
+
 	return ret;
 }
 int memory_desktop::load( void ) {
@@ -185,11 +194,11 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_hab_histogram->position(xx,yy);
 		}
-# ifndef _WIN32
+#ifndef _WIN32
 		else if ((this->str_sane_device_name_ == key) && (2 == ret)) {
 		cl_gts_master.cl_iip_scan.device_name((char*)di.c_str());
 		}
-# endif
+#endif
 		else {
 			pri_funct_err_bttvr(
  	"Warning : memory_desktop::load() : ignore '%s' at line %d"
