@@ -320,8 +320,11 @@ int cb_color_trace_enhancement::src_open_histogram_window_( E_COLOR_TRACE_HAB_CO
 			e_num);
 		return NG;
 	}
+	cl_gts_gui.window_opengl->show();/* Need for Minimize */
 	cl_gts_gui.window_hab_histogram->redraw();
 	cl_gts_gui.window_hab_histogram->show();
+	cl_gts_gui.menite_edit_hsv_min_max->set();//Check menu sw
+
 	return OK;
 }
 int cb_color_trace_enhancement::src_set_histogram_window( E_COLOR_TRACE_HAB_COLORS e_num )

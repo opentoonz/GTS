@@ -190,6 +190,7 @@ void cb_color_trace_thickness::tgt_open_edit_color_( E_COLOR_TRACE_HAB_COLORS tr
  col == cl_gts_master.cl_color_trace_enhancement.tgt_get_e_rgb_color()
 	) {
 		cl_gts_gui.window_edit_color->hide();
+		cl_gts_gui.menite_edit_color->clear();
 	}
 }
 
@@ -316,6 +317,7 @@ void cb_color_trace_thickness::cb_src_show_hide_01( void )
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
+		cl_gts_gui.menite_edit_hsv_min_max->clear();
 	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_02( void )
@@ -335,6 +337,7 @@ void cb_color_trace_thickness::cb_src_show_hide_02( void )
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
+		cl_gts_gui.menite_edit_hsv_min_max->clear();
 	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_03( void )
@@ -354,6 +357,7 @@ void cb_color_trace_thickness::cb_src_show_hide_03( void )
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
+		cl_gts_gui.menite_edit_hsv_min_max->clear();
 	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_04( void )
@@ -373,6 +377,7 @@ void cb_color_trace_thickness::cb_src_show_hide_04( void )
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
+		cl_gts_gui.menite_edit_hsv_min_max->clear();
 	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_05( void )
@@ -392,6 +397,7 @@ void cb_color_trace_thickness::cb_src_show_hide_05( void )
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
+		cl_gts_gui.menite_edit_hsv_min_max->clear();
 	}
 }
 void cb_color_trace_thickness::cb_src_show_hide_06( void )
@@ -411,6 +417,7 @@ void cb_color_trace_thickness::cb_src_show_hide_06( void )
  col == cl_gts_master.cl_color_trace_enhancement.src_get_e_color_range()
 	) {
 		cl_gts_gui.window_hab_histogram->hide();
+		cl_gts_gui.menite_edit_hsv_min_max->clear();
 	}
 }
 

@@ -24,4 +24,17 @@ public:
 	int load( const char *comm );
 };
 
+
+/* 環境変数を得る
+--> 将来共通関数として独立するべき */
+void ptbl_getenv(const char *name, std::string& env);
+
+/* ユーザーのホームディレクトリパスを得る
+--> 将来共通関数として独立するべき  */
+void ptbl_get_user_home(std::string& user_home);
+
+/* memory_scan_area , memory_install_setup で使う
+--> 将来アプリでの共通関数として独立するべき  */
+std::string gts_file_path(const char *comm, const char *file_name);
+
 #endif /* !memory_scan_area_h */

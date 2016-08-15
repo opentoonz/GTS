@@ -1,5 +1,6 @@
 #include <fstream>
 #include "igs_lex_white_space_and_double_quote.h"
+#include "memory_scan_area.h" // gts_file_path(-)
 #include "gts_master.h"
 
 void memory_install_setup::load( const std::string& exe_file_path )
