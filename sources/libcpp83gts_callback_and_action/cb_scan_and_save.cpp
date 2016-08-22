@@ -397,7 +397,14 @@ void gts_master::cb_scan_and_save_start( void )
 {
 	_i_rgb_trace_save_sw =
 		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value();
+
+	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
+		cl_gts_master.cl_list_access.set_endress_sw(true);
+	}
+
 	this->_cb_scan_and_save_start();
+
+	cl_gts_master.cl_list_access.set_endress_sw(false);
 }
 void gts_master::cb_scan_and_trace_and_save_start( void )
 {
@@ -411,7 +418,14 @@ void gts_master::cb_scan_and_trace_and_save_start( void )
 	cl_gts_gui.choice_pixel_type->value(2);
 
 	_i_rgb_trace_save_sw = 1;
+
+	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
+		cl_gts_master.cl_list_access.set_endress_sw(true);
+	}
+
 	this->_cb_scan_and_save_start();
+
+	cl_gts_master.cl_list_access.set_endress_sw(false);
 }
 void gts_master::cb_scan_and_save_next( void )
 {
@@ -423,6 +437,9 @@ void gts_master::cb_scan_and_save_next( void )
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
+	 if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
+		cl_gts_master.cl_list_access.set_endress_sw(true);
+	 }
 	 if (OK != this->_scan_and_save_crnt()) {
 		/*
 		ここでエラーになると次の番号がカレントに
@@ -434,8 +451,10 @@ void gts_master::cb_scan_and_save_next( void )
 
 		pri_funct_err_bttvr(
 	  "Error : this->_scan_and_save_crnt() returns NG" );
+		cl_gts_master.cl_list_access.set_endress_sw(false);
 		return;
 	 }
+	 cl_gts_master.cl_list_access.set_endress_sw(false);
 	}
 	/* 次のスキャンがあるなら */
 	if (0 < this->cl_list_access.get_i_next_file_num()) {

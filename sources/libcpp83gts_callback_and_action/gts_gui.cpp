@@ -544,13 +544,6 @@ void gts_gui::cb_strinp_level_file(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_strinp_level_file_i(o,v);
 }
 
-void gts_gui::cb_Endress_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_list_access.set_endress_sw(o->value()==1);
-}
-void gts_gui::cb_Endress(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Endress_i(o,v);
-}
-
 void gts_gui::cb_ligbut_level_image_x1_sw_i(Fl_Light_Button*, void*) {
   cl_gts_master.cl_bro_level.cb_x1view_wintgl();
 }
@@ -5248,10 +5241,9 @@ Fl_Double_Window* gts_gui::make_window() {
         valinp_level_end->maximum(9999);
         valinp_level_end->value(1);
       } // Fl_Value_Input* valinp_level_end
-      { Fl_Check_Button* o = new Fl_Check_Button(160, 455, 75, 25, "Endress");
-        o->down_box(FL_DOWN_BOX);
-        o->callback((Fl_Callback*)cb_Endress);
-      } // Fl_Check_Button* o
+      { chkbtn_endless = new Fl_Check_Button(160, 455, 75, 25, "Endless");
+        chkbtn_endless->down_box(FL_DOWN_BOX);
+      } // Fl_Check_Button* chkbtn_endless
       { Fl_Box* o = new Fl_Box(235, 455, 5, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
@@ -6509,20 +6501,20 @@ Fl_Double_Window* gts_gui::make_window() {
     window_color_trace->set_non_modal();
     window_color_trace->end();
   } // Fl_Double_Window* window_color_trace
-  { window_fnum_list = new Fl_Double_Window(80, 350, "Number");
+  { window_fnum_list = new Fl_Double_Window(116, 350, "Number");
     window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
-    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 80, 25);
+    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 116, 25);
       o->menu(menu_1);
     } // Fl_Menu_Bar* o
-    { norinp_fnum_insert = new Fl_Input(0, 25, 80, 25);
+    { norinp_fnum_insert = new Fl_Input(0, 25, 116, 25);
       norinp_fnum_insert->box(FL_BORDER_BOX);
       norinp_fnum_insert->callback((Fl_Callback*)cb_norinp_fnum_insert);
       norinp_fnum_insert->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       norinp_fnum_insert->when(FL_WHEN_ENTER_KEY);
     } // Fl_Input* norinp_fnum_insert
-    { norout_crnt_scan_level_of_fnum = new Fl_Output(0, 50, 80, 25);
+    { norout_crnt_scan_level_of_fnum = new Fl_Output(0, 50, 116, 25);
     } // Fl_Output* norout_crnt_scan_level_of_fnum
-    { selbro_fnum_list = new Fl_Browser(0, 75, 80, 275);
+    { selbro_fnum_list = new Fl_Browser(0, 75, 116, 275);
       selbro_fnum_list->type(3);
       Fl_Group::current()->resizable(selbro_fnum_list);
     } // Fl_Browser* selbro_fnum_list

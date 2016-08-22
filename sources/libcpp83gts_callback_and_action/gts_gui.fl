@@ -500,9 +500,8 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           label End
           xywh {120 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
         }
-        Fl_Check_Button {} {
-          label Endress
-          callback {cl_gts_master.cl_list_access.set_endress_sw(o->value()==1);}
+        Fl_Check_Button chkbtn_endless {
+          label Endless
           xywh {160 455 75 25} down_box DOWN_BOX
         }
         Fl_Box {} {
@@ -1723,14 +1722,14 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
 cl_gts_gui.menite_fnum_list->clear();}
-      xywh {50 50 80 350} type Double resizable non_modal visible
+      xywh {50 50 116 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {open
-        xywh {0 0 80 25}
+        xywh {0 0 116 25}
       } {
         Submenu {} {
           label Edit open
-          xywh {0 0 80 20}
+          xywh {0 0 116 20}
         } {
           MenuItem {} {
             label {Select All}
@@ -1738,7 +1737,7 @@ cl_gts_gui.menite_fnum_list->clear();}
 for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
         cl_gts_gui.selbro_fnum_list->select(ii);
 }}
-            xywh {0 0 80 20} shortcut 0x40061
+            xywh {0 0 116 20} shortcut 0x40061
           }
           MenuItem {} {
             label Delete
@@ -1748,19 +1747,19 @@ for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
                 cl_gts_gui.selbro_fnum_list->remove(ii);
         } else { ++ii; }
 }}
-            xywh {0 0 80 20} shortcut 0x40078
+            xywh {0 0 116 20} shortcut 0x40078
           }
         }
       }
       Fl_Input norinp_fnum_insert {
         callback {cl_gts_master.cb_fnum_edit_insert();}
-        xywh {0 25 80 25} box BORDER_BOX align 5 when 8
+        xywh {0 25 116 25} box BORDER_BOX align 5 when 8
       }
       Fl_Output norout_crnt_scan_level_of_fnum {
-        xywh {0 50 80 25}
+        xywh {0 50 116 25}
       }
       Fl_Browser selbro_fnum_list {
-        xywh {0 75 80 275} type Multi resizable
+        xywh {0 75 116 275} type Multi resizable
       }
     }
     Fl_Window window_trace_batch {
