@@ -544,6 +544,13 @@ void gts_gui::cb_strinp_level_file(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_strinp_level_file_i(o,v);
 }
 
+void gts_gui::cb_Endress_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_list_access.set_endress_sw(o->value()==1);
+}
+void gts_gui::cb_Endress(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Endress_i(o,v);
+}
+
 void gts_gui::cb_ligbut_level_image_x1_sw_i(Fl_Light_Button*, void*) {
   cl_gts_master.cl_bro_level.cb_x1view_wintgl();
 }
@@ -5241,7 +5248,11 @@ Fl_Double_Window* gts_gui::make_window() {
         valinp_level_end->maximum(9999);
         valinp_level_end->value(1);
       } // Fl_Value_Input* valinp_level_end
-      { Fl_Box* o = new Fl_Box(160, 455, 80, 25);
+      { Fl_Check_Button* o = new Fl_Check_Button(160, 455, 75, 25, "Endress");
+        o->down_box(FL_DOWN_BOX);
+        o->callback((Fl_Callback*)cb_Endress);
+      } // Fl_Check_Button* o
+      { Fl_Box* o = new Fl_Box(235, 455, 5, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { ligbut_level_image_x1_sw = new Fl_Light_Button(240, 455, 35, 25, "x1");

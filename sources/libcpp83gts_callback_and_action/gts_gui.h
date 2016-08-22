@@ -19,8 +19,8 @@
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Input.H>
-#include <FL/Fl_Light_Button.H>
 #include <FL/Fl_Check_Button.H>
+#include <FL/Fl_Light_Button.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Round_Button.H>
@@ -229,6 +229,10 @@ private:
 public:
   Fl_Value_Input *valinp_level_start;
   Fl_Value_Input *valinp_level_end;
+private:
+  inline void cb_Endress_i(Fl_Check_Button*, void*);
+  static void cb_Endress(Fl_Check_Button*, void*);
+public:
   Fl_Light_Button *ligbut_level_image_x1_sw;
 private:
   inline void cb_ligbut_level_image_x1_sw_i(Fl_Light_Button*, void*);

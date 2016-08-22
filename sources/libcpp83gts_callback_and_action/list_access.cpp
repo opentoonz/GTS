@@ -9,14 +9,43 @@
 
 #include "gts_gui.h"
 
+namespace {
+ bool check_next_selected_( int list_num )
+ {
+	for (;list_num<=cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
+		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
+			return true;
+		}
+	}
+	return false;
+ }
+}
+
 /* リストを指定番号からサーチし、
 次の選択されたリストの番号(1...)を得る
 ない場合は-1を返す */
-int list_access::_next_selected( int i_list_num )
+int list_access::_next_selected( int list_num )
 {
-	for (;i_list_num<=cl_gts_gui.selbro_fnum_list->size();++i_list_num){
-		if (cl_gts_gui.selbro_fnum_list->selected(i_list_num)) {
-			return i_list_num;
+	for (;list_num<=cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
+		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
+			/* EndressスイッチがON、かつ最後の選択だった */
+			if (this->endress_sw_ == true
+			&& !check_next_selected_(list_num+1)) {
+				/* 最後の番号に+1の番号を得る */
+				char numarray[8];
+				(void)sprintf( numarray, "%04d"
+	,atoi( cl_gts_gui.selbro_fnum_list->text(
+		cl_gts_gui.selbro_fnum_list->size()
+	) ) +1
+				);
+				/* listに追加して */
+				cl_gts_gui.selbro_fnum_list->add(numarray);
+				/* 選択状態にする */
+				cl_gts_gui.selbro_fnum_list->select(
+				 cl_gts_gui.selbro_fnum_list->size()
+				);
+			}
+			return list_num;
 		}
 	}
 	return -1;

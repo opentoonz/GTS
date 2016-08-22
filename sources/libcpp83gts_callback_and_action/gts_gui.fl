@@ -500,8 +500,13 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           label End
           xywh {120 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
         }
+        Fl_Check_Button {} {
+          label Endress
+          callback {cl_gts_master.cl_list_access.set_endress_sw(o->value()==1);}
+          xywh {160 455 75 25} down_box DOWN_BOX
+        }
         Fl_Box {} {
-          xywh {160 455 80 25} resizable
+          xywh {235 455 5 25} resizable
         }
         Fl_Light_Button ligbut_level_image_x1_sw {
           label x1
@@ -1720,7 +1725,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
 cl_gts_gui.menite_fnum_list->clear();}
       xywh {50 50 80 350} type Double resizable non_modal visible
     } {
-      Fl_Menu_Bar {} {
+      Fl_Menu_Bar {} {open
         xywh {0 0 80 25}
       } {
         Submenu {} {

@@ -201,7 +201,6 @@ private:
 
 	int	_i_rotate_per_90;
 
-	char *_get_next_num( char *cp_str, int *ip_num );
 	int _make_level_frame_number_list( void );
 	int _read_and_view_frame_number_list_1st_image( void );
 	int _read_and_save( int i_file_num, int i_list_num );
