@@ -85,13 +85,6 @@ void gts_gui::cb_menite_start_scan(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_start_scan_i(o,v);
 }
 
-void gts_gui::cb_Scan_i(Fl_Menu_*, void*) {
-  cl_gts_master.cb_scan_and_trace_and_save_start();
-}
-void gts_gui::cb_Scan(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Scan_i(o,v);
-}
-
 void gts_gui::cb_Preview1_i(Fl_Menu_*, void*) {
   cl_gts_master.cb_read_and_trace();
 }
@@ -332,7 +325,6 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Scanning", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview", 0x40070,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
- {"Scan and Trace", 0,  (Fl_Callback*)gts_gui::cb_Scan, 0, 144, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview Trace File", 0x74,  (Fl_Callback*)gts_gui::cb_Preview1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Save", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
@@ -380,16 +372,16 @@ Fl_Menu_Item* gts_gui::menite_level = gts_gui::menu_ + 1;
 Fl_Menu_Item* gts_gui::menite_config_load = gts_gui::menu_ + 2;
 Fl_Menu_Item* gts_gui::menite_config_save_as = gts_gui::menu_ + 4;
 Fl_Menu_Item* gts_gui::menite_start_scan = gts_gui::menu_ + 9;
-Fl_Menu_Item* gts_gui::menite_crop_area_and_rot90 = gts_gui::menu_ + 15;
-Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 16;
-Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 17;
-Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 18;
-Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 19;
-Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 20;
-Fl_Menu_Item* gts_gui::menite_edit_color = gts_gui::menu_ + 21;
-Fl_Menu_Item* gts_gui::menite_edit_hsv_min_max = gts_gui::menu_ + 22;
-Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 23;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 47;
+Fl_Menu_Item* gts_gui::menite_crop_area_and_rot90 = gts_gui::menu_ + 14;
+Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 15;
+Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 16;
+Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 17;
+Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 18;
+Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 19;
+Fl_Menu_Item* gts_gui::menite_edit_color = gts_gui::menu_ + 20;
+Fl_Menu_Item* gts_gui::menite_edit_hsv_min_max = gts_gui::menu_ + 21;
+Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 22;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 46;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );

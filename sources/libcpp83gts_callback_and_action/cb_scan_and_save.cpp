@@ -5,8 +5,6 @@
 #include "gts_master.h"
 
 /*--------------------------------------------------------*/
-static int _i_rgb_trace_save_sw;
-
 int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 {
 	char *cp_path;
@@ -114,7 +112,7 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 	/* スキャン画像保存(BW,GrayscaleあるいはRGBでSWが入っている場合) */
 	if ((this->cl_iip_ro90.get_l_channels() < 3L) ||//BW or Grayscale
 	    (this->cl_iip_ro90.get_l_channels() == 3L &&//RGB & SW is ON
-	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value() ==1
+	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value() == 1
 	    )
 	) {
 	 if (OK != this->_iipg_save(
@@ -144,7 +142,7 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 
 	/* RGBフルカラーでないか、トレス画像保存でなければここで終了 */
 	if (	(this->cl_iip_ro90.get_l_channels() < 3L) ||
-		(1 != _i_rgb_trace_save_sw)
+		(cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() == 0)
 	) {
 		/* リストの選択解除 */
 		this->cl_list_access.unselect(i_list_num);
@@ -307,13 +305,54 @@ int gts_master::_scan_and_save_crnt( void )
 	return OK;
 }
 
-void gts_master::_cb_scan_and_save_start( void )
+int gts_master::cb_scan_and_save_start_child_( void )
+{
+	/* カレントのスキャンと保存をして、次があるなら準備もする */
+	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
+	 /* この中でnext_file_numセットしている */
+	 if (OK != this->_scan_and_save_crnt()) {
+		pri_funct_err_bttvr(
+	  "Error : this->_scan_and_save_crnt() returns NG" );
+
+// std::string str("Error of scaning!\nSave Config and Restart!";
+// fl_alert(str.c_str());
+		return NG;
+	 }
+	}
+	return OK;
+}
+
+int gts_master::cb_scan_and_save_next_child_( void )
+{
+	/* カレントのスキャンと保存をして、次があるなら準備もする */
+	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
+	 /* この中でnext_file_numセットしている */
+	 if (OK != this->_scan_and_save_crnt()) {
+		/*
+		ここでエラーになると次の番号がカレントに
+		なってしまうので元に戻す
+	this->cl_list_access.set_next_to_crnt_number();
+		と対で使うこと
+		*/
+		this->cl_list_access.reset_next_to_crnt_number();
+
+		pri_funct_err_bttvr(
+	  "Error : this->_scan_and_save_crnt() returns NG" );
+		return NG;
+	 }
+	}
+	return OK;
+}
+
+/*--------------------------------------------------------*/
+
+void gts_master::cb_scan_and_save_start( void )
 {
 	/* 01 選択されたフレームの先頭の順番を得る */
-	const int i_crnt_list_num = this->cl_list_access.set_first_number();
+	const int crnt_list_num = this->cl_list_access.set_first_number();
 
-	/* 02 ゼロは選択されていない */
-	if (0 == i_crnt_list_num) {
+	/* 02 選択されていない */
+	if (crnt_list_num == 0) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_list_access.set_first_number() returns zero"
 		);
@@ -321,39 +360,14 @@ fl_alert("Select number!");
 		return;
 	}
 
-	/* 03 マイナスは選択されているのにフレーム番号名がない */
-	else if (i_crnt_list_num < 0) {
+	/* 03 選択されているのにフレーム番号名がない */
+	else if (crnt_list_num < 0) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_list_access.set_first_number() returns minus"
 		);
 fl_alert("No frame number.");
 		return;
 	}
-	/* プラスはリストを選んだ */
-
-	/* 保存dir,filehead,extが得られるか確認 */
-
-	/*************if (OK != this->cl_bro_level.i_path_cpy_dir(
-		cl_gts_gui.filinp_level_dir->value()
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_path_cpy_dir(%s) returns NULL.",
-		cl_gts_gui.filinp_level_dir->value()
-		);
-		return;
-	}
-	if (OK != this->cl_bro_level.i_lpath_cat_file_by_num(
-		cl_gts_gui.strinp_level_file->value(),
-		this->cl_list_access.get_i_crnt_file_num(),ON
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_lpath_cat_file_by_num(%s,%d,%d) returns NULL.",
-		cl_gts_gui.strinp_level_file->value(),
-		this->cl_list_access.get_i_crnt_file_num(),ON
-		);
-		return;
-	}****************/
-	// cp_path = this->cl_bro_level.cp_path();
 
 	/* 04 levelの名前を得る */
 	if (NULL == this->cl_bro_level.cp_filepath(
@@ -367,19 +381,18 @@ fl_alert("Input level name!");
 		return;
 	}
 
+	/* --> crnt_list_numがプラス-->リストを選んだ */
+
 	/* 05 カレントのスキャンと保存をして、次があるなら準備もする */
-	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
-	 /* この中でnext_file_numセットしている */
-	 if (OK != this->_scan_and_save_crnt()) {
-		pri_funct_err_bttvr(
-	  "Error : this->_scan_and_save_crnt() returns NG" );
-
-// std::string str("Error of scaning!\nSave Config and Restart!";
-// fl_alert(str.c_str());
-
-		return;
-	 }
+	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
+		cl_gts_master.cl_list_access.set_endress_sw(true);
 	}
+	if (this->cb_scan_and_save_start_child_() != OK) {
+// std::string str("Error in scaning at 1st!";
+// fl_alert(str.c_str());
+		return;
+	}
+	cl_gts_master.cl_list_access.set_endress_sw(false);
 
 	/* 06 次のスキャンがあるなら */
 	if (0 < this->cl_list_access.get_i_next_file_num()) {
@@ -390,43 +403,6 @@ fl_alert("Input level name!");
 		cl_gts_gui.window_next_scan->show();
 	}
 }
-
-/*--------------------------------------------------------*/
-
-void gts_master::cb_scan_and_save_start( void )
-{
-	_i_rgb_trace_save_sw =
-		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value();
-
-	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
-		cl_gts_master.cl_list_access.set_endress_sw(true);
-	}
-
-	this->_cb_scan_and_save_start();
-
-	cl_gts_master.cl_list_access.set_endress_sw(false);
-}
-void gts_master::cb_scan_and_trace_and_save_start( void )
-{
-	/* rgbのときだけ動作する */
-	/******if (2 == cl_gts_gui.choice_pixel_type->value()) {
-		_i_rgb_trace_save_sw = 1;
-		this->_cb_scan_and_save_start();
-	}******/
-
-	/* 強制的にrgbモードにして実行する */
-	cl_gts_gui.choice_pixel_type->value(2);
-
-	_i_rgb_trace_save_sw = 1;
-
-	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
-		cl_gts_master.cl_list_access.set_endress_sw(true);
-	}
-
-	this->_cb_scan_and_save_start();
-
-	cl_gts_master.cl_list_access.set_endress_sw(false);
-}
 void gts_master::cb_scan_and_save_next( void )
 {
 	/* windowを消す */
@@ -436,26 +412,16 @@ void gts_master::cb_scan_and_save_next( void )
 	this->cl_list_access.set_next_to_crnt_number();
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
-	 if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
+	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
 		cl_gts_master.cl_list_access.set_endress_sw(true);
-	 }
-	 if (OK != this->_scan_and_save_crnt()) {
-		/*
-		ここでエラーになると次の番号がカレントに
-		なってしまうので元に戻す
-	this->cl_list_access.set_next_to_crnt_number();
-		と対で使うこと
-		*/
-		this->cl_list_access.reset_next_to_crnt_number();
-
-		pri_funct_err_bttvr(
-	  "Error : this->_scan_and_save_crnt() returns NG" );
-		cl_gts_master.cl_list_access.set_endress_sw(false);
-		return;
-	 }
-	 cl_gts_master.cl_list_access.set_endress_sw(false);
 	}
+	if (this->cb_scan_and_save_next_child_() != OK) {
+// std::string str("Error in scaning at next!";
+// fl_alert(str.c_str());
+		return;
+	}
+	cl_gts_master.cl_list_access.set_endress_sw(false);
+
 	/* 次のスキャンがあるなら */
 	if (0 < this->cl_list_access.get_i_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */

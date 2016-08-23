@@ -89,7 +89,6 @@ public:
 	int read_and_save_crnt( void );
 	void cb_read_and_save_start( void );
 	void cb_scan_and_preview( void );
-	void cb_scan_and_trace_and_save_start( void );
 	void cb_scan_and_save_start( void );
 	void cb_scan_and_save_next( void );
 	void cb_scan_and_save_prev( void );
@@ -298,7 +297,8 @@ private:
 
 	int _cb_open_text( char *cp_path );
 
-	void _cb_scan_and_save_start( void );
+	int cb_scan_and_save_start_child_( void );
+	int cb_scan_and_save_next_child_( void );
 
 	void _trace_batch_run( char *cp_path );
 	void _trace_batch_add( char *cp_path );

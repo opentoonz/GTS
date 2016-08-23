@@ -63,8 +63,6 @@ public:
 private:
   inline void cb_menite_start_scan_i(Fl_Menu_*, void*);
   static void cb_menite_start_scan(Fl_Menu_*, void*);
-  inline void cb_Scan_i(Fl_Menu_*, void*);
-  static void cb_Scan(Fl_Menu_*, void*);
   inline void cb_Preview1_i(Fl_Menu_*, void*);
   static void cb_Preview1(Fl_Menu_*, void*);
   inline void cb_Trace_i(Fl_Menu_*, void*);
