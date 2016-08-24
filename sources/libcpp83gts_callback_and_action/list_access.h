@@ -8,8 +8,8 @@ public:
 		,_i_crnt_file_num(-1)
 		,_i_next_list_num(-1)
 		,_i_next_file_num(-1)
-		,_i_crnt_list_num_backup(-1)
-		,_i_crnt_file_num_backup(-1)
+		,crnt_list_num_for_reset_(-1)
+		,crnt_file_num_for_reset_(-1)
 		,endress_sw_(false)
 	{
 	}
@@ -40,8 +40,8 @@ private:
 		_i_crnt_file_num,
 		_i_next_list_num,
 		_i_next_file_num,
-		_i_crnt_list_num_backup,
-		_i_crnt_file_num_backup;
+		crnt_list_num_for_reset_,
+		crnt_file_num_for_reset_;
 	bool endress_sw_;
 
 	int _next_selected( int i_list_num );

@@ -5,116 +5,63 @@
 #include "gts_master.h"
 
 /*--------------------------------------------------------*/
-int gts_master::_scan_and_save( int i_file_num, int i_list_num )
+int gts_master::scan_and_save_( const int list_num , const int file_num )
 {
-	char *cp_path;
-	iip_canvas *clp_scan;
+	const char* cp_path = nullptr;
+	iip_canvas* clp_scan = nullptr;
 
-	/*------------------------------------------------*/
+	/* 01 フレーム番号(list_num)を表示するようリストをスクロール */
+	cl_gts_gui.selbro_fnum_list->middleline(list_num);
 
-	/* リストのセンタースクロール */
-	cl_gts_gui.selbro_fnum_list->middleline(i_list_num);
-
-	/*------------------------------------------------*/
-
-	/* スキャンを実行 */
+	/* 02 スキャンを実行 */
 	clp_scan = this->_iipg_scan();
-	if (NULL == clp_scan) {
+	if (nullptr == clp_scan) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iipg_scan() returns NULL" );
+	 "Error : this->_iipg_scan() returns nullptr" );
 		return NG;
 	}
 
-	/* 回転処理を実行 */
+	/* 03 回転処理を実行 */
 	if (OK != this->_iipg_rot90(
-		clp_scan,
-		cl_gts_gui.choice_rot90->value()
+		clp_scan ,cl_gts_gui.choice_rot90->value()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_rot90(-) returns NG" );
 		return NG;
 	}
 
-	/*------------------------------------------------*/
-
-	/* 保存する(番号に対する)ファイルパスを得る */
+	/* 04 保存する(番号に対する)ファイルパスを得る */
 	if (3L <= this->cl_iip_ro90.get_l_channels() &&
 	cl_gts_gui.chkbtn_level_rgb_with_full_sw->value() == 1
 	) {
-		/* RGB画像のときは専用の名前(A_full.0001.tif)で保存 */
+		/* RGB画像(専用の名前)(_full付)(A_full.0001.tif) */
 		/* 読み込み(番号に対する)ファイルパスを得る */
-
-		/**********if (OK != this->cl_bro_level.i_path_cpy_dir(
-			cl_gts_gui.filinp_level_rgb_scan_dir->value()
-		)) {
+		cp_path = this->cl_bro_level.cp_filepath_full( file_num );
+		if (cp_path == nullptr) {
 			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.i_path_cpy_dir(%s) returns NULL.",
-			cl_gts_gui.filinp_level_rgb_scan_dir->value()
-			);
-			return NG;
-		}
-		if (OK != this->cl_bro_level.i_lpath_cat_file_for_full(
-			cl_gts_gui.strinp_level_file->value(),
-			i_file_num,ON
-		)) {
-			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.i_lpath_cat_file_for_full(%s,%d,%d) returns NULL.",
-			cl_gts_gui.strinp_level_file->value(),
-			i_file_num,ON
-			);
-			return NG;
-		}
-		cp_path = this->cl_bro_level.cp_path();**********/
-
-		cp_path = this->cl_bro_level.cp_filepath_full(
-			i_file_num);
-		if (NULL == cp_path) {
-			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.cp_filepath_full(%d) returns NULL.",
-			i_file_num
-			);
+	 "Error : this->cl_bro_level.cp_filepath_full(%d) returns nullptr."
+				, file_num );
 			return NG;
 		}
 	} else {
-		/* BW,Grayscaleはノーマルな名前(A.0001.tif)で保存 */
-		/***********if (OK != this->cl_bro_level.i_path_cpy_dir(
-			cl_gts_gui.filinp_level_dir->value()
-		)) {
+		/* BW,Grayscale,RGB(通常の名前)は
+		ノーマルな名前(A.0001.tif)で保存 */
+		cp_path = this->cl_bro_level.cp_filepath( file_num );
+		if (cp_path == nullptr) {
 			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.i_path_cpy_dir(%s) returns NULL.",
-			cl_gts_gui.filinp_level_dir->value()
-			);
-			return NG;
-		}
-		if (OK != this->cl_bro_level.i_lpath_cat_file_by_num(
-			cl_gts_gui.strinp_level_file->value(),
-			i_file_num,ON
-		)) {
-			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.i_lpath_cat_file_by_num(%s,%d,%d) returns NULL.",
-			cl_gts_gui.strinp_level_file->value(),
-			i_file_num,ON
-			);
-			return NG;
-		}
-		cp_path = this->cl_bro_level.cp_path();**********/
-
-		cp_path = this->cl_bro_level.cp_filepath( i_file_num );
-		if (NULL == cp_path) {
-			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.cp_filepath(%d) returns NULL.",
-			i_file_num
-			);
+	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
+				, file_num );
 			return NG;
 		}
 	}
 
-	/* スキャン画像保存(BW,GrayscaleあるいはRGBでSWが入っている場合) */
+	/* 05 BWか、Grayscaleか、RGBで保存SWがONのどれかの場合 */
 	if ((this->cl_iip_ro90.get_l_channels() < 3L) ||//BW or Grayscale
 	    (this->cl_iip_ro90.get_l_channels() == 3L &&//RGB & SW is ON
 	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value() == 1
 	    )
 	) {
+	 /* スキャン画像保存 */
 	 if (OK != this->_iipg_save(
 		&(this->cl_iip_ro90),
 		cp_path,
@@ -125,135 +72,94 @@ int gts_master::_scan_and_save( int i_file_num, int i_list_num )
 	 "Error : this->_iip_save(-) returns NG" );
 		return NG;
 	 }
-	}
 
-	/*------------------------------------------------*/
-
-	/* リストにマーク付け */
-	if (OK != this->cl_list_access.marking_src(i_list_num)) {
+	 /* リストにScanimage(src)保存済マーク付け "0000" --> "0000 S" */
+	 if (OK != this->cl_list_access.marking_src(list_num)) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_list_access.marking_src(%d) returns NG",
-			i_list_num
+			list_num
 		);
 		return NG;
+	 }
 	}
 
 	/*------------------------------------------------*/
-
-	/* RGBフルカラーでないか、トレス画像保存でなければここで終了 */
-	if (	(this->cl_iip_ro90.get_l_channels() < 3L) ||
-		(cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() == 0)
+	/* 06 RGB画像でトレス画像保存SWがONの場合 */
+	if (	(this->cl_iip_ro90.get_l_channels() == 3L) &&
+		(cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() == 1)
 	) {
-		/* リストの選択解除 */
-		this->cl_list_access.unselect(i_list_num);
 
-		/* level browser listの再表示 */
-		this->cl_bro_level.cb_list_redisplay();
-
-		/* 表示 */
-		if (OK != this->_iipg_view_setup()) {
-			pri_funct_err_bttvr(
-		 "Error : this->_iipg_view_setup() returns NG" );
-			return NG;
-		}
-		this->iipg_view_redraw_();
-		return OK;
-	}
-
-	/*------------------------------------------------*/
-
-	/* 画像処理を実行 */
-	if (OK != this->_iipg_color_trace_setup()) {
+	 /* ２値化処理の準備 */
+	 if (OK != this->_iipg_color_trace_setup()) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iipg_color_trace_setup() returns NG" );
+	  "Error : this->_iipg_color_trace_setup() returns NG" );
 		return NG;
-	}
-	this->_iipg_color_trace_exec();
+	 }
 
-	/*------------------------------------------------*/
+	 /* ２値化処理を実行 */
+	 this->_iipg_color_trace_exec();
 
-	/* Trace保存する(番号に対する)ファイルパスを得る */
-	/**********if (OK != this->cl_bro_level.i_path_cpy_dir(
-		cl_gts_gui.filinp_level_dir->value()
-	)) {
+	 /* ２値化画像を保存する(番号に対する)ファイルパスを得る */
+	 cp_path = this->cl_bro_level.cp_filepath( file_num );
+	 if (NULL == cp_path) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_path_cpy_dir(%s) returns NULL.",
-		cl_gts_gui.filinp_level_dir->value()
+	  "Error : this->cl_bro_level.cp_filepath(%d) returns NULL."
+	 		, file_num
 		);
 		return NG;
-	}
-	if (OK != this->cl_bro_level.i_lpath_cat_file_by_num(
-		cl_gts_gui.strinp_level_file->value(),
-		i_file_num,ON
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_lpath_cat_file_by_num(%s,%d,%d) returns NULL.",
-		cl_gts_gui.strinp_level_file->value(),
-		i_file_num,ON
-		);
-		return NG;
-	}
-	cp_path = this->cl_bro_level.cp_path();*********/
+	 }
 
-	cp_path = this->cl_bro_level.cp_filepath( i_file_num );
-	if (NULL == cp_path) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.cp_filepath(%d) returns NULL.",
-		i_file_num
-		);
-		return NG;
-	}
-
-	/* Trace画像を保存する */
-	if (OK != this->_iipg_save(
-		&(cl_gts_master.cl_iip_trac),
-		cp_path,
-		cl_gts_gui.valinp_area_reso->value()
+	 /* ２値化画像を保存する */
+	 if (OK != this->_iipg_save(
+		&(cl_gts_master.cl_iip_trac)
+		, cp_path , cl_gts_gui.valinp_area_reso->value()
 		/* rot90実行後なので(デフォルト)0度とする */
-	) ) {
+	 ) ) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iipg_save(-) returns NG" );
+	  "Error : this->_iipg_save(-) returns NG" );
 		return NG;
-	}
+	 }
 
-	/* リストにマーク付け */
-	if (OK != this->cl_list_access.marking_tgt(i_list_num)) {
+	 /* リストにTracenimage(tgt)保存済マーク付け "0000" --> "0000 T" */
+	 if (OK != this->cl_list_access.marking_tgt(list_num)) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.marking_tgt(%d) returns NG",
-			i_list_num
+	  "Error : this->cl_list_access.marking_tgt(%d) returns NG"
+	 		, list_num
 		);
 		return NG;
+	 }
 	}
-
 	/*------------------------------------------------*/
 
-	/* リストの選択解除 */
-	this->cl_list_access.unselect(i_list_num);
+	/* 08 リストの選択解除 */
+	this->cl_list_access.unselect(list_num);
 
-	/*------------------------------------------------*/
-
-	/* level browser listの再表示 */
+	/* 09 level browser listの(保存したファイルも含めて)再表示 */
 	this->cl_bro_level.cb_list_redisplay();
 
-	/* 表示 */
+	/* 10 再表示準備 */
 	if (OK != this->_iipg_view_setup()) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return NG;
 	}
+
+	/* 11 再表示 */
 	this->iipg_view_redraw_();
 
 	return OK;
 }
 
-void gts_master::_set_window_next_scan( int i_file_prev, int i_file_next )
+void gts_master::set_next_scan_info_(
+	const int file_prev ,const int file_next
+)
 {
 	char	ca8_but[8];
 
-	(void)sprintf( ca8_but, "%d", i_file_prev );
+	(void)sprintf( ca8_but, "%d", file_prev );
 	cl_gts_gui.norout_crnt_scan_number->value(ca8_but);
 
-	(void)sprintf( ca8_but, "%d", i_file_next );
+	(void)sprintf( ca8_but, "%d", file_next );
 	cl_gts_gui.norout_next_scan_number->value(ca8_but);
 
 	cl_gts_gui.norout_crnt_scan_level->value(
@@ -262,8 +168,9 @@ void gts_master::_set_window_next_scan( int i_file_prev, int i_file_next )
 }
 
 /* 必ず、カレントの番号は有効の状態で、このmethodを呼ぶ */
-int gts_master::_scan_and_save_crnt( void )
+int gts_master::next_scan_and_save_( void )
 {
+	/* GUIのリストから処理する番号を得ておく */
 	if (OK != this->cl_list_access.set_next_number()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_list_access.set_next_number() returns NG");
@@ -271,17 +178,17 @@ int gts_master::_scan_and_save_crnt( void )
 	}
 
 	/* スキャンと保存を実行する */
-	if (OK != this->_scan_and_save(
-		this->cl_list_access.get_i_crnt_file_num(),
+	if (OK != this->scan_and_save_(
 		this->cl_list_access.get_i_crnt_list_num()
+		, this->cl_list_access.get_i_crnt_file_num()
 	)) {
 		/* 次のスキャン番号をキャンセルしてエラーリターン */
 		this->cl_list_access.reset_next_number();
 
 		pri_funct_err_bttvr(
-	 "Error : this->_scan_and_save(%d,%d) returns NG",
-		this->cl_list_access.get_i_crnt_file_num(),
+	 "Error : this->scan_and_save_(%d,%d) returns NG",
 		this->cl_list_access.get_i_crnt_list_num()
+		, this->cl_list_access.get_i_crnt_file_num()
 		);
 
 //std::string str("Critical Error!\nSave Config and Restart!");
@@ -296,9 +203,9 @@ int gts_master::_scan_and_save_crnt( void )
 	/* 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */
 	if (0 < this->cl_list_access.get_i_next_file_num()) {
-		this->_set_window_next_scan(
-		this->cl_list_access.get_i_crnt_file_num(),
-		this->cl_list_access.get_i_next_file_num()
+		this->set_next_scan_info_(
+		 this->cl_list_access.get_i_crnt_file_num(),
+		 this->cl_list_access.get_i_next_file_num()
 		);
 	}
 
@@ -310,9 +217,9 @@ int gts_master::cb_scan_and_save_start_child_( void )
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
 	 /* この中でnext_file_numセットしている */
-	 if (OK != this->_scan_and_save_crnt()) {
+	 if (OK != this->next_scan_and_save_()) {
 		pri_funct_err_bttvr(
-	  "Error : this->_scan_and_save_crnt() returns NG" );
+	  "Error : this->next_scan_and_save_() returns NG" );
 
 // std::string str("Error of scaning!\nSave Config and Restart!";
 // fl_alert(str.c_str());
@@ -327,7 +234,7 @@ int gts_master::cb_scan_and_save_next_child_( void )
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
 	 /* この中でnext_file_numセットしている */
-	 if (OK != this->_scan_and_save_crnt()) {
+	 if (OK != this->next_scan_and_save_()) {
 		/*
 		ここでエラーになると次の番号がカレントに
 		なってしまうので元に戻す
@@ -337,7 +244,7 @@ int gts_master::cb_scan_and_save_next_child_( void )
 		this->cl_list_access.reset_next_to_crnt_number();
 
 		pri_funct_err_bttvr(
-	  "Error : this->_scan_and_save_crnt() returns NG" );
+	  "Error : this->next_scan_and_save_() returns NG" );
 		return NG;
 	 }
 	}
@@ -438,9 +345,9 @@ void gts_master::cb_scan_and_save_prev( void )
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
-	 if (OK != this->_scan_and_save_crnt()) {
+	 if (OK != this->next_scan_and_save_()) {
 		pri_funct_err_bttvr(
-	  "Error : this->_scan_and_save_crnt() returns NG" );
+	  "Error : this->next_scan_and_save_() returns NG" );
 		return;
 	 }
 	}
