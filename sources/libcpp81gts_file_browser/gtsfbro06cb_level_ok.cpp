@@ -70,10 +70,10 @@ void gtsfbro06cb_level::cb_ok( void )
 	cl_gts_gui.selbro_fnum_list->topline(0);
 
 	/* 以前のリストをすべて削除 */
-	cl_gts_master.cl_list_access.remove_all();
+	cl_gts_master.cb_file_number_list.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	cl_gts_master.cl_frame_number_list.make_fnum_list_with_chk_mark(
+	cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
 		i_sta, i_end
 	);
 
@@ -83,7 +83,7 @@ void gtsfbro06cb_level::cb_ok( void )
 	);
 
 	/* 新たに作ったリストは全て選択状態にする */
-	cl_gts_master.cl_list_access.select_all();
+	cl_gts_master.cl_file_number_list.select_all();
 
 	/* ファイル名表示 */
 	cl_gts_master._print_window_headline();

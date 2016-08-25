@@ -24,8 +24,7 @@
 
 #include "memory_desktop.h"
 #include "memory_config.h"
-#include "list_access.h"
-#include "cb_frame_number_list.h"
+#include "cb_file_number_list.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
 #include "cb_color_trace_enhancement.h"
@@ -167,10 +166,7 @@ public:
 	memory_short_cut_key	cl_memo_short_cut_key;
 	memory_install_setup	cl_memo_install_setup;
 
-	list_access		cl_list_access; /* file number list */
-
-	/* [WIP]list_accessを取り込む予定 */
-	cb_frame_number_list	cl_frame_number_list;
+	cb_file_number_list	cl_file_number_list;
 
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
 	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;

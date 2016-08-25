@@ -1728,26 +1728,18 @@ cl_gts_gui.menite_fnum_list->clear();}
         } {
           MenuItem {} {
             label {Select All}
-            callback {int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
-        cl_gts_gui.selbro_fnum_list->select(ii);
-}}
+            callback {cl_gts_master.cl_file_number_list.select_all();}
             xywh {0 0 116 20} shortcut 0x40061
           }
           MenuItem {} {
             label Delete
-            callback {int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
-        if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
-                cl_gts_gui.selbro_fnum_list->remove(ii);
-        } else { ++ii; }
-}}
+            callback {cl_gts_master.cl_file_number_list.remove_selected();}
             xywh {0 0 116 20} shortcut 0x40078
           }
         }
       }
       Fl_Input norinp_fnum_insert {
-        callback {cl_gts_master.cl_frame_number_list.set_list_from_string();}
+        callback {cl_gts_master.cl_file_number_list.set_list_from_string();}
         xywh {0 25 116 25} box BORDER_BOX align 5 when 8
       }
       Fl_Output norout_crnt_scan_level_of_fnum {

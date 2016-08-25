@@ -149,9 +149,9 @@ this->cl_iip_read.get_d_tif_dpi_x()
 	/*------------------------------------------------*/
 
 	/* リストにマーク付け */
-	if (OK != this->cl_list_access.marking_tgt(i_list_num)) {
+	if (OK != this->cl_file_number_list.marking_trace_file(i_list_num)) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.marking_tgt(%d) returns NG",
+	 "Error : this->cl_file_number_list.marking_trace_file(%d) returns NG",
 			i_list_num
 		);
 		return NG;
@@ -160,7 +160,7 @@ this->cl_iip_read.get_d_tif_dpi_x()
 	/*------------------------------------------------*/
 
 	/* リストの選択解除 */
-	this->cl_list_access.unselect(i_list_num);
+	this->cl_file_number_list.unselect(i_list_num);
 
 	/* level browser listの再表示 */
 	this->cl_bro_level.cb_list_redisplay();
@@ -179,21 +179,21 @@ this->cl_iip_read.get_d_tif_dpi_x()
 /* 必ず、カレントの番号は有効の状態で、このmethodを呼ぶ */
 int gts_master::read_and_save_crnt( void )
 {
-	if (OK != this->cl_list_access.set_next_number()) {
+	if (OK != this->cl_file_number_list.set_next_number()) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_next_number() returns NG");
+	 "Error : this->cl_file_number_list.set_next_number() returns NG");
 		return NG;
 	}
 
 	/* ファイル読み込みと保存を実行する */
 	if (OK != this->_read_and_save(
-		this->cl_list_access.get_i_crnt_file_num(),
-		this->cl_list_access.get_i_crnt_list_num()
+		this->cl_file_number_list.get_crnt_file_num(),
+		this->cl_file_number_list.get_crnt_list_num()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->_scan_and_save(%d,%d) returns NG",
-		this->cl_list_access.get_i_crnt_file_num(),
-		this->cl_list_access.get_i_crnt_list_num()
+		this->cl_file_number_list.get_crnt_file_num(),
+		this->cl_file_number_list.get_crnt_list_num()
 		);
 		return NG;
 	}
@@ -212,7 +212,7 @@ void gts_master::cb_read_and_save_start( void )
 	int	i_key;
 	// char *cp_path;
 
-	i_crnt_list_num = this->cl_list_access.set_first_number();
+	i_crnt_list_num = this->cl_file_number_list.set_first_number();
 	/*
 		プラスはリストを選んだ
 		ゼロを返したらリストがない
@@ -221,13 +221,13 @@ void gts_master::cb_read_and_save_start( void )
 
 	if (0 == i_crnt_list_num) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_first_number() returns zero"
+	 "Error : this->cl_file_number_list.set_first_number() returns zero"
 		);
 		return;
 	}
 	else if (i_crnt_list_num < 0) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_first_number() returns minus"
+	 "Error : this->cl_file_number_list.set_first_number() returns minus"
 		);
 		return;
 	}
@@ -244,23 +244,23 @@ void gts_master::cb_read_and_save_start( void )
 	}
 	if (OK != this->cl_bro_level.i_lpath_cat_file_by_num(
 		cl_gts_gui.strinp_level_file->value(),
-		this->cl_list_access.get_i_crnt_file_num(),ON
+		this->cl_file_number_list.get_crnt_file_num(),ON
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.i_lpath_cat_file_by_num(%s,%d,%d) returns NULL.",
 		cl_gts_gui.strinp_level_file->value(),
-		this->cl_list_access.get_i_crnt_file_num(),ON
+		this->cl_file_number_list.get_crnt_file_num(),ON
 		);
 		return;
 	}***************/
 	// cp_path = this->cl_bro_level.cp_path();
 
 	if (NULL == this->cl_bro_level.cp_filepath(
-		this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_file_num()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.cp_filepath(%d) returns NULL.",
-		this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_file_num()
 		);
 		return;
 	}
@@ -268,14 +268,14 @@ void gts_master::cb_read_and_save_start( void )
 	/* RGB画像の処理となるので、モードを自動切替えする */
 	cl_gts_gui.choice_pixel_type->value(2);
 
-	while (0 < this->cl_list_access.get_i_crnt_list_num()) {
+	while (0 < this->cl_file_number_list.get_crnt_list_num()) {
 		/* カレントの読み込みと処理と保存をして */
 		if (OK != this->read_and_save_crnt()) {
 			pri_funct_err_bttvr(
 		 "Error : this->read_and_save_crnt() returns NG" );
 			return;
 		}
-		this->cl_list_access.set_next_to_crnt_number();
+		this->cl_file_number_list.set_next_to_crnt_number();
 
 		Fl::check();
 		i_key = Fl::event_key();

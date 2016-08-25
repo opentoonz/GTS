@@ -1832,22 +1832,14 @@ void gts_gui::cb_window_fnum_list(Fl_Double_Window* o, void* v) {
 }
 
 void gts_gui::cb_Select_i(Fl_Menu_*, void*) {
-  int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
-        cl_gts_gui.selbro_fnum_list->select(ii);
-};
+  cl_gts_master.cl_file_number_list.select_all();
 }
 void gts_gui::cb_Select(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Select_i(o,v);
 }
 
 void gts_gui::cb_Delete_i(Fl_Menu_*, void*) {
-  int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
-        if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
-                cl_gts_gui.selbro_fnum_list->remove(ii);
-        } else { ++ii; }
-};
+  cl_gts_master.cl_file_number_list.remove_selected();
 }
 void gts_gui::cb_Delete(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Delete_i(o,v);
@@ -1862,7 +1854,7 @@ Fl_Menu_Item gts_gui::menu_1[] = {
 };
 
 void gts_gui::cb_norinp_fnum_insert_i(Fl_Input*, void*) {
-  cl_gts_master.cl_frame_number_list.set_list_from_string();
+  cl_gts_master.cl_file_number_list.set_list_from_string();
 }
 void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);

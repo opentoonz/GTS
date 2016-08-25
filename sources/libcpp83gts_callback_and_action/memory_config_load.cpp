@@ -345,24 +345,24 @@ std::cout
 		/*------------------------------------------------*/
 
 		else if (((2==i_ret) || (3==i_ret) || (4==i_ret)) &&
-		!strcmp( ca_scan1, this->str_frame_number_list_)) {
+		!strcmp( ca_scan1, this->str_file_number_frame_)) {
 			/* ファイル番号リストの一番始めにやること */
 			if (OFF == i_fnum_list_sw) {
 			 /* ファイル番号リストの存在の有無 */
 			 i_fnum_list_sw = ON;
 			 /* 以前のリストをすべて削除 */
-			 cl_gts_master.cl_list_access.remove_all();
+			 cl_gts_master.cb_file_number_list.remove_all();
 			}
 
 			/* 実際の画像ファイルの有無を調べて
 			リストの最後に追加する */
-	cl_gts_master.cl_frame_number_list.append_fnum_list_with_chk_mark(
+	cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
 				atoi(ca_scan2));
 
 			/* 選択状態の再現 */
 			if (
-			!strcmp( ca_scan3,this->str_frame_number_selected_ ) ||
-			!strcmp( ca_scan4,this->str_frame_number_selected_ )
+			!strcmp( ca_scan3,this->str_file_number_selected_ ) ||
+			!strcmp( ca_scan4,this->str_file_number_selected_ )
 			) {
 				cl_gts_gui.selbro_fnum_list->select(
 				 cl_gts_gui.selbro_fnum_list->size());
@@ -427,7 +427,7 @@ std::cout
 	/* frame listがない時は設定ファイルと判断してlistをクリアする */
 	if (OFF == i_fnum_list_sw) {
 		/* 以前のリストをすべて削除 */
-		cl_gts_master.cl_list_access.remove_all();
+		cl_gts_master.cb_file_number_list.remove_all();
 	}
 
 	/* trace batch listがない時はlistをクリアする */

@@ -99,12 +99,10 @@ public:
 	    "color_trace_erase_1dot")
 	,str_color_trace_real_time_(
 	    "color_trace_real_time")
-	,str_frame_number_insert_(
-	    "frame_number_insert")
-	,str_frame_number_list_(
-	    "frame")
-	,str_frame_number_selected_(
-			 "selected")
+	,str_file_number_frame_(
+			"frame")
+	,str_file_number_selected_(
+			"selected")
 
 	,str_trace_batch_dir_(
 	    "trace_batch_dir")
@@ -279,9 +277,8 @@ private:
 
 	const char* str_color_trace_erase_1dot_;
 	const char* str_color_trace_real_time_;
-	const char* str_frame_number_insert_;
-	const char* str_frame_number_list_;
-	const char* str_frame_number_selected_;
+	const char* str_file_number_frame_;
+	const char* str_file_number_selected_;
 
 	const char* str_trace_batch_dir_;
 	const char* str_trace_batch_list_;

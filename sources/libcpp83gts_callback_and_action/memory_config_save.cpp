@@ -262,15 +262,6 @@ int memory_config::_save_trace_by_fp( FILE *fp )
 			this->str_on_:this->str_off_);
 	if (i_ret < 0) { return NG; }
 
-	/*------------------------------------------------*/
-
-	/******i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			this->str_frame_number_insert_,
-		cl_gts_gui.norinp_fnum_insert->value() );
-	if (i_ret < 0) { return NG; }**********/
-
-	/*------------------------------------------------*/
-
 	return OK;
 }
 
@@ -282,13 +273,13 @@ int memory_config::_save_fnum_by_fp( FILE *fp )
 	/* リストを全てサーチ */
 	for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
 		i_ret = fprintf(fp, "%s %s",
-			this->str_frame_number_list_,
+			this->str_file_number_frame_,
 			cl_gts_gui.selbro_fnum_list->text(ii) );
 		if (i_ret < 0) { return NG; }
 
 		if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
 			i_ret = fprintf(fp, " %s\n",
-				this->str_frame_number_selected_ );
+				this->str_file_number_selected_ );
 		} else {
 			i_ret = fprintf(fp, "\n");
 		}

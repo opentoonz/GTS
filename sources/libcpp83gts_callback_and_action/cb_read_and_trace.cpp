@@ -8,19 +8,19 @@ void gts_master::cb_read_and_trace( void )
 	int i_crnt_list_num;
 	char *cp_path;
 
-	i_crnt_list_num = this->cl_list_access.set_first_number();
+	i_crnt_list_num = this->cl_file_number_list.set_first_number();
 
 	/* ゼロは、リストがない */
 	if (0 == i_crnt_list_num) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_first_number() returns zero"
+	 "Error : this->cl_file_number_list.set_first_number() returns zero"
 		);
 		return;
 	}
 	/* マイナスは、リストのチェックでエラーが起きた */
 	else if (i_crnt_list_num < 0) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_first_number() returns minus"
+	 "Error : this->cl_file_number_list.set_first_number() returns minus"
 		);
 		return;
 	}
@@ -45,12 +45,12 @@ void gts_master::cb_read_and_trace( void )
 	}
 	if (OK != this->cl_bro_level.i_lpath_cat_file_for_full(
 		cl_gts_gui.strinp_level_file->value(),
-		this->cl_list_access.get_i_crnt_file_num(),ON
+		this->cl_file_number_list.get_crnt_file_num(),ON
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.i_lpath_cat_file_for_full(%s,%d,%d) returns NULL.",
 		cl_gts_gui.strinp_level_file->value(),
-		this->cl_list_access.get_i_crnt_file_num(),ON
+		this->cl_file_number_list.get_crnt_file_num(),ON
 		);
 		return;
 	}
@@ -58,12 +58,12 @@ void gts_master::cb_read_and_trace( void )
 
 
 	cp_path = this->cl_bro_level.cp_filepath_full(
-		this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_file_num()
 	);
 	if (NULL == cp_path) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.cp_filepath_full(%d) returns NULL.",
-		this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_file_num()
 		);
 		return;
 	}

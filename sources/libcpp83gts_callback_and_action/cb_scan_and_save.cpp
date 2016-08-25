@@ -74,9 +74,9 @@ int gts_master::scan_and_save_( const int list_num , const int file_num )
 	 }
 
 	 /* リストにScanimage(src)保存済マーク付け "0000" --> "0000 S" */
-	 if (OK != this->cl_list_access.marking_src(list_num)) {
+	 if (OK != this->cb_file_number_list.marking_scan_file(list_num)) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.marking_src(%d) returns NG",
+	  "Error : this->cb_file_number_list.marking_scan_file(%d) returns NG",
 			list_num
 		);
 		return NG;
@@ -121,9 +121,9 @@ int gts_master::scan_and_save_( const int list_num , const int file_num )
 	 }
 
 	 /* リストにTracenimage(tgt)保存済マーク付け "0000" --> "0000 T" */
-	 if (OK != this->cl_list_access.marking_tgt(list_num)) {
+	 if (OK != this->cb_file_number_list.marking_trace_file(list_num)) {
 		pri_funct_err_bttvr(
-	  "Error : this->cl_list_access.marking_tgt(%d) returns NG"
+	  "Error : this->cb_file_number_list.marking_trace_file(%d) returns NG"
 	 		, list_num
 		);
 		return NG;
@@ -132,7 +132,7 @@ int gts_master::scan_and_save_( const int list_num , const int file_num )
 	/*------------------------------------------------*/
 
 	/* 08 リストの選択解除 */
-	this->cl_list_access.unselect(list_num);
+	this->cb_file_number_list.unselect(list_num);
 
 	/* 09 level browser listの(保存したファイルも含めて)再表示 */
 	this->cl_bro_level.cb_list_redisplay();
@@ -171,24 +171,24 @@ void gts_master::set_next_scan_info_(
 int gts_master::next_scan_and_save_( void )
 {
 	/* GUIのリストから処理する番号を得ておく */
-	if (OK != this->cl_list_access.set_next_number()) {
+	if (OK != this->cl_file_number_list.set_next_number()) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_next_number() returns NG");
+	 "Error : this->cl_file_number_list.set_next_number() returns NG");
 		return NG;
 	}
 
 	/* スキャンと保存を実行する */
 	if (OK != this->scan_and_save_(
-		this->cl_list_access.get_i_crnt_list_num()
-		, this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_list_num()
+		, this->cl_file_number_list.get_crnt_file_num()
 	)) {
 		/* 次のスキャン番号をキャンセルしてエラーリターン */
-		this->cl_list_access.reset_next_number();
+		this->cl_file_number_list.reset_next_number();
 
 		pri_funct_err_bttvr(
 	 "Error : this->scan_and_save_(%d,%d) returns NG",
-		this->cl_list_access.get_i_crnt_list_num()
-		, this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_list_num()
+		, this->cl_file_number_list.get_crnt_file_num()
 		);
 
 //std::string str("Critical Error!\nSave Config and Restart!");
@@ -202,10 +202,10 @@ int gts_master::next_scan_and_save_( void )
 
 	/* 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */
-	if (0 < this->cl_list_access.get_i_next_file_num()) {
+	if (0 < this->cl_file_number_list.get_next_file_num()) {
 		this->set_next_scan_info_(
-		 this->cl_list_access.get_i_crnt_file_num(),
-		 this->cl_list_access.get_i_next_file_num()
+		 this->cl_file_number_list.get_crnt_file_num(),
+		 this->cl_file_number_list.get_next_file_num()
 		);
 	}
 
@@ -215,7 +215,7 @@ int gts_master::next_scan_and_save_( void )
 int gts_master::cb_scan_and_save_start_child_( void )
 {
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
+	if (0 < this->cl_file_number_list.get_crnt_file_num()) {
 	 /* この中でnext_file_numセットしている */
 	 if (OK != this->next_scan_and_save_()) {
 		pri_funct_err_bttvr(
@@ -232,16 +232,16 @@ int gts_master::cb_scan_and_save_start_child_( void )
 int gts_master::cb_scan_and_save_next_child_( void )
 {
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
+	if (0 < this->cl_file_number_list.get_crnt_file_num()) {
 	 /* この中でnext_file_numセットしている */
 	 if (OK != this->next_scan_and_save_()) {
 		/*
 		ここでエラーになると次の番号がカレントに
 		なってしまうので元に戻す
-	this->cl_list_access.set_next_to_crnt_number();
+	this->cl_file_number_list.set_next_to_crnt_number();
 		と対で使うこと
 		*/
-		this->cl_list_access.reset_next_to_crnt_number();
+		this->cl_file_number_list.reset_next_to_crnt_number();
 
 		pri_funct_err_bttvr(
 	  "Error : this->next_scan_and_save_() returns NG" );
@@ -256,12 +256,12 @@ int gts_master::cb_scan_and_save_next_child_( void )
 void gts_master::cb_scan_and_save_start( void )
 {
 	/* 01 選択されたフレームの先頭の順番を得る */
-	const int crnt_list_num = this->cl_list_access.set_first_number();
+	const int crnt_list_num = this->cl_file_number_list.set_first_number();
 
 	/* 02 選択されていない */
 	if (crnt_list_num == 0) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_first_number() returns zero"
+	 "Error : this->cl_file_number_list.set_first_number() returns zero"
 		);
 fl_alert("Select number!");
 		return;
@@ -270,7 +270,7 @@ fl_alert("Select number!");
 	/* 03 選択されているのにフレーム番号名がない */
 	else if (crnt_list_num < 0) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_list_access.set_first_number() returns minus"
+	 "Error : this->cl_file_number_list.set_first_number() returns minus"
 		);
 fl_alert("No frame number.");
 		return;
@@ -278,11 +278,11 @@ fl_alert("No frame number.");
 
 	/* 04 levelの名前を得る */
 	if (NULL == this->cl_bro_level.cp_filepath(
-		this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_file_num()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.cp_filepath(%d) returns NULL.",
-		this->cl_list_access.get_i_crnt_file_num()
+		this->cl_file_number_list.get_crnt_file_num()
 		);
 fl_alert("Input level name!");
 		return;
@@ -292,17 +292,17 @@ fl_alert("Input level name!");
 
 	/* 05 カレントのスキャンと保存をして、次があるなら準備もする */
 	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
-		cl_gts_master.cl_list_access.set_endress_sw(true);
+		cl_gts_master.cl_file_number_list.set_endress_sw(true);
 	}
 	if (this->cb_scan_and_save_start_child_() != OK) {
 // std::string str("Error in scaning at 1st!";
 // fl_alert(str.c_str());
 		return;
 	}
-	cl_gts_master.cl_list_access.set_endress_sw(false);
+	cl_gts_master.cl_file_number_list.set_endress_sw(false);
 
 	/* 06 次のスキャンがあるなら */
-	if (0 < this->cl_list_access.get_i_next_file_num()) {
+	if (0 < this->cl_file_number_list.get_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
 	this->cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
 
@@ -316,21 +316,21 @@ void gts_master::cb_scan_and_save_next( void )
 	cl_gts_gui.window_next_scan->hide();
 
 	/* 次の番号をカレントにする */
-	this->cl_list_access.set_next_to_crnt_number();
+	this->cl_file_number_list.set_next_to_crnt_number();
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if ( 0 != cl_gts_gui.chkbtn_endless->value() ) {
-		cl_gts_master.cl_list_access.set_endress_sw(true);
+		cl_gts_master.cl_file_number_list.set_endress_sw(true);
 	}
 	if (this->cb_scan_and_save_next_child_() != OK) {
 // std::string str("Error in scaning at next!";
 // fl_alert(str.c_str());
 		return;
 	}
-	cl_gts_master.cl_list_access.set_endress_sw(false);
+	cl_gts_master.cl_file_number_list.set_endress_sw(false);
 
 	/* 次のスキャンがあるなら */
-	if (0 < this->cl_list_access.get_i_next_file_num()) {
+	if (0 < this->cl_file_number_list.get_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
 	this->cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
 
@@ -344,7 +344,7 @@ void gts_master::cb_scan_and_save_prev( void )
 	cl_gts_gui.window_next_scan->hide();
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if (0 < this->cl_list_access.get_i_crnt_file_num()) {
+	if (0 < this->cl_file_number_list.get_crnt_file_num()) {
 	 if (OK != this->next_scan_and_save_()) {
 		pri_funct_err_bttvr(
 	  "Error : this->next_scan_and_save_() returns NG" );
@@ -352,7 +352,7 @@ void gts_master::cb_scan_and_save_prev( void )
 	 }
 	}
 	/* 次のスキャンがあるなら */
-	if (0 < this->cl_list_access.get_i_next_file_num()) {
+	if (0 < this->cl_file_number_list.get_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
 	this->cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
 

@@ -53,7 +53,7 @@ void gtsfbro06cb_trace_batch::cb_alladd( void )
 {
 	int     ii;
 
-	/* run listすべてunselectする */
+	/* run listすべて選択状態を外す */
 	for (ii=1; ii<= cl_gts_gui.selbro_trace_batch_run_list->size();
 	++ii) {
 	     cl_gts_gui.selbro_trace_batch_run_list->select( ii, 0 );
