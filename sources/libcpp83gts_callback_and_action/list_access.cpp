@@ -55,80 +55,80 @@ int list_access::set_first_number( void )
 	const char *cp_tmp;
 
 	/* 01 選択されたフレームの先頭の順番を得る */
-	this->_i_crnt_list_num = this->_next_selected( 1 );
+	this->crnt_list_num_ = this->_next_selected( 1 );
 
 	/* 02 選択されていないならゼロを返す */
-	if (this->_i_crnt_list_num < 1) {
+	if (this->crnt_list_num_ < 1) {
 		pri_funct_err_bttvr(
 			"Error : this->_next_selected(1) returns <%d>",
-			this->_i_crnt_list_num );
+			this->crnt_list_num_ );
 		return 0;
 	}
 
 	/* 03 先頭の順番から、フレーム番号名を得る */
 	cp_tmp = cl_gts_gui.selbro_fnum_list->text(
-			this->_i_crnt_list_num);
+			this->crnt_list_num_);
 
 	/* 04 選択されているのにフレーム番号名がない --> エラー */
 	if (NULL == cp_tmp) {
 		pri_funct_err_bttvr(
 	"Error : cl_gts_gui.selbro_fnum_list->text(%d) returns NULL",
-			this->_i_crnt_list_num
+			this->crnt_list_num_
 		);
 		return -1;/* エラーリターンはマイナスの値 */
 	}
 
 	/* 05 フレーム番号名からフレーム番号を得る */
-	this->_i_crnt_file_num = atoi(cp_tmp);
+	this->crnt_file_num_ = atoi(cp_tmp);
 
 	/* 06 次の番号は未定 */
-	this->_i_next_list_num = -1;
-	this->_i_next_file_num = -1;
+	this->next_list_num_ = -1;
+	this->next_file_num_ = -1;
 
 	/* 07 選択されたフレームの先頭の順番(1以上の値)を返す */
-	return this->_i_crnt_list_num;
+	return this->crnt_list_num_;
 }
 /*
 エラー時のリカバリー用
 int list_access::set_next_number( void )
 と対で使うこと
-this->_i_next_list_numとthis->_i_next_file_numを初期化する
+this->next_list_num_とthis->next_file_num_を初期化する
 */
 void list_access::reset_next_number( void )
 {
-	this->_i_next_list_num = -1;
-	this->_i_next_file_num = -1;
+	this->next_list_num_ = -1;
+	this->next_file_num_ = -1;
 }
-/* this->_i_next_list_numとthis->_i_next_file_numを設定する */
+/* this->next_list_num_とthis->next_file_num_を設定する */
 int list_access::set_next_number( void )
 {
 	char *cp_tmp;
 
 	/* 01 選択されたフレームの次の順番を得る */
-	this->_i_next_list_num = this->_next_selected(
-	 this->_i_crnt_list_num + 1 );
+	this->next_list_num_ = this->_next_selected(
+	 this->crnt_list_num_ + 1 );
 
 	/* 02 次がなければ(無効)次のフレーム番号を無効にしてこのmethod終 */
-	if (this->_i_next_list_num < 1) {
-	    this->_i_next_file_num = -1;
+	if (this->next_list_num_ < 1) {
+	    this->next_file_num_ = -1;
 		return OK;
 	}
 
 	/* 03 次の順番から、フレーム番号名を得る */
 	cp_tmp = (char *)cl_gts_gui.selbro_fnum_list->text(
-		this->_i_next_list_num);
+		this->next_list_num_);
 
 	/* 04 選択されているのにフレーム番号名がない --> エラー */
 	if (NULL == cp_tmp) {
 		pri_funct_err_bttvr(
 	"Error : cl_gts_gui.selbro_fnum_list->text(%d) returns NULL",
-		this->_i_next_list_num
+		this->next_list_num_
 		);
 		return NG;
 	}
 
 	/* 05 フレーム番号名からフレーム番号を得る */
-	this->_i_next_file_num = atoi( cp_tmp );
+	this->next_file_num_ = atoi( cp_tmp );
 
 	return OK;
 }
@@ -140,18 +140,18 @@ void list_access::set_next_to_crnt_number( void )
 */
 void list_access::reset_next_to_crnt_number( void )
 {
-	this->_i_crnt_list_num = this->crnt_list_num_for_reset_;
-	this->_i_crnt_file_num = this->crnt_file_num_for_reset_;
+	this->crnt_list_num_ = this->crnt_list_num_for_reset_;
+	this->crnt_file_num_ = this->crnt_file_num_for_reset_;
 }
 /* 次のフレームを処理するとき呼ぶ */
 void list_access::set_next_to_crnt_number( void )
 {
-	this->crnt_list_num_for_reset_ = this->_i_crnt_list_num;
-	this->crnt_file_num_for_reset_ = this->_i_crnt_file_num;
-	this->_i_crnt_list_num = this->_i_next_list_num;
-	this->_i_crnt_file_num = this->_i_next_file_num;
-	this->_i_next_list_num = -1;
-	this->_i_next_file_num = -1;
+	this->crnt_list_num_for_reset_ = this->crnt_list_num_;
+	this->crnt_file_num_for_reset_ = this->crnt_file_num_;
+	this->crnt_list_num_ = this->next_list_num_;
+	this->crnt_file_num_ = this->next_file_num_;
+	this->next_list_num_ = -1;
+	this->next_file_num_ = -1;
 }
 
 /* "0000"--> "0000 S" , "0000 T" --> "0000 ST" */

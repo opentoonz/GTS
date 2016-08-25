@@ -356,7 +356,7 @@ std::cout
 
 			/* 実際の画像ファイルの有無を調べて
 			リストの最後に追加する */
-	cl_gts_master.cl_image_mark_access.append_fnum_list_with_chk_mark(
+	cl_gts_master.cl_frame_number_list.append_fnum_list_with_chk_mark(
 				atoi(ca_scan2));
 
 			/* 選択状態の再現 */

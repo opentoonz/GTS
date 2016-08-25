@@ -25,7 +25,7 @@
 #include "memory_desktop.h"
 #include "memory_config.h"
 #include "list_access.h"
-#include "image_mark_access.h"
+#include "cb_frame_number_list.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
 #include "cb_color_trace_enhancement.h"
@@ -74,7 +74,6 @@ public:
 	void cb_config_save_as_list( void );
 	void cb_config_save_as_ok( void );
 	void cb_choice_pixel_type( void );
-	void cb_fnum_edit_insert( void );
 	void cb_level_dir( void );
 	void cb_level_rgb_scan_dir( void );
 	void cb_level_mkdir( void );
@@ -169,7 +168,10 @@ public:
 	memory_install_setup	cl_memo_install_setup;
 
 	list_access		cl_list_access; /* file number list */
-	image_mark_access	cl_image_mark_access;
+
+	/* [WIP]list_accessを取り込む予定 */
+	cb_frame_number_list	cl_frame_number_list;
+
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
 	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;
 	cb_color_trace_enhancement	cl_color_trace_enhancement;

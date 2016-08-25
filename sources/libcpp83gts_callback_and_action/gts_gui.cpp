@@ -1862,7 +1862,7 @@ Fl_Menu_Item gts_gui::menu_1[] = {
 };
 
 void gts_gui::cb_norinp_fnum_insert_i(Fl_Input*, void*) {
-  cl_gts_master.cb_fnum_edit_insert();
+  cl_gts_master.cl_frame_number_list.set_list_from_string();
 }
 void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);

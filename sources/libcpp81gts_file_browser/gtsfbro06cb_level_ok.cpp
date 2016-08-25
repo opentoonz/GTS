@@ -73,7 +73,7 @@ void gtsfbro06cb_level::cb_ok( void )
 	cl_gts_master.cl_list_access.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	cl_gts_master.cl_image_mark_access.make_fnum_list_with_chk_mark(
+	cl_gts_master.cl_frame_number_list.make_fnum_list_with_chk_mark(
 		i_sta, i_end
 	);
 
