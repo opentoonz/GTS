@@ -353,8 +353,8 @@ fl_message( ost.str().c_str() );}
     }
     Fl_Window window_level {
       label {Browse Level}
-      callback {cl_gts_master.cl_bro_level.cb_cancel();}
-      xywh {50 50 380 600} type Double resizable non_modal size_range {370 300 0 0} visible
+      callback {cl_gts_master.cl_bro_level.cb_cancel();} open
+      xywh {50 50 380 630} type Double resizable non_modal size_range {370 300 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -476,12 +476,12 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
         xywh {0 425 380 25}
       } {
         Fl_Box {} {
-          xywh {0 425 50 25}
+          xywh {0 425 80 25}
         }
         Fl_Input strinp_level_file {
           label Level
           callback {cl_gts_master.cl_bro_level.cb_level_name();}
-          xywh {50 425 330 25} box BORDER_BOX when 1 resizable
+          xywh {80 425 300 25} box BORDER_BOX when 1 resizable
         }
       }
       Fl_Group {} {open
@@ -489,18 +489,10 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
       } {
         Fl_Value_Input valinp_level_start {
           label Start
-          xywh {50 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-        }
-        Fl_Value_Input valinp_level_end {
-          label End
-          xywh {120 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-        }
-        Fl_Check_Button chkbtn_endless {
-          label Endless
-          xywh {160 455 75 25} down_box DOWN_BOX
+          xywh {80 455 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
         }
         Fl_Box {} {
-          xywh {235 455 5 25} resizable
+          xywh {130 455 110 25} resizable
         }
         Fl_Light_Button ligbut_level_image_x1_sw {
           label x1
@@ -516,10 +508,51 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
       Fl_Group {} {open
         xywh {0 485 380 25}
       } {
+        Fl_Choice choice_level_end_type {
+          callback {if (o->value() == 0) {
+ cl_gts_gui.valinp_level_end->show();
+ cl_gts_gui.choice_level_endless_direction->hide();
+} else {
+ cl_gts_gui.valinp_level_end->hide();
+ cl_gts_gui.choice_level_endless_direction->show();
+}} open
+          xywh {0 485 80 25} down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label End
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label Endless
+            xywh {0 0 30 20}
+          }
+        }
+        Fl_Value_Input valinp_level_end {selected
+          xywh {80 485 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+        }
+        Fl_Choice choice_level_endless_direction {open
+          xywh {80 485 50 25} down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label {+1}
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label {-1}
+            xywh {0 0 30 20}
+          }
+        }
+        Fl_Box {} {
+          xywh {130 485 250 25} resizable
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 515 380 25}
+      } {
         Fl_Choice choice_level_image_file_format {
           label Format
           callback {cl_gts_master.cl_bro_level.cb_set_image_file_extension();} open
-          xywh {50 485 65 25} down_box BORDER_BOX
+          xywh {80 515 65 25} down_box BORDER_BOX
         } {
           MenuItem {} {
             label TIFF
@@ -531,55 +564,55 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           }
         }
         Fl_Box {} {
-          xywh {113 485 267 25} resizable
+          xywh {145 515 235 25} resizable
         }
       }
       Fl_Group {} {open
-        xywh {0 515 380 50}
+        xywh {0 545 380 50}
       } {
         Fl_File_Input filinp_level_rgb_scan_dir {
           label {RGB scan dir}
           callback {cl_gts_master.cl_bro_level.cb_rgb_scan_dir();}
-          xywh {0 530 135 35} align 5 when 1 deactivate resizable
+          xywh {0 560 135 35} align 5 when 1 deactivate resizable
         }
         Fl_Check_Button chkbtn_level_rgb_trace_save_sw {
           label {S.C.T.}
-          tooltip {Save Color Trace level} xywh {135 545 60 20} down_box DOWN_BOX
+          tooltip {Save Color Trace level} xywh {135 575 60 20} down_box DOWN_BOX
         }
         Fl_Check_Button chkbtn_level_rgb_full_save_sw {
           label {S.Full}
-          tooltip {Save RGB Full  level} xywh {195 545 60 20} down_box DOWN_BOX value 1
+          tooltip {Save RGB Full  level} xywh {195 575 60 20} down_box DOWN_BOX value 1
         }
         Fl_Check_Button chkbtn_level_rgb_with_full_sw {
           label With_full
-          tooltip {With _full in RGB full name} xywh {195 523 75 20} down_box DOWN_BOX value 1
+          tooltip {With _full in RGB full name} xywh {195 553 75 20} down_box DOWN_BOX value 1
         }
         Fl_Light_Button ligbut_level_rgb_scan_browse_sw {
           label Browse
           callback {cl_gts_master.cl_bro_level.cb_browse_sw();}
-          xywh {255 540 70 25}
+          xywh {255 570 70 25}
         }
         Fl_Light_Button ligbut_level_info_rgb_sub_sw {
           label Full
           callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
-          xywh {325 540 50 25} hide
+          xywh {325 570 50 25} hide
         }
       }
-      Fl_Group {} {
-        xywh {0 570 380 24}
+      Fl_Group {} {open
+        xywh {0 600 380 24}
       } {
         Fl_Button {} {
           label OK
           callback {cl_gts_master.cl_bro_level.cb_ok();}
-          xywh {10 570 80 24}
+          xywh {10 600 80 24}
         }
         Fl_Box {} {
-          xywh {90 570 200 24} resizable
+          xywh {90 600 200 24} resizable
         }
         Fl_Button {} {
           label Cancel
           callback {cl_gts_master.cl_bro_level.cb_cancel();}
-          xywh {290 570 80 24}
+          xywh {290 600 80 24}
         }
       }
     }

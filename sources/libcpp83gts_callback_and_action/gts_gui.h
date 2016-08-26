@@ -19,8 +19,8 @@
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Input.H>
-#include <FL/Fl_Check_Button.H>
 #include <FL/Fl_Light_Button.H>
+#include <FL/Fl_Check_Button.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Round_Button.H>
@@ -226,8 +226,6 @@ private:
   static void cb_strinp_level_file(Fl_Input*, void*);
 public:
   Fl_Value_Input *valinp_level_start;
-  Fl_Value_Input *valinp_level_end;
-  Fl_Check_Button *chkbtn_endless;
   Fl_Light_Button *ligbut_level_image_x1_sw;
 private:
   inline void cb_ligbut_level_image_x1_sw_i(Fl_Light_Button*, void*);
@@ -238,6 +236,15 @@ private:
   inline void cb_ligbut_level_view_sw_i(Fl_Light_Button*, void*);
   static void cb_ligbut_level_view_sw(Fl_Light_Button*, void*);
 public:
+  Fl_Choice *choice_level_end_type;
+private:
+  inline void cb_choice_level_end_type_i(Fl_Choice*, void*);
+  static void cb_choice_level_end_type(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_level_end_type[];
+public:
+  Fl_Value_Input *valinp_level_end;
+  Fl_Choice *choice_level_endless_direction;
+  static Fl_Menu_Item menu_choice_level_endless_direction[];
   Fl_Choice *choice_level_image_file_format;
 private:
   inline void cb_choice_level_image_file_format_i(Fl_Choice*, void*);

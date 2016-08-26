@@ -297,7 +297,7 @@ private:
 	void _trace_batch_add( char *cp_path );
 	void _change_view_main( void );
 
-	int scan_and_save_( const int list_num ,const int file_num );
+	int scan_and_save_( void );
 	void set_next_scan_info_( const int file_prev ,const int file_next);
 	int next_scan_and_save_( void );
 	int cb_scan_and_save_start_child_( void );

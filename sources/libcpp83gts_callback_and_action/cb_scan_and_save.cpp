@@ -5,8 +5,10 @@
 #include "gts_master.h"
 
 /*--------------------------------------------------------*/
-int gts_master::scan_and_save_( const int list_num , const int file_num )
+int gts_master::scan_and_save_( void )
 {
+	const int list_num = this->cl_file_number_list.get_crnt_list_num();
+	const int file_num = this->cl_file_number_list.get_crnt_file_num();
 	const char* cp_path = nullptr;
 	iip_canvas* clp_scan = nullptr;
 
@@ -74,9 +76,9 @@ int gts_master::scan_and_save_( const int list_num , const int file_num )
 	 }
 
 	 /* リストにScanimage(src)保存済マーク付け "0000" --> "0000 S" */
-	 if (OK != this->cb_file_number_list.marking_scan_file(list_num)) {
+	 if (OK != this->cl_file_number_list.marking_scan_file(list_num)) {
 		pri_funct_err_bttvr(
-	  "Error : this->cb_file_number_list.marking_scan_file(%d) returns NG",
+	  "Error : this->cl_file_number_list.marking_scan_file(%d) returns NG",
 			list_num
 		);
 		return NG;
@@ -121,9 +123,9 @@ int gts_master::scan_and_save_( const int list_num , const int file_num )
 	 }
 
 	 /* リストにTracenimage(tgt)保存済マーク付け "0000" --> "0000 T" */
-	 if (OK != this->cb_file_number_list.marking_trace_file(list_num)) {
+	 if (OK != this->cl_file_number_list.marking_trace_file(list_num)) {
 		pri_funct_err_bttvr(
-	  "Error : this->cb_file_number_list.marking_trace_file(%d) returns NG"
+	  "Error : this->cl_file_number_list.marking_trace_file(%d) returns NG"
 	 		, list_num
 		);
 		return NG;
@@ -132,7 +134,7 @@ int gts_master::scan_and_save_( const int list_num , const int file_num )
 	/*------------------------------------------------*/
 
 	/* 08 リストの選択解除 */
-	this->cb_file_number_list.unselect(list_num);
+	this->cl_file_number_list.unselect(list_num);
 
 	/* 09 level browser listの(保存したファイルも含めて)再表示 */
 	this->cl_bro_level.cb_list_redisplay();
@@ -178,10 +180,7 @@ int gts_master::next_scan_and_save_( void )
 	}
 
 	/* スキャンと保存を実行する */
-	if (OK != this->scan_and_save_(
-		this->cl_file_number_list.get_crnt_list_num()
-		, this->cl_file_number_list.get_crnt_file_num()
-	)) {
+	if (OK != this->scan_and_save_()) {
 		/* 次のスキャン番号をキャンセルしてエラーリターン */
 		this->cl_file_number_list.reset_next_number();
 
