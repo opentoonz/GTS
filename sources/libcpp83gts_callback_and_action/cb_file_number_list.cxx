@@ -216,22 +216,23 @@ void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 	);
 }
 
-/* listの順位置に挿入。既にあるなら何もしない */
-int cb_file_number_list::set_fnum_list_( const int file_num )
+/* listの順位置に挿入し、選択状態にして、既にあるならその位置を返す */
+int cb_file_number_list::insert_and_select_fnum_in_list_( const int file_num )
 {
-	char buffer[8];
 	int ii,jj;
+	char buffer[8];
 
-	(void)sprintf(buffer, "%04d", file_num );
-
-	for (ii=1 ;ii<=cl_gts_gui.selbro_fnum_list->size() ;++ii) {
+	/* size + 1までループして最後でも追加するようにする */
+	for (ii= 1 ;ii <= cl_gts_gui.selbro_fnum_list->size() +1 ;++ii) {
 		jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
-		if (file_num == jj) {
-			//cl_gts_gui.selbro_fnum_list->text( ii ,buffer );
+		if (file_num == jj) {/* 既にあるなら何もしないで... */
+			cl_gts_gui.selbro_fnum_list->select( ii );/* 選択 */
 			return ii;
 		}
-		if (file_num < jj) {
+		if (file_num < jj) { /* listの順位置に挿入 */
+			(void)sprintf(buffer, "%04d", file_num );
 			cl_gts_gui.selbro_fnum_list->insert( ii ,buffer );
+			cl_gts_gui.selbro_fnum_list->select( ii );
 			return ii;
 		}
 	}
@@ -362,159 +363,10 @@ int cb_file_number_list::marking_trace_file( int list_num )
 
 //------------------------------------------------------------
 #if 0
-namespace {
- bool check_next_selected_( int list_num )
- {
-	for (;list_num<=cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
-		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
-			return true;
-		}
-	}
-	return false;
- }
-}
-
-/* リストを指定番号からサーチし、
-次の選択されたリストの番号(1...)を得る
-ない場合は-1を返す */
-int cb_file_number_list::_next_selected( int list_num )
-{
-	for (;list_num<=cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
-		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
-			/* EndressスイッチがON、かつ最後の選択だった */
-			if (this->endress_sw_ == true
-			&& !check_next_selected_(list_num+1)) {
-				/* 最後の番号に+1の番号を得る */
-				char numarray[8];
-				(void)sprintf( numarray, "%04d"
-	,atoi( cl_gts_gui.selbro_fnum_list->text(
-		cl_gts_gui.selbro_fnum_list->size()
-	) ) +1
-				);
-				/* listに追加して */
-				cl_gts_gui.selbro_fnum_list->add(numarray);
-				/* 選択状態にする */
-				cl_gts_gui.selbro_fnum_list->select(
-				 cl_gts_gui.selbro_fnum_list->size()
-				);
-			}
-			return list_num;
-		}
-	}
-	return -1;
-}
-int cb_file_number_list::set_first_number( void )
-{
-	const char *cp_tmp;
-
-	/* 01 選択されたフレームの先頭の順番を得る */
-	this->crnt_list_num_ = this->_next_selected( 1 );
-
-	/* 02 選択されていないならゼロを返す */
-	if (this->crnt_list_num_ < 1) {
-		pri_funct_err_bttvr(
-			"Error : this->_next_selected(1) returns <%d>",
-			this->crnt_list_num_ );
-		return 0;
-	}
-
-	/* 03 先頭の順番から、フレーム番号名を得る */
-	cp_tmp = cl_gts_gui.selbro_fnum_list->text(
-			this->crnt_list_num_);
-
-	/* 04 選択されているのにフレーム番号名がない --> エラー */
-	if (nullptr == cp_tmp) {
-		pri_funct_err_bttvr(
-	"Error : cl_gts_gui.selbro_fnum_list->text(%d) returns nullptr",
-			this->crnt_list_num_
-		);
-		return -1;/* エラーリターンはマイナスの値 */
-	}
-
-	/* 05 フレーム番号名からフレーム番号を得る */
-	this->crnt_file_num_ = atoi(cp_tmp);
-
-	/* 06 次の番号は未定 */
-	this->next_list_num_ = -1;
-	this->next_file_num_ = -1;
-
-	/* 07 選択されたフレームの先頭の順番(1以上の値)を返す */
-	return this->crnt_list_num_;
-}
-/* this->next_list_num_とthis->next_file_num_を設定する */
-int cb_file_number_list::set_next_number( void )
-{
-	char *cp_tmp;
-
-	/* 01 選択されたフレームの次の順番を得る */
-	this->next_list_num_ = this->_next_selected(
-	 this->crnt_list_num_ + 1 );
-
-	/* 02 次がなければ(無効)次のフレーム番号を無効にしてこのmethod終 */
-	if (this->next_list_num_ < 1) {
-	    this->next_file_num_ = -1;
-		return OK;
-	}
-
-	/* 03 次の順番から、フレーム番号名を得る */
-	cp_tmp = (char *)cl_gts_gui.selbro_fnum_list->text(
-		this->next_list_num_);
-
-	/* 04 選択されているのにフレーム番号名がない --> エラー */
-	if (nullptr == cp_tmp) {
-		pri_funct_err_bttvr(
-	"Error : cl_gts_gui.selbro_fnum_list->text(%d) returns nullptr",
-		this->next_list_num_
-		);
-		return NG;
-	}
-
-	/* 05 フレーム番号名からフレーム番号を得る */
-	this->next_file_num_ = atoi( cp_tmp );
-
-	return OK;
-}
-/*
-エラー時のリカバリー用
-int cb_file_number_list::set_next_number( void )
-と対で使うこと
-this->next_list_num_とthis->next_file_num_を初期化する
-*/
-void cb_file_number_list::reset_next_number( void )
-{
-	this->next_list_num_ = -1;
-	this->next_file_num_ = -1;
-}
-
-/*
-次スキャンしようとしたらエラーの時のリカバリー用
-void cb_file_number_list::set_next_to_crnt_number( void )
-と対で使うこと
-*/
-void cb_file_number_list::reset_next_to_crnt_number( void )
-{
-	this->crnt_list_num_ = this->prev_list_num_;
-	this->crnt_file_num_ = this->prev_file_num_;
-}
-/* 次のフレームを処理するとき呼ぶ */
-void cb_file_number_list::set_next_to_crnt_number( void )
-{
-	this->prev_list_num_ = this->crnt_list_num_;
-	this->prev_file_num_ = this->crnt_file_num_;
-	this->crnt_list_num_ = this->next_list_num_;
-	this->crnt_file_num_ = this->next_file_num_;
-	this->next_list_num_ = -1;
-	this->next_file_num_ = -1;
-}
-#endif
-//------------------------------------------------------------
-
 /* 1 初期化 */
-void cb_file_number_list::num_init( void )
+void cb_file_number_list::number_init( void )
 {
 	/* 位置をすべて-1にセット */
-	this->prev_list_num_ = -1;
-	this->prev_file_num_ = -1;
 	this->crnt_list_num_ = -1;
 	this->crnt_file_num_ = -1;
 	this->next_list_num_ = -1;
@@ -545,25 +397,22 @@ namespace {
 	int ii;
 	int jj;
 	for (ii=1 ;ii <= cl_gts_gui.selbro_fnum_list->size() ;++ii) {
-		jj = atoi(
-			cl_gts_gui.selbro_fnum_list->text( ii )
-		);
+		jj = atoi( cl_gts_gui.selbro_fnum_list->text( ii ) );
 		if (file_num == jj) { return ii; }
 	}
 	return -1;
  }
 }
 /* 2 現位置を得る */
-void cb_file_number_list::num_set_before_action( void )
+void cb_file_number_list::number_set( void )
 {
 	/* End指定
-		--> GUIのlistの選択をたどる
+	--> GUIのlistの選択をたどる
+	--> GUIのlistに対しては参照のみ
+	--> マークと選択解除は外で
 	*/
 	if ( cl_gts_gui.choice_level_end_type->value() == 0 ) {
-	/* a エラー処理のため、前位置を現位置に置換える */
-		this->prev_list_num_ = this->crnt_list_num_;
-		this->prev_file_num_ = this->crnt_file_num_;
-	/* b 現位置が初期化状態(-1)なら、現位置を初期位置にする */
+	/* a 現位置が初期化状態(-1)なら、現位置を初期位置にする */
 		if (this->crnt_list_num_ < 1) {
 			if (
 				cl_gts_gui.valinp_level_start->value()
@@ -578,10 +427,10 @@ void cb_file_number_list::num_set_before_action( void )
 					cl_gts_gui.selbro_fnum_list->size()
 				);
 			}
-			if (this->crnt_list_num_ < 1) {
+			if (this->crnt_list_num_ < 1) { /* 選択がない */
 				this->crnt_file_num_ = -1;
 			}
-			else {
+			else { /* 選択項目の表示番号を得る */
 				this->crnt_file_num_ = atoi( 
 					cl_gts_gui.selbro_fnum_list->text(
 				this->crnt_list_num_
@@ -589,33 +438,33 @@ void cb_file_number_list::num_set_before_action( void )
 				);
 			}
 		}
-	/* c 現位置が初期化状態(-1)でなければ、現位置を次位置に置換える */
+	/* b 現位置が初期化状態(-1)でなければ、現位置を次位置に置換える */
 		else {
 			this->crnt_list_num_ = this->next_list_num_;
 			this->crnt_file_num_ = this->next_file_num_;
 		}
-	/* d 次処理があるか判断のため、次番号もここで取る */
-	/* e 次位置がなければ-1をセット */
-		if (1 <= this->crnt_list_num) {
+	/* c 次番号を得る(次処理があるか判断のためここで取る) */
+	/* d 次位置がなければ-1をセット */
+		if (1 <= this->crnt_list_num_) {/* 現位置がなければ次ない */
 			if (
 				cl_gts_gui.valinp_level_start->value()
 				<= cl_gts_gui.valinp_level_end->value()
 			) {
-				/* 順送り(start <= end)の初期位置 */
+				/* 順送り(start <= end)の次位置 */
 				this->next_list_num_= next_selected_(
-					this->crnt_list_num
+					this->crnt_list_num_ + 1
 				);
 			}
 			else {
-				/* 逆送り(start > end)の初期位置 */
+				/* 逆送り(start > end)の次位置 */
 				this->next_list_num_= prev_selected_(
-					this->crnt_list_num
+					this->crnt_list_num_ - 1
 				);
 			}
-			if (this->next_list_num_ < 1) {
+			if (this->next_list_num_ < 1) { /* 次選択がない */
 				this->next_file_num_ = -1;
 			}
-			else {
+			else { /* 次選択項目の表示番号を得る */
 				this->next_file_num_ = atoi( 
 					cl_gts_gui.selbro_fnum_list->text(
 				this->next_list_num_
@@ -625,55 +474,225 @@ void cb_file_number_list::num_set_before_action( void )
 		}
 	}
 	/* Endless指定
-		--> GUIのlistの選択は無視
-		--> LevelのStart番号から始まる
-		--> GUIのlistには処理成功したものを追加する -->num_sccess()?
+	--> GUIのlistの選択は無視
+	--> LevelのStart番号から始まる
+	--> GUIのlist項目(になければ追加して)選択状態にする(処理開始準備)
+	--> マークと選択解除は外で
 	*/
 	else {
-		/* a 初期化状態(-1)の場合Startをセット */
+	/* a 現位置が初期化状態(-1)なら、現位置を初期位置(Start)にする */
 		if (this->crnt_list_num_ < 1) {
 			/* Start番号を現位置とする */
 			this->crnt_file_num_ = 
 				cl_gts_gui.valinp_level_start->value();
-			/* Start番号からlistの番号を得る */
+			/* Start番号に一致するlist番号あれば現位置とする */
 			this->crnt_list_num_ = search_list_from_file_num_(
 			 this->crnt_file_num_
 			);
-			/* 現位置がなければリスト追加する */
-			if (this->crnt_list_num_ < 1) {
-				this->crnt_list_num_ = this->set_fnum_list_(
-				 this->crnt_file_num_
-				);
-			}
-			/* 選択状態にする */
-			if (1 <= this->crnt_list_num_) {
-				cl_gts_gui.selbro_fnum_list->select(
-					this->crnt_list_num_
-				);
-			}
 		}
-		/* b 初期化状態(-1)でなければ+1/-1
-		(1...9999の範囲でlimmiterかける) */
+
+	/* b 現位置が初期化状態(-1)でなければ、現位置を次位置に置換える */
 		else {
-			this->prev_list_num_ = this->crnt_list_num_;
-			this->prev_file_num_ = this->crnt_file_num_;
 			this->crnt_list_num_ = this->next_list_num_;
 			this->crnt_file_num_ = this->next_file_num_;
+		}
+
+	/* c 一致する現位置(がなければGUI listに追加してそれ)を(再)設定 */
+		this->crnt_list_num_ = this->insert_and_select_fnum_in_list_(
+			this->crnt_file_num_
+		);
+
+	/* d 既存でも新規追加でも、選択状態にする */
+		if (1 <= this->crnt_list_num_) {
+			cl_gts_gui.selbro_fnum_list->select(
+				this->crnt_list_num_
+			);
+		}
+
+	/* e 次番号を得る(次処理があるか判断のためここで取る) */
+		if (cl_gts_gui.choice_level_endless_direction->value() == 0)
+		{
+			this->next_list_num_ = this->crnt_list_num_ + 1;
+			this->next_file_num_ = this->crnt_file_num_ + 1;
+		}
+		if (cl_gts_gui.choice_level_endless_direction->value() == 1)
+		{
+			this->next_list_num_ = this->crnt_list_num_ - 1;
+			this->next_file_num_ = this->crnt_file_num_ - 1;
+		}
+
+	/* f 次位置が1...9999外であれば-1をセット */
+		if (this->next_list_num_ < 1 || this->next_file_num_ < 1) {
+				this->next_list_num_ = -1;
+				this->next_file_num_ = -1;
+		}
+		if (9999<this->next_list_num || 9999<this->next_file_num) {
+				this->next_list_num_ = -1;
+				this->next_file_num_ = -1;
+		}
+	}
+}
+#endif
+
+namespace {
+ int next_selected_( int list_num )
+ {
+	for (;list_num <= cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
+		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
+			return return list_num;
+		}
+	}
+	return -1;
+ }
+ int prev_selected_( int list_num )
+ {
+	for (;1 <= list_num ;--list_num) {
+		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
+			return return list_num;
+		}
+	}
+	return -1;
+ }
+}
+void cb_file_number_list::set_next_num_from_crnt_( void )
+{
+	/* 現位置がなければ次もない */
+	if (this->crnt_list_num_ < 1 || this->crnt_file_num_ < 1) {
+		this->next_list_num_ = -1;
+		this->next_file_num_ = -1;
+		return;
+	}
+	if ( cl_gts_gui.choice_level_end_type->value() == 0 ) {/* End指定 */
+		/* GUIのfile number listの選択をたどる */
+		/* 処理後のマーキングと選択解除は外で行う */
+
+		if (
+			cl_gts_gui.valinp_level_start->value()
+			<= cl_gts_gui.valinp_level_end->value()
+		) {
+			/* 順送り(start <= end)の次選択位置 */
+			this->next_list_num_= next_selected_(
+				this->crnt_list_num_ + 1
+			);
+		}
+		else {
+			/* 逆送り(start > end)の次選択位置 */
+			this->next_list_num_= prev_selected_(
+				this->crnt_list_num_ - 1
+			);
+		}
+		if (this->next_list_num_ < 1) { /* 選択がないなら-1 */
+			this->next_file_num_ = -1;
+		}
+		else { /* 選択あったら、その項目の表示番号を得る */
+			this->next_file_num_ = atoi( 
+				cl_gts_gui.selbro_fnum_list->text(
+					this->next_list_num_
+				)
+			);
+		}
+	}
+	else /* Endless指定 */
+	if ( cl_gts_gui.choice_level_end_type->value() == 1 ) {
+		/* GUIのlistの選択は無視 */
+		/* 処理後のマーキングと選択解除は外で行う */
+
+		/* 次番号を得る(次処理があるか判断のためここで取る) */
+		if (cl_gts_gui.choice_level_endless_direction->value() == 0)
+		{
+			this->next_list_num_ = this->crnt_list_num_ + 1;
+			this->next_file_num_ = this->crnt_file_num_ + 1;
+		}
+		if (cl_gts_gui.choice_level_endless_direction->value() == 1)
+		{
+			this->next_list_num_ = this->crnt_list_num_ - 1;
+			this->next_file_num_ = this->crnt_file_num_ - 1;
+		}
+
+		/* 次位置が1...9999外であれば-1 */
+		if (this->next_list_num_ < 1 || this->next_file_num_ < 1) {
+				this->next_list_num_ = -1;
+				this->next_file_num_ = -1;
+		}
+		if (9999<this->next_list_num || 9999<this->next_file_num) {
+				this->next_list_num_ = -1;
+				this->next_file_num_ = -1;
 		}
 	}
 }
 
-/* 3 Errorが起きたら */
-void cb_file_number_list::num_error( void )
+/* 1 初期化 */
+void cb_file_number_list::counter_start( void )
 {
-	/* 現位置を前位置に戻す */
-	this->crnt_list_num_ = this->prev_list_num_;
-	this->crnt_file_num_ = this->prev_file_num_;
-	this->prev_list_num_ = -1;
-	this->prev_file_num_ = -1;
+	if ( cl_gts_gui.choice_level_end_type->value() == 0 ) {/* End指定 */
+		/* GUIのfile number listの選択をたどる */
+		/* 処理後のマーキングと選択解除は外で行う */
 
-	/* エラーなので次をStopするため次番号に-1をセット */
-	this->next_list_num_ = -1;
-	this->next_file_num_ = -1;
+		if (
+			cl_gts_gui.valinp_level_start->value()
+			<= cl_gts_gui.valinp_level_end->value()
+		) {
+			/* 順送り(start <= end)の初期位置 */
+			this->crnt_list_num_= next_selected_(1);
+		}
+		else {
+			/* 逆送り(start > end)の初期位置 */
+			this->crnt_list_num_= prev_selected_(
+				cl_gts_gui.selbro_fnum_list->size()
+			);
+		}
+		if (this->crnt_list_num_ < 1) { /* listに選択がない */
+			this->crnt_file_num_ = -1;
+		}
+		else { /* 選択があるなら、項目の表示番号を得る */
+			this->crnt_file_num_ = atoi( 
+				cl_gts_gui.selbro_fnum_list->text(
+					this->crnt_list_num_
+				)
+			);
+		}
+	}
+	else /* Endless指定 */
+	if ( cl_gts_gui.choice_level_end_type->value() == 1 ) {
+		/* GUIのlistの選択は無視 */
+		/* 処理後のマーキングと選択解除は外で行う */
+
+		/* LevelのStart番号から始まる */
+		this->crnt_file_num_ = 
+			cl_gts_gui.valinp_level_start->value();
+
+		/* Start番号に一致するlist番号あれば現位置とし、
+		なければ追加して現位置とし、
+		選択状態にする */
+		this->crnt_list_num_= this->insert_and_select_fnum_in_list_(
+			this->crnt_file_num_
+		);
+	}
+	/* 次番号を得る(次処理があるか判断のためここで取る)
+	次位置がなければ-1をセット */
+	this->set_next_num_from_crnt_();
+}
+
+
+
+/* 2 現位置を得る */
+void cb_file_number_list::counter_next( void )
+{
+	/* 次へ */
+	this->crnt_list_num_ = this->next_list_num_;
+	this->crnt_file_num_ = this->next_file_num_;
+
+	/* Endless指定 */
+	if ( cl_gts_gui.choice_level_end_type->value() == 1 ) {
+		/* File番号に一致するlist番号あれば現位置とし、
+		なければ追加して現位置とし、
+		選択状態にする */
+		this->crnt_list_num_= this->insert_and_select_fnum_in_list_(
+			this->crnt_file_num_
+		);
+	}
+	/* 次番号を得る(次処理があるか判断のためここで取る)
+	次位置がなければ-1をセット */
+	this->set_next_num_from_crnt_();
 }
 

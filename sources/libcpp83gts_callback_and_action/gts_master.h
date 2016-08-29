@@ -298,7 +298,6 @@ private:
 	void _change_view_main( void );
 
 	int scan_and_save_( void );
-	void set_next_scan_info_( const int file_prev ,const int file_next);
 	int next_scan_and_save_( void );
 	int cb_scan_and_save_start_child_( void );
 	int cb_scan_and_save_next_child_( void );
