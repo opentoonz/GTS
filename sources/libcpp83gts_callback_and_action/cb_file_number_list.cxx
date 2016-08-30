@@ -216,29 +216,6 @@ void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 	);
 }
 
-/* listの順位置に挿入し、選択状態にして、既にあるならその位置を返す */
-int cb_file_number_list::insert_and_select_fnum_in_list_( const int file_num )
-{
-	int ii,jj;
-	char buffer[8];
-
-	/* size + 1までループして最後でも追加するようにする */
-	for (ii= 1 ;ii <= cl_gts_gui.selbro_fnum_list->size() +1 ;++ii) {
-		jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
-		if (file_num == jj) {/* 既にあるなら何もしないで... */
-			cl_gts_gui.selbro_fnum_list->select( ii );/* 選択 */
-			return ii;
-		}
-		if (file_num < jj) { /* listの順位置に挿入 */
-			(void)sprintf(buffer, "%04d", file_num );
-			cl_gts_gui.selbro_fnum_list->insert( ii ,buffer );
-			cl_gts_gui.selbro_fnum_list->select( ii );
-			return ii;
-		}
-	}
-	return -1;
-}
-
 /* 指定範囲の番号でlistを追加生成する(ファイル存在マーク付き) */
 void cb_file_number_list::make_fnum_list_with_chk_mark( const int start_num, const int end_num )
 {
@@ -498,7 +475,7 @@ void cb_file_number_list::number_set( void )
 		}
 
 	/* c 一致する現位置(がなければGUI listに追加してそれ)を(再)設定 */
-		this->crnt_list_num_ = this->insert_and_select_fnum_in_list_(
+		this->crnt_list_num_ = insert_and_select_fnum_in_list_(
 			this->crnt_file_num_
 		);
 
@@ -539,7 +516,7 @@ namespace {
  {
 	for (;list_num <= cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
 		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
-			return return list_num;
+			return list_num;
 		}
 	}
 	return -1;
@@ -548,12 +525,36 @@ namespace {
  {
 	for (;1 <= list_num ;--list_num) {
 		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
-			return return list_num;
+			return list_num;
+		}
+	}
+	return -1;
+ }
+ /* listの順位置に挿入し、選択状態にして、既にあるならその位置を返す */
+ int insert_and_select_fnum_in_list_( const int file_num )
+ {
+	int ii,jj;
+	char buffer[8];
+
+	/* size + 1までループして最後でも追加するようにする */
+	for (ii= 1 ;ii <= cl_gts_gui.selbro_fnum_list->size() +1 ;++ii) {
+		jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
+		if (file_num == jj) {/* 既にあるなら何もしないで... */
+			cl_gts_gui.selbro_fnum_list->select( ii );/* 選択 */
+			return ii;
+		}
+		if (file_num < jj) { /* listの順位置に挿入 */
+			(void)sprintf(buffer, "%04d", file_num );
+			cl_gts_gui.selbro_fnum_list->insert( ii ,buffer );
+			cl_gts_gui.selbro_fnum_list->select( ii );/* 選択 */
+			return ii;
 		}
 	}
 	return -1;
  }
 }
+
+/* 現位置と現番号から次の処理位置と処理番号を得る */
 void cb_file_number_list::set_next_num_from_crnt_( void )
 {
 	/* 現位置がなければ次もない */
@@ -563,9 +564,6 @@ void cb_file_number_list::set_next_num_from_crnt_( void )
 		return;
 	}
 	if ( cl_gts_gui.choice_level_end_type->value() == 0 ) {/* End指定 */
-		/* GUIのfile number listの選択をたどる */
-		/* 処理後のマーキングと選択解除は外で行う */
-
 		if (
 			cl_gts_gui.valinp_level_start->value()
 			<= cl_gts_gui.valinp_level_end->value()
@@ -594,10 +592,7 @@ void cb_file_number_list::set_next_num_from_crnt_( void )
 	}
 	else /* Endless指定 */
 	if ( cl_gts_gui.choice_level_end_type->value() == 1 ) {
-		/* GUIのlistの選択は無視 */
-		/* 処理後のマーキングと選択解除は外で行う */
 
-		/* 次番号を得る(次処理があるか判断のためここで取る) */
 		if (cl_gts_gui.choice_level_endless_direction->value() == 0)
 		{
 			this->next_list_num_ = this->crnt_list_num_ + 1;
@@ -611,17 +606,17 @@ void cb_file_number_list::set_next_num_from_crnt_( void )
 
 		/* 次位置が1...9999外であれば-1 */
 		if (this->next_list_num_ < 1 || this->next_file_num_ < 1) {
-				this->next_list_num_ = -1;
-				this->next_file_num_ = -1;
+			this->next_list_num_ = -1;
+			this->next_file_num_ = -1;
 		}
 		if (9999<this->next_list_num || 9999<this->next_file_num) {
-				this->next_list_num_ = -1;
-				this->next_file_num_ = -1;
+			this->next_list_num_ = -1;
+			this->next_file_num_ = -1;
 		}
 	}
 }
 
-/* 1 初期化 */
+/* 初期化 */
 void cb_file_number_list::counter_start( void )
 {
 	if ( cl_gts_gui.choice_level_end_type->value() == 0 ) {/* End指定 */
@@ -661,12 +656,21 @@ void cb_file_number_list::counter_start( void )
 		this->crnt_file_num_ = 
 			cl_gts_gui.valinp_level_start->value();
 
+		/* start番号が範囲外 */
+		if (this->crnt_file_num_< 1 || 9999< this->crnt_file_num_) {
+			this->crnt_file_num_ = -1;
+			this->crnt_list_num_ = -1;
+		}
+
 		/* Start番号に一致するlist番号あれば現位置とし、
 		なければ追加して現位置とし、
 		選択状態にする */
-		this->crnt_list_num_= this->insert_and_select_fnum_in_list_(
-			this->crnt_file_num_
-		);
+		else {
+			this->crnt_list_num_=
+			insert_and_select_fnum_in_list_(
+				this->crnt_file_num_
+			);
+		}
 	}
 	/* 次番号を得る(次処理があるか判断のためここで取る)
 	次位置がなければ-1をセット */
@@ -675,7 +679,7 @@ void cb_file_number_list::counter_start( void )
 
 
 
-/* 2 現位置を得る */
+/* 現位置を得る */
 void cb_file_number_list::counter_next( void )
 {
 	/* 次へ */
@@ -687,9 +691,12 @@ void cb_file_number_list::counter_next( void )
 		/* File番号に一致するlist番号あれば現位置とし、
 		なければ追加して現位置とし、
 		選択状態にする */
-		this->crnt_list_num_= this->insert_and_select_fnum_in_list_(
-			this->crnt_file_num_
-		);
+		if (1 <= this->crnt_file_num_) {
+			this->crnt_list_num_ =
+			insert_and_select_fnum_in_list_(
+				this->crnt_file_num_
+			);
+		}
 	}
 	/* 次番号を得る(次処理があるか判断のためここで取る)
 	次位置がなければ-1をセット */

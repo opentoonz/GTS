@@ -191,6 +191,17 @@ void gts_master::cb_scan_and_save_start( void )
 	/* 先頭を得る */
 	this->cl_file_number_list.counter_start();
 
+	/* 最初に番号が選択がない/設定できない */
+	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
+		if (cl_gts_gui.choice_level_end_type->value() == 0) {/*End*/
+			fl_alert("Not select number!");
+		}
+		else {/* Endless */
+			fl_alert("Bad number in Start!");
+		}
+		return;
+	}
+
 	/* levelの名前を得る */
 	if (nullptr == this->cl_bro_level.cp_filepath(
 		this->cl_file_number_list.get_crnt_file_num()

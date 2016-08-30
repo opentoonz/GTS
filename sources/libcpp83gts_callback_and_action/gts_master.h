@@ -84,7 +84,6 @@ public:
 	void cb_read_rgb_preview( void );
 	void cb_read_and_trace( void );
 
-	int read_and_save_crnt( void );
 	void cb_read_and_save_start( void );
 	void cb_scan_and_preview( void );
 	void cb_scan_and_save_start( void );
@@ -200,7 +199,6 @@ private:
 
 	int _make_level_frame_number_list( void );
 	int _read_and_view_frame_number_list_1st_image( void );
-	int _read_and_save( int i_file_num, int i_list_num );
 
 	void _next_scan_number( void );
 	void _all_view( void );
@@ -301,6 +299,8 @@ private:
 	int next_scan_and_save_( void );
 	int cb_scan_and_save_start_child_( void );
 	int cb_scan_and_save_next_child_( void );
+
+	int read_and_save_crnt_( void );
 };
 extern gts_master cl_gts_master;
 

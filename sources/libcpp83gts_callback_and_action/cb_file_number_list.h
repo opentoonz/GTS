@@ -64,10 +64,7 @@ private:
 		, next_file_num_
 		;
 
-	/* ファイル存在マークを付加したファイル番号をlistの順位置に挿入 */
-	/* Endless動作のnum_set()で使用 */
-	void set_fnum_in_list_( const int file_num );
-	void make_next_from_crnt_( void );
+	void set_next_num_from_crnt_( void );
 };
 
 #endif /* !cb_file_number_list_h */
