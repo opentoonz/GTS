@@ -10,7 +10,7 @@ int gts_master::next_scan_and_save_( void )
 	int crnt_list_num;
 	int crnt_file_num;
 	int next_file_num;
-	const char* cp_path = nullptr;
+	char* filepath = nullptr;
 	iip_canvas* clp_scan = nullptr;
 	char	ca8_but[8];
 
@@ -53,8 +53,8 @@ int gts_master::next_scan_and_save_( void )
 	) {
 		/* RGB画像(専用の名前)(_full付)(A_full.0001.tif) */
 		/* 読み込み(番号に対する)ファイルパスを得る */
-		cp_path = this->cl_bro_level.cp_filepath_full( crnt_file_num );
-		if (cp_path == nullptr) {
+		filepath = const_cast<char*>(this->cl_bro_level.cp_filepath_full( crnt_file_num ));
+		if (filepath == nullptr) {
 			pri_funct_err_bttvr(
 		 "Error : this->cl_bro_level.cp_filepath_full(%d) returns nullptr."
 				, crnt_file_num );
@@ -63,8 +63,8 @@ int gts_master::next_scan_and_save_( void )
 	} else {
 		/* BW,Grayscale,RGB(通常の名前)は
 		ノーマルな名前(A.0001.tif)で保存 */
-		cp_path = this->cl_bro_level.cp_filepath( crnt_file_num );
-		if (cp_path == nullptr) {
+		filepath = const_cast<char*>(this->cl_bro_level.cp_filepath( crnt_file_num ));
+		if (filepath == nullptr) {
 			pri_funct_err_bttvr(
 	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
 				, crnt_file_num );
@@ -81,7 +81,7 @@ int gts_master::next_scan_and_save_( void )
 	 /* スキャン画像保存 */
 	 if (OK != this->_iipg_save(
 		&(this->cl_iip_ro90),
-		cp_path,
+		filepath,
 		cl_gts_gui.valinp_area_reso->value()
 		/* 回転値はゼロ固定にする */
 	 ) ) {
@@ -117,8 +117,8 @@ int gts_master::next_scan_and_save_( void )
 	 this->_iipg_color_trace_exec();
 
 	 /* ２値化画像を保存する(番号に対する)ファイルパスを得る */
-	 cp_path = this->cl_bro_level.cp_filepath( crnt_file_num );
-	 if (nullptr == cp_path) {
+	 filepath = const_cast<char*>(this->cl_bro_level.cp_filepath( crnt_file_num ));
+	 if (nullptr == filepath) {
 		pri_funct_err_bttvr(
 	  "Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
 	 		, crnt_file_num
@@ -129,7 +129,7 @@ int gts_master::next_scan_and_save_( void )
 	 /* ２値化画像を保存する */
 	 if (OK != this->_iipg_save(
 		&(cl_gts_master.cl_iip_trac)
-		, cp_path , cl_gts_gui.valinp_area_reso->value()
+		, filepath , cl_gts_gui.valinp_area_reso->value()
 		/* rot90実行後なので(デフォルト)0度とする */
 	 ) ) {
 		pri_funct_err_bttvr(
@@ -189,11 +189,15 @@ int gts_master::next_scan_and_save_( void )
 void gts_master::cb_scan_and_save_start( void )
 {
 	/* 先頭を得る */
-	this->cl_file_number_list.counter_start();
+	this->cl_file_number_list.counter_start(
+		cl_gts_gui.choice_level_end_type->value()
+	);
 
 	/* 最初に番号が選択がない/設定できない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
-		if (cl_gts_gui.choice_level_end_type->value() == 0) {/*End*/
+		if (cl_gts_gui.choice_level_end_type->value() == 
+		 cl_gts_master.cl_file_number_list.get_end_type_value()
+		) {/*End*/
 			fl_alert("Not select number!");
 		}
 		else {/* Endless */
@@ -234,7 +238,9 @@ void gts_master::cb_scan_and_save_next( void )
 	cl_gts_gui.window_next_scan->hide();
 
 	/* 次の番号を得る */
-	this->cl_file_number_list.counter_next();
+	this->cl_file_number_list.counter_next(
+		cl_gts_gui.choice_level_end_type->value()
+	);
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (this->next_scan_and_save_() != OK) {

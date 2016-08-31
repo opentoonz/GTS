@@ -1835,7 +1835,7 @@ void gts_gui::cb_Preview3(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_Preview4_i(Fl_Button*, void*) {
-  cl_gts_master.cb_read_rgb_preview();
+  cl_gts_master.cb_read_and_preview();
 }
 void gts_gui::cb_Preview4(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Preview4_i(o,v);
@@ -5261,16 +5261,16 @@ Fl_Double_Window* gts_gui::make_window() {
         choice_level_end_type->callback((Fl_Callback*)cb_choice_level_end_type);
         choice_level_end_type->menu(menu_choice_level_end_type);
       } // Fl_Choice* choice_level_end_type
+      { choice_level_endless_direction = new Fl_Choice(80, 485, 50, 25);
+        choice_level_endless_direction->down_box(FL_BORDER_BOX);
+        choice_level_endless_direction->menu(menu_choice_level_endless_direction);
+      } // Fl_Choice* choice_level_endless_direction
       { valinp_level_end = new Fl_Value_Input(80, 485, 50, 25);
         valinp_level_end->box(FL_BORDER_BOX);
         valinp_level_end->minimum(1);
         valinp_level_end->maximum(9999);
         valinp_level_end->value(1);
       } // Fl_Value_Input* valinp_level_end
-      { choice_level_endless_direction = new Fl_Choice(80, 485, 50, 25);
-        choice_level_endless_direction->down_box(FL_BORDER_BOX);
-        choice_level_endless_direction->menu(menu_choice_level_endless_direction);
-      } // Fl_Choice* choice_level_endless_direction
       { Fl_Box* o = new Fl_Box(130, 485, 250, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o

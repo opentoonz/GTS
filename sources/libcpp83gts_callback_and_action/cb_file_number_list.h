@@ -53,9 +53,17 @@ public:
 	int get_crnt_file_num(void) const { return this->crnt_file_num_; }
 	int get_next_file_num(void) const { return this->next_file_num_; }
 
-	/* 画像の番号をたどる方法 (file番号とlist番号) */
-	void counter_start( void );	/* 1 初期化し、開始位置 */
-	void counter_next( void );	/* 2 次へ辿り、現位置を得る */
+	/* 画像の番号をたどる方法を指定するための番号(scan時はGUI値から) */
+	int get_end_type_value(void) const { return this->end_type_value_; }
+	int get_endless_type_value(void) const {
+		return this->endless_type_value_;
+	}
+
+	/* 画像の番号をたどる (file番号とlist番号) */
+	/* 1 初期化し、開始位置 */
+	void counter_start( const int continue_type_value );
+	/* 2 次へ辿り、現位置を得る */
+	void counter_next( const int continue_type_value );
 
 private:
 	int	crnt_list_num_
@@ -64,7 +72,12 @@ private:
 		, next_file_num_
 		;
 
-	void set_next_num_from_crnt_( void );
+	enum choice_level_continue_type_value_ {
+		end_type_value_		// 0
+		,endless_type_value_	// 1
+	};
+
+	void set_next_num_from_crnt_( const int continue_type_value );
 };
 
 #endif /* !cb_file_number_list_h */

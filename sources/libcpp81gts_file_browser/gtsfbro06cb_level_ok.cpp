@@ -1,5 +1,6 @@
-#include <stdlib.h>	/* atoi() */
-#include <string.h>
+#include <cstdlib>	/* atoi() */
+#include <cstring>
+#include <string>	// std::to_string
 #include <FL/fl_ask.H>	/* fl_alert(-) */
 #include "gtsfbro06cb_level.h"
 #if !defined GTS_DEBUG
@@ -36,32 +37,29 @@ void gtsfbro06cb_level::cb_ok( void )
 		pri_funct_err_bttvr(
 	  "Error : cl_gts_gui.strinp_level_file->value() is null string"
 	  	);
-		fl_alert("bad level name");
+		fl_alert("level name is not exist");
 		return;
 	}
 
-	i_sta = (int)cl_gts_gui.valinp_level_start->value();
+	i_sta = static_cast<int>(cl_gts_gui.valinp_level_start->value());
 	if ((i_sta < 1) || (9999 < i_sta)) {
 		pri_funct_err_bttvr(
-	    "Error : cl_gts_gui.valinp_level_start->value()<%d> is zero or minus",
-			i_sta);
-		fl_alert("bad level start number");
+	    "Error : cl_gts_gui.valinp_level_start->value()<%d> is zero or minus"
+			, i_sta);
+		std::string str("bad level start number=");
+		str += std::to_string(i_sta);
+		fl_alert( str.c_str() );
 		return;
 	}
 
-	i_end = (int)cl_gts_gui.valinp_level_end->value();
+	i_end = static_cast<int>(cl_gts_gui.valinp_level_end->value());
 	if ((i_end < 1) || (9999 < i_end)) {
 		pri_funct_err_bttvr(
-	    "Error : cl_gts_gui.valinp_level_end->value()<%d> is zero or minus",
-			i_end);
-		fl_alert("bad level end number");
-		return;
-	}
-	if (i_end < i_sta) {
-		pri_funct_err_bttvr(
- "Error : cl_gts_gui.valinp_level_start->value()<%d> is bigger than end<%d>",
-			i_sta, i_end);
-		fl_alert("level start is bigger than end number");
+	    "Error : cl_gts_gui.valinp_level_end->value()<%d> is zero or minus"
+			, i_end);
+		std::string str("bad level end number=");
+		str += std::to_string(i_end);
+		fl_alert( str.c_str() );
 		return;
 	}
 
@@ -70,12 +68,28 @@ void gtsfbro06cb_level::cb_ok( void )
 	cl_gts_gui.selbro_fnum_list->topline(0);
 
 	/* 以前のリストをすべて削除 */
-	cl_gts_master.cb_file_number_list.remove_all();
+	cl_gts_master.cl_file_number_list.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
-		i_sta, i_end
-	);
+	if (cl_gts_gui.choice_level_end_type->value()
+	==  cl_gts_master.cl_file_number_list.get_end_type_value()) {
+		// End type
+	 if (i_sta <= i_end) {
+	  cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
+		i_sta ,i_end
+	  );
+	 }
+	 else {
+	  cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
+		i_end ,i_sta
+	  );
+	 }
+	}
+	else { // Endless type
+	 cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
+		static_cast<int>( cl_gts_gui.valinp_level_start->value() )
+	 );
+	}
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(

@@ -242,9 +242,9 @@ private:
   static void cb_choice_level_end_type(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_level_end_type[];
 public:
-  Fl_Value_Input *valinp_level_end;
   Fl_Choice *choice_level_endless_direction;
   static Fl_Menu_Item menu_choice_level_endless_direction[];
+  Fl_Value_Input *valinp_level_end;
   Fl_Choice *choice_level_image_file_format;
 private:
   inline void cb_choice_level_image_file_format_i(Fl_Choice*, void*);

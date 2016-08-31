@@ -353,7 +353,7 @@ fl_message( ost.str().c_str() );}
     }
     Fl_Window window_level {
       label {Browse Level}
-      callback {cl_gts_master.cl_bro_level.cb_cancel();} open
+      callback {cl_gts_master.cl_bro_level.cb_cancel();}
       xywh {50 50 380 630} type Double resizable non_modal size_range {370 300 0 0} visible
     } {
       Fl_Button {} {
@@ -527,9 +527,6 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
             xywh {0 0 30 20}
           }
         }
-        Fl_Value_Input valinp_level_end {selected
-          xywh {80 485 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-        }
         Fl_Choice choice_level_endless_direction {open
           xywh {80 485 50 25} down_box BORDER_BOX
         } {
@@ -541,6 +538,9 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
             label {-1}
             xywh {0 0 30 20}
           }
+        }
+        Fl_Value_Input valinp_level_end {
+          xywh {80 485 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
         }
         Fl_Box {} {
           xywh {130 485 250 25} resizable
@@ -1737,7 +1737,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
       }
       Fl_Button {} {
         label {Preview File}
-        callback {cl_gts_master.cb_read_rgb_preview();}
+        callback {cl_gts_master.cb_read_and_preview();}
         xywh {115 785 85 25}
       }
       Fl_Button {} {

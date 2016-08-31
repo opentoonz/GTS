@@ -1,3 +1,4 @@
+#include "FL/fl_ask.H"	// fl_alert(-)
 #include "ptbl_funct.h"
 #include "ptbl_returncode.h"
 #include "pri.h"
@@ -138,23 +139,14 @@ void gts_master::cb_read_and_save_start( void )
 {
 	int	ekey;
 
-	/* Endless設定では(1あるいは9999までStopしないため)動作できない */
-	if (cl_gts_gui.choice_level_end_type->value() == 1) {/* Endless */
-		fl_alert("Must be End(Not Endless)");
-		return;
-	}
+	/* 先頭を得る - End設定で選択したフレーム番号をたどっていく */
+	this->cl_file_number_list.counter_start(
+		cl_gts_master.cl_file_number_list.get_end_type_value()
+	);
 
-	/* 先頭を得る */
-	this->cl_file_number_list.counter_start();
-
-	/* 最初に番号が選択がない/設定できない */
+	/* 最初に番号が選択がない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
-		if (cl_gts_gui.choice_level_end_type->value() == 0) {/*End*/
-			fl_alert("Not select number!");
-		}
-		//else {/* Endless */
-		//	fl_alert("Must be End(Not Endless)");
-		//}
+		fl_alert("Not select number!");
 		return;
 	}
 
@@ -179,7 +171,10 @@ void gts_master::cb_read_and_save_start( void )
 		 "Error : this->read_and_save_crnt_() returns NG" );
 			return;
 		}
-		this->cl_file_number_list.counter_next();
+		/* 次を得る - End設定で選択したフレーム番号をたどっていく */
+		this->cl_file_number_list.counter_next(
+		 cl_gts_master.cl_file_number_list.get_end_type_value()
+		);
 
 		Fl::check();
 		ekey = Fl::event_key();

@@ -351,7 +351,7 @@ std::cout
 			 /* ファイル番号リストの存在の有無 */
 			 i_fnum_list_sw = ON;
 			 /* 以前のリストをすべて削除 */
-			 cl_gts_master.cb_file_number_list.remove_all();
+			 cl_gts_master.cl_file_number_list.remove_all();
 			}
 
 			/* 実際の画像ファイルの有無を調べて
@@ -427,7 +427,7 @@ std::cout
 	/* frame listがない時は設定ファイルと判断してlistをクリアする */
 	if (OFF == i_fnum_list_sw) {
 		/* 以前のリストをすべて削除 */
-		cl_gts_master.cb_file_number_list.remove_all();
+		cl_gts_master.cl_file_number_list.remove_all();
 	}
 
 	/* trace batch listがない時はlistをクリアする */

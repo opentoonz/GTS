@@ -1,3 +1,4 @@
+#include "FL/fl_ask.H"	// fl_alert(-)
 #include "ptbl_funct.h"
 #include "pri.h"
 #include "gts_gui.h"
@@ -5,62 +6,33 @@
 
 void gts_master::cb_read_and_trace( void )
 {
-	int i_crnt_list_num;
-	char *cp_path;
+	char *filepath;
 
-	i_crnt_list_num = this->cl_file_number_list.set_first_number();
+	/* 先頭を得る - End設定で選択したフレーム番号をたどっていく */
+	this->cl_file_number_list.counter_start(
+		cl_gts_master.cl_file_number_list.get_end_type_value()
+	);
 
-	/* ゼロは、リストがない */
-	if (0 == i_crnt_list_num) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_file_number_list.set_first_number() returns zero"
-		);
+	/* 最初に番号が選択がない */
+	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
+		fl_alert("Not select number!");
 		return;
 	}
-	/* マイナスは、リストのチェックでエラーが起きた */
-	else if (i_crnt_list_num < 0) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_file_number_list.set_first_number() returns minus"
-		);
-		return;
-	}
-	/* プラスはリストを選んだ */
 
-	/*------------------------------------------------*/
+	//--------------------------------------------------
 
 	/* リストのセンタースクロール */
-	cl_gts_gui.selbro_fnum_list->middleline(i_crnt_list_num);
-
-	/*------------------------------------------------*/
-
-	/* 読み込み(番号に対する)ファイルパスを得る */
-	/**********if (OK != this->cl_bro_level.i_path_cpy_dir(
-		cl_gts_gui.filinp_level_rgb_scan_dir->value()
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_path_cpy_dir(%s) returns NULL.",
-		cl_gts_gui.filinp_level_rgb_scan_dir->value()
-		);
-		return;
-	}
-	if (OK != this->cl_bro_level.i_lpath_cat_file_for_full(
-		cl_gts_gui.strinp_level_file->value(),
-		this->cl_file_number_list.get_crnt_file_num(),ON
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_lpath_cat_file_for_full(%s,%d,%d) returns NULL.",
-		cl_gts_gui.strinp_level_file->value(),
-		this->cl_file_number_list.get_crnt_file_num(),ON
-		);
-		return;
-	}
-	cp_path = this->cl_bro_level.cp_path();**********/
-
-
-	cp_path = this->cl_bro_level.cp_filepath_full(
+	cl_gts_gui.selbro_fnum_list->middleline(
 		this->cl_file_number_list.get_crnt_file_num()
 	);
-	if (NULL == cp_path) {
+
+	//--------------------------------------------------
+
+	/* 読み込み(番号に対する)ファイルパスを得る */
+	filepath = this->cl_bro_level.cp_filepath_full(
+		this->cl_file_number_list.get_crnt_file_num()
+	);
+	if (NULL == filepath) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.cp_filepath_full(%d) returns NULL.",
 		this->cl_file_number_list.get_crnt_file_num()
@@ -69,17 +41,17 @@ void gts_master::cb_read_and_trace( void )
 	}
 
 	/* 画像ファイルがないなら読み込みはしない */
-	if (!ptbl_dir_or_file_is_exist( cp_path )) {
+	if (!ptbl_dir_or_file_is_exist( filepath )) {
 		pri_funct_err_bttvr(
-			"Error : <%s> is not exist",cp_path);
+			"Error : <%s> is not exist",filepath);
 		return;
 	}
 
 	/* 読み込み元ファイルパス設定 */
-	if (OK != this->cl_iip_read.cl_name.set_name(cp_path)) {
+	if (OK != this->cl_iip_read.cl_name.set_name(filepath)) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_iip_read.cl_name.set_name(%s) returns NG",
-			cp_path);
+			filepath);
 		return;
 	}
 
@@ -89,6 +61,15 @@ void gts_master::cb_read_and_trace( void )
 	 "Error : this->cl_iip_read.file() returns NG" );
 		return;
 	}
+
+	/* データが、RGBフルカラーでなければ実行しない */
+	if (this->cl_iip_read.get_l_channels() < 3L) {
+		pri_funct_err_bttvr(
+   "Error : this->cl_iip_read.get_l_channels() smaller than 3L" );
+		return;
+	}
+
+	//--------------------------------------------------
 
 	/* 回転処理はしない(ゼロ度回転) */
 	if (OK != this->_iipg_rot90(
@@ -100,13 +81,8 @@ void gts_master::cb_read_and_trace( void )
 		return;
 	}
 
-	/* データが、RGBフルカラーでなければ実行しない */
-	if (this->cl_iip_read.get_l_channels() < 3L) {
-		return;
-	}
-
 	/* RGB画像の処理となるので、モードを自動切替えする */
-	cl_gts_gui.choice_pixel_type->value(2);
+	//cl_gts_gui.choice_pixel_type->value(2);
 
 	/* トレスを実行 */
 	if (OK != this->_iipg_color_trace_setup()) {
@@ -115,6 +91,8 @@ void gts_master::cb_read_and_trace( void )
 		return;
 	}
 	this->_iipg_color_trace_exec();
+
+	//--------------------------------------------------
 
 	/* 表示 */
 	if (OK != this->_iipg_view_setup()) {

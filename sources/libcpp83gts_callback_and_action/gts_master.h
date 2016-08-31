@@ -81,7 +81,7 @@ public:
 	void cb_level_ok( void );
 	void cb_quit( void );
 
-	void cb_read_rgb_preview( void );
+	void cb_read_and_preview( void );
 	void cb_read_and_trace( void );
 
 	void cb_read_and_save_start( void );
