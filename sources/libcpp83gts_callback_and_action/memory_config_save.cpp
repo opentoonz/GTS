@@ -78,15 +78,30 @@ int memory_config::_save_level_by_fp( FILE *fp )
 		cl_gts_gui.strinp_level_file->value() );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-24s %.16g\n",
-			this->str_level_num_start_,
-		cl_gts_gui.valinp_level_start->value() );
+	i_ret = fprintf(fp, "%-24s %.16g\n"
+			, this->str_level_num_start_
+		, cl_gts_gui.valinp_level_start->value() );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-24s %.16g\n",
-			this->str_level_num_end_,
-		cl_gts_gui.valinp_level_end->value() );
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_level_num_continue_type_
+		, cl_gts_gui.choice_level_continue_type->text(
+		  cl_gts_gui.choice_level_continue_type->value() )
+	);
 	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-24s %.16g\n"
+			, this->str_level_num_end_
+		, cl_gts_gui.valinp_level_end->value() );
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_level_num_endless_direction_
+		, cl_gts_gui.choice_level_endless_direction->text(
+		  cl_gts_gui.choice_level_endless_direction->value() )
+	);
+	if (i_ret < 0) { return NG; }
+
 
 	i_ret = fprintf(fp, "%-24s %s\n",
 			this->str_level_rgb_trace_save_sw_,

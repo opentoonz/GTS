@@ -114,6 +114,34 @@ std::cout << std::endl;
 			cl_gts_gui.valinp_level_end->value(
 				atof(ca_scan2));
 		}
+		else if ((2 == i_ret) && !strcmp(
+		ca_scan1    ,this->str_level_num_continue_type_)) {
+			const Fl_Menu_Item *crnt =
+			 cl_gts_gui.choice_level_continue_type->find_item(
+				ca_scan2
+			 );
+			if (crnt != nullptr) {
+	cl_gts_gui.choice_level_continue_type->value(crnt);
+	if (cl_gts_gui.choice_level_continue_type->value() == 0) {
+		cl_gts_gui.valinp_level_end->show();
+		cl_gts_gui.choice_level_endless_direction->hide();
+	}
+	else {
+		cl_gts_gui.valinp_level_end->hide();
+		cl_gts_gui.choice_level_endless_direction->show();
+	}
+			}
+		}
+		else if ((2 == i_ret) && !strcmp( ca_scan1
+		   ,this->str_level_num_endless_direction_)) {
+			const Fl_Menu_Item *crnt =
+		cl_gts_gui.choice_level_endless_direction->find_item(
+				ca_scan2
+		);
+			if (crnt != nullptr) {
+		cl_gts_gui.choice_level_endless_direction->value(crnt);
+			}
+		}
 
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_level_rgb_scan_dir_ )) {

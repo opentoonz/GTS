@@ -40,6 +40,10 @@ public:
 	    "level_num_start")
 	,str_level_num_end_(
 	    "level_num_end")
+	,str_level_num_continue_type_(
+	    "level_num_continue_type")
+	,str_level_num_endless_direction_(
+	    "level_num_endless_direction")
 	,str_level_rgb_scan_dir_(
 	    "level_rgb_scan_dir")
 	,str_level_rgb_trace_save_sw_(
@@ -246,6 +250,8 @@ private:
 	const char* str_level_file_;
 	const char* str_level_num_start_;
 	const char* str_level_num_end_;
+	const char* str_level_num_continue_type_;
+	const char* str_level_num_endless_direction_;
 	const char* str_level_rgb_scan_dir_;
 	const char* str_level_rgb_trace_save_sw_;
 	const char* str_level_rgb_full_save_sw_;

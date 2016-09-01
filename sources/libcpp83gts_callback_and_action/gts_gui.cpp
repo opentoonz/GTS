@@ -550,7 +550,7 @@ void gts_gui::cb_ligbut_level_view_sw(Fl_Light_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_ligbut_level_view_sw_i(o,v);
 }
 
-void gts_gui::cb_choice_level_end_type_i(Fl_Choice* o, void*) {
+void gts_gui::cb_choice_level_continue_type_i(Fl_Choice* o, void*) {
   if (o->value() == 0) {
  cl_gts_gui.valinp_level_end->show();
  cl_gts_gui.choice_level_endless_direction->hide();
@@ -559,11 +559,11 @@ void gts_gui::cb_choice_level_end_type_i(Fl_Choice* o, void*) {
  cl_gts_gui.choice_level_endless_direction->show();
 };
 }
-void gts_gui::cb_choice_level_end_type(Fl_Choice* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_level_end_type_i(o,v);
+void gts_gui::cb_choice_level_continue_type(Fl_Choice* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_level_continue_type_i(o,v);
 }
 
-Fl_Menu_Item gts_gui::menu_choice_level_end_type[] = {
+Fl_Menu_Item gts_gui::menu_choice_level_continue_type[] = {
  {"End", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Endless", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
@@ -5256,11 +5256,11 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 485, 380, 25);
-      { choice_level_end_type = new Fl_Choice(0, 485, 80, 25);
-        choice_level_end_type->down_box(FL_BORDER_BOX);
-        choice_level_end_type->callback((Fl_Callback*)cb_choice_level_end_type);
-        choice_level_end_type->menu(menu_choice_level_end_type);
-      } // Fl_Choice* choice_level_end_type
+      { choice_level_continue_type = new Fl_Choice(0, 485, 80, 25);
+        choice_level_continue_type->down_box(FL_BORDER_BOX);
+        choice_level_continue_type->callback((Fl_Callback*)cb_choice_level_continue_type);
+        choice_level_continue_type->menu(menu_choice_level_continue_type);
+      } // Fl_Choice* choice_level_continue_type
       { choice_level_endless_direction = new Fl_Choice(80, 485, 50, 25);
         choice_level_endless_direction->down_box(FL_BORDER_BOX);
         choice_level_endless_direction->menu(menu_choice_level_endless_direction);

@@ -389,7 +389,7 @@ void cb_file_number_list::number_set( void )
 	--> GUIのlistに対しては参照のみ
 	--> マークと選択解除は外で
 	*/
-	if ( cl_gts_gui.choice_level_end_type->value() == 0 ) {
+	if ( cl_gts_gui.choice_level_continue_type->value() == 0 ) {
 	/* a 現位置が初期化状態(-1)なら、現位置を初期位置にする */
 		if (this->crnt_list_num_ < 1) {
 			if (

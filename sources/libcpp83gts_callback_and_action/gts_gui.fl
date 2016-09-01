@@ -508,7 +508,7 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
       Fl_Group {} {open
         xywh {0 485 380 25}
       } {
-        Fl_Choice choice_level_end_type {
+        Fl_Choice choice_level_continue_type {
           callback {if (o->value() == 0) {
  cl_gts_gui.valinp_level_end->show();
  cl_gts_gui.choice_level_endless_direction->hide();

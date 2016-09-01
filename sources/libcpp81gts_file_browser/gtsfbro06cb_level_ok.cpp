@@ -71,7 +71,7 @@ void gtsfbro06cb_level::cb_ok( void )
 	cl_gts_master.cl_file_number_list.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	if (cl_gts_gui.choice_level_end_type->value()
+	if (cl_gts_gui.choice_level_continue_type->value()
 	==  cl_gts_master.cl_file_number_list.get_end_type_value()) {
 		// End type
 	 if (i_sta <= i_end) {
