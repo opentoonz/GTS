@@ -63,26 +63,37 @@ int memory_config::_save_level_by_fp( FILE *fp )
 {
 	int i_ret;
 
+	/* 01. Dirパス */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
 			this->str_level_dir_,
 		cl_gts_gui.filinp_level_dir->value() );
 	if (i_ret < 0) { return NG; }
 
+	/* 02 file/levelのlist表示切替(Renumberボタンの表示OFF/ONも) */
 	i_ret = fprintf(fp, "%-24s %d\n",
 			this->str_level_list_form_,
 		cl_gts_gui.choice_level_list_form->value() );
 	if (i_ret < 0) { return NG; }
 
+	/* 03 Level名 */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
 			this->str_level_file_,
 		cl_gts_gui.strinp_level_file->value() );
 	if (i_ret < 0) { return NG; }
 
+	/* 04 Level開始番号 */
 	i_ret = fprintf(fp, "%-24s %.16g\n"
 			, this->str_level_num_start_
 		, cl_gts_gui.valinp_level_start->value() );
 	if (i_ret < 0) { return NG; }
 
+	/* 05 Level終端番号 */
+	i_ret = fprintf(fp, "%-24s %.16g\n"
+			, this->str_level_num_end_
+		, cl_gts_gui.valinp_level_end->value() );
+	if (i_ret < 0) { return NG; }
+
+	/* 06 Level終端タイプ */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
 			, this->str_level_num_continue_type_
 		, cl_gts_gui.choice_level_continue_type->text(
@@ -90,11 +101,7 @@ int memory_config::_save_level_by_fp( FILE *fp )
 	);
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-24s %.16g\n"
-			, this->str_level_num_end_
-		, cl_gts_gui.valinp_level_end->value() );
-	if (i_ret < 0) { return NG; }
-
+	/* 07 Level Endless時増減方向 */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
 			, this->str_level_num_endless_direction_
 		, cl_gts_gui.choice_level_endless_direction->text(
@@ -102,30 +109,7 @@ int memory_config::_save_level_by_fp( FILE *fp )
 	);
 	if (i_ret < 0) { return NG; }
 
-
-	i_ret = fprintf(fp, "%-24s %s\n",
-			this->str_level_rgb_trace_save_sw_,
-		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value()?
-			this->str_on_:this->str_off_ );
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-24s %s\n",
-			this->str_level_rgb_full_save_sw_,
-		cl_gts_gui.chkbtn_level_rgb_full_save_sw->value()?
-			this->str_on_:this->str_off_ );
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-24s %s\n",
-			this->str_level_rgb_with_full_sw_,
-		cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()?
-			this->str_on_:this->str_off_ );
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			this->str_level_rgb_scan_dir_,
-		cl_gts_gui.filinp_level_rgb_scan_dir->value() );
-	if (i_ret < 0) { return NG; }
-
+	/* 08 保存(開くときも)画像ファイル書式 */
 	const Fl_Menu_Item &item = 
 	 cl_gts_gui.choice_level_image_file_format->menu()[
 	  cl_gts_gui.choice_level_image_file_format->value()
@@ -134,6 +118,39 @@ int memory_config::_save_level_by_fp( FILE *fp )
 			this->str_level_image_file_format_,
 			item.label() );
 	if (i_ret < 0) { return NG; }
+
+	/* 09 等倍画像表示スイッチ */
+	/* 10 画像全体表示スイッチ */
+	
+	/* 11 _full dirパス */
+	i_ret = fprintf(fp, "%-24s \"%s\"\n",
+			this->str_level_rgb_scan_dir_,
+		cl_gts_gui.filinp_level_rgb_scan_dir->value() );
+	if (i_ret < 0) { return NG; }
+
+	/* 12 RGBスキャン時、トレスを実行し保存するスイッチ */
+	i_ret = fprintf(fp, "%-24s %s\n",
+			this->str_level_rgb_trace_save_sw_,
+		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value()?
+			this->str_on_:this->str_off_ );
+	if (i_ret < 0) { return NG; }
+
+	/* 13 RGBスキャン画像保存sw */
+	i_ret = fprintf(fp, "%-24s %s\n",
+			this->str_level_rgb_full_save_sw_,
+		cl_gts_gui.chkbtn_level_rgb_full_save_sw->value()?
+			this->str_on_:this->str_off_ );
+	if (i_ret < 0) { return NG; }
+
+	/* 14 RGBスキャン画像ファイル名に_full付けるsw */
+	i_ret = fprintf(fp, "%-24s %s\n",
+			this->str_level_rgb_with_full_sw_,
+		cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()?
+			this->str_on_:this->str_off_ );
+	if (i_ret < 0) { return NG; }
+
+	/* 15 dirパス/_full dirパスのブラウジング切替えスイッチ */
+	/* 16 _full等倍画像表示スイッチ */
 
 	return OK;
 }
