@@ -70,9 +70,10 @@ int memory_config::_save_level_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	/* 02 file/levelのlist表示切替(Renumberボタンの表示OFF/ONも) */
-	i_ret = fprintf(fp, "%-24s %d\n",
-			this->str_level_list_form_,
-		cl_gts_gui.choice_level_list_form->value() );
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_level_list_form_
+		, cl_gts_gui.choice_level_list_form->text()
+	);
 	if (i_ret < 0) { return NG; }
 
 	/* 03 Level名 */
@@ -96,27 +97,22 @@ int memory_config::_save_level_by_fp( FILE *fp )
 	/* 06 Level終端タイプ */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
 			, this->str_level_num_continue_type_
-		, cl_gts_gui.choice_level_continue_type->text(
-		  cl_gts_gui.choice_level_continue_type->value() )
+		, cl_gts_gui.choice_level_continue_type->text()
 	);
 	if (i_ret < 0) { return NG; }
 
 	/* 07 Level Endless時増減方向 */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
 			, this->str_level_num_endless_direction_
-		, cl_gts_gui.choice_level_endless_direction->text(
-		  cl_gts_gui.choice_level_endless_direction->value() )
+		, cl_gts_gui.choice_level_endless_direction->text()
 	);
 	if (i_ret < 0) { return NG; }
 
 	/* 08 保存(開くときも)画像ファイル書式 */
-	const Fl_Menu_Item &item = 
-	 cl_gts_gui.choice_level_image_file_format->menu()[
-	  cl_gts_gui.choice_level_image_file_format->value()
-	 ];
-	i_ret = fprintf(fp, "%-24s \"%s\"\n",
-			this->str_level_image_file_format_,
-			item.label() );
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_level_image_file_format_
+		, cl_gts_gui.choice_level_image_file_format->text()
+	);
 	if (i_ret < 0) { return NG; }
 
 	/* 09 等倍画像表示スイッチ */
@@ -159,9 +155,9 @@ int memory_config::_save_area_by_fp( FILE *fp )
 {
 	int i_ret;
 
-	i_ret = fprintf(fp, "%-24s %s\n",
-			this->str_area_select_,
-		cl_gts_gui.choice_area_selecter->text()
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_area_select_
+		, cl_gts_gui.choice_area_selecter->text()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -175,9 +171,9 @@ int memory_config::_save_area_by_fp( FILE *fp )
 			cl_gts_gui.valinp_area_y_pos->value() );
 		if (i_ret < 0) { return NG; }
 
-		i_ret = fprintf(fp, "%-24s %s\n",
-				this->str_area_aspect_ratio_select_,
-			cl_gts_gui.choice_area_aspect_ratio_selecter->text()
+		i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_area_aspect_ratio_select_
+		, cl_gts_gui.choice_area_aspect_ratio_selecter->text()
 		);
 		if (i_ret < 0) { return NG; }
 
@@ -206,9 +202,10 @@ int memory_config::_save_area_by_fp( FILE *fp )
 		cl_gts_gui.valinp_area_reso->value() );
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-24s %d\n",
-			this->str_rotate_per_90_,
-		cl_gts_gui.choice_rot90->value() );
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_rotate_per_90_
+		, cl_gts_gui.choice_rot90->text()
+	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
@@ -233,9 +230,10 @@ int memory_config::_save_pixel_type_by_fp( FILE *fp )
 {
 	int i_ret;
 
-	i_ret = fprintf(fp, "%-24s %d\n",
-			this->str_pixel_type_,
-		cl_gts_gui.choice_pixel_type->value() );
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_pixel_type_
+		, cl_gts_gui.choice_pixel_type->text()
+	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-24s %.16g\n",

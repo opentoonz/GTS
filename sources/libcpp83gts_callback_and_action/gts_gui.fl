@@ -879,28 +879,28 @@ cl_gts_master.cb_scan_full_area_and_crop();}
         Fl_Choice choice_rot90 {
           label Rotate
           callback {cl_gts_master.cb_rotate_per_90();} open
-          xywh {50 235 60 25} box BORDER_BOX down_box BORDER_BOX
+          xywh {50 235 90 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
-            label {-90}
+            label {CW_-90}
             xywh {5 5 100 20}
           }
           MenuItem {} {
-            label 0
+            label CW_0
             xywh {5 5 100 20}
           }
           MenuItem {} {
-            label 90
+            label CW_90
             xywh {5 5 100 20}
           }
           MenuItem {} {
-            label 180
+            label CW_180
             xywh {5 5 100 20}
           }
         }
         Fl_Text_Display {} {
           label degree
-          xywh {111 240 0 0} align 6
+          xywh {140 240 0 0} align 6
         }
       }
       Fl_Group {} {

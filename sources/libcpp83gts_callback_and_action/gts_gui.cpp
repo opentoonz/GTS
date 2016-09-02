@@ -820,10 +820,10 @@ void gts_gui::cb_choice_rot90(Fl_Choice* o, void* v) {
 }
 
 Fl_Menu_Item gts_gui::menu_choice_rot90[] = {
- {"-90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"0", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"180", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_-90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_0", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_180", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 
@@ -5582,13 +5582,13 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Group* o = new Fl_Group(0, 235, 200, 25);
       o->labeltype(FL_ENGRAVED_LABEL);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { choice_rot90 = new Fl_Choice(50, 235, 60, 25, "Rotate");
+      { choice_rot90 = new Fl_Choice(50, 235, 90, 25, "Rotate");
         choice_rot90->box(FL_BORDER_BOX);
         choice_rot90->down_box(FL_BORDER_BOX);
         choice_rot90->callback((Fl_Callback*)cb_choice_rot90);
         choice_rot90->menu(menu_choice_rot90);
       } // Fl_Choice* choice_rot90
-      { Fl_Text_Display* o = new Fl_Text_Display(111, 240, 0, 0, "degree");
+      { Fl_Text_Display* o = new Fl_Text_Display(140, 240, 0, 0, "degree");
         o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
       } // Fl_Text_Display* o
       o->end();
