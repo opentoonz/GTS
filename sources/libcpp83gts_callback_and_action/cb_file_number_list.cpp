@@ -538,7 +538,7 @@ namespace {
 	char buffer[8];
 
 	/* size + 1までループして最後でも追加するようにする */
-	for (ii= 1 ;ii <= cl_gts_gui.selbro_fnum_list->size() +1 ;++ii) {
+	for (ii= 1 ;ii <= cl_gts_gui.selbro_fnum_list->size() ;++ii) {
 		jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
 		if (file_num == jj) {/* 既にあるなら何もしないで... */
 			cl_gts_gui.selbro_fnum_list->select( ii );/* 選択 */
@@ -551,7 +551,13 @@ namespace {
 			return ii;
 		}
 	}
-	return -1;
+	/* listの最後に追加 */
+	(void)sprintf(buffer, "%04d", file_num );
+	cl_gts_gui.selbro_fnum_list->add( buffer );
+	cl_gts_gui.selbro_fnum_list->select(
+	 cl_gts_gui.selbro_fnum_list->size()
+	);/* 選択 */
+	return ii;
  }
 }
 
@@ -602,7 +608,7 @@ void cb_file_number_list::set_next_num_from_crnt_( const int continue_type_value
 		}
 		if (cl_gts_gui.choice_level_endless_direction->value() == 1)
 		{
-			this->next_list_num_ = this->crnt_list_num_ - 1;
+			this->next_list_num_ = this->crnt_list_num_;
 			this->next_file_num_ = this->crnt_file_num_ - 1;
 		}
 
@@ -611,7 +617,7 @@ void cb_file_number_list::set_next_num_from_crnt_( const int continue_type_value
 			this->next_list_num_ = -1;
 			this->next_file_num_ = -1;
 		}
-		if (9999<this->next_list_num_ || 9999<this->next_file_num_) {
+		if (9999<this->next_list_num_|| 9999<this->next_file_num_) {
 			this->next_list_num_ = -1;
 			this->next_file_num_ = -1;
 		}
@@ -674,6 +680,10 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 			insert_and_select_fnum_in_list_(
 				this->crnt_file_num_
 			);
+			if (	this->crnt_list_num_< 1) {
+				this->crnt_file_num_ = -1;
+				this->crnt_list_num_ = -1;
+			}
 		}
 	}
 	/* 次番号を得る(次処理があるか判断のためここで取る)
@@ -698,6 +708,10 @@ void cb_file_number_list::counter_next( const int continue_type_value )
 			insert_and_select_fnum_in_list_(
 				this->crnt_file_num_
 			);
+			if (	this->crnt_list_num_< 1) {
+				this->crnt_file_num_ = -1;
+				this->crnt_list_num_ = -1;
+			}
 		}
 	}
 	/* 次番号を得る(次処理があるか判断のためここで取る)
