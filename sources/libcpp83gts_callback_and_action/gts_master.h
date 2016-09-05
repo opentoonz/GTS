@@ -295,10 +295,7 @@ private:
 	void _trace_batch_add( char *cp_path );
 	void _change_view_main( void );
 
-	int scan_and_save_( void );
 	int next_scan_and_save_( void );
-	int cb_scan_and_save_start_child_( void );
-	int cb_scan_and_save_next_child_( void );
 
 	int read_and_save_crnt_( void );
 };

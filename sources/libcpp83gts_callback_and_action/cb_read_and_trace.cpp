@@ -15,7 +15,7 @@ void gts_master::cb_read_and_trace( void )
 
 	/* 最初に番号が選択がない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
-		fl_alert("Not select number!");
+		fl_alert("Select number!");
 		return;
 	}
 

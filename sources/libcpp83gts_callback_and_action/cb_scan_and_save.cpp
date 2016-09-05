@@ -198,7 +198,7 @@ void gts_master::cb_scan_and_save_start( void )
 		if (cl_gts_gui.choice_level_continue_type->value() == 
 		 cl_gts_master.cl_file_number_list.get_end_type_value()
 		) {/*End*/
-			fl_alert("Not select number!");
+			fl_alert("Select number!");
 		}
 		else {/* Endless */
 			fl_alert("Bad number in Start!");

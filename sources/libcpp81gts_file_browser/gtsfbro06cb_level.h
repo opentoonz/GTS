@@ -15,13 +15,9 @@ public:
 	,continue_type_memory_(0)
 	,endless_direction_memory_(0)
 	,image_file_format_(0)
-	//,_i_x1view_sw_memory(0)
-	//,_i_view_sw_memory(0)
 	,_i_save_color_trace_level_sw_memory(0)
 	,save_rgb_scanimage_sw_memory_(0)
 	,rgb_with_full_sw_(0)
-	//,_i_rgb_scan_browse_sw_memory(0)
-	//,_i_info_rgb_sub_sw_memory(0)
 	{
 		this->level_filename_memory_[0]  = '\0';
 		this->_ca_rgb_scan_dir_memory[0] = '\0';
@@ -110,14 +106,10 @@ private:
 	int	continue_type_memory_;
 	int	endless_direction_memory_;
 	int	image_file_format_;
-	//int	_i_x1view_sw_memory;
-	//int	_i_view_sw_memory;
 	char	_ca_rgb_scan_dir_memory[PTBL_PATH_MAX];
 	int	_i_save_color_trace_level_sw_memory;
 	int	save_rgb_scanimage_sw_memory_;
 	int	rgb_with_full_sw_;
-	//int	_i_rgb_scan_browse_sw_memory;
-	//int	_i_info_rgb_sub_sw_memory;
 };
 
 #endif /* !gtsfbro06cb_level_h */

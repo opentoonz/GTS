@@ -67,12 +67,10 @@ void gtsfbro06cb_level::memory_from_gui( const char* level_dir_path )
 		cl_gts_gui.choice_level_image_file_format->value();
 
 	/* 09 等倍画像表示スイッチ */
-	/*this->_i_x1view_sw_memory =
-		cl_gts_gui.ligbut_level_image_x1_sw->value();*/
+	/* 記憶しない */
 
 	/* 10 画像全体表示スイッチ */
-	/*this->_i_view_sw_memory =
-		cl_gts_gui.ligbut_level_view_sw->value();*/
+	/* 記憶しない */
 
 	/* 11 _full dirパス */
 	this->set_rgb_scan_dir_memory_(
@@ -92,12 +90,10 @@ void gtsfbro06cb_level::memory_from_gui( const char* level_dir_path )
 		cl_gts_gui.chkbtn_level_rgb_with_full_sw->value();
 
 	/* 15 dirパス/_full dirパスのブラウジング切替えスイッチ */
-	/*this->_i_rgb_scan_browse_sw_memory =
-		cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value();*/
+	/* 記憶しない */
 
 	/* 16 _full等倍画像表示スイッチ */
-	/*this->_i_info_rgb_sub_sw_memory =
-		cl_gts_gui.ligbut_level_info_rgb_sub_sw->value();*/
+	/* 記憶しない */
 }
 
 /* 記憶からGUI復元 */
@@ -160,14 +156,10 @@ void gtsfbro06cb_level::memory_to_gui( void )
 	);
 
 	/* 09 等倍画像表示スイッチ */
-	/*cl_gts_gui.ligbut_level_image_x1_sw->value(
-		this->_i_x1view_sw_memory
-	);*/
+	/* 記憶しない */
 
 	/* 10 画像全体表示スイッチ */
-	/*cl_gts_gui.ligbut_level_view_sw->value(
-		this->_i_view_sw_memory
-	);*/
+	/* 記憶しない */
 
 	/* 11 _full dirパス */
 	cl_gts_gui.filinp_level_rgb_scan_dir->value(
@@ -193,21 +185,10 @@ void gtsfbro06cb_level::memory_to_gui( void )
 	);
 
 	/* 15 dirパス/_full dirパスのブラウジング切替えスイッチ */
-	/*cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value(
-		this->_i_rgb_scan_browse_sw_memory
-	);
-	if (cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value()) {
-		cl_gts_gui.filinp_level_dir->deactivate();
-		cl_gts_gui.filinp_level_rgb_scan_dir->activate();
-	} else {
-		cl_gts_gui.filinp_level_dir->activate();
-		cl_gts_gui.filinp_level_rgb_scan_dir->deactivate();
-	}*/
+	/* 記憶しない */
 
 	/* 16 _full等倍画像表示スイッチ */
-	/*cl_gts_gui.ligbut_level_info_rgb_sub_sw->value(
-		this->_i_info_rgb_sub_sw_memory
-	);*/
+	/* 記憶しない */
 }
 
 int gtsfbro06cb_level::i_init( void )
