@@ -123,6 +123,18 @@ void gts_gui::cb_menite_pixel_type_and_bright(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_pixel_type_and_bright_i(o,v);
 }
 
+void gts_gui::cb_menite_fnum_list_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_fnum_list->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_fnum_list->show();
+} else {
+    cl_gts_gui.window_fnum_list->hide();
+};
+}
+void gts_gui::cb_menite_fnum_list(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_fnum_list_i(o,v);
+}
+
 void gts_gui::cb_menite_color_trace_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_color_trace->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
@@ -137,18 +149,6 @@ void gts_gui::cb_menite_color_trace_i(Fl_Menu_*, void*) {
 }
 void gts_gui::cb_menite_color_trace(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_color_trace_i(o,v);
-}
-
-void gts_gui::cb_menite_fnum_list_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_fnum_list->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_fnum_list->show();
-} else {
-    cl_gts_gui.window_fnum_list->hide();
-};
-}
-void gts_gui::cb_menite_fnum_list(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_fnum_list_i(o,v);
 }
 
 void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
@@ -331,8 +331,8 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Setup", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Area and Rot90...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_crop_area_and_rot90, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Pixel Type and Bright...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"File Number ...", 0xffc7,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
  {"Color Trace Enhancement...", 0xffc6,  (Fl_Callback*)gts_gui::cb_menite_color_trace, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"File Number ...", 0xffc7,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Color Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Thickness...", 0,  (Fl_Callback*)gts_gui::cb_menite_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Edit Color...", 0,  (Fl_Callback*)gts_gui::cb_menite_edit_color, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
@@ -374,8 +374,8 @@ Fl_Menu_Item* gts_gui::menite_config_save_as = gts_gui::menu_ + 4;
 Fl_Menu_Item* gts_gui::menite_start_scan = gts_gui::menu_ + 9;
 Fl_Menu_Item* gts_gui::menite_crop_area_and_rot90 = gts_gui::menu_ + 14;
 Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 15;
-Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 16;
-Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 17;
+Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 16;
+Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 17;
 Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 18;
 Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 19;
 Fl_Menu_Item* gts_gui::menite_edit_color = gts_gui::menu_ + 20;

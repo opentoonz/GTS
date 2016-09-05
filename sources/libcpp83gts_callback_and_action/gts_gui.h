@@ -78,15 +78,15 @@ private:
   inline void cb_menite_pixel_type_and_bright_i(Fl_Menu_*, void*);
   static void cb_menite_pixel_type_and_bright(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_color_trace;
-private:
-  inline void cb_menite_color_trace_i(Fl_Menu_*, void*);
-  static void cb_menite_color_trace(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_fnum_list;
 private:
   inline void cb_menite_fnum_list_i(Fl_Menu_*, void*);
   static void cb_menite_fnum_list(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_color_trace;
+private:
+  inline void cb_menite_color_trace_i(Fl_Menu_*, void*);
+  static void cb_menite_color_trace(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_trace_batch;
 private:

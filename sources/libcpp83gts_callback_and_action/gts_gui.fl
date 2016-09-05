@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();}
+      callback {cl_gts_master.cb_quit();} open selected
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -122,6 +122,16 @@ cl_gts_master.cb_quit();}
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc3
           }
+          MenuItem menite_fnum_list {
+            label {File Number ...}
+            callback {if (cl_gts_gui.menite_fnum_list->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_fnum_list->show();
+} else {
+    cl_gts_gui.window_fnum_list->hide();
+}}
+            xywh {5 5 100 20} type Toggle shortcut 0xffc7 divider
+          }
           MenuItem menite_color_trace {
             label {Color Trace Enhancement...}
             callback {if (cl_gts_gui.menite_color_trace->value()) {
@@ -135,16 +145,6 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.menite_edit_hsv_min_max->clear();
 }}
             xywh {0 0 100 20} type Toggle shortcut 0xffc6
-          }
-          MenuItem menite_fnum_list {
-            label {File Number ...}
-            callback {if (cl_gts_gui.menite_fnum_list->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_fnum_list->show();
-} else {
-    cl_gts_gui.window_fnum_list->hide();
-}}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc7
           }
           MenuItem menite_trace_batch {
             label {Color Trace Batch...}
