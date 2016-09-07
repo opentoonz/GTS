@@ -158,7 +158,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 ## ライセンス
 
 - thirdparty ディレクトリ以外のファイル
-  - [New(3-Clause) BSD License](./LICENSE.txt)
+  - [New BSD License](./LICENSE.txt)
 - thirdparty ディレクトリ内のファイル
   - 各ディレクトリ内の README やソースコードに記載されたライセンスに従ってください
 
