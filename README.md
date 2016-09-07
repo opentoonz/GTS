@@ -147,4 +147,8 @@ Execute "./gts" in unziped folder.
 
 ## License
 
-[New BSD License](LICENSE.txt)
+- Files outside of the `thirdparty` directory are based on the New(3-Clause) BSD License.
+  - [New(3-Clause) BSD License](./LICENSE.txt).
+- For files in the `thirdparty` directory:
+  - Please consult with the licenses in the appropriate READMEs or source codes.
+
