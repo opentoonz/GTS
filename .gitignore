@@ -20,7 +20,7 @@
 *.lai
 *.la
 *.a
-*.lib
+#*.lib
 
 # Executables
 *.exe
@@ -32,15 +32,7 @@
 build/
 x86_release/
 
-# ThirdParty Programs
-thirdparty/fltk/*
-!thirdparty/fltk/fltk-1.3.3/
-thirdparty/libtiff/*
-!thirdparty/libtiff/tiff-4.0.3/
-
 # Autotools
-Makefile
-Makefile.in
 /autom4te.cache
 /aclocal.m4
 /compile
@@ -53,8 +45,16 @@ Makefile.in
 .deps
 .libs
 .dirstamp
-libtool
-ltmain.sh
+/Makefile
+/Makefile.in
+/libtool
+/ltmain.sh
+
+# ThirdParty Programs
+/thirdparty/libtiff/*
+!/thirdparty/libtiff/tiff-4.0.3/
+/thirdparty/fltk/*
+!/thirdparty/fltk/fltk-1.3.3/
 
 # editors
 *.swp
