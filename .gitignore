@@ -28,11 +28,19 @@
 *.app
 /gts
 
-# OpenGTS binary Folder
-build/
-x86_release/
+# Build Files
+/sources/build/
+/x86_release/
+
+# ThirdParty Programs
+/thirdparty/fltk/*
+!/thirdparty/fltk/fltk-1.3.3/
+/thirdparty/libtiff/*
+!/thirdparty/libtiff/tiff-4.0.3/
 
 # Autotools
+/Makefile
+/Makefile.in
 /autom4te.cache
 /aclocal.m4
 /compile
@@ -45,20 +53,12 @@ x86_release/
 .deps
 .libs
 .dirstamp
-/Makefile
-/Makefile.in
 /libtool
 /ltmain.sh
 
-# ThirdParty Programs
-/thirdparty/libtiff/*
-!/thirdparty/libtiff/tiff-4.0.3/
-/thirdparty/fltk/*
-!/thirdparty/fltk/fltk-1.3.3/
-
-# editors
+# Editors
 *.swp
 *~
 
-# other
-tests/
+# Other
+/tests/
