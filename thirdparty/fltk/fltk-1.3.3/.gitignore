@@ -110,6 +110,7 @@
 # /lib/
 /lib/lib*
 /lib/*.lib
+!/lib/fltk*-1.3.3-vc2013-32.lib
 /lib/*.a
 
 # /misc/
