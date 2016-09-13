@@ -40,6 +40,10 @@ public:
 	    "level_num_start")
 	,str_level_num_end_(
 	    "level_num_end")
+	,str_level_num_continue_type_(
+	    "level_num_continue_type")
+	,str_level_num_endless_direction_(
+	    "level_num_endless_direction")
 	,str_level_rgb_scan_dir_(
 	    "level_rgb_scan_dir")
 	,str_level_rgb_trace_save_sw_(
@@ -99,12 +103,10 @@ public:
 	    "color_trace_erase_1dot")
 	,str_color_trace_real_time_(
 	    "color_trace_real_time")
-	,str_frame_number_insert_(
-	    "frame_number_insert")
-	,str_frame_number_list_(
-	    "frame")
-	,str_frame_number_selected_(
-			 "selected")
+	,str_file_number_frame_(
+			"frame")
+	,str_file_number_selected_(
+			"selected")
 
 	,str_trace_batch_dir_(
 	    "trace_batch_dir")
@@ -248,6 +250,8 @@ private:
 	const char* str_level_file_;
 	const char* str_level_num_start_;
 	const char* str_level_num_end_;
+	const char* str_level_num_continue_type_;
+	const char* str_level_num_endless_direction_;
 	const char* str_level_rgb_scan_dir_;
 	const char* str_level_rgb_trace_save_sw_;
 	const char* str_level_rgb_full_save_sw_;
@@ -279,9 +283,8 @@ private:
 
 	const char* str_color_trace_erase_1dot_;
 	const char* str_color_trace_real_time_;
-	const char* str_frame_number_insert_;
-	const char* str_frame_number_list_;
-	const char* str_frame_number_selected_;
+	const char* str_file_number_frame_;
+	const char* str_file_number_selected_;
 
 	const char* str_trace_batch_dir_;
 	const char* str_trace_batch_list_;

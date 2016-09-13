@@ -36,7 +36,7 @@ cb_color_trace_src.cpp\
 cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
 cb_config_save.cpp\
-cb_fnum_edit_insert.cpp\
+cb_file_number_list.cpp\
 cb_quit.cpp\
 cb_read_and_preview.cpp\
 cb_read_and_save.cpp\
@@ -60,8 +60,6 @@ iipg_rot90.cpp\
 iipg_save.cpp\
 iipg_scan.cpp\
 iipg_view.cpp\
-image_mark_access.cpp\
-list_access.cpp\
 memory_config_load.cpp\
 memory_config_save.cpp\
 memory_config_trace_src_hsv_load.cpp\

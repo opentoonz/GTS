@@ -63,8 +63,6 @@ public:
 private:
   inline void cb_menite_start_scan_i(Fl_Menu_*, void*);
   static void cb_menite_start_scan(Fl_Menu_*, void*);
-  inline void cb_Scan_i(Fl_Menu_*, void*);
-  static void cb_Scan(Fl_Menu_*, void*);
   inline void cb_Preview1_i(Fl_Menu_*, void*);
   static void cb_Preview1(Fl_Menu_*, void*);
   inline void cb_Trace_i(Fl_Menu_*, void*);
@@ -80,15 +78,15 @@ private:
   inline void cb_menite_pixel_type_and_bright_i(Fl_Menu_*, void*);
   static void cb_menite_pixel_type_and_bright(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_color_trace;
-private:
-  inline void cb_menite_color_trace_i(Fl_Menu_*, void*);
-  static void cb_menite_color_trace(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_fnum_list;
 private:
   inline void cb_menite_fnum_list_i(Fl_Menu_*, void*);
   static void cb_menite_fnum_list(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_color_trace;
+private:
+  inline void cb_menite_color_trace_i(Fl_Menu_*, void*);
+  static void cb_menite_color_trace(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_trace_batch;
 private:
@@ -228,7 +226,6 @@ private:
   static void cb_strinp_level_file(Fl_Input*, void*);
 public:
   Fl_Value_Input *valinp_level_start;
-  Fl_Value_Input *valinp_level_end;
   Fl_Light_Button *ligbut_level_image_x1_sw;
 private:
   inline void cb_ligbut_level_image_x1_sw_i(Fl_Light_Button*, void*);
@@ -239,6 +236,15 @@ private:
   inline void cb_ligbut_level_view_sw_i(Fl_Light_Button*, void*);
   static void cb_ligbut_level_view_sw(Fl_Light_Button*, void*);
 public:
+  Fl_Choice *choice_level_continue_type;
+private:
+  inline void cb_choice_level_continue_type_i(Fl_Choice*, void*);
+  static void cb_choice_level_continue_type(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_level_continue_type[];
+public:
+  Fl_Choice *choice_level_endless_direction;
+  static Fl_Menu_Item menu_choice_level_endless_direction[];
+  Fl_Value_Input *valinp_level_end;
   Fl_Choice *choice_level_image_file_format;
 private:
   inline void cb_choice_level_image_file_format_i(Fl_Choice*, void*);
