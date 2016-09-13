@@ -78,23 +78,33 @@ std::cout << std::endl;
 			/* コメント行である */
 			continue;
 		}
+	/* 01. Dirパス */
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_level_dir_ )) {
 			cl_gts_master.cl_bro_level.init_level_dir(ca_scan2);
 			i_level_list_redisplay_sw = ON;
 		}
+	/* 02 file/levelのlist表示切替(Renumberボタンの表示OFF/ONも) */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_file_ )) {
-			cl_gts_master.cl_bro_level.level_filename_memory(ca_scan2);
-			cl_gts_gui.strinp_level_file->value(ca_scan2);
-		}
-		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_list_form_ )) {
-			cl_gts_gui.choice_level_list_form->value(
-				atoi(ca_scan2));
-
-			i_level_list_redisplay_sw = ON;
-
+		!strcmp( ca_scan1 ,this->str_level_list_form_ )) {
+	if (isdigit(ca_scan2[0])) {/* For Legacy Format...Delete sameday */
+		 cl_gts_gui.choice_level_list_form->value( atoi(ca_scan2) );
+		 i_level_list_redisplay_sw = ON;
+		 /* File/Level表示によってボタンを表示/非表示する */
+		 if (0 == cl_gts_gui.choice_level_list_form->value()) {
+			cl_gts_gui.button_level_shift_number->hide();
+			cl_gts_gui.ligbut_level_info_rgb_sub_sw->hide();
+		 } else {
+			cl_gts_gui.button_level_shift_number->show();
+			cl_gts_gui.ligbut_level_info_rgb_sub_sw->show();
+		 }
+	}
+	else {
+		const Fl_Menu_Item *crnt =
+		 cl_gts_gui.choice_level_list_form->find_item( ca_scan2 );
+		if (crnt != nullptr) {
+		 cl_gts_gui.choice_level_list_form->value( crnt );
+		 i_level_list_redisplay_sw = ON;
 		 /* File/Level表示によってボタンを表示/非表示する */
 		 if (0 == cl_gts_gui.choice_level_list_form->value()) {
 			cl_gts_gui.button_level_shift_number->hide();
@@ -104,17 +114,68 @@ std::cout << std::endl;
 			cl_gts_gui.ligbut_level_info_rgb_sub_sw->show();
 		 }
 		}
+	}
+		}
+	/* 03 Level名 */
+		else if ((2 == i_ret) &&
+		!strcmp( ca_scan1, this->str_level_file_ )) {
+			//cl_gts_master.cl_bro_level.level_filename_memory(ca_scan2);
+			cl_gts_gui.strinp_level_file->value(ca_scan2);
+		}
+	/* 04 Level開始番号 */
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_level_num_start_ )) {
 			cl_gts_gui.valinp_level_start->value(
 				atof(ca_scan2));
 		}
+	/* 05 Level終端番号 */
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_level_num_end_ )) {
 			cl_gts_gui.valinp_level_end->value(
 				atof(ca_scan2));
 		}
+	/* 06 Level終端タイプ */
+		else if ((2 == i_ret) &&
+		!strcmp( ca_scan1 ,this->str_level_num_continue_type_)) {
+	const Fl_Menu_Item* crnt =
+		cl_gts_gui.choice_level_continue_type->find_item(ca_scan2);
+	if (crnt != nullptr) {
+		 cl_gts_gui.choice_level_continue_type->value(crnt);
+		if (cl_gts_gui.choice_level_continue_type->value() == 0) {
+			cl_gts_gui.valinp_level_end->show();
+			cl_gts_gui.choice_level_endless_direction->hide();
+		}
+		else {
+			cl_gts_gui.valinp_level_end->hide();
+			cl_gts_gui.choice_level_endless_direction->show();
+		}
+	}
+		}
+	/* 07 Level Endless時増減方向 */
+		else if ((2 == i_ret) &&
+		!strcmp( ca_scan1,this->str_level_num_endless_direction_)) {
+	const Fl_Menu_Item *crnt =
+	 cl_gts_gui.choice_level_endless_direction->find_item( ca_scan2 );
+	if (crnt != nullptr) {
+		cl_gts_gui.choice_level_endless_direction->value(crnt);
+	}
+		}
 
+	/* 08 保存(開くときも)画像ファイル書式 */
+		else if ((2 == i_ret) &&
+		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
+	const Fl_Menu_Item *crnt =
+	cl_gts_gui.choice_level_image_file_format->find_item(ca_scan2);
+			if (crnt != nullptr) {
+	cl_gts_gui.choice_level_image_file_format->value(crnt);
+	cl_gts_master.cl_bro_level.cb_set_image_file_extension();
+			}
+		}
+
+	/* 09 等倍画像表示スイッチ */
+	/* 10 画像全体表示スイッチ */
+
+	/* 11 _full dirパス */
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_level_rgb_scan_dir_ )) {
 			cl_gts_gui.filinp_level_rgb_scan_dir->value(
@@ -125,43 +186,41 @@ std::cout << std::endl;
 
 			i_level_list_redisplay_sw = ON;
 		}
+	/* 12 RGBスキャン時、トレスを実行し保存するスイッチ */
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_rgb_trace_save_sw_)) {
 			 cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			 );
 		}
+	/* 13 RGBスキャン画像保存sw */
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_rgb_full_save_sw_)) {
 			 cl_gts_gui.chkbtn_level_rgb_full_save_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			 );
 		}
+	/* 14 RGBスキャン画像ファイル名に_full付けるsw */
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_rgb_with_full_sw_)) {
 			 cl_gts_gui.chkbtn_level_rgb_with_full_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			 );
 		}
-		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
-			const int idx =
-	cl_gts_gui.choice_level_image_file_format->find_index(ca_scan2);
-			if (idx != -1) {
- cl_gts_gui.choice_level_image_file_format->value(idx);
- /* 必ずchoice_level_image_file_format->value(idx)の後で実行すること */
- cl_gts_master.cl_bro_level.cb_set_image_file_extension();
-			}
-		}
+
+	/* 15 dirパス/_full dirパスのブラウジング切替えスイッチ */
+	/* 16 _full等倍画像表示スイッチ */
 
 		/*------------------------------------------------*/
 
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_area_select_ )) {
-		 cl_gts_gui.choice_area_selecter->value(
-		  cl_gts_gui.choice_area_selecter->find_item(ca_scan2)
-		 );
-		 cl_gts_master.cb_area_selecter();
+	const Fl_Menu_Item *crnt =
+		cl_gts_gui.choice_area_selecter->find_item( ca_scan2 );
+	if (crnt != nullptr) {
+		cl_gts_gui.choice_area_selecter->value( crnt );
+		cl_gts_master.cb_area_selecter();
+	}
 		}
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_area_x_pos_ )) {
@@ -173,19 +232,12 @@ std::cout << std::endl;
 		}
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_area_aspect_ratio_select_ )) {
-		 const Fl_Menu_Item *item =
-		  cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
-		   ca_scan2);
-std::cout
-<< "cl_gts_gui.choice_area_aspect_ratio_selecter->find_item("
-<< ca_scan2
-<<")="
-<< item
-<< std::endl;
-		 if (item != 0) {
-		  cl_gts_gui.choice_area_aspect_ratio_selecter->value(item);
-		  cl_gts_master.cb_area_aspect_ratio_selecter();
-		 }
+	const Fl_Menu_Item *crnt =
+	 cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(ca_scan2 );
+	if (crnt != 0) {
+	 cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
+	 cl_gts_master.cb_area_aspect_ratio_selecter();
+	}
 		}
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_area_x_size_ )) {
@@ -212,11 +264,29 @@ std::cout
 
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_rotate_per_90_ )) {
-			cl_gts_gui.choice_rot90->value(atoi(ca_scan2));
-
-			/* 回転値(システム設定値)をメモリする */
-			cl_gts_master.set_i_rotate_per_90(
-				cl_gts_gui.choice_rot90->value() );
+	if (isdigit(ca_scan2[0])) {/* For Legacy Format...Delete sameday */
+	/*
+		0=CW_-90 , 1=CW_0 , 2=CW_90 , 3=CW_180
+		0=CW_-90はScannerにとっての正対なのでこれ以外は回転処理必要
+		1=CW_0は作業者にとっての正対
+	*/
+		 cl_gts_gui.choice_rot90->value( atoi(ca_scan2) );
+		 /* 回転値(システム設定値)をメモリする */
+		 cl_gts_master.set_i_rotate_per_90(
+			cl_gts_gui.choice_rot90->value()
+		 );
+	}
+	else {
+		const Fl_Menu_Item *crnt =
+		 cl_gts_gui.choice_rot90->find_item( ca_scan2 );
+		if (crnt != nullptr) {
+		 cl_gts_gui.choice_rot90->value( crnt );
+		 /* 回転値(システム設定値)をメモリする */
+		 cl_gts_master.set_i_rotate_per_90(
+			cl_gts_gui.choice_rot90->value()
+		 );
+		}
+	}
 		}
 
 		else if (!strcmp( ca_scan1, this->str_scanner_type_ )) {
@@ -236,25 +306,50 @@ std::cout
 
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_pixel_type_ )) {
-			cl_gts_gui.choice_pixel_type->value(
-				atoi(ca_scan2));
-			switch (cl_gts_gui.choice_pixel_type->value()) {
-			case 0:
-				cl_gts_gui.group_bw->show();
-				cl_gts_gui.group_grays->hide();
-				cl_gts_gui.group_rgb->hide();
-				break;
-			case 1:
-				cl_gts_gui.group_bw->hide();
-				cl_gts_gui.group_grays->show();
-				cl_gts_gui.group_rgb->hide();
-				break;
-			case 2:
-				cl_gts_gui.group_bw->hide();
-				cl_gts_gui.group_grays->hide();
-				cl_gts_gui.group_rgb->show();
-				break;
-			};
+	if (isdigit(ca_scan2[0])) {/* For Legacy Format...Delete sameday */
+		 cl_gts_gui.choice_pixel_type->value( atoi(ca_scan2) );
+		 switch (cl_gts_gui.choice_pixel_type->value()) {
+		 case 0:
+			cl_gts_gui.group_bw->show();
+			cl_gts_gui.group_grays->hide();
+			cl_gts_gui.group_rgb->hide();
+			break;
+		 case 1:
+			cl_gts_gui.group_bw->hide();
+			cl_gts_gui.group_grays->show();
+			cl_gts_gui.group_rgb->hide();
+			break;
+		 case 2:
+			cl_gts_gui.group_bw->hide();
+			cl_gts_gui.group_grays->hide();
+			cl_gts_gui.group_rgb->show();
+			break;
+		 };
+	}
+	else {
+		const Fl_Menu_Item *crnt =
+		 cl_gts_gui.choice_pixel_type->find_item( ca_scan2 );
+		if (crnt != nullptr) {
+		 cl_gts_gui.choice_pixel_type->value( crnt );
+		 switch (cl_gts_gui.choice_pixel_type->value()) {
+		 case 0:
+			cl_gts_gui.group_bw->show();
+			cl_gts_gui.group_grays->hide();
+			cl_gts_gui.group_rgb->hide();
+			break;
+		 case 1:
+			cl_gts_gui.group_bw->hide();
+			cl_gts_gui.group_grays->show();
+			cl_gts_gui.group_rgb->hide();
+			break;
+		 case 2:
+			cl_gts_gui.group_bw->hide();
+			cl_gts_gui.group_grays->hide();
+			cl_gts_gui.group_rgb->show();
+			break;
+		 };
+		}
+	}
 		}
 
 		else if ((2 == i_ret) &&
@@ -345,24 +440,24 @@ std::cout
 		/*------------------------------------------------*/
 
 		else if (((2==i_ret) || (3==i_ret) || (4==i_ret)) &&
-		!strcmp( ca_scan1, this->str_frame_number_list_)) {
+		!strcmp( ca_scan1, this->str_file_number_frame_)) {
 			/* ファイル番号リストの一番始めにやること */
 			if (OFF == i_fnum_list_sw) {
 			 /* ファイル番号リストの存在の有無 */
 			 i_fnum_list_sw = ON;
 			 /* 以前のリストをすべて削除 */
-			 cl_gts_master.cl_list_access.remove_all();
+			 cl_gts_master.cl_file_number_list.remove_all();
 			}
 
 			/* 実際の画像ファイルの有無を調べて
 			リストの最後に追加する */
-	cl_gts_master.cl_image_mark_access.append_fnum_list_with_chk_mark(
+	cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
 				atoi(ca_scan2));
 
 			/* 選択状態の再現 */
 			if (
-			!strcmp( ca_scan3,this->str_frame_number_selected_ ) ||
-			!strcmp( ca_scan4,this->str_frame_number_selected_ )
+			!strcmp( ca_scan3,this->str_file_number_selected_ ) ||
+			!strcmp( ca_scan4,this->str_file_number_selected_ )
 			) {
 				cl_gts_gui.selbro_fnum_list->select(
 				 cl_gts_gui.selbro_fnum_list->size());
@@ -427,7 +522,7 @@ std::cout
 	/* frame listがない時は設定ファイルと判断してlistをクリアする */
 	if (OFF == i_fnum_list_sw) {
 		/* 以前のリストをすべて削除 */
-		cl_gts_master.cl_list_access.remove_all();
+		cl_gts_master.cl_file_number_list.remove_all();
 	}
 
 	/* trace batch listがない時はlistをクリアする */
@@ -461,6 +556,11 @@ std::cout
 	cl_gts_master.cl_color_trace_thickness.cb_enh_04();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
+
+	/* LevelのCancelを可能にするためmemoryしておく */
+	cl_gts_master.cl_bro_level.memory_from_gui(
+		cl_gts_gui.filinp_level_dir->value()
+	);
 
 	return OK;
 }

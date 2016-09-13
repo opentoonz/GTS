@@ -20,7 +20,7 @@ void gts_master::cb_color_trace_full_area( void )
 	}
 
 	/* RGB画像の処理となるので、モードを自動切替えする */
-	cl_gts_gui.choice_pixel_type->value(2);
+	//cl_gts_gui.choice_pixel_type->value(2);
 
 	/* 画像全体に処理を実行 */
 	if (OK != this->_iipg_color_trace_setup()) {

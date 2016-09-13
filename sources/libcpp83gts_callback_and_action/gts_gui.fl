@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();}
+      callback {cl_gts_master.cb_quit();} open selected
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -88,11 +88,6 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} divider
           }
           MenuItem {} {
-            label {Scan and Trace}
-            callback {cl_gts_master.cb_scan_and_trace_and_save_start();}
-            xywh {0 0 100 20} hide divider
-          }
-          MenuItem {} {
             label {Preview Trace File}
             callback {cl_gts_master.cb_read_and_trace();}
             xywh {0 0 100 20} shortcut 0x74
@@ -127,6 +122,16 @@ cl_gts_master.cb_quit();}
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc3
           }
+          MenuItem menite_fnum_list {
+            label {File Number ...}
+            callback {if (cl_gts_gui.menite_fnum_list->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_fnum_list->show();
+} else {
+    cl_gts_gui.window_fnum_list->hide();
+}}
+            xywh {5 5 100 20} type Toggle shortcut 0xffc7 divider
+          }
           MenuItem menite_color_trace {
             label {Color Trace Enhancement...}
             callback {if (cl_gts_gui.menite_color_trace->value()) {
@@ -140,16 +145,6 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.menite_edit_hsv_min_max->clear();
 }}
             xywh {0 0 100 20} type Toggle shortcut 0xffc6
-          }
-          MenuItem menite_fnum_list {
-            label {File Number ...}
-            callback {if (cl_gts_gui.menite_fnum_list->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_fnum_list->show();
-} else {
-    cl_gts_gui.window_fnum_list->hide();
-}}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc7
           }
           MenuItem menite_trace_batch {
             label {Color Trace Batch...}
@@ -302,7 +297,7 @@ fl_message( ost.str().c_str() );}
           }
         }
         Submenu {} {
-          label Debug open
+          label Debug
           xywh {0 0 62 20} hide
         } {
           MenuItem {} {
@@ -359,7 +354,7 @@ fl_message( ost.str().c_str() );}
     Fl_Window window_level {
       label {Browse Level}
       callback {cl_gts_master.cl_bro_level.cb_cancel();}
-      xywh {50 50 380 600} type Double resizable non_modal size_range {370 300 0 0} visible
+      xywh {50 50 380 630} type Double resizable non_modal size_range {370 300 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_level.cb_dir_up();}
@@ -481,12 +476,12 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
         xywh {0 425 380 25}
       } {
         Fl_Box {} {
-          xywh {0 425 50 25}
+          xywh {0 425 80 25}
         }
         Fl_Input strinp_level_file {
           label Level
           callback {cl_gts_master.cl_bro_level.cb_level_name();}
-          xywh {50 425 330 25} box BORDER_BOX when 1 resizable
+          xywh {80 425 300 25} box BORDER_BOX when 1 resizable
         }
       }
       Fl_Group {} {open
@@ -494,14 +489,10 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
       } {
         Fl_Value_Input valinp_level_start {
           label Start
-          xywh {50 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-        }
-        Fl_Value_Input valinp_level_end {
-          label End
-          xywh {120 455 40 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+          xywh {80 455 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
         }
         Fl_Box {} {
-          xywh {160 455 80 25} resizable
+          xywh {130 455 110 25} resizable
         }
         Fl_Light_Button ligbut_level_image_x1_sw {
           label x1
@@ -517,10 +508,51 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
       Fl_Group {} {open
         xywh {0 485 380 25}
       } {
+        Fl_Choice choice_level_continue_type {
+          callback {if (o->value() == 0) {
+ cl_gts_gui.valinp_level_end->show();
+ cl_gts_gui.choice_level_endless_direction->hide();
+} else {
+ cl_gts_gui.valinp_level_end->hide();
+ cl_gts_gui.choice_level_endless_direction->show();
+}} open
+          xywh {0 485 80 25} down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label End
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label Endless
+            xywh {0 0 30 20}
+          }
+        }
+        Fl_Choice choice_level_endless_direction {open
+          xywh {80 485 50 25} down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label {+1}
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label {-1}
+            xywh {0 0 30 20}
+          }
+        }
+        Fl_Value_Input valinp_level_end {
+          xywh {80 485 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+        }
+        Fl_Box {} {
+          xywh {130 485 250 25} resizable
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 515 380 25}
+      } {
         Fl_Choice choice_level_image_file_format {
           label Format
           callback {cl_gts_master.cl_bro_level.cb_set_image_file_extension();} open
-          xywh {50 485 65 25} down_box BORDER_BOX
+          xywh {80 515 65 25} down_box BORDER_BOX
         } {
           MenuItem {} {
             label TIFF
@@ -532,55 +564,55 @@ cl_gts_master.cl_bro_level.cb_info_redisplay();}
           }
         }
         Fl_Box {} {
-          xywh {113 485 267 25} resizable
+          xywh {145 515 235 25} resizable
         }
       }
       Fl_Group {} {open
-        xywh {0 515 380 50}
+        xywh {0 545 380 50}
       } {
         Fl_File_Input filinp_level_rgb_scan_dir {
           label {RGB scan dir}
           callback {cl_gts_master.cl_bro_level.cb_rgb_scan_dir();}
-          xywh {0 530 135 35} align 5 when 1 deactivate resizable
+          xywh {0 560 135 35} align 5 when 1 deactivate resizable
         }
         Fl_Check_Button chkbtn_level_rgb_trace_save_sw {
           label {S.C.T.}
-          tooltip {Save Color Trace level} xywh {135 545 60 20} down_box DOWN_BOX
+          tooltip {Save Color Trace level} xywh {135 575 60 20} down_box DOWN_BOX
         }
         Fl_Check_Button chkbtn_level_rgb_full_save_sw {
           label {S.Full}
-          tooltip {Save RGB Full  level} xywh {195 545 60 20} down_box DOWN_BOX value 1
+          tooltip {Save RGB Full  level} xywh {195 575 60 20} down_box DOWN_BOX value 1
         }
         Fl_Check_Button chkbtn_level_rgb_with_full_sw {
           label With_full
-          tooltip {With _full in RGB full name} xywh {195 523 75 20} down_box DOWN_BOX value 1
+          tooltip {With _full in RGB full name} xywh {195 553 75 20} down_box DOWN_BOX value 1
         }
         Fl_Light_Button ligbut_level_rgb_scan_browse_sw {
           label Browse
           callback {cl_gts_master.cl_bro_level.cb_browse_sw();}
-          xywh {255 540 70 25}
+          xywh {255 570 70 25}
         }
         Fl_Light_Button ligbut_level_info_rgb_sub_sw {
           label Full
           callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
-          xywh {325 540 50 25} hide
+          xywh {325 570 50 25} hide
         }
       }
-      Fl_Group {} {
-        xywh {0 570 380 24}
+      Fl_Group {} {open
+        xywh {0 600 380 24}
       } {
         Fl_Button {} {
           label OK
           callback {cl_gts_master.cl_bro_level.cb_ok();}
-          xywh {10 570 80 24}
+          xywh {10 600 80 24}
         }
         Fl_Box {} {
-          xywh {90 570 200 24} resizable
+          xywh {90 600 200 24} resizable
         }
         Fl_Button {} {
           label Cancel
           callback {cl_gts_master.cl_bro_level.cb_cancel();}
-          xywh {290 570 80 24}
+          xywh {290 600 80 24}
         }
       }
     }
@@ -847,28 +879,28 @@ cl_gts_master.cb_scan_full_area_and_crop();}
         Fl_Choice choice_rot90 {
           label Rotate
           callback {cl_gts_master.cb_rotate_per_90();} open
-          xywh {50 235 60 25} box BORDER_BOX down_box BORDER_BOX
+          xywh {50 235 90 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
-            label {-90}
+            label {CW_-90}
             xywh {5 5 100 20}
           }
           MenuItem {} {
-            label 0
+            label CW_0
             xywh {5 5 100 20}
           }
           MenuItem {} {
-            label 90
+            label CW_90
             xywh {5 5 100 20}
           }
           MenuItem {} {
-            label 180
+            label CW_180
             xywh {5 5 100 20}
           }
         }
         Fl_Text_Display {} {
           label degree
-          xywh {111 240 0 0} align 6
+          xywh {140 240 0 0} align 6
         }
       }
       Fl_Group {} {
@@ -1705,7 +1737,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
       }
       Fl_Button {} {
         label {Preview File}
-        callback {cl_gts_master.cb_read_rgb_preview();}
+        callback {cl_gts_master.cb_read_and_preview();}
         xywh {115 785 85 25}
       }
       Fl_Button {} {
@@ -1718,44 +1750,36 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
 cl_gts_gui.menite_fnum_list->clear();}
-      xywh {50 50 80 350} type Double resizable non_modal visible
+      xywh {50 50 116 350} type Double resizable non_modal visible
     } {
-      Fl_Menu_Bar {} {
-        xywh {0 0 80 25}
+      Fl_Menu_Bar {} {open
+        xywh {0 0 116 25}
       } {
         Submenu {} {
           label Edit open
-          xywh {0 0 80 20}
+          xywh {0 0 116 20}
         } {
           MenuItem {} {
             label {Select All}
-            callback {int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
-        cl_gts_gui.selbro_fnum_list->select(ii);
-}}
-            xywh {0 0 80 20} shortcut 0x40061
+            callback {cl_gts_master.cl_file_number_list.select_all();}
+            xywh {0 0 116 20} shortcut 0x40061
           }
           MenuItem {} {
             label Delete
-            callback {int     ii;
-for (ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
-        if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
-                cl_gts_gui.selbro_fnum_list->remove(ii);
-        } else { ++ii; }
-}}
-            xywh {0 0 80 20} shortcut 0x40078
+            callback {cl_gts_master.cl_file_number_list.remove_selected();}
+            xywh {0 0 116 20} shortcut 0x40078
           }
         }
       }
       Fl_Input norinp_fnum_insert {
-        callback {cl_gts_master.cb_fnum_edit_insert();}
-        xywh {0 25 80 25} box BORDER_BOX align 5 when 8
+        callback {cl_gts_master.cl_file_number_list.set_list_from_string();}
+        xywh {0 25 116 25} box BORDER_BOX align 5 when 8
       }
       Fl_Output norout_crnt_scan_level_of_fnum {
-        xywh {0 50 80 25}
+        xywh {0 50 116 25}
       }
       Fl_Browser selbro_fnum_list {
-        xywh {0 75 80 275} type Multi resizable
+        xywh {0 75 116 275} type Multi resizable
       }
     }
     Fl_Window window_trace_batch {

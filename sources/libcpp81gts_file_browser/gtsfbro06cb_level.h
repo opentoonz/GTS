@@ -9,18 +9,25 @@
 class gtsfbro06cb_level : public gtsfbro05list_level {
 public:
 	gtsfbro06cb_level()
-		:_i_start_memory(0)
-		,_i_end_memory(0)
-		,_i_view_sw_memory(0)
-		,_i_x1view_sw_memory(0)
-		,_i_rgb_scan_browse_sw_memory(0)
-		,_i_info_rgb_sub_sw_memory(0)
-		,_i_list_form_memory(0)
-		,_i_save_color_trace_level_sw_memory(0)
+	:_i_list_form_memory(0)
+	,_i_start_memory(0)
+	,_i_end_memory(0)
+	,continue_type_memory_(0)
+	,endless_direction_memory_(0)
+	,image_file_format_(0)
+	,_i_save_color_trace_level_sw_memory(0)
+	,save_rgb_scanimage_sw_memory_(0)
+	,rgb_with_full_sw_(0)
 	{
 		this->level_filename_memory_[0]  = '\0';
 		this->_ca_rgb_scan_dir_memory[0] = '\0';
 	}
+	/* GUIの状態を記憶する */
+	void memory_from_gui( const char* level_dir_path );
+
+	/* 記憶からGUI復元 */
+	void memory_to_gui( void );
+
 	int i_init( void );
 
 	void cb_dir( void );
@@ -46,15 +53,12 @@ public:
 	char *cp_filepath( int i_number );
 	char *cp_filepath_full( int i_number );
 	char *cp_levelname( void );
-	void level_filename_memory( const char *ccp_fname );
 
 	void cb_set_image_file_extension( void );
 
 protected:
 private:
 	void _cancel( void );
-
-	void _rgb_scan_dir_memory( const char *ccp_fname );
 
 	int _info_datetimereturn( const time_t *tp_time );
 	int _info_image_by_dir_and_file(
@@ -88,16 +92,24 @@ private:
 	void _select_new_dir_or_file_or_level( const char *ccp_name );
 	int _is_valid_string( const char *ccp_name );
 
-	char level_filename_memory_[PTBL_PATH_MAX];
-	int	_i_start_memory,
-		_i_end_memory;
-	char _ca_rgb_scan_dir_memory[PTBL_PATH_MAX];
-	int	_i_view_sw_memory,
-		_i_x1view_sw_memory,
-		_i_rgb_scan_browse_sw_memory,
-		_i_info_rgb_sub_sw_memory,
-		_i_list_form_memory,
-		_i_save_color_trace_level_sw_memory;
+	//----------
+
+	void set_level_filename_memory_( const char *ccp_fname );
+	void set_rgb_scan_dir_memory_( const char *ccp_fname );
+
+	//----------
+
+	int	_i_list_form_memory;
+	char	level_filename_memory_[PTBL_PATH_MAX];
+	int	_i_start_memory;
+	int	_i_end_memory;
+	int	continue_type_memory_;
+	int	endless_direction_memory_;
+	int	image_file_format_;
+	char	_ca_rgb_scan_dir_memory[PTBL_PATH_MAX];
+	int	_i_save_color_trace_level_sw_memory;
+	int	save_rgb_scanimage_sw_memory_;
+	int	rgb_with_full_sw_;
 };
 
 #endif /* !gtsfbro06cb_level_h */

@@ -13,7 +13,7 @@ void memory_install_setup::load( const std::string& exe_file_path )
 	if (!ifs) { return; } /* ファイルが開けない */
 
 	std::string str;
-	while ( std::getline(ifs,str) ) {/* 一行読む */
+	for (int ii = 1 ;std::getline(ifs,str) ;++ii) {/* 一行読む */
 		if (str.empty()) { continue; }/* 空行無視 */
 		if ('#' == str.at(0)) { continue; }/* コメント行無視 */
 
@@ -50,6 +50,11 @@ void memory_install_setup::load( const std::string& exe_file_path )
 		if (words.at(0) == "short_cut_key_stop_scan") {
 			// stop_scan	Esc(Default)
  cl_gts_master.cl_memo_short_cut_key.setup_stop_scan(words.at(1).c_str());
+		}
+		else {
+			pri_funct_err_bttvr(
+ 	"Warning : memory_install_setup::load() : ignore '%s' at line %d"
+			,words.at(0) ,ii );
 		}
 	}
 	ifs.close();/* ファイル閉じる */

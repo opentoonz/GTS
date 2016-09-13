@@ -24,8 +24,7 @@
 
 #include "memory_desktop.h"
 #include "memory_config.h"
-#include "list_access.h"
-#include "image_mark_access.h"
+#include "cb_file_number_list.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
 #include "cb_color_trace_enhancement.h"
@@ -74,7 +73,6 @@ public:
 	void cb_config_save_as_list( void );
 	void cb_config_save_as_ok( void );
 	void cb_choice_pixel_type( void );
-	void cb_fnum_edit_insert( void );
 	void cb_level_dir( void );
 	void cb_level_rgb_scan_dir( void );
 	void cb_level_mkdir( void );
@@ -83,13 +81,11 @@ public:
 	void cb_level_ok( void );
 	void cb_quit( void );
 
-	void cb_read_rgb_preview( void );
+	void cb_read_and_preview( void );
 	void cb_read_and_trace( void );
 
-	int read_and_save_crnt( void );
 	void cb_read_and_save_start( void );
 	void cb_scan_and_preview( void );
-	void cb_scan_and_trace_and_save_start( void );
 	void cb_scan_and_save_start( void );
 	void cb_scan_and_save_next( void );
 	void cb_scan_and_save_prev( void );
@@ -169,8 +165,8 @@ public:
 	memory_short_cut_key	cl_memo_short_cut_key;
 	memory_install_setup	cl_memo_install_setup;
 
-	list_access		cl_list_access; /* file number list */
-	image_mark_access	cl_image_mark_access;
+	cb_file_number_list	cl_file_number_list;
+
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
 	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;
 	cb_color_trace_enhancement	cl_color_trace_enhancement;
@@ -201,13 +197,9 @@ private:
 
 	int	_i_rotate_per_90;
 
-	char *_get_next_num( char *cp_str, int *ip_num );
 	int _make_level_frame_number_list( void );
 	int _read_and_view_frame_number_list_1st_image( void );
-	int _read_and_save( int i_file_num, int i_list_num );
-	int _scan_and_save( int i_file_num, int i_list_num );
-	void _set_window_next_scan( int i_file_prev, int i_file_next );
-	int _scan_and_save_crnt( void );
+
 	void _next_scan_number( void );
 	void _all_view( void );
 	void _zoom_up_twice_at_cen( void );
@@ -299,11 +291,13 @@ private:
 
 	int _cb_open_text( char *cp_path );
 
-	void _cb_scan_and_save_start( void );
-
 	void _trace_batch_run( char *cp_path );
 	void _trace_batch_add( char *cp_path );
 	void _change_view_main( void );
+
+	int next_scan_and_save_( void );
+
+	int read_and_save_crnt_( void );
 };
 extern gts_master cl_gts_master;
 
