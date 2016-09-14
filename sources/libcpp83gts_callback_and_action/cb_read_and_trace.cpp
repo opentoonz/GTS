@@ -23,7 +23,7 @@ void gts_master::cb_read_and_trace( void )
 
 	/* リストのセンタースクロール */
 	cl_gts_gui.selbro_fnum_list->middleline(
-		this->cl_file_number_list.get_crnt_file_num()
+		this->cl_file_number_list.get_crnt_list_num()
 	);
 
 	//--------------------------------------------------

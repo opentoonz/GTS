@@ -211,6 +211,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_read_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_save.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace.cpp \
+					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_rotate_per_90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \

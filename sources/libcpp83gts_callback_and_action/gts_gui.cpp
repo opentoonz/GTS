@@ -1885,6 +1885,13 @@ void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);
 }
 
+void gts_gui::cb_selbro_fnum_list_i(Fl_Browser*, void*) {
+  cl_gts_master.cb_read_and_trace_and_preview();
+}
+void gts_gui::cb_selbro_fnum_list(Fl_Browser* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_selbro_fnum_list_i(o,v);
+}
+
 void gts_gui::cb_window_trace_batch_i(Fl_Double_Window*, void*) {
   cl_gts_master.cl_bro_trace_batch.cb_cancel();
 }
@@ -6537,6 +6544,7 @@ Fl_Double_Window* gts_gui::make_window() {
     } // Fl_Output* norout_crnt_scan_level_of_fnum
     { selbro_fnum_list = new Fl_Browser(0, 75, 116, 275);
       selbro_fnum_list->type(3);
+      selbro_fnum_list->callback((Fl_Callback*)cb_selbro_fnum_list);
       Fl_Group::current()->resizable(selbro_fnum_list);
     } // Fl_Browser* selbro_fnum_list
     window_fnum_list->set_non_modal();

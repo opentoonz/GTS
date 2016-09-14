@@ -83,6 +83,7 @@ public:
 
 	void cb_read_and_preview( void );
 	void cb_read_and_trace( void );
+	void cb_read_and_trace_and_preview( void );
 
 	void cb_read_and_save_start( void );
 	void cb_scan_and_preview( void );

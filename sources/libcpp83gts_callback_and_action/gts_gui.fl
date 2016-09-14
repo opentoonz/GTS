@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();} open selected
+      callback {cl_gts_master.cb_quit();}
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -1093,7 +1093,7 @@ cl_gts_gui.menite_color_trace->clear();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();}
+cl_gts_gui.menite_edit_hsv_min_max->clear();} open
       xywh {50 50 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
@@ -1749,7 +1749,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();}
+cl_gts_gui.menite_fnum_list->clear();} open
       xywh {50 50 116 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {open
@@ -1779,6 +1779,7 @@ cl_gts_gui.menite_fnum_list->clear();}
         xywh {0 50 116 25}
       }
       Fl_Browser selbro_fnum_list {
+        callback {cl_gts_master.cb_read_and_trace_and_preview();} selected
         xywh {0 75 116 275} type Multi resizable
       }
     }

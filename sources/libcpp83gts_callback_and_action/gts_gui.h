@@ -978,6 +978,10 @@ private:
 public:
   Fl_Output *norout_crnt_scan_level_of_fnum;
   Fl_Browser *selbro_fnum_list;
+private:
+  inline void cb_selbro_fnum_list_i(Fl_Browser*, void*);
+  static void cb_selbro_fnum_list(Fl_Browser*, void*);
+public:
   Fl_Double_Window *window_trace_batch;
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
