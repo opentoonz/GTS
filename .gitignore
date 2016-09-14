@@ -5,8 +5,8 @@
 *.obj
 
 # Precompiled Headers
-*.gch
-*.pch
+#*.gch
+#*.pch
 
 # Compiled Dynamic libraries
 *.so
@@ -20,7 +20,7 @@
 *.lai
 *.la
 *.a
-*.lib
+#*.lib
 
 # Executables
 *.exe
@@ -28,17 +28,19 @@
 *.app
 /gts
 
-# OpenGTS binary Folder
-build/
-x86_release/
+# Build Files
+/sources/build/
+/x86_release/
 
 # ThirdParty Programs
-thirdparty/fltk/
-thirdparty/libtiff/
+/thirdparty/fltk/*
+!/thirdparty/fltk/fltk-1.3.3/
+/thirdparty/libtiff/*
+!/thirdparty/libtiff/tiff-4.0.3/
 
 # Autotools
-Makefile
-Makefile.in
+/Makefile
+/Makefile.in
 /autom4te.cache
 /aclocal.m4
 /compile
@@ -51,12 +53,12 @@ Makefile.in
 .deps
 .libs
 .dirstamp
-libtool
-ltmain.sh
+/libtool
+/ltmain.sh
 
-# editors
+# Editors
 *.swp
 *~
 
-# other
-tests/
+# Other
+/tests/

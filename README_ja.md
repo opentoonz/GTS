@@ -157,4 +157,8 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 ## ライセンス
 
-[New BSD License](https://github.com/opentoonz/GTS/blob/master/LICENSE.txt)
+- thirdparty ディレクトリ以外のファイル
+  - [New BSD License](./LICENSE.txt)
+- thirdparty ディレクトリ内のファイル
+  - 各ディレクトリ内の README やソースコードに記載されたライセンスに従ってください
+
