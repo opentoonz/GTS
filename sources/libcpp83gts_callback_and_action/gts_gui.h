@@ -132,10 +132,16 @@ private:
   static void cb_zoom(Fl_Menu_*, void*);
   inline void cb_zoom1_i(Fl_Menu_*, void*);
   static void cb_zoom1(Fl_Menu_*, void*);
-  inline void cb_main_to_lr_to_sub_i(Fl_Menu_*, void*);
-  static void cb_main_to_lr_to_sub(Fl_Menu_*, void*);
-  inline void cb_lr_to_ud_i(Fl_Menu_*, void*);
-  static void cb_lr_to_ud(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_wview_main_or_lr_ud;
+private:
+  inline void cb_menite_wview_main_or_lr_ud_i(Fl_Menu_*, void*);
+  static void cb_menite_wview_main_or_lr_ud(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_wview_lr_or_ud;
+private:
+  inline void cb_menite_wview_lr_or_ud_i(Fl_Menu_*, void*);
+  static void cb_menite_wview_lr_or_ud(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_help_about;
 private:

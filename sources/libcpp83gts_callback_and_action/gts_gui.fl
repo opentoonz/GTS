@@ -268,15 +268,15 @@ cl_gts_master.cb_quit();}
             label {Color Trace Window} open
             xywh {20 20 100 20}
           } {
-            MenuItem {} {
-              label main_to_lr_to_sub
-              callback {cl_gts_master.cb_change_view_main_or_lr_or_sub();}
-              xywh {20 20 100 20} shortcut 0xffc8
+            MenuItem menite_wview_main_or_lr_ud {
+              label main_or_lr_ud
+              callback {cl_gts_master.cb_change_wview_main_or_lr_ud();}
+              xywh {20 20 100 20} type Toggle shortcut 0xffc8
             }
-            MenuItem {} {
-              label lr_to_ud
-              callback {cl_gts_master.cb_change_view_lr_or_ud();}
-              xywh {20 20 100 20} shortcut 0xffc9
+            MenuItem menite_wview_lr_or_ud {
+              label lr_or_ud
+              callback {cl_gts_master.cb_change_wview_lr_or_ud();}
+              xywh {20 20 100 20} type Toggle shortcut 0xffc9
             }
           }
         }
@@ -1093,7 +1093,7 @@ cl_gts_gui.menite_color_trace->clear();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();} open
+cl_gts_gui.menite_edit_hsv_min_max->clear();}
       xywh {50 50 285 815} type Double non_modal visible
     } {
       Fl_Group {} {open
@@ -1749,7 +1749,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
     Fl_Window window_fnum_list {
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();} open
+cl_gts_gui.menite_fnum_list->clear();}
       xywh {50 50 116 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {open
@@ -1779,7 +1779,7 @@ cl_gts_gui.menite_fnum_list->clear();} open
         xywh {0 50 116 25}
       }
       Fl_Browser selbro_fnum_list {
-        callback {cl_gts_master.cb_read_and_trace_and_preview();} selected
+        callback {cl_gts_master.cb_read_and_trace_and_preview();}
         xywh {0 75 116 275} type Multi resizable
       }
     }

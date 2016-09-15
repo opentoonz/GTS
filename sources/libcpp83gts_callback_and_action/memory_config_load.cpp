@@ -617,5 +617,8 @@ int memory_config::load( const char *cp_file_path, int i_load_trace_batch_sw )
 		cl_gts_gui.opengl_view->h()
 	);
 
+	/* 画像表示 */
+	cl_gts_master.cb_read_and_trace_and_preview();
+
 	return OK;
 }

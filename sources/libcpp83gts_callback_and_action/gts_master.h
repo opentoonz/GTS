@@ -112,8 +112,8 @@ public:
 	void cb_color_trace_src_limit_aa( void );
 	void cb_color_trace_src_limit_bb( void );
 
-	void cb_change_view_main_or_lr_or_sub( void );
-	void cb_change_view_lr_or_ud( void );
+	void cb_change_wview_main_or_lr_ud( void );
+	void cb_change_wview_lr_or_ud( void );
 	void cb_real_time_on_off( void );
 
 	void cb_trace_batch_add( void );

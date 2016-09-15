@@ -73,6 +73,9 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	 filepath = this->cl_bro_level.cp_filepath( crnt_file_num );
 	}
 
+	/* 読込前に画像のタイプを得ておく */
+	const long before_channels = this->cl_iip_read.get_l_channels();
+
 	/* 読み込み元ファイルパス設定 */
 	if (OK != this->cl_iip_read.cl_name.set_name(filepath)) {
 		pri_funct_err_bttvr(
@@ -124,11 +127,19 @@ void gts_master::cb_read_and_trace_and_preview( void )
 
 	/* 分割表示とメイン表示の切替 */
 	if (3L <= this->cl_iip_read.get_l_channels()) {
-		/* トレス用画面分割表示 */
-		this->_wview_lr_parallel();
+	 if (before_channels< 3L) {/* 以前はRGB以外の画像だったら表示切替 */
+		cl_gts_gui.menite_wview_main_or_lr_ud->set();/* ON(lr/ud) */
+		if (cl_gts_gui.menite_wview_lr_or_ud->value()==0) {
+			this->_wview_lr_parallel();
+		}
+		else {
+			this->_wview_ud_parallel();
+		}
+	 }
 	}
 	/* BW,Grayscale画像のときは */
 	else {
+		cl_gts_gui.menite_wview_main_or_lr_ud->clear();/* OFF(main) */
 		/* メインのみ画面表示 */
 		this->_wview_main();
 	}
