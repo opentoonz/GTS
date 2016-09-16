@@ -6,6 +6,11 @@
 
 void gts_master::cb_read_and_trace_and_preview( void )
 {
+	/* "View Action for Heavy"メニューがなくなったらここは削除 */
+	if (cl_gts_gui.menite_quick_action_off->value() != 0) {
+		return;
+	}
+
 	/* File Number Listの選択の先頭項目を得る */
 	this->cl_file_number_list.counter_start(
 		cl_gts_master.cl_file_number_list.get_end_type_value()

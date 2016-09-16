@@ -180,3 +180,4 @@ void gts_master::cb_real_time_on_off( void )
 	case E_WVIEW_TYPE_UD_ONION: break;
 	}
 }
+

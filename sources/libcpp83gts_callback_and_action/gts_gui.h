@@ -110,20 +110,6 @@ private:
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
-  inline void cb_FullColor_i(Fl_Menu_*, void*);
-  static void cb_FullColor(Fl_Menu_*, void*);
-  inline void cb_Red_i(Fl_Menu_*, void*);
-  static void cb_Red(Fl_Menu_*, void*);
-  inline void cb_Green_i(Fl_Menu_*, void*);
-  static void cb_Green(Fl_Menu_*, void*);
-  inline void cb_Blue_i(Fl_Menu_*, void*);
-  static void cb_Blue(Fl_Menu_*, void*);
-  inline void cb_Red1_i(Fl_Menu_*, void*);
-  static void cb_Red1(Fl_Menu_*, void*);
-  inline void cb_Green1_i(Fl_Menu_*, void*);
-  static void cb_Green1(Fl_Menu_*, void*);
-  inline void cb_Blue1_i(Fl_Menu_*, void*);
-  static void cb_Blue1(Fl_Menu_*, void*);
   inline void cb_x1_i(Fl_Menu_*, void*);
   static void cb_x1(Fl_Menu_*, void*);
   inline void cb_All_i(Fl_Menu_*, void*);
@@ -142,13 +128,39 @@ public:
 private:
   inline void cb_menite_wview_lr_or_ud_i(Fl_Menu_*, void*);
   static void cb_menite_wview_lr_or_ud(Fl_Menu_*, void*);
+  inline void cb_FullColor_i(Fl_Menu_*, void*);
+  static void cb_FullColor(Fl_Menu_*, void*);
+  inline void cb_Red_i(Fl_Menu_*, void*);
+  static void cb_Red(Fl_Menu_*, void*);
+  inline void cb_Green_i(Fl_Menu_*, void*);
+  static void cb_Green(Fl_Menu_*, void*);
+  inline void cb_Blue_i(Fl_Menu_*, void*);
+  static void cb_Blue(Fl_Menu_*, void*);
+  inline void cb_Red1_i(Fl_Menu_*, void*);
+  static void cb_Red1(Fl_Menu_*, void*);
+  inline void cb_Green1_i(Fl_Menu_*, void*);
+  static void cb_Green1(Fl_Menu_*, void*);
+  inline void cb_Blue1_i(Fl_Menu_*, void*);
+  static void cb_Blue1(Fl_Menu_*, void*);
+  inline void cb_Show_i(Fl_Menu_*, void*);
+  static void cb_Show(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_quick_action_off;
+  static Fl_Menu_Item *chkbtn_color_trace_real_time;
+private:
+  inline void cb_chkbtn_color_trace_real_time_i(Fl_Menu_*, void*);
+  static void cb_chkbtn_color_trace_real_time(Fl_Menu_*, void*);
+  inline void cb_Preview2_i(Fl_Menu_*, void*);
+  static void cb_Preview2(Fl_Menu_*, void*);
+  inline void cb_Preview3_i(Fl_Menu_*, void*);
+  static void cb_Preview3(Fl_Menu_*, void*);
+  inline void cb_All1_i(Fl_Menu_*, void*);
+  static void cb_All1(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_help_about;
 private:
   inline void cb_menite_help_about_i(Fl_Menu_*, void*);
   static void cb_menite_help_about(Fl_Menu_*, void*);
-  inline void cb_Show_i(Fl_Menu_*, void*);
-  static void cb_Show(Fl_Menu_*, void*);
 public:
   fltk_opengl *opengl_view;
   Fl_Scrollbar *scrbar_view_x;
@@ -408,8 +420,8 @@ public:
 private:
   inline void cb_window_pixel_type_and_bright_i(Fl_Double_Window*, void*);
   static void cb_window_pixel_type_and_bright(Fl_Double_Window*, void*);
-  inline void cb_Preview2_i(Fl_Button*, void*);
-  static void cb_Preview2(Fl_Button*, void*);
+  inline void cb_Preview4_i(Fl_Button*, void*);
+  static void cb_Preview4(Fl_Button*, void*);
 public:
   Fl_Choice *choice_pixel_type;
 private:
@@ -956,16 +968,16 @@ private:
   inline void cb_chkbtn_color_trace_erase_1dot_i(Fl_Check_Button*, void*);
   static void cb_chkbtn_color_trace_erase_1dot(Fl_Check_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_color_trace_real_time;
+  Fl_Check_Button *chkbtn_color_trace_real_time__;
 private:
-  inline void cb_chkbtn_color_trace_real_time_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_real_time(Fl_Check_Button*, void*);
-  inline void cb_Preview3_i(Fl_Button*, void*);
-  static void cb_Preview3(Fl_Button*, void*);
-  inline void cb_Preview4_i(Fl_Button*, void*);
-  static void cb_Preview4(Fl_Button*, void*);
-  inline void cb_All1_i(Fl_Button*, void*);
-  static void cb_All1(Fl_Button*, void*);
+  inline void cb_chkbtn_color_trace_real_time___i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_color_trace_real_time__(Fl_Check_Button*, void*);
+  inline void cb_Preview5_i(Fl_Button*, void*);
+  static void cb_Preview5(Fl_Button*, void*);
+  inline void cb_Preview6_i(Fl_Button*, void*);
+  static void cb_Preview6(Fl_Button*, void*);
+  inline void cb_All2_i(Fl_Button*, void*);
+  static void cb_All2(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_fnum_list;
 private:
@@ -997,8 +1009,8 @@ private:
   static Fl_Menu_Item menu_2[];
   inline void cb_Add_i(Fl_Menu_*, void*);
   static void cb_Add(Fl_Menu_*, void*);
-  inline void cb_All2_i(Fl_Menu_*, void*);
-  static void cb_All2(Fl_Menu_*, void*);
+  inline void cb_All3_i(Fl_Menu_*, void*);
+  static void cb_All3(Fl_Menu_*, void*);
   inline void cb_Select1_i(Fl_Menu_*, void*);
   static void cb_Select1(Fl_Menu_*, void*);
   inline void cb_Delete1_i(Fl_Menu_*, void*);
