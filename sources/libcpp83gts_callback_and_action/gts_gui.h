@@ -145,11 +145,11 @@ private:
   inline void cb_Show_i(Fl_Menu_*, void*);
   static void cb_Show(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_quick_action_off;
-  static Fl_Menu_Item *chkbtn_color_trace_real_time;
+  static Fl_Menu_Item *menite_heavy_view_mode_in;
+  static Fl_Menu_Item *menite_color_trace_real_time;
 private:
-  inline void cb_chkbtn_color_trace_real_time_i(Fl_Menu_*, void*);
-  static void cb_chkbtn_color_trace_real_time(Fl_Menu_*, void*);
+  inline void cb_menite_color_trace_real_time_i(Fl_Menu_*, void*);
+  static void cb_menite_color_trace_real_time(Fl_Menu_*, void*);
   inline void cb_Preview2_i(Fl_Menu_*, void*);
   static void cb_Preview2(Fl_Menu_*, void*);
   inline void cb_Preview3_i(Fl_Menu_*, void*);
@@ -968,10 +968,10 @@ private:
   inline void cb_chkbtn_color_trace_erase_1dot_i(Fl_Check_Button*, void*);
   static void cb_chkbtn_color_trace_erase_1dot(Fl_Check_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_color_trace_real_time__;
+  Fl_Check_Button *menite_color_trace_real_time__;
 private:
-  inline void cb_chkbtn_color_trace_real_time___i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_real_time__(Fl_Check_Button*, void*);
+  inline void cb_menite_color_trace_real_time___i(Fl_Check_Button*, void*);
+  static void cb_menite_color_trace_real_time__(Fl_Check_Button*, void*);
   inline void cb_Preview5_i(Fl_Button*, void*);
   static void cb_Preview5(Fl_Button*, void*);
   inline void cb_Preview6_i(Fl_Button*, void*);

@@ -414,14 +414,14 @@ std::cout << std::endl;
 		}
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_color_trace_real_time_ )) {
-			/*cl_gts_gui.chkbtn_color_trace_real_time->value(
+			/*cl_gts_gui.menite_color_trace_real_time->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);*/
 			if (this->_chk_ON_OFF( ca_scan2 ) == 0) {
-			 cl_gts_gui.chkbtn_color_trace_real_time->clear();
+			 cl_gts_gui.menite_color_trace_real_time->clear();
 			}
 			else {
-			 cl_gts_gui.chkbtn_color_trace_real_time->set();
+			 cl_gts_gui.menite_color_trace_real_time->set();
 			}
 		}
 

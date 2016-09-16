@@ -12,7 +12,7 @@ void gts_master::color_trace_in_view_area( void )
 	}
 
 	/* メニューのリアルタイム指示を確認 */
-	if (0 == cl_gts_gui.chkbtn_color_trace_real_time->value()) {
+	if (0 == cl_gts_gui.menite_color_trace_real_time->value()) {
 		return;
 	}
 

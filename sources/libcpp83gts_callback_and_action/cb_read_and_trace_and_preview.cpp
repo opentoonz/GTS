@@ -7,7 +7,7 @@
 void gts_master::cb_read_and_trace_and_preview( void )
 {
 	/* "View Action for Heavy"メニューがなくなったらここは削除 */
-	if (cl_gts_gui.menite_quick_action_off->value() != 0) {
+	if (cl_gts_gui.menite_heavy_view_mode_in->value() != 0) {
 		return;
 	}
 

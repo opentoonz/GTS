@@ -301,11 +301,11 @@ void gts_gui::cb_Show(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Show_i(o,v);
 }
 
-void gts_gui::cb_chkbtn_color_trace_real_time_i(Fl_Menu_*, void*) {
+void gts_gui::cb_menite_color_trace_real_time_i(Fl_Menu_*, void*) {
   cl_gts_master.cb_real_time_on_off();
 }
-void gts_gui::cb_chkbtn_color_trace_real_time(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_chkbtn_color_trace_real_time_i(o,v);
+void gts_gui::cb_menite_color_trace_real_time(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_color_trace_real_time_i(o,v);
 }
 
 void gts_gui::cb_Preview2_i(Fl_Menu_*, void*) {
@@ -353,7 +353,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Scanning", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview", 0x40070,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
- {"Preview Trace File", 0x74,  (Fl_Callback*)gts_gui::cb_Preview1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Preview Trace File", 0,  (Fl_Callback*)gts_gui::cb_Preview1, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Save", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Setup", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -391,9 +391,9 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Debug", 0,  0, 0, 80, FL_NORMAL_LABEL, 0, 14, 0},
  {"Show Next Scan", 0,  (Fl_Callback*)gts_gui::cb_Show, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
- {"View Action for Heavy", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Quick Action OFF", 0,  0, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Real Time", 0,  (Fl_Callback*)gts_gui::cb_chkbtn_color_trace_real_time, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"for Heavy View", 0,  0, 0, 80, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Mode In", 0,  0, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Real Time", 0,  (Fl_Callback*)gts_gui::cb_menite_color_trace_real_time, 0, 6, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview Trace File", 0,  (Fl_Callback*)gts_gui::cb_Preview2, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview File", 0,  (Fl_Callback*)gts_gui::cb_Preview3, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"All Trace", 0,  (Fl_Callback*)gts_gui::cb_All1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
@@ -418,8 +418,8 @@ Fl_Menu_Item* gts_gui::menite_edit_hsv_min_max = gts_gui::menu_ + 21;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 22;
 Fl_Menu_Item* gts_gui::menite_wview_main_or_lr_ud = gts_gui::menu_ + 32;
 Fl_Menu_Item* gts_gui::menite_wview_lr_or_ud = gts_gui::menu_ + 33;
-Fl_Menu_Item* gts_gui::menite_quick_action_off = gts_gui::menu_ + 49;
-Fl_Menu_Item* gts_gui::chkbtn_color_trace_real_time = gts_gui::menu_ + 50;
+Fl_Menu_Item* gts_gui::menite_heavy_view_mode_in = gts_gui::menu_ + 49;
+Fl_Menu_Item* gts_gui::menite_color_trace_real_time = gts_gui::menu_ + 50;
 Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 56;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
@@ -1859,11 +1859,11 @@ void gts_gui::cb_chkbtn_color_trace_erase_1dot(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_chkbtn_color_trace_erase_1dot_i(o,v);
 }
 
-void gts_gui::cb_chkbtn_color_trace_real_time___i(Fl_Check_Button*, void*) {
+void gts_gui::cb_menite_color_trace_real_time___i(Fl_Check_Button*, void*) {
   cl_gts_master.cb_real_time_on_off();
 }
-void gts_gui::cb_chkbtn_color_trace_real_time__(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_chkbtn_color_trace_real_time___i(o,v);
+void gts_gui::cb_menite_color_trace_real_time__(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_color_trace_real_time___i(o,v);
 }
 
 void gts_gui::cb_Preview5_i(Fl_Button*, void*) {
@@ -5849,7 +5849,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->end();
     window_pixel_type_and_bright->resizable(window_pixel_type_and_bright);
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_color_trace = new Fl_Double_Window(285, 815, "Color Trace Enhancement");
+  { window_color_trace = new Fl_Double_Window(285, 785, "Color Trace Enhancement");
     window_color_trace->callback((Fl_Callback*)cb_window_color_trace, (void*)(this));
     { Fl_Group* o = new Fl_Group(5, 5, 280, 120);
       { Fl_Text_Display* o = new Fl_Text_Display(5, 10, 0, 0, "1");
@@ -6551,19 +6551,23 @@ Fl_Double_Window* gts_gui::make_window() {
       chkbtn_color_trace_erase_1dot->down_box(FL_DOWN_BOX);
       chkbtn_color_trace_erase_1dot->callback((Fl_Callback*)cb_chkbtn_color_trace_erase_1dot);
     } // Fl_Check_Button* chkbtn_color_trace_erase_1dot
-    { chkbtn_color_trace_real_time__ = new Fl_Check_Button(15, 780, 90, 25, "Real Time");
-      chkbtn_color_trace_real_time__->down_box(FL_DOWN_BOX);
-      chkbtn_color_trace_real_time__->value(1);
-      chkbtn_color_trace_real_time__->callback((Fl_Callback*)cb_chkbtn_color_trace_real_time__);
-    } // Fl_Check_Button* chkbtn_color_trace_real_time__
+    { menite_color_trace_real_time__ = new Fl_Check_Button(15, 780, 90, 25, "Real Time");
+      menite_color_trace_real_time__->down_box(FL_DOWN_BOX);
+      menite_color_trace_real_time__->value(1);
+      menite_color_trace_real_time__->callback((Fl_Callback*)cb_menite_color_trace_real_time__);
+      menite_color_trace_real_time__->hide();
+    } // Fl_Check_Button* menite_color_trace_real_time__
     { Fl_Button* o = new Fl_Button(145, 755, 130, 25, "Preview Trace File");
       o->callback((Fl_Callback*)cb_Preview5);
+      o->hide();
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(115, 785, 85, 25, "Preview File");
       o->callback((Fl_Callback*)cb_Preview6);
+      o->hide();
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(205, 785, 70, 25, "All Trace");
       o->callback((Fl_Callback*)cb_All2);
+      o->hide();
     } // Fl_Button* o
     window_color_trace->set_non_modal();
     window_color_trace->end();

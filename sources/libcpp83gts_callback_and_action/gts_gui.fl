@@ -74,7 +74,7 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label Scanning
+          label Scanning open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
@@ -90,7 +90,7 @@ cl_gts_master.cb_quit();}
           MenuItem {} {
             label {Preview Trace File}
             callback {cl_gts_master.cb_read_and_trace();}
-            xywh {0 0 100 20} shortcut 0x74
+            xywh {0 0 100 20} hide
           }
           MenuItem {} {
             label {Trace Save}
@@ -281,7 +281,7 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label Debug
+          label Debug open
           xywh {0 0 62 20} hide
         } {
           MenuItem {} {
@@ -291,17 +291,17 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label {View Action for Heavy} open
-          xywh {0 0 62 20}
+          label {for Heavy View} open
+          xywh {0 0 62 20} hide
         } {
-          MenuItem menite_quick_action_off {
-            label {Quick Action OFF}
-            xywh {0 0 30 20} type Toggle
+          MenuItem menite_heavy_view_mode_in {
+            label {Mode In}
+            xywh {0 0 30 20} type Toggle divider
           }
-          MenuItem chkbtn_color_trace_real_time {
+          MenuItem menite_color_trace_real_time {
             label {Real Time}
             callback {cl_gts_master.cb_real_time_on_off();}
-            xywh {0 0 30 20} type Toggle
+            xywh {0 0 30 20} type Toggle value 1
           }
           MenuItem {} {
             label {Preview Trace File}
@@ -1123,7 +1123,7 @@ cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();
 cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_edit_hsv_min_max->clear();}
-      xywh {50 50 285 815} type Double non_modal visible
+      xywh {50 50 285 785} type Double non_modal visible
     } {
       Fl_Group {} {
         xywh {5 5 280 120}
@@ -1754,25 +1754,25 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         callback {cl_gts_master.cb_real_time_on_off();}
         xywh {5 755 130 25} down_box DOWN_BOX
       }
-      Fl_Check_Button chkbtn_color_trace_real_time__ {
+      Fl_Check_Button menite_color_trace_real_time__ {
         label {Real Time}
         callback {cl_gts_master.cb_real_time_on_off();}
-        xywh {15 780 90 25} down_box DOWN_BOX value 1
+        xywh {15 780 90 25} down_box DOWN_BOX value 1 hide
       }
       Fl_Button {} {
         label {Preview Trace File}
         callback {cl_gts_master.cb_read_and_trace();}
-        xywh {145 755 130 25}
+        xywh {145 755 130 25} hide
       }
       Fl_Button {} {
         label {Preview File}
         callback {cl_gts_master.cb_read_and_preview();}
-        xywh {115 785 85 25}
+        xywh {115 785 85 25} hide
       }
       Fl_Button {} {
         label {All Trace}
         callback {cl_gts_master.cb_color_trace_full_area();}
-        xywh {205 785 70 25}
+        xywh {205 785 70 25} hide
       }
     }
     Fl_Window window_fnum_list {
