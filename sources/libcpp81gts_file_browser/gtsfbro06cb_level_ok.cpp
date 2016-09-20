@@ -92,6 +92,9 @@ void gtsfbro06cb_level::cb_ok( void )
 		cl_gts_gui.filinp_level_dir->value()
 	);
 
+	/* 画像表示 */
+	cl_gts_master.cb_read_and_trace_and_preview();
+
 	/* levelの終了に伴うx1view windowの閉じでは、
 	表示スイッチをOFFにしない */
 	cl_gts_gui.window_x1view->hide(); /* x1 Window閉じる */

@@ -12,7 +12,7 @@ void gts_master::color_trace_in_view_area( void )
 	}
 
 	/* メニューのリアルタイム指示を確認 */
-	if (0 == cl_gts_gui.chkbtn_color_trace_real_time->value()) {
+	if (0 == cl_gts_gui.menite_color_trace_real_time->value()) {
 		return;
 	}
 
@@ -37,10 +37,8 @@ void gts_master::color_trace_in_view_area( void )
 	case E_WVIEW_TYPE_UD_ONION: return;
 	}
 
-	/* zoom値がとれないか、1/2より小さいときは実行しない */
-	if (	(this->cl_ogl_view.get_l_zoom() < -2) ||
-		(0L == this->cl_ogl_view.get_l_zoom())
-	) {
+	/* zoom値がとれないときは実行しない */
+	if (0L == this->cl_ogl_view.get_l_zoom()) {
 		return;
 	}
 

@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_opengl {
       label GTS
-      callback {cl_gts_master.cb_quit();} open selected
+      callback {cl_gts_master.cb_quit();}
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -90,7 +90,7 @@ cl_gts_master.cb_quit();}
           MenuItem {} {
             label {Preview Trace File}
             callback {cl_gts_master.cb_read_and_trace();}
-            xywh {0 0 100 20} shortcut 0x74
+            xywh {0 0 100 20} hide
           }
           MenuItem {} {
             label {Trace Save}
@@ -99,7 +99,7 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label Setup open
+          label Setup
           xywh {10 10 100 20}
         } {
           MenuItem menite_crop_area_and_rot90 {
@@ -196,6 +196,51 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
+          label View open
+          xywh {10 10 100 20}
+        } {
+          Submenu {} {
+            label Zoom
+            xywh {25 25 100 20}
+          } {
+            MenuItem {} {
+              label x1
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);}
+              xywh {30 30 100 20} shortcut 0x6e
+            }
+            MenuItem {} {
+              label {All Figure}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);}
+              xywh {25 25 100 20} shortcut 0x6d
+            }
+            MenuItem {} {
+              label {zoom In}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);}
+              xywh {30 30 100 20} shortcut 0x7a
+            }
+            MenuItem {} {
+              label {zoom Out}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);}
+              xywh {30 30 100 20} shortcut 0x78
+            }
+          }
+          Submenu {} {
+            label {Color Trace Window} open
+            xywh {20 20 100 20}
+          } {
+            MenuItem menite_wview_main_or_lr_ud {
+              label main_or_lr_ud
+              callback {cl_gts_master.cb_change_wview_main_or_lr_ud();}
+              xywh {20 20 100 20} type Toggle shortcut 0xffc8
+            }
+            MenuItem menite_wview_lr_or_ud {
+              label lr_or_ud
+              callback {cl_gts_master.cb_change_wview_lr_or_ud();}
+              xywh {20 20 100 20} type Toggle shortcut 0xffc9
+            }
+          }
+        }
+        Submenu {} {
           label Channels
           xywh {0 0 100 20} hide
         } {
@@ -236,52 +281,46 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label View open
-          xywh {10 10 100 20}
+          label Debug open
+          xywh {0 0 62 20} hide
         } {
-          Submenu {} {
-            label Zoom open
-            xywh {25 25 100 20}
-          } {
-            MenuItem {} {
-              label x1
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);}
-              xywh {30 30 100 20} shortcut 0x6e
-            }
-            MenuItem {} {
-              label {All Figure}
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);}
-              xywh {25 25 100 20} shortcut 0x6d
-            }
-            MenuItem {} {
-              label {zoom In}
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);}
-              xywh {30 30 100 20} shortcut 0x7a
-            }
-            MenuItem {} {
-              label {zoom Out}
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);}
-              xywh {30 30 100 20} shortcut 0x78
-            }
-          }
-          Submenu {} {
-            label {Color Trace Window} open
-            xywh {20 20 100 20}
-          } {
-            MenuItem {} {
-              label main_to_lr_to_sub
-              callback {cl_gts_master.cb_change_view_main_or_lr_or_sub();}
-              xywh {20 20 100 20} shortcut 0xffc8
-            }
-            MenuItem {} {
-              label lr_to_ud
-              callback {cl_gts_master.cb_change_view_lr_or_ud();}
-              xywh {20 20 100 20} shortcut 0xffc9
-            }
+          MenuItem {} {
+            label {Show Next Scan}
+            callback {cl_gts_gui.window_next_scan->show();}
+            xywh {0 0 30 20}
           }
         }
         Submenu {} {
-          label Help open
+          label {for Heavy View} open
+          xywh {0 0 62 20} hide
+        } {
+          MenuItem menite_heavy_view_mode_in {
+            label {Mode In}
+            xywh {0 0 30 20} type Toggle divider
+          }
+          MenuItem menite_color_trace_real_time {
+            label {Real Time}
+            callback {cl_gts_master.cb_real_time_on_off();}
+            xywh {0 0 30 20} type Toggle value 1
+          }
+          MenuItem {} {
+            label {Preview Trace File}
+            callback {cl_gts_master.cb_read_and_trace();}
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label {Preview File}
+            callback {cl_gts_master.cb_read_and_preview();}
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label {All Trace}
+            callback {cl_gts_master.cb_color_trace_full_area();}
+            xywh {0 0 30 20}
+          }
+        }
+        Submenu {} {
+          label Help
           xywh {0 0 62 20}
         } {
           MenuItem menite_help_about {
@@ -293,16 +332,6 @@ ost
 << "Date " << cl_gts_master.cp_release_date()
 ;
 fl_message( ost.str().c_str() );}
-            xywh {0 0 30 20}
-          }
-        }
-        Submenu {} {
-          label Debug
-          xywh {0 0 62 20} hide
-        } {
-          MenuItem {} {
-            label {Show Next Scan}
-            callback {cl_gts_gui.window_next_scan->show();}
             xywh {0 0 30 20}
           }
         }
@@ -1094,9 +1123,9 @@ cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();
 cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_edit_hsv_min_max->clear();}
-      xywh {50 50 285 815} type Double non_modal visible
+      xywh {50 50 285 785} type Double non_modal visible
     } {
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {5 5 280 120}
       } {
         Fl_Text_Display {} {
@@ -1200,7 +1229,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           }
         }
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {5 130 280 120}
       } {
         Fl_Text_Display {} {
@@ -1304,7 +1333,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           }
         }
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {5 255 280 120}
       } {
         Fl_Text_Display {} {
@@ -1408,7 +1437,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           }
         }
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {5 380 280 120}
       } {
         Fl_Text_Display {} {
@@ -1512,7 +1541,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           }
         }
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {5 505 280 120}
       } {
         Fl_Text_Display {} {
@@ -1616,7 +1645,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
           }
         }
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {5 630 280 120}
       } {
         Fl_Text_Display {} {
@@ -1725,25 +1754,25 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         callback {cl_gts_master.cb_real_time_on_off();}
         xywh {5 755 130 25} down_box DOWN_BOX
       }
-      Fl_Check_Button chkbtn_color_trace_real_time {
+      Fl_Check_Button menite_color_trace_real_time__ {
         label {Real Time}
         callback {cl_gts_master.cb_real_time_on_off();}
-        xywh {15 780 90 25} down_box DOWN_BOX value 1
+        xywh {15 780 90 25} down_box DOWN_BOX value 1 hide
       }
       Fl_Button {} {
         label {Preview Trace File}
         callback {cl_gts_master.cb_read_and_trace();}
-        xywh {145 755 130 25}
+        xywh {145 755 130 25} hide
       }
       Fl_Button {} {
         label {Preview File}
         callback {cl_gts_master.cb_read_and_preview();}
-        xywh {115 785 85 25}
+        xywh {115 785 85 25} hide
       }
       Fl_Button {} {
         label {All Trace}
         callback {cl_gts_master.cb_color_trace_full_area();}
-        xywh {205 785 70 25}
+        xywh {205 785 70 25} hide
       }
     }
     Fl_Window window_fnum_list {
@@ -1779,6 +1808,7 @@ cl_gts_gui.menite_fnum_list->clear();}
         xywh {0 50 116 25}
       }
       Fl_Browser selbro_fnum_list {
+        callback {cl_gts_master.cb_read_and_trace_and_preview();}
         xywh {0 75 116 275} type Multi resizable
       }
     }

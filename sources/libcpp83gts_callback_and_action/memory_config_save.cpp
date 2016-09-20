@@ -288,7 +288,7 @@ int memory_config::_save_trace_by_fp( FILE *fp )
 
 	i_ret = fprintf(fp, "%-24s %s\n",
 			this->str_color_trace_real_time_,
-			cl_gts_gui.chkbtn_color_trace_real_time->value()?
+			cl_gts_gui.menite_color_trace_real_time->value()?
 			this->str_on_:this->str_off_);
 	if (i_ret < 0) { return NG; }
 
