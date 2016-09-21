@@ -40,6 +40,7 @@ std::cout
 	<< std::endl;
 
 	/* 取り込むサイズのどれかがゼロ値の時は、最大値をセットする */ 
+/******
 	if (
 		(cl_gts_gui.valinp_area_x_size->value() <= 0.0) ||
 		(cl_gts_gui.valinp_area_y_size->value() <= 0.0)
@@ -49,13 +50,14 @@ std::cout
 		cl_gts_gui.valinp_area_x_size->value(d_maxcm_w);
 		cl_gts_gui.valinp_area_y_size->value(d_maxcm_h);
 	}
+**********/
 
 	/* メニューに設定 */
 	cl_gts_gui.valout_scanner_width_max->value(d_maxcm_w);
 	cl_gts_gui.valout_scanner_height_max->value(d_maxcm_h);
 }
 
-void gts_master::_iipg_scan_get_from_gui( void )
+void gts_master::_iipg_scan_get_from_gui( const bool full_area_sw )
 {
 	double	d_cm_x,d_cm_y,d_cm_w,d_cm_h;
 
@@ -70,19 +72,46 @@ std::cout
 	<<       " H=" << cl_gts_gui.valout_scanner_height_max->value()
 	<< std::endl;
 
-	this->__area_rot90_d_pos_and_size(
-		-cl_gts_gui.choice_rot90->value(),/* マイナス回転 */
-		cl_gts_gui.valinp_area_x_pos->value(),
-		cl_gts_gui.valinp_area_y_pos->value(),
-		cl_gts_gui.valinp_area_x_size->value(),
-		cl_gts_gui.valinp_area_y_size->value(),
-		cl_gts_gui.valout_scanner_width_max->value(),
-		cl_gts_gui.valout_scanner_height_max->value(),
-		&d_cm_x,
-		&d_cm_y,
-		&d_cm_w,
-		&d_cm_h
-	);
+	if (full_area_sw) {
+		double	d_maxcm_w,d_maxcm_h;
+		/* スキャナーからメニューに設定する最大広さ値を得る */
+		this->__area_rot90_size(
+			cl_gts_gui.choice_rot90->value(),
+ 			this->cl_iip_scan.d_physical_width(),
+ 			this->cl_iip_scan.d_physical_height(),
+			&d_maxcm_w,
+			&d_maxcm_h
+		);
+		/* メニュー値からスキャナーへ渡す値を得る */
+		this->__area_rot90_d_pos_and_size(
+			-cl_gts_gui.choice_rot90->value()/* マイナス回転 */
+			,0.0
+			,0.0
+			,d_maxcm_w
+			,d_maxcm_h
+			,d_maxcm_w
+			,d_maxcm_h
+			,&d_cm_x
+			,&d_cm_y
+			,&d_cm_w
+			,&d_cm_h
+		);
+	}
+	else {
+		this->__area_rot90_d_pos_and_size(
+			-cl_gts_gui.choice_rot90->value()/* マイナス回転 */
+			,cl_gts_gui.valinp_area_x_pos->value()
+			,cl_gts_gui.valinp_area_y_pos->value()
+			,cl_gts_gui.valinp_area_x_size->value()
+			,cl_gts_gui.valinp_area_y_size->value()
+			,cl_gts_gui.valout_scanner_width_max->value()
+			,cl_gts_gui.valout_scanner_height_max->value()
+			,&d_cm_x
+			,&d_cm_y
+			,&d_cm_w
+			,&d_cm_h
+		);
+	}
 
 std::cout
 	<< "Scan\n"
@@ -154,7 +183,7 @@ std::cout
 	);***/
 }
 
-int gts_master::_iipg_scan_action( void )
+int gts_master::_iipg_scan_action( const bool full_area_sw )
 {
 	/* スキャナーに対して、スキャンの単位を一番始めに設定 */
 	if (OK != this->cl_iip_scan.setup_unit()) {
@@ -174,7 +203,7 @@ int gts_master::_iipg_scan_action( void )
 	this->_iipg_scan_set_physical_param();
 
 	/* メニューの(スキャン動作)情報を取って来て... */
-	this->_iipg_scan_get_from_gui();
+	this->_iipg_scan_get_from_gui( full_area_sw );
 
 	/* ...スキャナーへ送る */
 	if (OK != this->cl_iip_scan.setup_action()) {
@@ -203,7 +232,7 @@ int gts_master::_iipg_scan_action( void )
 
 /*---------------------------------------------------------*/
 
-iip_canvas *gts_master::_iipg_scan( void )
+iip_canvas *gts_master::_iipg_scan( const bool full_area_sw )
 {
 	int	i_ret;
 
@@ -217,7 +246,7 @@ iip_canvas *gts_master::_iipg_scan( void )
 	}
 
 	i_ret = OK;
-	if (OK != this->_iipg_scan_action()) {
+	if (OK != this->_iipg_scan_action( full_area_sw )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_scan_action(-) returns NG.");
 		/* ここでエラーがおきてもclose()はやる */
