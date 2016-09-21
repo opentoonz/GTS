@@ -228,15 +228,45 @@ cl_gts_master.cb_quit();}
             label {Color Trace Window} open
             xywh {20 20 100 20}
           } {
-            MenuItem menite_wview_main_or_lr_ud {
-              label main_or_lr_ud
-              callback {cl_gts_master.cb_change_wview_main_or_lr_ud();}
-              xywh {20 20 100 20} type Toggle shortcut 0xffc8
+            MenuItem menite_wview_main {
+              label ScanImage
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_main();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio value 1
             }
-            MenuItem menite_wview_lr_or_ud {
-              label lr_or_ud
-              callback {cl_gts_master.cb_change_wview_lr_or_ud();}
-              xywh {20 20 100 20} type Toggle shortcut 0xffc9
+            MenuItem menite_wview_sub {
+              label TraceImage
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_sub();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio
+            }
+            MenuItem menite_wview_lr {
+              label LeftRight
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_lr();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio
+            }
+            MenuItem menite_wview_ud {
+              label UpDown
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_ud();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio
             }
           }
         }

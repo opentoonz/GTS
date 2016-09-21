@@ -231,18 +231,52 @@ void gts_gui::cb_zoom1(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_zoom1_i(o,v);
 }
 
-void gts_gui::cb_menite_wview_main_or_lr_ud_i(Fl_Menu_*, void*) {
-  cl_gts_master.cb_change_wview_main_or_lr_ud();
+void gts_gui::cb_menite_wview_main_i(Fl_Menu_*, void*) {
+  if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_main();
 }
-void gts_gui::cb_menite_wview_main_or_lr_ud(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_wview_main_or_lr_ud_i(o,v);
+else {
+	menite_wview_main->setonly();
+};
+}
+void gts_gui::cb_menite_wview_main(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_wview_main_i(o,v);
 }
 
-void gts_gui::cb_menite_wview_lr_or_ud_i(Fl_Menu_*, void*) {
-  cl_gts_master.cb_change_wview_lr_or_ud();
+void gts_gui::cb_menite_wview_sub_i(Fl_Menu_*, void*) {
+  if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_sub();
 }
-void gts_gui::cb_menite_wview_lr_or_ud(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_wview_lr_or_ud_i(o,v);
+else {
+	menite_wview_main->setonly();
+};
+}
+void gts_gui::cb_menite_wview_sub(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_wview_sub_i(o,v);
+}
+
+void gts_gui::cb_menite_wview_lr_i(Fl_Menu_*, void*) {
+  if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_lr();
+}
+else {
+	menite_wview_main->setonly();
+};
+}
+void gts_gui::cb_menite_wview_lr(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_wview_lr_i(o,v);
+}
+
+void gts_gui::cb_menite_wview_ud_i(Fl_Menu_*, void*) {
+  if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_ud();
+}
+else {
+	menite_wview_main->setonly();
+};
+}
+void gts_gui::cb_menite_wview_ud(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_wview_ud_i(o,v);
 }
 
 void gts_gui::cb_FullColor_i(Fl_Menu_*, void*) {
@@ -375,8 +409,10 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"zoom Out", 0x78,  (Fl_Callback*)gts_gui::cb_zoom1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Color Trace Window", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"main_or_lr_ud", 0xffc8,  (Fl_Callback*)gts_gui::cb_menite_wview_main_or_lr_ud, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"lr_or_ud", 0xffc9,  (Fl_Callback*)gts_gui::cb_menite_wview_lr_or_ud, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"ScanImage", 0,  (Fl_Callback*)gts_gui::cb_menite_wview_main, 0, 12, FL_NORMAL_LABEL, 0, 14, 0},
+ {"TraceImage", 0,  (Fl_Callback*)gts_gui::cb_menite_wview_sub, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
+ {"LeftRight", 0,  (Fl_Callback*)gts_gui::cb_menite_wview_lr, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
+ {"UpDown", 0,  (Fl_Callback*)gts_gui::cb_menite_wview_ud, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0},
  {"Channels", 0,  0, 0, 80, FL_NORMAL_LABEL, 0, 14, 0},
@@ -416,11 +452,13 @@ Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 19;
 Fl_Menu_Item* gts_gui::menite_edit_color = gts_gui::menu_ + 20;
 Fl_Menu_Item* gts_gui::menite_edit_hsv_min_max = gts_gui::menu_ + 21;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 22;
-Fl_Menu_Item* gts_gui::menite_wview_main_or_lr_ud = gts_gui::menu_ + 32;
-Fl_Menu_Item* gts_gui::menite_wview_lr_or_ud = gts_gui::menu_ + 33;
-Fl_Menu_Item* gts_gui::menite_heavy_view_mode_in = gts_gui::menu_ + 49;
-Fl_Menu_Item* gts_gui::menite_color_trace_real_time = gts_gui::menu_ + 50;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 56;
+Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 32;
+Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 33;
+Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 34;
+Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 35;
+Fl_Menu_Item* gts_gui::menite_heavy_view_mode_in = gts_gui::menu_ + 51;
+Fl_Menu_Item* gts_gui::menite_color_trace_real_time = gts_gui::menu_ + 52;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 58;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );

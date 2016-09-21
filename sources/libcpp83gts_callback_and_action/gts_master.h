@@ -112,9 +112,13 @@ public:
 	void cb_color_trace_src_limit_aa( void );
 	void cb_color_trace_src_limit_bb( void );
 
-	void cb_change_wview_main_or_lr_ud( void );
-	void cb_change_wview_lr_or_ud( void );
 	void cb_real_time_on_off( void );
+
+	bool check_change_wview( void );
+	void cb_change_wview_main( void );
+	void cb_change_wview_sub( void );
+	void cb_change_wview_lr( void );
+	void cb_change_wview_ud( void );
 
 	void cb_trace_batch_add( void );
 	void cb_trace_batch_alladd( void );
@@ -297,8 +301,9 @@ private:
 	void _change_view_main( void );
 
 	int next_scan_and_save_( void );
-
 	int read_and_save_crnt_( void );
+
+	void cb_change_wview_( E_WVIEW_TYPE wview_type );
 };
 extern gts_master cl_gts_master;
 

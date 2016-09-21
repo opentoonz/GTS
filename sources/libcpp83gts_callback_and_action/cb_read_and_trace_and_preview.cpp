@@ -6,7 +6,7 @@
 
 void gts_master::cb_read_and_trace_and_preview( void )
 {
-	/* "View Action for Heavy"メニューがなくなったらここは削除 */
+	/* Legacy:"View Action for Heavy"メニューがなくなったらここは削除 */
 	if (cl_gts_gui.menite_heavy_view_mode_in->value() != 0) {
 		return;
 	}
@@ -133,20 +133,20 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	/* 分割表示とメイン表示の切替 */
 	if (3L <= this->cl_iip_read.get_l_channels()) {
 	 if (before_channels< 3L) {/* 以前はRGB以外の画像だったら表示切替 */
-		cl_gts_gui.menite_wview_main_or_lr_ud->set();/* ON(lr/ud) */
-		if (cl_gts_gui.menite_wview_lr_or_ud->value()==0) {
-			this->_wview_lr_parallel();
-		}
-		else {
-			this->_wview_ud_parallel();
-		}
+		/* 左右分割表示 */
+		this->_wview_lr_parallel();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_lr->setonly();
 	 }
 	}
 	/* BW,Grayscale画像のときは */
 	else {
-		cl_gts_gui.menite_wview_main_or_lr_ud->clear();/* OFF(main) */
-		/* メインのみ画面表示 */
+		/* メイン画像のみ表示 */
 		this->_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
 	}
 
 	/* 表示 */
@@ -161,3 +161,4 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		cl_gts_gui.window_hab_histogram->redraw();
 	}
 }
+

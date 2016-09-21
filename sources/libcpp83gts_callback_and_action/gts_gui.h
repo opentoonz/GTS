@@ -119,15 +119,25 @@ private:
   inline void cb_zoom1_i(Fl_Menu_*, void*);
   static void cb_zoom1(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_wview_main_or_lr_ud;
+  static Fl_Menu_Item *menite_wview_main;
 private:
-  inline void cb_menite_wview_main_or_lr_ud_i(Fl_Menu_*, void*);
-  static void cb_menite_wview_main_or_lr_ud(Fl_Menu_*, void*);
+  inline void cb_menite_wview_main_i(Fl_Menu_*, void*);
+  static void cb_menite_wview_main(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_wview_lr_or_ud;
+  static Fl_Menu_Item *menite_wview_sub;
 private:
-  inline void cb_menite_wview_lr_or_ud_i(Fl_Menu_*, void*);
-  static void cb_menite_wview_lr_or_ud(Fl_Menu_*, void*);
+  inline void cb_menite_wview_sub_i(Fl_Menu_*, void*);
+  static void cb_menite_wview_sub(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_wview_lr;
+private:
+  inline void cb_menite_wview_lr_i(Fl_Menu_*, void*);
+  static void cb_menite_wview_lr(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_wview_ud;
+private:
+  inline void cb_menite_wview_ud_i(Fl_Menu_*, void*);
+  static void cb_menite_wview_ud(Fl_Menu_*, void*);
   inline void cb_FullColor_i(Fl_Menu_*, void*);
   static void cb_FullColor(Fl_Menu_*, void*);
   inline void cb_Red_i(Fl_Menu_*, void*);
