@@ -6,7 +6,7 @@
 
 void gts_master::cb_read_and_trace_and_preview( void )
 {
-	/* Legacy:"View Action for Heavy"メニューがなくなったらここは削除 */
+	/* 画像が大きくて処理が重いときのため。将来は削除したい */
 	if (cl_gts_gui.menite_heavy_view_mode_in->value() != 0) {
 		return;
 	}
@@ -66,7 +66,17 @@ void gts_master::cb_read_and_trace_and_preview( void )
 			,this->cl_bro_level.cp_filepath_full(crnt_file_num)
 			,this->cl_bro_level.cp_filepath( crnt_file_num )
 		);
-/* 画面は空白表示するべき */
+
+		/* 画面は空白表示する指定(データは残っている) */
+		cl_gts_master.cl_ogl_view.no_view_canvas();
+		/* 画面クリア設定 */
+		cl_gts_master.cl_ogl_view.clear_opengl(
+			cl_gts_gui.opengl_view->w(),
+			cl_gts_gui.opengl_view->h()
+		);
+		/* 画面クリア */
+		cl_gts_gui.opengl_view->flush();
+
 		return;
 	}
 

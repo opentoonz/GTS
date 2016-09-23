@@ -26,15 +26,15 @@ void gts_master::color_trace_in_view_area( void )
 		return;
 	}
 
-	/* 分割画面でなければなにもしない */
+	/* 2値化画像表示でなければなにもしない */
 	switch (this->cl_ogl_view.get_e_wview_type()) {
-	case E_WVIEW_TYPE_NOTHING: return;
-	case E_WVIEW_TYPE_MAIN: return;
-	case E_WVIEW_TYPE_SUB: return;
-	case E_WVIEW_TYPE_LR_PARALLEL: break;
-	case E_WVIEW_TYPE_LR_ONION: return;
-	case E_WVIEW_TYPE_UD_PARALLEL: break;
-	case E_WVIEW_TYPE_UD_ONION: return;
+	case E_WVIEW_TYPE_NOTHING:	return;
+	case E_WVIEW_TYPE_MAIN:		return;
+	case E_WVIEW_TYPE_SUB:		break;
+	case E_WVIEW_TYPE_LR_PARALLEL:	break;
+	case E_WVIEW_TYPE_LR_ONION:	return;
+	case E_WVIEW_TYPE_UD_PARALLEL:	break;
+	case E_WVIEW_TYPE_UD_ONION:	return;
 	}
 
 	/* zoom値がとれないときは実行しない */

@@ -98,15 +98,15 @@ private:
   inline void cb_menite_thickness_i(Fl_Menu_*, void*);
   static void cb_menite_thickness(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_edit_color;
-private:
-  inline void cb_menite_edit_color_i(Fl_Menu_*, void*);
-  static void cb_menite_edit_color(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_edit_hsv_min_max;
 private:
   inline void cb_menite_edit_hsv_min_max_i(Fl_Menu_*, void*);
   static void cb_menite_edit_hsv_min_max(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_edit_color;
+private:
+  inline void cb_menite_edit_color_i(Fl_Menu_*, void*);
+  static void cb_menite_edit_color(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
@@ -1235,41 +1235,6 @@ private:
   inline void cb_valinp_thickness_06_i(Fl_Value_Input*, void*);
   static void cb_valinp_thickness_06(Fl_Value_Input*, void*);
 public:
-  Fl_Double_Window *window_edit_color;
-private:
-  inline void cb_window_edit_color_i(Fl_Double_Window*, void*);
-  static void cb_window_edit_color(Fl_Double_Window*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_red;
-private:
-  inline void cb_scrbar_edit_color_red_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_red(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_red;
-private:
-  inline void cb_valinp_edit_color_red_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_red(Fl_Value_Input*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_gre;
-private:
-  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_gre;
-private:
-  inline void cb_valinp_edit_color_gre_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_gre(Fl_Value_Input*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_blu;
-private:
-  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_blu;
-private:
-  inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
-public:
   Fl_Double_Window *window_hab_histogram;
 private:
   inline void cb_window_hab_histogram_i(Fl_Double_Window*, void*);
@@ -1352,6 +1317,41 @@ private:
   static void cb_Average2(Fl_Button*, void*);
   inline void cb_Color2_i(Fl_Light_Button*, void*);
   static void cb_Color2(Fl_Light_Button*, void*);
+public:
+  Fl_Double_Window *window_edit_color;
+private:
+  inline void cb_window_edit_color_i(Fl_Double_Window*, void*);
+  static void cb_window_edit_color(Fl_Double_Window*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_red;
+private:
+  inline void cb_scrbar_edit_color_red_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_red(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_edit_color_red;
+private:
+  inline void cb_valinp_edit_color_red_i(Fl_Value_Input*, void*);
+  static void cb_valinp_edit_color_red(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_gre;
+private:
+  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_edit_color_gre;
+private:
+  inline void cb_valinp_edit_color_gre_i(Fl_Value_Input*, void*);
+  static void cb_valinp_edit_color_gre(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_edit_color_blu;
+private:
+  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_edit_color_blu;
+private:
+  inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
+  static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

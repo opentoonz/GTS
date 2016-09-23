@@ -11,6 +11,8 @@ void iip_opengl_l3event::all_view( void )
 		{	    this->_clp_main->all_view(); }
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->all_view(); }
 		if (NULL != this->_clp_sub)
 		{	    this->_clp_sub->all_view(); }
 		break;
@@ -39,6 +41,8 @@ void iip_opengl_l3event::scroll_center( void )
 		{	    this->_clp_main->scroll_center(); }
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->scroll_center(); }
 		if (NULL != this->_clp_sub)
 		{	    this->_clp_sub->scroll_center(); }
 		break;
@@ -67,6 +71,8 @@ void iip_opengl_l3event::zoom_twice_at_center( void )
 		{	    this->_clp_main->zoom_twice_at_center(); }
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_twice_at_center(); }
 		if (NULL != this->_clp_sub)
 		{	    this->_clp_sub->zoom_twice_at_center(); }
 		break;
@@ -93,6 +99,8 @@ void iip_opengl_l3event::zoom_half_at_center( void )
 		{	    this->_clp_main->zoom_half_at_center(); }
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_half_at_center(); }
 		if (NULL != this->_clp_sub)
 		{	    this->_clp_sub->zoom_half_at_center(); }
 		break;
@@ -120,6 +128,8 @@ void iip_opengl_l3event::zoom_up_at_center( void )
 		{	    this->_clp_main->zoom_up_at_center(); }
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_up_at_center(); }
 		if (NULL != this->_clp_sub)
 		{	    this->_clp_sub->zoom_up_at_center(); }
 		break;
@@ -146,6 +156,8 @@ void iip_opengl_l3event::zoom_down_at_center( void )
 		{	    this->_clp_main->zoom_down_at_center(); }
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_down_at_center(); }
 		if (NULL != this->_clp_sub)
 		{	    this->_clp_sub->zoom_down_at_center(); }
 		break;
@@ -172,6 +184,8 @@ void iip_opengl_l3event::zoom_num( long l_zoom )
 		{	    this->_clp_main->zoom_num(l_zoom);}
 		break;
 	case E_WVIEW_TYPE_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_num(l_zoom);}
 		if (NULL != this->_clp_sub )
 		{	    this->_clp_sub->zoom_num(l_zoom);}
 		break;
@@ -293,7 +307,8 @@ void iip_opengl_l3event::zoom_twice_at_pos( long l_x, long l_y )
 	case E_WVIEW_AREA_EXCEPT: break;
 	case E_WVIEW_AREA_MAIN:
 		if (NULL != this->_clp_main)
-		{	    this->_clp_main->zoom_twice_at_pos(l_x,l_y);}
+		{	    this->_clp_main->zoom_twice_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_main)
 		&&  (NULL != this->_clp_sub)) {
 			this->_set_pos_and_zoom_from_main_to_sub();
@@ -301,8 +316,12 @@ void iip_opengl_l3event::zoom_twice_at_pos( long l_x, long l_y )
 		break;
 	case E_WVIEW_AREA_SEPARATOR: break;
 	case E_WVIEW_AREA_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_twice_at_pos(l_x,l_y);
+		}
 		if (NULL != this->_clp_sub)
-		{	    this->_clp_sub->zoom_twice_at_pos(l_x,l_y);}
+		{	    this->_clp_sub->zoom_twice_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_sub)
 		&&  (NULL != this->_clp_main)) {
 			this->_set_pos_and_zoom_from_sub_to_main();
@@ -319,7 +338,8 @@ void iip_opengl_l3event::zoom_half_at_pos( long l_x, long l_y )
 	case E_WVIEW_AREA_EXCEPT: break;
 	case E_WVIEW_AREA_MAIN:
 		if (NULL != this->_clp_main)
-		{	    this->_clp_main->zoom_half_at_pos(l_x,l_y);}
+		{	    this->_clp_main->zoom_half_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_main)
 		&&  (NULL != this->_clp_sub)) {
 			this->_set_pos_and_zoom_from_main_to_sub();
@@ -327,8 +347,12 @@ void iip_opengl_l3event::zoom_half_at_pos( long l_x, long l_y )
 		break;
 	case E_WVIEW_AREA_SEPARATOR: break;
 	case E_WVIEW_AREA_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_half_at_pos(l_x,l_y);
+		}
 		if (NULL != this->_clp_sub)
-		{	    this->_clp_sub->zoom_half_at_pos(l_x,l_y);}
+		{	    this->_clp_sub->zoom_half_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_sub)
 		&&  (NULL != this->_clp_main)) {
 			this->_set_pos_and_zoom_from_sub_to_main();
@@ -345,7 +369,8 @@ void iip_opengl_l3event::zoom_up_at_pos( long l_x, long l_y )
 	case E_WVIEW_AREA_EXCEPT: break;
 	case E_WVIEW_AREA_MAIN:
 		if (NULL != this->_clp_main)
-		{	    this->_clp_main->zoom_up_at_pos(l_x,l_y);}
+		{	    this->_clp_main->zoom_up_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_main)
 		&&  (NULL != this->_clp_sub)) {
 			this->_set_pos_and_zoom_from_main_to_sub();
@@ -353,8 +378,12 @@ void iip_opengl_l3event::zoom_up_at_pos( long l_x, long l_y )
 		break;
 	case E_WVIEW_AREA_SEPARATOR: break;
 	case E_WVIEW_AREA_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_up_at_pos(l_x,l_y);
+		}
 		if (NULL != this->_clp_sub)
-		{	    this->_clp_sub->zoom_up_at_pos(l_x,l_y);}
+		{	    this->_clp_sub->zoom_up_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_sub)
 		&&  (NULL != this->_clp_main)) {
 			this->_set_pos_and_zoom_from_sub_to_main();
@@ -371,7 +400,8 @@ void iip_opengl_l3event::zoom_down_at_pos( long l_x, long l_y )
 	case E_WVIEW_AREA_EXCEPT: break;
 	case E_WVIEW_AREA_MAIN:
 		if (NULL != this->_clp_main)
-		{	    this->_clp_main->zoom_down_at_pos(l_x,l_y);}
+		{	    this->_clp_main->zoom_down_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_main)
 		&&  (NULL != this->_clp_sub)) {
 			this->_set_pos_and_zoom_from_main_to_sub();
@@ -379,8 +409,12 @@ void iip_opengl_l3event::zoom_down_at_pos( long l_x, long l_y )
 		break;
 	case E_WVIEW_AREA_SEPARATOR: break;
 	case E_WVIEW_AREA_SUB:
+		if (NULL != this->_clp_main)
+		{	    this->_clp_main->zoom_down_at_pos(l_x,l_y);
+		}
 		if (NULL != this->_clp_sub)
-		{	    this->_clp_sub->zoom_down_at_pos(l_x,l_y);}
+		{	    this->_clp_sub->zoom_down_at_pos(l_x,l_y);
+		}
 		if ((NULL != this->_clp_sub)
 		&&  (NULL != this->_clp_main)) {
 			this->_set_pos_and_zoom_from_sub_to_main();
