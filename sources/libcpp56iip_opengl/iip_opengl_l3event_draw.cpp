@@ -37,16 +37,13 @@ void iip_opengl_l3event::reshape_opengl( long l_view_xs, long l_view_ys )
 	case E_WVIEW_TYPE_NOTHING:
 		break;
 	case E_WVIEW_TYPE_MAIN:
-		this->_cl_all.reshape_opengl(
-			0,0, l_view_xs,l_view_ys);
-		this->_clp_main->reshape_opengl(
-			0,0, l_view_xs,l_view_ys);
+		this->_cl_all.reshape_opengl(    0,0, l_view_xs,l_view_ys );
+		this->_clp_main->reshape_opengl( 0,0, l_view_xs,l_view_ys );
 		break;
 	case E_WVIEW_TYPE_SUB:
-		this->_cl_all.reshape_opengl(
-			0,0, l_view_xs,l_view_ys);
-		this->_clp_sub->reshape_opengl(
-			0,0, l_view_xs,l_view_ys);
+		this->_cl_all.reshape_opengl(    0,0, l_view_xs,l_view_ys );
+		this->_clp_sub->reshape_opengl(  0,0, l_view_xs,l_view_ys );
+		this->_clp_main->reshape_opengl( 0,0, l_view_xs,l_view_ys );
 		break;
 
 	/* 左右分割 */
@@ -125,7 +122,11 @@ void iip_opengl_l3event::draw_opengl( void )
 		this->_clp_main->draw_opengl();
 		break;
 	case E_WVIEW_TYPE_SUB:
-		this->_clp_sub->draw_opengl();
+		if (this->is_clicked_mouse_middle_button_) {
+		 this->_clp_main->draw_opengl();
+		} else {
+		 this->_clp_sub->draw_opengl();
+		}
 		break;
 
 	/* 左右分割 */

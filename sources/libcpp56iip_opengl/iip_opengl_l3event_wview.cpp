@@ -133,11 +133,26 @@ void iip_opengl_l3event::_wview( E_WVIEW_TYPE e_type )
 		case E_WVIEW_TYPE_MAIN:
 			this->_clp_main =
 				&(this->_cl_unt_view[0].cl_iip_view);
+/*
+この内容だとE_WVIEW_TYPE_SUBにしたときsub画像がscrollしてない
+scroll値をsubにもセットしておくため、表示はしないが画像セットしておく
+記録としてまだここ残す 2016-09-21
 			this->_clp_sub = NULL;
+*/
+			this->_clp_sub =
+				&(this->_cl_unt_view[1].cl_iip_view);
 			this->_e_wview_type = e_type;
 			break;
 		case E_WVIEW_TYPE_SUB:
+/*
+この内容だと表示しない
+記録としてまだここ残す 2016-09-21
 			this->_clp_main = NULL;
+			this->_clp_sub =
+				&(this->_cl_unt_view[1].cl_iip_view);
+*/
+			this->_clp_main =
+				&(this->_cl_unt_view[0].cl_iip_view);
 			this->_clp_sub =
 				&(this->_cl_unt_view[1].cl_iip_view);
 			this->_e_wview_type = e_type;

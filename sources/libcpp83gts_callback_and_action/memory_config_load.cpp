@@ -614,14 +614,15 @@ int memory_config::load( const char *cp_file_path, int i_load_trace_batch_sw )
 	/* add 2013-09-25 level名からfileが上書きなら注意表示 */
 	cl_gts_master.cl_bro_level.cb_level_name();
 
-	/* 表示を切る(データは残っている) */
+	/* 画面は空白表示する指定(データは残っている) */
 	cl_gts_master.cl_ogl_view.no_view_canvas();
-
-	/* 画面クリア */
+	/* 画面クリア設定 */
 	cl_gts_master.cl_ogl_view.clear_opengl(
 		cl_gts_gui.opengl_view->w(),
 		cl_gts_gui.opengl_view->h()
 	);
+	/* 画面クリア */
+	cl_gts_gui.opengl_view->flush();
 
 	/* 画像表示 */
 	cl_gts_master.cb_read_and_trace_and_preview();

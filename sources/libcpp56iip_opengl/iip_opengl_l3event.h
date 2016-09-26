@@ -138,7 +138,7 @@ public:
 	{
 		this->_clp_main = NULL;
 		this->_clp_sub = NULL;
-		this->_e_wview_type = E_WVIEW_TYPE_NOTHING;
+		//this->_e_wview_type = E_WVIEW_TYPE_NOTHING;
 	}
 
 	/* 切抜き編集情報 */

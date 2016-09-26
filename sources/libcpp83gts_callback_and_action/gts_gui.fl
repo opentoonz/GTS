@@ -99,7 +99,7 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label Setup
+          label Setup open
           xywh {10 10 100 20}
         } {
           MenuItem menite_crop_area_and_rot90 {
@@ -110,7 +110,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_crop_area_and_rot90->hide();
 }}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc2
+            xywh {5 5 100 20} type Toggle shortcut 0xffc0
           }
           MenuItem menite_pixel_type_and_bright {
             label {Pixel Type and Bright...}
@@ -120,7 +120,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_pixel_type_and_bright->hide();
 }}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc3
+            xywh {5 5 100 20} type Toggle shortcut 0xffc1
           }
           MenuItem menite_fnum_list {
             label {File Number ...}
@@ -130,7 +130,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_fnum_list->hide();
 }}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc7 divider
+            xywh {5 5 100 20} type Toggle shortcut 0xffc2 divider
           }
           MenuItem menite_color_trace {
             label {Color Trace Enhancement...}
@@ -144,7 +144,7 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_hab_histogram->hide();
     cl_gts_gui.menite_edit_hsv_min_max->clear();
 }}
-            xywh {0 0 100 20} type Toggle shortcut 0xffc6
+            xywh {0 0 100 20} type Toggle
           }
           MenuItem menite_trace_batch {
             label {Color Trace Batch...}
@@ -154,7 +154,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_trace_batch->hide();
 }}
-            xywh {0 0 100 20} type Toggle
+            xywh {0 0 100 20} type Toggle divider
           }
           MenuItem menite_thickness {
             label {Thickness...}
@@ -168,27 +168,27 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_hab_histogram->hide();
     cl_gts_gui.menite_edit_hsv_min_max->clear();
 }}
-            xywh {0 0 30 20} type Toggle
-          }
-          MenuItem menite_edit_color {
-            label {Edit Color...}
-            callback {if (cl_gts_gui.menite_edit_color->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_edit_color->show();
-} else {
-    cl_gts_gui.window_edit_color->hide();
-}}
-            xywh {0 0 30 20} type Toggle hide
+            xywh {0 0 30 20} type Toggle shortcut 0xffc3
           }
           MenuItem menite_edit_hsv_min_max {
-            label {Edit HSV Min Max}
+            label {Input Color(HSV Min Max)...}
             callback {if (cl_gts_gui.menite_edit_hsv_min_max->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_hab_histogram->show();
 } else {
     cl_gts_gui.window_hab_histogram->hide();
 }}
-            xywh {0 0 30 20} type Toggle hide
+            xywh {0 0 30 20} type Toggle shortcut 0xffc4
+          }
+          MenuItem menite_edit_color {
+            label {Output Color(RGB)...}
+            callback {if (cl_gts_gui.menite_edit_color->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_edit_color->show();
+} else {
+    cl_gts_gui.window_edit_color->hide();
+}}
+            xywh {0 0 30 20} type Toggle shortcut 0xffc5
           }
           MenuItem menite_sane_device {
             label {Select SANE device...}
@@ -228,15 +228,45 @@ cl_gts_master.cb_quit();}
             label {Color Trace Window} open
             xywh {20 20 100 20}
           } {
-            MenuItem menite_wview_main_or_lr_ud {
-              label main_or_lr_ud
-              callback {cl_gts_master.cb_change_wview_main_or_lr_ud();}
-              xywh {20 20 100 20} type Toggle shortcut 0xffc8
+            MenuItem menite_wview_main {
+              label ScanImage
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_main();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio shortcut 0xffc6 value 1
             }
-            MenuItem menite_wview_lr_or_ud {
-              label lr_or_ud
-              callback {cl_gts_master.cb_change_wview_lr_or_ud();}
-              xywh {20 20 100 20} type Toggle shortcut 0xffc9
+            MenuItem menite_wview_sub {
+              label TraceImage
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_sub();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio shortcut 0xffc7
+            }
+            MenuItem menite_wview_lr {
+              label LeftRight
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_lr();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio shortcut 0xffc8
+            }
+            MenuItem menite_wview_ud {
+              label UpDown
+              callback {if (cl_gts_master.check_change_wview()) {
+	cl_gts_master.cb_change_wview_ud();
+}
+else {
+	menite_wview_main->setonly();
+}}
+              xywh {0 0 30 20} type Radio shortcut 0xffc9
             }
           }
         }
@@ -2188,75 +2218,8 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         }
       }
     }
-    Fl_Window window_edit_color {
-      label {Edit Color}
-      callback {cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();}
-      xywh {50 50 385 100} type Double resizable non_modal size_range {200 100 1000 100} visible
-    } {
-      Fl_Group {} {open
-        xywh {0 10 385 20}
-      } {
-        Fl_Group {} {open
-          xywh {0 10 340 20} resizable
-        } {
-          Fl_Scrollbar scrbar_edit_color_red {
-            label Red
-            callback {valinp_edit_color_red->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-            xywh {45 10 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
-            code0 {scrbar_edit_color_red->linesize(1);}
-          }
-        }
-        Fl_Value_Input valinp_edit_color_red {
-          callback {((Fl_Valuator *)scrbar_edit_color_red)->value(o->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-          xywh {345 10 35 20} box BORDER_BOX maximum 255 step 1
-        }
-      }
-      Fl_Group {} {open
-        xywh {0 40 385 20}
-      } {
-        Fl_Group {} {open
-          xywh {0 40 340 20} resizable
-        } {
-          Fl_Scrollbar scrbar_edit_color_gre {
-            label Green
-            callback {valinp_edit_color_gre->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-            xywh {45 40 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
-            code0 {scrbar_edit_color_gre->linesize(1);}
-          }
-        }
-        Fl_Value_Input valinp_edit_color_gre {
-          callback {((Fl_Valuator *)scrbar_edit_color_gre)->value(o->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-          xywh {345 40 35 20} box BORDER_BOX maximum 255 step 1
-        }
-      }
-      Fl_Group {} {open
-        xywh {0 70 385 20}
-      } {
-        Fl_Group {} {open
-          xywh {0 70 340 20} resizable
-        } {
-          Fl_Scrollbar scrbar_edit_color_blu {
-            label Blue
-            callback {valinp_edit_color_blu->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-            xywh {45 70 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
-            code0 {scrbar_edit_color_blu->linesize(1);}
-          }
-        }
-        Fl_Value_Input valinp_edit_color_blu {
-          callback {((Fl_Valuator *)scrbar_edit_color_blu)->value(o->value());
-cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
-          xywh {345 70 35 20} box BORDER_BOX maximum 255 step 1
-        }
-      }
-    }
     Fl_Window window_hab_histogram {
-      label {Edit HSV-MinMax}
+      label {Input Color(HSV Min Max)}
       callback {cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_edit_hsv_min_max->clear();}
       xywh {50 50 1000 565} type Double non_modal visible
@@ -2470,6 +2433,73 @@ fltkp_bb_histogram->redraw();}
               xywh {305 545 60 20}
             }
           }
+        }
+      }
+    }
+    Fl_Window window_edit_color {
+      label {Output Color(RGB)}
+      callback {cl_gts_gui.window_edit_color->hide();
+cl_gts_gui.menite_edit_color->clear();}
+      xywh {50 50 385 100} type Double resizable non_modal size_range {200 100 1000 100} visible
+    } {
+      Fl_Group {} {open
+        xywh {0 10 385 20}
+      } {
+        Fl_Group {} {open
+          xywh {0 10 340 20} resizable
+        } {
+          Fl_Scrollbar scrbar_edit_color_red {
+            label Red
+            callback {valinp_edit_color_red->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+            xywh {45 10 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
+            code0 {scrbar_edit_color_red->linesize(1);}
+          }
+        }
+        Fl_Value_Input valinp_edit_color_red {
+          callback {((Fl_Valuator *)scrbar_edit_color_red)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+          xywh {345 10 35 20} box BORDER_BOX maximum 255 step 1
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 40 385 20}
+      } {
+        Fl_Group {} {open
+          xywh {0 40 340 20} resizable
+        } {
+          Fl_Scrollbar scrbar_edit_color_gre {
+            label Green
+            callback {valinp_edit_color_gre->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+            xywh {45 40 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
+            code0 {scrbar_edit_color_gre->linesize(1);}
+          }
+        }
+        Fl_Value_Input valinp_edit_color_gre {
+          callback {((Fl_Valuator *)scrbar_edit_color_gre)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+          xywh {345 40 35 20} box BORDER_BOX maximum 255 step 1
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 70 385 20}
+      } {
+        Fl_Group {} {open
+          xywh {0 70 340 20} resizable
+        } {
+          Fl_Scrollbar scrbar_edit_color_blu {
+            label Blue
+            callback {valinp_edit_color_blu->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+            xywh {45 70 295 20} type Horizontal box BORDER_BOX align 4 maximum 255 resizable
+            code0 {scrbar_edit_color_blu->linesize(1);}
+          }
+        }
+        Fl_Value_Input valinp_edit_color_blu {
+          callback {((Fl_Valuator *)scrbar_edit_color_blu)->value(o->value());
+cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
+          xywh {345 70 35 20} box BORDER_BOX maximum 255 step 1
         }
       }
     }
