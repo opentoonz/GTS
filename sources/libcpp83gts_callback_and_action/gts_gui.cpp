@@ -427,6 +427,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"zoom Out", 0x78,  (Fl_Callback*)gts_gui::cb_zoom1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Frame", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Cyclic", 0,  0, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Prev", 0x2d,  (Fl_Callback*)gts_gui::cb_Prev, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Next", 0x2b,  (Fl_Callback*)gts_gui::cb_Next, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
@@ -474,13 +475,14 @@ Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 19;
 Fl_Menu_Item* gts_gui::menite_edit_hsv_min_max = gts_gui::menu_ + 20;
 Fl_Menu_Item* gts_gui::menite_edit_color = gts_gui::menu_ + 21;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 22;
-Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 36;
-Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 37;
-Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 38;
-Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 39;
-Fl_Menu_Item* gts_gui::menite_heavy_view_mode_in = gts_gui::menu_ + 55;
-Fl_Menu_Item* gts_gui::menite_color_trace_real_time = gts_gui::menu_ + 56;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 62;
+Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 32;
+Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 37;
+Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 38;
+Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 39;
+Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 40;
+Fl_Menu_Item* gts_gui::menite_heavy_view_mode_in = gts_gui::menu_ + 56;
+Fl_Menu_Item* gts_gui::menite_color_trace_real_time = gts_gui::menu_ + 57;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 63;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );

@@ -228,6 +228,10 @@ cl_gts_master.cb_quit();}
             label Frame open
             xywh {0 0 62 20}
           } {
+            MenuItem menite_frame_cyclic {
+              label Cyclic
+              xywh {0 0 30 20} type Toggle
+            }
             MenuItem {} {
               label Prev
               callback {if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
