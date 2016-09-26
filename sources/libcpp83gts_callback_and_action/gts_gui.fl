@@ -244,11 +244,11 @@ cl_gts_master.cb_quit();}
             }
           }
           Submenu {} {
-            label {Color Trace Window} open
+            label {Color Trace} open
             xywh {20 20 100 20}
           } {
             MenuItem menite_wview_main {
-              label ScanImage
+              label {Scan Image}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_main();
 }
@@ -258,7 +258,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc6 value 1
             }
             MenuItem menite_wview_sub {
-              label TraceImage
+              label {Trace Image}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_sub();
 }
@@ -268,7 +268,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc7
             }
             MenuItem menite_wview_lr {
-              label LeftRight
+              label {Split Left and Right}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_lr();
 }
@@ -278,7 +278,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc8
             }
             MenuItem menite_wview_ud {
-              label UpDown
+              label {Split Top and Bottom}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_ud();
 }
