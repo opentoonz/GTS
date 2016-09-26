@@ -200,7 +200,7 @@ cl_gts_master.cb_quit();}
           xywh {10 10 100 20}
         } {
           Submenu {} {
-            label Zoom
+            label Zoom open
             xywh {25 25 100 20}
           } {
             MenuItem {} {
@@ -222,6 +222,25 @@ cl_gts_master.cb_quit();}
               label {zoom Out}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x78
+            }
+          }
+          Submenu {} {
+            label Frame open
+            xywh {0 0 62 20}
+          } {
+            MenuItem {} {
+              label Prev
+              callback {if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
+    cl_gts_master.cb_read_and_trace_and_preview();
+}}
+              xywh {0 0 30 20} shortcut 0x2d
+            }
+            MenuItem {} {
+              label Next
+              callback {if (cl_gts_master.cl_file_number_list.selected_next_frame()) {
+    cl_gts_master.cb_read_and_trace_and_preview();
+}}
+              xywh {0 0 30 20} shortcut 0x2b
             }
           }
           Submenu {} {
@@ -311,7 +330,7 @@ else {
           }
         }
         Submenu {} {
-          label Debug open
+          label Debug
           xywh {0 0 62 20} hide
         } {
           MenuItem {} {
@@ -321,7 +340,7 @@ else {
           }
         }
         Submenu {} {
-          label {for Heavy View} open
+          label {for Heavy View}
           xywh {0 0 62 20} hide
         } {
           MenuItem menite_heavy_view_mode_in {
@@ -350,7 +369,7 @@ else {
           }
         }
         Submenu {} {
-          label Help
+          label Help open
           xywh {0 0 62 20}
         } {
           MenuItem menite_help_about {

@@ -118,6 +118,10 @@ private:
   static void cb_zoom(Fl_Menu_*, void*);
   inline void cb_zoom1_i(Fl_Menu_*, void*);
   static void cb_zoom1(Fl_Menu_*, void*);
+  inline void cb_Prev_i(Fl_Menu_*, void*);
+  static void cb_Prev(Fl_Menu_*, void*);
+  inline void cb_Next_i(Fl_Menu_*, void*);
+  static void cb_Next(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_wview_main;
 private:

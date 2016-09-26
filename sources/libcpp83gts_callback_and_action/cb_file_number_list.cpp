@@ -719,3 +719,50 @@ void cb_file_number_list::counter_next( const int continue_type_value )
 	this->set_next_num_from_crnt_( continue_type_value );
 }
 
+/* 選択のフレーム送り/戻しをする */
+bool cb_file_number_list::selected_prev_frame(void)
+{
+	if (cl_gts_gui.selbro_fnum_list->size() < 1) {
+		return false; /* File Number Listないときはなにもしない */
+	}
+	const int ll = prev_selected_(
+		cl_gts_gui.selbro_fnum_list->size()
+	); /* 選択の最後尾番号 */
+	if (ll < 0) {	/* なにも選択がない */
+		cl_gts_gui.selbro_fnum_list->select(
+			cl_gts_gui.selbro_fnum_list->size()
+		); /* List最後尾を選択 */
+	}
+	else {				/* 選択あり */
+	 if (1 < ll) {
+		cl_gts_gui.selbro_fnum_list->select(ll, 0);/* 現選択解除 */
+		cl_gts_gui.selbro_fnum_list->select(ll-1); /* 次を選択 */
+	 }
+	 else {
+	 	return false; /* 先頭に到達したのでストップ */
+	 }
+	}
+	return true;
+}
+
+bool cb_file_number_list::selected_next_frame(void)
+{
+	if (cl_gts_gui.selbro_fnum_list->size() < 1) {
+		return false; /* File Number Listないときはなにもしない */
+	}
+	const int ll = next_selected_(1); /* 選択の先頭番号 */
+	if (ll < 0) {	/* なにも選択がない */
+		cl_gts_gui.selbro_fnum_list->select(1); /* List先頭を選択 */
+	}
+	else {				/* 選択あり */
+	 if (ll < cl_gts_gui.selbro_fnum_list->size()) {
+		cl_gts_gui.selbro_fnum_list->select(ll, 0);/* 現選択解除 */
+		cl_gts_gui.selbro_fnum_list->select(ll+1); /* 次を選択 */
+	 }
+	 else {
+	 	return false; /* 先頭に到達したのでストップ */
+	 }
+	}
+	return true;
+}
+
