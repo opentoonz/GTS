@@ -65,6 +65,10 @@ public:
 	/* 2 次へ辿り、現位置を得る */
 	void counter_next( const int continue_type_value );
 
+	/* 選択のフレーム送り/戻しをする */
+	bool selected_prev_frame(void);
+	bool selected_next_frame(void);
+
 private:
 	int	crnt_list_num_
 		, crnt_file_num_

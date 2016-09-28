@@ -200,7 +200,7 @@ cl_gts_master.cb_quit();}
           xywh {10 10 100 20}
         } {
           Submenu {} {
-            label Zoom
+            label Zoom open
             xywh {25 25 100 20}
           } {
             MenuItem {} {
@@ -225,11 +225,34 @@ cl_gts_master.cb_quit();}
             }
           }
           Submenu {} {
-            label {Color Trace Window} open
+            label Frame open
+            xywh {0 0 62 20}
+          } {
+            MenuItem menite_frame_cyclic {
+              label Cyclic
+              xywh {0 0 30 20} type Toggle
+            }
+            MenuItem {} {
+              label Prev
+              callback {if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
+    cl_gts_master.cb_read_and_trace_and_preview();
+}}
+              xywh {0 0 30 20} shortcut 0x2d
+            }
+            MenuItem {} {
+              label Next
+              callback {if (cl_gts_master.cl_file_number_list.selected_next_frame()) {
+    cl_gts_master.cb_read_and_trace_and_preview();
+}}
+              xywh {0 0 30 20} shortcut 0x2b
+            }
+          }
+          Submenu {} {
+            label {Color Trace} open
             xywh {20 20 100 20}
           } {
             MenuItem menite_wview_main {
-              label ScanImage
+              label {Scan Image}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_main();
 }
@@ -239,7 +262,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc6 value 1
             }
             MenuItem menite_wview_sub {
-              label TraceImage
+              label {Trace Image}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_sub();
 }
@@ -249,7 +272,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc7
             }
             MenuItem menite_wview_lr {
-              label LeftRight
+              label {Split Left and Right}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_lr();
 }
@@ -259,7 +282,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc8
             }
             MenuItem menite_wview_ud {
-              label UpDown
+              label {Split Top and Bottom}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_ud();
 }
@@ -311,7 +334,7 @@ else {
           }
         }
         Submenu {} {
-          label Debug open
+          label Debug
           xywh {0 0 62 20} hide
         } {
           MenuItem {} {
@@ -321,7 +344,7 @@ else {
           }
         }
         Submenu {} {
-          label {for Heavy View} open
+          label {for Heavy View}
           xywh {0 0 62 20} hide
         } {
           MenuItem menite_heavy_view_mode_in {
@@ -350,7 +373,7 @@ else {
           }
         }
         Submenu {} {
-          label Help
+          label Help open
           xywh {0 0 62 20}
         } {
           MenuItem menite_help_about {

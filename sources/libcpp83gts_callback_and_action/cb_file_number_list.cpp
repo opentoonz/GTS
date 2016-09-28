@@ -531,6 +531,13 @@ namespace {
 	}
 	return -1;
  }
+ /* 全て選択解除にする */
+ void unselect_all_( void )
+ {
+	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+		cl_gts_gui.selbro_fnum_list->select(ii ,0);
+	}
+ }
  /* listの順位置に挿入し、選択状態にして、既にあるならその位置を返す */
  int insert_and_select_fnum_in_list_( const int file_num )
  {
@@ -717,5 +724,68 @@ void cb_file_number_list::counter_next( const int continue_type_value )
 	/* 次番号を得る(次処理があるか判断のためここで取る)
 	次位置がなければ-1をセット */
 	this->set_next_num_from_crnt_( continue_type_value );
+}
+
+/* 選択のフレーム送り/戻しをする */
+bool cb_file_number_list::selected_prev_frame(void)
+{
+	if (cl_gts_gui.selbro_fnum_list->size() < 1) {
+		return false; /* File Number Listないときはなにもしない */
+	}
+	const int ll = prev_selected_(
+		cl_gts_gui.selbro_fnum_list->size()
+	); /* 選択の最後尾番号 */
+	if (ll < 0) {	/* なにも選択がない */
+		cl_gts_gui.selbro_fnum_list->select(
+			cl_gts_gui.selbro_fnum_list->size()
+		); /* List最後尾を選択 */
+	}
+	else {				/* 選択あり */
+	 if (1 < ll) {
+		unselect_all_();/* 選択全解除 */
+		cl_gts_gui.selbro_fnum_list->select(ll-1); /* 次を選択 */
+	 }
+	 else {
+	  /* 先頭に到達したら... */
+	  if (cl_gts_gui.menite_frame_cyclic->value() != 0) {
+		unselect_all_();/* 選択全解除 */
+		cl_gts_gui.selbro_fnum_list->select(
+			cl_gts_gui.selbro_fnum_list->size()
+		); /* List最後尾を選択 */
+	  }
+	  else {
+	 	return false; /* ストップ */
+	  }
+	 }
+	}
+	return true;
+}
+
+bool cb_file_number_list::selected_next_frame(void)
+{
+	if (cl_gts_gui.selbro_fnum_list->size() < 1) {
+		return false; /* File Number Listないときはなにもしない */
+	}
+	const int ll = next_selected_(1); /* 選択の先頭番号 */
+	if (ll < 0) {	/* なにも選択がない */
+		cl_gts_gui.selbro_fnum_list->select(1); /* List先頭を選択 */
+	}
+	else {				/* 選択あり */
+	 if (ll < cl_gts_gui.selbro_fnum_list->size()) {
+		unselect_all_();/* 選択全解除 */
+		cl_gts_gui.selbro_fnum_list->select(ll+1); /* 次を選択 */
+	 }
+	 else {
+	  /* 後尾に到達したら... */
+	  if (cl_gts_gui.menite_frame_cyclic->value() != 0) {
+		unselect_all_();/* 選択全解除 */
+		cl_gts_gui.selbro_fnum_list->select(1); /* List先頭を選択 */
+	  }
+	  else {
+	 	return false; /* ストップ */
+	  }
+	 }
+	}
+	return true;
 }
 
