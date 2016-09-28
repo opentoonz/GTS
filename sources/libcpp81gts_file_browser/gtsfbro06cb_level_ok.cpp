@@ -98,6 +98,5 @@ void gtsfbro06cb_level::cb_ok( void )
 	/* levelの終了に伴うx1view windowの閉じでは、
 	表示スイッチをOFFにしない */
 	cl_gts_gui.window_x1view->hide(); /* x1 Window閉じる */
-	cl_gts_gui.menite_level->clear(); /* menuのcheckを消す */
-	cl_gts_gui.window_level->hide();  /* Window閉じる */
+	cl_gts_gui.window_level_browse->hide();  /* Window閉じる */
 }
