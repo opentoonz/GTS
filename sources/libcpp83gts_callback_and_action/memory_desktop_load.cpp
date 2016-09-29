@@ -115,6 +115,10 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_level_set->position(xx,yy);
 		}
+		else if ((this->str_window_level_browse_==key)
+		&& (6==ret)) {
+		cl_gts_gui.window_level_browse->resize(xx,yy,ww,hh);
+		}
 		else if ((this->str_window_config_load_==key) && (6==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_config_load->set();

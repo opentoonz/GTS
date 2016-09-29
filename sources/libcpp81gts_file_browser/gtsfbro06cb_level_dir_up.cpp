@@ -5,7 +5,7 @@ void gtsfbro06cb_level::cb_dir_up( void )
 {
 	const char *ccp_crnt_dir;
 
-	if (0 == cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
 	 ccp_crnt_dir = cl_gts_gui.filinp_level_dir->value();
 	} else {
 	 ccp_crnt_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();

@@ -581,9 +581,9 @@ cl_gts_gui.menite_level->clear();}
               Fl_File_Input filinp_level_rgb_scan_dir {
                 label Directory
                 callback {cl_gts_master.cl_bro_level.cb_rgb_scan_dir();}
-                xywh {15 320 155 35} align 5 when 1
+                xywh {15 320 155 35} align 5 when 1 deactivate
               }
-              Fl_Button ligbut_level_rgb_scan_browse_sw {
+              Fl_Button togbut_level_rgb_scan_browse_sw {
                 label {<}
                 callback {cl_gts_master.cl_bro_level.cb_browse_sw();
 cl_gts_gui.window_level_browse->show();}
@@ -630,7 +630,7 @@ cl_gts_gui.window_level_browse->show();}
             callback {cl_gts_master.cl_bro_level.cb_rename();}
             xywh {0 0 30 20}
           }
-          MenuItem button_level_shift_number {
+          MenuItem menite_level_shift_number {
             label {Shift Number...}
             callback {cl_gts_master.cl_bro_level.cb_renumber();}
             xywh {0 0 30 20}
@@ -668,17 +668,17 @@ cl_gts_gui.window_level_browse->show();}
           label View open
           xywh {0 0 62 20}
         } {
-          MenuItem ligbut_level_view_sw {
+          MenuItem menite_level_view_sw {
             label Image
             callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
             xywh {0 0 30 20} type Toggle value 1
           }
-          MenuItem ligbut_level_info_rgb_sub_sw {
+          MenuItem menite_level_view_rgb_full_sw {
             label _full
             callback {cl_gts_master.cl_bro_level.cb_info_redisplay();}
             xywh {0 0 30 20} type Toggle
           }
-          MenuItem ligbut_level_image_x1_sw {
+          MenuItem menite_level_image_x1_sw {
             label X1
             callback {cl_gts_master.cl_bro_level.cb_x1view_wintgl();}
             xywh {0 0 30 20} type Toggle hide
@@ -691,11 +691,11 @@ cl_gts_gui.window_level_browse->show();}
         Fl_Button {} {
           label {<}
           callback {cl_gts_master.cl_bro_level.cb_dir_up();}
-          xywh {5 30 15 25} shortcut 0x40075
+          xywh {5 30 15 25} shortcut 0x40075 hide
         }
         Fl_Choice choice_level_list_form {
           callback {cl_gts_master.cl_bro_level.cb_file_or_level();} open
-          xywh {25 30 80 25} down_box BORDER_BOX
+          xywh {5 30 80 25} down_box BORDER_BOX
         } {
           MenuItem {} {
             label File
@@ -707,7 +707,7 @@ cl_gts_gui.window_level_browse->show();}
           }
         }
         Fl_Box {} {
-          xywh {105 30 275 25} resizable
+          xywh {85 30 295 25} resizable
         }
       }
       Fl_Tile {} {open

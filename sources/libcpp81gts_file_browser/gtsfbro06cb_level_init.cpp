@@ -112,11 +112,11 @@ void gtsfbro06cb_level::memory_to_gui( void )
 		this->_i_list_form_memory
 	);
 	if (0 == cl_gts_gui.choice_level_list_form->value()) {
-		cl_gts_gui.button_level_shift_number->deactivate();
-		cl_gts_gui.ligbut_level_info_rgb_sub_sw->deactivate();
+		cl_gts_gui.menite_level_shift_number->deactivate();
+		cl_gts_gui.menite_level_view_rgb_full_sw->deactivate();
 	} else {
-		cl_gts_gui.button_level_shift_number->activate();
-		cl_gts_gui.ligbut_level_info_rgb_sub_sw->activate();
+		cl_gts_gui.menite_level_shift_number->activate();
+		cl_gts_gui.menite_level_view_rgb_full_sw->activate();
 	}
 
 	/* 03 Level名 */

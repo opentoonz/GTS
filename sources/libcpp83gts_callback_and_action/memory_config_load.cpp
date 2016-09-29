@@ -92,11 +92,11 @@ std::cout << std::endl;
 		 i_level_list_redisplay_sw = ON;
 		 /* File/Level表示によってボタンを表示/非表示する */
 		 if (0 == cl_gts_gui.choice_level_list_form->value()) {
-			cl_gts_gui.button_level_shift_number->deactivate();
-			cl_gts_gui.ligbut_level_info_rgb_sub_sw->deactivate();
+			cl_gts_gui.menite_level_shift_number->deactivate();
+			cl_gts_gui.menite_level_view_rgb_full_sw->deactivate();
 		 } else {
-			cl_gts_gui.button_level_shift_number->activate();
-			cl_gts_gui.ligbut_level_info_rgb_sub_sw->activate();
+			cl_gts_gui.menite_level_shift_number->activate();
+			cl_gts_gui.menite_level_view_rgb_full_sw->activate();
 		 }
 	}
 	else {
@@ -107,11 +107,11 @@ std::cout << std::endl;
 		 i_level_list_redisplay_sw = ON;
 		 /* File/Level表示によってボタンを表示/非表示する */
 		 if (0 == cl_gts_gui.choice_level_list_form->value()) {
-			cl_gts_gui.button_level_shift_number->deactivate();
-			cl_gts_gui.ligbut_level_info_rgb_sub_sw->deactivate();
+			cl_gts_gui.menite_level_shift_number->deactivate();
+			cl_gts_gui.menite_level_view_rgb_full_sw->deactivate();
 		 } else {
-			cl_gts_gui.button_level_shift_number->activate();
-			cl_gts_gui.ligbut_level_info_rgb_sub_sw->activate();
+			cl_gts_gui.menite_level_shift_number->activate();
+			cl_gts_gui.menite_level_view_rgb_full_sw->activate();
 		 }
 		}
 	}

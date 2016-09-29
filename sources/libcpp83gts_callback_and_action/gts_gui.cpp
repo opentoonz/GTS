@@ -600,12 +600,12 @@ void gts_gui::cb_filinp_level_rgb_scan_dir(Fl_File_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_filinp_level_rgb_scan_dir_i(o,v);
 }
 
-void gts_gui::cb_ligbut_level_rgb_scan_browse_sw_i(Fl_Button*, void*) {
+void gts_gui::cb_togbut_level_rgb_scan_browse_sw_i(Fl_Button*, void*) {
   cl_gts_master.cl_bro_level.cb_browse_sw();
 cl_gts_gui.window_level_browse->show();
 }
-void gts_gui::cb_ligbut_level_rgb_scan_browse_sw(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_ligbut_level_rgb_scan_browse_sw_i(o,v);
+void gts_gui::cb_togbut_level_rgb_scan_browse_sw(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_togbut_level_rgb_scan_browse_sw_i(o,v);
 }
 
 void gts_gui::cb_chkbtn_color_trace_erase_1dot_i(Fl_Check_Button*, void*) {
@@ -636,11 +636,11 @@ void gts_gui::cb_Rename(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Rename_i(o,v);
 }
 
-void gts_gui::cb_button_level_shift_number_i(Fl_Menu_*, void*) {
+void gts_gui::cb_menite_level_shift_number_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_bro_level.cb_renumber();
 }
-void gts_gui::cb_button_level_shift_number(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_button_level_shift_number_i(o,v);
+void gts_gui::cb_menite_level_shift_number(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_level_shift_number_i(o,v);
 }
 
 void gts_gui::cb_Explorer_i(Fl_Menu_*, void*) {
@@ -672,45 +672,45 @@ void gts_gui::cb_Explorer(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Explorer_i(o,v);
 }
 
-void gts_gui::cb_ligbut_level_view_sw_i(Fl_Menu_*, void*) {
+void gts_gui::cb_menite_level_view_sw_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_bro_level.cb_info_redisplay();
 }
-void gts_gui::cb_ligbut_level_view_sw(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_ligbut_level_view_sw_i(o,v);
+void gts_gui::cb_menite_level_view_sw(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_level_view_sw_i(o,v);
 }
 
-void gts_gui::cb_ligbut_level_info_rgb_sub_sw_i(Fl_Menu_*, void*) {
+void gts_gui::cb_menite_level_view_rgb_full_sw_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_bro_level.cb_info_redisplay();
 }
-void gts_gui::cb_ligbut_level_info_rgb_sub_sw(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_ligbut_level_info_rgb_sub_sw_i(o,v);
+void gts_gui::cb_menite_level_view_rgb_full_sw(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_level_view_rgb_full_sw_i(o,v);
 }
 
-void gts_gui::cb_ligbut_level_image_x1_sw_i(Fl_Menu_*, void*) {
+void gts_gui::cb_menite_level_image_x1_sw_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_bro_level.cb_x1view_wintgl();
 }
-void gts_gui::cb_ligbut_level_image_x1_sw(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_ligbut_level_image_x1_sw_i(o,v);
+void gts_gui::cb_menite_level_image_x1_sw(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_level_image_x1_sw_i(o,v);
 }
 
 Fl_Menu_Item gts_gui::menu_1[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Make Directory...", 0,  (Fl_Callback*)gts_gui::cb_Make, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Shift Number...", 0,  (Fl_Callback*)gts_gui::cb_button_level_shift_number, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Shift Number...", 0,  (Fl_Callback*)gts_gui::cb_menite_level_shift_number, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Explorer...", 0,  (Fl_Callback*)gts_gui::cb_Explorer, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Image", 0,  (Fl_Callback*)gts_gui::cb_ligbut_level_view_sw, 0, 6, FL_NORMAL_LABEL, 0, 14, 0},
- {"_full", 0,  (Fl_Callback*)gts_gui::cb_ligbut_level_info_rgb_sub_sw, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"X1", 0,  (Fl_Callback*)gts_gui::cb_ligbut_level_image_x1_sw, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Image", 0,  (Fl_Callback*)gts_gui::cb_menite_level_view_sw, 0, 6, FL_NORMAL_LABEL, 0, 14, 0},
+ {"_full", 0,  (Fl_Callback*)gts_gui::cb_menite_level_view_rgb_full_sw, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"X1", 0,  (Fl_Callback*)gts_gui::cb_menite_level_image_x1_sw, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
 };
-Fl_Menu_Item* gts_gui::button_level_shift_number = gts_gui::menu_1 + 3;
-Fl_Menu_Item* gts_gui::ligbut_level_view_sw = gts_gui::menu_1 + 7;
-Fl_Menu_Item* gts_gui::ligbut_level_info_rgb_sub_sw = gts_gui::menu_1 + 8;
-Fl_Menu_Item* gts_gui::ligbut_level_image_x1_sw = gts_gui::menu_1 + 9;
+Fl_Menu_Item* gts_gui::menite_level_shift_number = gts_gui::menu_1 + 3;
+Fl_Menu_Item* gts_gui::menite_level_view_sw = gts_gui::menu_1 + 7;
+Fl_Menu_Item* gts_gui::menite_level_view_rgb_full_sw = gts_gui::menu_1 + 8;
+Fl_Menu_Item* gts_gui::menite_level_image_x1_sw = gts_gui::menu_1 + 9;
 
 void gts_gui::cb__i(Fl_Button*, void*) {
   cl_gts_master.cl_bro_level.cb_dir_up();
@@ -5398,11 +5398,12 @@ Fl_Double_Window* gts_gui::make_window() {
               filinp_level_rgb_scan_dir->callback((Fl_Callback*)cb_filinp_level_rgb_scan_dir);
               filinp_level_rgb_scan_dir->align(Fl_Align(FL_ALIGN_TOP_LEFT));
               filinp_level_rgb_scan_dir->when(FL_WHEN_CHANGED);
+              filinp_level_rgb_scan_dir->deactivate();
             } // Fl_File_Input* filinp_level_rgb_scan_dir
-            { ligbut_level_rgb_scan_browse_sw = new Fl_Button(170, 330, 15, 25, "<");
-              ligbut_level_rgb_scan_browse_sw->type(1);
-              ligbut_level_rgb_scan_browse_sw->callback((Fl_Callback*)cb_ligbut_level_rgb_scan_browse_sw);
-            } // Fl_Button* ligbut_level_rgb_scan_browse_sw
+            { togbut_level_rgb_scan_browse_sw = new Fl_Button(170, 330, 15, 25, "<");
+              togbut_level_rgb_scan_browse_sw->type(1);
+              togbut_level_rgb_scan_browse_sw->callback((Fl_Callback*)cb_togbut_level_rgb_scan_browse_sw);
+            } // Fl_Button* togbut_level_rgb_scan_browse_sw
             o->end();
           } // Fl_Group* o
           { chkbtn_level_rgb_with_full_sw = new Fl_Check_Button(15, 360, 175, 20, "Add _full in level");
@@ -5435,13 +5436,14 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Button* o = new Fl_Button(5, 30, 15, 25, "<");
         o->shortcut(0x40075);
         o->callback((Fl_Callback*)cb_);
+        o->hide();
       } // Fl_Button* o
-      { choice_level_list_form = new Fl_Choice(25, 30, 80, 25);
+      { choice_level_list_form = new Fl_Choice(5, 30, 80, 25);
         choice_level_list_form->down_box(FL_BORDER_BOX);
         choice_level_list_form->callback((Fl_Callback*)cb_choice_level_list_form);
         choice_level_list_form->menu(menu_choice_level_list_form);
       } // Fl_Choice* choice_level_list_form
-      { Fl_Box* o = new Fl_Box(105, 30, 275, 25);
+      { Fl_Box* o = new Fl_Box(85, 30, 295, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       o->end();

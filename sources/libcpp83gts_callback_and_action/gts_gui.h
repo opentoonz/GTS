@@ -251,10 +251,10 @@ private:
   inline void cb_filinp_level_rgb_scan_dir_i(Fl_File_Input*, void*);
   static void cb_filinp_level_rgb_scan_dir(Fl_File_Input*, void*);
 public:
-  Fl_Button *ligbut_level_rgb_scan_browse_sw;
+  Fl_Button *togbut_level_rgb_scan_browse_sw;
 private:
-  inline void cb_ligbut_level_rgb_scan_browse_sw_i(Fl_Button*, void*);
-  static void cb_ligbut_level_rgb_scan_browse_sw(Fl_Button*, void*);
+  inline void cb_togbut_level_rgb_scan_browse_sw_i(Fl_Button*, void*);
+  static void cb_togbut_level_rgb_scan_browse_sw(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_level_rgb_with_full_sw;
   Fl_Check_Button *chkbtn_color_trace_erase_1dot;
@@ -272,27 +272,27 @@ private:
   inline void cb_Rename_i(Fl_Menu_*, void*);
   static void cb_Rename(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *button_level_shift_number;
+  static Fl_Menu_Item *menite_level_shift_number;
 private:
-  inline void cb_button_level_shift_number_i(Fl_Menu_*, void*);
-  static void cb_button_level_shift_number(Fl_Menu_*, void*);
+  inline void cb_menite_level_shift_number_i(Fl_Menu_*, void*);
+  static void cb_menite_level_shift_number(Fl_Menu_*, void*);
   inline void cb_Explorer_i(Fl_Menu_*, void*);
   static void cb_Explorer(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *ligbut_level_view_sw;
+  static Fl_Menu_Item *menite_level_view_sw;
 private:
-  inline void cb_ligbut_level_view_sw_i(Fl_Menu_*, void*);
-  static void cb_ligbut_level_view_sw(Fl_Menu_*, void*);
+  inline void cb_menite_level_view_sw_i(Fl_Menu_*, void*);
+  static void cb_menite_level_view_sw(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *ligbut_level_info_rgb_sub_sw;
+  static Fl_Menu_Item *menite_level_view_rgb_full_sw;
 private:
-  inline void cb_ligbut_level_info_rgb_sub_sw_i(Fl_Menu_*, void*);
-  static void cb_ligbut_level_info_rgb_sub_sw(Fl_Menu_*, void*);
+  inline void cb_menite_level_view_rgb_full_sw_i(Fl_Menu_*, void*);
+  static void cb_menite_level_view_rgb_full_sw(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *ligbut_level_image_x1_sw;
+  static Fl_Menu_Item *menite_level_image_x1_sw;
 private:
-  inline void cb_ligbut_level_image_x1_sw_i(Fl_Menu_*, void*);
-  static void cb_ligbut_level_image_x1_sw(Fl_Menu_*, void*);
+  inline void cb_menite_level_image_x1_sw_i(Fl_Menu_*, void*);
+  static void cb_menite_level_image_x1_sw(Fl_Menu_*, void*);
   inline void cb__i(Fl_Button*, void*);
   static void cb_(Fl_Button*, void*);
 public:

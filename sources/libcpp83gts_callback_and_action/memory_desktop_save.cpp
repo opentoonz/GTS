@@ -41,6 +41,16 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
+	, this->str_window_level_browse_
+	, ccp_hide
+	, cl_gts_gui.window_level_browse->x()
+	, cl_gts_gui.window_level_browse->y()
+	, cl_gts_gui.window_level_browse->w()
+	, cl_gts_gui.window_level_browse->h()
+	);
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
 	, this->str_window_config_load_
 	, cl_gts_gui.menite_config_load->value()?ccp_show:ccp_hide
 	, cl_gts_gui.window_config_load->x()
