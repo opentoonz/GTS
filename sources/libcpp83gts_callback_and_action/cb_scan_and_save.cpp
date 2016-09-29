@@ -48,8 +48,8 @@ int gts_master::next_scan_and_save_( void )
 	}
 
 	/* 05 保存する(番号に対する)ファイルパスを得る */
-	if (3L <= this->cl_iip_ro90.get_l_channels() &&
-	cl_gts_gui.chkbtn_level_rgb_with_full_sw->value() == 1
+	if (3L <= this->cl_iip_ro90.get_l_channels()
+	&& cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()
 	) {
 		/* RGB画像(専用の名前)(_full付)(A_full.0001.tif) */
 		/* 読み込み(番号に対する)ファイルパスを得る */
@@ -73,9 +73,9 @@ int gts_master::next_scan_and_save_( void )
 	}
 
 	/* 06 BWか、Grayscaleか、RGBで保存SWがONのどれかの場合 */
-	if ((this->cl_iip_ro90.get_l_channels() < 3L) ||//BW or Grayscale
-	    (this->cl_iip_ro90.get_l_channels() == 3L &&//RGB & SW is ON
-	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value() == 1
+	if ((this->cl_iip_ro90.get_l_channels() < 3L)	//BW or Grayscale
+	||  (this->cl_iip_ro90.get_l_channels() == 3L &&//RGB & SW is ON
+	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value()
 	    )
 	) {
 	 /* スキャン画像保存 */
@@ -102,8 +102,8 @@ int gts_master::next_scan_and_save_( void )
 
 	/*------------------------------------------------*/
 	/* 07 RGB画像でトレス画像保存SWがONの場合 */
-	if (	(this->cl_iip_ro90.get_l_channels() == 3L) &&
-		(cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() == 1)
+	if (	(this->cl_iip_ro90.get_l_channels() == 3L)
+	&&	cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value()
 	) {
 
 	 /* ２値化処理の準備 */
@@ -195,8 +195,8 @@ void gts_master::cb_scan_and_save_start( void )
 
 	/* 最初に番号が選択がない/設定できない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
-		if (cl_gts_gui.choice_level_continue_type->value() == 
-		 cl_gts_master.cl_file_number_list.get_end_type_value()
+		if (cl_gts_gui.choice_level_continue_type->value()
+		== cl_gts_master.cl_file_number_list.get_end_type_value()
 		) {/*End*/
 			fl_alert("Select number!");
 		}

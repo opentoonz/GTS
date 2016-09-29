@@ -612,7 +612,7 @@ void gts_gui::cb_chkbtn_color_trace_erase_1dot_i(Fl_Check_Button*, void*) {
   cl_gts_master.cb_real_time_on_off();
 }
 void gts_gui::cb_chkbtn_color_trace_erase_1dot(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_erase_1dot_i(o,v);
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chkbtn_color_trace_erase_1dot_i(o,v);
 }
 
 void gts_gui::cb_window_level_browse_i(Fl_Double_Window*, void*) {
@@ -1119,11 +1119,11 @@ void gts_gui::cb_window_color_trace(Fl_Double_Window* o, void* v) {
 void gts_gui::cb_chkbtn_color_trace_01_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_01grp->activate();
-    cl_gts_gui.chkbtn_thickness_01_chk->value(1);
+    cl_gts_gui.chkbtn_thickness_01_chk->set();
     cl_gts_gui.group_thickness_01grp->activate();
 } else {
     cl_gts_gui.group_color_trace_01grp->deactivate();
-    cl_gts_gui.chkbtn_thickness_01_chk->value(0);
+    cl_gts_gui.chkbtn_thickness_01_chk->clear();
     cl_gts_gui.group_thickness_01grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -1396,11 +1396,11 @@ void gts_gui::cb_button_color_trace_01_src(Fl_Button* o, void* v) {
 void gts_gui::cb_chkbtn_color_trace_02_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_02grp->activate();
-    cl_gts_gui.chkbtn_thickness_02_chk->value(1);
+    cl_gts_gui.chkbtn_thickness_02_chk->set();
     cl_gts_gui.group_thickness_02grp->activate();
 } else {
     cl_gts_gui.group_color_trace_02grp->deactivate();
-    cl_gts_gui.chkbtn_thickness_02_chk->value(0);
+    cl_gts_gui.chkbtn_thickness_02_chk->clear();
     cl_gts_gui.group_thickness_02grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -1510,11 +1510,11 @@ void gts_gui::cb_button_color_trace_02_src(Fl_Button* o, void* v) {
 void gts_gui::cb_chkbtn_color_trace_03_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_03grp->activate();
-    cl_gts_gui.chkbtn_thickness_03_chk->value(1);
+    cl_gts_gui.chkbtn_thickness_03_chk->set();
     cl_gts_gui.group_thickness_03grp->activate();
 } else {
     cl_gts_gui.group_color_trace_03grp->deactivate();
-    cl_gts_gui.chkbtn_thickness_03_chk->value(0);
+    cl_gts_gui.chkbtn_thickness_03_chk->clear();
     cl_gts_gui.group_thickness_03grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -1624,11 +1624,11 @@ void gts_gui::cb_button_color_trace_03_src(Fl_Button* o, void* v) {
 void gts_gui::cb_chkbtn_color_trace_04_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_04grp->activate();
-    cl_gts_gui.chkbtn_thickness_04_chk->value(1);
+    cl_gts_gui.chkbtn_thickness_04_chk->set();
     cl_gts_gui.group_thickness_04grp->activate();
 } else {
     cl_gts_gui.group_color_trace_04grp->deactivate();
-    cl_gts_gui.chkbtn_thickness_04_chk->value(0);
+    cl_gts_gui.chkbtn_thickness_04_chk->clear();
     cl_gts_gui.group_thickness_04grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -1738,11 +1738,11 @@ void gts_gui::cb_button_color_trace_04_src(Fl_Button* o, void* v) {
 void gts_gui::cb_chkbtn_color_trace_05_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_05grp->activate();
-    cl_gts_gui.chkbtn_thickness_05_chk->value(1);
+    cl_gts_gui.chkbtn_thickness_05_chk->set();
     cl_gts_gui.group_thickness_05grp->activate();
 } else {
     cl_gts_gui.group_color_trace_05grp->deactivate();
-    cl_gts_gui.chkbtn_thickness_05_chk->value(0);
+    cl_gts_gui.chkbtn_thickness_05_chk->clear();
     cl_gts_gui.group_thickness_05grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -1852,11 +1852,11 @@ void gts_gui::cb_button_color_trace_05_src(Fl_Button* o, void* v) {
 void gts_gui::cb_chkbtn_color_trace_06_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_06grp->activate();
-    cl_gts_gui.chkbtn_thickness_06_chk->value(1);
+    cl_gts_gui.chkbtn_thickness_06_chk->set();
     cl_gts_gui.group_thickness_06grp->activate();
 } else {
     cl_gts_gui.group_color_trace_06grp->deactivate();
-    cl_gts_gui.chkbtn_thickness_06_chk->value(0);
+    cl_gts_gui.chkbtn_thickness_06_chk->clear();
     cl_gts_gui.group_thickness_06grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -2145,11 +2145,11 @@ void gts_gui::cb_window_thickness(Fl_Double_Window* o, void* v) {
 void gts_gui::cb_chkbtn_thickness_01_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_01grp->activate();
-    cl_gts_gui.chkbtn_color_trace_01_chk->value(1);
+    cl_gts_gui.chkbtn_color_trace_01_chk->set();
     cl_gts_gui.group_thickness_01grp->activate();
 } else {
     cl_gts_gui.group_color_trace_01grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_01_chk->value(0);
+    cl_gts_gui.chkbtn_color_trace_01_chk->clear();
     cl_gts_gui.group_thickness_01grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -2196,11 +2196,11 @@ void gts_gui::cb_valinp_thickness_01(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_chkbtn_thickness_02_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_02grp->activate();
-    cl_gts_gui.chkbtn_color_trace_02_chk->value(1);
+    cl_gts_gui.chkbtn_color_trace_02_chk->set();
     cl_gts_gui.group_thickness_02grp->activate();
 } else {
     cl_gts_gui.group_color_trace_02grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_02_chk->value(0);
+    cl_gts_gui.chkbtn_color_trace_02_chk->clear();
     cl_gts_gui.group_thickness_02grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -2247,11 +2247,11 @@ void gts_gui::cb_valinp_thickness_02(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_chkbtn_thickness_03_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_03grp->activate();
-    cl_gts_gui.chkbtn_color_trace_03_chk->value(1);
+    cl_gts_gui.chkbtn_color_trace_03_chk->set();
     cl_gts_gui.group_thickness_03grp->activate();
 } else {
     cl_gts_gui.group_color_trace_03grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_03_chk->value(0);
+    cl_gts_gui.chkbtn_color_trace_03_chk->clear();
     cl_gts_gui.group_thickness_03grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -2298,11 +2298,11 @@ void gts_gui::cb_valinp_thickness_03(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_chkbtn_thickness_04_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_04grp->activate();
-    cl_gts_gui.chkbtn_color_trace_04_chk->value(1);
+    cl_gts_gui.chkbtn_color_trace_04_chk->set();
     cl_gts_gui.group_thickness_04grp->activate();
 } else {
     cl_gts_gui.group_color_trace_04grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_04_chk->value(0);
+    cl_gts_gui.chkbtn_color_trace_04_chk->clear();
     cl_gts_gui.group_thickness_04grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -2349,11 +2349,11 @@ void gts_gui::cb_valinp_thickness_04(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_chkbtn_thickness_05_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_05grp->activate();
-    cl_gts_gui.chkbtn_color_trace_05_chk->value(1);
+    cl_gts_gui.chkbtn_color_trace_05_chk->set();
     cl_gts_gui.group_thickness_05grp->activate();
 } else {
     cl_gts_gui.group_color_trace_05grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_05_chk->value(0);
+    cl_gts_gui.chkbtn_color_trace_05_chk->clear();
     cl_gts_gui.group_thickness_05grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -2400,11 +2400,11 @@ void gts_gui::cb_valinp_thickness_05(Fl_Value_Input* o, void* v) {
 void gts_gui::cb_chkbtn_thickness_06_chk_i(Fl_Check_Button* o, void*) {
   if (o->value()) {
     cl_gts_gui.group_color_trace_06grp->activate();
-    cl_gts_gui.chkbtn_color_trace_06_chk->value(1);
+    cl_gts_gui.chkbtn_color_trace_06_chk->set();
     cl_gts_gui.group_thickness_06grp->activate();
 } else {
     cl_gts_gui.group_color_trace_06grp->deactivate();
-    cl_gts_gui.chkbtn_color_trace_06_chk->value(0);
+    cl_gts_gui.chkbtn_color_trace_06_chk->clear();
     cl_gts_gui.group_thickness_06grp->deactivate();
 }
 cl_gts_master.cb_color_trace_src_redraw_image();
@@ -5380,7 +5380,7 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 245, 200, 140, "Save RGB");
+    { Fl_Group* o = new Fl_Group(0, 245, 200, 185, "Save RGB");
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       { chkbtn_level_rgb_trace_save_sw = new Fl_Check_Button(5, 265, 190, 20, "Save Trace Image");
@@ -5413,15 +5413,14 @@ Fl_Double_Window* gts_gui::make_window() {
         } // Fl_Group* o
         o->end();
       } // Fl_Group* o
-      o->end();
-    } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 390, 200, 40, "Filter");
-      o->box(FL_BORDER_BOX);
-      o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-      { chkbtn_color_trace_erase_1dot = new Fl_Check_Button(5, 405, 190, 25, "Erase dot noise");
-        chkbtn_color_trace_erase_1dot->down_box(FL_DOWN_BOX);
-        chkbtn_color_trace_erase_1dot->callback((Fl_Callback*)cb_chkbtn_color_trace_erase_1dot);
-      } // Fl_Check_Button* chkbtn_color_trace_erase_1dot
+      { Fl_Group* o = new Fl_Group(5, 385, 195, 40, "Filter");
+        o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        { chkbtn_color_trace_erase_1dot = new Fl_Check_Button(10, 400, 185, 25, "Erase dot noise");
+          chkbtn_color_trace_erase_1dot->down_box(FL_DOWN_BOX);
+          chkbtn_color_trace_erase_1dot->callback((Fl_Callback*)cb_chkbtn_color_trace_erase_1dot);
+        } // Fl_Check_Button* chkbtn_color_trace_erase_1dot
+        o->end();
+      } // Fl_Group* o
       o->end();
     } // Fl_Group* o
     window_level_set->set_non_modal();

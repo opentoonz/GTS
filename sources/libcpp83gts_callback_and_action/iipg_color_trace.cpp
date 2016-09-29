@@ -120,6 +120,5 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	/* erase dot noise */
 	if (cl_gts_gui.chkbtn_color_trace_erase_1dot->value()) {
 		this->cl_iip_edot.exec();
-		this->cl_iip_edot.exec();
 	}
 }

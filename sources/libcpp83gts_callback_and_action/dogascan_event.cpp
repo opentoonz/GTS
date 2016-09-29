@@ -220,7 +220,7 @@ void gts_master::_move_start( void )
 	this->cl_ogl_view.drag_move_start();
 
 	/* リアルタイムスイッチが入っているときに */
-	if (1 == cl_gts_gui.menite_color_trace_real_time->value()) {
+	if (cl_gts_gui.menite_color_trace_real_time->value()) {
 		iip_canvas *clp_sub;
 		clp_sub = this->cl_ogl_view.get_clp_sub_canvas();
 		/* sub画像がある(２画面表示)なら画面を白クリア */
