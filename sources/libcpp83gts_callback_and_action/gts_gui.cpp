@@ -5427,7 +5427,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_level_set->set_non_modal();
     window_level_set->end();
   } // Fl_Double_Window* window_level_set
-  { window_level_browse = new Fl_Double_Window(380, 425, "Browse");
+  { window_level_browse = new Fl_Double_Window(380, 425, "Level Browse");
     window_level_browse->callback((Fl_Callback*)cb_window_level_browse, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 380, 25);
       o->menu(menu_1);

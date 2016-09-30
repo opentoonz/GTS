@@ -609,7 +609,7 @@ cl_gts_gui.window_level_browse->show();}
       }
     }
     Fl_Window window_level_browse {
-      label Browse
+      label {Level Browse}
       callback {cl_gts_master.cl_bro_level.cb_cancel();}
       xywh {50 50 380 425} type Double resizable modal size_range {180 120 1920 1200} visible
     } {
