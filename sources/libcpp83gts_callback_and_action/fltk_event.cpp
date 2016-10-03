@@ -42,9 +42,11 @@ void fltk_event::set_mouse_to_act( void )
 	/* マウスボタンの変化 */
 	switch (this->_i_mouse_which_button){
 	case FL_LEFT_MOUSE:
+/*
 		if (FL_PUSH == this->_i_mouse_button_state){
 			e_act = E_ACT_ZOOM_UP_TWICE_AT_POS;
 		}
+*/
 		break;
 
 	case FL_MIDDLE_MOUSE:
@@ -63,9 +65,11 @@ void fltk_event::set_mouse_to_act( void )
 		break;
 
 	case FL_RIGHT_MOUSE:
+/*
 		if (FL_PUSH == this->_i_mouse_button_state){
 			e_act = E_ACT_ZOOM_DOWN_HALF_AT_POS;
 		}
+*/
 		break;
 	}
 

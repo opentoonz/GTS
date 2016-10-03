@@ -120,6 +120,32 @@ int fltk_opengl::handle( int event )
 
 		return 1;
 
+	case FL_MOUSEWHEEL:
+		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
+			return 0;
+		}
+std::cout
+<< __FILE__
+<< " "
+<< __LINE__
+<< " mouseWheel"
+<< " dx=" << Fl::event_dx()
+<< " dy=" << Fl::event_dy()
+<< " zoom=" << cl_gts_master.cl_ogl_view.get_l_zoom()
+<< std::endl;
+		/*
+			Wheeling in the rear zoom down
+			and
+			Wheeling forward zoom up.
+		*/
+		if (0 < Fl::event_dy()) { /* Wheeling int the rear zoom down */
+		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_POS);
+		}
+		else {			  /* Wheeling forward */
+		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_POS);
+		}
+		return 1;
+
 	default:
 		/* pass other events to the base class */
 		return Fl_Gl_Window::handle(event);
