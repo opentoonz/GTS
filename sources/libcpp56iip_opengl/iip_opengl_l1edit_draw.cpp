@@ -209,8 +209,13 @@ void iip_opengl_l1edit::_draw_image( void )
 	/***glRasterPos2i(	this->_gli_rasterpos_x,
 			this->_gli_rasterpos_y );***/
 	/* Pixelの左下を表示開始位置とするため-0.5 */
+/*
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.5,
 			(double)(this->_gli_rasterpos_y) - 0.5 );
+下方位置（y値マイナス？）で画像消える現象。特定のマシンのみで起こる。原因不明。0.5を0.49999にして直る。2016-10-4
+*/
+	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
+			(double)(this->_gli_rasterpos_y) - 0.49999 );
 
 	/* 拡大縮小 */
 	glPixelZoom( (GLfloat)this->_d_zoom, (GLfloat)this->_d_zoom );
