@@ -4,9 +4,9 @@
 
 int fltk_opengl::handle( int event )
 {
-	/***int	cc;
-	char	*cp;
-	int	ii;***/
+	int	cc;
+	//char	*cp;
+	//int	ii;
 
 	switch(event) {
 	/*
@@ -14,11 +14,13 @@ int fltk_opengl::handle( int event )
 	 */
 
 	//case FL_KEYDOWN:
-	//case FL_KEYBOARD:
 	//case FL_KEYUP:
-#if 0
+	//case FL_KEYBOARD:
+
 	case FL_SHORTCUT:
 		cc = Fl::event_key();
+//std::cout << __FILE__ << " " << __LINE__ << " FL_SHORTCUT event_key=" << cc << std::endl;
+#if 0
 		cp = (char *)Fl::event_text();
 		ii = Fl::event_length();
 //pri_funct_msg_vr("key %c<%d>  text %c<%d>", cc,cc, cp[0],cp[0] );
@@ -37,9 +39,35 @@ int fltk_opengl::handle( int event )
 		cl_gts_master.reserve_by_key_event(
 		 cl_gts_master.cl_fltk_event.get_e_act()
 		);
-
-		return 1;
 #endif
+		switch (cc) {
+		case FL_Up:
+	if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
+	    cl_gts_master.cb_read_and_trace_and_preview();
+	}
+			return 1;
+		case FL_Down:
+	if (cl_gts_master.cl_file_number_list.selected_next_frame()) {
+	    cl_gts_master.cb_read_and_trace_and_preview();
+	}
+			return 1;
+		case FL_Left: /* Fl_ScrollBarのFL_Left イベントをCancel */
+		case FL_Right:/* Fl_ScrollBarのFL_RightイベントをCancel */
+			return 1;
+		}
+#if 0
+		/* メニューのショートカットキーイベントを起動したい */
+		switch (cc) {
+		case FL_Up:
+		case FL_Down:
+		case FL_Left:
+		case FL_Right:
+			return cl_gts_gui.menbar_menu_top->handle( event );
+			/* これだと落ちる */
+		}
+#endif
+
+		return 0;
 	/*
 	 * Mouse Events
 	 */
@@ -124,21 +152,12 @@ int fltk_opengl::handle( int event )
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
 			return 0;
 		}
-std::cout
-<< __FILE__
-<< " "
-<< __LINE__
-<< " mouseWheel"
-<< " dx=" << Fl::event_dx()
-<< " dy=" << Fl::event_dy()
-<< " zoom=" << cl_gts_master.cl_ogl_view.get_l_zoom()
-<< std::endl;
 		/*
 			Wheeling in the rear zoom down
-			and
+			or
 			Wheeling forward zoom up.
 		*/
-		if (0 < Fl::event_dy()) { /* Wheeling int the rear zoom down */
+		if (0 < Fl::event_dy()) { /* Wheeling int the rear */
 		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_POS);
 		}
 		else {			  /* Wheeling forward */
