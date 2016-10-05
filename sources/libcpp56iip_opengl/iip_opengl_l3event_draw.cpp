@@ -122,7 +122,7 @@ void iip_opengl_l3event::draw_opengl( void )
 		this->_clp_main->draw_opengl();
 		break;
 	case E_WVIEW_TYPE_SUB:
-		if (this->is_clicked_mouse_middle_button_) {
+		if (this->temporary_display_main_sw_) {
 		 this->_clp_main->draw_opengl();
 		} else {
 		 this->_clp_sub->draw_opengl();
@@ -141,7 +141,7 @@ void iip_opengl_l3event::draw_opengl( void )
 			this->_draw_main_no_hamidasi_by_sub_view();
 		}
 
-		if (this->is_clicked_mouse_middle_button_) {
+		if (this->temporary_display_main_sw_) {
 		 this->_clp_main->draw_opengl();
 		} else {
 		 this->_clp_sub->draw_opengl();
@@ -163,7 +163,7 @@ void iip_opengl_l3event::draw_opengl( void )
 			this->_draw_main_no_hamidasi_by_sub_view();
 		}
 
-		if (this->is_clicked_mouse_middle_button_) {
+		if (this->temporary_display_main_sw_) {
 		 this->_clp_main->draw_opengl();
 		} else {
 		 this->_clp_sub->draw_opengl();
