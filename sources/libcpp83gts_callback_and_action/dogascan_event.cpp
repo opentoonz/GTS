@@ -291,7 +291,7 @@ void gts_master::_move_stop( void )
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
-void gts_master::_move_passive( void )
+void gts_master::_move_hover( void )
 {
 	if (ON == this->cl_ogl_view.mouse_moving(
 	 this->cl_fltk_event.get_l_mouse_x(),
@@ -436,7 +436,7 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
  E_ACT_MOVE_START:             this->_move_start(); break;
  E_ACT_MOVE_DRAG:              this->_move_drag();break;
  E_ACT_MOVE_STOP:              this->_move_stop(); break;
- E_ACT_MOVE_PASSIVE:           this->_move_passive(); break;
+ E_ACT_MOVE_HOVER:             this->_move_hover(); break;
  E_ACT_CHANNEL_RGB_TO_RGB:     this->_channel_rgb_to_rgb(); break;
  E_ACT_CHANNEL_RED_TO_RED:     this->_channel_red_to_red(); break;
  E_ACT_CHANNEL_GRE_TO_GRE:     this->_channel_gre_to_gre(); break;
@@ -571,8 +571,8 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 	else if (E_ACT_MOVE_STOP == e_act) {
 		this->_move_stop();
 	}
-	else if (E_ACT_MOVE_PASSIVE == e_act) {
-		this->_move_passive();
+	else if (E_ACT_MOVE_HOVER == e_act) {
+		this->_move_hover();
 	}
 	else if (E_ACT_CHANNEL_RGB_TO_RGB == e_act) {
 		this->_channel_rgb_to_rgb();

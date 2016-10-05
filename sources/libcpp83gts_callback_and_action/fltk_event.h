@@ -43,7 +43,7 @@ E_ACT_SCROLL_Y_ABSOLUTE,	/* 縦方向の絶対位置へ移動(scrollbar) */
 E_ACT_MOVE_START,		/* 連続移動の開始 */
 E_ACT_MOVE_DRAG,		/* 連続移動中 */
 E_ACT_MOVE_STOP,		/* 連続移動の停止 */
-E_ACT_MOVE_PASSIVE,		/* 移動 */
+E_ACT_MOVE_HOVER,		/* 移動 */
 E_ACT_CHANNEL_RGB_TO_RGB,	/* RGB表示 */
 E_ACT_CHANNEL_RED_TO_RED,	/* Red  チャンネルを赤く表示 */
 E_ACT_CHANNEL_GRE_TO_GRE,	/* Greenチャンネルを緑に表示 */
@@ -152,6 +152,7 @@ public:
 	{ return this->_i_mouse_middle_dragging; }
 
 	bool clicked_mouse_middle_button( void );
+	bool clicked_mouse_left_button( void );
 private:
 	E_ACT	_e_act;
 

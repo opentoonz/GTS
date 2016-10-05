@@ -40,6 +40,7 @@ void fltk_event::set_mouse_to_act( void )
 	*/
 
 	/* マウスボタンの変化 */
+#if 0
 	switch (this->_i_mouse_which_button){
 	case FL_LEFT_MOUSE:
 /*
@@ -72,13 +73,30 @@ void fltk_event::set_mouse_to_act( void )
 */
 		break;
 	}
+#endif
+	switch (this->_i_mouse_which_button){
+	case FL_LEFT_MOUSE:
+		if (FL_PUSH == this->_i_mouse_button_state) {
+			e_act = E_ACT_MOVE_START;
+			this->set_i_mouse_middle_dragging( ON );
+		} else
+		if (FL_RELEASE == this->_i_mouse_button_state){
+		  if (ON == this->_i_mouse_middle_dragging) {
+			e_act = E_ACT_MOVE_STOP;
+			this->set_i_mouse_middle_dragging( OFF );
+		  }
+		}
+		break;
+	case FL_MIDDLE_MOUSE: break;
+	case FL_RIGHT_MOUSE: break;
+	}
 
 	/* マウスが移動した */
 	if (ON == this->_i_mouse_motion_sw) {
 		if (ON == this->_i_mouse_middle_dragging) {
 			e_act = E_ACT_MOVE_DRAG;
 		} else {
-			e_act = E_ACT_MOVE_PASSIVE;
+			e_act = E_ACT_MOVE_HOVER;
 		}
 		this->_i_mouse_motion_sw = OFF;
 	}
@@ -88,6 +106,13 @@ void fltk_event::set_mouse_to_act( void )
 bool fltk_event::clicked_mouse_middle_button( void )
 {
 	 return this->_i_mouse_which_button == FL_MIDDLE_MOUSE &&
+		this->_i_mouse_button_state == FL_PUSH
+		;
+}
+
+bool fltk_event::clicked_mouse_left_button( void )
+{
+	 return this->_i_mouse_which_button == FL_LEFT_MOUSE &&
 		this->_i_mouse_button_state == FL_PUSH
 		;
 }

@@ -112,8 +112,8 @@ int fltk_opengl::handle( int event )
 		);
 
 		/* (クリックした瞬間)2値化画像をscan画像に切替る指示 */
-		cl_gts_master.cl_ogl_view.set_clicked_mouse_middle_button(
-		 cl_gts_master.cl_fltk_event.clicked_mouse_middle_button()
+		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
+		 cl_gts_master.cl_fltk_event.clicked_mouse_left_button()
 		);
 
 		/* ここで再表示 */
@@ -142,7 +142,7 @@ int fltk_opengl::handle( int event )
 		);
 
 		/* (クリックした瞬間)2値化画像に(scan画像から)戻す */
-		cl_gts_master.cl_ogl_view.set_clicked_mouse_middle_button(
+		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
 			false
 		);
 

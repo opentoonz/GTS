@@ -43,7 +43,8 @@ void fltk_opengl::draw()
 	}
 
 	if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
-		/* subエリアのトレス線表示 */
+		/* subエリアのカラートレス処理
+		と(指定にあれば)ドットノイズ除去 */
 		cl_gts_master.color_trace_in_view_area();
 
 		/* OpenGL全表示 */

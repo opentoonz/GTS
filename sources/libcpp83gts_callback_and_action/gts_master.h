@@ -245,7 +245,7 @@ private:
 	void _move_start( void );
 	void _move_drag( void );
 	void _move_stop( void );
-	void _move_passive( void );
+	void _move_hover( void );
 	void __set_channel( int i_src, int i_tgt );
 	void _channel_rgb_to_rgb( void );
 	void _channel_red_to_red( void );
