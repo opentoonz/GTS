@@ -1,7 +1,51 @@
-#ifndef __fltk_event_h__
-#define __fltk_event_h__
+#ifndef fltk_event_h
+#define fltk_event_h
 
 #include "ptbl_returncode.h"
+
+/* マウスの最後の状態を保持するクラス */
+class mouse_state {
+public:
+	mouse_state()
+		:x_(0)
+		,y_(0)
+		,move_start_x_(0)
+		,move_start_y_(0)
+		,which_button_(0)
+		,button_click_sw_(false)
+	{}
+
+	//FL_PUSH
+	void event_push( const int button ,const long x ,const long y );
+
+	//FL_RELEASE
+	void event_release( const int button ,const long x ,const long y );
+
+	//FL_MOVE
+	void event_move( const long x ,const long y );
+
+	//FL_DRAG
+	void event_drag( const long x ,const long y );
+
+	int x(void) { return this->x_; }
+	int y(void) { return this->y_; }
+	int x_move(void) { return this->x_ - this->move_start_x_; }
+	int y_move(void) { return this->y_ - this->move_start_y_; }
+	int which_button(void) { return this->which_button_; } /* FL_LEFT_MOUSE/FL_MIDDLE_MOUSE/FL_RIGHT_MOUSE */
+	bool is_clicked(void) { return this->button_click_sw_; }
+	void escape_clicked(void) { this->button_click_sw_ = false; }
+
+private:
+	int	x_	/* 横位置 */
+		,y_;	/* 縦位置 */
+	int	move_start_x_	/* FL_PUSHの時の位置の記憶 */
+		,move_start_y_;	/* FL_PUSHの時の位置の記憶 */
+
+	int	which_button_;		/* ボタンの種類 */
+	bool	button_click_sw_;	/* ボタンの状態 */
+};
+
+//---------------------------------
 
 typedef enum {
 E_ACT_NOTHING = 1,		/* 実行予約はなにもない */
@@ -42,7 +86,7 @@ E_ACT_SCROLL_X_ABSOLUTE,	/* 横方向の絶対位置へ移動(scrollbar) */
 E_ACT_SCROLL_Y_ABSOLUTE,	/* 縦方向の絶対位置へ移動(scrollbar) */
 E_ACT_MOVE_START,		/* 連続移動の開始 */
 E_ACT_MOVE_DRAG,		/* 連続移動中 */
-E_ACT_MOVE_STOP,		/* 連続移動の停止 */
+E_ACT_MOVE_STOP,		/* 連続移動の停止(予約) */
 E_ACT_MOVE_HOVER,		/* 移動 */
 E_ACT_CHANNEL_RGB_TO_RGB,	/* RGB表示 */
 E_ACT_CHANNEL_RED_TO_RED,	/* Red  チャンネルを赤く表示 */
@@ -73,21 +117,6 @@ public:
 		this->_i_keyboard_sw = OFF;
 		this->_i_keyboard = 0;
 
-		this->_i_mouse_motion_sw = OFF;
-		this->_i_mouse_button_sw = OFF;
-
-		this->_l_mouse_x = 0L;
-		this->_l_mouse_y = 0L;
-
-		this->_l_movestart_mouse_x = 0L;
-		this->_l_movestart_mouse_y = 0L;
-
-		this->_i_mouse_left_dragging = OFF;
-		this->_i_mouse_middle_dragging = OFF;
-
-		this->_i_mouse_which_button = 0;
-		this->_i_mouse_button_state = 0;
-
 		this->_l_scrollbar_x_val = 0L;
 		this->_l_scrollbar_x_min = 0L;
 		this->_l_scrollbar_x_max = 0L;
@@ -98,10 +127,6 @@ public:
 
 	void  set_e_act( E_ACT e_act )   {this->_e_act = e_act;}
 	E_ACT get_e_act( void )  { return this->_e_act; }
-
-	void set_mouse_motion( long x, long y );
-	void set_mouse_button( int button, int state, long x, long y );
-	void set_mouse_to_act( void );
 
 	void set_keyboard( int key );
 	void set_keyboard_to_act( void );
@@ -132,47 +157,14 @@ public:
 	long get_l_scrollbar_y_max( void ) { return
 	  this->_l_scrollbar_y_max; }
 
-	void set_l_movestart_mouse_x( long ll )
-	{ this->_l_movestart_mouse_x = ll; }
-	void set_l_movestart_mouse_y( long ll )
-	{ this->_l_movestart_mouse_y = ll; }
+	/* マウスの最後の状態を保持するクラス */
+	mouse_state cl_mouse_state;
 
-	void set_i_mouse_middle_dragging( int sw )
-	{ this->_i_mouse_middle_dragging=sw; }
-
-	long get_l_mouse_x( void ) { return this->_l_mouse_x; }
-	long get_l_mouse_y( void ) { return this->_l_mouse_y; }
-
-	long        get_l_movestart_mouse_x( void )
-	{ return this->_l_movestart_mouse_x; }
-	long        get_l_movestart_mouse_y( void )
-	{ return this->_l_movestart_mouse_y; }
-
-	int         get_i_mouse_middle_dragging( void )
-	{ return this->_i_mouse_middle_dragging; }
-
-	bool clicked_mouse_middle_button( void );
-	bool clicked_mouse_left_button( void );
 private:
 	E_ACT	_e_act;
 
 	int	_i_keyboard_sw;
 	int	_i_keyboard;
-
-	int	_i_mouse_motion_sw,
-		_i_mouse_button_sw;
-
-	long	_l_mouse_x,
-		_l_mouse_y;
-
-	long	_l_movestart_mouse_x,
-		_l_movestart_mouse_y;
-
-	int	_i_mouse_left_dragging,
-		_i_mouse_middle_dragging;
-
-	int	_i_mouse_which_button,
-		_i_mouse_button_state;
 
 	long	_l_scrollbar_x_val,
 		_l_scrollbar_x_min,
@@ -182,4 +174,4 @@ private:
 		_l_scrollbar_y_max;
 };
 
-#endif /* !__fltk_event_h__ */
+#endif /* !fltk_event_h */

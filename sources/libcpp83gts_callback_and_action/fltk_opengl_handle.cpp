@@ -7,6 +7,7 @@ int fltk_opengl::handle( int event )
 	int	cc;
 	//char	*cp;
 	//int	ii;
+	mouse_state& ms = cl_gts_master.cl_fltk_event.cl_mouse_state;
 
 	switch(event) {
 	/*
@@ -72,73 +73,71 @@ int fltk_opengl::handle( int event )
 	 * Mouse Events
 	 */
 	case FL_DRAG: /* The mouse has moved with a button held down. */
-	case FL_MOVE: /* The mouse has moved without mouse drag. */
+		/* 扱う対象がないなら、何もしない */
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
-			return 0;}
+			return 0;
+		}
 
-		/* マウスの移動を記憶 */
-		cl_gts_master.cl_fltk_event.set_mouse_motion(
-			Fl::event_x(),Fl::event_y()
-		);
+		/* マウスドラッグ位置を記憶 */
+		ms.event_drag( Fl::event_x() ,Fl::event_y() );
 
-		/* マウスの記憶から実行イベントを記憶 */
-		cl_gts_master.cl_fltk_event.set_mouse_to_act();
+		/* 左ボタンによる実行を設定 */
+		if (ms.which_button() == FL_LEFT_MOUSE) {
+			/* reserveがなければ予約入れる
+			既にreserveあれば予約せず何もしない */
+			cl_gts_master.reserve( E_ACT_MOVE_DRAG );
+		}
 
-		/* 実行イベントと、idle callbackを設定 */
-		cl_gts_master.reserve(
-		 cl_gts_master.cl_fltk_event.get_e_act()
-		);
+		return 1;
+
+	case FL_MOVE: /* The mouse has moved without mouse drag. */
+		/* 扱う対象がないなら、何もしない */
+		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
+			return 0;
+		}
+
+		/* マウス移動位置を記憶 */
+		ms.event_move( Fl::event_x() ,Fl::event_y() );
+
+		/* reserveがなければ予約入れる
+			既にreserveあれば予約せず何もしない */
+		cl_gts_master.reserve( E_ACT_MOVE_HOVER );
 
 		return 1;
 
 	case FL_PUSH: /* A mouse button has gone down */
+		/* 扱う対象がないなら、何もしない */
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
-			return 0;}
+			return 0;
+		}
 
 		/* マウスボタンの状態と位置を記憶 */
-		cl_gts_master.cl_fltk_event.set_mouse_button(
-			Fl::event_button(),
-			FL_PUSH,
-			Fl::event_x(),Fl::event_y()
+		ms.event_push(
+			Fl::event_button() ,Fl::event_x() ,Fl::event_y()
 		);
 
-		/* マウスの記憶から実行イベントを記憶 */
-		cl_gts_master.cl_fltk_event.set_mouse_to_act();
-
-		/* 実行イベントと、idle callbackを設定 */
-		//cl_gts_master.reserve(
-		cl_gts_master.action(
-		 cl_gts_master.cl_fltk_event.get_e_act()
-		);
+		/* 即実行 */
+		cl_gts_master.action( E_ACT_MOVE_START );
 
 		/* (クリックした瞬間)2値化画像をscan画像に切替る指示 */
 		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
-		 cl_gts_master.cl_fltk_event.clicked_mouse_left_button()
+			ms.which_button() == FL_LEFT_MOUSE
 		);
 
-		/* ここで再表示 */
+		/* event_push()する前に、表示 */
 		cl_gts_gui.opengl_view->flush();
 
 		return 1;
 
 	case FL_RELEASE: /* A mouse button has been released. */
+		/* 扱う対象がないなら、何もしない */
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
-			return 0;}
+			return 0;
+		}
 
 		/* マウスボタンの状態と位置を記憶 */
-		cl_gts_master.cl_fltk_event.set_mouse_button(
-			Fl::event_button(),
-			FL_RELEASE,
-			Fl::event_x(),Fl::event_y()
-		);
-
-		/* マウスの記憶から実行イベントを記憶 */
-		cl_gts_master.cl_fltk_event.set_mouse_to_act();
-
-		/* 実行イベントと、idle callbackを設定 */
-		//cl_gts_master.reserve(
-		cl_gts_master.action(
-		 cl_gts_master.cl_fltk_event.get_e_act()
+		ms.event_release(
+			Fl::event_button() ,Fl::event_x() ,Fl::event_y()
 		);
 
 		/* (クリックした瞬間)2値化画像に(scan画像から)戻す */
@@ -146,9 +145,13 @@ int fltk_opengl::handle( int event )
 			false
 		);
 
+		/* event_release()後に、表示 */
+		cl_gts_gui.opengl_view->flush();
+
 		return 1;
 
 	case FL_MOUSEWHEEL:
+		/* 扱う対象がないなら、何もしない */
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
 			return 0;
 		}

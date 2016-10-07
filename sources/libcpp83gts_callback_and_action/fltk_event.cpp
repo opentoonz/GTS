@@ -1,120 +1,36 @@
 #include <FL/Fl.H>
 #include "fltk_event.h"
  
-void fltk_event::set_mouse_button( int button, int state, long x, long y )
+//FL_PUSH
+void mouse_state::event_push( const int button ,const long x ,const long y )
 {
-	this->_i_mouse_button_sw = ON;
-	this->_i_mouse_which_button = button;
-	this->_i_mouse_button_state = state;
-	this->_l_mouse_x = x;
-	this->_l_mouse_y = y;
-}
-void fltk_event::set_mouse_motion( long x, long y )
-{
-	this->_i_mouse_motion_sw = ON;
-	this->_l_mouse_x = x;
-	this->_l_mouse_y = y;
-}
-void fltk_event::set_mouse_to_act( void )
-{
-	E_ACT	e_act;
-	e_act = E_ACT_NOTHING;
-
-	/* マウスボタンが変化していないときは何もしないように設定 */
-	if (OFF == this->_i_mouse_button_sw) {
-		this->_i_mouse_which_button = 0;
-		this->_i_mouse_button_state = 0;
-	}
-	else {
-		this->_i_mouse_button_sw = OFF;
-	}
-
-	/*
-		2005.05.25
-		マウスボタンを押す、あるいは離したとき、別のイベントが
-		動作中で、それが終る前に、また、マウスボタンを離す、押
-		す、あるいは移動のイベントが起こると、動かないか、ドラ
-		ッグや停止から始まったりする。
-		動かない場合はそれで良いが、開始が無視されて、移動や停
-		止から始まった場合、それらイベントは無視したい。
-	*/
-
-	/* マウスボタンの変化 */
-#if 0
-	switch (this->_i_mouse_which_button){
-	case FL_LEFT_MOUSE:
-/*
-		if (FL_PUSH == this->_i_mouse_button_state){
-			e_act = E_ACT_ZOOM_UP_TWICE_AT_POS;
-		}
-*/
-		break;
-
-	case FL_MIDDLE_MOUSE:
-		if (FL_PUSH == this->_i_mouse_button_state) {
-			e_act = E_ACT_MOVE_START;
-
-			this->set_i_mouse_middle_dragging( ON );
-		} else
-		if (FL_RELEASE==this->_i_mouse_button_state){
-		  if (ON == this->_i_mouse_middle_dragging) {
-			e_act = E_ACT_MOVE_STOP;
-
-			this->set_i_mouse_middle_dragging( OFF );
-		  }
-		}
-		break;
-
-	case FL_RIGHT_MOUSE:
-/*
-		if (FL_PUSH == this->_i_mouse_button_state){
-			e_act = E_ACT_ZOOM_DOWN_HALF_AT_POS;
-		}
-*/
-		break;
-	}
-#endif
-	switch (this->_i_mouse_which_button){
-	case FL_LEFT_MOUSE:
-		if (FL_PUSH == this->_i_mouse_button_state) {
-			e_act = E_ACT_MOVE_START;
-			this->set_i_mouse_middle_dragging( ON );
-		} else
-		if (FL_RELEASE == this->_i_mouse_button_state){
-		  if (ON == this->_i_mouse_middle_dragging) {
-			e_act = E_ACT_MOVE_STOP;
-			this->set_i_mouse_middle_dragging( OFF );
-		  }
-		}
-		break;
-	case FL_MIDDLE_MOUSE: break;
-	case FL_RIGHT_MOUSE: break;
-	}
-
-	/* マウスが移動した */
-	if (ON == this->_i_mouse_motion_sw) {
-		if (ON == this->_i_mouse_middle_dragging) {
-			e_act = E_ACT_MOVE_DRAG;
-		} else {
-			e_act = E_ACT_MOVE_HOVER;
-		}
-		this->_i_mouse_motion_sw = OFF;
-	}
-
-	this->_e_act = e_act;
-}
-bool fltk_event::clicked_mouse_middle_button( void )
-{
-	 return this->_i_mouse_which_button == FL_MIDDLE_MOUSE &&
-		this->_i_mouse_button_state == FL_PUSH
-		;
+	this->x_ = this->move_start_x_ = x;
+	this->y_ = this->move_start_y_ = y;
+	this->which_button_ = button;
+	this->button_click_sw_  = true;
 }
 
-bool fltk_event::clicked_mouse_left_button( void )
+//FL_RELEASE
+void mouse_state::event_release( const int button ,const long x ,const long y )
 {
-	 return this->_i_mouse_which_button == FL_LEFT_MOUSE &&
-		this->_i_mouse_button_state == FL_PUSH
-		;
+	this->x_ = x;
+	this->y_ = y;
+	this->which_button_ = button;
+	this->button_click_sw_ = false;
+}
+
+//FL_MOVE
+void mouse_state::event_move( const long x ,const long y )
+{
+	this->x_ = x;
+	this->y_ = y;
+}
+
+//FL_DRAG
+void mouse_state::event_drag( const long x ,const long y )
+{
+	this->x_ = x;
+	this->y_ = y;
 }
 
 /*--------------------------------------------------------*/

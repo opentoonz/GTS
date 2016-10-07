@@ -4,10 +4,11 @@
 
 void gts_master::color_trace_in_view_area( void )
 {
-	//static int _i_mouse_middle_dragging_sw = OFF;
-
 	/* マウスドラッグ中は処理しない */
-	if (ON == this->cl_fltk_event.get_i_mouse_middle_dragging()) {
+	if (
+	 this->cl_fltk_event.cl_mouse_state.which_button() == FL_LEFT_MOUSE
+	 && this->cl_fltk_event.cl_mouse_state.is_clicked()
+	) {
 		return;
 	}
 
