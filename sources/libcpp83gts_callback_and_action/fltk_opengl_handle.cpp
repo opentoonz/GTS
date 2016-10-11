@@ -79,10 +79,11 @@ int fltk_opengl::handle( int event )
 		}
 
 		/* マウスドラッグ位置を記憶 */
-		ms.event_drag( Fl::event_x() ,Fl::event_y() );
+		ms.memory_drag_event( Fl::event_x() ,Fl::event_y() );
 
 		/* 左ボタンによる実行を設定 */
-		if (ms.which_button() == FL_LEFT_MOUSE) {
+		if (ms.which_button() == FL_LEFT_MOUSE
+		||  ms.which_button() == FL_MIDDLE_MOUSE) {
 			/* reserveがなければ予約入れる
 			既にreserveあれば予約せず何もしない */
 			cl_gts_master.reserve( E_ACT_MOVE_DRAG );
@@ -97,7 +98,7 @@ int fltk_opengl::handle( int event )
 		}
 
 		/* マウス移動位置を記憶 */
-		ms.event_move( Fl::event_x() ,Fl::event_y() );
+		ms.memory_move_event( Fl::event_x() ,Fl::event_y() );
 
 		/* reserveがなければ予約入れる
 			既にreserveあれば予約せず何もしない */
@@ -105,48 +106,48 @@ int fltk_opengl::handle( int event )
 
 		return 1;
 
-	case FL_PUSH: /* A mouse button has gone down */
+	case FL_PUSH: /* マウスボタンをクリックした瞬間 */
 		/* 扱う対象がないなら、何もしない */
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
 			return 0;
 		}
 
 		/* マウスボタンの状態と位置を記憶 */
-		ms.event_push(
+		ms.memory_push_event(
 			Fl::event_button() ,Fl::event_x() ,Fl::event_y()
 		);
 
-		/* 即実行 */
+		/* 動作初期設定 */
 		cl_gts_master.action( E_ACT_MOVE_START );
 
-		/* (クリックした瞬間)2値化画像をscan画像に切替る指示 */
+		/* 画像移動時、2値化画像からscan画像表示設定に... */
 		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
-			ms.which_button() == FL_LEFT_MOUSE
+			ms.which_button() == FL_MIDDLE_MOUSE
 		);
 
-		/* event_push()する前に、表示 */
+		/* ...再描画する */
 		cl_gts_gui.opengl_view->flush();
 
 		return 1;
 
-	case FL_RELEASE: /* A mouse button has been released. */
+	case FL_RELEASE: /* マウスボタンをリリースした瞬間 */
 		/* 扱う対象がないなら、何もしない */
 		if (0 == cl_gts_master.cl_ogl_view.is_main_canvas()) {
 			return 0;
 		}
 
-		/* マウスボタンの状態と位置を記憶 */
-		ms.event_release(
-			Fl::event_button() ,Fl::event_x() ,Fl::event_y()
-		);
-
-		/* (クリックした瞬間)2値化画像に(scan画像から)戻す */
+		/* scan画像から2値化画像表示設定に... */
 		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
 			false
 		);
 
-		/* event_release()後に、表示 */
+		/* ...再描画する */
 		cl_gts_gui.opengl_view->flush();
+
+		/* マウスボタンの状態と位置を記憶 */
+		ms.memory_release_event(
+			Fl::event_button() ,Fl::event_x() ,Fl::event_y()
+		);
 
 		return 1;
 

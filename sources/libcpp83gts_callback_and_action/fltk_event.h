@@ -16,16 +16,20 @@ public:
 	{}
 
 	//FL_PUSH
-	void event_push( const int button ,const long x ,const long y );
+	void memory_push_event(
+		const int button ,const long x ,const long y
+	);
 
 	//FL_RELEASE
-	void event_release( const int button ,const long x ,const long y );
+	void memory_release_event(
+		const int button ,const long x ,const long y
+	);
 
 	//FL_MOVE
-	void event_move( const long x ,const long y );
+	void memory_move_event( const long x ,const long y );
 
 	//FL_DRAG
-	void event_drag( const long x ,const long y );
+	void memory_drag_event( const long x ,const long y );
 
 	int x(void) { return this->x_; }
 	int y(void) { return this->y_; }

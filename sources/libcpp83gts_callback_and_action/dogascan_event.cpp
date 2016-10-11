@@ -210,8 +210,9 @@ void gts_master::_move_start( void )
 {
 	this->cl_ogl_view.drag_move_start();
 
-	/* リアルタイムスイッチが入っているときに */
-	if (cl_gts_gui.menite_color_trace_real_time->value()) {
+	if (cl_gts_gui.menite_heavy_view_mode_in->value()) {
+	 /* リアルタイムスイッチが入っているときに */
+	 if (cl_gts_gui.menite_color_trace_real_time->value()) {
 		iip_canvas *clp_sub;
 		clp_sub = this->cl_ogl_view.get_clp_sub_canvas();
 		/* sub画像がある(２画面表示)なら画面を白クリア */
@@ -224,6 +225,7 @@ void gts_master::_move_start( void )
 				clp_sub->get_l_scanline_channel_bytes()
 			);
 		}
+	 }
 	}
 }
 void gts_master::_move_drag( void )
@@ -231,9 +233,30 @@ void gts_master::_move_drag( void )
 	/*
 	考察
 	DRAGによる表示がidleにより遅れて処理する場合
-	マウスReleaseした後に、行われる
-	今はRelease時のmouse_stop()処理は無い
+	マウスReleaseした後に行われることがあるかもしれない
+	今はRelease時のmouse_stop()処理は無いので問題ない
 	*/
+
+	/* なにもつかんでいないので何もしない */
+	if (this->cl_ogl_view.get_e_select_part() == E_SELECT_NOTHING) {
+		return;
+	}
+
+	mouse_state& ms = cl_gts_master.cl_fltk_event.cl_mouse_state;
+	if (!(
+	/* 画像を移動するのは、マウス真ん中ボタンで行う */
+	(	this->cl_ogl_view.get_e_select_part() == E_SELECT_IMAGE
+		&& ms.which_button() == FL_MIDDLE_MOUSE
+	)
+	/* Crop枠の変更は、マウス左ボタンで行う */
+	||
+	(	this->cl_ogl_view.get_e_select_part() != E_SELECT_IMAGE
+		&& ms.which_button() == FL_LEFT_MOUSE
+	)
+	)) {
+		/* ...のでなければ動作しないこと */
+		return;
+	}
 
 	/* Cropエリア比が指定されていたらそれをセットし、指定なしならゼロ */
 	double crop_aspect_ratio_w = 0.0;
@@ -360,8 +383,11 @@ void gts_master::_crop_off( void ) { this->__crop_area(OFF); }
 void gts_master::_escape( void )
 {
 	if (
-	 this->cl_fltk_event.cl_mouse_state.which_button() == FL_LEFT_MOUSE
-	 && this->cl_fltk_event.cl_mouse_state.is_clicked()
+ (	this->cl_fltk_event.cl_mouse_state.which_button()==FL_LEFT_MOUSE
+	||
+	this->cl_fltk_event.cl_mouse_state.which_button()==FL_MIDDLE_MOUSE
+ )
+ &&	this->cl_fltk_event.cl_mouse_state.is_clicked()
 	) {
 		this->cl_ogl_view.escape_motion();
 		this->cl_fltk_event.cl_mouse_state.escape_clicked();

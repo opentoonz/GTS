@@ -4,10 +4,9 @@
 
 void gts_master::color_trace_in_view_area( void )
 {
-	/* マウスドラッグ中は処理しない */
+	/* マウスドラッグ中、2値化の変化はないので、処理しない */
 	if (
-	 this->cl_fltk_event.cl_mouse_state.which_button() == FL_LEFT_MOUSE
-	 && this->cl_fltk_event.cl_mouse_state.is_clicked()
+	 this->cl_fltk_event.cl_mouse_state.is_clicked()
 	) {
 		return;
 	}

@@ -2,7 +2,7 @@
 #include "fltk_event.h"
  
 //FL_PUSH
-void mouse_state::event_push( const int button ,const long x ,const long y )
+void mouse_state::memory_push_event( const int button ,const long x ,const long y )
 {
 	this->x_ = this->move_start_x_ = x;
 	this->y_ = this->move_start_y_ = y;
@@ -11,7 +11,7 @@ void mouse_state::event_push( const int button ,const long x ,const long y )
 }
 
 //FL_RELEASE
-void mouse_state::event_release( const int button ,const long x ,const long y )
+void mouse_state::memory_release_event( const int button ,const long x ,const long y )
 {
 	this->x_ = x;
 	this->y_ = y;
@@ -20,14 +20,14 @@ void mouse_state::event_release( const int button ,const long x ,const long y )
 }
 
 //FL_MOVE
-void mouse_state::event_move( const long x ,const long y )
+void mouse_state::memory_move_event( const long x ,const long y )
 {
 	this->x_ = x;
 	this->y_ = y;
 }
 
 //FL_DRAG
-void mouse_state::event_drag( const long x ,const long y )
+void mouse_state::memory_drag_event( const long x ,const long y )
 {
 	this->x_ = x;
 	this->y_ = y;
