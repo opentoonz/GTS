@@ -53,7 +53,7 @@ class gts_gui {open
           MenuItem {} {
             label {    Save Config}
             callback {cl_gts_master.cb_config_save();}
-            xywh {5 5 100 20} shortcut 0x53
+            xywh {5 5 100 20} shortcut 0x40073
           }
           MenuItem menite_config_save_as {
             label {Save As Config...}
@@ -70,7 +70,7 @@ class gts_gui {open
             label {    Quit}
             callback {// cl_gts_master.reserve_by_menu(E_ACT_QUIT);
 cl_gts_master.cb_quit();}
-            xywh {10 10 100 20} shortcut 0x51
+            xywh {10 10 100 20} shortcut 0x40071
           }
         }
         Submenu {} {
@@ -80,7 +80,7 @@ cl_gts_master.cb_quit();}
           MenuItem {} {
             label Preview
             callback {cl_gts_master.cb_scan_and_preview();}
-            xywh {5 5 100 20} shortcut 0x40070
+            xywh {5 5 100 20} shortcut 0x70
           }
           MenuItem menite_start_scan {
             label Scan
@@ -1250,7 +1250,7 @@ cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();
 cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_edit_hsv_min_max->clear();}
-      xywh {50 50 285 755} type Double non_modal visible
+      xywh {50 0 285 755} type Double non_modal visible
     } {
       Fl_Group {} {
         xywh {5 5 280 120}
