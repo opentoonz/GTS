@@ -2,73 +2,81 @@
 #include "gts_master.h"
 #include "gts_gui.h"
 
+namespace {
+ int fl_shortcut_up_down_left_right_( int key )
+ {
+	iip_opengl_l3event& og = cl_gts_master.cl_ogl_view;
+
+	/* Cropハンドル移動：Cropモードで、選択あり、選択Actionでない */
+	if(og.get_e_select_part() != E_SELECT_NOTHING
+	&& og.get_e_select_part() != E_SELECT_IMAGE
+	&& og.get_crop_disp_sw()
+	) {
+		/* マウスポインター移動に合わせて画像表示パラメータを設定 */
+		int xd = 0;
+		int yd = 0;
+		long zm = og.get_l_zoom();
+
+		if (zm < 1L) { zm = 1L; }
+		switch (key) {
+		case FL_Up:	xd = 0; yd =-1 * zm; break;
+		case FL_Down:	xd = 0; yd = 1 * zm; break;
+		case FL_Left:	xd =-1 * zm; yd = 0; break;
+		case FL_Right:	xd = 1 * zm; yd = 0; break;
+		}
+		og.drag_move_start();
+		og.drag_moving( xd , yd , 0.0 , 0.0 );
+
+		/* 画像再表示 */
+		cl_gts_gui.opengl_view->redraw();
+
+		/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
+		cl_gts_master.from_opengl_rect_to_area_val();
+
+		return 1;
+	}
+	/* フレーム送り戻し：Cropでない、あるいは、Crop選択されてない */
+	else {
+		cb_file_number_list& fn = cl_gts_master.cl_file_number_list;
+		switch (key) {
+		case FL_Up:
+			if (fn.selected_prev_frame()) {
+			 cl_gts_master.cb_read_and_trace_and_preview();
+			}
+			break;
+		case FL_Down:
+			if (fn.selected_next_frame()) {
+			 cl_gts_master.cb_read_and_trace_and_preview();
+			}
+			break;
+		case FL_Left: /* Fl_ScrollBarのFL_Left イベントをCancel */
+		case FL_Right:/* Fl_ScrollBarのFL_RightイベントをCancel */
+			break;
+		}
+		return 1;
+	}
+	return 0;
+ }
+}
 int fltk_opengl::handle( int event )
 {
-	int	cc;
-	//char	*cp;
-	//int	ii;
 	mouse_state& ms = cl_gts_master.cl_fltk_event.cl_mouse_state;
 
 	switch(event) {
+
 	/*
 	 * Keyboard Events
 	 */
-
 	//case FL_KEYDOWN:
 	//case FL_KEYUP:
 	//case FL_KEYBOARD:
-
 	case FL_SHORTCUT:
-		cc = Fl::event_key();
-//std::cout << __FILE__ << " " << __LINE__ << " FL_SHORTCUT event_key=" << cc << std::endl;
-#if 0
-		cp = (char *)Fl::event_text();
-		ii = Fl::event_length();
-//pri_funct_msg_vr("key %c<%d>  text %c<%d>", cc,cc, cp[0],cp[0] );
-
-		if (1 == ii) {
-			cc = (int)(cp[0]);
+		switch (Fl::event_key()) {
+		case FL_Up: case FL_Down: case FL_Left: case FL_Right:
+		 return fl_shortcut_up_down_left_right_(Fl::event_key());
 		}
-
-		/* キーの状態を記憶 */
-		cl_gts_master.cl_fltk_event.set_keyboard( cc );
-
-		/* キーの記憶から実行イベントを記憶 */
-		cl_gts_master.cl_fltk_event.set_keyboard_to_act();
-
-		/* 実行イベントと、idle callbackを設定 */
-		cl_gts_master.reserve_by_key_event(
-		 cl_gts_master.cl_fltk_event.get_e_act()
-		);
-#endif
-		switch (cc) {
-		case FL_Up:
-	if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
-	    cl_gts_master.cb_read_and_trace_and_preview();
-	}
-			return 1;
-		case FL_Down:
-	if (cl_gts_master.cl_file_number_list.selected_next_frame()) {
-	    cl_gts_master.cb_read_and_trace_and_preview();
-	}
-			return 1;
-		case FL_Left: /* Fl_ScrollBarのFL_Left イベントをCancel */
-		case FL_Right:/* Fl_ScrollBarのFL_RightイベントをCancel */
-			return 1;
-		}
-#if 0
-		/* メニューのショートカットキーイベントを起動したい */
-		switch (cc) {
-		case FL_Up:
-		case FL_Down:
-		case FL_Left:
-		case FL_Right:
-			return cl_gts_gui.menbar_menu_top->handle( event );
-			/* これだと落ちる */
-		}
-#endif
-
 		return 0;
+
 	/*
 	 * Mouse Events
 	 */
@@ -140,6 +148,9 @@ int fltk_opengl::handle( int event )
 		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
 			false
 		);
+
+		/* 動作初期設定 */
+		cl_gts_master.action( E_ACT_MOVE_STOP );
 
 		/* ...再描画する */
 		cl_gts_gui.opengl_view->flush();

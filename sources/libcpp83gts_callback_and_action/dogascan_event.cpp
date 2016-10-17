@@ -206,8 +206,24 @@ void gts_master::_scroll_y_absolute( void )
 	cl_gts_gui.opengl_view->redraw();
 }
 
+void gts_master::_move_hover( void )
+{
+	if (ON == this->cl_ogl_view.mouse_moving(
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
+	)) {
+		cl_gts_gui.opengl_view->redraw();
+	}
+}
 void gts_master::_move_start( void )
 {
+	/* 1 選択可能状態にする */
+	this->cl_ogl_view.set_select_action_sw(true);
+
+	/* 2 選択する */
+	this->_move_hover();/* 再選択をする */
+
+	/* 3 選択から移動の開始点の設定 */
 	this->cl_ogl_view.drag_move_start();
 
 	if (cl_gts_gui.menite_heavy_view_mode_in->value()) {
@@ -234,7 +250,6 @@ void gts_master::_move_drag( void )
 	考察
 	DRAGによる表示がidleにより遅れて処理する場合
 	マウスReleaseした後に行われることがあるかもしれない
-	今はRelease時のmouse_stop()処理は無いので問題ない
 	*/
 
 	/* なにもつかんでいないので何もしない */
@@ -295,15 +310,23 @@ void gts_master::_move_drag( void )
 	this->set_scrollbar();
 
 	/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
-	this->_from_opengl_rect_to_area_val();
+	this->from_opengl_rect_to_area_val();
 }
-void gts_master::_move_hover( void )
+void gts_master::_move_stop( void )
 {
-	if (ON == this->cl_ogl_view.mouse_moving(
-		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+	/* 左ボタンでマウスリリースしたときCropを選択している */
+	if (cl_gts_master.cl_fltk_event.cl_mouse_state.which_button()
+	    == FL_LEFT_MOUSE
+	&&  this->cl_ogl_view.get_e_select_part() != E_SELECT_NOTHING
+	&&  this->cl_ogl_view.get_e_select_part() != E_SELECT_IMAGE
+	&&  this->cl_ogl_view.get_e_select_part() == 
+	    this->cl_ogl_view.get_select_part(
+		  cl_gts_master.cl_fltk_event.cl_mouse_state.x()
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
-	)) {
-		cl_gts_gui.opengl_view->redraw();
+	    )
+	) {
+		/* 非選択状態に。hover時に選択しない */
+		this->cl_ogl_view.set_select_action_sw(false);
 	}
 }
 
@@ -372,13 +395,16 @@ void gts_master::_wview_ud_onion( void )
 	this->set_scrollbar();
 }
 
-void gts_master::__crop_area( int sw )
+void gts_master::_crop_on( void )
 {
-	this->cl_ogl_view.crop_area(sw);
+	this->cl_ogl_view.set_crop_disp_sw(ON);
 	cl_gts_gui.opengl_view->redraw();
 }
-void gts_master::_crop_on( void ) { this->__crop_area(ON); }
-void gts_master::_crop_off( void ) { this->__crop_area(OFF); }
+void gts_master::_crop_off( void )
+{
+	this->cl_ogl_view.set_crop_disp_sw(OFF);
+	cl_gts_gui.opengl_view->redraw();
+}
 
 void gts_master::_escape( void )
 {
@@ -574,17 +600,17 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 	else if (E_ACT_SCROLL_Y_ABSOLUTE == e_act) {
 		this->_scroll_y_absolute();
 	}
+	else if (E_ACT_MOVE_HOVER == e_act) {
+		this->_move_hover();
+	}
 	else if (E_ACT_MOVE_START == e_act) {
 		this->_move_start();
 	}
 	else if (E_ACT_MOVE_DRAG == e_act) {
 		this->_move_drag();
 	}
-	else if (E_ACT_MOVE_HOVER == e_act) {
-		this->_move_hover();
-	}
 	else if (E_ACT_MOVE_STOP == e_act) {
-		/* 予約 */
+		this->_move_stop();
 	}
 	else if (E_ACT_CHANNEL_RGB_TO_RGB == e_act) {
 		this->_channel_rgb_to_rgb();

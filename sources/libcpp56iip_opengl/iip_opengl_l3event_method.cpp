@@ -508,12 +508,19 @@ void iip_opengl_l3event::move_pixel( void )
 	{	    this->_clp_sub->move_pixel();
 		    this->_clp_sub->reshape_opengl(); }
 }
-void iip_opengl_l3event::crop_area( int sw )
+void iip_opengl_l3event::set_crop_disp_sw( int sw )
 {
 	if (NULL != this->_clp_main)
 	{	    this->_clp_main->set_i_crop_disp_sw(sw); }
 	if (NULL != this->_clp_sub )
 	{	    this->_clp_sub->set_i_crop_disp_sw(sw); }
+}
+void iip_opengl_l3event::set_select_action_sw( const bool sw )
+{
+	if (NULL != this->_clp_main)
+	{	    this->_clp_main->set_select_action_sw(sw); }
+	if (NULL != this->_clp_sub )
+	{	    this->_clp_sub->set_select_action_sw(sw); }
 }
 void iip_opengl_l3event::escape_motion( void )
 {
@@ -637,6 +644,23 @@ E_SELECT_PART iip_opengl_l3event::get_e_select_part( void )
 	{ return    this->_clp_sub->get_e_select_part();}
 	return E_SELECT_NOTHING;
 }
+E_SELECT_PART iip_opengl_l3event::get_select_part( long l_xp ,long l_yp )
+{
+	if (NULL != this->_clp_main)
+	{ return    this->_clp_main->get_select_part(l_xp,l_yp);}
+	if (NULL != this->_clp_sub )
+	{ return    this->_clp_sub->get_select_part(l_xp,l_yp);}
+	return E_SELECT_NOTHING;
+}
+bool iip_opengl_l3event::get_crop_disp_sw( void )
+{
+	if (NULL != this->_clp_main)
+	{ return    this->_clp_main->get_crop_disp_sw();}
+	if (NULL != this->_clp_sub )
+	{ return    this->_clp_sub->get_crop_disp_sw();}
+	return false;
+}
+
 void iip_opengl_l3event::set_crop_area(long l_xpos, long l_ypos, long l_xsize, long l_ysize )
 {
 	if (NULL != this->_clp_main) {

@@ -297,7 +297,6 @@ namespace {
 	/* 掴むための四角マークは選択時はオレンジ色、非選択時は赤灰色 */
 	void color_mark( void ) { glColor3d(this->mr_,this->mg_,this->mb_);}
 	void draw_mark( E_SELECT_PART select_crnt ) {
-		if (select_crnt==this->select_on_) {glColor3d(sr_,sg_,sb_);}
 		GLdouble xx=0,yy=0;
 		switch (select_crnt) {
 		case E_SELECT_LEFTBOTTOM:	xx= x1_; yy= y1_; break;
@@ -310,8 +309,15 @@ namespace {
 		case E_SELECT_BOTTOM:		xx= xc_; yy= y1_; break;
 		case E_SELECT_CENTER:		xx= xc_; yy= yc_; break;
 		}
-		opengl_line_rect_by_center_( xx, yy ,this->radius_ );
-		if (select_crnt==this->select_on_) {glColor3d(mr_,mg_,mb_);}
+		if (select_crnt==this->select_on_) {
+			glColor3d(sr_,sg_,sb_);
+			opengl_line_rect_by_center_(xx,yy,this->radius_   );
+			opengl_line_rect_by_center_(xx,yy,this->radius_-1.);
+		}
+		else {
+			glColor3d(mr_,mg_,mb_);
+			opengl_line_rect_by_center_( xx,yy,this->radius_ );
+		}
 	}
  private:
 	//const GLdouble

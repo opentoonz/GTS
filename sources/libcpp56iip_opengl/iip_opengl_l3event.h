@@ -111,7 +111,8 @@ public:
 	int mouse_moving( long l_mouse_x, long l_mouse_y );
 	void move_smooth( void );
 	void move_pixel( void );
-	void crop_area( int sw );
+	void set_crop_disp_sw( int sw );
+	void set_select_action_sw( const bool sw );
 	void escape_motion( void );
 
 	void scrollbar_x(long l_val, long l_min, long l_max);
@@ -148,7 +149,11 @@ public:
 	long get_l_crop_yp( void );
 	long get_l_crop_width( void );
 	long get_l_crop_height( void );
+
 	E_SELECT_PART get_e_select_part( void );
+	E_SELECT_PART get_select_part( long l_xp ,long l_yp );
+	bool get_crop_disp_sw( void );
+
 	void set_crop_area(long l_xpos, long l_ypos, long l_xsize, long l_ysize );
 
 	/* 部分処理用情報 */

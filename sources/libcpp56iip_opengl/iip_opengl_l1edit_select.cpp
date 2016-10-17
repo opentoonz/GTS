@@ -2,37 +2,45 @@
 #include "pri.h"
 #include "iip_opengl_l1edit.h"
 
+E_SELECT_PART iip_opengl_l1edit::get_select_part( long l_xp, long l_yp )
+{
+	E_SELECT_PART	select_part = E_SELECT_NOTHING; /* 初期値 */
+
+	/* マウスは左上原点、ここでは左下原点 */
+	l_yp = this->_l_view_y_size - 1L - l_yp;
+
+	/* 切抜き編集が有効なら切抜きエリア選択 */
+	if (ON == this->_i_crop_disp_sw) {
+		select_part = this->_selection_crop_picker( l_xp, l_yp );
+	}
+
+	/* 切抜き隅エリア以外は、強制的に画像を選ぶ */
+	if (E_SELECT_NOTHING == select_part) {
+		select_part = E_SELECT_IMAGE;
+	}
+
+	return select_part;
+}
+
 /* マウスが動いているとき常時選択動作する */
 /* 変化があったとき(選択しなくなったときも含めて)ONを戻す */
 int iip_opengl_l1edit::_select( long l_xp, long l_yp )
 {
-	E_SELECT_PART	e_select_part;
-	int	i_ret;
-
-	/* マウスは左上原点、ここでは左下原点 */
-	l_yp = this->_l_view_y_size - 1L - l_yp;
-	/* 初期値 */
-	e_select_part = E_SELECT_NOTHING;
-
-	/* 切抜き編集が有効なら切抜きエリア選択 */
-	if (ON == this->_i_crop_disp_sw) {
-	 e_select_part = this->_selection_crop_picker( l_xp, l_yp );
+	/* 選択をしない。現在の選択を維持する */
+	if (!this->select_action_sw_) {
+		return OFF;
 	}
 
-	/* 切抜き隅エリア以外は、強制的に画像を選ぶ */
-	if (E_SELECT_NOTHING == e_select_part) {
-		e_select_part = E_SELECT_IMAGE;
-	}
+	/* 指定座標での選択対象を得る */
+	E_SELECT_PART select_part = this->get_select_part( l_xp , l_yp );
 
 	/* 変化したときはONを返す */
-	if (this->_e_select_part != e_select_part) {
-		i_ret = ON;
-	} else {i_ret = OFF;}
+	int sw = (this->_e_select_part != select_part) ?ON :OFF;
 
 	/* 新しい値を設定 */
-	this->_e_select_part = e_select_part;
+	this->_e_select_part = select_part;
 
-	return i_ret;
+	return sw;
 }
 
 namespace {
