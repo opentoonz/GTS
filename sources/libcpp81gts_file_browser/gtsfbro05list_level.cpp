@@ -184,7 +184,7 @@ int gtsfbro05list_level::_make_dir_or_file_level( const char *ccp_gui_main_dir, 
 		return NG;
 	}
 
-	if (0 == cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
 		e_1st_main_type = E_DIR_OR_FILE_IS_DIR;
 		e_1st_sub_type = E_DIR_OR_FILE_IS_NOTHING;
 	} else {
@@ -251,7 +251,7 @@ int gtsfbro05list_level::change_level_list( void )
 	ccp_gui_main_dir= cl_gts_gui.filinp_level_dir->value();
 	ccp_gui_sub_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();
 
-	if (0 == cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
 		ccp_dir = ccp_gui_main_dir;;
 	} else {
 		ccp_dir = ccp_gui_sub_dir;;
@@ -342,7 +342,7 @@ void gtsfbro05list_level::change_level_dir( const char *ccp_dir )
 		cp_gui_dir = (char *)ccp_dir;
 	}
 
-	if (0 == cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
 	 cl_gts_gui.filinp_level_dir->value(cp_gui_dir);
 	 cl_gts_gui.filinp_level_dir->position(strlen(cp_gui_dir));
 	}

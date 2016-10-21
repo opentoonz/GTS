@@ -45,7 +45,7 @@ void gtsfbro06cb_level::cb_list( void )
 		i_dir_sw = ON;
 	}
 
-	if (0 == cl_gts_gui.ligbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
 	 ccp_crnt_dir = cl_gts_gui.filinp_level_dir->value();
 	} else {
 	 ccp_crnt_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();
@@ -128,7 +128,7 @@ void gtsfbro06cb_level::cb_list( void )
 
 	/* ディレクトリでなければファイルである */
 	i_list_num = cl_gts_gui.selbro_level_list->value() - 1;
-	if (0 == cl_gts_gui.choice_level_list_form->value()) {
+	if (0 == cl_gts_gui.choice_level_list_form->value()) {/* File表記 */
 		cl_gts_gui.strinp_level_file->value(cp_dir_or_file);
 
 		/* 画像情報を表示する */
@@ -142,7 +142,7 @@ void gtsfbro06cb_level::cb_list( void )
 			return;
 		}
 	}
-	/* level表記のとき */
+	/* Level表記のとき */
 	else {
 		cl_gts_gui.strinp_level_file->value(
 			this->cp_dir_or_level_name( i_list_num )
@@ -153,6 +153,10 @@ void gtsfbro06cb_level::cb_list( void )
 		cl_gts_gui.valinp_level_end->value(
 			this->i_dir_or_level_end(i_list_num)
 		);
+		/* End/EndressをEndに設定 */
+		cl_gts_gui.choice_level_continue_type->value(0);
+		cl_gts_gui.valinp_level_end->show();
+		cl_gts_gui.choice_level_endless_direction->hide();
 
 		/* levelと画像情報を表示する */
 		if (OK != this->_list_image_info(

@@ -250,11 +250,18 @@ int gtsfbro06cb_level::_image_by_dir_and_file( const char *ccp_dir, const char *
 	t_start = clock() - t_start;
 		/* 123456789012345678901234567 */
 		/* 10.123%(100x100)(10.123sec) */
+/*
 	snprintf( ca32,32,"%7.3f%%(%ldx%ld)(%.3gsec)",
 		d_scale*100.0,
 		clp_iip_scal->get_l_width(),
 		clp_iip_scal->get_l_height(),
 		(double)t_start/CLOCKS_PER_SEC
+	);
+*/
+	snprintf( ca32,32,"Zoom %7.3f%%(%ldx%ld)"
+		, d_scale*100.0
+		, clp_iip_scal->get_l_width()
+		, clp_iip_scal->get_l_height()
 	);
 	cl_gts_gui.box_level_image->label( ca32 );
 	cl_gts_gui.box_level_image->redraw();

@@ -48,7 +48,7 @@ int gts_master::exec( void )
 	cl_gts_gui.window_opengl->position(		100,100 );
 	cl_gts_gui.window_config_load->position(	110,150 );
 	cl_gts_gui.window_config_save_as->position(	120,200 );
-	cl_gts_gui.window_level->position(		130,250 );
+	cl_gts_gui.window_level_set->position(		130,250 );
 	cl_gts_gui.window_x1view->position(		140,300 );
 	cl_gts_gui.window_trace_batch->position(	150,350 );
 

@@ -148,7 +148,7 @@ int gtsfbro06cb_level::_info_image_by_dir_and_file( const char *ccp_dir, const c
 	// this->text_add("\n");
 
 	/* 画像表示 */
-	if (cl_gts_gui.ligbut_level_view_sw->value()) {
+	if (cl_gts_gui.menite_level_view_sw->value()) {
 	 cl_gts_gui.box_level_image->show();
 	 cl_gts_gui.box_level_x1view->show();
 	 if (OK != this->_image_by_dir_and_file( ccp_dir, ccp_file )) {
@@ -177,10 +177,10 @@ int gtsfbro06cb_level::_info_image_by_dir_and_num( const char *ccp_file_for_head
 /***pri_funct_msg_vr( "%s %d : ligut_level_info_rgb_sub<%d> <%s>",
 __FILE__,
 __LINE__,
-cl_gts_gui.ligbut_level_info_rgb_sub_sw->value(),
+cl_gts_gui.menite_level_view_rgb_full_sw->value(),
 cl_gts_gui.filinp_level_rgb_scan_dir->value()
 );***/
-	if (cl_gts_gui.ligbut_level_info_rgb_sub_sw->value()) {
+	if (cl_gts_gui.menite_level_view_rgb_full_sw->value()) {
 		ccp_gui_dir =
 			cl_gts_gui.filinp_level_rgb_scan_dir->value();
 		if (OK != this->i_lpath_cat_file_for_full(

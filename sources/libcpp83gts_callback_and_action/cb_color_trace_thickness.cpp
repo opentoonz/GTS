@@ -201,32 +201,32 @@ void cb_color_trace_thickness::tgt_change_black_( E_COLOR_TRACE_HAB_COLORS trace
 	/* black off */
 	if (	      E_COLOR_TRACE_HAB_01 != trace_list_pos
 	 && cl_gts_gui.roubut_thickness_01_tgt_is_bl->value()) {
-	    cl_gts_gui.roubut_thickness_01_tgt_is_bl->value(0);
+	    cl_gts_gui.roubut_thickness_01_tgt_is_bl->clear();
 			   this->cb_enh_01();
 	}
 	if (	      E_COLOR_TRACE_HAB_02 != trace_list_pos
 	 && cl_gts_gui.roubut_thickness_02_tgt_is_bl->value()) {
-	    cl_gts_gui.roubut_thickness_02_tgt_is_bl->value(0);
+	    cl_gts_gui.roubut_thickness_02_tgt_is_bl->clear();
 			   this->cb_enh_02();
 	}
 	if (	      E_COLOR_TRACE_HAB_03 != trace_list_pos
 	 && cl_gts_gui.roubut_thickness_03_tgt_is_bl->value()) {
-	    cl_gts_gui.roubut_thickness_03_tgt_is_bl->value(0);
+	    cl_gts_gui.roubut_thickness_03_tgt_is_bl->clear();
 			   this->cb_enh_03();
 	}
 	if (	      E_COLOR_TRACE_HAB_04 != trace_list_pos
 	 && cl_gts_gui.roubut_thickness_04_tgt_is_bl->value()) {
-	    cl_gts_gui.roubut_thickness_04_tgt_is_bl->value(0);
+	    cl_gts_gui.roubut_thickness_04_tgt_is_bl->clear();
 			   this->cb_enh_04();
 	}
 	if (	      E_COLOR_TRACE_HAB_05 != trace_list_pos
 	 && cl_gts_gui.roubut_thickness_05_tgt_is_bl->value()) {
-	    cl_gts_gui.roubut_thickness_05_tgt_is_bl->value(0);
+	    cl_gts_gui.roubut_thickness_05_tgt_is_bl->clear();
 			   this->cb_enh_05();
 	}
 	if (	      E_COLOR_TRACE_HAB_06 != trace_list_pos
 	 && cl_gts_gui.roubut_thickness_06_tgt_is_bl->value()) {
-	    cl_gts_gui.roubut_thickness_06_tgt_is_bl->value(0);
+	    cl_gts_gui.roubut_thickness_06_tgt_is_bl->clear();
 			   this->cb_enh_06();
 	}
 	/* black on */

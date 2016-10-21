@@ -9,6 +9,10 @@ void iip_opengl_l3event::all_view( void )
 	case E_WVIEW_TYPE_MAIN:
 		if (NULL != this->_clp_main)
 		{	    this->_clp_main->all_view(); }
+		if ((NULL != this->_clp_main)
+		&&  (NULL != this->_clp_sub)) {
+			this->_set_pos_and_zoom_from_main_to_sub();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		if (NULL != this->_clp_main)
@@ -63,12 +67,15 @@ void iip_opengl_l3event::scroll_center( void )
 
 void iip_opengl_l3event::zoom_twice_at_center( void )
 {
-
 	switch (this->_e_wview_type) {
 	case E_WVIEW_TYPE_NOTHING: break;
 	case E_WVIEW_TYPE_MAIN:
 		if (NULL != this->_clp_main)
 		{	    this->_clp_main->zoom_twice_at_center(); }
+		if ((NULL != this->_clp_main)
+		&&  (NULL != this->_clp_sub)) {
+			this->_set_pos_and_zoom_from_main_to_sub();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		if (NULL != this->_clp_main)
@@ -97,6 +104,10 @@ void iip_opengl_l3event::zoom_half_at_center( void )
 	case E_WVIEW_TYPE_MAIN:
 		if (NULL != this->_clp_main)
 		{	    this->_clp_main->zoom_half_at_center(); }
+		if ((NULL != this->_clp_main)
+		&&  (NULL != this->_clp_sub)) {
+			this->_set_pos_and_zoom_from_main_to_sub();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		if (NULL != this->_clp_main)
@@ -126,6 +137,10 @@ void iip_opengl_l3event::zoom_up_at_center( void )
 	case E_WVIEW_TYPE_MAIN:
 		if (NULL != this->_clp_main)
 		{	    this->_clp_main->zoom_up_at_center(); }
+		if ((NULL != this->_clp_main)
+		&&  (NULL != this->_clp_sub)) {
+			this->_set_pos_and_zoom_from_main_to_sub();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		if (NULL != this->_clp_main)
@@ -154,6 +169,10 @@ void iip_opengl_l3event::zoom_down_at_center( void )
 	case E_WVIEW_TYPE_MAIN:
 		if (NULL != this->_clp_main)
 		{	    this->_clp_main->zoom_down_at_center(); }
+		if ((NULL != this->_clp_main)
+		&&  (NULL != this->_clp_sub)) {
+			this->_set_pos_and_zoom_from_main_to_sub();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		if (NULL != this->_clp_main)
@@ -182,6 +201,10 @@ void iip_opengl_l3event::zoom_num( long l_zoom )
 	case E_WVIEW_TYPE_MAIN:
 		if (NULL != this->_clp_main)
 		{	    this->_clp_main->zoom_num(l_zoom);}
+		if ((NULL != this->_clp_main)
+		&&  (NULL != this->_clp_sub)) {
+			this->_set_pos_and_zoom_from_main_to_sub();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		if (NULL != this->_clp_main)

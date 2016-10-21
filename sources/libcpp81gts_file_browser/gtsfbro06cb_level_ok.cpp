@@ -98,6 +98,12 @@ void gtsfbro06cb_level::cb_ok( void )
 	/* levelの終了に伴うx1view windowの閉じでは、
 	表示スイッチをOFFにしない */
 	cl_gts_gui.window_x1view->hide(); /* x1 Window閉じる */
-	cl_gts_gui.menite_level->clear(); /* menuのcheckを消す */
-	cl_gts_gui.window_level->hide();  /* Window閉じる */
+	cl_gts_gui.window_level_browse->hide();  /* Window閉じる */
+
+	/* RGB Scan Image _full画像の保存場所指定の時の状態復元 */
+	if (cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
+		cl_gts_gui.togbut_level_rgb_scan_browse_sw->clear();
+		cl_gts_gui.filinp_level_dir->activate();
+		cl_gts_gui.filinp_level_rgb_scan_dir->deactivate();
+	}
 }
