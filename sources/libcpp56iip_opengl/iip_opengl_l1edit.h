@@ -92,6 +92,7 @@ public:
 		this->_l_crop_height_backup_for_cancel = 0L;
 
 		this->_i_crop_disp_sw = OFF;
+		this->select_action_sw_ = true;
 		this->_l_crop_select_radius = 8L;
 
 		this->_e_select_part = E_SELECT_NOTHING;
@@ -184,13 +185,18 @@ public:
 	/* 表示(OpenGL) */
 	void draw_opengl( void );
 
-	/* 切抜きエリアの表示 */
+	/* 切抜きエリアの表示と選択設定 */
 	void set_i_crop_disp_sw( int sw )
 	{
 		this->_i_crop_disp_sw=sw;
 		if (OFF == sw) {
 			this->_e_select_part = E_SELECT_IMAGE;
 		}
+	}
+	/* 切抜きエリアの選択動作のみ設定 */
+	void set_select_action_sw( const bool sw )
+	{
+		this->select_action_sw_ = sw;
 	}
 	/* 切抜きエリア */
 	void set_crop_full_image( void ) {
@@ -210,8 +216,8 @@ public:
 	long get_l_crop_width( void ) { return this->_l_crop_width; }
 	long get_l_crop_height( void ) { return this->_l_crop_height; }
 
-	E_SELECT_PART get_e_select_part( void )
-	{ return this->_e_select_part; }
+	E_SELECT_PART get_e_select_part(void) {return this->_e_select_part;}
+	bool get_crop_disp_sw(void) { return this->_i_crop_disp_sw!=OFF; }
 
 	void set_crop_area(long l_xpos, long l_ypos, long l_xsize, long l_ysize );
 
@@ -223,6 +229,9 @@ public:
 
 	double crop_aspect_ratio_w; /* 2013-11-28追加 */
 	double crop_aspect_ratio_h; /* 2013-11-28追加 */
+
+	E_SELECT_PART get_select_part( long l_xp, long l_yp );
+
 private:
 	long	_l_view_x_pos,
 		_l_view_y_pos,
@@ -304,6 +313,7 @@ private:
 		_l_crop_height_backup_for_cancel;
 
 	int	_i_crop_disp_sw;
+	bool	select_action_sw_;
 	long	_l_crop_select_radius;	/* 掴む部分の半径 */
 
 	E_SELECT_PART _e_select_part;

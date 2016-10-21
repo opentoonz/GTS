@@ -3,7 +3,7 @@
 #include "gts_master.h"
 
 fltk_opengl::fltk_opengl(int x,int y,int w,int h,const char *l)
-            : Fl_Gl_Window(x,y,w,h,l)
+	: Fl_Gl_Window(x,y,w,h,l)
 {
 }
 
@@ -43,7 +43,8 @@ void fltk_opengl::draw()
 	}
 
 	if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
-		/* subエリアのトレス線表示 */
+		/* subエリアのカラートレス処理
+		と(指定にあれば)ドットノイズ除去 */
 		cl_gts_master.color_trace_in_view_area();
 
 		/* OpenGL全表示 */

@@ -30,9 +30,9 @@ int gts_master::_iipg_view_setup( int i_max_area_sw )
 
 	/* 最大サイズの場合切抜きをするのでON、それ以外はOFF */
 	if (ON == i_max_area_sw) {
-		this->cl_ogl_view.crop_area(ON);
+		this->cl_ogl_view.set_crop_disp_sw(ON);
 	} else if (OFF == i_max_area_sw) {
-		this->cl_ogl_view.crop_area(OFF);
+		this->cl_ogl_view.set_crop_disp_sw(OFF);
 	}/* ONでもOFFでもないとき(-1)はなにもしない-->以前の状態 */
 
 	/* 始めて、あるいは大きさの違う画像を表示するときは */

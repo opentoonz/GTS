@@ -165,7 +165,7 @@ int gts_master::next_scan_and_save_( void )
 	this->iipg_view_redraw_();
 
 	/* 12 切抜きはしないのでOFFにしておく */
-	this->cl_ogl_view.crop_area(OFF);
+	this->cl_ogl_view.set_crop_disp_sw(OFF);
 
 	/* 13 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */

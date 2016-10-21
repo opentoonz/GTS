@@ -188,6 +188,8 @@ public:
 
 	int _print_window_headline( void );
 
+	void from_opengl_rect_to_area_val( void );
+
 private:
 	int	_i_mv_sw,
 		_i_pv_sw,
@@ -242,10 +244,12 @@ private:
 	void _scroll_smooth( void );
 	void _scroll_x_absolute( void );
 	void _scroll_y_absolute( void );
+
+	void _move_hover( void );
 	void _move_start( void );
 	void _move_drag( void );
 	void _move_stop( void );
-	void _move_passive( void );
+
 	void __set_channel( int i_src, int i_tgt );
 	void _channel_rgb_to_rgb( void );
 	void _channel_red_to_red( void );
@@ -261,7 +265,6 @@ private:
 	void _wview_ud_parallel( void );
 	void _wview_lr_onion( void );
 	void _wview_ud_onion( void );
-	void __crop_area( int sw );
 	void _crop_on( void );
 	void _crop_off( void );
 	void _escape( void );
@@ -291,7 +294,6 @@ private:
 	void __area_rot90_size( int i_rot90, double d_w, double d_h, double *dp_w, double *dp_h );
 	void _area_rot90_menu( int i_rot90_old, int i_rot90_new );
 	void _area_rot90_openglrect( int i_rot90_old, int i_rot90_new );
-	void _from_opengl_rect_to_area_val( void );
 	void _from_area_val_to_opengl_rect( void );
 
 	int _cb_open_text( char *cp_path );

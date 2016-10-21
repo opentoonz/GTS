@@ -38,7 +38,7 @@ public:
 
 		this->_clp_main = NULL;
 		this->_clp_sub = NULL;
-		this->is_clicked_mouse_middle_button_ = false;
+		this->temporary_display_main_sw_ = false;
 	}
 	void set_i_mv_sw( int sw ) {
 		this->_i_mv_sw = sw;
@@ -111,7 +111,8 @@ public:
 	int mouse_moving( long l_mouse_x, long l_mouse_y );
 	void move_smooth( void );
 	void move_pixel( void );
-	void crop_area( int sw );
+	void set_crop_disp_sw( int sw );
+	void set_select_action_sw( const bool sw );
 	void escape_motion( void );
 
 	void scrollbar_x(long l_val, long l_min, long l_max);
@@ -148,7 +149,11 @@ public:
 	long get_l_crop_yp( void );
 	long get_l_crop_width( void );
 	long get_l_crop_height( void );
+
 	E_SELECT_PART get_e_select_part( void );
+	E_SELECT_PART get_select_part( long l_xp ,long l_yp );
+	bool get_crop_disp_sw( void );
+
 	void set_crop_area(long l_xpos, long l_ypos, long l_xsize, long l_ysize );
 
 	/* 部分処理用情報 */
@@ -161,8 +166,8 @@ public:
 	E_WVIEW_TYPE get_e_wview_type( void )
 	{  return this->_e_wview_type; }
 
-	void set_clicked_mouse_middle_button(bool sw)
-	{ this->is_clicked_mouse_middle_button_ = sw; }
+	void set_temporary_display_main_sw(bool sw)
+	{ this->temporary_display_main_sw_ = sw; }
 
 private:
 	int	_i_mv_sw,
@@ -187,7 +192,7 @@ private:
 	iip_opengl_l2data _cl_unt_view[2];
 
 	/* 2値化表示を同位置でスキャン画像に切替表示するためのスイッチ */
-	bool is_clicked_mouse_middle_button_;
+	bool temporary_display_main_sw_;
 
 	void _draw_separeter( void );
 	void _draw_main_no_hamidasi_by_sub_view( void );

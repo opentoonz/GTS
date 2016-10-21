@@ -68,8 +68,8 @@ void gts_master::_zoom_u16( void ) { this->__zoom_num( 16L); }
 void gts_master::_zoom_up_twice_at_pos( void )
 {
 	this->cl_ogl_view.zoom_twice_at_pos(
-		cl_gts_master.cl_fltk_event.get_l_mouse_x(),
-		cl_gts_master.cl_fltk_event.get_l_mouse_y()
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->_print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
@@ -78,8 +78,8 @@ void gts_master::_zoom_up_twice_at_pos( void )
 void gts_master::_zoom_down_half_at_pos( void )
 {
 	this->cl_ogl_view.zoom_half_at_pos(
-		cl_gts_master.cl_fltk_event.get_l_mouse_x(),
-		cl_gts_master.cl_fltk_event.get_l_mouse_y()
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->_print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
@@ -88,8 +88,8 @@ void gts_master::_zoom_down_half_at_pos( void )
 void gts_master::_zoom_up_step_at_pos( void )
 {
 	this->cl_ogl_view.zoom_up_at_pos(
-		cl_gts_master.cl_fltk_event.get_l_mouse_x(),
-		cl_gts_master.cl_fltk_event.get_l_mouse_y()
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->_print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
@@ -98,8 +98,8 @@ void gts_master::_zoom_up_step_at_pos( void )
 void gts_master::_zoom_down_step_at_pos( void )
 {
 	this->cl_ogl_view.zoom_down_at_pos(
-		cl_gts_master.cl_fltk_event.get_l_mouse_x(),
-		cl_gts_master.cl_fltk_event.get_l_mouse_y()
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->_print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
@@ -206,21 +206,29 @@ void gts_master::_scroll_y_absolute( void )
 	cl_gts_gui.opengl_view->redraw();
 }
 
+void gts_master::_move_hover( void )
+{
+	if (ON == this->cl_ogl_view.mouse_moving(
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
+	)) {
+		cl_gts_gui.opengl_view->redraw();
+	}
+}
 void gts_master::_move_start( void )
 {
-	this->cl_fltk_event.set_i_mouse_middle_dragging( ON );
+	/* 1 選択可能状態にする */
+	this->cl_ogl_view.set_select_action_sw(true);
 
-	this->cl_fltk_event.set_l_movestart_mouse_x(
-	 this->cl_fltk_event.get_l_mouse_x()
-	);
-	this->cl_fltk_event.set_l_movestart_mouse_y(
-	 this->cl_fltk_event.get_l_mouse_y()
-	);
+	/* 2 選択する */
+	this->_move_hover();/* 再選択をする */
 
+	/* 3 選択から移動の開始点の設定 */
 	this->cl_ogl_view.drag_move_start();
 
-	/* リアルタイムスイッチが入っているときに */
-	if (cl_gts_gui.menite_color_trace_real_time->value()) {
+	if (cl_gts_gui.menite_heavy_view_mode_in->value()) {
+	 /* リアルタイムスイッチが入っているときに */
+	 if (cl_gts_gui.menite_color_trace_real_time->value()) {
 		iip_canvas *clp_sub;
 		clp_sub = this->cl_ogl_view.get_clp_sub_canvas();
 		/* sub画像がある(２画面表示)なら画面を白クリア */
@@ -233,10 +241,38 @@ void gts_master::_move_start( void )
 				clp_sub->get_l_scanline_channel_bytes()
 			);
 		}
+	 }
 	}
 }
 void gts_master::_move_drag( void )
 {
+	/*
+	考察
+	DRAGによる表示がidleにより遅れて処理する場合
+	マウスReleaseした後に行われることがあるかもしれない
+	*/
+
+	/* なにもつかんでいないので何もしない */
+	if (this->cl_ogl_view.get_e_select_part() == E_SELECT_NOTHING) {
+		return;
+	}
+
+	mouse_state& ms = cl_gts_master.cl_fltk_event.cl_mouse_state;
+	if (!(
+	/* 画像を移動するのは、マウス真ん中ボタンで行う */
+	(	this->cl_ogl_view.get_e_select_part() == E_SELECT_IMAGE
+		&& ms.which_button() == FL_MIDDLE_MOUSE
+	)
+	/* Crop枠の変更は、マウス左ボタンで行う */
+	||
+	(	this->cl_ogl_view.get_e_select_part() != E_SELECT_IMAGE
+		&& ms.which_button() == FL_LEFT_MOUSE
+	)
+	)) {
+		/* ...のでなければ動作しないこと */
+		return;
+	}
+
 	/* Cropエリア比が指定されていたらそれをセットし、指定なしならゼロ */
 	double crop_aspect_ratio_w = 0.0;
 	double crop_aspect_ratio_h = 0.0;
@@ -261,12 +297,10 @@ void gts_master::_move_drag( void )
 
 	/* マウスポインター移動に合わせて画像表示パラメータを設定 */
 	this->cl_ogl_view.drag_moving(
-		 (this->cl_fltk_event.get_l_mouse_x() -
-		  this->cl_fltk_event.get_l_movestart_mouse_x())
-		,(this->cl_fltk_event.get_l_mouse_y() -
-		  this->cl_fltk_event.get_l_movestart_mouse_y())
-		,crop_aspect_ratio_w
-		,crop_aspect_ratio_h
+		cl_gts_master.cl_fltk_event.cl_mouse_state.x_move()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y_move()
+		, crop_aspect_ratio_w
+		, crop_aspect_ratio_h
 	);
 
 	/* 画像再表示 */
@@ -276,28 +310,23 @@ void gts_master::_move_drag( void )
 	this->set_scrollbar();
 
 	/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
-	this->_from_opengl_rect_to_area_val();
+	this->from_opengl_rect_to_area_val();
 }
 void gts_master::_move_stop( void )
 {
-	this->cl_ogl_view.drag_move_stop(
-	 (this->cl_fltk_event.get_l_mouse_x() -
-	  this->cl_fltk_event.get_l_movestart_mouse_x()),
-	 (this->cl_fltk_event.get_l_mouse_y() -
-	  this->cl_fltk_event.get_l_movestart_mouse_y())
-	); 
-
-	this->cl_fltk_event.set_i_mouse_middle_dragging( OFF );
-	cl_gts_gui.opengl_view->redraw();
-	this->set_scrollbar();
-}
-void gts_master::_move_passive( void )
-{
-	if (ON == this->cl_ogl_view.mouse_moving(
-	 this->cl_fltk_event.get_l_mouse_x(),
-	 this->cl_fltk_event.get_l_mouse_y()
-	)) {
-		cl_gts_gui.opengl_view->redraw();
+	/* 左ボタンでマウスリリースしたときCropを選択している */
+	if (cl_gts_master.cl_fltk_event.cl_mouse_state.which_button()
+	    == FL_LEFT_MOUSE
+	&&  this->cl_ogl_view.get_e_select_part() != E_SELECT_NOTHING
+	&&  this->cl_ogl_view.get_e_select_part() != E_SELECT_IMAGE
+	&&  this->cl_ogl_view.get_e_select_part() == 
+	    this->cl_ogl_view.get_select_part(
+		  cl_gts_master.cl_fltk_event.cl_mouse_state.x()
+		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
+	    )
+	) {
+		/* 非選択状態に。hover時に選択しない */
+		this->cl_ogl_view.set_select_action_sw(false);
 	}
 }
 
@@ -366,19 +395,28 @@ void gts_master::_wview_ud_onion( void )
 	this->set_scrollbar();
 }
 
-void gts_master::__crop_area( int sw )
+void gts_master::_crop_on( void )
 {
-	this->cl_ogl_view.crop_area(sw);
+	this->cl_ogl_view.set_crop_disp_sw(ON);
 	cl_gts_gui.opengl_view->redraw();
 }
-void gts_master::_crop_on( void ) { this->__crop_area(ON); }
-void gts_master::_crop_off( void ) { this->__crop_area(OFF); }
+void gts_master::_crop_off( void )
+{
+	this->cl_ogl_view.set_crop_disp_sw(OFF);
+	cl_gts_gui.opengl_view->redraw();
+}
 
 void gts_master::_escape( void )
 {
-	if (ON == this->cl_fltk_event.get_i_mouse_middle_dragging()) {
+	if (
+ (	this->cl_fltk_event.cl_mouse_state.which_button()==FL_LEFT_MOUSE
+	||
+	this->cl_fltk_event.cl_mouse_state.which_button()==FL_MIDDLE_MOUSE
+ )
+ &&	this->cl_fltk_event.cl_mouse_state.is_clicked()
+	) {
 		this->cl_ogl_view.escape_motion();
-		this->cl_fltk_event.set_i_mouse_middle_dragging( OFF );
+		this->cl_fltk_event.cl_mouse_state.escape_clicked();
 		cl_gts_gui.opengl_view->redraw();
 	}
 }
@@ -435,8 +473,8 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
  E_ACT_SCROLL_Y_ABSOLUTE:      this->_scroll_y_absolute(); break;
  E_ACT_MOVE_START:             this->_move_start(); break;
  E_ACT_MOVE_DRAG:              this->_move_drag();break;
- E_ACT_MOVE_STOP:              this->_move_stop(); break;
- E_ACT_MOVE_PASSIVE:           this->_move_passive(); break;
+ E_ACT_MOVE_STOP:              break;
+ E_ACT_MOVE_HOVER:             this->_move_hover(); break;
  E_ACT_CHANNEL_RGB_TO_RGB:     this->_channel_rgb_to_rgb(); break;
  E_ACT_CHANNEL_RED_TO_RED:     this->_channel_red_to_red(); break;
  E_ACT_CHANNEL_GRE_TO_GRE:     this->_channel_gre_to_gre(); break;
@@ -562,6 +600,9 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 	else if (E_ACT_SCROLL_Y_ABSOLUTE == e_act) {
 		this->_scroll_y_absolute();
 	}
+	else if (E_ACT_MOVE_HOVER == e_act) {
+		this->_move_hover();
+	}
 	else if (E_ACT_MOVE_START == e_act) {
 		this->_move_start();
 	}
@@ -570,9 +611,6 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 	}
 	else if (E_ACT_MOVE_STOP == e_act) {
 		this->_move_stop();
-	}
-	else if (E_ACT_MOVE_PASSIVE == e_act) {
-		this->_move_passive();
 	}
 	else if (E_ACT_CHANNEL_RGB_TO_RGB == e_act) {
 		this->_channel_rgb_to_rgb();
@@ -634,31 +672,33 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 /*--------------- アイドリング時に実行する ---------------*/
 static void _fltk_cb_idle( void *vp )
 {
-	fltk_event	*clp_event;
-	clp_event = &(cl_gts_master.cl_fltk_event);
+	/* 予約時指定の動作で処理実行 */
+	cl_gts_master.action( cl_gts_master.cl_fltk_event.get_e_act() );
 
-	if (E_ACT_NOTHING != clp_event->get_e_act()) {
-		cl_gts_master.action( clp_event->get_e_act() );
-		clp_event->set_e_act( E_ACT_NOTHING );
+	/* 処理の予約を解除 */
+	cl_gts_master.cl_fltk_event.set_e_act( E_ACT_NOTHING );
 
-		/* idleコールバックを解除する */
-		if (Fl::has_idle(_fltk_cb_idle)) {
-		 Fl::remove_idle(_fltk_cb_idle);
-		}
-	}
+	/* 処理が済んだらidle設定を解除 */
+	if (Fl::has_idle(_fltk_cb_idle)) { Fl::remove_idle(_fltk_cb_idle); }
 }
 
+/* reserve()は座標値など連続するイベントで溜まって対応できない処理で使用 */
 void gts_master::reserve( E_ACT e_act )
 {
-	if (E_ACT_NOTHING != e_act) {
-		/* 動作設定をして... */
-		cl_gts_master.cl_fltk_event.set_e_act( e_act );
+	/* 予約が有効でなければ何もしない */
+	if (E_ACT_NOTHING == e_act) { return; }
 
-		/* 実行の予約をする */
-		if (!  (Fl::has_idle(_fltk_cb_idle))) {
-			Fl::add_idle(_fltk_cb_idle);
-		}
-	}
+	/* 未処理のidle待ちがあるならそれを優先し今回処理は捨てる */
+//	if (Fl::has_idle(_fltk_cb_idle)) { return; }
+
+	/* 未処理のidle待ちがあるならそれを削除し今回処理を優先 */
+	if (Fl::has_idle(_fltk_cb_idle)) { Fl::remove_idle(_fltk_cb_idle); }
+
+	/* 動作設定をして... */
+	cl_gts_master.cl_fltk_event.set_e_act( e_act );
+
+	/* 実行の予約をする */
+	Fl::add_idle(_fltk_cb_idle);
 }
 /*------ ショートカット、あるいはGUIイベントの実行 -------*/
 void gts_master::reserve_by_menu( E_ACT e_act )

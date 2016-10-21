@@ -70,15 +70,21 @@ void gts_master::cb_change_wview_( E_WVIEW_TYPE wview_type )
 
 bool gts_master::check_change_wview( void )
 {
+	/* Crop実行時はなにもしない */
+	if (cl_gts_master.cl_ogl_view.get_crop_disp_sw() == ON) {
+		fl_alert("Not change ,when Crop mode");
+		return false;
+	}
+
 	/* データがないときはなにもしない */
 	if (NULL == this->cl_iip_ro90.get_clp_parent()) {
-		fl_alert("No Image");
+		fl_alert("Need Image");
 		return false;
 	}
 
 	/* データが、RGBフルカラーでないと実行しない */
 	if (this->cl_iip_ro90.get_l_channels() < 3L) {
-		fl_alert("Not RGB Image");
+		fl_alert("Need RGB Image");
 		return false;
 	}
 

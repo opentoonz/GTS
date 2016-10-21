@@ -84,7 +84,7 @@ void gtsfbro06cb_level::cb_ok( void )
 	cl_gts_master._print_window_headline();
 
 	/* 切抜きはしないのでOFFにしておく */
-	//cl_gts_master.cl_ogl_view.crop_area(OFF);
+	//cl_gts_master.cl_ogl_view.set_crop_disp_sw(OFF);
 #endif
 
 	/* GUIの状態を記憶する Cancel用のメモリ */

@@ -232,7 +232,7 @@ int iip_opengl_l1edit::mouse_moving( long l_mouse_x, long l_mouse_y )
 {
 	if (NULL == this->get_vp_canvas()) { return OFF; }
 
-	return this->_select( l_mouse_x, l_mouse_y );
+	return this->_select( l_mouse_x, l_mouse_y );/* Hover中に選択する */
 }
 
 void iip_opengl_l1edit::move_xy_pos( long l_xp, long l_yp )

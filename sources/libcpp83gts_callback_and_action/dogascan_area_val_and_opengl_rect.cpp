@@ -3,7 +3,7 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-void gts_master::_from_opengl_rect_to_area_val( void )
+void gts_master::from_opengl_rect_to_area_val( void )
 {
 	long	l_image_w,
 		l_image_h;
