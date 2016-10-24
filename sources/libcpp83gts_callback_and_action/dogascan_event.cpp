@@ -259,9 +259,9 @@ void gts_master::_move_drag( void )
 
 	mouse_state& ms = cl_gts_master.cl_fltk_event.cl_mouse_state;
 	if (!(
-	/* 画像を移動するのは、マウス真ん中ボタンで行う */
+	/* 画像を移動するのは、マウス左ボタンで行う */
 	(	this->cl_ogl_view.get_e_select_part() == E_SELECT_IMAGE
-		&& ms.which_button() == FL_MIDDLE_MOUSE
+		&& ms.which_button() == FL_LEFT_MOUSE
 	)
 	/* Crop枠の変更は、マウス左ボタンで行う */
 	||
@@ -409,11 +409,8 @@ void gts_master::_crop_off( void )
 void gts_master::_escape( void )
 {
 	if (
- (	this->cl_fltk_event.cl_mouse_state.which_button()==FL_LEFT_MOUSE
-	||
-	this->cl_fltk_event.cl_mouse_state.which_button()==FL_MIDDLE_MOUSE
- )
- &&	this->cl_fltk_event.cl_mouse_state.is_clicked()
+ 	this->cl_fltk_event.cl_mouse_state.which_button()==FL_LEFT_MOUSE
+	&& this->cl_fltk_event.cl_mouse_state.is_clicked()
 	) {
 		this->cl_ogl_view.escape_motion();
 		this->cl_fltk_event.cl_mouse_state.escape_clicked();
