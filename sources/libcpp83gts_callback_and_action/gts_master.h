@@ -146,7 +146,7 @@ public:
 	void reserve_by_scroll_y( int ii );
 
 	/* メニュー、クロップエリア、画像を同時に回転する */
-	int rotate_per_90( void );
+	int rotate_per_90( const bool crop_sw=false );
 
 	/* スクロールバー設定 */
 	void set_scrollbar( void );
@@ -300,12 +300,13 @@ private:
 
 	void _trace_batch_run( char *cp_path );
 	void _trace_batch_add( char *cp_path );
-	void _change_view_main( void );
+	//void _change_view_main( void );
 
 	int next_scan_and_save_( void );
 	int read_and_save_crnt_( void );
 
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
+	void rot_and_trace_and_preview_( iip_canvas *parent ,int rotate_per_90_type ,const long before_channels ,const bool crop_sw=false );
 };
 extern gts_master cl_gts_master;
 

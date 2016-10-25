@@ -4,31 +4,18 @@
 
 void gts_master::cb_scan_and_preview( void )
 {
-	iip_canvas *clp_scan;
-
 	/* スキャンを実行 */
+	iip_canvas *clp_scan=nullptr;
 	clp_scan = this->_iipg_scan();
 	if (NULL == clp_scan) {
 		pri_funct_err_bttvr(
-	  "Error : this->_iipg_scan() returns NULL" );
+	   "Error : this->_iipg_scan() returns NULL" );
 		return;
 	}
 
-	/* 回転処理を実行 */
-	if (OK != this->_iipg_rot90(
-		clp_scan,
-		cl_gts_gui.choice_rot90->value()
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_rot90(-) returns NG" );
-		return;
-	}
-
-	/* 表示 */
-	if (OK != this->_iipg_view_setup()) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_view_setup() returns NG" );
-		return;
-	}
-	this->iipg_view_redraw_();
+	this->rot_and_trace_and_preview_(
+		clp_scan
+		, cl_gts_gui.choice_rot90->value()
+		, 3 /* RGBのスキャンの時は以前の表示状態を継続する */
+	);
 }

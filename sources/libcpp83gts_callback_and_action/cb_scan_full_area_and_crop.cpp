@@ -15,6 +15,7 @@ void gts_master::cb_scan_full_area_and_crop( void )
 		return;
 	}
 
+#if 0
 	/* 回転処理を実行 */
 	if (OK != this->_iipg_rot90(
 		clp_scan,
@@ -32,4 +33,13 @@ void gts_master::cb_scan_full_area_and_crop( void )
 		return;
 	}
 	this->iipg_view_redraw_();
+#endif
+	/* メイン画像のみ表示 */
+	this->_wview_main();
+	/* 画像表示状態をメニューに設定 */
+	cl_gts_gui.menite_wview_main->setonly();
+
+	this->rot_and_trace_and_preview_(
+		clp_scan , cl_gts_gui.choice_rot90->value() , 3 , true
+	);
 }

@@ -3,7 +3,7 @@
 #include "gts_master.h"
 
 /* メニューの回転値に合わせて回転処理をおこなう */
-int gts_master::rotate_per_90( void )
+int gts_master::rotate_per_90( const bool crop_sw )
 {
 	int i_rot90_old, i_rot90_new;
 
@@ -15,8 +15,7 @@ int gts_master::rotate_per_90( void )
 	if (i_rot90_old == i_rot90_new) { return OK; }
 
 	if (ON == this->i_mv_sw()) {
-		pri_funct_msg_ttvr(
-			"gts_master::rotate_per_90(-)");
+		pri_funct_msg_ttvr( "gts_master::rotate_per_90(-)");
 	}
 
 	/*
@@ -36,6 +35,7 @@ int gts_master::rotate_per_90( void )
 	 * 画像あれば回転処理し表示する
 	 */
 
+#if 0
 	if (	(NULL != this->cl_iip_ro90.get_clp_parent()) &&
 		(NULL != this->cl_iip_ro90.get_vp_canvas())
 	) {
@@ -57,6 +57,13 @@ int gts_master::rotate_per_90( void )
 		}
 		this->iipg_view_redraw_();
 	}
+#endif
+	this->rot_and_trace_and_preview_( 
+		this->cl_iip_ro90.get_clp_parent()
+		, i_rot90_new
+		, 3
+		, crop_sw
+	);
 
 	/* menuからopengl rect値をセットする
 	(直接回転しても値がリセットしてしまうための暫定措置) */
@@ -66,8 +73,14 @@ int gts_master::rotate_per_90( void )
 }
 void gts_master::cb_rotate_per_90( void )
 {
-	if (OK != this->rotate_per_90()) {
-		pri_funct_err_bttvr(
-	 "Error : this->rotate_per_90() returns NG" );
+	/* スキャンした画像であった場合のみ回転する */
+	if (this->cl_iip_scan.get_clp_canvas()
+	==  this->cl_iip_ro90.get_clp_parent()) {
+		if (OK != this->rotate_per_90(
+			this->cl_ogl_view.get_crop_disp_sw()
+		)) {
+			pri_funct_err_bttvr(
+		 "Error : this->rotate_per_90() returns NG" );
+		}
 	}
 }
