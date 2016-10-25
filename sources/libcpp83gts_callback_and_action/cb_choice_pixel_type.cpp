@@ -2,6 +2,7 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
+#if 0
 void gts_master::_change_view_main( void )
 {
 	/* データがないときはなにもしない */
@@ -35,6 +36,7 @@ void gts_master::_change_view_main( void )
 	/* 表示 */
 	this->iipg_view_redraw_();
 }
+#endif
 void gts_master::cb_choice_pixel_type( void )
 {
 	switch (cl_gts_gui.choice_pixel_type->value()) {
@@ -43,14 +45,14 @@ void gts_master::cb_choice_pixel_type( void )
 		cl_gts_gui.group_grays->hide();
 		cl_gts_gui.group_rgb->hide();
 
-		this->_change_view_main();
+//		this->_change_view_main();
 		break;
 	case 1:
 		cl_gts_gui.group_bw->hide();
 		cl_gts_gui.group_grays->show();
 		cl_gts_gui.group_rgb->hide();
 
-		this->_change_view_main();
+//		this->_change_view_main();
 		break;
 	case 2:
 		cl_gts_gui.group_bw->hide();

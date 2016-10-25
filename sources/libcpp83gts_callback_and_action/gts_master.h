@@ -300,12 +300,13 @@ private:
 
 	void _trace_batch_run( char *cp_path );
 	void _trace_batch_add( char *cp_path );
-	void _change_view_main( void );
+	//void _change_view_main( void );
 
 	int next_scan_and_save_( void );
 	int read_and_save_crnt_( void );
 
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
+	void rot_and_trace_and_preview_( iip_canvas *parent ,int rotate_per_90_type ,const long before_channels ,const bool crop_sw=false );
 };
 extern gts_master cl_gts_master;
 

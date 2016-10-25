@@ -36,6 +36,7 @@ int gts_master::rotate_per_90( void )
 	 * 画像あれば回転処理し表示する
 	 */
 
+#if 0
 	if (	(NULL != this->cl_iip_ro90.get_clp_parent()) &&
 		(NULL != this->cl_iip_ro90.get_vp_canvas())
 	) {
@@ -57,6 +58,12 @@ int gts_master::rotate_per_90( void )
 		}
 		this->iipg_view_redraw_();
 	}
+#endif
+	this->rot_and_trace_and_preview_( 
+		this->cl_iip_ro90.get_clp_parent()
+		, i_rot90_new
+		, 3
+	);
 
 	/* menuからopengl rect値をセットする
 	(直接回転しても値がリセットしてしまうための暫定措置) */
