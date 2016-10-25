@@ -128,7 +128,7 @@ void gts_master::rot_and_trace_and_preview_(
 		return;
 	}
 
-	/* RGB画像のときは2値化(トレス)処理*/
+	/* RGB画像のときは2値化(トレス)処理 */
 	if (3L <= parent->get_l_channels()) {
 		if (OK != this->_iipg_color_trace_setup()) {
 			pri_funct_err_bttvr(

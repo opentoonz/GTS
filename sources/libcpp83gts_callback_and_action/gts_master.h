@@ -146,7 +146,7 @@ public:
 	void reserve_by_scroll_y( int ii );
 
 	/* メニュー、クロップエリア、画像を同時に回転する */
-	int rotate_per_90( void );
+	int rotate_per_90( const bool crop_sw=false );
 
 	/* スクロールバー設定 */
 	void set_scrollbar( void );
