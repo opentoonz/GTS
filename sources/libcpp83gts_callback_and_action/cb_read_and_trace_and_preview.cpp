@@ -118,6 +118,7 @@ void gts_master::rot_and_trace_and_preview_(
 	, int rotate_per_90_type 
 	, const long before_channels 
 	, const bool crop_sw
+	, const bool force_view_scanimage_sw
 )
 {
 	/* 回転処理 */
@@ -145,21 +146,21 @@ void gts_master::rot_and_trace_and_preview_(
 	}
 
 	/* 表示準備2 */
-	if (3L <= parent->get_l_channels()) { /* 今回RGB画像 */
-	 if (before_channels< 3L) {/* 以前RGB以外なら表示切替 */
+	if (force_view_scanimage_sw	/* ScanImage表示強制指定のとき */
+	||  parent->get_l_channels() < 3L) {/* あるいは、BW,Grayscale画像 */
+		/* ScanImage(メイン)画像のみ表示 */
+		this->_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
+	} else
+	if (3L <= parent->get_l_channels()	/* 今回RGB画像 */
+	&&  before_channels < 3L) {	/* かつ、以前RGB以外なら表示切替 */
 		/* 左右分割表示 */
 		this->_wview_lr_parallel();
 
 		/* 画像表示状態をメニューに設定 */
 		cl_gts_gui.menite_wview_lr->setonly();
-	 }
-	}
-	else {	/* BW,Grayscale画像のときは */
-		/* メイン画像のみ表示 */
-		this->_wview_main();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_main->setonly();
 	}
 
 	/* 表示 */
