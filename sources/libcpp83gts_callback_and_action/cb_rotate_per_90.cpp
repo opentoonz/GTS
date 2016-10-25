@@ -26,7 +26,7 @@ int gts_master::rotate_per_90( const bool crop_sw )
 	this->_area_rot90_menu( i_rot90_old, i_rot90_new );
 
 	/* opengl rect値を回転する(必ず(view)画像の回転の前に行なう) */
-	//this->_area_rot90_openglrect( i_rot90_old, i_rot90_new );
+	this->_area_rot90_openglrect( i_rot90_old, i_rot90_new );
 
 	/* 回転の現在値をメモリする */
 	this->_i_rotate_per_90 = i_rot90_new;
@@ -35,29 +35,6 @@ int gts_master::rotate_per_90( const bool crop_sw )
 	 * 画像あれば回転処理し表示する
 	 */
 
-#if 0
-	if (	(NULL != this->cl_iip_ro90.get_clp_parent()) &&
-		(NULL != this->cl_iip_ro90.get_vp_canvas())
-	) {
-		/* 回転処理を実行 */
-		if (OK != this->_iipg_rot90(
-			this->cl_iip_ro90.get_clp_parent(),
-			i_rot90_new
-		)) {
-			pri_funct_err_bttvr(
-		 "Error : this->_iipg_rot90(-) returns NG" );
-			return NG;
-		}
-
-		/* 表示 */
-		if (OK != this->_iipg_view_setup(-1)) {
-			pri_funct_err_bttvr(
-		 "Error : this->_iipg_view_setup(-) returns NG" );
-			return NG;
-		}
-		this->iipg_view_redraw_();
-	}
-#endif
 	this->rot_and_trace_and_preview_( 
 		this->cl_iip_ro90.get_clp_parent()
 		, i_rot90_new

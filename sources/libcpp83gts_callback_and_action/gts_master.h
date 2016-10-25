@@ -300,7 +300,6 @@ private:
 
 	void _trace_batch_run( char *cp_path );
 	void _trace_batch_add( char *cp_path );
-	//void _change_view_main( void );
 
 	int next_scan_and_save_( void );
 	int read_and_save_crnt_( void );

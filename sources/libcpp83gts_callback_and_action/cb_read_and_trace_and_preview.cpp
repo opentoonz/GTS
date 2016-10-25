@@ -1,4 +1,3 @@
-#include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "ptbl_funct.h"
 #include "pri.h"
@@ -144,12 +143,10 @@ void gts_master::rot_and_trace_and_preview_(
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return;
 	}
-std::cout << __FILE__ << " -------> get_l_channels()=" << parent->get_l_channels() << " before_channels=" << before_channels << "\n";
 
 	/* 表示準備2 */
 	if (3L <= parent->get_l_channels()) { /* 今回RGB画像 */
 	 if (before_channels< 3L) {/* 以前RGB以外なら表示切替 */
-std::cout << __FILE__ << " ------->this->_wview_lr_parallel();\n";
 		/* 左右分割表示 */
 		this->_wview_lr_parallel();
 
@@ -158,7 +155,6 @@ std::cout << __FILE__ << " ------->this->_wview_lr_parallel();\n";
 	 }
 	}
 	else {	/* BW,Grayscale画像のときは */
-std::cout << __FILE__ << " ------->this->_wview_main();\n";
 		/* メイン画像のみ表示 */
 		this->_wview_main();
 
