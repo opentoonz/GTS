@@ -45,9 +45,6 @@ void gtsfbro06cb_level::cb_ok( void )
 	}
 
 #if !defined GTS_DEBUG
-	// GUI Scroll
-	cl_gts_gui.selbro_fnum_list->topline(0);
-
 	/* 以前のリストをすべて削除 */
 	cl_gts_master.cl_file_number_list.remove_all();
 
