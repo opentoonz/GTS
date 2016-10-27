@@ -60,7 +60,7 @@ void gtsfbro06cb_level::cb_ok( void )
 	if ((NULL == ccp_file) || ('\0' == ccp_file[0])) {
 		pri_funct_err_bttvr(
 	  "Error : cl_gts_gui.strinp_level_file->value() is null string"
-	  	);
+		);
 		fl_alert("level name is not exist");
 		return;
 	}

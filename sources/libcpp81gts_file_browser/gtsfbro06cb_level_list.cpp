@@ -66,7 +66,7 @@ void gtsfbro06cb_level::cb_list( void )
 		 "Error : this->change_level_list() returns NG");
 			return;
 		}
-		/* add 2013-10-02 level名からfileが上書きなら注意表示 */
+		/* listの中にlevelと同じ名があるなら上書き注意表示 */
 		this->cb_level_name();
 
 		return;
@@ -89,7 +89,7 @@ void gtsfbro06cb_level::cb_list( void )
 			snprintf(ca_msg,PTBL_PATH_MAX,
 				"Dir\n %s\nis not exist!",ccp_crnt_dir);
 		}
-		/* add 2013-10-02 level名からfileが上書きなら注意表示 */
+		/* listの中にlevelと同じ名があるなら上書き注意表示 */
 		this->cb_level_name();
 
 		fl_alert(ca_msg);
@@ -104,6 +104,7 @@ void gtsfbro06cb_level::cb_list( void )
 			return;
 		}
 
+		/* 下るディレクトリパスを設定する(内部保持) */
 		if (OK != this->i_path_dir_down(
 			ccp_crnt_dir,
 			cp_dir_or_file
@@ -114,13 +115,18 @@ void gtsfbro06cb_level::cb_list( void )
 			cp_dir_or_file);
 			return;
 		}
+
+		/* 設定したディレクトリにパス表示を変更 */
 		this->change_level_dir();
+
+		/* 設定したディレクトリにリスト表示を変更 */
 		if (OK != this->change_level_list() ) {
 			pri_funct_err_bttvr(
 		 "Error : this->change_level_list() returns NG");
 			return;
 		}
-		/* add 2013-10-02 level名からfileが上書きなら注意表示 */
+
+		/* listの中にlevelと同じ名があるなら上書き注意表示 */
 		this->cb_level_name();
 
 		return;
@@ -169,6 +175,6 @@ void gtsfbro06cb_level::cb_list( void )
 			return;
 		}
 	}
-	/* add 2013-10-02 level名からfileが上書きなら注意表示 */
+	/* listの中にlevelと同じ名があるなら上書き注意表示 */
 	this->cb_level_name();
 }
