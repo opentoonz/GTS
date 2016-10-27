@@ -8,6 +8,49 @@
 #endif
 #include "gts_gui.h"
 
+namespace {
+
+/* ファイルの存在をチェックしながらリストを設定 */
+void make_fnum_list_with_chk_mark_same_way_(
+	const std::vector<int>& num_list /* こちら優先して使い設定 */
+	, const int start_num	/* num_listが空ならこちらで設定 */
+	, const int end_num
+)
+{
+	/* num_listにセットしてあるならそれをGUIリストに設定する */
+	if (!num_list.empty()) {
+		for (int num : num_list) {
+	 cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
+		num
+	 );
+		}
+		return;
+	}
+
+	/* startからendまでをGUIリストに設定する */
+	if (cl_gts_gui.choice_level_continue_type->value()
+	==  cl_gts_master.cl_file_number_list.get_end_type_value()) {
+		// End type
+	 if (start_num <= end_num) {
+	  cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
+		start_num ,end_num
+	  );
+	 }
+	 else {
+	  cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
+		end_num ,start_num
+	  );
+	 }
+	}
+	else { // Endless type
+	 cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
+		static_cast<int>( cl_gts_gui.valinp_level_start->value() )
+	 );
+	}
+}
+
+} // namespace
+
 void gtsfbro06cb_level::cb_ok( void )
 {
 	const char *ccp_file;
@@ -49,33 +92,16 @@ void gtsfbro06cb_level::cb_ok( void )
 	cl_gts_master.cl_file_number_list.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	if (cl_gts_gui.choice_level_continue_type->value()
-	==  cl_gts_master.cl_file_number_list.get_end_type_value()) {
-		// End type
-	 if (i_sta <= i_end) {
-	  cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
-		i_sta ,i_end
-	  );
-	 }
-	 else {
-	  cl_gts_master.cl_file_number_list.make_fnum_list_with_chk_mark(
-		i_end ,i_sta
-	  );
-	 }
-	}
-	else { // Endless type
-	 cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
-		static_cast<int>( cl_gts_gui.valinp_level_start->value() )
-	 );
-	}
+	std::vector<int> num_list;
+	make_fnum_list_with_chk_mark_same_way_( num_list ,i_sta ,i_end );
+
+	/* 新たに作ったリストは全て選択状態にする */
+	cl_gts_master.cl_file_number_list.select_all();
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
 		cl_gts_master.cl_bro_level.cp_levelname()
 	);
-
-	/* 新たに作ったリストは全て選択状態にする */
-	cl_gts_master.cl_file_number_list.select_all();
 
 	/* ファイル名表示 */
 	cl_gts_master._print_window_headline();
