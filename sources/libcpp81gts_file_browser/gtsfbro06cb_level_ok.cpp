@@ -87,13 +87,22 @@ void gtsfbro06cb_level::cb_ok( void )
 		return;
 	}
 
+	std::vector<int> num_list;
+	this->level_set( num_list ,i_sta ,i_end );
+}
+
+void gtsfbro06cb_level::level_set(
+	const std::vector<int>& num_list
+	, const int start_num
+	, const int end_num
+)
+{
 #if !defined GTS_DEBUG
 	/* 以前のリストをすべて削除 */
 	cl_gts_master.cl_file_number_list.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	std::vector<int> num_list;
-	make_fnum_list_with_chk_mark_same_way_( num_list ,i_sta ,i_end );
+	make_fnum_list_with_chk_mark_same_way_(num_list,start_num,end_num);
 
 	/* 新たに作ったリストは全て選択状態にする */
 	cl_gts_master.cl_file_number_list.select_all();

@@ -56,6 +56,11 @@ public:
 
 	void cb_set_image_file_extension( void );
 
+	void level_set(
+		const std::vector<int>& num_list
+		, const int start_num , const int end_num
+	);
+
 protected:
 private:
 	void _cancel( void );
