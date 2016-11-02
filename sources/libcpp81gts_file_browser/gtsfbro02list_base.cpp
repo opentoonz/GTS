@@ -188,6 +188,22 @@ int gtsfbro02list_base::mem_alloc( int i_additional_alloc )
 	return OK;
 }
 
+namespace {
+
+bool can_not_access_directory_(const char* dir_path ,const char* dire)
+{
+	std::string path(dir_path); path += "/"; path += dire;
+	dirent **dlist=nullptr;
+	const int list_count = fl_filename_list( path.c_str() ,&dlist );
+	if (0 < list_count) { /* アクセスできた、、、ので後しまつ */
+		for (int ii=list_count-1 ;0<=ii ;--ii) { free(dlist[ii]); }
+		free( dlist );
+		return false;
+	}
+	return true;	/* アクセスできない */
+}
+
+} // namespace
 /*
  e_1st_type is E_DIR_OR_FILE_IS_DIR or E_DIR_OR_FILE_IS_NOTHING
  e_2nd_type is E_DIR_OR_FILE_IS_NUM_IMAGE or E_DIR_OR_FILE_IS_TEXT
@@ -217,6 +233,11 @@ void gtsfbro02list_base::make_dir_or_file( E_DIR_OR_FILE_TYPE e_1st_type, E_DIR_
 
 		/* this->cp_path()内のd_nameファイルの種別を得る */
 		e_type = this->e_dir_or_file_type( cp_name );
+
+		if (e_type == E_DIR_OR_FILE_IS_DIR
+		&& can_not_access_directory_(this->cp_path() ,cp_name)) {
+			continue;
+		}
 
 		if (	(e_1st_type == e_type) ||
 			(e_2nd_type  == e_type)

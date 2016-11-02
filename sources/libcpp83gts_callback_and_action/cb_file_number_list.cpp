@@ -240,6 +240,10 @@ void cb_file_number_list::select_all( void )
 /* 選択に関わらずすべて削除 */
 void cb_file_number_list::remove_all( void )
 {
+	// GUI Scroll
+	cl_gts_gui.selbro_fnum_list->topline(0);
+
+	// delete all list
 	while (0 < cl_gts_gui.selbro_fnum_list->size()) { 
 	   	cl_gts_gui.selbro_fnum_list->remove(1);
 	}
