@@ -4,7 +4,6 @@
 
 void gts_master::cb_scan_full_area_and_crop( void )
 {
-	// int i_max_area_sw;
 	iip_canvas *clp_scan;
 
 	/* フルエリアでスキャンを実行 */
@@ -15,21 +14,7 @@ void gts_master::cb_scan_full_area_and_crop( void )
 		return;
 	}
 
-	/* 回転処理を実行 */
-	if (OK != this->_iipg_rot90(
-		clp_scan,
-		cl_gts_gui.choice_rot90->value()
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_rot90(-) returns NG" );
-		return;
-	}
-
-	/* 画像(Crop枠も同時に)表示 */
-	if (OK != this->_iipg_view_setup( ON )) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_view_setup(-) returns NG" );
-		return;
-	}
-	this->iipg_view_redraw_();
+	this->rot_and_trace_and_preview_(
+		clp_scan ,cl_gts_gui.choice_rot90->value() ,3 ,true ,true
+	);
 }

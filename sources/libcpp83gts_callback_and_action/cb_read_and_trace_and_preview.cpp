@@ -6,17 +6,19 @@
 
 void gts_master::cb_read_and_trace_and_preview( void )
 {
-	/* 画像が大きくて処理が重いときのため。将来は削除したい */
+	/* Regacy→将来削除:画像大処理重用操作の時は何もしない */
 	if (cl_gts_gui.menite_heavy_view_mode_in->value() != 0) {
 		return;
 	}
 
-	/* File Number Listの選択の先頭項目を得る */
+	/*------ ファイル番号を得て、その位置にスクロールする ------*/
+
+	/* File Number Listの選択の先頭項目を得る... */
 	this->cl_file_number_list.counter_start(
 		cl_gts_master.cl_file_number_list.get_end_type_value()
 	);
 
-	/* 選択がない */
+	/* ...選択がない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
 		// fl_alert("Select number!");
 /* alertは必要なら呼出元で出す */
@@ -25,14 +27,12 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	const int crnt_file_num =
 		this->cl_file_number_list.get_crnt_file_num();
 
-	//----------
-
 	/* 選択の先頭を中心位置にスクロール */
 	cl_gts_gui.selbro_fnum_list->middleline(
 		this->cl_file_number_list.get_crnt_list_num()
 	);
 
-	//----------
+	/*------ _full付きファイルを優先してファイルの読込み ------*/
 
 	/* 番号に対する_full付きのファイルパスを得ることはできるか */
 	if (nullptr == this->cl_bro_level.cp_filepath_full(crnt_file_num)) {
@@ -106,23 +106,30 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		return;
 	}
 
-	//----------
-
+	/*------ 読込んだ画像を回転、２値化、表示する ------*/
 	/* ファイルからの読み込み時は回転処理はしない(ゼロ度回転をする) */
-	if (OK != this->_iipg_rot90(
-		&(this->cl_iip_read),
-		0
-	)) {
+	this->rot_and_trace_and_preview_(
+		&(this->cl_iip_read), 0 ,before_channels
+	);
+}
+
+void gts_master::rot_and_trace_and_preview_(
+	iip_canvas *parent
+	, int rotate_per_90_type 
+	, const long before_channels 
+	, const bool crop_sw
+	, const bool force_view_scanimage_sw
+)
+{
+	/* 回転処理 */
+	if (OK != this->_iipg_rot90( parent, rotate_per_90_type )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_rot90(-) returns NG" );
 		return;
 	}
 
-	//----------
-
-	/* RGB画像のときは */
-	if (3L <= this->cl_iip_read.get_l_channels()) {
-		/* 2値化(トレス)を実行 */
+	/* RGB画像のときは2値化(トレス)処理 */
+	if (3L <= parent->get_l_channels()) {
 		if (OK != this->_iipg_color_trace_setup()) {
 			pri_funct_err_bttvr(
 		 "Error : this->_iipg_color_trace_setup() returns NG" );
@@ -131,39 +138,36 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		this->_iipg_color_trace_exec();
 	}
 
-	//----------
-
 	/* 表示準備 */
-	if (OK != this->_iipg_view_setup()) {
+	if (OK != this->_iipg_view_setup( crop_sw ?ON :OFF )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_view_setup() returns NG" );
 		return;
 	}
 
-	/* 分割表示とメイン表示の切替 */
-	if (3L <= this->cl_iip_read.get_l_channels()) {
-	 if (before_channels< 3L) {/* 以前はRGB以外の画像だったら表示切替 */
+	/* 表示準備2 */
+	if (force_view_scanimage_sw	/* ScanImage表示強制指定のとき */
+	||  parent->get_l_channels() < 3L) {/* あるいは、BW,Grayscale画像 */
+		/* ScanImage(メイン)画像のみ表示 */
+		this->_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
+	} else
+	if (3L <= parent->get_l_channels()	/* 今回RGB画像 */
+	&&  before_channels < 3L) {	/* かつ、以前RGB以外なら表示切替 */
 		/* 左右分割表示 */
 		this->_wview_lr_parallel();
 
 		/* 画像表示状態をメニューに設定 */
 		cl_gts_gui.menite_wview_lr->setonly();
-	 }
-	}
-	/* BW,Grayscale画像のときは */
-	else {
-		/* メイン画像のみ表示 */
-		this->_wview_main();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_main->setonly();
 	}
 
 	/* 表示 */
 	this->iipg_view_redraw_();
 
 	/* color trace histogram表示設定 */
-	if (3L <= this->cl_iip_read.get_l_channels()) {
+	if (3L <= parent->get_l_channels()) {
 		/* color trace histogram maxの設定 */
 		this->cl_color_trace_enhancement.src_set_histogram_max();
 

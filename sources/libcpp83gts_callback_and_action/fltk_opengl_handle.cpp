@@ -91,7 +91,7 @@ int fltk_opengl::handle( int event )
 
 		/* 左ボタンによる実行を設定 */
 		if (ms.which_button() == FL_LEFT_MOUSE
-		||  ms.which_button() == FL_MIDDLE_MOUSE) {
+		) {
 			/* reserveがなければ予約入れる
 			既にreserveあれば予約せず何もしない */
 			cl_gts_master.reserve( E_ACT_MOVE_DRAG );
@@ -130,7 +130,7 @@ int fltk_opengl::handle( int event )
 
 		/* 画像移動時、2値化画像からscan画像表示設定に... */
 		cl_gts_master.cl_ogl_view.set_temporary_display_main_sw(
-			ms.which_button() == FL_MIDDLE_MOUSE
+			ms.which_button() == FL_LEFT_MOUSE
 		);
 
 		/* ...再描画する */

@@ -144,10 +144,12 @@ std::cout << std::endl;
 		if (cl_gts_gui.choice_level_continue_type->value() == 0) {
 			cl_gts_gui.valinp_level_end->show();
 			cl_gts_gui.choice_level_endless_direction->hide();
+			cl_gts_gui.selbro_fnum_list->activate();
 		}
 		else {
 			cl_gts_gui.valinp_level_end->hide();
 			cl_gts_gui.choice_level_endless_direction->show();
+			cl_gts_gui.selbro_fnum_list->deactivate();
 		}
 	}
 		}
