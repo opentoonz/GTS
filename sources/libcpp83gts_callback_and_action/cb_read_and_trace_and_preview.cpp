@@ -153,14 +153,6 @@ void gts_master::rot_and_trace_and_preview_(
 
 		/* 画像表示状態をメニューに設定 */
 		cl_gts_gui.menite_wview_main->setonly();
-	} else
-	if (3L <= parent->get_l_channels()	/* 今回RGB画像 */
-	&&  before_channels < 3L) {	/* かつ、以前RGB以外なら表示切替 */
-		/* 左右分割表示 */
-		this->_wview_lr_parallel();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_lr->setonly();
 	}
 
 	/* 表示 */

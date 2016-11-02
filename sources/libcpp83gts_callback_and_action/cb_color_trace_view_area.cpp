@@ -4,13 +4,6 @@
 
 void gts_master::color_trace_in_view_area( void )
 {
-	/* マウスドラッグ中、2値化の変化はないので、処理しない */
-	if (
-	 this->cl_fltk_event.cl_mouse_state.is_clicked()
-	) {
-		return;
-	}
-
 	/* メニューのリアルタイム指示を確認 */
 	if (0 == cl_gts_gui.menite_color_trace_real_time->value()) {
 		return;

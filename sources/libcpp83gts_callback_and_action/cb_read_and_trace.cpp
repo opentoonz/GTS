@@ -109,5 +109,5 @@ void gts_master::cb_read_and_trace( void )
 	cl_gts_gui.window_hab_histogram->redraw();
 
 	/* トレス用画面分割表示 */
-	this->_wview_lr_parallel();
+	//this->_wview_lr_parallel();
 }
