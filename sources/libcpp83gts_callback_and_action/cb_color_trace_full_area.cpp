@@ -44,9 +44,6 @@ void gts_master::cb_color_trace_full_area( void )
 	/* color trace histogram window の再描画 */
 	cl_gts_gui.window_hab_histogram->redraw();
 
-	/* 画面分割(中でredraw()もやってる) */
-	this->_wview_lr_parallel();
-
-	/* 再表示 */
-	/***cl_gts_gui.opengl_view->redraw();***/
+	/* RGB再表示 */
+	cl_gts_gui.opengl_view->redraw();
 }

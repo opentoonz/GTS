@@ -5731,10 +5731,10 @@ Fl_Double_Window* gts_gui::make_window() {
             o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
             { radbut_area_reso_fix_cm = new Fl_Button(158, 135, 35, 25, "cm");
               radbut_area_reso_fix_cm->type(102);
-              radbut_area_reso_fix_cm->value(1);
             } // Fl_Button* radbut_area_reso_fix_cm
             { radbut_area_reso_fix_pixel = new Fl_Button(158, 165, 35, 25, "pixel");
               radbut_area_reso_fix_pixel->type(102);
+              radbut_area_reso_fix_pixel->value(1);
             } // Fl_Button* radbut_area_reso_fix_pixel
             o->end();
           } // Fl_Group* o

@@ -1011,11 +1011,11 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             } {
               Fl_Button radbut_area_reso_fix_cm {
                 label cm
-                xywh {158 135 35 25} type Radio value 1
+                xywh {158 135 35 25} type Radio
               }
               Fl_Button radbut_area_reso_fix_pixel {
                 label pixel
-                xywh {158 165 35 25} type Radio
+                xywh {158 165 35 25} type Radio value 1
               }
             }
           }
