@@ -156,13 +156,30 @@ void gts_master::cb_read_and_save_start( void )
 	)) {
 		pri_funct_err_bttvr(
 	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
-	 	, this->cl_file_number_list.get_crnt_file_num()
+		, this->cl_file_number_list.get_crnt_file_num()
 		);
 		return;
 	}
 
-	/* RGB画像の処理となるので、モードを自動切替えする */
-	//cl_gts_gui.choice_pixel_type->value(2);
+	/* 保存するタイプで画像を表示する */
+#if 0
+	if ( cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() ) {
+#endif
+		/* TracenImage画像のみ表示 */
+		cl_gts_master.cb_change_wview_sub();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_sub->setonly();
+#if 0
+	}
+	else {
+		/* ScanImage(メイン)画像のみ表示 */
+		cl_gts_master.cb_change_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
+	}
+#endif
 
 	while (1 <= this->cl_file_number_list.get_crnt_list_num()) {
 		/* カレントの読み込みと処理と保存をして */
