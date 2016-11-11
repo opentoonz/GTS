@@ -244,23 +244,36 @@ private:
   inline void cb_Set_i(Fl_Button*, void*);
   static void cb_Set(Fl_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_level_rgb_trace_save_sw;
-  Fl_Check_Button *chkbtn_level_rgb_full_save_sw;
-  Fl_File_Input *filinp_level_rgb_scan_dir;
+  Fl_Check_Button *chkbtn_rgb_erase_1dot;
 private:
-  inline void cb_filinp_level_rgb_scan_dir_i(Fl_File_Input*, void*);
-  static void cb_filinp_level_rgb_scan_dir(Fl_File_Input*, void*);
+  inline void cb_chkbtn_rgb_erase_1dot_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_rgb_erase_1dot(Fl_Check_Button*, void*);
 public:
-  Fl_Button *togbut_level_rgb_scan_browse_sw;
+  Fl_Check_Button *chkbtn_rgb_color_trace;
 private:
-  inline void cb_togbut_level_rgb_scan_browse_sw_i(Fl_Button*, void*);
-  static void cb_togbut_level_rgb_scan_browse_sw(Fl_Button*, void*);
+  inline void cb_chkbtn_rgb_color_trace_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_rgb_color_trace(Fl_Check_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_level_rgb_with_full_sw;
-  Fl_Check_Button *chkbtn_color_trace_erase_1dot;
+  Fl_File_Input *filinp_level_open_dir;
 private:
-  inline void cb_chkbtn_color_trace_erase_1dot_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_erase_1dot(Fl_Check_Button*, void*);
+  inline void cb_filinp_level_open_dir_i(Fl_File_Input*, void*);
+  static void cb_filinp_level_open_dir(Fl_File_Input*, void*);
+public:
+  Fl_Button *togbut_level_open_browse;
+private:
+  inline void cb_togbut_level_open_browse_i(Fl_Button*, void*);
+  static void cb_togbut_level_open_browse(Fl_Button*, void*);
+public:
+  Fl_Input *strinp_level_open_name;
+private:
+  inline void cb_strinp_level_open_name_i(Fl_Input*, void*);
+  static void cb_strinp_level_open_name(Fl_Input*, void*);
+public:
+  Fl_Choice *choice_level_open_image_file_format;
+private:
+  inline void cb_choice_level_open_image_file_format_i(Fl_Choice*, void*);
+  static void cb_choice_level_open_image_file_format(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_level_open_image_file_format[];
 public:
   Fl_Double_Window *window_level_browse;
 private:
