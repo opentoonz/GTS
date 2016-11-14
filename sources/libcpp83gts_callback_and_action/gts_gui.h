@@ -221,6 +221,11 @@ private:
   inline void cb_filinp_level_dir_i(Fl_File_Input*, void*);
   static void cb_filinp_level_dir(Fl_File_Input*, void*);
 public:
+  Fl_Button *togbut_level_save_browse;
+private:
+  inline void cb_togbut_level_save_browse_i(Fl_Button*, void*);
+  static void cb_togbut_level_save_browse(Fl_Button*, void*);
+public:
   Fl_Input *strinp_level_file;
 private:
   inline void cb_strinp_level_file_i(Fl_Input*, void*);

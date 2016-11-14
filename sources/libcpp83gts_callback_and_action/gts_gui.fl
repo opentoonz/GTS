@@ -437,57 +437,62 @@ fl_message( ost.str().c_str() );}
       label Level
       callback {cl_gts_gui.window_level_set->hide();
 cl_gts_gui.menite_level->clear();}
-      xywh {50 50 200 475} type Double non_modal visible
+      xywh {50 50 200 495} type Double non_modal visible
     } {
+      Fl_Button {} {
+        label {Browse...}
+        callback {cl_gts_gui.window_level_browse->show();}
+        xywh {115 5 80 25}
+      }
       Fl_Group {} {
         label Save open
-        xywh {0 0 200 250} box BORDER_BOX labeltype SHADOW_LABEL align 21
+        xywh {0 35 200 230} box BORDER_BOX labeltype SHADOW_LABEL align 21
       } {
-        Fl_Button {} {
-          label {Browse...}
-          callback {cl_gts_gui.window_level_browse->show();}
-          xywh {115 20 80 25}
-        }
-        Fl_Group {} {
-          xywh {0 45 200 175}
+        Fl_Group {} {open
+          xywh {0 60 200 175}
         } {
           Fl_Group {} {open
-            xywh {0 45 200 50}
+            xywh {0 60 200 50}
           } {
             Fl_File_Input filinp_level_dir {
               label Directory
               callback {cl_gts_master.cl_bro_level.cb_dir();}
-              xywh {0 60 200 35} box BORDER_BOX align 5 when 1
+              xywh {0 75 185 35} box BORDER_BOX align 5 when 1
+            }
+            Fl_Button togbut_level_save_browse {
+              label {<}
+              callback {cl_gts_master.cb_level_save_browse();}
+              xywh {185 85 15 25} type Toggle
             }
           }
           Fl_Group {} {open
-            xywh {0 100 200 25}
+            xywh {0 115 200 25}
           } {
             Fl_Box {} {
-              xywh {0 100 80 25}
+              xywh {0 115 80 25}
             }
             Fl_Input strinp_level_file {
               label Level
               callback {cl_gts_master.cl_bro_level.cb_level_name();}
-              xywh {80 100 120 25} box BORDER_BOX when 1
+              xywh {80 115 120 25} box BORDER_BOX when 1
             }
           }
           Fl_Group {} {open
-            xywh {0 130 200 25}
+            xywh {0 145 200 25}
           } {
             Fl_Box {} {
-              xywh {0 130 80 25}
+              xywh {0 145 80 25}
             }
             Fl_Value_Input valinp_level_start {
               label Start
-              xywh {80 130 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+              xywh {80 145 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
             }
             Fl_Box {} {
-              xywh {130 130 70 25}
+              xywh {130 145 70 25}
             }
           }
           Fl_Group {} {open
-            xywh {0 160 200 25}
+            xywh {0 175 200 25}
           } {
             Fl_Choice choice_level_continue_type {
               callback {if (o->value() == 0) {
@@ -499,7 +504,7 @@ cl_gts_gui.menite_level->clear();}
  cl_gts_gui.choice_level_endless_direction->show();
  cl_gts_gui.selbro_fnum_list->deactivate();
 }} open
-              xywh {0 160 80 25} down_box BORDER_BOX
+              xywh {0 175 80 25} down_box BORDER_BOX
             } {
               MenuItem {} {
                 label End
@@ -511,7 +516,7 @@ cl_gts_gui.menite_level->clear();}
               }
             }
             Fl_Choice choice_level_endless_direction {open
-              xywh {80 160 50 25} down_box BORDER_BOX
+              xywh {80 175 50 25} down_box BORDER_BOX
             } {
               MenuItem {} {
                 label {+1}
@@ -523,22 +528,22 @@ cl_gts_gui.menite_level->clear();}
               }
             }
             Fl_Value_Input valinp_level_end {
-              xywh {80 160 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+              xywh {80 175 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
             }
             Fl_Box {} {
-              xywh {130 160 70 25}
+              xywh {130 175 70 25}
             }
           }
           Fl_Group {} {open
-            xywh {0 185 200 30}
+            xywh {0 200 200 30}
           } {
             Fl_Box {} {
-              xywh {0 190 80 25}
+              xywh {0 205 80 25}
             }
             Fl_Choice choice_level_image_file_format {
               label Format
               callback {cl_gts_master.cl_bro_level.cb_set_image_file_extension();} open
-              xywh {80 190 100 25} down_box BORDER_BOX
+              xywh {80 205 100 25} down_box BORDER_BOX
             } {
               MenuItem {} {
                 label {TIFF(*.tif)}
@@ -550,71 +555,71 @@ cl_gts_gui.menite_level->clear();}
               }
             }
             Fl_Box {} {
-              xywh {180 190 20 25}
+              xywh {180 205 20 25}
             }
           }
         }
         Fl_Button {} {
           label {Set Number}
           callback {cl_gts_master.cl_bro_level.cb_ok();}
-          xywh {5 220 80 25}
+          xywh {5 235 80 25}
         }
       }
       Fl_Group {} {
         label Filter open
-        xywh {0 255 200 75} box BORDER_BOX labeltype SHADOW_LABEL align 21
+        xywh {0 270 200 75} box BORDER_BOX labeltype SHADOW_LABEL align 21
       } {
         Fl_Check_Button chkbtn_rgb_erase_1dot {
           label {RGB Erase dot noise}
           callback {cl_gts_master.cb_rgb_erase_1dot();}
-          xywh {5 280 160 25} down_box DOWN_BOX
+          xywh {5 295 160 25} down_box DOWN_BOX
         }
         Fl_Check_Button chkbtn_rgb_color_trace {
           label {RGB Trace}
           callback {cl_gts_master.cb_rgb_color_trace();}
-          xywh {5 305 160 25} down_box DOWN_BOX
+          xywh {5 320 160 25} down_box DOWN_BOX
         }
       }
       Fl_Group {} {
         label Open open
-        xywh {0 335 200 135} box BORDER_BOX labeltype SHADOW_LABEL align 21
+        xywh {0 350 200 140} box BORDER_BOX labeltype SHADOW_LABEL align 21
       } {
         Fl_Group {} {open
-          xywh {0 360 200 50}
+          xywh {0 375 200 50}
         } {
           Fl_File_Input filinp_level_open_dir {
             label Directory
             callback {cl_gts_master.cb_level_open_dir();}
-            xywh {0 375 185 35} align 5 when 1
+            xywh {0 390 185 35} align 5 when 1
           }
           Fl_Button togbut_level_open_browse {
             label {<}
             callback {cl_gts_master.cb_level_open_browse();}
-            xywh {185 385 15 25} type Toggle
+            xywh {185 400 15 25} type Toggle
           }
         }
         Fl_Group {} {open
-          xywh {0 415 200 25}
+          xywh {0 430 200 25}
         } {
           Fl_Box {} {
-            xywh {0 415 80 25}
+            xywh {0 430 80 25}
           }
           Fl_Input strinp_level_open_name {
             label Level
             callback {cl_gts_master.cb_level_open_name();}
-            xywh {80 415 120 25} box BORDER_BOX when 1
+            xywh {80 430 120 25} box BORDER_BOX when 1
           }
         }
         Fl_Group {} {open
-          xywh {0 445 200 25}
+          xywh {0 460 200 25}
         } {
           Fl_Box {} {
-            xywh {0 445 80 25}
+            xywh {0 460 80 25}
           }
           Fl_Choice choice_level_open_image_file_format {
             label Format
             callback {cl_gts_master.cb_level_open_image_file_format();} open
-            xywh {80 445 100 25} down_box BORDER_BOX
+            xywh {80 460 100 25} down_box BORDER_BOX
           } {
             MenuItem {} {
               label {TIFF(*.tif)}
@@ -626,7 +631,7 @@ cl_gts_gui.menite_level->clear();}
             }
           }
           Fl_Box {} {
-            xywh {180 445 20 25}
+            xywh {180 460 20 25}
           }
         }
       }
