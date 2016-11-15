@@ -163,6 +163,7 @@ void gtsfbro06cb_level::cb_list( void )
 		cl_gts_gui.choice_level_continue_type->value(0);
 		cl_gts_gui.valinp_level_end->show();
 		cl_gts_gui.choice_level_endless_direction->hide();
+		cl_gts_gui.selbro_fnum_list->activate();
 
 		/* levelと画像情報を表示する */
 		if (OK != this->_list_image_info(
