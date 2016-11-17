@@ -454,7 +454,7 @@ cl_gts_gui.menite_level->clear();}
           Fl_Group {} {open
             xywh {0 60 200 50}
           } {
-            Fl_File_Input filinp_level_save_dir {
+            Fl_File_Input filinp_level_save_dir_path {
               label Directory
               callback {cl_gts_master.cl_bro_level.cb_dir();}
               xywh {0 75 185 35} box BORDER_BOX align 5 when 1
@@ -471,7 +471,7 @@ cl_gts_gui.menite_level->clear();}
             Fl_Box {} {
               xywh {0 115 80 25}
             }
-            Fl_Input strinp_level_file {
+            Fl_Input strinp_level_save_file_head {
               label Level
               callback {cl_gts_master.cl_bro_level.cb_level_name();}
               xywh {80 115 120 25} box BORDER_BOX when 1
@@ -483,7 +483,7 @@ cl_gts_gui.menite_level->clear();}
             Fl_Box {} {
               xywh {0 145 80 25}
             }
-            Fl_Value_Input valinp_level_start {
+            Fl_Value_Input valinp_level_saveopen_num_start {
               label Start
               xywh {80 145 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
             }
@@ -494,14 +494,14 @@ cl_gts_gui.menite_level->clear();}
           Fl_Group {} {open
             xywh {0 175 200 25}
           } {
-            Fl_Choice choice_level_continue_type {
+            Fl_Choice choice_level_save_num_continue_type {
               callback {if (o->value() == 0) {
- cl_gts_gui.valinp_level_end->show();
- cl_gts_gui.choice_level_endless_direction->hide();
+ cl_gts_gui.valinp_level_saveopen_num_end->show();
+ cl_gts_gui.choice_level_save_num_endless_direction->hide();
  cl_gts_gui.selbro_fnum_list->activate();
 } else {
- cl_gts_gui.valinp_level_end->hide();
- cl_gts_gui.choice_level_endless_direction->show();
+ cl_gts_gui.valinp_level_saveopen_num_end->hide();
+ cl_gts_gui.choice_level_save_num_endless_direction->show();
  cl_gts_gui.selbro_fnum_list->deactivate();
 }} open
               xywh {0 175 80 25} down_box BORDER_BOX
@@ -515,7 +515,7 @@ cl_gts_gui.menite_level->clear();}
                 xywh {5 5 30 20}
               }
             }
-            Fl_Choice choice_level_endless_direction {open
+            Fl_Choice choice_level_save_num_endless_direction {open
               xywh {80 175 50 25} down_box BORDER_BOX
             } {
               MenuItem {} {
@@ -527,7 +527,7 @@ cl_gts_gui.menite_level->clear();}
                 xywh {5 5 30 20}
               }
             }
-            Fl_Value_Input valinp_level_end {
+            Fl_Value_Input valinp_level_saveopen_num_end {
               xywh {80 175 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
             }
             Fl_Box {} {
@@ -540,7 +540,7 @@ cl_gts_gui.menite_level->clear();}
             Fl_Box {} {
               xywh {0 205 80 25}
             }
-            Fl_Choice choice_level_image_file_format {
+            Fl_Choice choice_level_save_image_format {
               label Format
               callback {cl_gts_master.cl_bro_level.cb_set_image_file_extension();} open
               xywh {80 205 100 25} down_box BORDER_BOX
@@ -569,7 +569,7 @@ cl_gts_gui.menite_level->clear();}
         label Filter open
         xywh {0 270 200 75} box BORDER_BOX labeltype SHADOW_LABEL align 21
       } {
-        Fl_Check_Button chkbtn_filter_rgb_erase_1dot {
+        Fl_Check_Button chkbtn_filter_rgb_erase_1dot_sw {
           label {RGB Erase dot noise}
           callback {cl_gts_master.cb_filter_rgb_erase_1dot();}
           xywh {5 295 160 25} down_box DOWN_BOX
@@ -587,7 +587,7 @@ cl_gts_gui.menite_level->clear();}
         Fl_Group {} {open
           xywh {0 375 200 50}
         } {
-          Fl_File_Input filinp_level_open_dir {
+          Fl_File_Input filinp_level_open_dir_path {
             label Directory
             callback {cl_gts_master.cb_level_open_dir();}
             xywh {0 390 185 35} align 5 when 1
@@ -668,8 +668,8 @@ cl_gts_gui.menite_level->clear();}
             callback {std::string comm("C:\\\\WINDOWS\\\\explorer.exe");
 \# ifdef _WIN32
     comm += ' ';
-    comm += cl_gts_gui.filinp_level_save_dir->value();
-    //std::string comm("start "); comm += cl_gts_gui.filinp_level_save_dir->value();
+    comm += cl_gts_gui.filinp_level_save_dir_path->value();
+    //std::string comm("start "); comm += cl_gts_gui.filinp_level_save_dir_path->value();
     for (unsigned ii = 0; ii < comm.size(); ++ii) {
         if ('/' == comm[ii]) { comm[ii] = '\\\\'; }
     }

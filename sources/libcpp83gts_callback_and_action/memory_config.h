@@ -30,32 +30,32 @@ public:
 	,str_config_save_as_file_(
 	    "config_save_as_file")
 
-	,str_level_dir_(
-	    "level_dir")	// level_save_dir_path
-	,str_level_file_(
-	    "level_file")	// level_save_file_head
-	,str_level_num_start_(
-	    "level_num_start")	// level_saveopen_start
-	,str_level_num_end_(
-	    "level_num_end")	// level_saveopen_end
-	,str_level_num_continue_type_(
-	    "level_num_continue_type")		// level_save_continue_type
-	,str_level_num_endless_direction_(
-	    "level_num_endless_direction")	// level_save_direction
-	,str_level_image_file_format_(
-	    "level_image_file_format")		// level_save_image_format
+	,str_level_save_dir_path_(
+	    "level_dir")			// differ!
+	,str_level_save_file_head_(
+	    "level_file")			// differ!
+	,str_level_saveopen_num_start_(
+	    "level_num_start")			// differ!-->restore name!
+	,str_level_saveopen_num_end_(
+	    "level_num_end")			// differ!-->restore name!
+	,str_level_save_num_continue_type_(
+	    "level_num_continue_type")		// differ!-->restore name!
+	,str_level_save_num_endless_direction_(
+	    "level_num_endless_direction")	// differ!-->restore name!
+	,str_level_save_image_format_(
+	    "level_image_file_format")		// differ!
 
-	,str_color_trace_erase_1dot_(
-	    "color_trace_erase_1dot")	// filter_erase_1dot_exec
-	,str_level_rgb_trace_save_sw_(
-	    "level_rgb_trace_save_sw")	// filter_color_trace_exec
+	,str_filter_rgb_erase_1dot_sw_(
+	    "color_trace_erase_1dot")		// differ!
+	,str_filter_rgb_color_trace_sw_(
+	    "level_rgb_trace_save_sw")		// differ!
 
-	,str_level_rgb_scan_dir_(
-	    "level_rgb_scan_dir")	// level_open_dir_path
-	,str_level_open_head_(
-	    "level_open_file_head")	// level_open_file_head
+	,str_level_open_dir_path_(
+	    "level_rgb_scan_dir")		// differ!
+	,str_level_open_file_head_(
+	    "level_open_file_head")
 	,str_level_open_image_format_(
-	    "level_open_image_format")	// level_open_image_format
+	    "level_open_image_format")
 
 	,str_level_list_form_(
 	    "level_list_form")
@@ -248,19 +248,19 @@ private:
 	const char* str_config_load_file_;
 	const char* str_config_save_as_file_;
 
-	const char* str_level_dir_;
-	const char* str_level_file_;
-	const char* str_level_num_start_;
-	const char* str_level_num_end_;
-	const char* str_level_num_continue_type_;
-	const char* str_level_num_endless_direction_;
-	const char* str_level_image_file_format_;
+	const char* str_level_save_dir_path_;
+	const char* str_level_save_file_head_;
+	const char* str_level_saveopen_num_start_;
+	const char* str_level_saveopen_num_end_;
+	const char* str_level_save_num_continue_type_;
+	const char* str_level_save_num_endless_direction_;
+	const char* str_level_save_image_format_;
 
-	const char* str_color_trace_erase_1dot_;
-	const char* str_level_rgb_trace_save_sw_;
+	const char* str_filter_rgb_erase_1dot_sw_;
+	const char* str_filter_rgb_color_trace_sw_;
 
-	const char* str_level_rgb_scan_dir_;
-	const char* str_level_open_head_;
+	const char* str_level_open_dir_path_;
+	const char* str_level_open_file_head_;
 	const char* str_level_open_image_format_;
 
 	const char* str_level_list_form_;

@@ -80,7 +80,7 @@ std::cout << std::endl;
 		}
 	/* 01. Dirパス */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_dir_ )) {
+		!strcmp( ca_scan1, this->str_level_save_dir_path_ )) {
 			cl_gts_master.cl_bro_level.init_level_dir(ca_scan2);
 			i_level_list_redisplay_sw = ON;
 		}
@@ -118,58 +118,58 @@ std::cout << std::endl;
 		}
 	/* 03 Level名 */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_file_ )) {
+		!strcmp( ca_scan1, this->str_level_save_file_head_ )) {
 			//cl_gts_master.cl_bro_level.level_filename_memory(ca_scan2);
-			cl_gts_gui.strinp_level_file->value(ca_scan2);
+			cl_gts_gui.strinp_level_save_file_head->value(ca_scan2);
 		}
 	/* 04 Level開始番号 */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_num_start_ )) {
-			cl_gts_gui.valinp_level_start->value(
+		!strcmp( ca_scan1, this->str_level_saveopen_num_start_ )) {
+			cl_gts_gui.valinp_level_saveopen_num_start->value(
 				atof(ca_scan2));
 		}
 	/* 05 Level終端番号 */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_num_end_ )) {
-			cl_gts_gui.valinp_level_end->value(
+		!strcmp( ca_scan1, this->str_level_saveopen_num_end_ )) {
+			cl_gts_gui.valinp_level_saveopen_num_end->value(
 				atof(ca_scan2));
 		}
 	/* 06 Level終端タイプ */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1 ,this->str_level_num_continue_type_)) {
+		!strcmp( ca_scan1 ,this->str_level_save_num_continue_type_)) {
 	const Fl_Menu_Item* crnt =
-		cl_gts_gui.choice_level_continue_type->find_item(ca_scan2);
+		cl_gts_gui.choice_level_save_num_continue_type->find_item(ca_scan2);
 	if (crnt != nullptr) {
-		 cl_gts_gui.choice_level_continue_type->value(crnt);
-		if (cl_gts_gui.choice_level_continue_type->value() == 0) {
-			cl_gts_gui.valinp_level_end->show();
-			cl_gts_gui.choice_level_endless_direction->hide();
+		 cl_gts_gui.choice_level_save_num_continue_type->value(crnt);
+		if (cl_gts_gui.choice_level_save_num_continue_type->value() == 0) {
+			cl_gts_gui.valinp_level_saveopen_num_end->show();
+			cl_gts_gui.choice_level_save_num_endless_direction->hide();
 			cl_gts_gui.selbro_fnum_list->activate();
 		}
 		else {
-			cl_gts_gui.valinp_level_end->hide();
-			cl_gts_gui.choice_level_endless_direction->show();
+			cl_gts_gui.valinp_level_saveopen_num_end->hide();
+			cl_gts_gui.choice_level_save_num_endless_direction->show();
 			cl_gts_gui.selbro_fnum_list->deactivate();
 		}
 	}
 		}
 	/* 07 Level Endless時増減方向 */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1,this->str_level_num_endless_direction_)) {
+		!strcmp( ca_scan1,this->str_level_save_num_endless_direction_)) {
 	const Fl_Menu_Item *crnt =
-	 cl_gts_gui.choice_level_endless_direction->find_item( ca_scan2 );
+	 cl_gts_gui.choice_level_save_num_endless_direction->find_item( ca_scan2 );
 	if (crnt != nullptr) {
-		cl_gts_gui.choice_level_endless_direction->value(crnt);
+		cl_gts_gui.choice_level_save_num_endless_direction->value(crnt);
 	}
 		}
 
 	/* 08 保存(開くときも)画像ファイル書式 */
 		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,this->str_level_image_file_format_)) {
+		!strcmp(ca_scan1,this->str_level_save_image_format_)) {
 	const Fl_Menu_Item *crnt =
-	cl_gts_gui.choice_level_image_file_format->find_item(ca_scan2);
+	cl_gts_gui.choice_level_save_image_format->find_item(ca_scan2);
 			if (crnt != nullptr) {
-	cl_gts_gui.choice_level_image_file_format->value(crnt);
+	cl_gts_gui.choice_level_save_image_format->value(crnt);
 	cl_gts_master.cl_bro_level.cb_set_image_file_extension();
 			}
 		}
@@ -179,10 +179,10 @@ std::cout << std::endl;
 
 	/* 11 open dirパス */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_rgb_scan_dir_ )) {
-			cl_gts_gui.filinp_level_open_dir->value(
+		!strcmp( ca_scan1, this->str_level_open_dir_path_ )) {
+			cl_gts_gui.filinp_level_open_dir_path->value(
 				ca_scan2);
-			cl_gts_gui.filinp_level_open_dir->position(
+			cl_gts_gui.filinp_level_open_dir_path->position(
 				strlen(ca_scan2)
 			);
 
@@ -190,7 +190,7 @@ std::cout << std::endl;
 		}
 	/* xx Open Level名 */
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_level_open_head_ )) {
+		!strcmp( ca_scan1, this->str_level_open_file_head_ )) {
 			//cl_gts_master.cl_bro_level.level_filename_memory(ca_scan2);
 			cl_gts_gui.strinp_level_open_file->value(ca_scan2);
 		}
@@ -205,7 +205,7 @@ std::cout << std::endl;
 		}
 	/* 12 RGBスキャン時、トレスを実行(し保存)するスイッチ */
 		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,this->str_level_rgb_trace_save_sw_)) {
+		!strcmp(ca_scan1,this->str_filter_rgb_color_trace_sw_)) {
 			 cl_gts_gui.chkbtn_filter_rgb_color_trace->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			 );
@@ -410,8 +410,8 @@ std::cout << std::endl;
 		/*-- other ---*/
 
 		else if ((2 == i_ret) &&
-		!strcmp( ca_scan1, this->str_color_trace_erase_1dot_ )) {
-			cl_gts_gui.chkbtn_filter_rgb_erase_1dot->value(
+		!strcmp( ca_scan1, this->str_filter_rgb_erase_1dot_sw_ )) {
+			cl_gts_gui.chkbtn_filter_rgb_erase_1dot_sw->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);
 		}
@@ -554,8 +554,8 @@ std::cout << std::endl;
 	}
 
 	/******cl_gts_master.cl_list_level.load(
-		cl_gts_gui.filinp_level_save_dir->value(),
-		cl_gts_gui.filinp_level_open_dir->value()
+		cl_gts_gui.filinp_level_save_dir_path->value(),
+		cl_gts_gui.filinp_level_open_dir_path->value()
 	);******/
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
@@ -568,7 +568,7 @@ std::cout << std::endl;
 
 	/* LevelのCancelを可能にするためmemoryしておく */
 	cl_gts_master.cl_bro_level.memory_from_gui(
-		cl_gts_gui.filinp_level_save_dir->value()
+		cl_gts_gui.filinp_level_save_dir_path->value()
 	);
 
 	return OK;

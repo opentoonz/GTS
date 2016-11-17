@@ -192,12 +192,12 @@ void gts_master::cb_scan_and_save_start( void )
 {
 	/* 先頭を得る */
 	this->cl_file_number_list.counter_start(
-		cl_gts_gui.choice_level_continue_type->value()
+		cl_gts_gui.choice_level_save_num_continue_type->value()
 	);
 
 	/* 最初に番号が選択がない/設定できない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
-		if (cl_gts_gui.choice_level_continue_type->value()
+		if (cl_gts_gui.choice_level_save_num_continue_type->value()
 		== cl_gts_master.cl_file_number_list.get_end_type_value()
 		) {/*End*/
 			fl_alert("Select number!");
@@ -258,7 +258,7 @@ void gts_master::cb_scan_and_save_next( void )
 
 	/* 次の番号を得る */
 	this->cl_file_number_list.counter_next(
-		cl_gts_gui.choice_level_continue_type->value()
+		cl_gts_gui.choice_level_save_num_continue_type->value()
 	);
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */

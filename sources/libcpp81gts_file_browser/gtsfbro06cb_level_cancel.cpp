@@ -30,7 +30,7 @@ void gtsfbro06cb_level::cb_cancel( void )
 	/* RGB Scan Image _full画像の保存場所指定の時の状態復元 */
 	if (cl_gts_gui.togbut_level_open_browse->value()) {
 		cl_gts_gui.togbut_level_open_browse->clear();
-		cl_gts_gui.filinp_level_save_dir->activate();
-		cl_gts_gui.filinp_level_open_dir->deactivate();
+		cl_gts_gui.filinp_level_save_dir_path->activate();
+		cl_gts_gui.filinp_level_open_dir_path->deactivate();
 	}
 }

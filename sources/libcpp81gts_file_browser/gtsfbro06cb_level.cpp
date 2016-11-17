@@ -8,20 +8,20 @@ BW画,Grayscale画,RGBTrace画(結果画像)
 char *gtsfbro06cb_level::cp_filepath( int i_number )
 {
 	if (OK != this->i_path_cpy_dir(
-		cl_gts_gui.filinp_level_save_dir->value()
+		cl_gts_gui.filinp_level_save_dir_path->value()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_path_cpy_dir(%s) returns NG.",
-		cl_gts_gui.filinp_level_save_dir->value()
+		cl_gts_gui.filinp_level_save_dir_path->value()
 		);
 		return NULL;
 	}
 	if (OK != this->i_lpath_cat_file_by_num(
-		cl_gts_gui.strinp_level_file->value(), i_number,ON
+		cl_gts_gui.strinp_level_save_file_head->value(), i_number,ON
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_lpath_cat_file_by_num(%s,%d,%d) returns NG.",
-		cl_gts_gui.strinp_level_file->value(), i_number,ON
+		cl_gts_gui.strinp_level_save_file_head->value(), i_number,ON
 		);
 		return NULL;
 	}
@@ -34,20 +34,20 @@ RGBScan画(中間画像)
 char *gtsfbro06cb_level::cp_filepath_full( int i_number )
 {
 	if (OK != this->i_path_cpy_dir(
-		cl_gts_gui.filinp_level_open_dir->value()
+		cl_gts_gui.filinp_level_open_dir_path->value()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_path_cpy_dir(%s) returns NG.",
-		cl_gts_gui.filinp_level_open_dir->value()
+		cl_gts_gui.filinp_level_open_dir_path->value()
 		);
 		return NULL;
 	}
 	if (OK != this->i_lpath_cat_file_for_full(
-		cl_gts_gui.strinp_level_file->value(), i_number,ON
+		cl_gts_gui.strinp_level_save_file_head->value(), i_number,ON
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_lpath_cat_file_for_full(%s,%d,%d) returns NG.",
-		cl_gts_gui.strinp_level_file->value(), i_number,ON
+		cl_gts_gui.strinp_level_save_file_head->value(), i_number,ON
 		);
 		return NULL;
 	}
@@ -61,11 +61,11 @@ levelブラウザーのlevel名の項目からとって来る
 char *gtsfbro06cb_level::cp_levelname( void )
 {
 	if (OK != this->i_lpath_cpy_head_means_level(
-		cl_gts_gui.strinp_level_file->value(),ON
+		cl_gts_gui.strinp_level_save_file_head->value(),ON
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_lpath_cpy_head_means_level(%s,%d) returns NG",
-		cl_gts_gui.strinp_level_file->value(),ON
+		cl_gts_gui.strinp_level_save_file_head->value(),ON
 		);
 		return NULL;
 	}

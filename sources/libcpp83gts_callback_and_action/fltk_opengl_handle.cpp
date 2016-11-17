@@ -228,15 +228,15 @@ void open_files_by_paste_( const std::string &dnd_str )
 	if (exte == "txt") { /* config file */
 
 	} else {	/* level */
-		cl_gts_gui.filinp_level_save_dir->value( dire.c_str() );
-		cl_gts_gui.strinp_level_file->value( head.c_str() );
-		cl_gts_gui.valinp_level_start->value( start_num );
-		cl_gts_gui.valinp_level_end->value( end_num );
+		cl_gts_gui.filinp_level_save_dir_path->value( dire.c_str() );
+		cl_gts_gui.strinp_level_save_file_head->value( head.c_str() );
+		cl_gts_gui.valinp_level_saveopen_num_start->value( start_num );
+		cl_gts_gui.valinp_level_saveopen_num_end->value( end_num );
 		if ( exte == "tif" ) {
-		 cl_gts_gui.choice_level_image_file_format->value(0);
+		 cl_gts_gui.choice_level_save_image_format->value(0);
 		} else
 		if ( exte == "tga" ) {
-		 cl_gts_gui.choice_level_image_file_format->value(1);
+		 cl_gts_gui.choice_level_save_image_format->value(1);
 		}
 		cl_gts_master.cl_bro_level.cb_set_image_file_extension();
 		cl_gts_master.cl_bro_level.level_set(

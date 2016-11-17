@@ -45,9 +45,9 @@ void gtsfbro06cb_level::cb_mkdir( void )
 
 	/* Dirを得る */
 	if (cl_gts_gui.togbut_level_open_browse->value()) {
-		ccp_dir = cl_gts_gui.filinp_level_open_dir->value();
+		ccp_dir = cl_gts_gui.filinp_level_open_dir_path->value();
 	} else {
-		ccp_dir = cl_gts_gui.filinp_level_save_dir->value();
+		ccp_dir = cl_gts_gui.filinp_level_save_dir_path->value();
 	}
 
 	/* Dialogのメッセージ生成 */

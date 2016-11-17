@@ -157,7 +157,7 @@ int gts_master::exec( const char *comm )
 	}
 
 	/* image file format TIFF/TGA */
-	cl_gts_gui.choice_level_image_file_format->value(
+	cl_gts_gui.choice_level_save_image_format->value(
 	 this->cl_bro_level.get_current_imagefile_extension()
 	);
 	//ct_gts_master.cl_bro_level.cb_set_image_file_extension();

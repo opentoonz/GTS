@@ -5,7 +5,7 @@
 void gtsfbro06cb_level::cb_rgb_scan_dir( void )
 {
 	if (fl_filename_isdir(
-		cl_gts_gui.filinp_level_open_dir->value()
+		cl_gts_gui.filinp_level_open_dir_path->value()
 	)) {
 		this->change_level_list();
 	}

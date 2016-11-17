@@ -28,7 +28,7 @@ void make_fnum_list_with_chk_mark_same_way_(
 	}
 
 	/* startからendまでをGUIリストに設定する */
-	if (cl_gts_gui.choice_level_continue_type->value()
+	if (cl_gts_gui.choice_level_save_num_continue_type->value()
 	==  cl_gts_master.cl_file_number_list.get_end_type_value()) {
 		// End type
 	 if (start_num <= end_num) {
@@ -44,7 +44,7 @@ void make_fnum_list_with_chk_mark_same_way_(
 	}
 	else { // Endless type
 	 cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
-		static_cast<int>( cl_gts_gui.valinp_level_start->value() )
+		static_cast<int>( cl_gts_gui.valinp_level_saveopen_num_start->value() )
 	 );
 	}
 }
@@ -56,19 +56,19 @@ void gtsfbro06cb_level::cb_ok( void )
 	const char *ccp_file;
 	int i_sta,i_end;
 
-	ccp_file = cl_gts_gui.strinp_level_file->value();
+	ccp_file = cl_gts_gui.strinp_level_save_file_head->value();
 	if ((NULL == ccp_file) || ('\0' == ccp_file[0])) {
 		pri_funct_err_bttvr(
-	  "Error : cl_gts_gui.strinp_level_file->value() is null string"
+	  "Error : cl_gts_gui.strinp_level_save_file_head->value() is null string"
 		);
 		fl_alert("level name is not exist");
 		return;
 	}
 
-	i_sta = static_cast<int>(cl_gts_gui.valinp_level_start->value());
+	i_sta = static_cast<int>(cl_gts_gui.valinp_level_saveopen_num_start->value());
 	if ((i_sta < 1) || (9999 < i_sta)) {
 		pri_funct_err_bttvr(
-	    "Error : cl_gts_gui.valinp_level_start->value()<%d> is zero or minus"
+	    "Error : cl_gts_gui.valinp_level_saveopen_num_start->value()<%d> is zero or minus"
 			, i_sta);
 		std::string str("bad level start number=");
 		str += std::to_string(i_sta);
@@ -76,10 +76,10 @@ void gtsfbro06cb_level::cb_ok( void )
 		return;
 	}
 
-	i_end = static_cast<int>(cl_gts_gui.valinp_level_end->value());
+	i_end = static_cast<int>(cl_gts_gui.valinp_level_saveopen_num_end->value());
 	if ((i_end < 1) || (9999 < i_end)) {
 		pri_funct_err_bttvr(
-	    "Error : cl_gts_gui.valinp_level_end->value()<%d> is zero or minus"
+	    "Error : cl_gts_gui.valinp_level_saveopen_num_end->value()<%d> is zero or minus"
 			, i_end);
 		std::string str("bad level end number=");
 		str += std::to_string(i_end);
@@ -121,7 +121,7 @@ void gtsfbro06cb_level::level_set(
 
 	/* GUIの状態を記憶する Cancel用のメモリ */
 	this->memory_from_gui(
-		cl_gts_gui.filinp_level_save_dir->value()
+		cl_gts_gui.filinp_level_save_dir_path->value()
 	);
 
 	/* 画像表示 */
@@ -135,7 +135,7 @@ void gtsfbro06cb_level::level_set(
 	/* RGB Scan Image _full画像の保存場所指定の時の状態復元 */
 	if (cl_gts_gui.togbut_level_open_browse->value()) {
 		cl_gts_gui.togbut_level_open_browse->clear();
-		cl_gts_gui.filinp_level_save_dir->activate();
-		cl_gts_gui.filinp_level_open_dir->deactivate();
+		cl_gts_gui.filinp_level_save_dir_path->activate();
+		cl_gts_gui.filinp_level_open_dir_path->deactivate();
 	}
 }

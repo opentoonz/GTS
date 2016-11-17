@@ -6,9 +6,9 @@ void gtsfbro06cb_level::cb_dir_up( void )
 	const char *ccp_crnt_dir;
 
 	if (0 == cl_gts_gui.togbut_level_open_browse->value()) {
-	 ccp_crnt_dir = cl_gts_gui.filinp_level_save_dir->value();
+	 ccp_crnt_dir = cl_gts_gui.filinp_level_save_dir_path->value();
 	} else {
-	 ccp_crnt_dir = cl_gts_gui.filinp_level_open_dir->value();
+	 ccp_crnt_dir = cl_gts_gui.filinp_level_open_dir_path->value();
 	}
 
 	if (OK != this->i_path_dir_up( ccp_crnt_dir )) {

@@ -3,7 +3,7 @@
 
 void gtsfbro06cb_level::cb_set_image_file_extension( void )
 {
-/*	switch (cl_gts_gui.choice_level_image_file_format->value()) {
+/*	switch (cl_gts_gui.choice_level_save_image_format->value()) {
 	case 0:
 		this->set_current_imagefile_extension(0);
 		// TIFF
@@ -16,7 +16,7 @@ void gtsfbro06cb_level::cb_set_image_file_extension( void )
 
 	// 0:TIFF 1:TGAでなければならない
 	this->set_current_imagefile_extension(
-		cl_gts_gui.choice_level_image_file_format->value()
+		cl_gts_gui.choice_level_save_image_format->value()
 	);
 
 	this->change_level_list();
