@@ -23,10 +23,10 @@ int gtsfbro06cb_level::_renumber_level_tif( int i_num )
 	ccp_main_dir = NULL;
 	ccp_full_dir = NULL;
 	if (0 < stp_dir_or_level->i_count) {
-	 ccp_main_dir =cl_gts_gui.filinp_level_dir->value();
+	 ccp_main_dir =cl_gts_gui.filinp_level_save_dir->value();
 	}
 	if (0 < stp_dir_or_level->i_not_traceing_rgb_count) {
-	 ccp_full_dir =cl_gts_gui.filinp_level_rgb_scan_dir->value();
+	 ccp_full_dir =cl_gts_gui.filinp_level_open_dir->value();
 	}
 	ccp_file = stp_dir_or_level->name;
 
@@ -185,7 +185,7 @@ int gtsfbro06cb_level::_renumber_level_tif_main( const char *ccp_file, int i_old
 	const char *ccp_dir;
 	char ca_new[PTBL_PATH_MAX];
 
-	ccp_dir = cl_gts_gui.filinp_level_dir->value();
+	ccp_dir = cl_gts_gui.filinp_level_save_dir->value();
 
 	/* 新しいDirパス設定 */
 	if (OK != this->i_path_cpy_dir( ccp_dir )) {
@@ -241,7 +241,7 @@ int gtsfbro06cb_level::_renumber_level_tif_full( const char *ccp_file, int i_old
 	const char *ccp_dir;
 	char ca_new[PTBL_PATH_MAX];
 
-	ccp_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();
+	ccp_dir = cl_gts_gui.filinp_level_open_dir->value();
 
 	/* 新しいDirパス設定 */
 	if (OK != this->i_path_cpy_dir( ccp_dir )) {

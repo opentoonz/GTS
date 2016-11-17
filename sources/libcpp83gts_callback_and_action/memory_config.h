@@ -31,29 +31,34 @@ public:
 	    "config_save_as_file")
 
 	,str_level_dir_(
-	    "level_dir")
+	    "level_dir")	// level_save_dir_path
+	,str_level_file_(
+	    "level_file")	// level_save_file_head
+	,str_level_num_start_(
+	    "level_num_start")	// level_saveopen_start
+	,str_level_num_end_(
+	    "level_num_end")	// level_saveopen_end
+	,str_level_num_continue_type_(
+	    "level_num_continue_type")		// level_save_continue_type
+	,str_level_num_endless_direction_(
+	    "level_num_endless_direction")	// level_save_direction
+	,str_level_image_file_format_(
+	    "level_image_file_format")		// level_save_image_format
+
+	,str_color_trace_erase_1dot_(
+	    "color_trace_erase_1dot")	// filter_erase_1dot_exec
+	,str_level_rgb_trace_save_sw_(
+	    "level_rgb_trace_save_sw")	// filter_color_trace_exec
+
+	,str_level_rgb_scan_dir_(
+	    "level_rgb_scan_dir")	// level_open_dir_path
+	,str_level_open_head_(
+	    "level_open_file_head")	// level_open_file_head
+	,str_level_open_image_format_(
+	    "level_open_image_format")	// level_open_image_format
+
 	,str_level_list_form_(
 	    "level_list_form")
-	,str_level_file_(
-	    "level_file")
-	,str_level_num_start_(
-	    "level_num_start")
-	,str_level_num_end_(
-	    "level_num_end")
-	,str_level_num_continue_type_(
-	    "level_num_continue_type")
-	,str_level_num_endless_direction_(
-	    "level_num_endless_direction")
-	,str_level_rgb_scan_dir_(
-	    "level_rgb_scan_dir")
-	,str_level_rgb_trace_save_sw_(
-	    "level_rgb_trace_save_sw")
-	,str_level_rgb_full_save_sw_(
-	    "level_rgb_full_save_sw")
-	,str_level_rgb_with_full_sw_(
-	    "level_rgb_with_full_sw")
-	,str_level_image_file_format_(
-	    "level_image_file_format")
 
 	,str_area_select_(
 	    "area_select")
@@ -99,8 +104,6 @@ public:
 	,str_rgb_gamma_(
 	    "rgb_gamma")
 
-	,str_color_trace_erase_1dot_(
-	    "color_trace_erase_1dot")
 	,str_color_trace_real_time_(
 	    "color_trace_real_time")
 	,str_file_number_frame_(
@@ -246,17 +249,21 @@ private:
 	const char* str_config_save_as_file_;
 
 	const char* str_level_dir_;
-	const char* str_level_list_form_;
 	const char* str_level_file_;
 	const char* str_level_num_start_;
 	const char* str_level_num_end_;
 	const char* str_level_num_continue_type_;
 	const char* str_level_num_endless_direction_;
-	const char* str_level_rgb_scan_dir_;
-	const char* str_level_rgb_trace_save_sw_;
-	const char* str_level_rgb_full_save_sw_;
-	const char* str_level_rgb_with_full_sw_;
 	const char* str_level_image_file_format_;
+
+	const char* str_color_trace_erase_1dot_;
+	const char* str_level_rgb_trace_save_sw_;
+
+	const char* str_level_rgb_scan_dir_;
+	const char* str_level_open_head_;
+	const char* str_level_open_image_format_;
+
+	const char* str_level_list_form_;
 
 	const char* str_area_select_;
 	const char* str_area_x_pos_;
@@ -281,7 +288,6 @@ private:
 	const char* str_rgb_contrast_;
 	const char* str_rgb_gamma_;
 
-	const char* str_color_trace_erase_1dot_;
 	const char* str_color_trace_real_time_;
 	const char* str_file_number_frame_;
 	const char* str_file_number_selected_;

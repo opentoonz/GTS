@@ -177,35 +177,36 @@ std::cout << std::endl;
 	/* 09 等倍画像表示スイッチ */
 	/* 10 画像全体表示スイッチ */
 
-	/* 11 _full dirパス */
+	/* 11 open dirパス */
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_level_rgb_scan_dir_ )) {
-			cl_gts_gui.filinp_level_rgb_scan_dir->value(
+			cl_gts_gui.filinp_level_open_dir->value(
 				ca_scan2);
-			cl_gts_gui.filinp_level_rgb_scan_dir->position(
+			cl_gts_gui.filinp_level_open_dir->position(
 				strlen(ca_scan2)
 			);
 
 			i_level_list_redisplay_sw = ON;
 		}
-	/* 12 RGBスキャン時、トレスを実行し保存するスイッチ */
+	/* xx Open Level名 */
+		else if ((2 == i_ret) &&
+		!strcmp( ca_scan1, this->str_level_open_head_ )) {
+			//cl_gts_master.cl_bro_level.level_filename_memory(ca_scan2);
+			cl_gts_gui.strinp_level_open_file->value(ca_scan2);
+		}
+	/* xx open画像ファイル書式 */
+		else if ((2 == i_ret) &&
+		!strcmp(ca_scan1,this->str_level_open_image_format_)) {
+	const Fl_Menu_Item *crnt =
+	cl_gts_gui.choice_level_open_image_format->find_item(ca_scan2);
+			if (crnt != nullptr) {
+	cl_gts_gui.choice_level_open_image_format->value(crnt);
+			}
+		}
+	/* 12 RGBスキャン時、トレスを実行(し保存)するスイッチ */
 		else if ((2 == i_ret) &&
 		!strcmp(ca_scan1,this->str_level_rgb_trace_save_sw_)) {
-			 cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value(
-				this->_chk_ON_OFF( ca_scan2 )
-			 );
-		}
-	/* 13 RGBスキャン画像保存sw */
-		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,this->str_level_rgb_full_save_sw_)) {
-			 cl_gts_gui.chkbtn_level_rgb_full_save_sw->value(
-				this->_chk_ON_OFF( ca_scan2 )
-			 );
-		}
-	/* 14 RGBスキャン画像ファイル名に_full付けるsw */
-		else if ((2 == i_ret) &&
-		!strcmp(ca_scan1,this->str_level_rgb_with_full_sw_)) {
-			 cl_gts_gui.chkbtn_level_rgb_with_full_sw->value(
+			 cl_gts_gui.chkbtn_filter_rgb_color_trace->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			 );
 		}
@@ -410,7 +411,7 @@ std::cout << std::endl;
 
 		else if ((2 == i_ret) &&
 		!strcmp( ca_scan1, this->str_color_trace_erase_1dot_ )) {
-			 cl_gts_gui.chkbtn_color_trace_erase_1dot->value(
+			cl_gts_gui.chkbtn_filter_rgb_erase_1dot->value(
 				this->_chk_ON_OFF( ca_scan2 )
 			);
 		}
@@ -553,8 +554,8 @@ std::cout << std::endl;
 	}
 
 	/******cl_gts_master.cl_list_level.load(
-		cl_gts_gui.filinp_level_dir->value(),
-		cl_gts_gui.filinp_level_rgb_scan_dir->value()
+		cl_gts_gui.filinp_level_save_dir->value(),
+		cl_gts_gui.filinp_level_open_dir->value()
 	);******/
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
@@ -567,7 +568,7 @@ std::cout << std::endl;
 
 	/* LevelのCancelを可能にするためmemoryしておく */
 	cl_gts_master.cl_bro_level.memory_from_gui(
-		cl_gts_gui.filinp_level_dir->value()
+		cl_gts_gui.filinp_level_save_dir->value()
 	);
 
 	return OK;

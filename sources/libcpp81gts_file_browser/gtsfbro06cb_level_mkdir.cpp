@@ -44,10 +44,10 @@ void gtsfbro06cb_level::cb_mkdir( void )
 	char ca_subdir[PTBL_PATH_MAX];
 
 	/* Dirを得る */
-	if (cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
-		ccp_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();
+	if (cl_gts_gui.togbut_level_open_browse->value()) {
+		ccp_dir = cl_gts_gui.filinp_level_open_dir->value();
 	} else {
-		ccp_dir = cl_gts_gui.filinp_level_dir->value();
+		ccp_dir = cl_gts_gui.filinp_level_save_dir->value();
 	}
 
 	/* Dialogのメッセージ生成 */

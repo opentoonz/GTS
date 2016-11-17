@@ -454,7 +454,7 @@ cl_gts_gui.menite_level->clear();}
           Fl_Group {} {open
             xywh {0 60 200 50}
           } {
-            Fl_File_Input filinp_level_dir {
+            Fl_File_Input filinp_level_save_dir {
               label Directory
               callback {cl_gts_master.cl_bro_level.cb_dir();}
               xywh {0 75 185 35} box BORDER_BOX align 5 when 1
@@ -569,14 +569,14 @@ cl_gts_gui.menite_level->clear();}
         label Filter open
         xywh {0 270 200 75} box BORDER_BOX labeltype SHADOW_LABEL align 21
       } {
-        Fl_Check_Button chkbtn_rgb_erase_1dot {
+        Fl_Check_Button chkbtn_filter_rgb_erase_1dot {
           label {RGB Erase dot noise}
-          callback {cl_gts_master.cb_rgb_erase_1dot();}
+          callback {cl_gts_master.cb_filter_rgb_erase_1dot();}
           xywh {5 295 160 25} down_box DOWN_BOX
         }
-        Fl_Check_Button chkbtn_rgb_color_trace {
+        Fl_Check_Button chkbtn_filter_rgb_color_trace {
           label {RGB Trace}
-          callback {cl_gts_master.cb_rgb_color_trace();}
+          callback {cl_gts_master.cb_filter_rgb_color_trace();}
           xywh {5 320 160 25} down_box DOWN_BOX
         }
       }
@@ -639,7 +639,7 @@ cl_gts_gui.menite_level->clear();}
     Fl_Window window_level_browse {
       label {Level Browse}
       callback {cl_gts_master.cl_bro_level.cb_cancel();}
-      xywh {50 50 380 425} type Double hide resizable modal size_range {180 120 1920 1200}
+      xywh {50 50 380 425} type Double resizable modal size_range {180 120 1920 1200} visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 380 25}
@@ -668,8 +668,8 @@ cl_gts_gui.menite_level->clear();}
             callback {std::string comm("C:\\\\WINDOWS\\\\explorer.exe");
 \# ifdef _WIN32
     comm += ' ';
-    comm += cl_gts_gui.filinp_level_dir->value();
-    //std::string comm("start "); comm += cl_gts_gui.filinp_level_dir->value();
+    comm += cl_gts_gui.filinp_level_save_dir->value();
+    //std::string comm("start "); comm += cl_gts_gui.filinp_level_save_dir->value();
     for (unsigned ii = 0; ii < comm.size(); ++ii) {
         if ('/' == comm[ii]) { comm[ii] = '\\\\'; }
     }

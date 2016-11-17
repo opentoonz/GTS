@@ -66,7 +66,7 @@ int memory_config::_save_level_by_fp( FILE *fp )
 	/* 01. Dirパス */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
 			this->str_level_dir_,
-		cl_gts_gui.filinp_level_dir->value() );
+		cl_gts_gui.filinp_level_save_dir->value() );
 	if (i_ret < 0) { return NG; }
 
 	/* 02 file/levelのlist表示切替(Renumberボタンの表示OFF/ONも) */
@@ -121,27 +121,25 @@ int memory_config::_save_level_by_fp( FILE *fp )
 	/* 11 _full dirパス */
 	i_ret = fprintf(fp, "%-24s \"%s\"\n",
 			this->str_level_rgb_scan_dir_,
-		cl_gts_gui.filinp_level_rgb_scan_dir->value() );
+		cl_gts_gui.filinp_level_open_dir->value() );
 	if (i_ret < 0) { return NG; }
+
+	/* xx open Level名 */
+	i_ret = fprintf(fp, "%-24s \"%s\"\n",
+			this->str_level_open_head,
+		cl_gts_gui.strinp_level_open_head->value() );
+	if (i_ret < 0) { return NG; }
+
+	/* xx open画像ファイル書式 */
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+			, this->str_level_open_image_format_
+		, cl_gts_gui.choice_level_open_image_format->text()
+	);
 
 	/* 12 RGBスキャン時、トレスを実行し保存するスイッチ */
 	i_ret = fprintf(fp, "%-24s %s\n",
 			this->str_level_rgb_trace_save_sw_,
-		cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value()?
-			this->str_on_:this->str_off_ );
-	if (i_ret < 0) { return NG; }
-
-	/* 13 RGBスキャン画像保存sw */
-	i_ret = fprintf(fp, "%-24s %s\n",
-			this->str_level_rgb_full_save_sw_,
-		cl_gts_gui.chkbtn_level_rgb_full_save_sw->value()?
-			this->str_on_:this->str_off_ );
-	if (i_ret < 0) { return NG; }
-
-	/* 14 RGBスキャン画像ファイル名に_full付けるsw */
-	i_ret = fprintf(fp, "%-24s %s\n",
-			this->str_level_rgb_with_full_sw_,
-		cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()?
+		cl_gts_gui.chkbtn_filter_rgb_color_trace->value()?
 			this->str_on_:this->str_off_ );
 	if (i_ret < 0) { return NG; }
 
@@ -282,7 +280,7 @@ int memory_config::_save_trace_by_fp( FILE *fp )
 
 	i_ret = fprintf(fp, "%-24s %s\n",
 			this->str_color_trace_erase_1dot_,
-			cl_gts_gui.chkbtn_color_trace_erase_1dot->value()?
+			cl_gts_gui.chkbtn_filter_rgb_erase_1dot->value()?
 			this->str_on_:this->str_off_);
 	if (i_ret < 0) { return NG; }
 
@@ -417,3 +415,34 @@ int memory_config::save( const char *cp_file_path )
 
 	return OK;
 }
+
+//--------------------------------------------------
+
+void memory_config::save_key_and_val_(
+	const std::string& key ,const std::string& val ,std::ofstream& ofs
+)
+{
+	ofs << ofs.setw(26) << ofs.left << key << ' ' << ofs.right << val;
+}
+
+void memory_config::save_config_( std::ofstream& ofs )
+{
+	this->save_key_and_val_( this->str_config_dir
+		,cl_gts_gui.filinp_config_load_dir->value() ,ofs );
+}
+
+void memory_config::save( const char *file_path )
+{
+ try {
+	std::ofstream ofs(file_path);
+	ofs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
+	this->save_config_(ofs)
+ }
+ catch (const std::ios_base::failure& e) {
+	std::cerr << "Error in saving \"" << file_path << "\","
+		<< e.what() << std::endl;
+	/* ここはダイオローグでユーザーに知らせる */
+ }
+}
+
+//--------------------------------------------------

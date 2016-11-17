@@ -48,6 +48,7 @@ int gts_master::next_scan_and_save_( void )
 	}
 
 	/* 05 保存する(番号に対する)ファイルパスを得る */
+#if 0
 	if (3L <= this->cl_iip_ro90.get_l_channels()
 	&& cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()
 	) {
@@ -61,6 +62,7 @@ int gts_master::next_scan_and_save_( void )
 			return NG;
 		}
 	} else {
+#endif
 		/* BW,Grayscale,RGB(通常の名前)は
 		ノーマルな名前(A.0001.tif)で保存 */
 		filepath = const_cast<char*>(this->cl_bro_level.cp_filepath( crnt_file_num ));
@@ -70,12 +72,12 @@ int gts_master::next_scan_and_save_( void )
 				, crnt_file_num );
 			return NG;
 		}
-	}
+//	}
 
 	/* 06 BWか、Grayscaleか、RGBで保存SWがONのどれかの場合 */
 	if ((this->cl_iip_ro90.get_l_channels() < 3L)	//BW or Grayscale
-	||  (this->cl_iip_ro90.get_l_channels() == 3L &&//RGB & SW is ON
-	     cl_gts_gui.chkbtn_level_rgb_full_save_sw->value()
+	||  (this->cl_iip_ro90.get_l_channels() == 3L	//RGB & SW is ON
+	&&   cl_gts_gui.chkbtn_filter_rgb_color_trace->value()
 	    )
 	) {
 	 /* スキャン画像保存 */
@@ -103,7 +105,7 @@ int gts_master::next_scan_and_save_( void )
 	/*------------------------------------------------*/
 	/* 07 RGB画像でトレス画像保存SWがONの場合 */
 	if (	(this->cl_iip_ro90.get_l_channels() == 3L)
-	&&	cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value()
+	&&	cl_gts_gui.chkbtn_filter_rgb_color_trace->value()
 	) {
 
 	 /* ２値化処理の準備 */
@@ -219,7 +221,7 @@ fl_alert("Input level name!");
 	}
 
 	/* 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() ) {
+	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace->value() ) {
 		/* TracenImage画像のみ表示 */
 		cl_gts_master.cb_change_wview_sub();
 

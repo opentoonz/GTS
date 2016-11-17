@@ -9,7 +9,7 @@
 class gtsfbro06cb_level : public gtsfbro05list_level {
 public:
 	gtsfbro06cb_level()
-	:_i_list_form_memory(0)
+/*	:_i_list_form_memory(0)
 	,_i_start_memory(0)
 	,_i_end_memory(0)
 	,continue_type_memory_(0)
@@ -17,16 +17,23 @@ public:
 	,image_file_format_(0)
 	,_i_save_color_trace_level_sw_memory(0)
 	,save_rgb_scanimage_sw_memory_(0)
-	,rgb_with_full_sw_(0)
+*/
+
+	,saveopen_start_(0.)
+	,saveopen_end_(0.)
 	{
-		this->level_filename_memory_[0]  = '\0';
+/*		this->level_filename_memory_[0]  = '\0';
 		this->_ca_rgb_scan_dir_memory[0] = '\0';
+*/
 	}
 	/* GUIの状態を記憶する */
 	void memory_from_gui( const char* level_dir_path );
 
 	/* 記憶からGUI復元 */
 	void memory_to_gui( void );
+
+//	void memory_backup( const char* level_dir_path ); /* GUI状態記憶 */
+//	void memory_restore(); /* 記憶からGUI復元 */
 
 	int i_init( void );
 
@@ -99,11 +106,11 @@ private:
 
 	//----------
 
+/*
 	void set_level_filename_memory_( const char *ccp_fname );
 	void set_rgb_scan_dir_memory_( const char *ccp_fname );
 
 	//----------
-
 	int	_i_list_form_memory;
 	char	level_filename_memory_[PTBL_PATH_MAX];
 	int	_i_start_memory;
@@ -114,7 +121,18 @@ private:
 	char	_ca_rgb_scan_dir_memory[PTBL_PATH_MAX];
 	int	_i_save_color_trace_level_sw_memory;
 	int	save_rgb_scanimage_sw_memory_;
-	int	rgb_with_full_sw_;
+*/
+
+	/* save_dir_path_はthis->cp_memory() */
+	std::string save_file_head_;
+	double saveopen_start_;	/* 整数利用だがFl_Inputがdoubleなので */
+	double saveopen_end_;	/* 整数利用だがFl_Inputがdoubleなので */
+	std::string saveopen_continue_type_;
+	std::string save_image_format_;
+
+	std::string open_dir_path_;
+	std::string open_file_head_;
+	std::string open_image_format_;
 };
 
 #endif /* !gtsfbro06cb_level_h */

@@ -228,7 +228,7 @@ void open_files_by_paste_( const std::string &dnd_str )
 	if (exte == "txt") { /* config file */
 
 	} else {	/* level */
-		cl_gts_gui.filinp_level_dir->value( dire.c_str() );
+		cl_gts_gui.filinp_level_save_dir->value( dire.c_str() );
 		cl_gts_gui.strinp_level_file->value( head.c_str() );
 		cl_gts_gui.valinp_level_start->value( start_num );
 		cl_gts_gui.valinp_level_end->value( end_num );

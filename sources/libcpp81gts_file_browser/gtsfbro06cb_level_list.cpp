@@ -45,10 +45,10 @@ void gtsfbro06cb_level::cb_list( void )
 		i_dir_sw = ON;
 	}
 
-	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
-	 ccp_crnt_dir = cl_gts_gui.filinp_level_dir->value();
+	if (0 == cl_gts_gui.togbut_level_open_browse->value()) {
+	 ccp_crnt_dir = cl_gts_gui.filinp_level_save_dir->value();
 	} else {
-	 ccp_crnt_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();
+	 ccp_crnt_dir = cl_gts_gui.filinp_level_open_dir->value();
 	}
 
 	/* ディレクトリを上がる */

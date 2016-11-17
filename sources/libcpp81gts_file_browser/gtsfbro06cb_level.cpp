@@ -8,11 +8,11 @@ BW画,Grayscale画,RGBTrace画(結果画像)
 char *gtsfbro06cb_level::cp_filepath( int i_number )
 {
 	if (OK != this->i_path_cpy_dir(
-		cl_gts_gui.filinp_level_dir->value()
+		cl_gts_gui.filinp_level_save_dir->value()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_path_cpy_dir(%s) returns NG.",
-		cl_gts_gui.filinp_level_dir->value()
+		cl_gts_gui.filinp_level_save_dir->value()
 		);
 		return NULL;
 	}
@@ -34,11 +34,11 @@ RGBScan画(中間画像)
 char *gtsfbro06cb_level::cp_filepath_full( int i_number )
 {
 	if (OK != this->i_path_cpy_dir(
-		cl_gts_gui.filinp_level_rgb_scan_dir->value()
+		cl_gts_gui.filinp_level_open_dir->value()
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_path_cpy_dir(%s) returns NG.",
-		cl_gts_gui.filinp_level_rgb_scan_dir->value()
+		cl_gts_gui.filinp_level_open_dir->value()
 		);
 		return NULL;
 	}

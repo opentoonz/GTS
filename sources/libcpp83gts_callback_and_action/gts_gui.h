@@ -216,10 +216,10 @@ private:
   inline void cb_Browse_i(Fl_Button*, void*);
   static void cb_Browse(Fl_Button*, void*);
 public:
-  Fl_File_Input *filinp_level_dir;
+  Fl_File_Input *filinp_level_save_dir;
 private:
-  inline void cb_filinp_level_dir_i(Fl_File_Input*, void*);
-  static void cb_filinp_level_dir(Fl_File_Input*, void*);
+  inline void cb_filinp_level_save_dir_i(Fl_File_Input*, void*);
+  static void cb_filinp_level_save_dir(Fl_File_Input*, void*);
 public:
   Fl_Button *togbut_level_save_browse;
 private:
@@ -249,15 +249,15 @@ private:
   inline void cb_Set_i(Fl_Button*, void*);
   static void cb_Set(Fl_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_rgb_erase_1dot;
+  Fl_Check_Button *chkbtn_filter_rgb_erase_1dot;
 private:
-  inline void cb_chkbtn_rgb_erase_1dot_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_rgb_erase_1dot(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_filter_rgb_erase_1dot_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_filter_rgb_erase_1dot(Fl_Check_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_rgb_color_trace;
+  Fl_Check_Button *chkbtn_filter_rgb_color_trace;
 private:
-  inline void cb_chkbtn_rgb_color_trace_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_rgb_color_trace(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_filter_rgb_color_trace_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_filter_rgb_color_trace(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_level_open_dir;
 private:
