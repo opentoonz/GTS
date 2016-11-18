@@ -20,14 +20,14 @@ void gtsfbro06cb_level::memory_from_gui( const char* level_dir_path )
 	this->save_file_head_ = cl_gts_gui.strinp_level_save_file_head->value();
 
 	// save and open start
-	this->saveopen_start_ = cl_gts_gui.valinp_level_saveopen_num_start->value();
+	this->saveopen_start_ = cl_gts_gui.valinp_level_num_start->value();
 
 	// save and open end
-	this->saveopen_end_   = cl_gts_gui.valinp_level_saveopen_num_end->value();
+	this->saveopen_end_   = cl_gts_gui.valinp_level_num_end->value();
 
 	// save and open continue type
 	this->saveopen_continue_type_ =
-		cl_gts_gui.choice_level_save_num_continue_type->text();
+		cl_gts_gui.choice_level_num_continue_type->text();
 
 	// save image format
 	this->save_image_format_ =
@@ -58,28 +58,28 @@ void gtsfbro06cb_level::memory_to_gui( void )
 	cl_gts_gui.strinp_level_save_file_head->value( this->save_file_head_.c_str());
 
 	// save and open start
-	cl_gts_gui.valinp_level_saveopen_num_start->value(this->saveopen_start_ );
+	cl_gts_gui.valinp_level_num_start->value(this->saveopen_start_ );
 
 	// save and open end
-	cl_gts_gui.valinp_level_saveopen_num_end->value(  this->saveopen_end_ );
+	cl_gts_gui.valinp_level_num_end->value(  this->saveopen_end_ );
 
 	// save and open continue type
 	if (!(this->saveopen_continue_type_.empty())) {
-	 cl_gts_gui.choice_level_save_num_continue_type->value(
-	  cl_gts_gui.choice_level_save_num_continue_type->find_item(
+	 cl_gts_gui.choice_level_num_continue_type->value(
+	  cl_gts_gui.choice_level_num_continue_type->find_item(
 		this->saveopen_continue_type_.c_str()
 	  )
 	 );
 	}
-	if (cl_gts_gui.choice_level_save_num_continue_type->text()
+	if (cl_gts_gui.choice_level_num_continue_type->text()
 	== std::string("End")) {
-		cl_gts_gui.valinp_level_saveopen_num_end->show();
-		cl_gts_gui.choice_level_save_num_endless_direction->hide();
+		cl_gts_gui.valinp_level_num_end->show();
+		cl_gts_gui.choice_level_num_endless_direction->hide();
 		cl_gts_gui.selbro_fnum_list->activate();
 	}
 	else {
-		cl_gts_gui.valinp_level_saveopen_num_end->hide();
-		cl_gts_gui.choice_level_save_num_endless_direction->show();
+		cl_gts_gui.valinp_level_num_end->hide();
+		cl_gts_gui.choice_level_num_endless_direction->show();
 		cl_gts_gui.selbro_fnum_list->deactivate();
 	}
 

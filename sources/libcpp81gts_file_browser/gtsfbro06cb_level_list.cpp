@@ -153,16 +153,16 @@ void gtsfbro06cb_level::cb_list( void )
 		cl_gts_gui.strinp_level_save_file_head->value(
 			this->cp_dir_or_level_name( i_list_num )
 		);
-		cl_gts_gui.valinp_level_saveopen_num_start->value(
+		cl_gts_gui.valinp_level_num_start->value(
 			this->i_dir_or_level_start(i_list_num)
 		);
-		cl_gts_gui.valinp_level_saveopen_num_end->value(
+		cl_gts_gui.valinp_level_num_end->value(
 			this->i_dir_or_level_end(i_list_num)
 		);
 		/* End/EndressをEndに設定 */
-		cl_gts_gui.choice_level_save_num_continue_type->value(0);
-		cl_gts_gui.valinp_level_saveopen_num_end->show();
-		cl_gts_gui.choice_level_save_num_endless_direction->hide();
+		cl_gts_gui.choice_level_num_continue_type->value(0);
+		cl_gts_gui.valinp_level_num_end->show();
+		cl_gts_gui.choice_level_num_endless_direction->hide();
 		cl_gts_gui.selbro_fnum_list->activate();
 
 		/* levelと画像情報を表示する */

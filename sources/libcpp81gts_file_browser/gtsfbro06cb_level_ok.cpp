@@ -28,7 +28,7 @@ void make_fnum_list_with_chk_mark_same_way_(
 	}
 
 	/* startからendまでをGUIリストに設定する */
-	if (cl_gts_gui.choice_level_save_num_continue_type->value()
+	if (cl_gts_gui.choice_level_num_continue_type->value()
 	==  cl_gts_master.cl_file_number_list.get_end_type_value()) {
 		// End type
 	 if (start_num <= end_num) {
@@ -44,7 +44,7 @@ void make_fnum_list_with_chk_mark_same_way_(
 	}
 	else { // Endless type
 	 cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
-		static_cast<int>( cl_gts_gui.valinp_level_saveopen_num_start->value() )
+		static_cast<int>( cl_gts_gui.valinp_level_num_start->value() )
 	 );
 	}
 }
@@ -65,10 +65,10 @@ void gtsfbro06cb_level::cb_ok( void )
 		return;
 	}
 
-	i_sta = static_cast<int>(cl_gts_gui.valinp_level_saveopen_num_start->value());
+	i_sta = static_cast<int>(cl_gts_gui.valinp_level_num_start->value());
 	if ((i_sta < 1) || (9999 < i_sta)) {
 		pri_funct_err_bttvr(
-	    "Error : cl_gts_gui.valinp_level_saveopen_num_start->value()<%d> is zero or minus"
+	    "Error : cl_gts_gui.valinp_level_num_start->value()<%d> is zero or minus"
 			, i_sta);
 		std::string str("bad level start number=");
 		str += std::to_string(i_sta);
@@ -76,10 +76,10 @@ void gtsfbro06cb_level::cb_ok( void )
 		return;
 	}
 
-	i_end = static_cast<int>(cl_gts_gui.valinp_level_saveopen_num_end->value());
+	i_end = static_cast<int>(cl_gts_gui.valinp_level_num_end->value());
 	if ((i_end < 1) || (9999 < i_end)) {
 		pri_funct_err_bttvr(
-	    "Error : cl_gts_gui.valinp_level_saveopen_num_end->value()<%d> is zero or minus"
+	    "Error : cl_gts_gui.valinp_level_num_end->value()<%d> is zero or minus"
 			, i_end);
 		std::string str("bad level end number=");
 		str += std::to_string(i_end);

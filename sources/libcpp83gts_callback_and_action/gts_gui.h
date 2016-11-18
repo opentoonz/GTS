@@ -238,8 +238,8 @@ private:
   static void cb_choice_level_save_num_continue_type(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_level_save_num_continue_type[];
 public:
-  Fl_Choice *choice_level_save_num_endless_direction;
-  static Fl_Menu_Item menu_choice_level_save_num_endless_direction[];
+  Fl_Choice *choice_level_num_endless_direction;
+  static Fl_Menu_Item menu_choice_level_num_endless_direction[];
   Fl_Value_Input *valinp_level_saveopen_num_end;
   Fl_Choice *choice_level_save_image_format;
 private:

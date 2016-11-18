@@ -14,14 +14,14 @@ void memory_install_setup::load( const std::string& exe_file_path )
 
 	std::string str;
 	for (int ii = 1 ;std::getline(ifs,str) ;++ii) {/* 一行読む */
-		if (str.empty()) { continue; }/* 空行無視 */
-		if ('#' == str.at(0)) { continue; }/* コメント行無視 */
+		if (str.empty()) { continue; }/* 空行は無視 */
+		if ('#' == str.at(0)) { continue; }/* コメント行は無視 */
 
-		std::vector< std::string > words; /* 言葉分け */
+		std::vector< std::string > words; /* 単語に分割 */
 		igs::lex::white_space_and_double_quote(str,words);
 		if (words.size() < 2) { continue; }/* キーワードしかない */
 
-		/* キーワードと数値が1語以上(2<=words.size())ある */
+		/* キーワードと、数値が1語以上(2<=words.size())ある */
 
 		if (words.at(0) == "browser_directory_path") {
  cl_gts_master.cl_bro_config.setup_path(words.at(1).c_str());

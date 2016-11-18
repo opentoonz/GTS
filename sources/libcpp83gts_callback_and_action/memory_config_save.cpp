@@ -14,21 +14,21 @@ void memory_config::save_str_(
 	const std::string& key ,const std::string& val ,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(26) << ofs.left  << key
+	ofs << ofs.setw(28) << ofs.left  << key
 	    << ' ' << '\"'  << ofs.right << val << '\"' << '\n';
 }
 void memory_config::save_word_(
 	const std::string& key ,const std::string& val ,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(26) << ofs.left << key
+	ofs << ofs.setw(28) << ofs.left << key
 	    << ' ' << ofs.right << val<< '\n';
 }
 void memory_config::save_f64_(
 	const std::string& key ,const double val ,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(26) << ofs.left << key
+	ofs << ofs.setw(28) << ofs.left << key
 	    << ' ' << ofs.right << ofs.setprecision(16) << val<< '\n';
 	/*	double(=倍精度浮動小数点数)の精度は
 		53bit約16桁(=53log10(2)=15.954589...) */
@@ -38,7 +38,7 @@ void memory_config::save_3int_(
 	,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(26) << ofs.left << key
+	ofs << ofs.setw(28) << ofs.left << key
 	    << ' ' << rr << ' ' << gg << ' ' << bb << '\n';
 }
 //----------
@@ -70,17 +70,17 @@ void memory_config::save_level_( std::ofstream& ofs )
 		,cl_gts_gui.filinp_level_save_dir_path->value() ,ofs );
 	this->save_str_( this->str_level_save_file_head_
 		,cl_gts_gui.strinp_level_save_file_head->value() ,ofs );
-	this->save_f64_( this->str_level_saveopen_num_start_
-		,cl_gts_gui.valinp_level_saveopen_num_start->value()
+	this->save_f64_( this->str_level_num_start_
+		,cl_gts_gui.valinp_level_num_start->value()
 		,ofs );
-	this->save_f64_( this->str_level_saveopen_num_end_
-		,cl_gts_gui.valinp_level_saveopen_num_end->value()
+	this->save_f64_( this->str_level_num_end_
+		,cl_gts_gui.valinp_level_num_end->value()
 		,ofs );
-	this->save_str_( this->str_level_save_num_continue_type_
-		,cl_gts_gui.choice_level_save_num_continue_type->text()
+	this->save_str_( this->str_level_num_continue_type_
+		,cl_gts_gui.choice_level_num_continue_type->text()
 		,ofs);
-	this->save_str_( this->str_level_save_num_endless_direction_
-		,cl_gts_gui.choice_level_save_num_endless_direction->text()
+	this->save_str_( this->str_level_num_endless_direction_
+		,cl_gts_gui.choice_level_num_endless_direction->text()
 		,ofs );
 	this->save_str_( this->str_level_save_image_format_
 		,cl_gts_gui.choice_level_save_image_format->text() ,ofs );
@@ -182,7 +182,7 @@ void memory_config::save_trace_batch_( std::ofstream& ofs )
 void memory_config::save( const char *file_path )
 {
  try {
-	std::ofstream ofs(file_path);
+	std::ofstream ofs(file_path); /* ファイル開く */
 	ofs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
 	this->save_head_(ofs);
 	this->save_config_(ofs);
@@ -192,12 +192,10 @@ void memory_config::save( const char *file_path )
 	this->save_trace_src_hsv_(ofs);
 	this->save_fnum_(ofs);
 	this->save_trace_batch_(ofs);
+	ofs.close(); /* ファイル閉じる */
 
-	/* 正常に設定したなら、ファイル名の記憶 */
-	this->memory_of_path = file_path;
-
-	/* ファイル名を表示する */
-	cl_gts_master._print_window_headline();
+	this->memory_of_path = file_path; /* 正常保存ならファイル名の記憶 */
+	cl_gts_master._print_window_headline(); /* ファイル名を表示する */
  }
  catch (const std::ios_base::failure& e) {
  	std::ostringstream ost;

@@ -31,27 +31,44 @@ public:
 	    "config_save_as_file")
 
 	,str_level_save_dir_path_(
-	    "level_dir")			// differ!
+	    "level_save_dir_path")
+	,str_level_save_dir_path_legacy2016_(
+	    "level_dir")
+
 	,str_level_save_file_head_(
-	    "level_file")			// differ!
-	,str_level_saveopen_num_start_(
-	    "level_num_start")			// differ!-->restore name!
-	,str_level_saveopen_num_end_(
-	    "level_num_end")			// differ!-->restore name!
-	,str_level_save_num_continue_type_(
-	    "level_num_continue_type")		// differ!-->restore name!
-	,str_level_save_num_endless_direction_(
-	    "level_num_endless_direction")	// differ!-->restore name!
+	    "level_save_file_head")
+	,str_level_save_file_head_legacy2016_(
+	    "level_file")
+
+	,str_level_num_start_(
+	    "level_num_start")
+	,str_level_num_end_(
+	    "level_num_end")
+	,str_level_num_continue_type_(
+	    "level_num_continue_type")
+	,str_level_num_endless_direction_(
+	    "level_num_endless_direction")
+
 	,str_level_save_image_format_(
-	    "level_image_file_format")		// differ!
+	    "level_save_image_format")
+	,str_level_save_image_format_legacy2016_(
+	    "level_image_file_format")
 
 	,str_filter_rgb_erase_1dot_sw_(
-	    "color_trace_erase_1dot")		// differ!
+	    "filter_rgb_erase_1dot_sw")
+	,str_filter_rgb_erase_1dot_sw_legacy2016_(
+	    "color_trace_erase_1dot")
+
 	,str_filter_rgb_color_trace_sw_(
-	    "level_rgb_trace_save_sw")		// differ!
+	    "filter_rgb_color_trace_sw")
+	,str_filter_rgb_color_trace_sw_legacy2016_(
+	    "level_rgb_trace_save_sw")
 
 	,str_level_open_dir_path_(
-	    "level_rgb_scan_dir")		// differ!
+	    "level_open_dir_path")
+	,str_level_open_dir_path_legacy2016_(
+	    "level_rgb_scan_dir")
+
 	,str_level_open_file_head_(
 	    "level_open_file_head")
 	,str_level_open_image_format_(
@@ -250,10 +267,10 @@ private:
 
 	const char* str_level_save_dir_path_;
 	const char* str_level_save_file_head_;
-	const char* str_level_saveopen_num_start_;
-	const char* str_level_saveopen_num_end_;
-	const char* str_level_save_num_continue_type_;
-	const char* str_level_save_num_endless_direction_;
+	const char* str_level_num_start_;
+	const char* str_level_num_end_;
+	const char* str_level_num_continue_type_;
+	const char* str_level_num_endless_direction_;
 	const char* str_level_save_image_format_;
 
 	const char* str_filter_rgb_erase_1dot_sw_;

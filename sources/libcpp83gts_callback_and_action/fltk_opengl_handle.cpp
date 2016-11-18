@@ -230,8 +230,8 @@ void open_files_by_paste_( const std::string &dnd_str )
 	} else {	/* level */
 		cl_gts_gui.filinp_level_save_dir_path->value( dire.c_str() );
 		cl_gts_gui.strinp_level_save_file_head->value( head.c_str() );
-		cl_gts_gui.valinp_level_saveopen_num_start->value( start_num );
-		cl_gts_gui.valinp_level_saveopen_num_end->value( end_num );
+		cl_gts_gui.valinp_level_num_start->value( start_num );
+		cl_gts_gui.valinp_level_num_end->value( end_num );
 		if ( exte == "tif" ) {
 		 cl_gts_gui.choice_level_save_image_format->value(0);
 		} else

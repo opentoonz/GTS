@@ -483,7 +483,7 @@ cl_gts_gui.menite_level->clear();}
             Fl_Box {} {
               xywh {0 145 80 25}
             }
-            Fl_Value_Input valinp_level_saveopen_num_start {
+            Fl_Value_Input valinp_level_num_start {
               label Start
               xywh {80 145 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
             }
@@ -494,14 +494,14 @@ cl_gts_gui.menite_level->clear();}
           Fl_Group {} {open
             xywh {0 175 200 25}
           } {
-            Fl_Choice choice_level_save_num_continue_type {
+            Fl_Choice choice_level_num_continue_type {
               callback {if (o->value() == 0) {
- cl_gts_gui.valinp_level_saveopen_num_end->show();
- cl_gts_gui.choice_level_save_num_endless_direction->hide();
+ cl_gts_gui.valinp_level_num_end->show();
+ cl_gts_gui.choice_level_num_endless_direction->hide();
  cl_gts_gui.selbro_fnum_list->activate();
 } else {
- cl_gts_gui.valinp_level_saveopen_num_end->hide();
- cl_gts_gui.choice_level_save_num_endless_direction->show();
+ cl_gts_gui.valinp_level_num_end->hide();
+ cl_gts_gui.choice_level_num_endless_direction->show();
  cl_gts_gui.selbro_fnum_list->deactivate();
 }} open
               xywh {0 175 80 25} down_box BORDER_BOX
@@ -515,7 +515,7 @@ cl_gts_gui.menite_level->clear();}
                 xywh {5 5 30 20}
               }
             }
-            Fl_Choice choice_level_save_num_endless_direction {open
+            Fl_Choice choice_level_num_endless_direction {open
               xywh {80 175 50 25} down_box BORDER_BOX
             } {
               MenuItem {} {
@@ -527,7 +527,7 @@ cl_gts_gui.menite_level->clear();}
                 xywh {5 5 30 20}
               }
             }
-            Fl_Value_Input valinp_level_saveopen_num_end {
+            Fl_Value_Input valinp_level_num_end {
               xywh {80 175 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
             }
             Fl_Box {} {

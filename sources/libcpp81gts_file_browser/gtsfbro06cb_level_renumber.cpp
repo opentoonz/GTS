@@ -59,10 +59,10 @@ void gtsfbro06cb_level::cb_renumber( void )
 		this->_select_new_dir_or_file_or_level(
 			stp_dir_or_level->name
 		);
-		cl_gts_gui.valinp_level_saveopen_num_start->value(
+		cl_gts_gui.valinp_level_num_start->value(
 			(double)stp_dir_or_level->i_start_num
 		);
-		cl_gts_gui.valinp_level_saveopen_num_end->value(
+		cl_gts_gui.valinp_level_num_end->value(
 			(double)stp_dir_or_level->i_end_num
 		);
 	}
