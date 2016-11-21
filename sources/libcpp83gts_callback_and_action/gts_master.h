@@ -305,7 +305,22 @@ private:
 	int read_and_save_crnt_( void );
 
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
-	void rot_and_trace_and_preview_( iip_canvas *parent ,int rotate_per_90_type ,const long before_channels ,const bool crop_sw=false ,const bool force_view_scanimage_sw=false );
+
+	void rot_and_trace_and_enoise_and_preview_(
+		iip_canvas *parent
+		,int rotate_per_90_type
+		,const bool crop_sw=false
+		,const bool force_view_scanimage_sw=false
+	);
+	int rot_and_trace_and_enoise_( // Rot90 and Effects
+		iip_canvas *parent
+		, int rotate_per_90_type 
+	);
+	int redraw_image_(
+		iip_canvas *parent
+		, const bool crop_sw
+		, const bool force_view_scanimage_sw
+	);
 };
 extern gts_master cl_gts_master;
 

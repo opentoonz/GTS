@@ -56,24 +56,14 @@ int gts_master::read_and_save_crnt_( void )
 	}
 
 	/*------------------------------------------------*/
+	// Rot90 and Effects(color Trace and Erase color dot noise)
 
-	/* 回転処理を実行 */
-	if (OK != this->_iipg_rot90(
-		&(this->cl_iip_read),
-		0	/* 画像コンバート処理のみで、回転はしない */
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_rot90(-) returns NG" );
+	if (this->rot_and_trace_and_enoise_(
+		&(this->cl_iip_read)
+		,0	/* 画像コンバート処理のみで、回転はしない */
+	) != OK) {
 		return NG;
 	}
-
-	/* ２値化処理を実行 */
-	if (OK != this->_iipg_color_trace_setup()) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_color_trace_setup() returns NG" );
-		return NG;
-	}
-	this->_iipg_color_trace_exec();
 
 	/*------------------------------------------------*/
 
@@ -114,21 +104,22 @@ this->cl_iip_read.get_d_tif_dpi_x()
 		return NG;
 	}
 
-	/*------------------------------------------------*/
-
 	/* リストの選択解除 */
 	this->cl_file_number_list.unselect(crnt_list_num);
 
 	/* level browser listの再表示 */
 	this->cl_bro_level.cb_list_redisplay();
 
+	/*------------------------------------------------*/
+
 	/* 表示 */
-	if (OK != this->_iipg_view_setup()) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_view_setup() returns NG" );
+	if (this->redraw_image_(
+		&(this->cl_iip_read)
+		, false /* crop sw */
+		, false /* force view scanimage sw */
+	)) {
 		return NG;
 	}
-	this->iipg_view_redraw_();
 
 	return OK;
 }
@@ -137,8 +128,6 @@ this->cl_iip_read.get_d_tif_dpi_x()
 
 void gts_master::cb_read_and_save_start( void )
 {
-	int	ekey;
-
 	/* 先頭を得る - End設定で選択したフレーム番号をたどっていく */
 	this->cl_file_number_list.counter_start(
 		cl_gts_master.cl_file_number_list.get_end_type_value()
@@ -162,7 +151,7 @@ void gts_master::cb_read_and_save_start( void )
 	}
 
 	/* 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace->value() ) {
+	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
 		/* TracenImage画像のみ表示 */
 		cl_gts_master.cb_change_wview_sub();
 
@@ -190,7 +179,7 @@ void gts_master::cb_read_and_save_start( void )
 		);
 
 		Fl::check();
-		ekey = Fl::event_key();
+		int ekey = Fl::event_key();
 
 		/* FL_Escapeと'q'と't'は効かない */
 		//if (FL_Escape == ekey) {

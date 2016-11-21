@@ -555,28 +555,28 @@ void gts_gui::cb_strinp_level_save_file_head(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_strinp_level_save_file_head_i(o,v);
 }
 
-void gts_gui::cb_choice_level_save_num_continue_type_i(Fl_Choice* o, void*) {
+void gts_gui::cb_choice_level_num_continue_type_i(Fl_Choice* o, void*) {
   if (o->value() == 0) {
- cl_gts_gui.valinp_level_saveopen_num_end->show();
- cl_gts_gui.choice_level_save_num_endless_direction->hide();
+ cl_gts_gui.valinp_level_num_end->show();
+ cl_gts_gui.choice_level_num_endless_direction->hide();
  cl_gts_gui.selbro_fnum_list->activate();
 } else {
- cl_gts_gui.valinp_level_saveopen_num_end->hide();
- cl_gts_gui.choice_level_save_num_endless_direction->show();
+ cl_gts_gui.valinp_level_num_end->hide();
+ cl_gts_gui.choice_level_num_endless_direction->show();
  cl_gts_gui.selbro_fnum_list->deactivate();
 };
 }
-void gts_gui::cb_choice_level_save_num_continue_type(Fl_Choice* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_choice_level_save_num_continue_type_i(o,v);
+void gts_gui::cb_choice_level_num_continue_type(Fl_Choice* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_choice_level_num_continue_type_i(o,v);
 }
 
-Fl_Menu_Item gts_gui::menu_choice_level_save_num_continue_type[] = {
+Fl_Menu_Item gts_gui::menu_choice_level_num_continue_type[] = {
  {"End", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Endless", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 
-Fl_Menu_Item gts_gui::menu_choice_level_save_num_endless_direction[] = {
+Fl_Menu_Item gts_gui::menu_choice_level_num_endless_direction[] = {
  {"+1", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"-1", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
@@ -609,11 +609,11 @@ void gts_gui::cb_chkbtn_filter_rgb_erase_1dot_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_erase_1dot_sw_i(o,v);
 }
 
-void gts_gui::cb_chkbtn_filter_rgb_color_trace_i(Fl_Check_Button*, void*) {
+void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw_i(Fl_Check_Button*, void*) {
   cl_gts_master.cb_filter_rgb_color_trace();
 }
-void gts_gui::cb_chkbtn_filter_rgb_color_trace(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_color_trace_i(o,v);
+void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_color_trace_sw_i(o,v);
 }
 
 void gts_gui::cb_filinp_level_open_dir_path_i(Fl_File_Input*, void*) {
@@ -5372,32 +5372,32 @@ Fl_Double_Window* gts_gui::make_window() {
         { Fl_Group* o = new Fl_Group(0, 145, 200, 25);
           { new Fl_Box(0, 145, 80, 25);
           } // Fl_Box* o
-          { valinp_level_saveopen_num_start = new Fl_Value_Input(80, 145, 50, 25, "Start");
-            valinp_level_saveopen_num_start->box(FL_BORDER_BOX);
-            valinp_level_saveopen_num_start->minimum(1);
-            valinp_level_saveopen_num_start->maximum(9999);
-            valinp_level_saveopen_num_start->value(1);
-          } // Fl_Value_Input* valinp_level_saveopen_num_start
+          { valinp_level_num_start = new Fl_Value_Input(80, 145, 50, 25, "Start");
+            valinp_level_num_start->box(FL_BORDER_BOX);
+            valinp_level_num_start->minimum(1);
+            valinp_level_num_start->maximum(9999);
+            valinp_level_num_start->value(1);
+          } // Fl_Value_Input* valinp_level_num_start
           { new Fl_Box(130, 145, 70, 25);
           } // Fl_Box* o
           o->end();
         } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(0, 175, 200, 25);
-          { choice_level_save_num_continue_type = new Fl_Choice(0, 175, 80, 25);
-            choice_level_save_num_continue_type->down_box(FL_BORDER_BOX);
-            choice_level_save_num_continue_type->callback((Fl_Callback*)cb_choice_level_save_num_continue_type);
-            choice_level_save_num_continue_type->menu(menu_choice_level_save_num_continue_type);
-          } // Fl_Choice* choice_level_save_num_continue_type
-          { choice_level_save_num_endless_direction = new Fl_Choice(80, 175, 50, 25);
-            choice_level_save_num_endless_direction->down_box(FL_BORDER_BOX);
-            choice_level_save_num_endless_direction->menu(menu_choice_level_save_num_endless_direction);
-          } // Fl_Choice* choice_level_save_num_endless_direction
-          { valinp_level_saveopen_num_end = new Fl_Value_Input(80, 175, 50, 25);
-            valinp_level_saveopen_num_end->box(FL_BORDER_BOX);
-            valinp_level_saveopen_num_end->minimum(1);
-            valinp_level_saveopen_num_end->maximum(9999);
-            valinp_level_saveopen_num_end->value(1);
-          } // Fl_Value_Input* valinp_level_saveopen_num_end
+          { choice_level_num_continue_type = new Fl_Choice(0, 175, 80, 25);
+            choice_level_num_continue_type->down_box(FL_BORDER_BOX);
+            choice_level_num_continue_type->callback((Fl_Callback*)cb_choice_level_num_continue_type);
+            choice_level_num_continue_type->menu(menu_choice_level_num_continue_type);
+          } // Fl_Choice* choice_level_num_continue_type
+          { choice_level_num_endless_direction = new Fl_Choice(80, 175, 50, 25);
+            choice_level_num_endless_direction->down_box(FL_BORDER_BOX);
+            choice_level_num_endless_direction->menu(menu_choice_level_num_endless_direction);
+          } // Fl_Choice* choice_level_num_endless_direction
+          { valinp_level_num_end = new Fl_Value_Input(80, 175, 50, 25);
+            valinp_level_num_end->box(FL_BORDER_BOX);
+            valinp_level_num_end->minimum(1);
+            valinp_level_num_end->maximum(9999);
+            valinp_level_num_end->value(1);
+          } // Fl_Value_Input* valinp_level_num_end
           { new Fl_Box(130, 175, 70, 25);
           } // Fl_Box* o
           o->end();
@@ -5429,10 +5429,10 @@ Fl_Double_Window* gts_gui::make_window() {
         chkbtn_filter_rgb_erase_1dot_sw->down_box(FL_DOWN_BOX);
         chkbtn_filter_rgb_erase_1dot_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_erase_1dot_sw);
       } // Fl_Check_Button* chkbtn_filter_rgb_erase_1dot_sw
-      { chkbtn_filter_rgb_color_trace = new Fl_Check_Button(5, 320, 160, 25, "RGB Trace");
-        chkbtn_filter_rgb_color_trace->down_box(FL_DOWN_BOX);
-        chkbtn_filter_rgb_color_trace->callback((Fl_Callback*)cb_chkbtn_filter_rgb_color_trace);
-      } // Fl_Check_Button* chkbtn_filter_rgb_color_trace
+      { chkbtn_filter_rgb_color_trace_sw = new Fl_Check_Button(5, 320, 160, 25, "RGB Trace");
+        chkbtn_filter_rgb_color_trace_sw->down_box(FL_DOWN_BOX);
+        chkbtn_filter_rgb_color_trace_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_color_trace_sw);
+      } // Fl_Check_Button* chkbtn_filter_rgb_color_trace_sw
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 350, 200, 140, "Open");

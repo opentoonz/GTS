@@ -6,12 +6,6 @@
 #include "ptbl_path_max.h"
 #include "ptbl_returncode.h"
 
-typedef enum {
-	E_MEMORY_CONFIG_LOAD_MATCH = 1,
-	E_MEMORY_CONFIG_LOAD_NOTHING,
-	E_MEMORY_CONFIG_LOAD_ERROR,
-} E_MEMORY_CONFIG_LOAD_RET;
-
 class memory_config {
 public:
 	memory_config()
@@ -249,8 +243,8 @@ public:
 	{
 	}
 
-	int save( const char *cp_file_path );
-	int load( const char *cp_file_path, int i_load_trace_batch_sw=ON );
+	int save( const char *file_path );
+	int load( const char *file_path, int load_trace_batch_sw=ON );
 
 	std::string memory_of_path;
 
@@ -374,19 +368,30 @@ private:
 
 	//-------------------------------------
 
-	int _save_comment_by_fp( FILE *fp );
-	int _save_config_by_fp( FILE *fp );
-	int _save_level_by_fp( FILE *fp );
-	int _save_area_by_fp( FILE *fp );
-	int _save_pixel_type_by_fp( FILE *fp );
-	int _save_trace_by_fp( FILE *fp );
-	int _save_fnum_by_fp( FILE *fp );
-	int _save_trace_batch_by_fp( FILE *fp );
-	int _save_trace_src_hsv_by_fp( FILE *fp );
+	void save_str_(
+	 const std::string& key ,const std::string& val ,std::ofstream& ofs
+	);
+	void save_word_(
+	 const std::string& key ,const std::string& val ,std::ofstream& ofs
+	);
+	void save_f64_(
+	 const std::string& key ,const double val ,std::ofstream& ofs
+	);
+	void save_3int_(
+	 const std::string& key ,const int rr ,const int gg ,const int bb
+	 ,std::ofstream& ofs
+	);
+	void save_head_( std::ofstream& ofs );
+	void save_config_( std::ofstream& ofs );
+	void save_level_( std::ofstream& ofs );
+	void save_area_( std::ofstream& ofs );
+	void save_pixel_type_( std::ofstream& ofs );
+	void save_fnum_( std::ofstream& ofs );
+	void save_trace_batch_( std::ofstream& ofs );
 
-	int _chk_ON_OFF( char *cp_scan );
-	int _load_by_fp( FILE *fp, int i_load_trace_batch_sw );
-	E_MEMORY_CONFIG_LOAD_RET _load_trace_src_hsv_by_fp( int i_num, char *cp1, char *cp2, char *cp3, char *cp4 );
+
+	void load_ifs_( std::ifstream& ifs , int load_trace_batch_sw );
+	bool load_trace_src_hsv_( std::vector< std::string >& words );
 };
 
 #endif /* !memory_config_h */

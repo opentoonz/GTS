@@ -77,7 +77,7 @@ int gts_master::next_scan_and_save_( void )
 	/* 06 BWか、Grayscaleか、RGBで保存SWがONのどれかの場合 */
 	if ((this->cl_iip_ro90.get_l_channels() < 3L)	//BW or Grayscale
 	||  (this->cl_iip_ro90.get_l_channels() == 3L	//RGB & SW is ON
-	&&   cl_gts_gui.chkbtn_filter_rgb_color_trace->value()
+	&&   cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()
 	    )
 	) {
 	 /* スキャン画像保存 */
@@ -105,7 +105,7 @@ int gts_master::next_scan_and_save_( void )
 	/*------------------------------------------------*/
 	/* 07 RGB画像でトレス画像保存SWがONの場合 */
 	if (	(this->cl_iip_ro90.get_l_channels() == 3L)
-	&&	cl_gts_gui.chkbtn_filter_rgb_color_trace->value()
+	&&	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()
 	) {
 
 	 /* ２値化処理の準備 */
@@ -221,7 +221,7 @@ fl_alert("Input level name!");
 	}
 
 	/* 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace->value() ) {
+	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
 		/* TracenImage画像のみ表示 */
 		cl_gts_master.cb_change_wview_sub();
 

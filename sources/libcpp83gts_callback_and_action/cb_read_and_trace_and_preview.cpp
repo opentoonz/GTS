@@ -89,7 +89,7 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	}
 
 	/* 読込前に画像のタイプを得ておく */
-	const long before_channels = this->cl_iip_read.get_l_channels();
+	//const long before_channels = this->cl_iip_read.get_l_channels();
 
 	/* 読み込み元ファイルパス設定 */
 	if (OK != this->cl_iip_read.cl_name.set_name(filepath)) {
@@ -108,41 +108,55 @@ void gts_master::cb_read_and_trace_and_preview( void )
 
 	/*------ 読込んだ画像を回転、２値化、表示する ------*/
 	/* ファイルからの読み込み時は回転処理はしない(ゼロ度回転をする) */
-	this->rot_and_trace_and_preview_(
-		&(this->cl_iip_read), 0 ,before_channels
+	this->rot_and_trace_and_enoise_and_preview_(
+		&(this->cl_iip_read), 0
 	);
 }
 
-void gts_master::rot_and_trace_and_preview_(
+void gts_master::rot_and_trace_and_enoise_and_preview_(
 	iip_canvas *parent
 	, int rotate_per_90_type 
-	, const long before_channels 
 	, const bool crop_sw
 	, const bool force_view_scanimage_sw
+)
+{
+	this->rot_and_trace_and_enoise_( parent , rotate_per_90_type );
+	this->redraw_image_( parent , crop_sw , force_view_scanimage_sw );
+}
+int gts_master::rot_and_trace_and_enoise_( // Rot90 and Effects
+	iip_canvas *parent
+	, int rotate_per_90_type 
 )
 {
 	/* 回転処理 */
 	if (OK != this->_iipg_rot90( parent, rotate_per_90_type )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_rot90(-) returns NG" );
-		return;
+		return NG;
 	}
 
-	/* RGB画像のときは2値化(トレス)処理 */
+	/* RGB画像のときは2値化(トレス)処理と、ドットノイズ消去処理 */
 	if (3L <= parent->get_l_channels()) {
 		if (OK != this->_iipg_color_trace_setup()) {
 			pri_funct_err_bttvr(
 		 "Error : this->_iipg_color_trace_setup() returns NG" );
-			return;
+			return NG;
 		}
 		this->_iipg_color_trace_exec();
 	}
-
+	return OK;
+}
+int gts_master::redraw_image_(
+	iip_canvas *parent
+	, const bool crop_sw
+	, const bool force_view_scanimage_sw
+)
+{
 	/* 表示準備 */
 	if (OK != this->_iipg_view_setup( crop_sw ?ON :OFF )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_view_setup() returns NG" );
-		return;
+		return NG;
 	}
 
 	/* 表示準備2 */
@@ -153,7 +167,7 @@ void gts_master::rot_and_trace_and_preview_(
 
 		/* 画像表示状態をメニューに設定 */
 		cl_gts_gui.menite_wview_main->setonly();
-	}
+	} /* それ以外の場合は現在の表示モードを維持する */
 
 	/* 表示 */
 	this->iipg_view_redraw_();
@@ -166,5 +180,6 @@ void gts_master::rot_and_trace_and_preview_(
 		/* color trace histogram windowの再描画 */
 		cl_gts_gui.window_hab_histogram->redraw();
 	}
+	return OK;
 }
 

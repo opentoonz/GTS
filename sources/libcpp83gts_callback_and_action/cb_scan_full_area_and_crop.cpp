@@ -14,7 +14,7 @@ void gts_master::cb_scan_full_area_and_crop( void )
 		return;
 	}
 
-	this->rot_and_trace_and_preview_(
-		clp_scan ,cl_gts_gui.choice_rot90->value() ,3 ,true ,true
+	this->rot_and_trace_and_enoise_and_preview_(
+		clp_scan ,cl_gts_gui.choice_rot90->value() ,true ,true
 	);
 }

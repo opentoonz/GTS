@@ -231,16 +231,16 @@ private:
   inline void cb_strinp_level_save_file_head_i(Fl_Input*, void*);
   static void cb_strinp_level_save_file_head(Fl_Input*, void*);
 public:
-  Fl_Value_Input *valinp_level_saveopen_num_start;
-  Fl_Choice *choice_level_save_num_continue_type;
+  Fl_Value_Input *valinp_level_num_start;
+  Fl_Choice *choice_level_num_continue_type;
 private:
-  inline void cb_choice_level_save_num_continue_type_i(Fl_Choice*, void*);
-  static void cb_choice_level_save_num_continue_type(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_level_save_num_continue_type[];
+  inline void cb_choice_level_num_continue_type_i(Fl_Choice*, void*);
+  static void cb_choice_level_num_continue_type(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_level_num_continue_type[];
 public:
   Fl_Choice *choice_level_num_endless_direction;
   static Fl_Menu_Item menu_choice_level_num_endless_direction[];
-  Fl_Value_Input *valinp_level_saveopen_num_end;
+  Fl_Value_Input *valinp_level_num_end;
   Fl_Choice *choice_level_save_image_format;
 private:
   inline void cb_choice_level_save_image_format_i(Fl_Choice*, void*);
@@ -254,10 +254,10 @@ private:
   inline void cb_chkbtn_filter_rgb_erase_1dot_sw_i(Fl_Check_Button*, void*);
   static void cb_chkbtn_filter_rgb_erase_1dot_sw(Fl_Check_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_filter_rgb_color_trace;
+  Fl_Check_Button *chkbtn_filter_rgb_color_trace_sw;
 private:
-  inline void cb_chkbtn_filter_rgb_color_trace_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_filter_rgb_color_trace(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_filter_rgb_color_trace_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_level_open_dir_path;
 private:

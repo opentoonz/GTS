@@ -574,7 +574,7 @@ cl_gts_gui.menite_level->clear();}
           callback {cl_gts_master.cb_filter_rgb_erase_1dot();}
           xywh {5 295 160 25} down_box DOWN_BOX
         }
-        Fl_Check_Button chkbtn_filter_rgb_color_trace {
+        Fl_Check_Button chkbtn_filter_rgb_color_trace_sw {
           label {RGB Trace}
           callback {cl_gts_master.cb_filter_rgb_color_trace();}
           xywh {5 320 160 25} down_box DOWN_BOX

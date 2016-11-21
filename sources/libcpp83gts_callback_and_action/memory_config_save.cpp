@@ -89,7 +89,7 @@ void memory_config::save_level_( std::ofstream& ofs )
 		, cl_gts_gui.chkbtn_filter_rgb_erase_1dot_sw->value()?
 		 this->str_on_:this->str_off_);
 	this->save_word_( this->str_filter_rgb_color_trace_sw_
-		, cl_gts_gui.chkbtn_filter_rgb_color_trace->value()?
+		, cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()?
 			this->str_on_:this->str_off_ );
 
 	this->save_str_( this->str_level_open_dir_path_
@@ -179,7 +179,7 @@ void memory_config::save_trace_batch_( std::ofstream& ofs )
 	}
 }
 //----------
-void memory_config::save( const char *file_path )
+int memory_config::save( const char *file_path )
 {
  try {
 	std::ofstream ofs(file_path); /* ファイル開く */
@@ -203,6 +203,8 @@ void memory_config::save( const char *file_path )
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
 	fl_alert( ost.str().c_str() );/* ダイオローグでユーザーに知らせる */
+	return NG;
  }
+	return OK;
 }
 //--------------------------------------------------

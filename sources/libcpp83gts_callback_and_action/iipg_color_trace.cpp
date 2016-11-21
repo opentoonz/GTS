@@ -115,7 +115,13 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	}
 
 	/* トレース */
-	this->cl_iip_trac.exec( &(this->cl_cal_trac) );
+	if (cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()) {
+		this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
+	} else {
+		this->cl_iip_trac.copy_image_from_parent(
+		 this->cl_iip_trac.get_ccp_object_name_of_mv()
+		);	/* 処理しないのでコピーだけする */
+	}
 
 	/* erase dot noise */
 	if (cl_gts_gui.chkbtn_filter_rgb_erase_1dot_sw->value()) {
