@@ -39,11 +39,11 @@ void gtsfbro06cb_level::memory_from_gui( const char* level_dir_path )
 
 	// open file head
 	this->open_file_head_ =
-		cl_gts_gui.strinp_level_open_name->value();
+		cl_gts_gui.strinp_level_open_file_head->value();
 
 	// open image format
 	this->open_image_format_ =
-		cl_gts_gui.choice_level_open_image_file_format->value();
+		cl_gts_gui.choice_level_open_image_format->value();
 }
 /* 記憶からGUI復元 */
 void gtsfbro06cb_level::memory_to_gui( void )
@@ -101,14 +101,14 @@ void gtsfbro06cb_level::memory_to_gui( void )
 	);
 
 	// open file head
-	cl_gts_gui.strinp_level_open_name->value(
+	cl_gts_gui.strinp_level_open_file_head->value(
 		this->open_file_head_.c_str()
 	);
 
 	// open image format
 	if (!(this->open_image_format_.empty())) {
-	 cl_gts_gui.choice_level_open_image_file_format->value(
-	  cl_gts_gui.choice_level_open_image_file_format->find_item(
+	 cl_gts_gui.choice_level_open_image_format->value(
+	  cl_gts_gui.choice_level_open_image_format->find_item(
 		this->open_image_format_.c_str()
 	  )
 	 );

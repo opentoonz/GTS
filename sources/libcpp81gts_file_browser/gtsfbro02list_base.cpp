@@ -89,7 +89,7 @@ E_DIR_OR_FILE_TYPE gtsfbro02list_base::e_dir_or_file_type( char *cp_file )
 		return E_DIR_OR_FILE_IS_TEXT;
 	}
 
-	/* 拡張子がthis->get_imagefile_extension()(=".tif")であり ---------
+	/* 拡張子がthis->get_save_imagefile_extension()(=".tif")であり ---------
 		かつ
 	   番号がある(".0000")
 		A.0001.tif" or "A_full.0001.tif" or ...

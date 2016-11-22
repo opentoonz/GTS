@@ -1,3 +1,5 @@
+#include <sstream> // std::ostringstream
+#include <iomanip> // std::setfill('0') , setw(4)
 #include "gtsfbro06cb_level.h"
 #include "gts_gui.h"
 
@@ -52,6 +54,20 @@ char *gtsfbro06cb_level::cp_filepath_full( int i_number )
 		return NULL;
 	}
 	return this->cp_path();
+}
+
+const std::string gtsfbro06cb_level::filepath_open( const int number )
+{
+	std::string str;
+	str = cl_gts_gui.filinp_level_open_dir_path->value();
+	str += '/';
+	str += cl_gts_gui.strinp_level_open_file_head->value();
+	str += '.';
+	std::ostringstream ost;
+	ost << std::setfill('0') << std::setw(4) << number;
+	str += ost.str();
+	str += this->get_open_imagefile_extension();
+	return str;
 }
 
 /*

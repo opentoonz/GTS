@@ -60,17 +60,17 @@ int gtsfbro06cb_level::_renumber_level_tif( int i_num )
 			" %s.%04d%s...%s.%04d%s\n",
 			ccp_file,
 			stp_dir_or_level->i_start_num,
-			this->get_imagefile_extension(),
+			this->get_save_imagefile_extension(),
 			ccp_file,
 			stp_dir_or_level->i_end_num,
-			this->get_imagefile_extension()
+			this->get_save_imagefile_extension()
 		);
 	} else {
 		sprintf( &(ca_msg[strlen(ca_msg)]),
 			" %s.%04d%s\n",
 			ccp_file,
 			stp_dir_or_level->i_start_num,
-			this->get_imagefile_extension()
+			this->get_save_imagefile_extension()
 		);
 	}
 	strcat( ca_msg, "Input plus or minus number\n");

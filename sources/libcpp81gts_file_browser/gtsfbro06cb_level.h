@@ -9,31 +9,15 @@
 class gtsfbro06cb_level : public gtsfbro05list_level {
 public:
 	gtsfbro06cb_level()
-/*	:_i_list_form_memory(0)
-	,_i_start_memory(0)
-	,_i_end_memory(0)
-	,continue_type_memory_(0)
-	,endless_direction_memory_(0)
-	,image_file_format_(0)
-	,_i_save_color_trace_level_sw_memory(0)
-	,save_rgb_scanimage_sw_memory_(0)
-*/
-
-	,saveopen_start_(0.)
+	:saveopen_start_(0.)
 	,saveopen_end_(0.)
 	{
-/*		this->level_filename_memory_[0]  = '\0';
-		this->_ca_rgb_scan_dir_memory[0] = '\0';
-*/
 	}
 	/* GUIの状態を記憶する */
 	void memory_from_gui( const char* level_dir_path );
 
 	/* 記憶からGUI復元 */
 	void memory_to_gui( void );
-
-//	void memory_backup( const char* level_dir_path ); /* GUI状態記憶 */
-//	void memory_restore(); /* 記憶からGUI復元 */
 
 	int i_init( void );
 
@@ -59,9 +43,13 @@ public:
 
 	char *cp_filepath( int i_number );
 	char *cp_filepath_full( int i_number );
+	char *filepath_full( int i_number );
+	const std::string filepath_open( const int number );
+
 	char *cp_levelname( void );
 
-	void cb_set_image_file_extension( void );
+	void cb_set_save_image_file_extension( void );
+	void cb_set_open_image_file_extension( void );
 
 	void level_set(
 		const std::vector<int>& num_list
@@ -105,23 +93,6 @@ private:
 	int _is_valid_string( const char *ccp_name );
 
 	//----------
-
-/*
-	void set_level_filename_memory_( const char *ccp_fname );
-	void set_rgb_scan_dir_memory_( const char *ccp_fname );
-
-	//----------
-	int	_i_list_form_memory;
-	char	level_filename_memory_[PTBL_PATH_MAX];
-	int	_i_start_memory;
-	int	_i_end_memory;
-	int	continue_type_memory_;
-	int	endless_direction_memory_;
-	int	image_file_format_;
-	char	_ca_rgb_scan_dir_memory[PTBL_PATH_MAX];
-	int	_i_save_color_trace_level_sw_memory;
-	int	save_rgb_scanimage_sw_memory_;
-*/
 
 	/* save_dir_path_はthis->cp_memory() */
 	std::string save_file_head_;
