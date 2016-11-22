@@ -1,5 +1,9 @@
-#include <ctype.h>	/* for isdigit() */
+#include <FL/fl_ask.H> // fl_alert()
+#include <ctype.h> // isdigit()
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "pri.h"
 /*
 #include "ptbl_returncode.h"
@@ -51,7 +55,7 @@ void set_level_save_image_format_( const std::string& str1 )
 	if (crnt == nullptr) { return; }
 
 	cl_gts_gui.choice_level_save_image_format->value(crnt);
-	cl_gts_master.cl_bro_level.cb_set_image_file_extension();
+	cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
 }
 void set_level_open_image_format_( const std::string& str1 )
 {
@@ -60,6 +64,7 @@ void set_level_open_image_format_( const std::string& str1 )
 			str1.c_str() );
 	if (crnt == nullptr) { return; }
 	cl_gts_gui.choice_level_open_image_format->value(crnt);
+	cl_gts_master.cl_bro_level.cb_set_open_image_file_extension();
 }
 void set_level_list_form_( const std::string& str1 )
 {
@@ -230,10 +235,10 @@ void memory_config::load_ifs_(
 		}
 
 		else if ((2 == words.size()) &&
-		((words.at(0) == this->str_filter_rgb_erase_1dot_sw_) ||
-		 (words.at(0) == this->str_filter_rgb_erase_1dot_sw_legacy2016_))
+		((words.at(0) == this->str_filter_rgb_erase_dot_noise_sw_) ||
+		 (words.at(0) == this->str_filter_rgb_erase_dot_noise_sw_legacy2016_))
 		) {
-			cl_gts_gui.chkbtn_filter_rgb_erase_1dot_sw->value(
+			cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value(
 				(words.at(1) == this->str_on_) ?1 :0
 			);
 		}
@@ -259,7 +264,7 @@ void memory_config::load_ifs_(
 
 		else if ((2 == words.size()) &&
 		(words.at(0) == this->str_level_open_file_head_)) {
-			cl_gts_gui.strinp_level_open_file->value(
+			cl_gts_gui.strinp_level_open_file_head->value(
 				words.at(1).c_str() );
 		}
 		else if ((2 == words.size()) && (words.at(0)
@@ -278,7 +283,7 @@ void memory_config::load_ifs_(
 		(words.at(0) == this->str_area_select_ )) {
 			const Fl_Menu_Item *crnt =
 				cl_gts_gui.choice_area_selecter->find_item(
-					words.at(1) );
+					words.at(1).c_str() );
 			if (crnt != nullptr) {
 			 cl_gts_gui.choice_area_selecter->value(crnt);
 			 cl_gts_master.cb_area_selecter();
@@ -300,7 +305,7 @@ void memory_config::load_ifs_(
 		(words.at(0) == this->str_area_aspect_ratio_select_)) {
 			const Fl_Menu_Item *crnt =
 		cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
-				words.at(1) );
+				words.at(1).c_str() );
 			if (crnt != 0) {
 		cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
 		cl_gts_master.cb_area_aspect_ratio_selecter();
@@ -495,7 +500,7 @@ void memory_config::load_ifs_(
 			/* リストの最後に追加する */
 			cl_gts_gui.selbro_trace_batch_run_list->insert(
 			cl_gts_gui.selbro_trace_batch_run_list->size()+1,
-				words.at(1)
+				words.at(1).c_str()
 			);
 		}
 

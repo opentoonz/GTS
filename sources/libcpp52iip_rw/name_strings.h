@@ -8,7 +8,7 @@ public:
 	name_strings(void) { this->_cp_name = NULL; }
 	~name_strings(void) { this->_mem_free(); }
 
-	int set_name( char *cp_name );
+	int set_name( const char *cp_name );
 	char *get_cp_name( void ) { return this->_cp_name; }
 private:
 	char *_cp_name; 

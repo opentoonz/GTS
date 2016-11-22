@@ -249,10 +249,10 @@ private:
   inline void cb_Set_i(Fl_Button*, void*);
   static void cb_Set(Fl_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_filter_rgb_erase_1dot_sw;
+  Fl_Check_Button *chkbtn_filter_rgb_erase_dot_noise_sw;
 private:
-  inline void cb_chkbtn_filter_rgb_erase_1dot_sw_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_filter_rgb_erase_1dot_sw(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_filter_rgb_erase_dot_noise_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_filter_rgb_color_trace_sw;
 private:
@@ -269,16 +269,16 @@ private:
   inline void cb_togbut_level_open_browse_i(Fl_Button*, void*);
   static void cb_togbut_level_open_browse(Fl_Button*, void*);
 public:
-  Fl_Input *strinp_level_open_name;
+  Fl_Input *strinp_level_open_file_head;
 private:
-  inline void cb_strinp_level_open_name_i(Fl_Input*, void*);
-  static void cb_strinp_level_open_name(Fl_Input*, void*);
+  inline void cb_strinp_level_open_file_head_i(Fl_Input*, void*);
+  static void cb_strinp_level_open_file_head(Fl_Input*, void*);
 public:
-  Fl_Choice *choice_level_open_image_file_format;
+  Fl_Choice *choice_level_open_image_format;
 private:
-  inline void cb_choice_level_open_image_file_format_i(Fl_Choice*, void*);
-  static void cb_choice_level_open_image_file_format(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_level_open_image_file_format[];
+  inline void cb_choice_level_open_image_format_i(Fl_Choice*, void*);
+  static void cb_choice_level_open_image_format(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_level_open_image_format[];
 public:
   Fl_Double_Window *window_level_browse;
 private:

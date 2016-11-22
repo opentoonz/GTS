@@ -115,16 +115,21 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	}
 
 	/* トレース */
-	if (cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()) {
+	if (	(this->cl_iip_trac.get_l_channels() == 3L)
+	&&	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()
+	) {	// RGB
 		this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
-	} else {
+	}
+	else {	// BW,Grayscale
 		this->cl_iip_trac.copy_image_from_parent(
 		 this->cl_iip_trac.get_ccp_object_name_of_mv()
-		);	/* 処理しないのでコピーだけする */
+		);	/* 処理しないのでrot90からコピーだけする */
 	}
 
 	/* erase dot noise */
-	if (cl_gts_gui.chkbtn_filter_rgb_erase_1dot_sw->value()) {
+	if (	(this->cl_iip_edot.get_l_channels() == 3L)
+	&&	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value()
+	) {	// RGB
 		this->cl_iip_edot.exec();
 	}
 }

@@ -22,8 +22,19 @@ gts_master::gts_master(
 	んだ設定に合わせること */
 	,_i_rotate_per_90(0)
 {
-	this->cl_bro_level.add_imagefile_extension( ".tif" );
-	this->cl_bro_level.add_imagefile_extension( ".tga" );
+	/* GUIのsaveで指定した順に拡張子リストを作る */
+	for (int ii=0 ;ii<cl_gts_gui.choice_level_save_image_format->size()
+	;++ii) {
+		const char* tx =
+			cl_gts_gui.choice_level_save_image_format->text(ii);
+		if      (std::string(tx) == "TGA(*.tga)") {
+			this->cl_bro_level.add_imagefile_extension(".tga");
+		}
+		else if (std::string(tx) == "TIFF(*.tif)") {
+			this->cl_bro_level.add_imagefile_extension(".tif");
+		}
+	}
+
 	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 }
@@ -156,11 +167,14 @@ int gts_master::exec( const char *comm )
 		return NG;
 	}
 
-	/* image file format TIFF/TGA */
+	/* カレントのファイル拡張子(tif/tga)、元設定からGUI設定する*/
 	cl_gts_gui.choice_level_save_image_format->value(
-	 this->cl_bro_level.get_current_imagefile_extension()
+ this->cl_bro_level.get_current_save_imagefile_extension()
 	);
-	//ct_gts_master.cl_bro_level.cb_set_image_file_extension();
+	cl_gts_gui.choice_level_open_image_format->value(
+ this->cl_bro_level.get_current_open_imagefile_extension()
+	);
+	//ct_gts_master.cl_bro_level.cb_set_save_image_file_extension();
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	this->cl_color_trace_thickness.cb_enh_01();

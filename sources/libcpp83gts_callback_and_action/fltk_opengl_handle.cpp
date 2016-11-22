@@ -238,7 +238,7 @@ void open_files_by_paste_( const std::string &dnd_str )
 		if ( exte == "tga" ) {
 		 cl_gts_gui.choice_level_save_image_format->value(1);
 		}
-		cl_gts_master.cl_bro_level.cb_set_image_file_extension();
+		cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
 		cl_gts_master.cl_bro_level.level_set(
 			nums ,start_num ,end_num
 		);

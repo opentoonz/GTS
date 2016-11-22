@@ -542,7 +542,7 @@ void gts_gui::cb_filinp_level_save_dir_path(Fl_File_Input* o, void* v) {
 }
 
 void gts_gui::cb_togbut_level_save_browse_i(Fl_Button*, void*) {
-  cl_gts_master.cb_level_save_browse();
+  //cl_gts_master.cb_level_save_browse();
 }
 void gts_gui::cb_togbut_level_save_browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_togbut_level_save_browse_i(o,v);
@@ -583,7 +583,7 @@ Fl_Menu_Item gts_gui::menu_choice_level_num_endless_direction[] = {
 };
 
 void gts_gui::cb_choice_level_save_image_format_i(Fl_Choice*, void*) {
-  cl_gts_master.cl_bro_level.cb_set_image_file_extension();
+  cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
 }
 void gts_gui::cb_choice_level_save_image_format(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_choice_level_save_image_format_i(o,v);
@@ -602,49 +602,49 @@ void gts_gui::cb_Set(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Set_i(o,v);
 }
 
-void gts_gui::cb_chkbtn_filter_rgb_erase_1dot_sw_i(Fl_Check_Button*, void*) {
-  cl_gts_master.cb_filter_rgb_erase_1dot();
+void gts_gui::cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(Fl_Check_Button*, void*) {
+  //cl_gts_master.cb_filter_rgb_erase_dot_noise();
 }
-void gts_gui::cb_chkbtn_filter_rgb_erase_1dot_sw(Fl_Check_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_erase_1dot_sw_i(o,v);
+void gts_gui::cb_chkbtn_filter_rgb_erase_dot_noise_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(o,v);
 }
 
 void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw_i(Fl_Check_Button*, void*) {
-  cl_gts_master.cb_filter_rgb_color_trace();
+  //cl_gts_master.cb_filter_rgb_color_trace();
 }
 void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_color_trace_sw_i(o,v);
 }
 
 void gts_gui::cb_filinp_level_open_dir_path_i(Fl_File_Input*, void*) {
-  cl_gts_master.cb_level_open_dir();
+  //cl_gts_master.cb_level_open_dir_path();
 }
 void gts_gui::cb_filinp_level_open_dir_path(Fl_File_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_filinp_level_open_dir_path_i(o,v);
 }
 
 void gts_gui::cb_togbut_level_open_browse_i(Fl_Button*, void*) {
-  cl_gts_master.cb_level_open_browse();
+  //cl_gts_master.cb_level_open_browse();
 }
 void gts_gui::cb_togbut_level_open_browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_togbut_level_open_browse_i(o,v);
 }
 
-void gts_gui::cb_strinp_level_open_name_i(Fl_Input*, void*) {
-  cl_gts_master.cb_level_open_name();
+void gts_gui::cb_strinp_level_open_file_head_i(Fl_Input*, void*) {
+  //cl_gts_master.cb_level_open_file_head();
 }
-void gts_gui::cb_strinp_level_open_name(Fl_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_strinp_level_open_name_i(o,v);
-}
-
-void gts_gui::cb_choice_level_open_image_file_format_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_level_open_image_file_format();
-}
-void gts_gui::cb_choice_level_open_image_file_format(Fl_Choice* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_level_open_image_file_format_i(o,v);
+void gts_gui::cb_strinp_level_open_file_head(Fl_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_strinp_level_open_file_head_i(o,v);
 }
 
-Fl_Menu_Item gts_gui::menu_choice_level_open_image_file_format[] = {
+void gts_gui::cb_choice_level_open_image_format_i(Fl_Choice*, void*) {
+  //cl_gts_master.cb_level_open_image_format();
+}
+void gts_gui::cb_choice_level_open_image_format(Fl_Choice* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_level_open_image_format_i(o,v);
+}
+
+Fl_Menu_Item gts_gui::menu_choice_level_open_image_format[] = {
  {"TIFF(*.tif)", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"TGA(*.tga)", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
@@ -5425,10 +5425,10 @@ Fl_Double_Window* gts_gui::make_window() {
       o->box(FL_BORDER_BOX);
       o->labeltype(FL_SHADOW_LABEL);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-      { chkbtn_filter_rgb_erase_1dot_sw = new Fl_Check_Button(5, 295, 160, 25, "RGB Erase dot noise");
-        chkbtn_filter_rgb_erase_1dot_sw->down_box(FL_DOWN_BOX);
-        chkbtn_filter_rgb_erase_1dot_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_erase_1dot_sw);
-      } // Fl_Check_Button* chkbtn_filter_rgb_erase_1dot_sw
+      { chkbtn_filter_rgb_erase_dot_noise_sw = new Fl_Check_Button(5, 295, 160, 25, "RGB Erase dot noise");
+        chkbtn_filter_rgb_erase_dot_noise_sw->down_box(FL_DOWN_BOX);
+        chkbtn_filter_rgb_erase_dot_noise_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_erase_dot_noise_sw);
+      } // Fl_Check_Button* chkbtn_filter_rgb_erase_dot_noise_sw
       { chkbtn_filter_rgb_color_trace_sw = new Fl_Check_Button(5, 320, 160, 25, "RGB Trace");
         chkbtn_filter_rgb_color_trace_sw->down_box(FL_DOWN_BOX);
         chkbtn_filter_rgb_color_trace_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_color_trace_sw);
@@ -5454,21 +5454,21 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Group* o = new Fl_Group(0, 430, 200, 25);
         { new Fl_Box(0, 430, 80, 25);
         } // Fl_Box* o
-        { strinp_level_open_name = new Fl_Input(80, 430, 120, 25, "Level");
-          strinp_level_open_name->box(FL_BORDER_BOX);
-          strinp_level_open_name->callback((Fl_Callback*)cb_strinp_level_open_name);
-          strinp_level_open_name->when(FL_WHEN_CHANGED);
-        } // Fl_Input* strinp_level_open_name
+        { strinp_level_open_file_head = new Fl_Input(80, 430, 120, 25, "Level");
+          strinp_level_open_file_head->box(FL_BORDER_BOX);
+          strinp_level_open_file_head->callback((Fl_Callback*)cb_strinp_level_open_file_head);
+          strinp_level_open_file_head->when(FL_WHEN_CHANGED);
+        } // Fl_Input* strinp_level_open_file_head
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(0, 460, 200, 25);
         { new Fl_Box(0, 460, 80, 25);
         } // Fl_Box* o
-        { choice_level_open_image_file_format = new Fl_Choice(80, 460, 100, 25, "Format");
-          choice_level_open_image_file_format->down_box(FL_BORDER_BOX);
-          choice_level_open_image_file_format->callback((Fl_Callback*)cb_choice_level_open_image_file_format);
-          choice_level_open_image_file_format->menu(menu_choice_level_open_image_file_format);
-        } // Fl_Choice* choice_level_open_image_file_format
+        { choice_level_open_image_format = new Fl_Choice(80, 460, 100, 25, "Format");
+          choice_level_open_image_format->down_box(FL_BORDER_BOX);
+          choice_level_open_image_format->callback((Fl_Callback*)cb_choice_level_open_image_format);
+          choice_level_open_image_format->menu(menu_choice_level_open_image_format);
+        } // Fl_Choice* choice_level_open_image_format
         { new Fl_Box(180, 460, 20, 25);
         } // Fl_Box* o
         o->end();

@@ -1,10 +1,11 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H> // fl_alert()
 #include <ctime>
-#include <iomanip>	// setw()
+#include <iomanip>	// std::setw()
 #include <string>
 #include <fstream>
 #include <sstream>
+#include "ptbl_funct.h" // ptbl_get_cp_username
 #include "memory_config.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -14,22 +15,22 @@ void memory_config::save_str_(
 	const std::string& key ,const std::string& val ,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(28) << ofs.left  << key
-	    << ' ' << '\"'  << ofs.right << val << '\"' << '\n';
+	ofs << std::setw(28) << std::left  << key
+	    << ' ' << '\"'  << std::right << val << '\"' << '\n';
 }
 void memory_config::save_word_(
 	const std::string& key ,const std::string& val ,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(28) << ofs.left << key
-	    << ' ' << ofs.right << val<< '\n';
+	ofs << std::setw(28) << std::left << key
+	    << ' ' << std::right << val<< '\n';
 }
 void memory_config::save_f64_(
 	const std::string& key ,const double val ,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(28) << ofs.left << key
-	    << ' ' << ofs.right << ofs.setprecision(16) << val<< '\n';
+	ofs << std::setw(28) << std::left << key
+	    << ' ' << std::right << std::setprecision(16) << val<< '\n';
 	/*	double(=倍精度浮動小数点数)の精度は
 		53bit約16桁(=53log10(2)=15.954589...) */
 }
@@ -38,7 +39,7 @@ void memory_config::save_3int_(
 	,std::ofstream& ofs
 )
 {
-	ofs << ofs.setw(28) << ofs.left << key
+	ofs << std::setw(28) << std::left << key
 	    << ' ' << rr << ' ' << gg << ' ' << bb << '\n';
 }
 //----------
@@ -85,12 +86,12 @@ void memory_config::save_level_( std::ofstream& ofs )
 	this->save_str_( this->str_level_save_image_format_
 		,cl_gts_gui.choice_level_save_image_format->text() ,ofs );
 
-	this->save_word_( this->str_filter_rgb_erase_1dot_sw_
-		, cl_gts_gui.chkbtn_filter_rgb_erase_1dot_sw->value()?
-		 this->str_on_:this->str_off_);
+	this->save_word_( this->str_filter_rgb_erase_dot_noise_sw_
+		, cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value()?
+		 this->str_on_:this->str_off_,ofs );
 	this->save_word_( this->str_filter_rgb_color_trace_sw_
 		, cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()?
-			this->str_on_:this->str_off_ );
+			this->str_on_:this->str_off_ ,ofs );
 
 	this->save_str_( this->str_level_open_dir_path_
 		,cl_gts_gui.filinp_level_open_dir_path->value() ,ofs );
@@ -124,7 +125,7 @@ void memory_config::save_area_( std::ofstream& ofs )
 	this->save_f64_(	this->str_area_resolution_dpi_
 		       ,cl_gts_gui.valinp_area_reso->value() ,ofs );
 	this->save_str_(	this->str_rotate_per_90_
-			       ,cl_gts_gui.choice_rot90->text() .ofs );
+			       ,cl_gts_gui.choice_rot90->text() ,ofs );
 	this->save_str_(	this->str_scanner_type_
 		       ,cl_gts_gui.txtout_scanner_type->value() ,ofs );
 	this->save_f64_(	this->str_scanner_x_max_

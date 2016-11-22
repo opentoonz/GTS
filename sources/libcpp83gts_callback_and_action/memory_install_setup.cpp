@@ -30,9 +30,9 @@ void memory_install_setup::load( const std::string& exe_file_path )
 		} else
 		if (words.at(0) == "image_file_format") {
 			if (words.at(1) == "TIFF") {
- cl_gts_master.cl_bro_level.set_current_imagefile_extension(0);
+ cl_gts_master.cl_bro_level.set_current_save_imagefile_extension(0);
 			} else if (words.at(1) == "TGA") {
- cl_gts_master.cl_bro_level.set_current_imagefile_extension(1);
+ cl_gts_master.cl_bro_level.set_current_save_imagefile_extension(1);
 			}
 		} else
 		if (words.at(0) == "short_cut_key_start_scan") {

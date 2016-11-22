@@ -154,6 +154,7 @@ namespace {
 		return nullptr;
 	}
 
+#if 0
 	/* ファイルヘッドに_fullを付加した画像ファイルパスを得る */
 	cp_path = cl_gts_master.cl_bro_level.cp_filepath_full(file_num);
 	if (nullptr == cp_path) {
@@ -169,6 +170,7 @@ namespace {
 			cp_path);
 		return nullptr;
 	}
+#endif
 
 	/* モノクロ２値画像 */
 	if (E_CH_NUM_BITBW ==

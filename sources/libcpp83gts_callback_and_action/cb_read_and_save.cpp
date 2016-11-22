@@ -1,3 +1,4 @@
+#include <fstream>	//std::ifstream
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "ptbl_funct.h"
 #include "ptbl_returncode.h"
@@ -7,7 +8,6 @@
 
 int gts_master::read_and_save_crnt_( void )
 {
-	char *filepath;
 	int crnt_file_num = this->cl_file_number_list.get_crnt_file_num();
 	int crnt_list_num = this->cl_file_number_list.get_crnt_list_num();
 
@@ -19,25 +19,32 @@ int gts_master::read_and_save_crnt_( void )
 	/*------------------------------------------------*/
 
 	/* 読み込み(番号に対する)ファイルパスを得る */
-	filepath = this->cl_bro_level.cp_filepath_full(crnt_file_num);
-	if (nullptr == filepath) {
+
+	/* open dir , head ,extによるパス */
+
+	std::string fpath_open(
+		this->cl_bro_level.filepath_open(crnt_file_num)
+	);
+	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.cp_filepath_full(%d) returns nullptr",
+	  "Error : this->cl_bro_level.filepath_open(%d) returns nullptr",
 		crnt_file_num
 		);
 		return NG;
 	}
 
 	/* 画像ファイルがないなら読み込みはしないでその番号キャンセル */
-	if (!ptbl_dir_or_file_is_exist( filepath )) {
-		return OK;
+	//if (!ptbl_dir_or_file_is_exist( fpath_open.c_str() )) {return OK;}
+	{
+	 std::ifstream ifs( fpath_open.c_str() ,std::ios_base::binary );
+	 if (!ifs) { return OK; }
 	}
 
 	/* 読み込み元ファイルパス設定 */
-	if (OK != this->cl_iip_read.cl_name.set_name(filepath)) {
+	if (OK != this->cl_iip_read.cl_name.set_name(fpath_open.c_str())) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_iip_read.cl_name.set_name(%s) returns NG",
-			filepath);
+			fpath_open.c_str());
 		return NG;
 	}
 
@@ -69,7 +76,7 @@ int gts_master::read_and_save_crnt_( void )
 
 	/* Trace保存する(番号に対する)ファイルパスを得る */
 
-	filepath = this->cl_bro_level.cp_filepath(crnt_file_num);
+	char* filepath = this->cl_bro_level.cp_filepath(crnt_file_num);
 	if (nullptr == filepath) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.cp_filepath(%d) returns nullptr.",

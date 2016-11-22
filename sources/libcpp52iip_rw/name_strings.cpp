@@ -13,7 +13,7 @@ void name_strings::_mem_free(void)
 	}
 }
 
-int name_strings::set_name( char *cp_name )
+int name_strings::set_name( const char *cp_name )
 {
 	/* 引数がNULLであってはならない */
 	assert(NULL != cp_name);

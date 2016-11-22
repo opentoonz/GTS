@@ -1,8 +1,9 @@
 #ifndef memory_config_h
 #define memory_config_h
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
+#include <vector>
 #include "ptbl_path_max.h"
 #include "ptbl_returncode.h"
 
@@ -48,9 +49,9 @@ public:
 	,str_level_save_image_format_legacy2016_(
 	    "level_image_file_format")
 
-	,str_filter_rgb_erase_1dot_sw_(
-	    "filter_rgb_erase_1dot_sw")
-	,str_filter_rgb_erase_1dot_sw_legacy2016_(
+	,str_filter_rgb_erase_dot_noise_sw_(
+	    "filter_rgb_erase_dot_noise_sw")
+	,str_filter_rgb_erase_dot_noise_sw_legacy2016_(
 	    "color_trace_erase_1dot")
 
 	,str_filter_rgb_color_trace_sw_(
@@ -260,17 +261,23 @@ private:
 	const char* str_config_save_as_file_;
 
 	const char* str_level_save_dir_path_;
+	const char* str_level_save_dir_path_legacy2016_;
 	const char* str_level_save_file_head_;
+	const char* str_level_save_file_head_legacy2016_;
 	const char* str_level_num_start_;
 	const char* str_level_num_end_;
 	const char* str_level_num_continue_type_;
 	const char* str_level_num_endless_direction_;
 	const char* str_level_save_image_format_;
+	const char* str_level_save_image_format_legacy2016_;
 
-	const char* str_filter_rgb_erase_1dot_sw_;
+	const char* str_filter_rgb_erase_dot_noise_sw_;
+	const char* str_filter_rgb_erase_dot_noise_sw_legacy2016_;
 	const char* str_filter_rgb_color_trace_sw_;
+	const char* str_filter_rgb_color_trace_sw_legacy2016_;
 
 	const char* str_level_open_dir_path_;
+	const char* str_level_open_dir_path_legacy2016_;
 	const char* str_level_open_file_head_;
 	const char* str_level_open_image_format_;
 
@@ -388,6 +395,7 @@ private:
 	void save_pixel_type_( std::ofstream& ofs );
 	void save_fnum_( std::ofstream& ofs );
 	void save_trace_batch_( std::ofstream& ofs );
+	void save_trace_src_hsv_( std::ofstream& ofs );
 
 
 	void load_ifs_( std::ifstream& ifs , int load_trace_batch_sw );

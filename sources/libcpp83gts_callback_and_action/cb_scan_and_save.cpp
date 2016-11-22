@@ -4,20 +4,12 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-/*--------------------------------------------------------*/
 int gts_master::next_scan_and_save_( void )
 {
-	int crnt_list_num;
-	int crnt_file_num;
-	int next_file_num;
-	char* filepath = nullptr;
-	iip_canvas* clp_scan = nullptr;
-	char	ca8_but[8];
-
 	/* 01 次(始め)の位置を得る */
-	crnt_list_num = this->cl_file_number_list.get_crnt_list_num();
-	crnt_file_num = this->cl_file_number_list.get_crnt_file_num();
-	next_file_num = this->cl_file_number_list.get_next_file_num();
+	int crnt_list_num = this->cl_file_number_list.get_crnt_list_num();
+	int crnt_file_num = this->cl_file_number_list.get_crnt_file_num();
+	int next_file_num = this->cl_file_number_list.get_next_file_num();
 	if (crnt_list_num< 1 || crnt_file_num< 1) {
 		pri_funct_err_bttvr(
    "Error : crnt_list_num=%d or crnt_file_num=%d"
@@ -25,130 +17,61 @@ int gts_master::next_scan_and_save_( void )
 		return NG;
 	}
 
-	/* 02 フレーム番号(crnt_list_num)を表示するようリストをスクロール */
+	/* 02 保存するファイルパスを得る
+		DirPath/Level.Number.Ext-->例:"C:/users/public/A.0001.tif"
+	*/
+	char* filepath = const_cast<char*>(
+		this->cl_bro_level.cp_filepath( crnt_file_num )
+	);
+	if (filepath == nullptr) {
+		pri_funct_err_bttvr(
+	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
+			, crnt_file_num );
+		return NG;
+	}
+
+	/* 03 フレーム番号(crnt_list_num)を表示するようリストをスクロール */
 	cl_gts_gui.selbro_fnum_list->middleline(crnt_list_num);
 
-	/* 03 スキャンを実行 */
-	clp_scan = this->_iipg_scan();
+	/* 04 スキャンを実行 */
+	iip_canvas* clp_scan = this->_iipg_scan();
 	if (nullptr == clp_scan) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iipg_scan() returns nullptr" );
+		      "Error : this->_iipg_scan() returns nullptr" );
 // std::string str("Error in scaning at next!";
 // fl_alert(str.c_str());
 		return NG;
 	}
 
-	/* 04 回転処理を実行 */
-	if (OK != this->_iipg_rot90(
+	/* 05 回転、2値化、ドットノイズ消去　処理 */
+	if (this->rot_and_trace_and_enoise_(
 		clp_scan ,cl_gts_gui.choice_rot90->value()
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_rot90(-) returns NG" );
+	) != OK) {
 		return NG;
 	}
 
-	/* 05 保存する(番号に対する)ファイルパスを得る */
-#if 0
-	if (3L <= this->cl_iip_ro90.get_l_channels()
-	&& cl_gts_gui.chkbtn_level_rgb_with_full_sw->value()
-	) {
-		/* RGB画像(専用の名前)(_full付)(A_full.0001.tif) */
-		/* 読み込み(番号に対する)ファイルパスを得る */
-		filepath = const_cast<char*>(this->cl_bro_level.cp_filepath_full( crnt_file_num ));
-		if (filepath == nullptr) {
-			pri_funct_err_bttvr(
-		 "Error : this->cl_bro_level.cp_filepath_full(%d) returns nullptr."
-				, crnt_file_num );
-			return NG;
-		}
-	} else {
-#endif
-		/* BW,Grayscale,RGB(通常の名前)は
-		ノーマルな名前(A.0001.tif)で保存 */
-		filepath = const_cast<char*>(this->cl_bro_level.cp_filepath( crnt_file_num ));
-		if (filepath == nullptr) {
-			pri_funct_err_bttvr(
-	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
-				, crnt_file_num );
-			return NG;
-		}
-//	}
-
-	/* 06 BWか、Grayscaleか、RGBで保存SWがONのどれかの場合 */
-	if ((this->cl_iip_ro90.get_l_channels() < 3L)	//BW or Grayscale
-	||  (this->cl_iip_ro90.get_l_channels() == 3L	//RGB & SW is ON
-	&&   cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()
-	    )
-	) {
-	 /* スキャン画像保存 */
-	 if (OK != this->_iipg_save(
-		&(this->cl_iip_ro90),
-		filepath,
-		cl_gts_gui.valinp_area_reso->value()
-		/* 回転値はゼロ固定にする */
-	 ) ) {
+	/* 06 画像を保存する
+		BW/Grayscale/RGB/RGBTraceのどれか
+	*/
+	if (OK != this->_iipg_save(
+		&(cl_gts_master.cl_iip_edot)/* Effectの最後Node画像を保存 */
+		, filepath
+		, cl_gts_gui.valinp_area_reso->value()
+		/* 回転値後を正対として角度ゼロ(default)として保存する */
+	) ) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iip_save(-) returns NG" );
+	 "Error : this->_iipg_save(-) returns NG" );
 		return NG;
-	 }
+	}
 
-	 /* リストにScanimage(src)保存済マーク付け "0000" --> "0000 S" */
-	 if (OK != this->cl_file_number_list.marking_scan_file(crnt_list_num)) {
+	/* 07 リストに保存済マーク付け "0000" --> "0000 S" */
+	if (OK!=this->cl_file_number_list.marking_scan_file(crnt_list_num)){
 		pri_funct_err_bttvr(
-	  "Error : this->cl_file_number_list.marking_scan_file(%d) returns NG",
+       "Error : this->cl_file_number_list.marking_scan_file(%d) returns NG",
 			crnt_list_num
 		);
 		return NG;
-	 }
 	}
-
-	/*------------------------------------------------*/
-	/* 07 RGB画像でトレス画像保存SWがONの場合 */
-	if (	(this->cl_iip_ro90.get_l_channels() == 3L)
-	&&	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()
-	) {
-
-	 /* ２値化処理の準備 */
-	 if (OK != this->_iipg_color_trace_setup()) {
-		pri_funct_err_bttvr(
-	  "Error : this->_iipg_color_trace_setup() returns NG" );
-		return NG;
-	 }
-
-	 /* ２値化処理を実行 */
-	 this->_iipg_color_trace_exec();
-
-	 /* ２値化画像を保存する(番号に対する)ファイルパスを得る */
-	 filepath = const_cast<char*>(this->cl_bro_level.cp_filepath( crnt_file_num ));
-	 if (nullptr == filepath) {
-		pri_funct_err_bttvr(
-	  "Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
-	 		, crnt_file_num
-		);
-		return NG;
-	 }
-
-	 /* ２値化画像を保存する */
-	 if (OK != this->_iipg_save(
-		&(cl_gts_master.cl_iip_trac)
-		, filepath , cl_gts_gui.valinp_area_reso->value()
-		/* rot90実行後なので(デフォルト)0度とする */
-	 ) ) {
-		pri_funct_err_bttvr(
-	  "Error : this->_iipg_save(-) returns NG" );
-		return NG;
-	 }
-
-	 /* リストにTracenimage(tgt)保存済マーク付け "0000" --> "0000 T" */
-	 if (OK != this->cl_file_number_list.marking_trace_file(crnt_list_num)) {
-		pri_funct_err_bttvr(
-	  "Error : this->cl_file_number_list.marking_trace_file(%d) returns NG"
-	 		, crnt_list_num
-		);
-		return NG;
-	 }
-	}
-	/*------------------------------------------------*/
 
 	/* 08 リストの選択解除 */
 	this->cl_file_number_list.unselect(crnt_list_num);
@@ -156,22 +79,18 @@ int gts_master::next_scan_and_save_( void )
 	/* 09 level browser listの(保存したファイルも含めて)再表示 */
 	this->cl_bro_level.cb_list_redisplay();
 
-	/* 10 再表示準備 */
-	if (OK != this->_iipg_view_setup()) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_view_setup() returns NG" );
+	/* 10 画像表示 */
+	if (this->redraw_image_( clp_scan ,false ,false ) != OK) {
 		return NG;
 	}
 
-	/* 11 再表示 */
-	this->iipg_view_redraw_();
-
-	/* 12 切抜きはしないのでOFFにしておく */
+	/* 11 切抜きはしないのでOFFにしておく */
 	this->cl_ogl_view.set_crop_disp_sw(OFF);
 
-	/* 13 次のフレーム番号があるなら、
+	/* 12 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */
 	if (0 < this->cl_file_number_list.get_next_file_num()) {
+		char	ca8_but[8];
 		(void)sprintf( ca8_but ,"%d" ,crnt_file_num );
 		cl_gts_gui.norout_crnt_scan_number->value(ca8_but);
 
