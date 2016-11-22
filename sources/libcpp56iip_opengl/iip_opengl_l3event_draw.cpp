@@ -39,6 +39,9 @@ void iip_opengl_l3event::reshape_opengl( long l_view_xs, long l_view_ys )
 	case E_WVIEW_TYPE_MAIN:
 		this->_cl_all.reshape_opengl(    0,0, l_view_xs,l_view_ys );
 		this->_clp_main->reshape_opengl( 0,0, l_view_xs,l_view_ys );
+		if (this->_clp_sub != nullptr) {
+		 this->_clp_sub->reshape_opengl( 0,0, l_view_xs,l_view_ys );
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		this->_cl_all.reshape_opengl(    0,0, l_view_xs,l_view_ys );

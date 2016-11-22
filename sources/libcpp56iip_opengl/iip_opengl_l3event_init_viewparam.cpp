@@ -22,6 +22,10 @@ void iip_opengl_l3event::init_viewparam( long l_view_xs, long l_view_ys )
 	case E_WVIEW_TYPE_MAIN:
 		this->_clp_main->init_viewport(l_view_xs,l_view_ys);
 		this->_clp_main->all_view();
+		if (this->_clp_sub != nullptr) {
+		 this->_clp_sub->init_viewport(l_view_xs,l_view_ys);
+		 this->_clp_sub->all_view();
+		}
 		break;
 	case E_WVIEW_TYPE_SUB:
 		this->_clp_main->init_viewport(l_view_xs,l_view_ys);
