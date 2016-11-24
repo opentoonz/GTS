@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include "gtsfbro06cb_config.h"
 #if !defined GTS_DEBUG
 # include "gts_master.h"

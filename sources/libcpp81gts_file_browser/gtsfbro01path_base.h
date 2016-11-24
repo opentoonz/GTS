@@ -16,10 +16,11 @@
 class gtsfbro01path_base {
 public:
 	gtsfbro01path_base()
-		/*,imagefile_extensions_({ ".tif" ,".tga" })*/
+		//imagefile_extensions_({ ".tif" ,".tga" })
+		//,imagefile_extensions_({ ".txt" })
 		:_i_dir_part_length(0)
-		,current_save_imagefile_extension_(1) // tga
-		,current_open_imagefile_extension_(1) // tga
+		,current_save_imagefile_extension_(0)
+		,current_open_imagefile_extension_(0)
 	{
 #if defined _WIN32
 		strcpy( this->_ca_path   ,"C:/" );

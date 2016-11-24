@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include <stdlib.h> /* calloc(),free() */
 #include <string.h>
 #include <ctype.h> /* isdigit() */
@@ -240,7 +241,7 @@ void gtsfbro02list_base::make_dir_or_file( E_DIR_OR_FILE_TYPE e_1st_type, E_DIR_
 		}
 
 		if (	(e_1st_type == e_type) ||
-			(e_2nd_type  == e_type)
+			(e_2nd_type == e_type)
 		) {
 			stp_fil->cp_name = cp_name;
 			stp_fil->e_type = e_type;

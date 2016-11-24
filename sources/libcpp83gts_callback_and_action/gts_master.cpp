@@ -22,21 +22,6 @@ gts_master::gts_master(
 	んだ設定に合わせること */
 	,_i_rotate_per_90(0)
 {
-	/* GUIのsaveで指定した順に拡張子リストを作る */
-	for (int ii=0 ;ii<cl_gts_gui.choice_level_save_image_format->size()
-	;++ii) {
-		const char* tx =
-			cl_gts_gui.choice_level_save_image_format->text(ii);
-		if      (std::string(tx) == "TGA(*.tga)") {
-			this->cl_bro_level.add_imagefile_extension(".tga");
-		}
-		else if (std::string(tx) == "TIFF(*.tif)") {
-			this->cl_bro_level.add_imagefile_extension(".tif");
-		}
-	}
-
-	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
-	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 }
 
 int  gts_master::i_mv_sw( void ) const
@@ -118,14 +103,31 @@ int gts_master::exec( const char *comm )
 		pri_funct_msg_ttvr( "gts_master::exec()" );
 	}
 
-	/*------------------------------------------------*/
-	/* GUI(fltk)生成 */
+	/*---------- GUI(fltk)生成 ----------*/
 
 	/***Fl::add_handler(handle_to_steel_shortcut_event);***/
 	(void)cl_gts_gui.make_window();
 
-	/*------------------------------------------------*/
-	/* GUI設定 */
+	/*---------- GUI初期設定 ----------*/
+
+	/* GUIのsaveで指定した順に拡張子リストを作る */
+	for (int ii=0 ;ii<cl_gts_gui.choice_level_save_image_format->size()
+	;++ii) {
+		const char* tx =
+			cl_gts_gui.choice_level_save_image_format->text(ii);
+		if (tx == nullptr) { break; }
+
+		if      (std::string(tx) == "TGA(*.tga)") {
+			this->cl_bro_level.add_imagefile_extension(".tga");
+		}
+		else if (std::string(tx) == "TIFF(*.tif)") {
+			this->cl_bro_level.add_imagefile_extension(".tif");
+		}
+	}
+
+	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
+	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
+
 
 	/* color trace enhancement */
 	this->cl_color_trace_enhancement.src_init_histogram_window();

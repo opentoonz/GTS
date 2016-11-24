@@ -245,7 +245,8 @@ public:
 	}
 
 	int save( const char *file_path );
-	int load( const char *file_path, int load_trace_batch_sw=ON );
+	//int load( const char *file_path, int load_trace_batch_sw=ON );
+	int load( const std::string& file_path,int load_trace_batch_sw=ON );
 
 	std::string memory_of_path;
 
@@ -398,7 +399,13 @@ private:
 	void save_trace_src_hsv_( std::ofstream& ofs );
 
 
-	void load_ifs_( std::ifstream& ifs , int load_trace_batch_sw );
+	void load_ifs_(
+		std::ifstream& ifs
+		,const int load_trace_batch_sw
+		,bool& fnum_list_sw
+		,bool& trace_batch_list_sw
+		,bool& level_list_redisplay_sw
+	);
 	bool load_trace_src_hsv_( std::vector< std::string >& words );
 };
 

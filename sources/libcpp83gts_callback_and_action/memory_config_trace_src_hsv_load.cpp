@@ -64,8 +64,8 @@ bool memory_config::load_trace_src_hsv_( std::vector< std::string >& words )
 	else if ((4 == words.size()) &&
 	(words.at(0) == this->str_color_trace_01_tgt_rgb_)) {
 	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_01 , std::stod(words.at(1))
-			, std::stod(words.at(2)) , std::stod(words.at(3))
+			    E_COLOR_TRACE_HAB_01 , std::stoi(words.at(1))
+			, std::stoi(words.at(2)) , std::stoi(words.at(3))
 		);
 		cl_gts_gui.button_color_trace_01_tgt_rgb->redraw();
 		  cl_gts_gui.button_thickness_01_tgt_rgb->redraw();
@@ -137,8 +137,8 @@ bool memory_config::load_trace_src_hsv_( std::vector< std::string >& words )
 	else if ((4 == words.size()) &&
 	(words.at(0) == this->str_color_trace_02_tgt_rgb_)) {
 	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_02 , std::stod(words.at(1))
-			, std::stod(words.at(2)) , std::stod(words.at(3))
+			    E_COLOR_TRACE_HAB_02 , std::stoi(words.at(1))
+			, std::stoi(words.at(2)) , std::stoi(words.at(3))
 		);
 		cl_gts_gui.button_color_trace_02_tgt_rgb->redraw();
 		  cl_gts_gui.button_thickness_02_tgt_rgb->redraw();
@@ -210,8 +210,8 @@ bool memory_config::load_trace_src_hsv_( std::vector< std::string >& words )
 	else if ((4 == words.size()) &&
 	(words.at(0) == this->str_color_trace_03_tgt_rgb_)) {
 	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_03 , std::stod(words.at(1))
-			, std::stod(words.at(2)) , std::stod(words.at(3))
+			    E_COLOR_TRACE_HAB_03 , std::stoi(words.at(1))
+			, std::stoi(words.at(2)) , std::stoi(words.at(3))
 		);
 		cl_gts_gui.button_color_trace_03_tgt_rgb->redraw();
 		  cl_gts_gui.button_thickness_03_tgt_rgb->redraw();
@@ -283,8 +283,8 @@ bool memory_config::load_trace_src_hsv_( std::vector< std::string >& words )
 	else if ((4 == words.size()) &&
 	(words.at(0) == this->str_color_trace_04_tgt_rgb_)) {
 	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_04 , std::stod(words.at(1))
-			, std::stod(words.at(2)) , std::stod(words.at(3))
+			    E_COLOR_TRACE_HAB_04 , std::stoi(words.at(1))
+			, std::stoi(words.at(2)) , std::stoi(words.at(3))
 		);
 		cl_gts_gui.button_color_trace_04_tgt_rgb->redraw();
 		  cl_gts_gui.button_thickness_04_tgt_rgb->redraw();
@@ -356,8 +356,8 @@ bool memory_config::load_trace_src_hsv_( std::vector< std::string >& words )
 	else if ((4 == words.size()) &&
 	(words.at(0) == this->str_color_trace_05_tgt_rgb_)) {
 	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_05 , std::stod(words.at(1))
-			, std::stod(words.at(2)) , std::stod(words.at(3))
+			    E_COLOR_TRACE_HAB_05 , std::stoi(words.at(1))
+			, std::stoi(words.at(2)) , std::stoi(words.at(3))
 		);
 		cl_gts_gui.button_color_trace_05_tgt_rgb->redraw();
 		  cl_gts_gui.button_thickness_05_tgt_rgb->redraw();
@@ -429,8 +429,8 @@ bool memory_config::load_trace_src_hsv_( std::vector< std::string >& words )
 	else if ((4 == words.size()) &&
 	(words.at(0) == this->str_color_trace_06_tgt_rgb_)) {
 	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_06 , std::stod(words.at(1))
-			, std::stod(words.at(2)) , std::stod(words.at(3))
+			    E_COLOR_TRACE_HAB_06 , std::stoi(words.at(1))
+			, std::stoi(words.at(2)) , std::stoi(words.at(3))
 		);
 		cl_gts_gui.button_color_trace_06_tgt_rgb->redraw();
 		  cl_gts_gui.button_thickness_06_tgt_rgb->redraw();

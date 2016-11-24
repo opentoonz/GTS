@@ -5,10 +5,6 @@
 #include <sstream>
 #include <string>
 #include "pri.h"
-/*
-#include "ptbl_returncode.h"
-#include "ptbl_funct.h"
-*/
 #include "igs_lex_white_space_and_double_quote.h"
 #include "memory_config.h"
 #include "gts_gui.h"
@@ -153,13 +149,13 @@ void set_pixel_type_( const std::string& str1 )
 } // namespace
 
 void memory_config::load_ifs_(
-	std::ifstream& ifs , int load_trace_batch_sw
+	std::ifstream& ifs
+	,const int load_trace_batch_sw
+	,bool& fnum_list_sw
+	,bool& trace_batch_list_sw
+	,bool& level_list_redisplay_sw
 )
 {
-	int	fnum_list_sw = OFF;
-	int	trace_batch_list_sw = OFF;
-	int	level_list_redisplay_sw = OFF;
-
 	std::string str;
 	for (int ii = 1 ;std::getline(ifs,str) ;++ii) {/* 一行読む */
 		if (str.empty()) { continue; }/* 空行は無視 */
@@ -196,13 +192,16 @@ void memory_config::load_ifs_(
 		) {
 			cl_gts_master.cl_bro_level.init_level_dir(
 				words.at(1).c_str() );
-			level_list_redisplay_sw = ON;
+			level_list_redisplay_sw = true;
 		}
 		else if ((2 == words.size()) &&
 		((words.at(0)==this->str_level_save_file_head_) ||
 		 (words.at(0)==this->str_level_save_file_head_legacy2016_))
 		) {
 			cl_gts_gui.strinp_level_save_file_head->value(
+				words.at(1).c_str() );
+			/* openも同時に設定、ファイル後述で別設定可能 */
+			cl_gts_gui.strinp_level_open_file_head->value(
 				words.at(1).c_str() );
 		}
 		else if ((2 == words.size()) &&
@@ -232,6 +231,8 @@ void memory_config::load_ifs_(
 		 (words.at(0) ==this->str_level_save_image_format_legacy2016_))
 		) {
 			set_level_save_image_format_( words.at(1) );
+			/* openも同時に設定、ファイル後述で別設定可能 */
+			set_level_open_image_format_( words.at(1) );
 		}
 
 		else if ((2 == words.size()) &&
@@ -259,7 +260,7 @@ void memory_config::load_ifs_(
 				words.at(1).c_str() );
 			cl_gts_gui.filinp_level_open_dir_path->position(
 				words.at(1).size() );
-			level_list_redisplay_sw = ON;
+			level_list_redisplay_sw = true;
 		}
 
 		else if ((2 == words.size()) &&
@@ -274,7 +275,7 @@ void memory_config::load_ifs_(
 		else if ((2 == words.size()) &&
 		(words.at(0) == this->str_level_list_form_)) {
 			set_level_list_form_( words.at(1) );
-			level_list_redisplay_sw = ON;
+			level_list_redisplay_sw = true;
 		}
 
 		//---------- area ----------
@@ -444,9 +445,9 @@ void memory_config::load_ifs_(
 			|| (4==words.size())
 		) && (words.at(0) == this->str_file_number_frame_)) {
 			/* ファイル番号リストの一番始めにやること */
-			if (OFF == fnum_list_sw) {
+			if (false == fnum_list_sw) {
 			 /* ファイル番号リストの存在の有無 */
-			 fnum_list_sw = ON;
+			 fnum_list_sw = true;
 			 /* 以前のリストをすべて削除 */
 			 cl_gts_master.cl_file_number_list.remove_all();
 			}
@@ -487,9 +488,9 @@ void memory_config::load_ifs_(
 			if (ON != load_trace_batch_sw) { continue; }
 
 			/* ファイル番号リストの一番始めにやること */
-			if (OFF == trace_batch_list_sw) {
+			if (false == trace_batch_list_sw) {
 				/* ファイル番号リストの存在の有無 */
-				trace_batch_list_sw = ON;
+				trace_batch_list_sw = true;
 				/* 以前のリストをすべて削除 */
 				while (0 <
 			cl_gts_gui.selbro_trace_batch_run_list->size()) {
@@ -514,19 +515,46 @@ void memory_config::load_ifs_(
 			}
 		}
 	}
-	ifs.close();/* ファイル閉じる */
+}
+int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
+{
+ try { /* ファイル読込と伴う設定でのエラーを例外処理で行う */
+	this->memory_of_path = file_path; /* 正常保存ならファイル名の記憶 */
+	bool fnum_list_sw = false;
+	bool trace_batch_list_sw = false;
+	bool level_list_redisplay_sw = false;
+
+	//---------- read file ----------
+  {
+	std::ifstream ifs( file_path );/* ファイル開く */
+	ifs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
+   try {	/* std::getline()はEOFの場合も例外を投げてしまう */
+	this->load_ifs_( ifs
+		, load_trace_batch_sw
+		, fnum_list_sw
+		, trace_batch_list_sw
+		, level_list_redisplay_sw
+	); /* ファイル読む */
+   }
+   catch ( std::fstream::failure& e ) {
+	if ( std::ios_base::eofbit == false ) {
+		throw; /* EOF以外の例外はエラーなので再び投げる */
+	}
+   }
+	ifs.close(); /* ファイル閉じる */
+  }
 
 	//---------- after reading ----------
 
-	/* ファイルにframe listがない時はlistをクリアする */
-	if (OFF == fnum_list_sw) {
+	/* ファイルにframe listがない事が分かった時はlistをクリアする */
+	if (false == fnum_list_sw) {
 		/* 以前のリストをすべて削除 */
 		cl_gts_master.cl_file_number_list.remove_all();
 	}
 
-	/* ファイルにtrace batch listがない時はlistをクリアする */
+	/* ファイルにtrace_batch listがない事が分かった時はlistをクリア */
 	if (ON == load_trace_batch_sw) {
-	 if (OFF == trace_batch_list_sw) {
+	 if (false == trace_batch_list_sw) {
 		/* 以前のリストをすべて削除 */
 		while (0 <
 		cl_gts_gui.selbro_trace_batch_run_list->size()) {
@@ -539,7 +567,7 @@ void memory_config::load_ifs_(
 	cl_gts_gui.norinp_fnum_insert->value(NULL);
 
 	/* Level/Fileリストを再表示する */
-	if (ON == level_list_redisplay_sw) {
+	if (true == level_list_redisplay_sw) {
 		cl_gts_master.cl_bro_level.cb_list_redisplay();
 	}
 
@@ -555,17 +583,9 @@ void memory_config::load_ifs_(
 	cl_gts_master.cl_bro_level.memory_from_gui(
 		cl_gts_gui.filinp_level_save_dir_path->value()
 	);
-}
-int memory_config::load( const char *file_path, int load_trace_batch_sw )
-{
- try {
-	std::ifstream ifs( file_path );/* ファイル開く */
-	ifs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
-	this->load_ifs_(ifs ,load_trace_batch_sw); /* ファイル読む */
-	ifs.close(); /* ファイル閉じる */
 
-	this->memory_of_path = file_path; /* 正常保存ならファイル名の記憶 */
-	cl_gts_master._print_window_headline(); /* ファイル名を表示する */
+	/* ファイル名を表示する */
+	cl_gts_master._print_window_headline();
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
