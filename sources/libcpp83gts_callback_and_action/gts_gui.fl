@@ -441,12 +441,14 @@ cl_gts_gui.menite_level->clear();}
     } {
       Fl_Button {} {
         label {Browse...}
-        callback {cl_gts_gui.window_level_browse->show();}
+        callback {cl_gts_master.cl_bro_level.memory_from_gui( filinp_level_save_dir_path->value() );
+cl_gts_master.cl_bro_level.cb_dir();
+window_level_browse->show();}
         xywh {115 5 80 25}
       }
       Fl_Group {} {
         label Save open
-        xywh {0 35 200 230} box BORDER_BOX labeltype SHADOW_LABEL align 21
+        xywh {0 35 200 230} box BORDER_BOX align 21
       } {
         Fl_Group {} {open
           xywh {0 60 200 175}
@@ -456,13 +458,39 @@ cl_gts_gui.menite_level->clear();}
           } {
             Fl_File_Input filinp_level_save_dir_path {
               label Directory
-              callback {cl_gts_master.cl_bro_level.cb_dir();}
+              callback {//cl_gts_master.cl_bro_level.cb_dir();}
               xywh {0 75 185 35} box BORDER_BOX align 5 when 1
             }
             Fl_Button togbut_level_save_browse {
               label {<}
-              callback {//cl_gts_master.cb_level_save_browse();}
-              xywh {185 85 15 25} type Toggle
+              callback {Fl_Native_File_Chooser native;
+native.title("Save File");
+native.type(Fl_Native_File_Chooser::BROWSE_SAVE_FILE);
+std::string dpath(filinp_level_save_dir_path->value());
+std::replace(dpath.begin(), dpath.end(), '/', '\\\\'); // path separater must be \\.
+native.directory( dpath.c_str() );
+native.preset_file( strinp_level_save_file_head->value() );
+native.options(
+	 Fl_Native_File_Chooser::SAVEAS_CONFIRM
+	|Fl_Native_File_Chooser::NEW_FOLDER
+	|Fl_Native_File_Chooser::PREVIEW
+	|Fl_Native_File_Chooser::USE_FILTER_EXT
+);
+native.filter( "Targa\\t*.tga\\n" "TIFF\\t*.tif\}" );
+switch ( native.show() ) \{
+case -1: std::cerr << "Error:" << native.errmsg() << std::endl; break;
+case  1: std::cout << "Cancel" << std::endl; break;
+default: // PICKED FILE
+	if ( native.filename() ) \{
+		filinp_level_save_dir_path->value(native.filename());
+	\} else \{
+		filinp_level_save_dir_path->value("");
+	\}
+	break;
+\}}
+              xywh {185 85 15 25}
+              code0 {\#include <FL/Fl_Native_File_Chooser.H>}
+              code1 {\#include <algorithm> // std::replace(-)}
             }
           }
           Fl_Group {} {open
@@ -567,7 +595,7 @@ cl_gts_gui.menite_level->clear();}
       }
       Fl_Group {} {
         label Filter open
-        xywh {0 270 200 75} box BORDER_BOX labeltype SHADOW_LABEL align 21
+        xywh {0 270 200 75} box BORDER_BOX align 21
       } {
         Fl_Check_Button chkbtn_filter_rgb_erase_dot_noise_sw {
           label {RGB Erase dot noise}
@@ -582,20 +610,43 @@ cl_gts_gui.menite_level->clear();}
       }
       Fl_Group {} {
         label Open open
-        xywh {0 350 200 140} box BORDER_BOX labeltype SHADOW_LABEL align 21
+        xywh {0 350 200 140} box BORDER_BOX align 21
       } {
         Fl_Group {} {open
           xywh {0 375 200 50}
         } {
           Fl_File_Input filinp_level_open_dir_path {
             label Directory
-            callback {//cl_gts_master.cb_level_open_dir_path();}
             xywh {0 390 185 35} align 5 when 1
           }
           Fl_Button togbut_level_open_browse {
             label {<}
-            callback {//cl_gts_master.cb_level_open_browse();}
-            xywh {185 400 15 25} type Toggle
+            callback {Fl_Native_File_Chooser native;
+native.title("Open File");
+native.type(Fl_Native_File_Chooser::BROWSE_FILE);
+std::string dpath(filinp_level_open_dir_path->value());
+std::replace(dpath.begin(), dpath.end(), '/', '\\\\'); // path separater must be \\.
+native.directory( dpath.c_str() );
+native.preset_file( strinp_level_open_file_head->value() );
+native.options(
+	Fl_Native_File_Chooser::PREVIEW
+	|Fl_Native_File_Chooser::USE_FILTER_EXT
+);
+native.filter( "Targa\\t*.tga\\n" "TIFF\\t*.tif\}" );
+switch ( native.show() ) \{
+case -1: std::cerr << "Error:" << native.errmsg() << std::endl; break;
+case  1: std::cout << "Cancel" << std::endl; break;
+default: // PICKED FILE
+	if ( native.filename() ) \{
+		filinp_level_open_dir_path->value(native.filename());
+	\} else \{
+		filinp_level_open_dir_path->value("");
+	\}
+	break;
+\}}
+            xywh {185 400 15 25}
+            code0 {\#include <FL/Fl_Native_File_Chooser.H>}
+            code1 {\#include <algorithm> // std::replace(-)}
           }
         }
         Fl_Group {} {open

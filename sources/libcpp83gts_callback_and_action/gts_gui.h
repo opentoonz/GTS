@@ -11,6 +11,8 @@
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_File_Input.H>
+#include <FL/Fl_Native_File_Chooser.H>
+#include <algorithm> // std::replace(-)
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Value_Input.H>
@@ -260,10 +262,6 @@ private:
   static void cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_level_open_dir_path;
-private:
-  inline void cb_filinp_level_open_dir_path_i(Fl_File_Input*, void*);
-  static void cb_filinp_level_open_dir_path(Fl_File_Input*, void*);
-public:
   Fl_Button *togbut_level_open_browse;
 private:
   inline void cb_togbut_level_open_browse_i(Fl_Button*, void*);

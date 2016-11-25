@@ -9,8 +9,8 @@
 class gtsfbro06cb_level : public gtsfbro05list_level {
 public:
 	gtsfbro06cb_level()
-	:saveopen_start_(0.)
-	,saveopen_end_(0.)
+	:num_start_(0.)
+	,num_end_(0.)
 	{
 	}
 	/* GUIの状態を記憶する */
@@ -96,9 +96,9 @@ private:
 
 	/* save_dir_path_はthis->cp_memory() */
 	std::string save_file_head_;
-	double saveopen_start_;	/* 整数利用だがFl_Inputがdoubleなので */
-	double saveopen_end_;	/* 整数利用だがFl_Inputがdoubleなので */
-	std::string saveopen_continue_type_;
+	double num_start_;	/* 整数利用だがFl_Inputがdoubleなので */
+	double num_end_;	/* 整数利用だがFl_Inputがdoubleなので */
+	std::string num_continue_type_;
 	std::string save_image_format_;
 
 	std::string open_dir_path_;

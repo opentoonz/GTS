@@ -153,6 +153,9 @@ void gtsfbro06cb_level::cb_list( void )
 		cl_gts_gui.strinp_level_save_file_head->value(
 			this->cp_dir_or_level_name( i_list_num )
 		);
+		cl_gts_gui.strinp_level_open_file_head->value(
+			this->cp_dir_or_level_name( i_list_num )
+		);
 		cl_gts_gui.valinp_level_num_start->value(
 			this->i_dir_or_level_start(i_list_num)
 		);

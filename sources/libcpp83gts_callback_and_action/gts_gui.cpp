@@ -528,21 +528,47 @@ void gts_gui::cb_window_level_set(Fl_Double_Window* o, void* v) {
 }
 
 void gts_gui::cb_Browse_i(Fl_Button*, void*) {
-  cl_gts_gui.window_level_browse->show();
+  cl_gts_master.cl_bro_level.memory_from_gui( filinp_level_save_dir_path->value() );
+cl_gts_master.cl_bro_level.cb_dir();
+window_level_browse->show();
 }
 void gts_gui::cb_Browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Browse_i(o,v);
 }
 
 void gts_gui::cb_filinp_level_save_dir_path_i(Fl_File_Input*, void*) {
-  cl_gts_master.cl_bro_level.cb_dir();
+  //cl_gts_master.cl_bro_level.cb_dir();
 }
 void gts_gui::cb_filinp_level_save_dir_path(Fl_File_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_filinp_level_save_dir_path_i(o,v);
 }
 
 void gts_gui::cb_togbut_level_save_browse_i(Fl_Button*, void*) {
-  //cl_gts_master.cb_level_save_browse();
+  Fl_Native_File_Chooser native;
+native.title("Save File");
+native.type(Fl_Native_File_Chooser::BROWSE_SAVE_FILE);
+std::string dpath(filinp_level_save_dir_path->value());
+std::replace(dpath.begin(), dpath.end(), '/', '\\'); // path separater must be \.
+native.directory( dpath.c_str() );
+native.preset_file( strinp_level_save_file_head->value() );
+native.options(
+	 Fl_Native_File_Chooser::SAVEAS_CONFIRM
+	|Fl_Native_File_Chooser::NEW_FOLDER
+	|Fl_Native_File_Chooser::PREVIEW
+	|Fl_Native_File_Chooser::USE_FILTER_EXT
+);
+native.filter( "Targa\t*.tga\n" "TIFF\t*.tif}" );
+switch ( native.show() ) {
+case -1: std::cerr << "Error:" << native.errmsg() << std::endl; break;
+case  1: std::cout << "Cancel" << std::endl; break;
+default: // PICKED FILE
+	if ( native.filename() ) {
+		filinp_level_save_dir_path->value(native.filename());
+	} else {
+		filinp_level_save_dir_path->value("");
+	}
+	break;
+};
 }
 void gts_gui::cb_togbut_level_save_browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_togbut_level_save_browse_i(o,v);
@@ -616,15 +642,30 @@ void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_color_trace_sw_i(o,v);
 }
 
-void gts_gui::cb_filinp_level_open_dir_path_i(Fl_File_Input*, void*) {
-  //cl_gts_master.cb_level_open_dir_path();
-}
-void gts_gui::cb_filinp_level_open_dir_path(Fl_File_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_filinp_level_open_dir_path_i(o,v);
-}
-
 void gts_gui::cb_togbut_level_open_browse_i(Fl_Button*, void*) {
-  //cl_gts_master.cb_level_open_browse();
+  Fl_Native_File_Chooser native;
+native.title("Open File");
+native.type(Fl_Native_File_Chooser::BROWSE_FILE);
+std::string dpath(filinp_level_open_dir_path->value());
+std::replace(dpath.begin(), dpath.end(), '/', '\\'); // path separater must be \.
+native.directory( dpath.c_str() );
+native.preset_file( strinp_level_open_file_head->value() );
+native.options(
+	Fl_Native_File_Chooser::PREVIEW
+	|Fl_Native_File_Chooser::USE_FILTER_EXT
+);
+native.filter( "Targa\t*.tga\n" "TIFF\t*.tif}" );
+switch ( native.show() ) {
+case -1: std::cerr << "Error:" << native.errmsg() << std::endl; break;
+case  1: std::cout << "Cancel" << std::endl; break;
+default: // PICKED FILE
+	if ( native.filename() ) {
+		filinp_level_open_dir_path->value(native.filename());
+	} else {
+		filinp_level_open_dir_path->value("");
+	}
+	break;
+};
 }
 void gts_gui::cb_togbut_level_open_browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_togbut_level_open_browse_i(o,v);
@@ -5343,7 +5384,6 @@ Fl_Double_Window* gts_gui::make_window() {
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(0, 35, 200, 230, "Save");
       o->box(FL_BORDER_BOX);
-      o->labeltype(FL_SHADOW_LABEL);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       { Fl_Group* o = new Fl_Group(0, 60, 200, 175);
         { Fl_Group* o = new Fl_Group(0, 60, 200, 50);
@@ -5354,7 +5394,6 @@ Fl_Double_Window* gts_gui::make_window() {
             filinp_level_save_dir_path->when(FL_WHEN_CHANGED);
           } // Fl_File_Input* filinp_level_save_dir_path
           { togbut_level_save_browse = new Fl_Button(185, 85, 15, 25, "<");
-            togbut_level_save_browse->type(1);
             togbut_level_save_browse->callback((Fl_Callback*)cb_togbut_level_save_browse);
           } // Fl_Button* togbut_level_save_browse
           o->end();
@@ -5423,7 +5462,6 @@ Fl_Double_Window* gts_gui::make_window() {
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 270, 200, 75, "Filter");
       o->box(FL_BORDER_BOX);
-      o->labeltype(FL_SHADOW_LABEL);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       { chkbtn_filter_rgb_erase_dot_noise_sw = new Fl_Check_Button(5, 295, 160, 25, "RGB Erase dot noise");
         chkbtn_filter_rgb_erase_dot_noise_sw->down_box(FL_DOWN_BOX);
@@ -5437,16 +5475,13 @@ Fl_Double_Window* gts_gui::make_window() {
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 350, 200, 140, "Open");
       o->box(FL_BORDER_BOX);
-      o->labeltype(FL_SHADOW_LABEL);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       { Fl_Group* o = new Fl_Group(0, 375, 200, 50);
         { filinp_level_open_dir_path = new Fl_File_Input(0, 390, 185, 35, "Directory");
-          filinp_level_open_dir_path->callback((Fl_Callback*)cb_filinp_level_open_dir_path);
           filinp_level_open_dir_path->align(Fl_Align(FL_ALIGN_TOP_LEFT));
           filinp_level_open_dir_path->when(FL_WHEN_CHANGED);
         } // Fl_File_Input* filinp_level_open_dir_path
         { togbut_level_open_browse = new Fl_Button(185, 400, 15, 25, "<");
-          togbut_level_open_browse->type(1);
           togbut_level_open_browse->callback((Fl_Callback*)cb_togbut_level_open_browse);
         } // Fl_Button* togbut_level_open_browse
         o->end();
