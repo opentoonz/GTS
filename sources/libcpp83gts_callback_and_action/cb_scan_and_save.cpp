@@ -155,7 +155,6 @@ fl_alert("Input level name!");
 		cl_gts_gui.menite_wview_main->setonly();
 	}
 	
-
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (this->next_scan_and_save_() != OK) {
 		return;
