@@ -84,10 +84,26 @@ int gts_master::next_scan_and_save_( void )
 		return NG;
 	}
 
-	/* 11 切抜きはしないのでOFFにしておく */
+	/* 11 保存するタイプで画像を表示する */
+	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
+		/* TracenImage画像のみ表示 */
+		cl_gts_master.cb_change_wview_sub();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_sub->setonly();
+	}
+	else {
+		/* ScanImage(メイン)画像のみ表示 */
+		cl_gts_master.cb_change_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
+	}
+
+	/* 12 切抜きはしないのでOFFにしておく */
 	this->cl_ogl_view.set_crop_disp_sw(OFF);
 
-	/* 12 次のフレーム番号があるなら、
+	/* 13 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */
 	if (0 < this->cl_file_number_list.get_next_file_num()) {
 		char	ca8_but[8];
@@ -139,22 +155,6 @@ fl_alert("Input level name!");
 		return;
 	}
 
-	/* 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
-		/* TracenImage画像のみ表示 */
-		cl_gts_master.cb_change_wview_sub();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_sub->setonly();
-	}
-	else {
-		/* ScanImage(メイン)画像のみ表示 */
-		cl_gts_master.cb_change_wview_main();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_main->setonly();
-	}
-	
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (this->next_scan_and_save_() != OK) {
 		return;
