@@ -226,6 +226,8 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/fltk_opengl_draw.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_opengl_handle.cpp \
 					sources/libcpp83gts_callback_and_action/igs_lex_white_space_and_double_quote.cpp \
+					sources/libcpp83gts_callback_and_action/ids_path_fltk_native_browse.cpp \
+					sources/libcpp83gts_callback_and_action/ids_path_level_from_files.cpp \
 					sources/libcpp83gts_callback_and_action/iipg_color_trace.cpp \
 					sources/libcpp83gts_callback_and_action/iipg_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/iipg_save.cpp \

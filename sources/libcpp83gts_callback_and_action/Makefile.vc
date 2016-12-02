@@ -56,6 +56,8 @@ fltk_event.cpp\
 fltk_opengl_draw.cpp\
 fltk_opengl_handle.cpp\
 igs_lex_white_space_and_double_quote.cpp\
+ids_path_fltk_native_browse.cpp\
+ids_path_level_from_files.cpp\
 iipg_color_trace.cpp\
 iipg_rot90.cpp\
 iipg_save.cpp\

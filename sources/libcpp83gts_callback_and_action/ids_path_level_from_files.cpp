@@ -1,11 +1,13 @@
 #include <iostream>
+#include <sstream> // std::ostringstream
 #include <iomanip> // std::setw()
 #include <algorithm>    // std::sort()
 #include <vector>
 #include <string>
 #include "FL/Fl.H"
 #include "FL/filename.H" // fl_filename_list()
-#include "igs_path_filepath_number_list.h"
+#include "ids_path_level_from_files.h"
+
 namespace {
 
 void from_fpath_to_dpath_fname_(
@@ -133,7 +135,8 @@ void pr_filename_(
 )
 {
 	std::cout
-		<< std::setw(2) << pos << "/" << len
+		<< std::setw(2) << pos << "/"
+		<< std::setw(2) << len
 		<< " fname=\""	<< std::setw(14) << fname << "\""
 		<< " he=\""	<< std::setw(10) << head << "\""
 		<< " nu_f=\""	<< std::setw(6) << num_form << "\""
@@ -186,9 +189,9 @@ void from_dpath_head_num_ext_to_nums_(
 	/* WindowsではDirectoryの場合d_nameの最後に/が付く、Fileは付かない
 	   "../"が始めに来て、"./"が２番目に来る
 	*/
-#if DEBUG
+#if DEBUG_INO
 pr_filename_( ii ,list_count ,list_pp[ii]->d_name ,he ,nu ,number ,ex );
-#endif //DEBUG
+#endif //DEBUG_INO
 		if (	0 <= number && he == head && ex == ext
 			&& save_as_num_form_(num,nu)
 		) {
@@ -199,15 +202,10 @@ pr_filename_( ii ,list_count ,list_pp[ii]->d_name ,he ,nu ,number ,ex );
 }
 
 } // namespace
+
 //----------------------------------------------------------------------
-/*
-igs::path::filepath_number_list(-)
-fpathからdpath,head,num,number,extをセット
-dpathから、head,num書式,extの一致する連番のファイルを探し、numsにセット
-num書式の一致は、文字数の一致、同位置に数値文字、区切子の文字一致
-fpathのファイル名に数値がない場合、num,nums=empty()、number=-1となる
-*/
-void igs::path::filepath_number_list(
+
+void ids::path::level_from_files(
 	const std::string& fpath
 	, std::string& dpath
 	, std::string& head
@@ -221,45 +219,79 @@ void igs::path::filepath_number_list(
 	from_fpath_to_dpath_fname_( fpath ,dpath ,fname );
 	from_fname_to_head_num_ext_(fname,head,num,number,ext);
 
-#if DEBUG
+#if DEBUG_INO
 std::cout << "--------------------------------------------------\n";
 std::cout << "dpath=\"" << dpath << "\"\n";
 std::cout << "--------------------------------------------------\n";
 	pr_filename_( 0 ,1 ,fname ,head ,num ,number ,ext );
 std::cout << "--------------------------------------------------\n";
-#endif //DEBUG
+#endif //DEBUG_INO
 
 	from_dpath_head_num_ext_to_nums_(dpath,head,num,ext,nums);
 	std::sort( nums.begin() ,nums.end() ); /* 昇順ソート */
 
-#if DEBUG
+#if DEBUG_INO
 std::cout << "--------------------------------------------------\n";
 for( const int& num : nums ) {
 std::cout << num << "\n";
 }
 std::cout << "--------------------------------------------------\n";
-#endif //DEBUG
+#endif //DEBUG_INO
 }
+
+const std::string ids::path::str_from_number(
+	const int number
+	, const std::string& num_form
+)
+{
+	int ww = num_form.size();
+	std::string sep;
+	if (!isalpha( num_form.at(0) )) {
+		--ww;
+		sep = num_form.at(0);
+	}
+	std::ostringstream ost;
+	ost << sep << std::setfill('0') << std::setw( ww ) << number;
+	return ost.str();
+}
+
 //----------------------------------------------------------------------
-#if DEBUG
+#if DEBUG_INO
 int main(int argc ,const char* argv[])
 {
-	if (2 <= argc) {
-		std::string dpath ,head ,num_form ,ext;
-		int number=-1;
-		std::vector<int> nums;
-
-		igs::path::filepath_number_list(
-			argv[1] ,dpath ,head ,num_form ,number ,ext ,nums
-		);
-		pr_filename_( 0 ,1 ,"Result" ,head ,num_form ,number ,ext );
+	if (argc < 2) {
+		return 1;
 	}
+
+	std::string dpath ,head ,num_form ,ext;
+	int number=-1;
+	std::vector<int> nums;
+
+	ids::path::level_from_files(
+		argv[1] ,dpath ,head ,num_form ,number ,ext ,nums
+	);
+
+	pr_filename_( 0 ,1 ,"Result" ,head ,num_form ,number ,ext );
+std::cout << "--------------------------------------------------\n";
+	for( const int& num : nums ) {
+		std::cout
+			<< "num=" << std::setw(4) << num
+			<< " num_form=\""
+			<< ids::path::str_from_number(num ,num_form)
+			<< "\"\n";
+	}
+std::cout << "--------------------------------------------------\n";
+
 	return 0;
 }
-#endif //DEBUG
 /*
-:205,207 w! make.bat
-rem make
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG /I..\..\thirdparty\fltk\fltk-1.3.3 ..\..\thirdparty\fltk\fltk-1.3.3\lib\fltk-1.3.3-vc2013-32.lib t_level_from_filepath.cpp /Fet
-del t_level_from_filepath.obj
+:262,264 w! make.bat
+rem windows make
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_INO /I..\..\thirdparty\fltk\fltk-1.3.3 ..\..\thirdparty\fltk\fltk-1.3.3\lib\fltk-1.3.3-vc2013-32.lib ids_path_level_from_files.cpp /Fet
+del ids_path_level_from_files.obj
+
+:270,270 w! make.csh
+# linux make
+g++ -DDEBUG_INO -std=c++11 ids_path_level_from_files.cpp -lfltk
 */
+#endif //DEBUG_INO

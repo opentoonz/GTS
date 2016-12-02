@@ -614,7 +614,11 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	ost	<< "Error in loading \"" << file_path << "\","
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
-	fl_alert( ost.str().c_str() );/* ダイオローグでユーザーに知らせる */
+	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	return NG;
+ }
+ catch (...) {
+	fl_alert( "Error in saving." );/* ユーザーに知らせる */
 	return NG;
  }
 	return OK;

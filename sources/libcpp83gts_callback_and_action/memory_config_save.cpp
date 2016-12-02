@@ -203,7 +203,11 @@ int memory_config::save( const char *file_path )
 	ost	<< "Error in saving \"" << file_path << "\","
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
-	fl_alert( ost.str().c_str() );/* ダイオローグでユーザーに知らせる */
+	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	return NG;
+ }
+ catch (...) {
+	fl_alert( "Error in saving." );/* ユーザーに知らせる */
 	return NG;
  }
 	return OK;
