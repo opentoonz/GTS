@@ -1,6 +1,8 @@
 #ifndef cb_file_number_list_h
 #define cb_file_number_list_h
 
+#include <vector>
+
 class cb_file_number_list {
 public:
 	cb_file_number_list()
@@ -25,6 +27,12 @@ public:
 	/* 指定範囲の番号でlistを追加生成する(ファイル存在マーク付き) */
 	/* configの設定時使用 */
 	void make_fnum_list_with_chk_mark( const int start_num, const int end_num );
+
+	void append_numbers_with_exist_mark(
+		const std::vector<int>& num_list /* こちら優先し使い設定 */
+		, const int start_num   /* num_listが空ならこちらで設定 */
+		, const int end_num
+	);
 
 	//--------------------------------------------------
 
@@ -68,6 +76,8 @@ public:
 	/* 選択のフレーム送り/戻しをする */
 	bool selected_prev_frame(void);
 	bool selected_next_frame(void);
+
+	//--------------------------------------------------
 
 private:
 	int	crnt_list_num_

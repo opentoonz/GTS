@@ -2,10 +2,13 @@
 #include <cctype>	// isdigit()
 #include <cassert>	// assert()
 #include <cstring>
+#include <sstream>	// std::ostringstream
+#include <iomanip>	// std::setw()
 #include "ptbl_funct.h"
-#include "cb_file_number_list.h"
 #include "gts_gui.h"
 #include "gts_master.h"
+#include "cb_file_number_list.h"
+#include "ids_path_level_from_files.h"
 
 namespace {
  const char *next_num_( const char* str ,int* rsz ,int* file_num )
@@ -86,7 +89,7 @@ void cb_file_number_list::set_list_from_string( void )
 }
 
 //------------------------------------------------------------
-
+#if 0
 namespace {
  /* ファイルのヘッダー情報を得る */
  int set_file_header_info_( const char *cp_file, iip_read *clp_read )
@@ -146,7 +149,10 @@ namespace {
 		return nullptr;
 	}
 
-	/* 画像ファイルの情報を取る */
+	/* 画像ファイルの情報を取る
+		画像ファイルが存在しないか、読み取り可能であるならOK
+		あるのに読めない場合NG
+	*/
 	if (OK != set_file_header_info_(cp_path, &cl_read_target )) {
 		pri_funct_err_bttvr(
  	 "Error : set_file_header_info_(%s,) returns NG",
@@ -195,25 +201,30 @@ namespace {
 	return nullptr;
  }
 }
+#endif
 
-/* ファイル存在マークを付加したファイル番号をlistの最後に追加 */
+/* saveファイル存在マークを付加したファイル番号をlistの最後に追加 */
 void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 {
-	char buffer[8];
-	const char *mark_str;
+	std::string fpath;
+	fpath += cl_gts_gui.filinp_level_save_dir_path->value();
+	fpath += "/";
+	fpath += cl_gts_gui.strinp_level_save_file_head->value();
+	fpath += ids::path::str_from_number( file_num );
+	switch (cl_gts_gui.choice_level_save_image_format->value()) {
+	case 0: fpath += ".tif"; break;
+	case 1: fpath += ".tga"; break;
+	}
 
-	(void)sprintf(buffer, "%04d", file_num );
-
-	mark_str = get_mark_str_by_checking_file_(file_num);
-	/* ファイルチェックでエラーが起きたとしても実行を続ける */
-	if ( mark_str != nullptr ) {
-		(void)strcat( buffer ," " );
-		(void)strcat( buffer ,mark_str );
+	std::ostringstream ost;
+	ost << std::setfill('0') << std::setw(4) << file_num;
+	if (ptbl_dir_or_file_is_exist(const_cast<char*>(fpath.c_str()))) {
+		ost << " S";
 	}
 
 	cl_gts_gui.selbro_fnum_list->insert(
 		cl_gts_gui.selbro_fnum_list->size()+1,
-		buffer
+		ost.str().c_str()
 	);
 }
 
@@ -224,6 +235,38 @@ void cb_file_number_list::make_fnum_list_with_chk_mark( const int start_num, con
 	/* ファイルの存在をチェックしながらリストを設定 */
 	for (ii = start_num; ii <= end_num; ++ii) { 
 		this->append_fnum_list_with_chk_mark( ii );
+	}
+}
+
+void cb_file_number_list::append_numbers_with_exist_mark(
+	const std::vector<int>& num_list /* こちら優先して使い設定 */
+	, const int start_num   /* num_listが空ならこちらで設定 */
+	, const int end_num
+)
+{
+	/* num_listにセットしてあるならそれをGUIリストに設定する */
+	if (!num_list.empty()) {
+		for (int num : num_list) {
+			this->append_fnum_list_with_chk_mark( num );
+		}
+		return;
+	}
+
+	/* startからendまでをGUIリストに設定する */
+	if (cl_gts_gui.choice_level_num_continue_type->value()
+	==  this->get_end_type_value()) {
+		// End type
+	 if (start_num <= end_num) {
+	 	this->make_fnum_list_with_chk_mark( start_num ,end_num );
+	 }
+	 else {
+	 	this->make_fnum_list_with_chk_mark( end_num ,start_num );
+	 }
+	}
+	else { // Endless type
+		this->append_fnum_list_with_chk_mark(
+		static_cast<int>( cl_gts_gui.valinp_level_num_start->value() )
+		);
 	}
 }
 
@@ -621,4 +664,7 @@ bool cb_file_number_list::selected_next_frame(void)
 	}
 	return true;
 }
+
+//--------------------------------------------------
+
 

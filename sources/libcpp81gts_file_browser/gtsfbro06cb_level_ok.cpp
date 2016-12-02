@@ -8,6 +8,7 @@
 #endif
 #include "gts_gui.h"
 
+#if 0
 namespace {
 
 /* ファイルの存在をチェックしながらリストを設定 */
@@ -50,6 +51,7 @@ void make_fnum_list_with_chk_mark_same_way_(
 }
 
 } // namespace
+#endif
 
 void gtsfbro06cb_level::cb_ok( void )
 {
@@ -102,7 +104,10 @@ void gtsfbro06cb_level::level_set(
 	cl_gts_master.cl_file_number_list.remove_all();
 
 	/* ファイルの存在をチェックしながらリストを設定 */
-	make_fnum_list_with_chk_mark_same_way_(num_list,start_num,end_num);
+//make_fnum_list_with_chk_mark_same_way_(num_list,start_num,end_num);
+	cl_gts_master.cl_file_number_list.append_numbers_with_exist_mark(
+		num_list ,start_num ,end_num
+	);
 
 	/* 新たに作ったリストは全て選択状態にする */
 	cl_gts_master.cl_file_number_list.select_all();

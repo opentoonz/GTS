@@ -98,19 +98,55 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 
 	} else {	/* level */
 		cl_gts_gui.filinp_level_save_dir_path->value(dpath.c_str());
+		cl_gts_gui.filinp_level_open_dir_path->value(dpath.c_str());
 		cl_gts_gui.strinp_level_save_file_head->value(head.c_str());
+		cl_gts_gui.strinp_level_open_file_head->value(head.c_str());
 		cl_gts_gui.valinp_level_num_start->value( start_num );
 		cl_gts_gui.valinp_level_num_end->value( end_num );
 		if ( ext == ".tif" ) {
 		 cl_gts_gui.choice_level_save_image_format->value(0);
+		 cl_gts_gui.choice_level_open_image_format->value(0);
 		} else
 		if ( ext == ".tga" ) {
 		 cl_gts_gui.choice_level_save_image_format->value(1);
+		 cl_gts_gui.choice_level_open_image_format->value(1);
 		}
-		cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
-		cl_gts_master.cl_bro_level.level_set(
+
+		//cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
+		/*
+		cb_set_save_image_file_extension()の中身は以下2行
+	cl_gts_master.cl_bro_level.set_current_open_imagefile_extension(
+		cl_gts_gui.choice_level_open_image_format->value()
+	);
+	cl_gts_master.cl_bro_level.change_level_list(); // protected:
+		*/
+
+		//cl_gts_master.cl_bro_level.level_set(nums ,start_num ,end_num);
+		/*
+		level_set(-)の中身は他でも使っているので調査必要!!!!!!!!!!!
+		*/
+		/* 以前のリストをすべて削除 */
+		cl_gts_master.cl_file_number_list.remove_all();
+
+		/* ファイルの存在をチェックしながらリストを設定 */
+		/*
+	make_fnum_list_with_chk_mark_same_way_(nums,start_num,end_num);
+		*/
+		cl_gts_master.cl_file_number_list.append_numbers_with_exist_mark(
 			nums ,start_num ,end_num
 		);
+
+		/* 新たに作ったリストは全て選択状態にする */
+		cl_gts_master.cl_file_number_list.select_all();
+
+		/* frame number listにlevel名を表示する */
+		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
+		 //cl_gts_master.cl_bro_level.cp_levelname()
+		 cl_gts_gui.strinp_level_save_file_head->value()
+		);
+
+		/* ファイル名表示 */
+		cl_gts_master._print_window_headline();
 	}
 	return std::string();
 }
