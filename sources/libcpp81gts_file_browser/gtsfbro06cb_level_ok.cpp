@@ -100,6 +100,7 @@ void gtsfbro06cb_level::level_set(
 )
 {
 #if !defined GTS_DEBUG
+#if 0
 	/* 以前のリストをすべて削除 */
 	cl_gts_master.cl_file_number_list.remove_all();
 
@@ -111,6 +112,11 @@ void gtsfbro06cb_level::level_set(
 
 	/* 新たに作ったリストは全て選択状態にする */
 	cl_gts_master.cl_file_number_list.select_all();
+#endif
+	/* numberリストをファイル存在マーク付で再構築し選択状態にする */
+	cl_gts_master.cl_file_number_list.remake_with_exist_mark_and_select(
+		num_list ,start_num ,end_num
+	);
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
@@ -118,7 +124,7 @@ void gtsfbro06cb_level::level_set(
 	);
 
 	/* ファイル名表示 */
-	cl_gts_master._print_window_headline();
+	cl_gts_master.print_window_headline();
 
 	/* 切抜きはしないのでOFFにしておく */
 	//cl_gts_master.cl_ogl_view.set_crop_disp_sw(OFF);

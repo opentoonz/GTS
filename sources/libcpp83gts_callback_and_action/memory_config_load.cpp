@@ -154,6 +154,7 @@ void memory_config::load_ifs_(
 	,bool& fnum_list_sw
 	,bool& trace_batch_list_sw
 	,bool& level_list_redisplay_sw
+	,bool& level_num_continue_type_sw
 )
 {
 	std::string str;
@@ -221,6 +222,7 @@ void memory_config::load_ifs_(
 		else if ((2 == words.size()) && (words.at(0)
 		==this->str_level_num_continue_type_)) {
 			set_level_num_continue_type_( words.at(1) );
+			level_num_continue_type_sw = true;
 		}
 		else if ((2 == words.size()) && (words.at(0)
 		==this->str_level_num_endless_direction_)) {
@@ -523,6 +525,7 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	bool fnum_list_sw = false;
 	bool trace_batch_list_sw = false;
 	bool level_list_redisplay_sw = false;
+	bool level_num_continue_type_sw = false;
 
 	//---------- read file ----------
   {
@@ -534,6 +537,7 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 		, fnum_list_sw
 		, trace_batch_list_sw
 		, level_list_redisplay_sw
+		, level_num_continue_type_sw
 	); /* ファイル読む */
    }
    catch ( std::fstream::failure& e ) {
@@ -546,6 +550,7 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 
 	//---------- after reading ----------
 
+#if 0	/* --> configにセットする項目がない時は現状維持する */
 	/* ファイルにframe listがない事が分かった時はlistをクリアする */
 	if (false == fnum_list_sw) {
 		/* 以前のリストをすべて削除 */
@@ -564,12 +569,15 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	}
 
 	/* frame number insert項目をゼロクリアする */
+	/* --> configにセットする項目がない時は現状維持する */
 	cl_gts_gui.norinp_fnum_insert->value(NULL);
 
 	/* Level/Fileリストを再表示する */
+	/* --> Dialog開くときセットするべきなのでここではやらない */
 	if (true == level_list_redisplay_sw) {
 		cl_gts_master.cl_bro_level.cb_list_redisplay();
 	}
+#endif
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	cl_gts_master.cl_color_trace_thickness.cb_enh_01();
@@ -585,7 +593,7 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	);
 
 	/* ファイル名を表示する */
-	cl_gts_master._print_window_headline();
+	cl_gts_master.print_window_headline();
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
@@ -594,6 +602,14 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 
 	/* level名からfileが上書きなら注意表示 */
 	cl_gts_master.cl_bro_level.cb_level_name();
+
+	/* LevelのEnd/Endless指定がない時はStart...End指定にする */
+	if (!level_num_continue_type_sw) {
+		cl_gts_gui.valinp_level_num_end->show();
+		cl_gts_gui.choice_level_num_endless_direction->hide();
+		cl_gts_gui.selbro_fnum_list->activate();
+		cl_gts_gui.choice_level_num_continue_type->value(0/*End*/);
+	}
 
 	/* 画面は空白表示する指定(データは残っている) */
 	cl_gts_master.cl_ogl_view.no_view_canvas();

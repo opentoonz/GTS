@@ -33,6 +33,12 @@ public:
 		, const int start_num   /* num_listが空ならこちらで設定 */
 		, const int end_num
 	);
+	/* remove_all()->append_numbers_with_exist_mark(-)->select_all() */
+	void remake_with_exist_mark_and_select(
+		const std::vector<int>& num_list /* こちら優先し使い設定 */
+		, const int start_num   /* num_listが空ならこちらで設定 */
+		, const int end_num
+	);
 
 	//--------------------------------------------------
 

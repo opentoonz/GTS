@@ -35,6 +35,15 @@ const std::string str_from_number(
 	, const std::string& num_form=".0000"
 );
 
+/*
+ファイルパスをディレクトリパスとファイル名に分割する
+*/
+void from_fpath_to_dpath_fname(
+	const std::string& fpath
+	,std::string& dpath
+	,std::string& fname
+);
+
 } // path
 } // igs
 

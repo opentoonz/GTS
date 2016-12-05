@@ -13,7 +13,7 @@
 void gts_master::_all_view( void )
 {
 	this->cl_ogl_view.all_view();
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -21,28 +21,28 @@ void gts_master::_all_view( void )
 void gts_master::_zoom_up_twice_at_cen( void )
 {
 	this->cl_ogl_view.zoom_twice_at_center();
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_down_half_at_cen( void )
 {
 	this->cl_ogl_view.zoom_half_at_center();
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_up_step_at_cen( void )
 {
 	this->cl_ogl_view.zoom_up_at_center();
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_down_step_at_cen( void )
 {
 	this->cl_ogl_view.zoom_down_at_center();
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -51,7 +51,7 @@ void gts_master::__zoom_num( long l_zoom )
 {
 	this->cl_ogl_view.zoom_num( l_zoom );
 
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -71,7 +71,7 @@ void gts_master::_zoom_up_twice_at_pos( void )
 		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -81,7 +81,7 @@ void gts_master::_zoom_down_half_at_pos( void )
 		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -91,7 +91,7 @@ void gts_master::_zoom_up_step_at_pos( void )
 		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -101,7 +101,7 @@ void gts_master::_zoom_down_step_at_pos( void )
 		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
-	this->_print_window_headline();
+	this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -109,7 +109,7 @@ void gts_master::_zoom_down_step_at_pos( void )
 void gts_master::_scroll_center( void )
 {
 	this->cl_ogl_view.scroll_center();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
@@ -355,42 +355,42 @@ void gts_master::_channel_blu_to_gray( void )
 void gts_master::_wview_main( void )
 {
 	this->cl_ogl_view.wview_main();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_sub( void )
 {
 	this->cl_ogl_view.wview_sub();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_lr_parallel( void )
 {
 	this->cl_ogl_view.wview_lr_parallel();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_ud_parallel( void )
 {
 	this->cl_ogl_view.wview_ud_parallel();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_lr_onion( void )
 {
 	this->cl_ogl_view.wview_lr_onion();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_ud_onion( void )
 {
 	this->cl_ogl_view.wview_ud_onion();
-	//this->_print_window_headline();
+	//this->print_window_headline();
 	cl_gts_gui.opengl_view->redraw();
 	this->set_scrollbar();
 }

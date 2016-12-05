@@ -437,240 +437,54 @@ fl_message( ost.str().c_str() );}
       label Level
       callback {cl_gts_gui.window_level_set->hide();
 cl_gts_gui.menite_level->clear();}
-      xywh {50 50 200 495} type Double non_modal visible
+      xywh {50 50 200 480} type Double resizable non_modal size_range {200 480 1000 480} visible
     } {
       Fl_Button {} {
         label {Browse...}
         callback {cl_gts_master.cl_bro_level.memory_from_gui( filinp_level_save_dir_path->value() );
 cl_gts_master.cl_bro_level.cb_dir();
 window_level_browse->show();}
-        xywh {115 5 80 25}
-      }
-      Fl_Group {} {
-        label Save open
-        xywh {0 35 200 230} box BORDER_BOX align 21
-      } {
-        Fl_Group {} {open
-          xywh {0 60 200 175}
-        } {
-          Fl_Group {} {open
-            xywh {0 60 200 50}
-          } {
-            Fl_File_Input filinp_level_save_dir_path {
-              label Directory
-              callback {//cl_gts_master.cl_bro_level.cb_dir();}
-              xywh {0 75 185 35} box BORDER_BOX align 5 when 1
-            }
-            Fl_Button togbut_level_save_browse {
-              label {<}
-              callback {Fl_Native_File_Chooser native;
-native.title("Save File");
-native.type(Fl_Native_File_Chooser::BROWSE_SAVE_FILE);
-std::string dpath(filinp_level_save_dir_path->value());
-std::replace(dpath.begin(), dpath.end(), '/', '\\\\'); // path separater must be \\.
-native.directory( dpath.c_str() );
-native.preset_file( strinp_level_save_file_head->value() );
-native.options(
-	 Fl_Native_File_Chooser::SAVEAS_CONFIRM
-	|Fl_Native_File_Chooser::NEW_FOLDER
-	|Fl_Native_File_Chooser::PREVIEW
-	|Fl_Native_File_Chooser::USE_FILTER_EXT
-);
-native.filter( "Targa\\t*.tga\\n" "TIFF\\t*.tif\}" );
-switch ( native.show() ) \{
-case -1: std::cerr << "Error:" << native.errmsg() << std::endl; break;
-case  1: std::cout << "Cancel" << std::endl; break;
-default: // PICKED FILE
-	if ( native.filename() ) \{
-		filinp_level_save_dir_path->value(native.filename());
-	\} else \{
-		filinp_level_save_dir_path->value("");
-	\}
-	break;
-\}}
-              xywh {185 85 15 25}
-              code0 {\#include <FL/Fl_Native_File_Chooser.H>}
-              code1 {\#include <algorithm> // std::replace(-)}
-            }
-          }
-          Fl_Group {} {open
-            xywh {0 115 200 25}
-          } {
-            Fl_Box {} {
-              xywh {0 115 80 25}
-            }
-            Fl_Input strinp_level_save_file_head {
-              label Level
-              callback {cl_gts_master.cl_bro_level.cb_level_name();}
-              xywh {80 115 120 25} box BORDER_BOX when 1
-            }
-          }
-          Fl_Group {} {open
-            xywh {0 145 200 25}
-          } {
-            Fl_Box {} {
-              xywh {0 145 80 25}
-            }
-            Fl_Value_Input valinp_level_num_start {
-              label Start
-              xywh {80 145 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-            }
-            Fl_Box {} {
-              xywh {130 145 70 25}
-            }
-          }
-          Fl_Group {} {open
-            xywh {0 175 200 25}
-          } {
-            Fl_Choice choice_level_num_continue_type {
-              callback {if (o->value() == 0) {
- cl_gts_gui.valinp_level_num_end->show();
- cl_gts_gui.choice_level_num_endless_direction->hide();
- cl_gts_gui.selbro_fnum_list->activate();
-} else {
- cl_gts_gui.valinp_level_num_end->hide();
- cl_gts_gui.choice_level_num_endless_direction->show();
- cl_gts_gui.selbro_fnum_list->deactivate();
-}} open
-              xywh {0 175 80 25} down_box BORDER_BOX
-            } {
-              MenuItem {} {
-                label End
-                xywh {5 5 30 20}
-              }
-              MenuItem {} {
-                label Endless
-                xywh {5 5 30 20}
-              }
-            }
-            Fl_Choice choice_level_num_endless_direction {open
-              xywh {80 175 50 25} down_box BORDER_BOX
-            } {
-              MenuItem {} {
-                label {+1}
-                xywh {5 5 30 20}
-              }
-              MenuItem {} {
-                label {-1}
-                xywh {5 5 30 20}
-              }
-            }
-            Fl_Value_Input valinp_level_num_end {
-              xywh {80 175 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-            }
-            Fl_Box {} {
-              xywh {130 175 70 25}
-            }
-          }
-          Fl_Group {} {open
-            xywh {0 200 200 30}
-          } {
-            Fl_Box {} {
-              xywh {0 205 80 25}
-            }
-            Fl_Choice choice_level_save_image_format {
-              label Format
-              callback {cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();} open
-              xywh {80 205 100 25} down_box BORDER_BOX
-            } {
-              MenuItem {} {
-                label {TIFF(*.tif)}
-                xywh {5 5 30 20}
-              }
-              MenuItem {} {
-                label {TGA(*.tga)}
-                xywh {5 5 30 20}
-              }
-            }
-            Fl_Box {} {
-              xywh {180 205 20 25}
-            }
-          }
-        }
-        Fl_Button {} {
-          label {Set Number}
-          callback {cl_gts_master.cl_bro_level.cb_ok();}
-          xywh {5 235 80 25}
-        }
-      }
-      Fl_Group {} {
-        label Filter open
-        xywh {0 270 200 75} box BORDER_BOX align 21
-      } {
-        Fl_Check_Button chkbtn_filter_rgb_erase_dot_noise_sw {
-          label {RGB Erase dot noise}
-          callback {//cl_gts_master.cb_filter_rgb_erase_dot_noise();}
-          xywh {5 295 160 25} down_box DOWN_BOX
-        }
-        Fl_Check_Button chkbtn_filter_rgb_color_trace_sw {
-          label {RGB Trace}
-          callback {//cl_gts_master.cb_filter_rgb_color_trace();}
-          xywh {5 320 160 25} down_box DOWN_BOX
-        }
+        xywh {115 5 80 25} hide
       }
       Fl_Group {} {
         label Open open
-        xywh {0 350 200 140} box BORDER_BOX align 21
+        xywh {0 0 200 140} box BORDER_BOX align 21
       } {
         Fl_Group {} {open
-          xywh {0 375 200 50}
+          xywh {0 25 200 50}
         } {
           Fl_File_Input filinp_level_open_dir_path {
             label Directory
-            xywh {0 390 185 35} align 5 when 1
+            xywh {0 40 185 35} align 5 when 1 resizable
           }
           Fl_Button togbut_level_open_browse {
             label {<}
-            callback {Fl_Native_File_Chooser native;
-native.title("Open File");
-native.type(Fl_Native_File_Chooser::BROWSE_FILE);
-std::string dpath(filinp_level_open_dir_path->value());
-std::replace(dpath.begin(), dpath.end(), '/', '\\\\'); // path separater must be \\.
-native.directory( dpath.c_str() );
-native.preset_file( strinp_level_open_file_head->value() );
-native.options(
-	Fl_Native_File_Chooser::PREVIEW
-	|Fl_Native_File_Chooser::USE_FILTER_EXT
-);
-native.filter( "Targa\\t*.tga\\n" "TIFF\\t*.tif\}" );
-switch ( native.show() ) \{
-case -1: std::cerr << "Error:" << native.errmsg() << std::endl; break;
-case  1: std::cout << "Cancel" << std::endl; break;
-default: // PICKED FILE
-	if ( native.filename() ) \{
-		filinp_level_open_dir_path->value(native.filename());
-	\} else \{
-		filinp_level_open_dir_path->value("");
-	\}
-	break;
-\}}
-            xywh {185 400 15 25}
-            code0 {\#include <FL/Fl_Native_File_Chooser.H>}
-            code1 {\#include <algorithm> // std::replace(-)}
+            callback {cl_gts_master.cl_level.browse_open();}
+            xywh {185 50 15 25}
           }
         }
         Fl_Group {} {open
-          xywh {0 430 200 25}
+          xywh {0 80 200 25}
         } {
           Fl_Box {} {
-            xywh {0 430 80 25}
+            xywh {0 80 80 25}
           }
           Fl_Input strinp_level_open_file_head {
             label Level
             callback {//cl_gts_master.cb_level_open_file_head();}
-            xywh {80 430 120 25} box BORDER_BOX when 1
+            xywh {80 80 120 25} box BORDER_BOX when 1 resizable
           }
         }
         Fl_Group {} {open
-          xywh {0 460 200 25}
+          xywh {0 110 200 25}
         } {
           Fl_Box {} {
-            xywh {0 460 80 25}
+            xywh {0 110 80 25}
           }
           Fl_Choice choice_level_open_image_format {
             label Format
             callback {//cl_gts_master.cb_level_open_image_format();} open
-            xywh {80 460 100 25} down_box BORDER_BOX
+            xywh {80 110 100 25} down_box BORDER_BOX
           } {
             MenuItem {} {
               label {TIFF(*.tif)}
@@ -682,7 +496,165 @@ default: // PICKED FILE
             }
           }
           Fl_Box {} {
-            xywh {180 460 20 25}
+            xywh {180 110 20 25} resizable
+          }
+        }
+      }
+      Fl_Group {} {
+        label Save open
+        xywh {0 145 200 140} box BORDER_BOX align 21
+      } {
+        Fl_Group {} {open
+          xywh {0 170 200 50}
+        } {
+          Fl_File_Input filinp_level_save_dir_path {
+            label Directory
+            callback {//cl_gts_master.cl_bro_level.cb_dir();}
+            xywh {0 185 185 35} box BORDER_BOX align 5 when 1 resizable
+          }
+          Fl_Button togbut_level_save_browse {
+            label {<}
+            callback {cl_gts_master.cl_level.browse_save();}
+            xywh {185 195 15 25}
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 225 200 25}
+        } {
+          Fl_Box {} {
+            xywh {0 225 80 25}
+          }
+          Fl_Input strinp_level_save_file_head {
+            label Level
+            callback {cl_gts_master.cl_bro_level.cb_level_name();}
+            xywh {80 225 120 25} box BORDER_BOX when 1 resizable
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 255 200 25}
+        } {
+          Fl_Box {} {
+            xywh {0 255 80 25}
+          }
+          Fl_Choice choice_level_save_image_format {
+            label Format
+            callback {cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();} open
+            xywh {80 255 100 25} down_box BORDER_BOX
+          } {
+            MenuItem {} {
+              label {TIFF(*.tif)}
+              xywh {10 10 30 20}
+            }
+            MenuItem {} {
+              label {TGA(*.tga)}
+              xywh {10 10 30 20}
+            }
+          }
+          Fl_Box {} {
+            xywh {180 255 20 25} resizable
+          }
+        }
+      }
+      Fl_Group {} {
+        label Number open
+        xywh {0 290 200 110} box BORDER_BOX align 21
+      } {
+        Fl_Group {} {open
+          xywh {0 310 200 25}
+        } {
+          Fl_Box {} {
+            xywh {0 310 80 25}
+          }
+          Fl_Value_Input valinp_level_num_start {
+            label Start
+            xywh {80 310 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+          }
+          Fl_Box {} {
+            xywh {130 310 70 25} resizable
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 340 200 25}
+        } {
+          Fl_Choice choice_level_num_continue_type {
+            callback {if (o->value() == 0) {
+ cl_gts_gui.valinp_level_num_end->show();
+ cl_gts_gui.choice_level_num_endless_direction->hide();
+ cl_gts_gui.selbro_fnum_list->activate();
+} else {
+ cl_gts_gui.valinp_level_num_end->hide();
+ cl_gts_gui.choice_level_num_endless_direction->show();
+ cl_gts_gui.selbro_fnum_list->deactivate();
+}} open
+            xywh {0 340 80 25} down_box BORDER_BOX
+          } {
+            MenuItem {} {
+              label End
+              xywh {10 10 30 20}
+            }
+            MenuItem {} {
+              label Endless
+              xywh {10 10 30 20}
+            }
+          }
+          Fl_Choice choice_level_num_endless_direction {open
+            xywh {80 340 50 25} down_box BORDER_BOX
+          } {
+            MenuItem {} {
+              label {+1}
+              xywh {10 10 30 20}
+            }
+            MenuItem {} {
+              label {-1}
+              xywh {10 10 30 20}
+            }
+          }
+          Fl_Value_Input valinp_level_num_end {
+            xywh {80 340 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+          }
+          Fl_Box {} {
+            xywh {130 340 70 25} resizable
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 370 200 25}
+        } {
+          Fl_Box {} {
+            xywh {0 370 110 25} resizable
+          }
+          Fl_Button {} {
+            label {Set Number}
+            callback {cl_gts_master.cl_bro_level.cb_ok();}
+            xywh {110 370 85 25}
+          }
+        }
+      }
+      Fl_Group {} {
+        label Filter open
+        xywh {0 405 200 75} box BORDER_BOX align 21
+      } {
+        Fl_Group {} {open
+          xywh {0 430 200 25}
+        } {
+          Fl_Check_Button chkbtn_filter_rgb_erase_dot_noise_sw {
+            label {RGB Erase dot noise}
+            callback {//cl_gts_master.cb_filter_rgb_erase_dot_noise();}
+            xywh {5 430 160 25} down_box DOWN_BOX
+          }
+          Fl_Box {} {
+            xywh {165 430 35 25} resizable
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 455 200 25}
+        } {
+          Fl_Check_Button chkbtn_filter_rgb_color_trace_sw {
+            label {RGB Trace}
+            callback {//cl_gts_master.cb_filter_rgb_color_trace();}
+            xywh {5 455 160 25} down_box DOWN_BOX value 1
+          }
+          Fl_Box {} {
+            xywh {165 455 35 25} resizable
           }
         }
       }
@@ -1985,7 +1957,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
       label Number
       callback {cl_gts_gui.window_fnum_list->hide();
 cl_gts_gui.menite_fnum_list->clear();}
-      xywh {50 50 116 350} type Double hide resizable non_modal
+      xywh {50 50 116 350} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 116 25}

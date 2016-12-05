@@ -225,7 +225,7 @@ int gts_master::exec( const char *comm )
 	}
 
 	/* main windowのタイトル表示 */
-	this->_print_window_headline();
+	this->print_window_headline();
 
 	/* keyのDrag and Dropをしない */
 	Fl::dnd_text_ops(0);

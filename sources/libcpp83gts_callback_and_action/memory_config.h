@@ -398,14 +398,15 @@ private:
 	void save_trace_batch_( std::ofstream& ofs );
 	void save_trace_src_hsv_( std::ofstream& ofs );
 
-
 	void load_ifs_(
 		std::ifstream& ifs
 		,const int load_trace_batch_sw
 		,bool& fnum_list_sw
 		,bool& trace_batch_list_sw
 		,bool& level_list_redisplay_sw
+		,bool& level_num_continue_type_sw
 	);
+
 	bool load_trace_src_hsv_( std::vector< std::string >& words );
 };
 

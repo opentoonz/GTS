@@ -86,23 +86,36 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		return "Error : Need Extension .tga/.tif/.txt";
 	}
 
-	/* ファイル名に番号がないエラー */
-	if (nums.empty()) {
-		return "Error : Need Number in Filename";
+	/* Config file */
+	if (ext == ".txt") {
+		std::string dpa,fna;
+		ids::path::from_fpath_to_dpath_fname(
+			dnd_str ,dpa ,fna
+		);
+		if (dpa.empty()) {
+			return "Error : Need directroy";
+		}
+		if (fna.empty()) {
+			return "Error : Need filename";
+		}
+		cl_gts_gui.filinp_config_load_dir->value(  dpa.c_str() );
+		cl_gts_gui.strinp_config_load_file->value( fna.c_str() );
+
+		cl_gts_master.cl_bro_config.cb_load_ok();
 	}
-	const int start_num=nums.front();
-	const int end_num=nums.back();
-
-
-	if (ext == ".txt") { /* config file */
-
-	} else {	/* level */
+	/* Level(tif,tga) file */
+	else {
+		/* ファイル名に番号がないエラー */
+		if (nums.empty()) {
+			return "Error : Need Number in Filename";
+		}
+		/* Levelウインドウに設定 */
 		cl_gts_gui.filinp_level_save_dir_path->value(dpath.c_str());
 		cl_gts_gui.filinp_level_open_dir_path->value(dpath.c_str());
 		cl_gts_gui.strinp_level_save_file_head->value(head.c_str());
 		cl_gts_gui.strinp_level_open_file_head->value(head.c_str());
-		cl_gts_gui.valinp_level_num_start->value( start_num );
-		cl_gts_gui.valinp_level_num_end->value( end_num );
+		cl_gts_gui.valinp_level_num_start->value( nums.front() );
+		cl_gts_gui.valinp_level_num_end->value( nums.back() );
 		if ( ext == ".tif" ) {
 		 cl_gts_gui.choice_level_save_image_format->value(0);
 		 cl_gts_gui.choice_level_open_image_format->value(0);
@@ -111,42 +124,28 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		 cl_gts_gui.choice_level_save_image_format->value(1);
 		 cl_gts_gui.choice_level_open_image_format->value(1);
 		}
+		/* Levelウインドウに設定 : Start...End範囲指定タイプ */
+		cl_gts_gui.valinp_level_num_end->show();
+		cl_gts_gui.choice_level_num_endless_direction->hide();
+		cl_gts_gui.selbro_fnum_list->activate();
+		cl_gts_gui.choice_level_num_continue_type->value(0/*End*/);
 
-		//cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
-		/*
-		cb_set_save_image_file_extension()の中身は以下2行
-	cl_gts_master.cl_bro_level.set_current_open_imagefile_extension(
-		cl_gts_gui.choice_level_open_image_format->value()
-	);
-	cl_gts_master.cl_bro_level.change_level_list(); // protected:
-		*/
-
-		//cl_gts_master.cl_bro_level.level_set(nums ,start_num ,end_num);
-		/*
-		level_set(-)の中身は他でも使っているので調査必要!!!!!!!!!!!
-		*/
-		/* 以前のリストをすべて削除 */
-		cl_gts_master.cl_file_number_list.remove_all();
-
-		/* ファイルの存在をチェックしながらリストを設定 */
-		/*
-	make_fnum_list_with_chk_mark_same_way_(nums,start_num,end_num);
-		*/
-		cl_gts_master.cl_file_number_list.append_numbers_with_exist_mark(
-			nums ,start_num ,end_num
+		/* Numberリスト再構築。
+		ファイル存在マーク付けて選択状態にする */
+		cl_gts_master.cl_file_number_list.remake_with_exist_mark_and_select(
+			nums ,nums.front() ,nums.back()
 		);
 
-		/* 新たに作ったリストは全て選択状態にする */
-		cl_gts_master.cl_file_number_list.select_all();
-
-		/* frame number listにlevel名を表示する */
+		/* Number上部に保存level名を表示する */
 		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-		 //cl_gts_master.cl_bro_level.cp_levelname()
 		 cl_gts_gui.strinp_level_save_file_head->value()
 		);
 
-		/* ファイル名表示 */
-		cl_gts_master._print_window_headline();
+		/* メインウインドウバーに(level名更新)表示 */
+		cl_gts_master.print_window_headline();
+
+		/* 画像読込表示 */
+		cl_gts_master.cb_read_and_trace_and_preview();
 	}
 	return std::string();
 }

@@ -196,7 +196,7 @@ int memory_config::save( const char *file_path )
 	ofs.close(); /* ファイル閉じる */
 
 	this->memory_of_path = file_path; /* 正常保存ならファイル名の記憶 */
-	cl_gts_master._print_window_headline(); /* ファイル名を表示する */
+	cl_gts_master.print_window_headline(); /* ファイル名を表示する */
  }
  catch (const std::ios_base::failure& e) {
  	std::ostringstream ost;

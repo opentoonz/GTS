@@ -89,119 +89,6 @@ void cb_file_number_list::set_list_from_string( void )
 }
 
 //------------------------------------------------------------
-#if 0
-namespace {
- /* ファイルのヘッダー情報を得る */
- int set_file_header_info_( const char *cp_file, iip_read *clp_read )
- {
-	assert(nullptr != cp_file);
-	assert(nullptr != clp_read);
-
-	/* ファイルが存在しなければ、なにもせず、OKで終る */
-	if (!ptbl_dir_or_file_is_exist(const_cast<char*>(cp_file))) {
-		return OK;
-	}
-
-	/* ファイル名をセットして... */
-	if (OK != clp_read->cl_name.set_name(const_cast<char*>(cp_file))) {
-		pri_funct_err_bttvr(
- 	 "Error : clp_read->cl_name.set_name(%s) returns NG",
-			cp_file);
-		return NG;
-	}
-	/* ファイルヘッダー情報を得る */
-	if (OK != clp_read->header()) {
-		pri_funct_err_bttvr(
- 	 "Error : clp_read->header() returns NG");
-		return NG;
-	}
-	return OK;
- }
-
- /* ファイルの存在マークを文字列で返す
-	マークは、"0001 ST"の、ST部分
-	画像の種類毎に扱いが違う
-	rgbのとき
-		S -> Scanファイル("A_full.0001.tif"等)
-		T -> Traceファイル("A.0001.tif"等)
-	grayscaleのとき
-		S -> scanファイル("A.0001.tif")
-		T -> 存在しない
-	BWのとき
-		S -> scanファイル("A.0001.tif")
-		T -> 存在しない
- */
- const char* get_mark_str_by_checking_file_( const int file_num )
- {
-	iip_read	cl_read_target,
-			cl_read_rgbscan;
-	const char* cp_path;
-	const char	*cp_s = "S",
-			*cp_t = "T",
-			*cp_st = "ST";
-
-	/* 画像のファイルパスを得る */
-	cp_path = cl_gts_master.cl_bro_level.cp_filepath(file_num);
-	if (nullptr == cp_path) {
-		pri_funct_err_bttvr(
-	 "Error : cl_gts_master.cl_bro_level.cp_filepath(%d) returns nullptr."
-			, file_num );
-		return nullptr;
-	}
-
-	/* 画像ファイルの情報を取る
-		画像ファイルが存在しないか、読み取り可能であるならOK
-		あるのに読めない場合NG
-	*/
-	if (OK != set_file_header_info_(cp_path, &cl_read_target )) {
-		pri_funct_err_bttvr(
- 	 "Error : set_file_header_info_(%s,) returns NG",
-			cp_path);
-		return nullptr;
-	}
-
-#if 0
-	/* ファイルヘッドに_fullを付加した画像ファイルパスを得る */
-	cp_path = cl_gts_master.cl_bro_level.cp_filepath_full(file_num);
-	if (nullptr == cp_path) {
-		pri_funct_err_bttvr(
-	 "Error : cl_gts_master.cl_bro_level.cp_filepath_full(%d) returns nullptr."
-	 		, file_num );
-		return nullptr;
-	}
-	/* ファイルヘッドに_fullを付加した画像ファイルの情報を取る */
-	if (OK != set_file_header_info_(cp_path, &cl_read_rgbscan )) {
-		pri_funct_err_bttvr(
- 	 "Error : set_file_header_info_(%s,) returns NG",
-			cp_path);
-		return nullptr;
-	}
-#endif
-
-	/* モノクロ２値画像 */
-	if (E_CH_NUM_BITBW ==
-	cl_read_target.cl_ch_info.get_e_ch_num_type()) { return cp_s; }
-
-	/* GrayScale画像 */
-	else if (1L == cl_read_target.get_l_channels()) { return cp_s; }
-
-	/* RGB Scan and Trace画像 */
-	else if ((3L <= cl_read_target.get_l_channels()) &&
-		 (3L <= cl_read_rgbscan.get_l_channels())) {return cp_st;}
-	/* RGB Scan画像 */
-	else if (3L <= cl_read_rgbscan.get_l_channels()) { return cp_s; }
-	/* RGB Trace画像 */
-	else if (3L <= cl_read_target.get_l_channels()) { return cp_t; }
-
-	/* ファイルがない */
-	else if ((0L == cl_read_target.get_l_channels()) &&
-		 (0L == cl_read_rgbscan.get_l_channels())) {return nullptr;}
-
-	pri_funct_err_bttvr( "Error : bad file type" );
-	return nullptr;
- }
-}
-#endif
 
 /* saveファイル存在マークを付加したファイル番号をlistの最後に追加 */
 void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
@@ -268,6 +155,16 @@ void cb_file_number_list::append_numbers_with_exist_mark(
 		static_cast<int>( cl_gts_gui.valinp_level_num_start->value() )
 		);
 	}
+}
+void cb_file_number_list::remake_with_exist_mark_and_select(
+	const std::vector<int>& num_list /* こちら優先して使い設定 */
+	, const int start_num   /* num_listが空ならこちらで設定 */
+	, const int end_num
+)
+{
+	this->remove_all();
+	this->append_numbers_with_exist_mark(num_list ,start_num ,end_num);
+	this->select_all();
 }
 
 //------------------------------------------------------------

@@ -8,9 +8,7 @@
 #include "FL/filename.H" // fl_filename_list()
 #include "ids_path_level_from_files.h"
 
-namespace {
-
-void from_fpath_to_dpath_fname_(
+void ids::path::from_fpath_to_dpath_fname(
 	const std::string& fpath
 	,std::string& dpath
 	,std::string& fname
@@ -59,6 +57,9 @@ void from_fpath_to_dpath_fname_(
 	/* ディレクトリパスをセット */
 	dpath = fpath.substr(0,pos+1);
 }
+
+namespace {
+
 void from_fname_to_head_num_ext_(
 	const std::string& fname
 	,std::string& head
@@ -216,7 +217,7 @@ void ids::path::level_from_files(
 )
 {
 	std::string fname;
-	from_fpath_to_dpath_fname_( fpath ,dpath ,fname );
+	ids::path::from_fpath_to_dpath_fname( fpath ,dpath ,fname );
 	from_fname_to_head_num_ext_(fname,head,num,number,ext);
 
 #if DEBUG_INO

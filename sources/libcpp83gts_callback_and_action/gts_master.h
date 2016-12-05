@@ -24,6 +24,7 @@
 
 #include "memory_desktop.h"
 #include "memory_config.h"
+#include "cb_level.h"
 #include "cb_file_number_list.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
@@ -170,6 +171,7 @@ public:
 	memory_short_cut_key	cl_memo_short_cut_key;
 	memory_install_setup	cl_memo_install_setup;
 
+	cb_level		cl_level;
 	cb_file_number_list	cl_file_number_list;
 
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
@@ -186,7 +188,7 @@ public:
 	iip_opengl_l3event cl_ogl_view;	/* OpenGL表示用unit */
 	iip_write	cl_iip_writ;	/* 画像保存 */
 
-	int _print_window_headline( void );
+	int print_window_headline( void );
 
 	void from_opengl_rect_to_area_val( void );
 
