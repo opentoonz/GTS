@@ -5,6 +5,7 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
+//---------- extensions ----------
 ids::path::extensions::extensions()
 	:names_({ "TIFF" ,"Targa" })
 	,dotex_({ ".tif" ,".tga" })
@@ -46,6 +47,7 @@ const std::string ids::path::extensions::get_native_filter( void )
 	}
 	return str;
 }
+//---------- extensions ----------
 
 void cb_level::set_level_open(
 	ids::path::extensions& et
@@ -83,8 +85,8 @@ void cb_level::set_level_open(
 	cl_gts_gui.choice_level_num_endless_direction->hide();
 	cl_gts_gui.choice_level_num_continue_type->value(0/*End*/);
 
-	/* 再表示 */
-	cl_gts_gui.window_level_set->redraw();
+	/* 即表示 */
+	cl_gts_gui.window_level_set->flush();
 
 	/* 05 Numberウインドウ List再構築
 	ファイル存在マーク付けて選択状態にする
@@ -101,8 +103,8 @@ void cb_level::set_level_open(
 	 cl_gts_gui.strinp_level_save_file_head->value()
 	);
 
-	/* 再表示 */
-	cl_gts_gui.window_fnum_list->redraw();
+	/* 即表示 */
+	cl_gts_gui.window_fnum_list->flush();
 
 	/* 08 Mainウインドウ バーにlevel名表示 */
 	cl_gts_master.print_window_headline();
@@ -172,29 +174,53 @@ void cb_level::set_level_save(
 	/* 09 画像読込表示はしない */
 }
 
-void cb_level::browse_open( void )
+const std::string cb_level::get_openfilename(
+	ids::path::extensions& et
+	,const int num
+)
 {
-	ids::path::extensions et;
-
-	/* LevelウインドウメニューからFileNameを得る */
 	std::string filename;
 	filename += cl_gts_gui.strinp_level_open_file_head->value();
 	if (filename.empty()) {
 	 filename += "untitled";
 	}
-	if (0 <= cl_gts_gui.valinp_level_num_start->value()) {
-	 filename += ids::path::str_from_number(
-		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
-	 );
+	if (0 <= num) {
+	 filename += ids::path::str_from_number( num );
 	}
 	filename += et.str_from_num(
 		cl_gts_gui.choice_level_open_image_format->value()
 	);
+	return filename;
+}
+const std::string cb_level::get_savefilename(
+	ids::path::extensions& et
+	,const int num
+)
+{
+	std::string filename;
+	filename += cl_gts_gui.strinp_level_save_file_head->value();
+	if (filename.empty()) {
+	 filename += "untitled";
+	}
+	if (0 <= num) {
+	 filename += ids::path::str_from_number( num );
+	}
+	filename += et.str_from_num(
+		cl_gts_gui.choice_level_save_image_format->value()
+	);
+	return filename;
+}
+
+void cb_level::browse_and_set_of_open( void )
+{
+	ids::path::extensions et;
 
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_open(
 		cl_gts_gui.filinp_level_open_dir_path->value()
-		,filename
+		,this->get_openfilename( et,
+		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
+		)
 		,et.get_native_filter()
 		,cl_gts_gui.choice_level_open_image_format->value()
 	);
@@ -216,29 +242,16 @@ void cb_level::browse_open( void )
 	this->set_level_open( et ,dpath ,head ,ext ,nums );
 }
 
-void cb_level::browse_save( void )
+void cb_level::browse_and_set_of_save( void )
 {
 	ids::path::extensions et;
-
-	/* LevelウインドウメニューからFileNameを得る */
-	std::string filename;
-	filename += cl_gts_gui.strinp_level_save_file_head->value();
-	if (filename.empty()) {
-	 filename += "untitled";
-	}
-	if (0 <= cl_gts_gui.valinp_level_num_start->value()) {
-	 filename += ids::path::str_from_number(
-		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
-	 );
-	}
-	filename += et.str_from_num(
-		cl_gts_gui.choice_level_save_image_format->value()
-	);
 
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_save(
 		cl_gts_gui.filinp_level_save_dir_path->value()
-		,filename
+		,this->get_savefilename( et,
+		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
+		)
 		,et.get_native_filter()
 		,cl_gts_gui.choice_level_save_image_format->value()
 	);

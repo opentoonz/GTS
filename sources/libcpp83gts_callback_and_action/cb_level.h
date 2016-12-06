@@ -27,8 +27,17 @@ class cb_level {
 public:
 	cb_level() {}
 
-	void browse_open( void );
-	void browse_save( void );
+	void browse_and_set_of_open( void );
+	void browse_and_set_of_save( void );
+
+	const std::string get_openfilename(
+		ids::path::extensions& et
+		,const int num
+	);
+	const std::string get_savefilename(
+		ids::path::extensions& et
+		,const int num
+	);
 
 	void set_level_open(
 		ids::path::extensions& et

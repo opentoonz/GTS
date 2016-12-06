@@ -537,7 +537,7 @@ void gts_gui::cb_Browse(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_togbut_level_open_browse_i(Fl_Button*, void*) {
-  cl_gts_master.cl_level.browse_open();
+  cl_gts_master.cl_level.browse_and_set_of_open();
 }
 void gts_gui::cb_togbut_level_open_browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_togbut_level_open_browse_i(o,v);
@@ -571,7 +571,7 @@ void gts_gui::cb_filinp_level_save_dir_path(Fl_File_Input* o, void* v) {
 }
 
 void gts_gui::cb_togbut_level_save_browse_i(Fl_Button*, void*) {
-  cl_gts_master.cl_level.browse_save();
+  cl_gts_master.cl_level.browse_and_set_of_save();
 }
 void gts_gui::cb_togbut_level_save_browse(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_togbut_level_save_browse_i(o,v);
@@ -5331,7 +5331,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_next_scan->set_modal();
     window_next_scan->end();
   } // Fl_Double_Window* window_next_scan
-  { window_level_set = new Fl_Double_Window(200, 480, "Level");
+  { window_level_set = new Fl_Double_Window(200, 490, "Level");
     window_level_set->callback((Fl_Callback*)cb_window_level_set, (void*)(this));
     { Fl_Button* o = new Fl_Button(115, 5, 80, 25, "Browse...");
       o->callback((Fl_Callback*)cb_Browse);
@@ -5468,26 +5468,26 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 405, 200, 75, "Filter");
+    { Fl_Group* o = new Fl_Group(0, 405, 200, 85, "Filter");
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-      { Fl_Group* o = new Fl_Group(0, 430, 200, 25);
-        { chkbtn_filter_rgb_erase_dot_noise_sw = new Fl_Check_Button(5, 430, 160, 25, "RGB Erase dot noise");
+      { Fl_Group* o = new Fl_Group(0, 460, 200, 25);
+        { chkbtn_filter_rgb_erase_dot_noise_sw = new Fl_Check_Button(5, 460, 160, 25, "RGB Erase dot noise");
           chkbtn_filter_rgb_erase_dot_noise_sw->down_box(FL_DOWN_BOX);
           chkbtn_filter_rgb_erase_dot_noise_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_erase_dot_noise_sw);
         } // Fl_Check_Button* chkbtn_filter_rgb_erase_dot_noise_sw
-        { Fl_Box* o = new Fl_Box(165, 430, 35, 25);
+        { Fl_Box* o = new Fl_Box(165, 460, 35, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 455, 200, 25);
-        { chkbtn_filter_rgb_color_trace_sw = new Fl_Check_Button(5, 455, 160, 25, "RGB Trace");
+      { Fl_Group* o = new Fl_Group(0, 430, 200, 25);
+        { chkbtn_filter_rgb_color_trace_sw = new Fl_Check_Button(5, 430, 160, 25, "RGB Trace");
           chkbtn_filter_rgb_color_trace_sw->down_box(FL_DOWN_BOX);
           chkbtn_filter_rgb_color_trace_sw->value(1);
           chkbtn_filter_rgb_color_trace_sw->callback((Fl_Callback*)cb_chkbtn_filter_rgb_color_trace_sw);
         } // Fl_Check_Button* chkbtn_filter_rgb_color_trace_sw
-        { Fl_Box* o = new Fl_Box(165, 455, 35, 25);
+        { Fl_Box* o = new Fl_Box(165, 430, 35, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();

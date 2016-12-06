@@ -35,9 +35,12 @@ void gts_master::cb_read_and_trace_and_preview( void )
 
 	/*------ ファイルパス ------*/
 
+	ids::path::extensions et;
 	std::string fpath_open(
-		this->cl_bro_level.filepath_open(crnt_file_num)
+		cl_gts_gui.filinp_level_open_dir_path->value()
 	);
+	fpath_open += '/';
+	fpath_open += this->cl_level.get_openfilename(et ,crnt_file_num);
 
 	/* 番号に対するファイルパスを得ることはできるか */
 	if (fpath_open.empty()) {
@@ -162,7 +165,7 @@ int gts_master::redraw_image_(
 		this->cl_color_trace_enhancement.src_set_histogram_max();
 
 		/* color trace histogram windowの再描画 */
-		cl_gts_gui.window_hab_histogram->redraw();
+		cl_gts_gui.window_hab_histogram->flush();
 	}
 	return OK;
 }

@@ -437,7 +437,7 @@ fl_message( ost.str().c_str() );}
       label Level
       callback {cl_gts_gui.window_level_set->hide();
 cl_gts_gui.menite_level->clear();}
-      xywh {50 50 200 480} type Double resizable non_modal size_range {200 480 1000 480} visible
+      xywh {50 50 200 490} type Double resizable non_modal size_range {200 480 1000 480} visible
     } {
       Fl_Button {} {
         label {Browse...}
@@ -459,7 +459,7 @@ window_level_browse->show();}
           }
           Fl_Button togbut_level_open_browse {
             label {<}
-            callback {cl_gts_master.cl_level.browse_open();}
+            callback {cl_gts_master.cl_level.browse_and_set_of_open();}
             xywh {185 50 15 25}
           }
         }
@@ -514,7 +514,7 @@ window_level_browse->show();}
           }
           Fl_Button togbut_level_save_browse {
             label {<}
-            callback {cl_gts_master.cl_level.browse_save();}
+            callback {cl_gts_master.cl_level.browse_and_set_of_save();}
             xywh {185 195 15 25}
           }
         }
@@ -631,30 +631,30 @@ window_level_browse->show();}
       }
       Fl_Group {} {
         label Filter open
-        xywh {0 405 200 75} box BORDER_BOX align 21
+        xywh {0 405 200 85} box BORDER_BOX align 21
       } {
         Fl_Group {} {open
-          xywh {0 430 200 25}
+          xywh {0 460 200 25}
         } {
           Fl_Check_Button chkbtn_filter_rgb_erase_dot_noise_sw {
             label {RGB Erase dot noise}
             callback {//cl_gts_master.cb_filter_rgb_erase_dot_noise();}
-            xywh {5 430 160 25} down_box DOWN_BOX
+            xywh {5 460 160 25} down_box DOWN_BOX
           }
           Fl_Box {} {
-            xywh {165 430 35 25} resizable
+            xywh {165 460 35 25} resizable
           }
         }
         Fl_Group {} {open
-          xywh {0 455 200 25}
+          xywh {0 430 200 25}
         } {
           Fl_Check_Button chkbtn_filter_rgb_color_trace_sw {
             label {RGB Trace}
             callback {//cl_gts_master.cb_filter_rgb_color_trace();}
-            xywh {5 455 160 25} down_box DOWN_BOX value 1
+            xywh {5 430 160 25} down_box DOWN_BOX value 1
           }
           Fl_Box {} {
-            xywh {165 455 35 25} resizable
+            xywh {165 430 35 25} resizable
           }
         }
       }
