@@ -4,9 +4,10 @@
 #include <sstream>
 #include <filesystem>/* tr2::sys::path */
 #include "fltk_opengl.h"
+#include "ids_path_level_from_files.h"
+#include "cb_level.h"
 #include "gts_master.h"
 #include "gts_gui.h"
-#include "ids_path_level_from_files.h"
 
 namespace {
 
@@ -105,47 +106,10 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 	}
 	/* Level(tif,tga) file */
 	else {
-		/* ファイル名に番号がないエラー */
-		if (nums.empty()) {
-			return "Error : Need Number in Filename";
-		}
-		/* Levelウインドウに設定 */
-		cl_gts_gui.filinp_level_save_dir_path->value(dpath.c_str());
-		cl_gts_gui.filinp_level_open_dir_path->value(dpath.c_str());
-		cl_gts_gui.strinp_level_save_file_head->value(head.c_str());
-		cl_gts_gui.strinp_level_open_file_head->value(head.c_str());
-		cl_gts_gui.valinp_level_num_start->value( nums.front() );
-		cl_gts_gui.valinp_level_num_end->value( nums.back() );
-		if ( ext == ".tif" ) {
-		 cl_gts_gui.choice_level_save_image_format->value(0);
-		 cl_gts_gui.choice_level_open_image_format->value(0);
-		} else
-		if ( ext == ".tga" ) {
-		 cl_gts_gui.choice_level_save_image_format->value(1);
-		 cl_gts_gui.choice_level_open_image_format->value(1);
-		}
-		/* Levelウインドウに設定 : Start...End範囲指定タイプ */
-		cl_gts_gui.valinp_level_num_end->show();
-		cl_gts_gui.choice_level_num_endless_direction->hide();
-		cl_gts_gui.selbro_fnum_list->activate();
-		cl_gts_gui.choice_level_num_continue_type->value(0/*End*/);
-
-		/* Numberリスト再構築。
-		ファイル存在マーク付けて選択状態にする */
-		cl_gts_master.cl_file_number_list.remake_with_exist_mark_and_select(
-			nums ,nums.front() ,nums.back()
+		ids::path::extensions et;
+		cl_gts_master.cl_level.set_level_open(
+			et ,dpath ,head ,ext ,nums
 		);
-
-		/* Number上部に保存level名を表示する */
-		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-		 cl_gts_gui.strinp_level_save_file_head->value()
-		);
-
-		/* メインウインドウバーに(level名更新)表示 */
-		cl_gts_master.print_window_headline();
-
-		/* 画像読込表示 */
-		cl_gts_master.cb_read_and_trace_and_preview();
 	}
 	return std::string();
 }

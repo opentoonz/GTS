@@ -43,7 +43,7 @@ void gtsfbro06cb_config::cb_load_ok( void )
 	this->v_path_memory();
 
 	/* ファイル名の項目をクリアする */
-	cl_gts_gui.strinp_config_load_file->value(NULL);
+	//cl_gts_gui.strinp_config_load_file->value(NULL);
 
 	cl_gts_gui.menite_config_load->clear(); /* menuのcheck外す */
 	cl_gts_gui.window_config_load->hide();  /* Window 閉じる */
