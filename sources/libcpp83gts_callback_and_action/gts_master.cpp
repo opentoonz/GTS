@@ -103,6 +103,15 @@ int gts_master::exec( const char *comm )
 		pri_funct_msg_ttvr( "gts_master::exec()" );
 	}
 
+	/*---------- cl_level.ext_open/save初期値設定----------*/
+
+	/* 画像R/Wルーチンの対応状態をセットする --> あとで修正予定 */
+	this->cl_level.ext_open.set_filter( "TIFF" ,".tif" );	/* 0番目 */
+	this->cl_level.ext_open.set_filter( "TGA"  ,".tga" );	/* 1番目 */
+
+	this->cl_level.ext_save.set_filter( "TIFF" ,".tif" );	/* 0番目 */
+	this->cl_level.ext_save.set_filter( "TGA"  ,".tga" );	/* 1番目 */
+
 	/*---------- GUI(fltk)生成 ----------*/
 
 	/***Fl::add_handler(handle_to_steel_shortcut_event);***/
@@ -111,6 +120,7 @@ int gts_master::exec( const char *comm )
 	/*---------- GUI初期設定 ----------*/
 
 	/* GUIのsaveで指定した順に拡張子リストを作る */
+/*
 	for (int ii=0 ;ii<cl_gts_gui.choice_level_save_image_format->size()
 	;++ii) {
 		const char* tx =
@@ -124,6 +134,7 @@ int gts_master::exec( const char *comm )
 			this->cl_bro_level.add_imagefile_extension(".tif");
 		}
 	}
+*/
 
 	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
@@ -158,18 +169,21 @@ int gts_master::exec( const char *comm )
 	 "Error : this->cl_bro_config.i_init() returns NG");
 		return NG;
 	}
+/*
 	if (OK != this->cl_bro_level.i_init()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_level.i_init() returns NG");
 		return NG;
 	}
+*/
 	if (OK != this->cl_bro_trace_batch.i_init()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_trace_batch.i_init() returns NG");
 		return NG;
 	}
 
-	/* カレントのファイル拡張子(tif/tga)、元設定からGUI設定する*/
+	/* ファイル拡張子、元設定からGUI設定し、カレント指定(.tga)する */
+/*
 	cl_gts_gui.choice_level_save_image_format->value(
  this->cl_bro_level.get_current_save_imagefile_extension()
 	);
@@ -177,6 +191,25 @@ int gts_master::exec( const char *comm )
  this->cl_bro_level.get_current_open_imagefile_extension()
 	);
 	//ct_gts_master.cl_bro_level.cb_set_save_image_file_extension();
+*/
+	for(int ii=0;ii<this->cl_level.ext_open.size() ;++ii) {
+		   cl_gts_gui.choice_level_open_image_format->add(
+			this->cl_level.ext_open.get_fltk_filter(ii).c_str()
+		);
+	}
+	for(int ii=0;ii<this->cl_level.ext_save.size() ;++ii) {
+		   cl_gts_gui.choice_level_save_image_format->add(
+			this->cl_level.ext_save.get_fltk_filter(ii).c_str()
+		);
+	}
+	if (0 < this->cl_level.ext_open.size()) {
+	   cl_gts_gui.choice_level_open_image_format->value(
+		this->cl_level.ext_open.size() - 1/*".tga"*/ );
+	}
+	if (0 < this->cl_level.ext_save.size()) {
+	   cl_gts_gui.choice_level_save_image_format->value(
+		this->cl_level.ext_save.size() - 1/*".tga"*/ );
+	}
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	this->cl_color_trace_thickness.cb_enh_01();

@@ -25,20 +25,16 @@ public:
 	void append_fnum_list_with_chk_mark( const int file_num );
 
 	/* 指定範囲の番号でlistを追加生成する(ファイル存在マーク付き) */
-	/* configの設定時使用 */
-	void make_fnum_list_with_chk_mark( const int start_num, const int end_num );
-
 	void append_numbers_with_exist_mark(
 		const std::vector<int>& num_list /* こちら優先し使い設定 */
 		, const int start_num   /* num_listが空ならこちらで設定 */
 		, const int end_num
 	);
-	/* remove_all()->append_numbers_with_exist_mark(-)->select_all() */
-	void remake_with_exist_mark_and_select(
-		const std::vector<int>& num_list /* こちら優先し使い設定 */
-		, const int start_num   /* num_listが空ならこちらで設定 */
-		, const int end_num
-	);
+
+	/* 上記二つの関数は後方互換のため保持しているが将来廃止 */
+	/* 上記二つの関数は使わないようにして以下の関数を使う */
+	void append_without_S( const int file_num );
+	void append_with_S( const int file_num );
 
 	//--------------------------------------------------
 
@@ -49,8 +45,9 @@ public:
 	//--------------------------------------------------
 
 	void unselect( int list_num );	/* 選択状態を外す */
-	int marking_scan_file( int list_num );/* Scan  fileの存在Mark付加 */
-	int marking_trace_file(int list_num );/* Trace fileの存在Mark付加 */
+
+	/* 指定の項目に(付いていなければ)"S"マークを付加する */
+	void add_S( const int list_num );
 
 	//--------------------------------------------------
 

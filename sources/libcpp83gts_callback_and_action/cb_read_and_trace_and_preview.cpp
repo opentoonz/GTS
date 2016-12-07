@@ -1,6 +1,6 @@
 #include <fstream>	//std::ifstream
 #include "FL/fl_ask.H"	// fl_alert(-)
-#include "ptbl_funct.h"
+#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -35,26 +35,23 @@ void gts_master::cb_read_and_trace_and_preview( void )
 
 	/*------ ファイルパス ------*/
 
-	ids::path::extensions et;
 	std::string fpath_open(
-		cl_gts_gui.filinp_level_open_dir_path->value()
+		this->cl_level.get_openfilepath(crnt_file_num)
 	);
-	fpath_open += '/';
-	fpath_open += this->cl_level.get_openfilename(et ,crnt_file_num);
 
 	/* 番号に対するファイルパスを得ることはできるか */
 	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-		"Error : this->cl_bro_level.filepath_open(%d) returns nullptr."
+	"Error : this->cl_level.get_openfilepath(%d) returns nullptr."
 			, crnt_file_num
 		);
 		return;
 	}
 
 	/* 画像ファイル存在しない */
-	{
-	 std::ifstream ifs( fpath_open.c_str() ,std::ios_base::binary );
-	 if (!ifs) {
+	if (!ptbl_dir_or_file_is_exist(
+		const_cast<char *>(fpath_open.c_str())
+	)) {
 		pri_funct_err_bttvr( "Warning : <%s> is not exist"
 			,fpath_open.c_str()
 		);
@@ -70,7 +67,6 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		cl_gts_gui.opengl_view->flush();
 
 		return;
-	 }
 	}
 
 	/*------ ファイルの読込み ------*/

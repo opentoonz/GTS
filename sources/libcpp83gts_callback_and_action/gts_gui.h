@@ -231,7 +231,6 @@ public:
 private:
   inline void cb_choice_level_open_image_format_i(Fl_Choice*, void*);
   static void cb_choice_level_open_image_format(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_level_open_image_format[];
 public:
   Fl_File_Input *filinp_level_save_dir_path;
 private:
@@ -252,7 +251,6 @@ public:
 private:
   inline void cb_choice_level_save_image_format_i(Fl_Choice*, void*);
   static void cb_choice_level_save_image_format(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_level_save_image_format[];
 public:
   Fl_Value_Input *valinp_level_num_start;
   Fl_Choice *choice_level_num_continue_type;

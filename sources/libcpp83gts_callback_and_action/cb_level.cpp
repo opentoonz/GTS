@@ -1,4 +1,6 @@
 #include <algorithm> // std::find(-)
+#include <utility> // std::swap(-)
+#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
 #include "cb_level.h"
@@ -7,12 +9,10 @@
 
 //---------- extensions ----------
 ids::path::extensions::extensions()
-	:names_({ "TIFF" ,"Targa" })
-	,dotex_({ ".tif" ,".tga" })
 {}
 const std::string ids::path::extensions::str_from_num( const int num )
 {
-	if (static_cast<int>(this->count_::size) <= num) {
+	if (static_cast<int>(this->dotex_.size()) <= num) {
 		return std::string();
 	}
 
@@ -24,22 +24,20 @@ const int ids::path::extensions::num_from_str( const std::string& ext )
 	if ( it == this->dotex_.end() ) {
 		return -1;
 	}
-
 	return static_cast<int>(std::distance(this->dotex_.begin(), it));
-/*
-	for (int ii=0 ;ii<this->dotex_.size() ;++ii) {
-		if (this->dotex_.at(ii) == ext) {
-			return ii;
-		}
-	}
-*/
-	return -1;
 }
-const std::string ids::path::extensions::get_native_filter( void )
+void ids::path::extensions::set_filter(
+	const std::string& name ,const std::string& dotex
+)
+{
+	this->names_.push_back( name );
+	this->dotex_.push_back( dotex );
+}
+const std::string ids::path::extensions::get_native_filters( void )
 {
 	std::string str;
 
-	for (int ii=0 ;ii<static_cast<int>(this->count_::size) ;++ii) {
+	for (int ii=0 ;ii<static_cast<int>(this->dotex_.size()) ;++ii) {
 		str += this->names_.at(ii);
 		str += "\t*";
 		str += this->dotex_.at(ii);
@@ -47,11 +45,22 @@ const std::string ids::path::extensions::get_native_filter( void )
 	}
 	return str;
 }
+const std::string ids::path::extensions::get_fltk_filter( const int num )
+{
+	std::string str;
+	if (num < 0 || static_cast<int>(this->dotex_.size()) <= num) {
+		return str;
+	}
+	str += this->names_.at(num);
+	str += "(*";
+	str += this->dotex_.at(num);
+	str += ")";
+	return str;
+}
 //---------- extensions ----------
 
 void cb_level::set_level_open(
-	ids::path::extensions& et
-	,const std::string& dpath
+	const std::string& dpath
 	,const std::string& head
 	,const std::string& ext
 	,const std::vector<int>& nums
@@ -63,7 +72,7 @@ void cb_level::set_level_open(
 	}
 
 	/* 01 拡張子が対応した種類でないと何もしない */
-	const int ext_num = et.num_from_str( ext );
+	const int ext_num = this->ext_open.num_from_str( ext );
 	if ( ext_num < 0 ) {
 		return;
 	}
@@ -90,10 +99,20 @@ void cb_level::set_level_open(
 
 	/* 05 Numberウインドウ List再構築
 	ファイル存在マーク付けて選択状態にする
-	存在するファイルの番号(nums)のみリストに */
-	cl_gts_master.cl_file_number_list.remake_with_exist_mark_and_select(
-		nums ,nums.front() ,nums.back()
-	);
+	--> 存在するファイルの番号(nums)のみリストに表示する */
+	cl_gts_master.cl_file_number_list.remove_all();
+	for (int num : nums) {
+		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			this->get_savefilepath(num).c_str()
+		))) {
+		 cl_gts_master.cl_file_number_list.append_with_S(num);
+		}
+		else {
+		 cl_gts_master.cl_file_number_list.append_without_S(num);
+		}
+	}
+	cl_gts_master.cl_file_number_list.select_all();
+
 
 	/* 06 Numberウインドウ List表示設定 */
 	cl_gts_gui.selbro_fnum_list->activate();
@@ -113,8 +132,7 @@ void cb_level::set_level_open(
 	cl_gts_master.cb_read_and_trace_and_preview();
 }
 void cb_level::set_level_save(
-	ids::path::extensions& et
-	,const std::string& dpath
+	const std::string& dpath
 	,const std::string& head
 	,const std::string& ext
 	,const std::vector<int>& nums
@@ -127,7 +145,7 @@ void cb_level::set_level_save(
 
 	/* 01 拡張子が対応した種類かどうか確認 */
 	if (!ext.empty()) {
-	 const int ext_num = et.num_from_str( ext );
+	 const int ext_num = this->ext_save.num_from_str( ext );
 	 if ( ext_num < 0 ) {
 		return;
 	 }
@@ -140,7 +158,7 @@ void cb_level::set_level_save(
 	cl_gts_gui.filinp_level_save_dir_path->value(dpath.c_str());
 	cl_gts_gui.strinp_level_save_file_head->value(head.c_str());
 	if (!ext.empty()) {
-	 const int ext_num = et.num_from_str( ext );
+	 const int ext_num = this->ext_save.num_from_str( ext );
 	 cl_gts_gui.choice_level_save_image_format->value(ext_num);
 	}
 
@@ -153,13 +171,26 @@ void cb_level::set_level_save(
 
 	/* 05 Numberウインドウ List再構築
 	ファイル存在マーク付けて選択状態にする
-	番号範囲(num_start,num_end)をリストに */
-	std::vector<int> nums_dummy;
-	cl_gts_master.cl_file_number_list.remake_with_exist_mark_and_select(
-		nums_dummy
-		,static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
-		,static_cast<int>(cl_gts_gui.valinp_level_num_end->value())
-	);
+	--> 番号範囲(num_start,num_end)をリストに */
+	int num_s = static_cast<int>(
+				cl_gts_gui.valinp_level_num_start->value());
+	int num_e = static_cast<int>(
+				cl_gts_gui.valinp_level_num_end->value());
+	if (num_e < num_s) {
+		std::swap( num_s ,num_e );
+	}
+	cl_gts_master.cl_file_number_list.remove_all();
+	for (int num =num_s ;num <= num_e ; ++num) {
+		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			this->get_savefilepath(num).c_str()
+		))) {
+		 cl_gts_master.cl_file_number_list.append_with_S(num);
+		}
+		else {
+		 cl_gts_master.cl_file_number_list.append_without_S(num);
+		}
+	}
+	cl_gts_master.cl_file_number_list.select_all();
 
 	/* 06 Numberウインドウ List表示設定は現状維持 */
 
@@ -174,10 +205,7 @@ void cb_level::set_level_save(
 	/* 09 画像読込表示はしない */
 }
 
-const std::string cb_level::get_openfilename(
-	ids::path::extensions& et
-	,const int num
-)
+const std::string cb_level::get_openfilename( const int num )
 {
 	std::string filename;
 	filename += cl_gts_gui.strinp_level_open_file_head->value();
@@ -187,15 +215,12 @@ const std::string cb_level::get_openfilename(
 	if (0 <= num) {
 	 filename += ids::path::str_from_number( num );
 	}
-	filename += et.str_from_num(
+	filename += this->ext_open.str_from_num(
 		cl_gts_gui.choice_level_open_image_format->value()
 	);
 	return filename;
 }
-const std::string cb_level::get_savefilename(
-	ids::path::extensions& et
-	,const int num
-)
+const std::string cb_level::get_savefilename( const int num )
 {
 	std::string filename;
 	filename += cl_gts_gui.strinp_level_save_file_head->value();
@@ -205,23 +230,38 @@ const std::string cb_level::get_savefilename(
 	if (0 <= num) {
 	 filename += ids::path::str_from_number( num );
 	}
-	filename += et.str_from_num(
+	filename += this->ext_save.str_from_num(
 		cl_gts_gui.choice_level_save_image_format->value()
 	);
 	return filename;
 }
 
+const std::string cb_level::get_openfilepath( const int num )
+{
+	std::string filepath;
+	filepath += cl_gts_gui.filinp_level_open_dir_path->value();
+	filepath += '/';
+	filepath += this->get_openfilename( num );
+	return filepath;
+}
+const std::string cb_level::get_savefilepath( const int num )
+{
+	std::string filepath;
+	filepath += cl_gts_gui.filinp_level_save_dir_path->value();
+	filepath += '/';
+	filepath += this->get_savefilename( num );
+	return filepath;
+}
+
 void cb_level::browse_and_set_of_open( void )
 {
-	ids::path::extensions et;
-
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_open(
 		cl_gts_gui.filinp_level_open_dir_path->value()
-		,this->get_openfilename( et,
+		,this->get_openfilename(
 		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
 		)
-		,et.get_native_filter()
+		,this->ext_open.get_native_filters()
 		,cl_gts_gui.choice_level_open_image_format->value()
 	);
 
@@ -239,20 +279,18 @@ void cb_level::browse_and_set_of_open( void )
 	);
 
 	/* ファイルパスから生成した部品を、GUI、その他セット */
-	this->set_level_open( et ,dpath ,head ,ext ,nums );
+	this->set_level_open( dpath ,head ,ext ,nums );
 }
 
 void cb_level::browse_and_set_of_save( void )
 {
-	ids::path::extensions et;
-
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_save(
 		cl_gts_gui.filinp_level_save_dir_path->value()
-		,this->get_savefilename( et,
+		,this->get_savefilename(
 		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
 		)
-		,et.get_native_filter()
+		,this->ext_save.get_native_filters()
 		,cl_gts_gui.choice_level_save_image_format->value()
 	);
 
@@ -270,5 +308,5 @@ void cb_level::browse_and_set_of_save( void )
 	);
 
 	/* ファイルパスから生成した部品を、GUI、その他セット */
-	this->set_level_save( et ,dpath ,head ,ext ,nums );
+	this->set_level_save( dpath ,head ,ext ,nums );
 }

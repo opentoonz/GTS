@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include "pri.h"
+#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "igs_lex_white_space_and_double_quote.h"
 #include "memory_config.h"
 #include "gts_gui.h"
@@ -456,9 +457,17 @@ void memory_config::load_ifs_(
 
 			/* 実際の画像ファイルの有無を調べて
 			リストの最後に追加する */
-	cl_gts_master.cl_file_number_list.append_fnum_list_with_chk_mark(
-	 std::stoi(words.at(1)) // use C++11,throw exception then error
-	);
+	// use C++11,throw exception then error
+	const int num = std::stoi(words.at(1));
+
+	if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+		cl_gts_master.cl_level.get_savefilepath(num).c_str()
+	))) {
+		cl_gts_master.cl_file_number_list.append_with_S(num);
+	}
+	else {
+		cl_gts_master.cl_file_number_list.append_without_S(num);
+	}
 
 			/* 選択状態の再現 */
 			if (
@@ -599,6 +608,9 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
 		cl_gts_master.cl_bro_level.cp_levelname()
 	);
+
+	/* numberリストは選択状態にしておく(config読込直後の表示のため) */
+	cl_gts_master.cl_file_number_list.select_all();
 
 	/* level名からfileが上書きなら注意表示 */
 	cl_gts_master.cl_bro_level.cb_level_name();

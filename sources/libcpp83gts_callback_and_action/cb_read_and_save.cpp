@@ -23,21 +23,21 @@ int gts_master::read_and_save_crnt_( void )
 	/* open dir , head ,extによるパス */
 
 	std::string fpath_open(
-		this->cl_bro_level.filepath_open(crnt_file_num)
+		this->cl_level.get_openfilepath(crnt_file_num)
 	);
 	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-	  "Error : this->cl_bro_level.filepath_open(%d) returns nullptr",
+	"Error : this->cl_level.get_openfilepath(%d) returns nullptr",
 		crnt_file_num
 		);
 		return NG;
 	}
 
 	/* 画像ファイルがないなら読み込みはしないでその番号キャンセル */
-	//if (!ptbl_dir_or_file_is_exist( fpath_open.c_str() )) {return OK;}
-	{
-	 std::ifstream ifs( fpath_open.c_str() ,std::ios_base::binary );
-	 if (!ifs) { return OK; }
+	if (!ptbl_dir_or_file_is_exist(
+		const_cast<char *>(fpath_open.c_str())
+	)) {
+		return OK;
 	}
 
 	/* 読み込み元ファイルパス設定 */
@@ -76,10 +76,12 @@ int gts_master::read_and_save_crnt_( void )
 
 	/* Trace保存する(番号に対する)ファイルパスを得る */
 
-	char* filepath = this->cl_bro_level.cp_filepath(crnt_file_num);
-	if (nullptr == filepath) {
+	std::string fpath_save(
+		this->cl_level.get_savefilepath(crnt_file_num)
+	);
+	if (fpath_save.empty()) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.cp_filepath(%d) returns nullptr.",
+	"Error : this->cl_level.get_savefilepath(%d) returns nullptr",
 		crnt_file_num
 		);
 		return NG;
@@ -87,10 +89,10 @@ int gts_master::read_and_save_crnt_( void )
 
 	/* 保存する */
 	if (OK != this->_iipg_save(
-		&(cl_gts_master.cl_iip_trac),
-		filepath,
+		&(cl_gts_master.cl_iip_trac)
+		, const_cast<char *>(fpath_save.c_str())
 // cl_gts_gui.valinp_area_reso->value()
-this->cl_iip_read.get_d_tif_dpi_x()
+		, this->cl_iip_read.get_d_tif_dpi_x()
 		/* rot90実行後なので(デフォルト)0度とする */
 		/* (デフォルト)なしとする、
 			&(this->cl_iip_read)は参照しない */
@@ -102,20 +104,14 @@ this->cl_iip_read.get_d_tif_dpi_x()
 
 	/*------------------------------------------------*/
 
-	/* リストにマーク付け */
-	if (OK != this->cl_file_number_list.marking_trace_file(crnt_list_num)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_file_number_list.marking_trace_file(%d) returns NG",
-			crnt_list_num
-		);
-		return NG;
-	}
+	/* リストにマーク付いていなければ付ける */
+	this->cl_file_number_list.add_S( crnt_list_num );
 
 	/* リストの選択解除 */
 	this->cl_file_number_list.unselect(crnt_list_num);
 
 	/* level browser listの再表示 */
-	this->cl_bro_level.cb_list_redisplay();
+	//this->cl_bro_level.cb_list_redisplay();
 
 	/*------------------------------------------------*/
 
@@ -143,17 +139,6 @@ void gts_master::cb_read_and_save_start( void )
 	/* 最初に番号が選択がない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
 		fl_alert("Select number!");
-		return;
-	}
-
-	/* 保存dir,filehead,extからfilepathを得る */
-	if (nullptr == this->cl_bro_level.cp_filepath(
-		this->cl_file_number_list.get_crnt_file_num()
-	)) {
-		pri_funct_err_bttvr(
-	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
-		, this->cl_file_number_list.get_crnt_file_num()
-		);
 		return;
 	}
 

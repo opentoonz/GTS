@@ -65,13 +65,7 @@ int gts_master::next_scan_and_save_( void )
 	}
 
 	/* 07 リストに保存済マーク付け "0000" --> "0000 S" */
-	if (OK!=this->cl_file_number_list.marking_scan_file(crnt_list_num)){
-		pri_funct_err_bttvr(
-       "Error : this->cl_file_number_list.marking_scan_file(%d) returns NG",
-			crnt_list_num
-		);
-		return NG;
-	}
+	this->cl_file_number_list.add_S(crnt_list_num);
 
 	/* 08 リストの選択解除 */
 	this->cl_file_number_list.unselect(crnt_list_num);

@@ -58,32 +58,62 @@ namespace {
 	/* 次の10進数字('0'〜'9')の文字位置(ii)はない */
 	return nullptr;
  }
+} // namespace
+
+namespace {
+
+void insert_( const std::string& str ,const int list_num/* 1,2,3... */)
+{
+	cl_gts_gui.selbro_fnum_list->insert( list_num ,str.c_str() );
 }
+
+void insert_without_S_( const int file_num ,const int list_num/*1,2,3...*/)
+{
+	std::ostringstream ost;
+	ost << std::setfill('0') << std::setw(4) << file_num;
+	insert_( ost.str() ,list_num );
+}
+void insert_with_S_( const int file_num ,const int list_num/*1,2,3...*/)
+{
+	std::ostringstream ost;
+	ost << std::setfill('0') << std::setw(4) << file_num << " S";
+	insert_( ost.str() ,list_num );
+}
+
+} // namespace
 
 void cb_file_number_list::set_list_from_string( void )
 {
-	const char* str;/* 複数数値含文字列の数値始まり位置へのpointer */
-	int	rsz;	/* 残り文字数(Remain SiZe) */
-	int	file_num;
-	int	ii ,jj;
-	char	ca8_tmp[8];
+	/* 複数数値含文字列 "1" ,"0001" ,"1 2 3" ,"0001 0002 0003" ,etc. */
+	const char* str = cl_gts_gui.norinp_fnum_insert->value();
 
-	/* "1" ,"0001" ,"1 2 3" ,"0001 0002 0003" ,etc. */
-	str = cl_gts_gui.norinp_fnum_insert->value();
-	rsz = cl_gts_gui.norinp_fnum_insert->size();
+	/* 残り文字数(Remain SiZe) */
+	int	rsz = cl_gts_gui.norinp_fnum_insert->size();
+
+	int	file_num = -1;
 
 	while (nullptr != (str = next_num_( str ,&rsz ,&file_num ))) {
+		int ii = -1;
+		int jj = -1;
 		/* file number listから、insertする
 		(file_numと同じかより大きいfile(jj)の)位置(ii)を得る */
-		for (ii=1; ii<=cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+		for (ii=1;ii<=cl_gts_gui.selbro_fnum_list->size();++ii){
 			jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
 			if (file_num <= jj) { break; }
 		}
 		/* すでにあるフレームは飛ばして次へ */
 		if (jj == file_num) { continue; }
+
 		/* insert&Scroll for viewing */
-		sprintf( ca8_tmp ,"%04d" ,file_num );
-		cl_gts_gui.selbro_fnum_list->insert( ii ,ca8_tmp );
+		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+		 cl_gts_master.cl_level.get_savefilepath(file_num).c_str()
+		))) {
+			insert_with_S_( file_num ,ii);
+		}
+		else {
+			insert_without_S_( file_num ,ii);
+		}
+
 		cl_gts_gui.selbro_fnum_list->middleline( ii );
 	}
 }
@@ -91,6 +121,7 @@ void cb_file_number_list::set_list_from_string( void )
 //------------------------------------------------------------
 
 /* saveファイル存在マークを付加したファイル番号をlistの最後に追加 */
+/* 後方互換のため保持しているが将来廃止 */
 void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 {
 	std::string fpath;
@@ -115,16 +146,7 @@ void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 	);
 }
 
-/* 指定範囲の番号でlistを追加生成する(ファイル存在マーク付き) */
-void cb_file_number_list::make_fnum_list_with_chk_mark( const int start_num, const int end_num )
-{
-	int	ii;
-	/* ファイルの存在をチェックしながらリストを設定 */
-	for (ii = start_num; ii <= end_num; ++ii) { 
-		this->append_fnum_list_with_chk_mark( ii );
-	}
-}
-
+/* 後方互換のため保持しているが将来廃止 */
 void cb_file_number_list::append_numbers_with_exist_mark(
 	const std::vector<int>& num_list /* こちら優先して使い設定 */
 	, const int start_num   /* num_listが空ならこちらで設定 */
@@ -144,27 +166,30 @@ void cb_file_number_list::append_numbers_with_exist_mark(
 	==  this->get_end_type_value()) {
 		// End type
 	 if (start_num <= end_num) {
-	 	this->make_fnum_list_with_chk_mark( start_num ,end_num );
+		for (int ii = start_num; ii <= end_num; ++ii) { 
+			this->append_fnum_list_with_chk_mark( ii );
+		}
 	 }
 	 else {
-	 	this->make_fnum_list_with_chk_mark( end_num ,start_num );
+		for (int ii = end_num; ii <= start_num; ++ii) { 
+			this->append_fnum_list_with_chk_mark( ii );
+		}
 	 }
 	}
 	else { // Endless type
 		this->append_fnum_list_with_chk_mark(
-		static_cast<int>( cl_gts_gui.valinp_level_num_start->value() )
+	static_cast<int>( cl_gts_gui.valinp_level_num_start->value() )
 		);
 	}
 }
-void cb_file_number_list::remake_with_exist_mark_and_select(
-	const std::vector<int>& num_list /* こちら優先して使い設定 */
-	, const int start_num   /* num_listが空ならこちらで設定 */
-	, const int end_num
-)
+
+void cb_file_number_list::append_without_S( const int file_num )
 {
-	this->remove_all();
-	this->append_numbers_with_exist_mark(num_list ,start_num ,end_num);
-	this->select_all();
+	insert_without_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1);
+}
+void cb_file_number_list::append_with_S( const int file_num )
+{
+	insert_with_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1 );
 }
 
 //------------------------------------------------------------
@@ -205,82 +230,13 @@ void cb_file_number_list::unselect( int list_num )
 	cl_gts_gui.selbro_fnum_list->select(list_num, 0);
 }
 
-/* Scan image fileの存在Mark付加
-	"0000"--> "0000 S" , "0000 T" --> "0000 ST" */
-int cb_file_number_list::marking_scan_file( int list_num )
+void cb_file_number_list::add_S( const int list_num )
 {
-	const char *list_text;
-	char buffer[8];
-
-	list_text = cl_gts_gui.selbro_fnum_list->text(list_num);
-	if (nullptr == list_text) {
-		pri_funct_err_bttvr(
-	"Error : cl_gts_gui.selbro_fnum_list->text(%d) returns nullptr"
-			, list_num
-		);
-		return NG;
+	std::string numstr( cl_gts_gui.selbro_fnum_list->text(list_num) );
+	if (numstr.size() == 4) {
+		numstr += " S";
+		cl_gts_gui.selbro_fnum_list->text(list_num, numstr.c_str());
 	}
-
-	if (4 == strlen(list_text)) {
-		/* "0001"のとき"0001 S"に変更する */
-		(void)strcpy( buffer, list_text );
-		(void)strcat( buffer, " S" );
-		cl_gts_gui.selbro_fnum_list->text(list_num, buffer);
-	} else
-	/* "0001 S" or "0001 T" */
-	if (6 == strlen(list_text)) {
-		if ('T' == list_text[5]) {
-			/* "0001 T"のとき"0001 ST"に変更する */
-			(void)strcpy( buffer, list_text );
-			buffer[5] = 'S';
-			buffer[6] = 'T';
-			buffer[7] = '\0';
-			cl_gts_gui.selbro_fnum_list->text(list_num, buffer);
-		}
-		/* "0001 S"ではなにもしない */
-	}
-	/* "0001 ST"ではなにもしない */
-
-	return OK;
-}
-
-/* Trace image fileの存在Mark付加
-	"0000"--> "0000 T" , "0000 S" --> "0000 ST" */
-int cb_file_number_list::marking_trace_file( int list_num )
-{
-	const char *list_text;
-	char buffer[8];
-
-	list_text = cl_gts_gui.selbro_fnum_list->text(list_num);
-	if (nullptr == list_text) {
-		pri_funct_err_bttvr(
-	 "Error : cl_gts_gui.selbro_fnum_list->text(%d) returns nullptr"
-			, list_num
-		);
-		return NG;
-	}
-
-	if (4 == strlen(list_text)) {
-		/* "0001"のとき"0001 T"に変更する */
-		(void)strcpy( buffer, list_text );
-		(void)strcat( buffer, " T" );
-		cl_gts_gui.selbro_fnum_list->text(list_num, buffer);
-	} else
-	/* "0001 S" or "0001 T" */
-	if (6 == strlen(list_text)) {
-		if ('S' == list_text[5]) {
-			/* "0001 S"のとき"0001 ST"に変更する */
-			(void)strcpy( buffer, list_text );
-			buffer[5] = 'S';
-			buffer[6] = 'T';
-			buffer[7] = '\0';
-			cl_gts_gui.selbro_fnum_list->text(list_num, buffer);
-		}
-		/* "0001 T"ではなにもしない */
-	}
-	/* "0001 ST"ではなにもしない */
-
-	return OK;
 }
 
 //------------------------------------------------------------

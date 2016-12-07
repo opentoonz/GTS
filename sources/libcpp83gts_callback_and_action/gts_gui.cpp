@@ -557,12 +557,6 @@ void gts_gui::cb_choice_level_open_image_format(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_level_open_image_format_i(o,v);
 }
 
-Fl_Menu_Item gts_gui::menu_choice_level_open_image_format[] = {
- {"TIFF(*.tif)", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"TGA(*.tga)", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0}
-};
-
 void gts_gui::cb_filinp_level_save_dir_path_i(Fl_File_Input*, void*) {
   //cl_gts_master.cl_bro_level.cb_dir();
 }
@@ -585,17 +579,11 @@ void gts_gui::cb_strinp_level_save_file_head(Fl_Input* o, void* v) {
 }
 
 void gts_gui::cb_choice_level_save_image_format_i(Fl_Choice*, void*) {
-  cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
+  //cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
 }
 void gts_gui::cb_choice_level_save_image_format(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_level_save_image_format_i(o,v);
 }
-
-Fl_Menu_Item gts_gui::menu_choice_level_save_image_format[] = {
- {"TIFF(*.tif)", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"TGA(*.tga)", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0}
-};
 
 void gts_gui::cb_choice_level_num_continue_type_i(Fl_Choice* o, void*) {
   if (o->value() == 0) {
@@ -5368,7 +5356,6 @@ Fl_Double_Window* gts_gui::make_window() {
         { choice_level_open_image_format = new Fl_Choice(80, 110, 100, 25, "Format");
           choice_level_open_image_format->down_box(FL_BORDER_BOX);
           choice_level_open_image_format->callback((Fl_Callback*)cb_choice_level_open_image_format);
-          choice_level_open_image_format->menu(menu_choice_level_open_image_format);
         } // Fl_Choice* choice_level_open_image_format
         { Fl_Box* o = new Fl_Box(180, 110, 20, 25);
           Fl_Group::current()->resizable(o);
@@ -5410,7 +5397,6 @@ Fl_Double_Window* gts_gui::make_window() {
         { choice_level_save_image_format = new Fl_Choice(80, 255, 100, 25, "Format");
           choice_level_save_image_format->down_box(FL_BORDER_BOX);
           choice_level_save_image_format->callback((Fl_Callback*)cb_choice_level_save_image_format);
-          choice_level_save_image_format->menu(menu_choice_level_save_image_format);
         } // Fl_Choice* choice_level_save_image_format
         { Fl_Box* o = new Fl_Box(180, 255, 20, 25);
           Fl_Group::current()->resizable(o);

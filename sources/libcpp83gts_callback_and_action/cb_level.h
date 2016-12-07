@@ -7,15 +7,29 @@
 namespace ids {
 namespace path {
 
+/* 拡張子管理 */
 class extensions {
 public:
 	extensions();
-	const std::string str_from_num( const int num );
-	const int num_from_str( const std::string& ext );
-	const std::string get_native_filter( void );
 
+	/* 名前と拡張子をセット */
+	void set_filter(const std::string& name ,const std::string& dotex);
+
+	/* セットした数 */
+	const int size(void) { return this->dotex_.size(); }
+
+	/* 位置から拡張子を得る */
+	const std::string str_from_num( const int num );
+
+	/* 拡張子から位置を得る */
+	const int num_from_str( const std::string& ext );
+
+	/* fltk Nativeウインドウへ渡すための拡張子フィルタ文字列 */
+	const std::string get_native_filters( void );
+
+	/* fltk Fl_Choiceに渡すための拡張子フィルタ文字列 */
+	const std::string get_fltk_filter( const int num );
 private:
-	enum struct count_ { tif ,tga ,size };
 	std::vector< std::string >	 names_
 					,dotex_;
 };
@@ -27,28 +41,27 @@ class cb_level {
 public:
 	cb_level() {}
 
+	ids::path::extensions ext_open;
+	ids::path::extensions ext_save;
+
 	void browse_and_set_of_open( void );
 	void browse_and_set_of_save( void );
 
-	const std::string get_openfilename(
-		ids::path::extensions& et
-		,const int num
-	);
-	const std::string get_savefilename(
-		ids::path::extensions& et
-		,const int num
-	);
+	/* numをマイナスにするとファイル名に番号が付かない */
+	const std::string get_openfilename( const int num );
+	const std::string get_savefilename( const int num );
+
+	const std::string get_openfilepath( const int num );
+	const std::string get_savefilepath( const int num );
 
 	void set_level_open(
-		ids::path::extensions& et
-		,const std::string& dpath
+		const std::string& dpath
 		,const std::string& head
 		,const std::string& ext
 		,const std::vector<int>& nums
 	);
 	void set_level_save(
-		ids::path::extensions& et
-		,const std::string& dpath
+		const std::string& dpath
 		,const std::string& head
 		,const std::string& ext
 		,const std::vector<int>& nums

@@ -485,16 +485,7 @@ window_level_browse->show();}
             label Format
             callback {//cl_gts_master.cb_level_open_image_format();} open
             xywh {80 110 100 25} down_box BORDER_BOX
-          } {
-            MenuItem {} {
-              label {TIFF(*.tif)}
-              xywh {15 15 30 20}
-            }
-            MenuItem {} {
-              label {TGA(*.tga)}
-              xywh {15 15 30 20}
-            }
-          }
+          } {}
           Fl_Box {} {
             xywh {180 110 20 25} resizable
           }
@@ -538,18 +529,9 @@ window_level_browse->show();}
           }
           Fl_Choice choice_level_save_image_format {
             label Format
-            callback {cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();} open
+            callback {//cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();} open
             xywh {80 255 100 25} down_box BORDER_BOX
-          } {
-            MenuItem {} {
-              label {TIFF(*.tif)}
-              xywh {10 10 30 20}
-            }
-            MenuItem {} {
-              label {TGA(*.tga)}
-              xywh {10 10 30 20}
-            }
-          }
+          } {}
           Fl_Box {} {
             xywh {180 255 20 25} resizable
           }
