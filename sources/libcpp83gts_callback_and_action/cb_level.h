@@ -66,6 +66,8 @@ public:
 		,const std::string& ext
 		,const std::vector<int>& nums
 	);
+
+	void set_number_and_savelevelname( void );
 private:
 };
 

@@ -37,6 +37,7 @@ int gts_master::read_and_save_crnt_( void )
 	if (!ptbl_dir_or_file_is_exist(
 		const_cast<char *>(fpath_open.c_str())
 	)) {
+		pri_funct_msg_ttvr( "Not exist \"%s\"", fpath_open.c_str());
 		return OK;
 	}
 
@@ -81,8 +82,8 @@ int gts_master::read_and_save_crnt_( void )
 	);
 	if (fpath_save.empty()) {
 		pri_funct_err_bttvr(
-	"Error : this->cl_level.get_savefilepath(%d) returns nullptr",
-		crnt_file_num
+	"Error : this->cl_level.get_savefilepath(%d) returns empty"
+			, crnt_file_num
 		);
 		return NG;
 	}
@@ -124,6 +125,22 @@ int gts_master::read_and_save_crnt_( void )
 		return NG;
 	}
 
+	/* 保存するタイプで画像を表示する */
+	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
+		/* TracenImage画像のみ表示 */
+		cl_gts_master.cb_change_wview_sub();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_sub->setonly();
+	}
+	else {
+		/* ScanImage(メイン)画像のみ表示 */
+		cl_gts_master.cb_change_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
+	}
+
 	return OK;
 }
 
@@ -142,20 +159,21 @@ void gts_master::cb_read_and_save_start( void )
 		return;
 	}
 
-	/* 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
-		/* TracenImage画像のみ表示 */
-		cl_gts_master.cb_change_wview_sub();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_sub->setonly();
-	}
-	else {
-		/* ScanImage(メイン)画像のみ表示 */
-		cl_gts_master.cb_change_wview_main();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_main->setonly();
+	/* 実行確認 */
+	const int crnt_file_num =
+		this->cl_file_number_list.get_crnt_file_num();
+	const bool tsw =
+		cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() != 0;
+	const bool esw =
+		cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value()!=0;
+	if (fl_ask(
+		"%s%s\n%s\n-->\n%s\n..."
+		,tsw ?"Trace" :"Not trace"
+		,esw ?" and Erase Dot Noise" :""
+		,this->cl_level.get_openfilepath(crnt_file_num).c_str()
+		,this->cl_level.get_savefilepath(crnt_file_num).c_str()
+	) != 1) {
+		return; // Cancel
 	}
 
 	while (1 <= this->cl_file_number_list.get_crnt_list_num()) {

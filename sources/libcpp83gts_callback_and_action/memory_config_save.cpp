@@ -199,15 +199,28 @@ int memory_config::save( const char *file_path )
 	cl_gts_master.print_window_headline(); /* ファイル名を表示する */
  }
  catch (const std::ios_base::failure& e) {
- 	std::ostringstream ost;
-	ost	<< "Error in saving \"" << file_path << "\","
+	std::ostringstream ost;
+	ost	<< "Error(ios_base::failure) in saving \""
+		<< file_path << "\","
+		<< e.what() << std::endl;
+	std::cerr << ost.str();
+	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	return NG;
+ }
+ catch (std::exception& e) {
+	std::ostringstream ost;
+	ost	<< "Error(exception) in saving \""
+		<< file_path << "\","
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
 	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
 	return NG;
  }
  catch (...) {
-	fl_alert( "Error in saving." );/* ユーザーに知らせる */
+	std::ostringstream ost;
+	ost << "Error(other) in saving.";/* ユーザーに知らせる */
+	std::cerr << ost.str();
+	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
 	return NG;
  }
 	return OK;

@@ -20,12 +20,12 @@ int gts_master::next_scan_and_save_( void )
 	/* 02 保存するファイルパスを得る
 		DirPath/Level.Number.Ext-->例:"C:/users/public/A.0001.tif"
 	*/
-	char* filepath = const_cast<char*>(
-		this->cl_bro_level.cp_filepath( crnt_file_num )
+	std::string fpath_save(
+		this->cl_level.get_savefilepath(crnt_file_num)
 	);
-	if (filepath == nullptr) {
+	if (fpath_save.empty()) {
 		pri_funct_err_bttvr(
-	"Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
+	"Error : this->cl_level.get_savefilepath(%d) returns empty"
 			, crnt_file_num );
 		return NG;
 	}
@@ -55,7 +55,7 @@ int gts_master::next_scan_and_save_( void )
 	*/
 	if (OK != this->_iipg_save(
 		&(cl_gts_master.cl_iip_edot)/* Effectの最後Node画像を保存 */
-		, filepath
+		, const_cast<char *>(fpath_save.c_str())
 		, cl_gts_gui.valinp_area_reso->value()
 		/* 回転値後を正対として角度ゼロ(default)として保存する */
 	) ) {
@@ -71,7 +71,7 @@ int gts_master::next_scan_and_save_( void )
 	this->cl_file_number_list.unselect(crnt_list_num);
 
 	/* 09 level browser listの(保存したファイルも含めて)再表示 */
-	this->cl_bro_level.cb_list_redisplay();
+	//this->cl_bro_level.cb_list_redisplay();
 
 	/* 10 画像表示 */
 	if (this->redraw_image_( clp_scan ,false ,false ) != OK) {
@@ -108,7 +108,7 @@ int gts_master::next_scan_and_save_( void )
 		cl_gts_gui.norout_next_scan_number->value(ca8_but);
 
 		cl_gts_gui.norout_crnt_scan_level->value(
-			this->cl_bro_level.cp_levelname()
+		 cl_gts_gui.strinp_level_save_file_head->value()
 		);
 	}
 
@@ -134,18 +134,6 @@ void gts_master::cb_scan_and_save_start( void )
 		else {/* Endless */
 			fl_alert("Bad number in Start!");
 		}
-		return;
-	}
-
-	/* levelの名前を得る */
-	if (nullptr == this->cl_bro_level.cp_filepath(
-		this->cl_file_number_list.get_crnt_file_num()
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.cp_filepath(%d) returns nullptr.",
-		this->cl_file_number_list.get_crnt_file_num()
-		);
-fl_alert("Input level name!");
 		return;
 	}
 

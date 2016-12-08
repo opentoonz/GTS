@@ -12,7 +12,8 @@ namespace path {
 Cancelの場合パスがempty()
 */
 const std::string fltk_native_browse_open(
-	const std::string& dpath
+	const std::string& title
+	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter
 	,const int filter_current
@@ -24,7 +25,8 @@ const std::string fltk_native_browse_open(
 Cancelの場合パスがempty()
 */
 const std::string fltk_native_browse_save(
-	const std::string& dpath
+	const std::string& title
+	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter
 	,const int filter_current

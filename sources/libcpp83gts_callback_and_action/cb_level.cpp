@@ -1,5 +1,6 @@
 #include <algorithm> // std::find(-)
 #include <utility> // std::swap(-)
+#include <FL/fl_ask.H>  // fl_alert(-)
 #include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
@@ -68,17 +69,20 @@ void cb_level::set_level_open(
 {
 	/* ファイルヘッド(Level名)が空だとなにもしない */
 	if (head.empty()) {
+		fl_alert("No Head of OpenFileName");
 		return;
 	}
 
 	/* 01 拡張子が対応した種類でないと何もしない */
 	const int ext_num = this->ext_open.num_from_str( ext );
 	if ( ext_num < 0 ) {
+		fl_alert("Bad Extension\"%s\" of OpenFileName",ext.c_str());
 		return;
 	}
 
 	/* 02 開く対象の番号リスト(ファイルの存在)確認 */
 	if (nums.empty()) {
+		fl_alert("No Numbers with OpenFileName");
 		return;
 	}
 
@@ -140,6 +144,7 @@ void cb_level::set_level_save(
 {
 	/* ファイルヘッド(Level名)が空だとなにもしない */
 	if (head.empty()) {
+		fl_alert("No Head of SaveFileName");
 		return;
 	}
 
@@ -147,6 +152,7 @@ void cb_level::set_level_save(
 	if (!ext.empty()) {
 	 const int ext_num = this->ext_save.num_from_str( ext );
 	 if ( ext_num < 0 ) {
+		fl_alert("Bad Extension\"%s\" of SaveFileName",ext.c_str());
 		return;
 	 }
 	}
@@ -169,40 +175,8 @@ void cb_level::set_level_save(
 	 cl_gts_gui.valinp_level_num_end->value(   nums.back() );
 	}
 
-	/* 05 Numberウインドウ List再構築
-	ファイル存在マーク付けて選択状態にする
-	--> 番号範囲(num_start,num_end)をリストに */
-	int num_s = static_cast<int>(
-				cl_gts_gui.valinp_level_num_start->value());
-	int num_e = static_cast<int>(
-				cl_gts_gui.valinp_level_num_end->value());
-	if (num_e < num_s) {
-		std::swap( num_s ,num_e );
-	}
-	cl_gts_master.cl_file_number_list.remove_all();
-	for (int num =num_s ;num <= num_e ; ++num) {
-		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
-			this->get_savefilepath(num).c_str()
-		))) {
-		 cl_gts_master.cl_file_number_list.append_with_S(num);
-		}
-		else {
-		 cl_gts_master.cl_file_number_list.append_without_S(num);
-		}
-	}
-	cl_gts_master.cl_file_number_list.select_all();
-
-	/* 06 Numberウインドウ List表示設定は現状維持 */
-
-	/* 07 Numberウインドウ 保存level名表示 */
-	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-	 cl_gts_gui.strinp_level_save_file_head->value()
-	);
-
-	/* 08 Mainウインドウ バーにlevel名表示 */
-	cl_gts_master.print_window_headline();
-
-	/* 09 画像読込表示はしない */
+	/* 05 NumberウインドウList再構 & Level名表示 */
+	this->set_number_and_savelevelname();
 }
 
 const std::string cb_level::get_openfilename( const int num )
@@ -257,7 +231,8 @@ void cb_level::browse_and_set_of_open( void )
 {
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_open(
-		cl_gts_gui.filinp_level_open_dir_path->value()
+		"Open Level"
+		,cl_gts_gui.filinp_level_open_dir_path->value()
 		,this->get_openfilename(
 		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
 		)
@@ -286,7 +261,8 @@ void cb_level::browse_and_set_of_save( void )
 {
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_save(
-		cl_gts_gui.filinp_level_save_dir_path->value()
+		"Set Saving Level"
+		,cl_gts_gui.filinp_level_save_dir_path->value()
 		,this->get_savefilename(
 		static_cast<int>(cl_gts_gui.valinp_level_num_start->value())
 		)
@@ -310,3 +286,50 @@ void cb_level::browse_and_set_of_save( void )
 	/* ファイルパスから生成した部品を、GUI、その他セット */
 	this->set_level_save( dpath ,head ,ext ,nums );
 }
+
+void cb_level::set_number_and_savelevelname( void )
+{
+	/* Numberウインドウ List再構築
+	ファイル存在マーク付けて選択状態にする
+	--> 番号範囲(num_start,num_end)をリストに */
+	std::string cont(cl_gts_gui.choice_level_num_continue_type->text());
+	int num_s = -1;
+	int num_e = -1;
+	if (cont == "Endless") {
+ num_s = static_cast<int>(cl_gts_gui.valinp_level_num_start->value());
+ num_e = num_s;
+	}
+	else {
+ num_s = static_cast<int>(cl_gts_gui.valinp_level_num_start->value());
+ num_e = static_cast<int>(cl_gts_gui.valinp_level_num_end->value());
+		if (num_e < num_s) {
+			std::swap( num_s ,num_e );
+		}
+	}
+
+	cl_gts_master.cl_file_number_list.remove_all();
+	for (int num =num_s ;num <= num_e ; ++num) {
+		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			this->get_savefilepath(num).c_str()
+		))) {
+		 cl_gts_master.cl_file_number_list.append_with_S(num);
+		}
+		else {
+		 cl_gts_master.cl_file_number_list.append_without_S(num);
+		}
+	}
+	cl_gts_master.cl_file_number_list.select_all();
+
+	/* Numberウインドウ List表示設定は現状維持 */
+
+	/* Numberウインドウ 保存level名表示 */
+	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
+	 cl_gts_gui.strinp_level_save_file_head->value()
+	);
+
+	/* Mainウインドウ バーにlevel名表示 */
+	cl_gts_master.print_window_headline();
+
+	/* 画像読込表示はしない */
+}
+

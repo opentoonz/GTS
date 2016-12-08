@@ -66,15 +66,16 @@ Ubuntu16.04-desktopで::Fl_Native_File_Chooser単独で実行すると落ちる
 } // namespace
 
 const std::string ids::path::fltk_native_browse_save(
-	const std::string& dpath
+	const std::string& title
+	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter
 	,const int filter_current
 )
 {
 	return fltk_native_file_chooser_(
-		"Save as" /* 名前を付けて保存 */
-		,::Fl_Native_File_Chooser::BROWSE_SAVE_FILE
+		title
+		,::Fl_Native_File_Chooser::BROWSE_SAVE_FILE /* 名付け保存 */
 		,dpath
 		,preset_file
 		,::Fl_Native_File_Chooser::SAVEAS_CONFIRM
@@ -87,15 +88,16 @@ const std::string ids::path::fltk_native_browse_save(
 }
 
 const std::string ids::path::fltk_native_browse_open(
-	const std::string& dpath
+	const std::string& title
+	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter
 	,const int filter_current
 )
 {
 	return fltk_native_file_chooser_(
-		"Open" /* 開く */
-		,::Fl_Native_File_Chooser::BROWSE_FILE
+		title
+		,::Fl_Native_File_Chooser::BROWSE_FILE /* 開く */
 		,dpath
 		,preset_file
 		,::Fl_Native_File_Chooser::PREVIEW

@@ -52,7 +52,9 @@ void set_level_save_image_format_( const std::string& str1 )
 	if (crnt == nullptr) { return; }
 
 	cl_gts_gui.choice_level_save_image_format->value(crnt);
+std::cerr << __FILE__ << " " << __LINE__ << " \"" << str1 << "\"" << std::endl;
 	cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
+std::cerr << __FILE__ << " " << __LINE__ << " \"" << str1 << "\"" << std::endl;
 }
 void set_level_open_image_format_( const std::string& str1 )
 {
@@ -167,6 +169,7 @@ void memory_config::load_ifs_(
 		if (words.size() < 2) { continue; }/* キーワードしかない */
 
 		/* キーワードと、数値が1語以上(2<=words.size())ある */
+std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 
 		//---------- config ----------
 
@@ -246,10 +249,10 @@ void memory_config::load_ifs_(
 				(words.at(1) == this->str_on_) ?1 :0
 			);
 		}
-		else if ((2 == words.size()) &&
-		((words.at(0) == this->str_filter_rgb_color_trace_sw_) ||
-		 (words.at(0) == this->str_filter_rgb_color_trace_sw_legacy2016_))
-		) {
+		else if ((2 == words.size()) && (
+		(words.at(0) == this->str_filter_rgb_color_trace_sw_)
+//|| (words.at(0) == this->str_filter_rgb_color_trace_sw_legacy2016_)
+		)) {
 			cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value(
 				(words.at(1) == this->str_on_) ?1 :0
 			);
@@ -639,14 +642,27 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
  }
  catch (const std::ios_base::failure& e) {
 	std::ostringstream ost;
-	ost	<< "Error in loading \"" << file_path << "\","
+	ost	<< "Error(ios_base::failure) in loading \""
+		<< file_path << "\","
+		<< e.what() << std::endl;
+	std::cerr << ost.str();
+	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	return NG;
+ }
+ catch (std::exception& e) {
+	std::ostringstream ost;
+	ost	<< "Error(exception) in loading \""
+		<< file_path << "\","
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
 	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
 	return NG;
  }
  catch (...) {
-	fl_alert( "Error in saving." );/* ユーザーに知らせる */
+	std::ostringstream ost;
+	ost << "Error(other) in loading.";/* ユーザーに知らせる */
+	std::cerr << ost.str();
+	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
 	return NG;
  }
 	return OK;
