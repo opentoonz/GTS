@@ -111,9 +111,6 @@ int gts_master::read_and_save_crnt_( void )
 	/* リストの選択解除 */
 	this->cl_file_number_list.unselect(crnt_list_num);
 
-	/* level browser listの再表示 */
-	//this->cl_bro_level.cb_list_redisplay();
-
 	/*------------------------------------------------*/
 
 	/* 表示 */

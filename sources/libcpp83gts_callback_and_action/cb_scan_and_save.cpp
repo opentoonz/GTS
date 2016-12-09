@@ -70,15 +70,12 @@ int gts_master::next_scan_and_save_( void )
 	/* 08 リストの選択解除 */
 	this->cl_file_number_list.unselect(crnt_list_num);
 
-	/* 09 level browser listの(保存したファイルも含めて)再表示 */
-	//this->cl_bro_level.cb_list_redisplay();
-
-	/* 10 画像表示 */
+	/* 09 画像表示 */
 	if (this->redraw_image_( clp_scan ,false ,false ) != OK) {
 		return NG;
 	}
 
-	/* 11 保存するタイプで画像を表示する */
+	/* 10 保存するタイプで画像を表示する */
 	if ( cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() ) {
 		/* TracenImage画像のみ表示 */
 		cl_gts_master.cb_change_wview_sub();
@@ -94,10 +91,10 @@ int gts_master::next_scan_and_save_( void )
 		cl_gts_gui.menite_wview_main->setonly();
 	}
 
-	/* 12 切抜きはしないのでOFFにしておく */
+	/* 11 切抜きはしないのでOFFにしておく */
 	this->cl_ogl_view.set_crop_disp_sw(OFF);
 
-	/* 13 次のフレーム番号があるなら、
+	/* 12 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */
 	if (0 < this->cl_file_number_list.get_next_file_num()) {
 		char	ca8_but[8];

@@ -112,7 +112,7 @@ void gts_gui::cb_Convert(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_level_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_level->value()) {
-    cl_gts_master.cl_bro_level.cb_level_name();
+    //cl_gts_master.cl_bro_level.cb_level_name();
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_level_set->show();
 } else {
@@ -633,14 +633,14 @@ void gts_gui::cb_Set1(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(Fl_Check_Button*, void*) {
-  //cl_gts_master.cb_filter_rgb_erase_dot_noise();
+  cl_gts_master.cb_read_and_trace_and_preview();
 }
 void gts_gui::cb_chkbtn_filter_rgb_erase_dot_noise_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(o,v);
 }
 
 void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw_i(Fl_Check_Button*, void*) {
-  //cl_gts_master.cb_filter_rgb_color_trace();
+  cl_gts_master.cb_read_and_trace_and_preview();
 }
 void gts_gui::cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chkbtn_filter_rgb_color_trace_sw_i(o,v);

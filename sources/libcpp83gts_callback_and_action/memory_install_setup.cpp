@@ -24,16 +24,12 @@ void memory_install_setup::load( const std::string& exe_file_path )
 		/* キーワードと、数値が1語以上(2<=words.size())ある */
 
 		if (words.at(0) == "browser_directory_path") {
+			this->browser_directory_path = words.at(1);
  cl_gts_master.cl_bro_config.setup_path(words.at(1).c_str());
- cl_gts_master.cl_bro_level.setup_path(words.at(1).c_str());
  cl_gts_master.cl_bro_trace_batch.setup_path(words.at(1).c_str());
 		} else
 		if (words.at(0) == "image_file_format") {
-			if (words.at(1) == "TIFF") {
- cl_gts_master.cl_bro_level.set_current_save_imagefile_extension(0);
-			} else if (words.at(1) == "TGA") {
- cl_gts_master.cl_bro_level.set_current_save_imagefile_extension(1);
-			}
+			this->image_file_format = words.at(1);
 		} else
 		if (words.at(0) == "short_cut_key_start_scan") {
 			// start_scan	Enter(Default)

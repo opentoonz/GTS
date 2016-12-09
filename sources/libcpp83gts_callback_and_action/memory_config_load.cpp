@@ -52,9 +52,6 @@ void set_level_save_image_format_( const std::string& str1 )
 	if (crnt == nullptr) { return; }
 
 	cl_gts_gui.choice_level_save_image_format->value(crnt);
-std::cerr << __FILE__ << " " << __LINE__ << " \"" << str1 << "\"" << std::endl;
-	cl_gts_master.cl_bro_level.cb_set_save_image_file_extension();
-std::cerr << __FILE__ << " " << __LINE__ << " \"" << str1 << "\"" << std::endl;
 }
 void set_level_open_image_format_( const std::string& str1 )
 {
@@ -63,7 +60,6 @@ void set_level_open_image_format_( const std::string& str1 )
 			str1.c_str() );
 	if (crnt == nullptr) { return; }
 	cl_gts_gui.choice_level_open_image_format->value(crnt);
-	cl_gts_master.cl_bro_level.cb_set_open_image_file_extension();
 }
 void set_level_list_form_( const std::string& str1 )
 {
@@ -195,8 +191,10 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 		((words.at(0)==this->str_level_save_dir_path_) ||
 		 (words.at(0)==this->str_level_save_dir_path_legacy2016_))
 		) {
-			cl_gts_master.cl_bro_level.init_level_dir(
+			cl_gts_gui.filinp_level_save_dir_path->value(
 				words.at(1).c_str() );
+			cl_gts_gui.filinp_level_save_dir_path->position(
+				words.at(1).size() );
 			level_list_redisplay_sw = true;
 		}
 		else if ((2 == words.size()) &&
@@ -562,35 +560,6 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 
 	//---------- after reading ----------
 
-#if 0	/* --> configにセットする項目がない時は現状維持する */
-	/* ファイルにframe listがない事が分かった時はlistをクリアする */
-	if (false == fnum_list_sw) {
-		/* 以前のリストをすべて削除 */
-		cl_gts_master.cl_file_number_list.remove_all();
-	}
-
-	/* ファイルにtrace_batch listがない事が分かった時はlistをクリア */
-	if (ON == load_trace_batch_sw) {
-	 if (false == trace_batch_list_sw) {
-		/* 以前のリストをすべて削除 */
-		while (0 <
-		cl_gts_gui.selbro_trace_batch_run_list->size()) {
-		 cl_gts_gui.selbro_trace_batch_run_list->remove(1);
-		}
-	 }
-	}
-
-	/* frame number insert項目をゼロクリアする */
-	/* --> configにセットする項目がない時は現状維持する */
-	cl_gts_gui.norinp_fnum_insert->value(NULL);
-
-	/* Level/Fileリストを再表示する */
-	/* --> Dialog開くときセットするべきなのでここではやらない */
-	if (true == level_list_redisplay_sw) {
-		cl_gts_master.cl_bro_level.cb_list_redisplay();
-	}
-#endif
-
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	cl_gts_master.cl_color_trace_thickness.cb_enh_01();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_02();
@@ -599,24 +568,16 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 
-	/* LevelのCancelを可能にするためmemoryしておく */
-	cl_gts_master.cl_bro_level.memory_from_gui(
-		cl_gts_gui.filinp_level_save_dir_path->value()
-	);
-
 	/* ファイル名を表示する */
 	cl_gts_master.print_window_headline();
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-		cl_gts_master.cl_bro_level.cp_levelname()
+	 cl_gts_gui.strinp_level_save_file_head->value()
 	);
 
 	/* numberリストは選択状態にしておく(config読込直後の表示のため) */
 	cl_gts_master.cl_file_number_list.select_all();
-
-	/* level名からfileが上書きなら注意表示 */
-	cl_gts_master.cl_bro_level.cb_level_name();
 
 	/* LevelのEnd/Endless指定がない時はStart...End指定にする */
 	if (!level_num_continue_type_sw) {

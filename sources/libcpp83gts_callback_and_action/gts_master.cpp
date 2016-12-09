@@ -120,25 +120,9 @@ int gts_master::exec( const char *comm )
 	/*---------- GUI初期設定 ----------*/
 
 	/* GUIのsaveで指定した順に拡張子リストを作る */
-/*
-	for (int ii=0 ;ii<cl_gts_gui.choice_level_save_image_format->size()
-	;++ii) {
-		const char* tx =
-			cl_gts_gui.choice_level_save_image_format->text(ii);
-		if (tx == nullptr) { break; }
-
-		if      (std::string(tx) == "TGA(*.tga)") {
-			this->cl_bro_level.add_imagefile_extension(".tga");
-		}
-		else if (std::string(tx) == "TIFF(*.tif)") {
-			this->cl_bro_level.add_imagefile_extension(".tif");
-		}
-	}
-*/
 
 	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
-
 
 	/* color trace enhancement */
 	this->cl_color_trace_enhancement.src_init_histogram_window();
@@ -169,29 +153,13 @@ int gts_master::exec( const char *comm )
 	 "Error : this->cl_bro_config.i_init() returns NG");
 		return NG;
 	}
-/*
-	if (OK != this->cl_bro_level.i_init()) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.i_init() returns NG");
-		return NG;
-	}
-*/
 	if (OK != this->cl_bro_trace_batch.i_init()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_trace_batch.i_init() returns NG");
 		return NG;
 	}
 
-	/* ファイル拡張子、元設定からGUI設定し、カレント指定(.tga)する */
-/*
-	cl_gts_gui.choice_level_save_image_format->value(
- this->cl_bro_level.get_current_save_imagefile_extension()
-	);
-	cl_gts_gui.choice_level_open_image_format->value(
- this->cl_bro_level.get_current_open_imagefile_extension()
-	);
-	//ct_gts_master.cl_bro_level.cb_set_save_image_file_extension();
-*/
+	/* ファイル拡張子、元設定からGUI設定し、初期指定(.tga)する */
 	for(int ii=0;ii<this->cl_level.ext_open.size() ;++ii) {
 		   cl_gts_gui.choice_level_open_image_format->add(
 			this->cl_level.ext_open.get_fltk_filter(ii).c_str()
@@ -209,6 +177,28 @@ int gts_master::exec( const char *comm )
 	if (0 < this->cl_level.ext_save.size()) {
 	   cl_gts_gui.choice_level_save_image_format->value(
 		this->cl_level.ext_save.size() - 1/*".tga"*/ );
+	}
+
+	/* install_setupによる2次設定 */
+
+	if (!this->cl_memo_install_setup.browser_directory_path.empty()) {
+	  cl_gts_gui.filinp_level_open_dir_path->value(
+	     this->cl_memo_install_setup.browser_directory_path.c_str()
+	  );
+	  cl_gts_gui.filinp_level_save_dir_path->value(
+	     this->cl_memo_install_setup.browser_directory_path.c_str()
+	  );
+	}
+
+	if (!this->cl_memo_install_setup.image_file_format.empty()) {
+	 if (this->cl_memo_install_setup.image_file_format=="TIFF"){
+	  cl_gts_gui.choice_level_open_image_format->value(0);
+	  cl_gts_gui.choice_level_save_image_format->value(0);
+	 } else if (
+	     this->cl_memo_install_setup.image_file_format=="TGA") {
+	  cl_gts_gui.choice_level_open_image_format->value(1);
+	  cl_gts_gui.choice_level_save_image_format->value(1);
+	 }
 	}
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */

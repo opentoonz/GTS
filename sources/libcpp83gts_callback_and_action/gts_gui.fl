@@ -112,7 +112,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
           MenuItem menite_level {
             label {Level...}
             callback {if (cl_gts_gui.menite_level->value()) {
-    cl_gts_master.cl_bro_level.cb_level_name();
+    //cl_gts_master.cl_bro_level.cb_level_name();
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
     cl_gts_gui.window_level_set->show();
 } else {
@@ -616,7 +616,7 @@ window_level_browse->show();}
         } {
           Fl_Check_Button chkbtn_filter_rgb_erase_dot_noise_sw {
             label {RGB Erase dot noise}
-            callback {//cl_gts_master.cb_filter_rgb_erase_dot_noise();}
+            callback {cl_gts_master.cb_read_and_trace_and_preview();}
             xywh {5 380 160 25} down_box DOWN_BOX
           }
           Fl_Box {} {
@@ -628,7 +628,7 @@ window_level_browse->show();}
         } {
           Fl_Check_Button chkbtn_filter_rgb_color_trace_sw {
             label {RGB Trace}
-            callback {//cl_gts_master.cb_filter_rgb_color_trace();}
+            callback {cl_gts_master.cb_read_and_trace_and_preview();}
             xywh {5 350 160 25} down_box DOWN_BOX value 1
           }
           Fl_Box {} {
