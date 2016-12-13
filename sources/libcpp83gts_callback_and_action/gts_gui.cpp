@@ -5917,18 +5917,18 @@ Fl_Double_Window* gts_gui::make_window() {
     window_crop_area_and_rot90->set_non_modal();
     window_crop_area_and_rot90->end();
   } // Fl_Double_Window* window_crop_area_and_rot90
-  { window_pixel_type_and_bright = new Fl_Double_Window(265, 190, "Pixel Type and Bright");
+  { window_pixel_type_and_bright = new Fl_Double_Window(200, 190, "Pixel Type and Bright");
     window_pixel_type_and_bright->callback((Fl_Callback*)cb_window_pixel_type_and_bright, (void*)(this));
-    { Fl_Group* o = new Fl_Group(0, 5, 265, 25);
-      { Fl_Box* o = new Fl_Box(0, 5, 200, 25);
+    { Fl_Group* o = new Fl_Group(0, 5, 200, 25);
+      { Fl_Box* o = new Fl_Box(0, 5, 135, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Button* o = new Fl_Button(200, 5, 60, 25, "Preview");
+      { Fl_Button* o = new Fl_Button(135, 5, 60, 25, "Preview");
         o->callback((Fl_Callback*)cb_Preview4);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 35, 265, 25);
+    { Fl_Group* o = new Fl_Group(0, 35, 200, 25);
       { new Fl_Box(0, 35, 75, 25);
       } // Fl_Box* o
       { choice_pixel_type = new Fl_Choice(75, 35, 100, 25, "Pixel Type");
@@ -5937,14 +5937,14 @@ Fl_Double_Window* gts_gui::make_window() {
         choice_pixel_type->callback((Fl_Callback*)cb_choice_pixel_type);
         choice_pixel_type->menu(menu_choice_pixel_type);
       } // Fl_Choice* choice_pixel_type
-      { Fl_Box* o = new Fl_Box(175, 35, 90, 25);
+      { Fl_Box* o = new Fl_Box(175, 35, 25, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       o->end();
     } // Fl_Group* o
-    { group_bw = new Fl_Group(0, 80, 265, 110);
-      { Fl_Group* o = new Fl_Group(0, 80, 265, 25);
-        { scrbar_bw_threshold = new Fl_Scrollbar(5, 85, 215, 20, "B&W Threshold");
+    { group_bw = new Fl_Group(0, 80, 200, 110);
+      { Fl_Group* o = new Fl_Group(0, 80, 200, 25);
+        { scrbar_bw_threshold = new Fl_Scrollbar(5, 85, 150, 20, "B&W Threshold");
           scrbar_bw_threshold->type(1);
           scrbar_bw_threshold->box(FL_BORDER_BOX);
           scrbar_bw_threshold->maximum(255);
@@ -5954,7 +5954,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_bw_threshold);
           scrbar_bw_threshold->linesize(1);
         } // Fl_Scrollbar* scrbar_bw_threshold
-        { valinp_bw_threshold = new Fl_Value_Input(225, 80, 35, 25);
+        { valinp_bw_threshold = new Fl_Value_Input(160, 80, 35, 25);
           valinp_bw_threshold->box(FL_BORDER_BOX);
           valinp_bw_threshold->maximum(255);
           valinp_bw_threshold->value(180);
@@ -5965,10 +5965,10 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       group_bw->end();
     } // Fl_Group* group_bw
-    { group_grays = new Fl_Group(0, 80, 265, 110);
+    { group_grays = new Fl_Group(0, 80, 200, 110);
       group_grays->hide();
-      { Fl_Group* o = new Fl_Group(0, 80, 265, 25);
-        { scrbar_grays_brightness = new Fl_Scrollbar(5, 85, 205, 20, "Brightness");
+      { Fl_Group* o = new Fl_Group(0, 80, 200, 25);
+        { scrbar_grays_brightness = new Fl_Scrollbar(5, 85, 140, 20, "Brightness");
           scrbar_grays_brightness->type(1);
           scrbar_grays_brightness->box(FL_BORDER_BOX);
           scrbar_grays_brightness->minimum(-1000);
@@ -5978,7 +5978,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_grays_brightness);
           scrbar_grays_brightness->linesize(1);
         } // Fl_Scrollbar* scrbar_grays_brightness
-        { valinp_grays_brightness = new Fl_Value_Input(215, 80, 45, 25);
+        { valinp_grays_brightness = new Fl_Value_Input(150, 80, 45, 25);
           valinp_grays_brightness->box(FL_BORDER_BOX);
           valinp_grays_brightness->minimum(-1000);
           valinp_grays_brightness->maximum(1000);
@@ -5986,8 +5986,8 @@ Fl_Double_Window* gts_gui::make_window() {
         } // Fl_Value_Input* valinp_grays_brightness
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 120, 265, 25);
-        { scrbar_grays_contrast = new Fl_Scrollbar(5, 125, 205, 20, "Contrast");
+      { Fl_Group* o = new Fl_Group(0, 120, 200, 25);
+        { scrbar_grays_contrast = new Fl_Scrollbar(5, 125, 140, 20, "Contrast");
           scrbar_grays_contrast->type(1);
           scrbar_grays_contrast->box(FL_BORDER_BOX);
           scrbar_grays_contrast->minimum(-1000);
@@ -5997,7 +5997,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_grays_contrast);
           scrbar_grays_contrast->linesize(1);
         } // Fl_Scrollbar* scrbar_grays_contrast
-        { valinp_grays_contrast = new Fl_Value_Input(215, 120, 45, 25);
+        { valinp_grays_contrast = new Fl_Value_Input(150, 120, 45, 25);
           valinp_grays_contrast->box(FL_BORDER_BOX);
           valinp_grays_contrast->minimum(-1000);
           valinp_grays_contrast->maximum(1000);
@@ -6005,8 +6005,8 @@ Fl_Double_Window* gts_gui::make_window() {
         } // Fl_Value_Input* valinp_grays_contrast
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 160, 265, 25);
-        { scrbar_grays_gamma = new Fl_Scrollbar(5, 165, 205, 20, "Gamma");
+      { Fl_Group* o = new Fl_Group(0, 160, 200, 25);
+        { scrbar_grays_gamma = new Fl_Scrollbar(5, 165, 140, 20, "Gamma");
           scrbar_grays_gamma->type(1);
           scrbar_grays_gamma->box(FL_BORDER_BOX);
           scrbar_grays_gamma->minimum(0.5);
@@ -6018,7 +6018,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_grays_gamma);
           scrbar_grays_gamma->linesize(1);
         } // Fl_Scrollbar* scrbar_grays_gamma
-        { valinp_grays_gamma = new Fl_Value_Input(215, 160, 45, 25);
+        { valinp_grays_gamma = new Fl_Value_Input(150, 160, 45, 25);
           valinp_grays_gamma->box(FL_BORDER_BOX);
           valinp_grays_gamma->minimum(0.5);
           valinp_grays_gamma->maximum(5);
@@ -6029,10 +6029,10 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       group_grays->end();
     } // Fl_Group* group_grays
-    { group_rgb = new Fl_Group(0, 80, 265, 110);
+    { group_rgb = new Fl_Group(0, 80, 200, 110);
       group_rgb->hide();
-      { Fl_Group* o = new Fl_Group(0, 80, 265, 25);
-        { scrbar_rgb_brightness = new Fl_Scrollbar(5, 85, 205, 20, "Brightness");
+      { Fl_Group* o = new Fl_Group(0, 80, 200, 25);
+        { scrbar_rgb_brightness = new Fl_Scrollbar(5, 85, 140, 20, "Brightness");
           scrbar_rgb_brightness->type(1);
           scrbar_rgb_brightness->box(FL_BORDER_BOX);
           scrbar_rgb_brightness->minimum(-1000);
@@ -6042,7 +6042,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_rgb_brightness);
           scrbar_rgb_brightness->linesize(1);
         } // Fl_Scrollbar* scrbar_rgb_brightness
-        { valinp_rgb_brightness = new Fl_Value_Input(215, 80, 45, 25);
+        { valinp_rgb_brightness = new Fl_Value_Input(150, 80, 45, 25);
           valinp_rgb_brightness->box(FL_BORDER_BOX);
           valinp_rgb_brightness->minimum(-1000);
           valinp_rgb_brightness->maximum(1000);
@@ -6050,8 +6050,8 @@ Fl_Double_Window* gts_gui::make_window() {
         } // Fl_Value_Input* valinp_rgb_brightness
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 120, 265, 25);
-        { scrbar_rgb_contrast = new Fl_Scrollbar(5, 125, 205, 20, "Contrast");
+      { Fl_Group* o = new Fl_Group(0, 120, 200, 25);
+        { scrbar_rgb_contrast = new Fl_Scrollbar(5, 125, 140, 20, "Contrast");
           scrbar_rgb_contrast->type(1);
           scrbar_rgb_contrast->box(FL_BORDER_BOX);
           scrbar_rgb_contrast->minimum(-1000);
@@ -6061,7 +6061,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_rgb_contrast);
           scrbar_rgb_contrast->linesize(1);
         } // Fl_Scrollbar* scrbar_rgb_contrast
-        { valinp_rgb_contrast = new Fl_Value_Input(215, 120, 45, 25);
+        { valinp_rgb_contrast = new Fl_Value_Input(150, 120, 45, 25);
           valinp_rgb_contrast->box(FL_BORDER_BOX);
           valinp_rgb_contrast->minimum(-1000);
           valinp_rgb_contrast->maximum(1000);
@@ -6069,8 +6069,8 @@ Fl_Double_Window* gts_gui::make_window() {
         } // Fl_Value_Input* valinp_rgb_contrast
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(0, 160, 265, 25);
-        { scrbar_rgb_gamma = new Fl_Scrollbar(5, 165, 205, 20, "Gamma");
+      { Fl_Group* o = new Fl_Group(0, 160, 200, 25);
+        { scrbar_rgb_gamma = new Fl_Scrollbar(5, 165, 140, 20, "Gamma");
           scrbar_rgb_gamma->type(1);
           scrbar_rgb_gamma->box(FL_BORDER_BOX);
           scrbar_rgb_gamma->minimum(0.5);
@@ -6082,7 +6082,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(scrbar_rgb_gamma);
           scrbar_rgb_gamma->linesize(1);
         } // Fl_Scrollbar* scrbar_rgb_gamma
-        { valinp_rgb_gamma = new Fl_Value_Input(215, 160, 45, 25);
+        { valinp_rgb_gamma = new Fl_Value_Input(150, 160, 45, 25);
           valinp_rgb_gamma->box(FL_BORDER_BOX);
           valinp_rgb_gamma->minimum(0.5);
           valinp_rgb_gamma->maximum(5);
@@ -6841,6 +6841,7 @@ Fl_Double_Window* gts_gui::make_window() {
       Fl_Group::current()->resizable(selbro_fnum_list);
     } // Fl_Browser* selbro_fnum_list
     window_fnum_list->set_non_modal();
+    window_fnum_list->size_range(116, 0, 200, 4000);
     window_fnum_list->end();
   } // Fl_Double_Window* window_fnum_list
   { window_trace_batch = new Fl_Double_Window(300, 415, "Color Trace Batch");
