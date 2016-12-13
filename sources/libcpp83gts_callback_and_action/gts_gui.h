@@ -221,6 +221,8 @@ private:
   static void cb_window_level_set(Fl_Double_Window*, void*);
   inline void cb_Browse_i(Fl_Button*, void*);
   static void cb_Browse(Fl_Button*, void*);
+  inline void cb_Scan_i(Fl_Button*, void*);
+  static void cb_Scan(Fl_Button*, void*);
   inline void cb_Convert1_i(Fl_Button*, void*);
   static void cb_Convert1(Fl_Button*, void*);
 public:
@@ -239,8 +241,6 @@ public:
 private:
   inline void cb_choice_level_open_image_format_i(Fl_Choice*, void*);
   static void cb_choice_level_open_image_format(Fl_Choice*, void*);
-  inline void cb_Scan_i(Fl_Button*, void*);
-  static void cb_Scan(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_level_num_start;
   Fl_Choice *choice_level_num_continue_type;

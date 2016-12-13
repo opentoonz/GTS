@@ -150,6 +150,24 @@ void gts_master::cb_read_and_save_start( void )
 		cl_gts_master.cl_file_number_list.get_end_type_value()
 	);
 
+	/* 開くファイルのLevel名がない */
+	{
+	std::string name(cl_gts_gui.strinp_level_open_file_head->value());
+	if ( name.empty() ) {
+		fl_alert("Need Open Level Name!");
+		return;
+	}
+	}
+
+	/* 保存ファイルのLevel名がない */
+	{
+	std::string name(cl_gts_gui.strinp_level_save_file_head->value());
+	if ( name.empty() ) {
+		fl_alert("Need Save Level Name!");
+		return;
+	}
+	}
+
 	/* 最初に番号が選択がない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
 		fl_alert("Select number!");

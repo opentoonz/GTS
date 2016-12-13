@@ -333,3 +333,35 @@ void cb_level::set_number_and_savelevelname( void )
 	/* 画像読込表示はしない */
 }
 
+/* Numberの非選択含めた番号ファイルで一つでも存在するならtrueを返す */
+bool cb_level::is_exist_save_files_(void)
+{
+	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+		std::string filepath( this->get_savefilepath(
+			std::stoi( /* リストの項目に表示した番号 */
+				cl_gts_gui.selbro_fnum_list->text(ii)
+			)
+		) );
+		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			filepath.c_str()
+		))) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void cb_level::check_save_level_by_existing_file(void)
+{
+	bool overwrite_sw = this->is_exist_save_files_();
+
+	if (overwrite_sw) {	/* 上書き */
+		Fl_Color col = FL_YELLOW;
+		cl_gts_gui.strinp_level_save_file_head->color(col);
+		cl_gts_gui.strinp_level_save_file_head->redraw();
+	} else {	/* 新規ファイル */
+		Fl_Color col = FL_WHITE;
+		cl_gts_gui.strinp_level_save_file_head->color(col);
+		cl_gts_gui.strinp_level_save_file_head->redraw();
+	}
+}

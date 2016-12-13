@@ -121,6 +121,16 @@ void gts_master::cb_scan_and_save_start( void )
 		cl_gts_gui.choice_level_num_continue_type->value()
 	);
 
+	/* 保存ファイルのLevel名がない */
+	{
+	std::string name(cl_gts_gui.strinp_level_save_file_head->value());
+	if ( name.empty() ) {
+		fl_alert("Need Save Level Name!");
+		return;
+	}
+	}
+
+	/* 最初に番号が選択がない */
 	/* 最初に番号が選択がない/設定できない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
 		if (cl_gts_gui.choice_level_num_continue_type->value()

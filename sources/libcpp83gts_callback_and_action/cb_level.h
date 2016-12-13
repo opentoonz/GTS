@@ -68,7 +68,10 @@ public:
 	);
 
 	void set_number_and_savelevelname( void );
+
+	void check_save_level_by_existing_file(void);
 private:
+	bool is_exist_save_files_(void);
 };
 
 #endif /* !cb_level_h */
