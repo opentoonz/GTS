@@ -100,7 +100,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             xywh {0 0 100 20} hide
           }
           MenuItem {} {
-            label {Convert RGB...}
+            label {RGB Convert...}
             callback {cl_gts_master.cb_read_and_save_start();}
             xywh {5 5 100 20} shortcut 0x54
           }
@@ -483,7 +483,7 @@ window_level_browse->show();}
           xywh {0 35 95 25} resizable
         }
         Fl_Button {} {
-          label {Convert RGB...}
+          label {RGB Convert...}
           callback {cl_gts_master.cb_read_and_save_start();}
           xywh {95 35 100 25}
         }
@@ -2118,7 +2118,7 @@ cl_gts_gui.menite_thickness->clear();
 cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();
 cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();} selected
+cl_gts_gui.menite_edit_hsv_min_max->clear();}
       xywh {50 50 330 225} type Double resizable non_modal size_range {200 225 1000 225} visible
     } {
       Fl_Group {} {open

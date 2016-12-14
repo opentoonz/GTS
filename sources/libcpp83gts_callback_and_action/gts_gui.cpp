@@ -103,11 +103,11 @@ void gts_gui::cb_Preview1(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Preview1_i(o,v);
 }
 
-void gts_gui::cb_Convert_i(Fl_Menu_*, void*) {
+void gts_gui::cb_RGB_i(Fl_Menu_*, void*) {
   cl_gts_master.cb_read_and_save_start();
 }
-void gts_gui::cb_Convert(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Convert_i(o,v);
+void gts_gui::cb_RGB(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_RGB_i(o,v);
 }
 
 void gts_gui::cb_menite_level_i(Fl_Menu_*, void*) {
@@ -432,7 +432,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Preview", 0x70,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview Trace File", 0,  (Fl_Callback*)gts_gui::cb_Preview1, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
- {"Convert RGB...", 0x54,  (Fl_Callback*)gts_gui::cb_Convert, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"RGB Convert...", 0x54,  (Fl_Callback*)gts_gui::cb_RGB, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Window", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Level...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_level, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
@@ -570,11 +570,11 @@ void gts_gui::cb_Scan(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Scan_i(o,v);
 }
 
-void gts_gui::cb_Convert1_i(Fl_Button*, void*) {
+void gts_gui::cb_RGB1_i(Fl_Button*, void*) {
   cl_gts_master.cb_read_and_save_start();
 }
-void gts_gui::cb_Convert1(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Convert1_i(o,v);
+void gts_gui::cb_RGB1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_RGB1_i(o,v);
 }
 
 void gts_gui::cb_togbut_level_open_browse_i(Fl_Button*, void*) {
@@ -5381,8 +5381,8 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Box* o = new Fl_Box(0, 35, 95, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Button* o = new Fl_Button(95, 35, 100, 25, "Convert RGB...");
-        o->callback((Fl_Callback*)cb_Convert1);
+      { Fl_Button* o = new Fl_Button(95, 35, 100, 25, "RGB Convert...");
+        o->callback((Fl_Callback*)cb_RGB1);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o

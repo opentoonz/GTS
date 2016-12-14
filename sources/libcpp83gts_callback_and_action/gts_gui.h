@@ -66,8 +66,8 @@ private:
   static void cb_menite_start_scan(Fl_Menu_*, void*);
   inline void cb_Preview1_i(Fl_Menu_*, void*);
   static void cb_Preview1(Fl_Menu_*, void*);
-  inline void cb_Convert_i(Fl_Menu_*, void*);
-  static void cb_Convert(Fl_Menu_*, void*);
+  inline void cb_RGB_i(Fl_Menu_*, void*);
+  static void cb_RGB(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_level;
 private:
@@ -223,8 +223,8 @@ private:
   static void cb_Browse(Fl_Button*, void*);
   inline void cb_Scan_i(Fl_Button*, void*);
   static void cb_Scan(Fl_Button*, void*);
-  inline void cb_Convert1_i(Fl_Button*, void*);
-  static void cb_Convert1(Fl_Button*, void*);
+  inline void cb_RGB1_i(Fl_Button*, void*);
+  static void cb_RGB1(Fl_Button*, void*);
 public:
   Fl_File_Input *filinp_level_open_dir_path;
   Fl_Button *togbut_level_open_browse;
