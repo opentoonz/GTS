@@ -161,6 +161,22 @@ int gts_master::next_scan_and_save_( void )
 		return NG;
 	}
 
+	/* 保存するタイプで画像を表示する */
+	if ( cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() ) {
+		/* TracenImage画像のみ表示 */
+		cl_gts_master.cb_change_wview_sub();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_sub->setonly();
+	}
+	else {
+		/* ScanImage(メイン)画像のみ表示 */
+		cl_gts_master.cb_change_wview_main();
+
+		/* 画像表示状態をメニューに設定 */
+		cl_gts_gui.menite_wview_main->setonly();
+	}
+
 	/* 11 再表示 */
 	this->iipg_view_redraw_();
 
@@ -217,23 +233,6 @@ void gts_master::cb_scan_and_save_start( void )
 fl_alert("Input level name!");
 		return;
 	}
-
-	/* 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_level_rgb_trace_save_sw->value() ) {
-		/* TracenImage画像のみ表示 */
-		cl_gts_master.cb_change_wview_sub();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_sub->setonly();
-	}
-	else {
-		/* ScanImage(メイン)画像のみ表示 */
-		cl_gts_master.cb_change_wview_main();
-
-		/* 画像表示状態をメニューに設定 */
-		cl_gts_gui.menite_wview_main->setonly();
-	}
-	
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	if (this->next_scan_and_save_() != OK) {
