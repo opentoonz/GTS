@@ -2,7 +2,6 @@
 #include <algorithm>	// std::sort()
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include <sstream>
-#include <filesystem>/* tr2::sys::path */
 #include "fltk_opengl.h"
 #include "ids_path_level_from_files.h"
 #include "cb_level.h"
