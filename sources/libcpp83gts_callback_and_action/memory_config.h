@@ -1,16 +1,11 @@
 #ifndef memory_config_h
 #define memory_config_h
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
+#include <vector>
 #include "ptbl_path_max.h"
 #include "ptbl_returncode.h"
-
-typedef enum {
-	E_MEMORY_CONFIG_LOAD_MATCH = 1,
-	E_MEMORY_CONFIG_LOAD_NOTHING,
-	E_MEMORY_CONFIG_LOAD_ERROR,
-} E_MEMORY_CONFIG_LOAD_RET;
 
 class memory_config {
 public:
@@ -30,12 +25,16 @@ public:
 	,str_config_save_as_file_(
 	    "config_save_as_file")
 
-	,str_level_dir_(
+	,str_level_save_dir_path_(
+	    "level_save_dir_path")
+	,str_level_save_dir_path_legacy2016_(
 	    "level_dir")
-	,str_level_list_form_(
-	    "level_list_form")
-	,str_level_file_(
+
+	,str_level_save_file_head_(
+	    "level_save_file_head")
+	,str_level_save_file_head_legacy2016_(
 	    "level_file")
+
 	,str_level_num_start_(
 	    "level_num_start")
 	,str_level_num_end_(
@@ -44,16 +43,34 @@ public:
 	    "level_num_continue_type")
 	,str_level_num_endless_direction_(
 	    "level_num_endless_direction")
-	,str_level_rgb_scan_dir_(
-	    "level_rgb_scan_dir")
-	,str_level_rgb_trace_save_sw_(
-	    "level_rgb_trace_save_sw")
-	,str_level_rgb_full_save_sw_(
-	    "level_rgb_full_save_sw")
-	,str_level_rgb_with_full_sw_(
-	    "level_rgb_with_full_sw")
-	,str_level_image_file_format_(
+
+	,str_level_save_image_format_(
+	    "level_save_image_format")
+	,str_level_save_image_format_legacy2016_(
 	    "level_image_file_format")
+
+	,str_filter_rgb_erase_dot_noise_sw_(
+	    "filter_rgb_erase_dot_noise_sw")
+	,str_filter_rgb_erase_dot_noise_sw_legacy2016_(
+	    "color_trace_erase_1dot")
+
+	,str_filter_rgb_color_trace_sw_(
+	    "filter_rgb_color_trace_sw")
+	,str_filter_rgb_color_trace_sw_legacy2016_(
+	    "level_rgb_trace_save_sw")
+
+	,str_level_open_dir_path_(
+	    "level_open_dir_path")
+	,str_level_open_dir_path_legacy2016_(
+	    "level_rgb_scan_dir")
+
+	,str_level_open_file_head_(
+	    "level_open_file_head")
+	,str_level_open_image_format_(
+	    "level_open_image_format")
+
+	,str_level_list_form_(
+	    "level_list_form")
 
 	,str_area_select_(
 	    "area_select")
@@ -99,8 +116,6 @@ public:
 	,str_rgb_gamma_(
 	    "rgb_gamma")
 
-	,str_color_trace_erase_1dot_(
-	    "color_trace_erase_1dot")
 	,str_color_trace_real_time_(
 	    "color_trace_real_time")
 	,str_file_number_frame_(
@@ -229,8 +244,9 @@ public:
 	{
 	}
 
-	int save( const char *cp_file_path );
-	int load( const char *cp_file_path, int i_load_trace_batch_sw=ON );
+	int save( const char *file_path );
+	//int load( const char *file_path, int load_trace_batch_sw=ON );
+	int load( const std::string& file_path,int load_trace_batch_sw=ON );
 
 	std::string memory_of_path;
 
@@ -245,18 +261,28 @@ private:
 	const char* str_config_load_file_;
 	const char* str_config_save_as_file_;
 
-	const char* str_level_dir_;
-	const char* str_level_list_form_;
-	const char* str_level_file_;
+	const char* str_level_save_dir_path_;
+	const char* str_level_save_dir_path_legacy2016_;
+	const char* str_level_save_file_head_;
+	const char* str_level_save_file_head_legacy2016_;
 	const char* str_level_num_start_;
 	const char* str_level_num_end_;
 	const char* str_level_num_continue_type_;
 	const char* str_level_num_endless_direction_;
-	const char* str_level_rgb_scan_dir_;
-	const char* str_level_rgb_trace_save_sw_;
-	const char* str_level_rgb_full_save_sw_;
-	const char* str_level_rgb_with_full_sw_;
-	const char* str_level_image_file_format_;
+	const char* str_level_save_image_format_;
+	const char* str_level_save_image_format_legacy2016_;
+
+	const char* str_filter_rgb_erase_dot_noise_sw_;
+	const char* str_filter_rgb_erase_dot_noise_sw_legacy2016_;
+	const char* str_filter_rgb_color_trace_sw_;
+	const char* str_filter_rgb_color_trace_sw_legacy2016_;
+
+	const char* str_level_open_dir_path_;
+	const char* str_level_open_dir_path_legacy2016_;
+	const char* str_level_open_file_head_;
+	const char* str_level_open_image_format_;
+
+	const char* str_level_list_form_;
 
 	const char* str_area_select_;
 	const char* str_area_x_pos_;
@@ -281,7 +307,6 @@ private:
 	const char* str_rgb_contrast_;
 	const char* str_rgb_gamma_;
 
-	const char* str_color_trace_erase_1dot_;
 	const char* str_color_trace_real_time_;
 	const char* str_file_number_frame_;
 	const char* str_file_number_selected_;
@@ -351,19 +376,38 @@ private:
 
 	//-------------------------------------
 
-	int _save_comment_by_fp( FILE *fp );
-	int _save_config_by_fp( FILE *fp );
-	int _save_level_by_fp( FILE *fp );
-	int _save_area_by_fp( FILE *fp );
-	int _save_pixel_type_by_fp( FILE *fp );
-	int _save_trace_by_fp( FILE *fp );
-	int _save_fnum_by_fp( FILE *fp );
-	int _save_trace_batch_by_fp( FILE *fp );
-	int _save_trace_src_hsv_by_fp( FILE *fp );
+	void save_str_(
+	 const std::string& key ,const std::string& val ,std::ofstream& ofs
+	);
+	void save_word_(
+	 const std::string& key ,const std::string& val ,std::ofstream& ofs
+	);
+	void save_f64_(
+	 const std::string& key ,const double val ,std::ofstream& ofs
+	);
+	void save_3int_(
+	 const std::string& key ,const int rr ,const int gg ,const int bb
+	 ,std::ofstream& ofs
+	);
+	void save_head_( std::ofstream& ofs );
+	void save_config_( std::ofstream& ofs );
+	void save_level_( std::ofstream& ofs );
+	void save_area_( std::ofstream& ofs );
+	void save_pixel_type_( std::ofstream& ofs );
+	void save_fnum_( std::ofstream& ofs );
+	void save_trace_batch_( std::ofstream& ofs );
+	void save_trace_src_hsv_( std::ofstream& ofs );
 
-	int _chk_ON_OFF( char *cp_scan );
-	int _load_by_fp( FILE *fp, int i_load_trace_batch_sw );
-	E_MEMORY_CONFIG_LOAD_RET _load_trace_src_hsv_by_fp( int i_num, char *cp1, char *cp2, char *cp3, char *cp4 );
+	void load_ifs_(
+		std::ifstream& ifs
+		,const int load_trace_batch_sw
+		,bool& fnum_list_sw
+		,bool& trace_batch_list_sw
+		,bool& level_list_redisplay_sw
+		,bool& level_num_continue_type_sw
+	);
+
+	bool load_trace_src_hsv_( std::vector< std::string >& words );
 };
 
 #endif /* !memory_config_h */

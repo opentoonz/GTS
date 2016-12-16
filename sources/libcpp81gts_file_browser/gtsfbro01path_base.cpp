@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <string.h> /* strcmp() */
 #include <ctype.h> /* isdigit() */
@@ -17,7 +18,7 @@ const char *gtsfbro01path_base::ccp_num4_and_ext(const char *ccp_file)
 	/* ".0000.tif"は9文字 */
 	t_len = strlen(ccp_file);
 	if (	(9 < t_len) &&
-		(0 == strcmp(	this->get_imagefile_extension(),
+		(0 == strcmp(	this->get_save_imagefile_extension(),
 				&(ccp_file[t_len-4]) )) &&
 		isdigit(ccp_file[t_len-5]) &&
 		isdigit(ccp_file[t_len-6]) &&
@@ -415,21 +416,33 @@ char *gtsfbro01path_base::cp_memory( void )
 }
 
 
-const char* gtsfbro01path_base::get_imagefile_extension( void ) const
-{
-	return this->imagefile_extensions_.at(
-		this->current_imagefile_extension_
-	).c_str();
-}
 void gtsfbro01path_base::add_imagefile_extension( const std::string& ext )
 {
 	this->imagefile_extensions_.push_back( ext );
 }
-const int gtsfbro01path_base::get_current_imagefile_extension( void ) const
+const char* gtsfbro01path_base::get_save_imagefile_extension( void ) const
 {
-	return this->current_imagefile_extension_;
+	return this->imagefile_extensions_.at(
+		this->current_save_imagefile_extension_
+	).c_str();
 }
-void gtsfbro01path_base::set_current_imagefile_extension( const int current )
+const char* gtsfbro01path_base::get_open_imagefile_extension( void ) const
+{
+	return this->imagefile_extensions_.at(
+		this->current_open_imagefile_extension_
+	).c_str();
+}
+const int gtsfbro01path_base::get_current_save_imagefile_extension( void ) const
+{
+	return this->current_save_imagefile_extension_;
+}
+const int gtsfbro01path_base::get_current_open_imagefile_extension( void ) const
+{
+	return this->current_open_imagefile_extension_;
+}
+void gtsfbro01path_base::set_current_save_imagefile_extension(
+	const int current
+)
 {
 	if (
 	 current < 0 ||
@@ -437,6 +450,17 @@ void gtsfbro01path_base::set_current_imagefile_extension( const int current )
 	) {
 		return;
 	}
-
-	this->current_imagefile_extension_ = current;
+	this->current_save_imagefile_extension_ = current;
+}
+void gtsfbro01path_base::set_current_open_imagefile_extension(
+	const int current
+)
+{
+	if (
+	 current < 0 ||
+	 static_cast<int>(this->imagefile_extensions_.size()) <= current
+	) {
+		return;
+	}
+	this->current_open_imagefile_extension_ = current;
 }

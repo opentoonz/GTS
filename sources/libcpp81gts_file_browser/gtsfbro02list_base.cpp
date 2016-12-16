@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include <stdlib.h> /* calloc(),free() */
 #include <string.h>
 #include <ctype.h> /* isdigit() */
@@ -89,7 +90,7 @@ E_DIR_OR_FILE_TYPE gtsfbro02list_base::e_dir_or_file_type( char *cp_file )
 		return E_DIR_OR_FILE_IS_TEXT;
 	}
 
-	/* 拡張子がthis->get_imagefile_extension()(=".tif")であり ---------
+	/* 拡張子がthis->get_save_imagefile_extension()(=".tif")であり ---------
 		かつ
 	   番号がある(".0000")
 		A.0001.tif" or "A_full.0001.tif" or ...
@@ -240,7 +241,7 @@ void gtsfbro02list_base::make_dir_or_file( E_DIR_OR_FILE_TYPE e_1st_type, E_DIR_
 		}
 
 		if (	(e_1st_type == e_type) ||
-			(e_2nd_type  == e_type)
+			(e_2nd_type == e_type)
 		) {
 			stp_fil->cp_name = cp_name;
 			stp_fil->e_type = e_type;

@@ -1,5 +1,6 @@
+#include <fstream>	//std::ifstream
 #include "FL/fl_ask.H"	// fl_alert(-)
-#include "ptbl_funct.h"
+#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -32,39 +33,27 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		this->cl_file_number_list.get_crnt_list_num()
 	);
 
-	/*------ _full付きファイルを優先してファイルの読込み ------*/
+	/*------ ファイルパス ------*/
 
-	/* 番号に対する_full付きのファイルパスを得ることはできるか */
-	if (nullptr == this->cl_bro_level.cp_filepath_full(crnt_file_num)) {
+	std::string fpath_open(
+		this->cl_level.get_openfilepath(crnt_file_num)
+	);
+
+	/* 番号に対するファイルパスを得ることはできるか */
+	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.cp_filepath_full(%d) returns nullptr."
+	"Error : this->cl_level.get_openfilepath(%d) returns nullptr."
 			, crnt_file_num
 		);
 		return;
 	}
 
-	/* 番号に対する_full無しファイルパスを得ることはできるか */
-	if (nullptr == this->cl_bro_level.cp_filepath( crnt_file_num )) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_level.cp_filepath(%d) returns nullptr."
-			, crnt_file_num
-		);
-		return;
-	}
-
-	/* 各画像ファイルの存在確認 */
-	const bool full_sw = (1==ptbl_dir_or_file_is_exist( 
-		this->cl_bro_level.cp_filepath_full( crnt_file_num )
-	));
-	const bool nofull_sw = (1==ptbl_dir_or_file_is_exist( 
-		this->cl_bro_level.cp_filepath( crnt_file_num )
-	));
-
-	/* どちらの画像ファイルも存在しない */
-	if (!full_sw && !nofull_sw) {
-		pri_funct_err_bttvr( "Warning : <%s> and <%s> is not exist"
-			,this->cl_bro_level.cp_filepath_full(crnt_file_num)
-			,this->cl_bro_level.cp_filepath( crnt_file_num )
+	/* 画像ファイル存在しない */
+	if (!ptbl_dir_or_file_is_exist(
+		const_cast<char *>(fpath_open.c_str())
+	)) {
+		pri_funct_err_bttvr( "Warning : <%s> is not exist"
+			,fpath_open.c_str()
 		);
 
 		/* 画面は空白表示する指定(データは残っている) */
@@ -80,22 +69,16 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		return;
 	}
 
-	/* _full付きファイルを優先してどちらかのファイルパスを選ぶ */
-	char* filepath;
-	if (full_sw) {
-	 filepath = this->cl_bro_level.cp_filepath_full( crnt_file_num );
-	} else {
-	 filepath = this->cl_bro_level.cp_filepath( crnt_file_num );
-	}
+	/*------ ファイルの読込み ------*/
 
 	/* 読込前に画像のタイプを得ておく */
-	const long before_channels = this->cl_iip_read.get_l_channels();
+	//const long before_channels = this->cl_iip_read.get_l_channels();
 
 	/* 読み込み元ファイルパス設定 */
-	if (OK != this->cl_iip_read.cl_name.set_name(filepath)) {
+	if (OK != this->cl_iip_read.cl_name.set_name(fpath_open.c_str())) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_iip_read.cl_name.set_name(%s) returns NG",
-			filepath);
+			fpath_open.c_str());
 		return;
 	}
 
@@ -106,43 +89,57 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		return;
 	}
 
-	/*------ 読込んだ画像を回転、２値化、表示する ------*/
+	/*------ 画像を回転、２値化、ドットノイズ消去、表示する ------*/
 	/* ファイルからの読み込み時は回転処理はしない(ゼロ度回転をする) */
-	this->rot_and_trace_and_preview_(
-		&(this->cl_iip_read), 0 ,before_channels
+	this->rot_and_trace_and_enoise_and_preview_(
+		&(this->cl_iip_read), 0
 	);
 }
 
-void gts_master::rot_and_trace_and_preview_(
+void gts_master::rot_and_trace_and_enoise_and_preview_(
 	iip_canvas *parent
 	, int rotate_per_90_type 
-	, const long before_channels 
 	, const bool crop_sw
 	, const bool force_view_scanimage_sw
+)
+{
+	this->rot_and_trace_and_enoise_( parent , rotate_per_90_type );
+	this->redraw_image_( parent , crop_sw , force_view_scanimage_sw );
+}
+int gts_master::rot_and_trace_and_enoise_( // Rot90 and Effects
+	iip_canvas *parent
+	, int rotate_per_90_type 
 )
 {
 	/* 回転処理 */
 	if (OK != this->_iipg_rot90( parent, rotate_per_90_type )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_rot90(-) returns NG" );
-		return;
+		return NG;
 	}
 
-	/* RGB画像のときは2値化(トレス)処理 */
-	if (3L <= parent->get_l_channels()) {
-		if (OK != this->_iipg_color_trace_setup()) {
-			pri_funct_err_bttvr(
-		 "Error : this->_iipg_color_trace_setup() returns NG" );
-			return;
-		}
-		this->_iipg_color_trace_exec();
+	/* Effect Node Treeを繋ぎ、準備する */
+	if (OK != this->_iipg_color_trace_setup()) {
+		pri_funct_err_bttvr(
+	 "Error : this->_iipg_color_trace_setup() returns NG" );
+		return NG;
 	}
+	/* 2値化(トレス)処理とドットノイズ消去、あるいは画像受継ぎ処理 */
+	this->_iipg_color_trace_exec();
 
+	return OK;
+}
+int gts_master::redraw_image_(
+	iip_canvas *parent
+	, const bool crop_sw
+	, const bool force_view_scanimage_sw
+)
+{
 	/* 表示準備 */
 	if (OK != this->_iipg_view_setup( crop_sw ?ON :OFF )) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_view_setup() returns NG" );
-		return;
+		return NG;
 	}
 
 	/* 表示準備2 */
@@ -153,7 +150,7 @@ void gts_master::rot_and_trace_and_preview_(
 
 		/* 画像表示状態をメニューに設定 */
 		cl_gts_gui.menite_wview_main->setonly();
-	}
+	} /* それ以外の場合は現在の表示モードを維持する */
 
 	/* 表示 */
 	this->iipg_view_redraw_();
@@ -164,7 +161,8 @@ void gts_master::rot_and_trace_and_preview_(
 		this->cl_color_trace_enhancement.src_set_histogram_max();
 
 		/* color trace histogram windowの再描画 */
-		cl_gts_gui.window_hab_histogram->redraw();
+		cl_gts_gui.window_hab_histogram->flush();
 	}
+	return OK;
 }
 

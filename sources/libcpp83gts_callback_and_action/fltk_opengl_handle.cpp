@@ -2,8 +2,9 @@
 #include <algorithm>	// std::sort()
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include <sstream>
-#include <filesystem>/* tr2::sys::path */
 #include "fltk_opengl.h"
+#include "ids_path_level_from_files.h"
+#include "cb_level.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 
@@ -65,184 +66,50 @@ int fl_shortcut_up_down_left_right_( int key )
 }
 
 /*------ dnd処理ここから ------*/
-std::vector<std::string> split_(const std::string &str, char delim)
+const std::string open_files_by_paste_( const std::string &dnd_str )
 {
-	std::stringstream strstr(str);
-	std::string item;
-	std::vector<std::string> elems;
-	while (std::getline(strstr, item, delim)) {
-		if (!item.empty()) {
-			elems.push_back(item);
-		}
+	/* 複数のファイルパスはエラー */
+	if (std::string::npos != dnd_str.find("\n")) {
+		return "Error : Need Only 1 Filepath";
 	}
-	return elems;
-}
-
-void separate_filehead_number_(
-	const std::string& basename
-	, std::string& filehead
-	, std::string& number
-)
-{
-	int ii=0;
-	for (ii=basename.size()-1 ;0<=ii ;--ii) {
-		if (!isdigit(basename.at( ii ))) { break; }
-	}
-	if (ii < 0) { /* 全体が数字になっている */
-		filehead.clear();
-		number = basename;
-		return;
-	}
-	if (basename.at(ii) == '.' && 1 <= ii) {/* 区切り有り */
-		filehead = basename.substr( 0 ,ii );
-	} else {				/* 区切り無し */
-		filehead = basename.substr( 0 ,ii+1 );
-	}
-	number   = basename.substr(ii+1);
-}
-
-void filepath_to_dir_head_num_ext_(
-	const std::string& filepath
-	, std::string& dir
-	, std::string& head
-	, std::string& num
-	, std::string& ext
-)
-{
-	std::tr2::sys::path path( filepath );
-	dir = path.parent_path();
-	separate_filehead_number_( path.basename() ,head ,num );
-	ext = path.extension().substr(1);
-}
-
-bool check_(
-	const std::vector<std::string>& strs
-	, std::vector<int>& nums
-	, int& start_num
-	, int& end_num
-	, std::vector<int>& diffs
-	, std::string& dir_fst
-	, std::string& head_fst
-	, std::string& ext_fst
-)
-{
-	bool only_first_sw = true;
-	bool error_sw = false;
-
-	for (const std::string& str : strs) {
-		/* ファイルパスを部品に分割 */
-		std::string dir;
-		std::string head;
-		std::string num;
-		std::string ext;
-		filepath_to_dir_head_num_ext_( str ,dir ,head ,num ,ext );
-		/* ファイル番号文字を番号配列に格納 */
-		if (num.empty())
-		{	nums.push_back( 0 ); }
-		else {	nums.push_back( std::stoi(num) ); }
-
-		/* 始めのファイルパスでの初期セット */
-		if (only_first_sw) {
-			only_first_sw = false;
-			/* 1個目のファイルパスが連番の基準 */
-			dir_fst = dir;
-			head_fst = head;
-			ext_fst = ext;
-			/* 1個目のファイルパスが基準なので違いスイッチOFF */
-			diffs.push_back(0);
-			/* 1個目以後のファイルパスでmin/maxの設定 */
-			start_num = end_num = nums.back();
-			continue;
-		}
-
-		/* 2個目以後のファイルパスでmin/maxの設定 */
-		else {
-			if (end_num < nums.back()) {
-			    end_num = nums.back();
-			}
-			if (nums.back() < start_num) {
-			    start_num = nums.back();
-			}
-		}
-		/* 2個目以後のファイルパスと1個目との比較 */
-		if (dir_fst != dir || head_fst != head || ext_fst != ext)
-		{
-			diffs.push_back(1);	/* 違いあり */
-			error_sw = true;
-		}
-		else {
-			diffs.push_back(0);	/* 違わない */
-		}
-	}
-
-	return error_sw;
-}
-
-void message_bad_files_(
-	const std::vector<std::string>& strs
-	, const std::vector<int>& diffs
-	, const std::vector<int>& nums
-)
-{
-	std::string msg("Include Bad files...\n");
-	for (unsigned ii=0 ;ii<strs.size() ;++ii) {
-		msg += strs.at(ii);
-		msg += " ";
-		msg += ((diffs.at(ii)==1) ?"X" :"O");
-		msg += " ";
-		msg += std::to_string( nums.at(ii) );
-		msg += "\n";
-	}
-	fl_alert( msg.c_str() ); /* !!! 多いと表示しきれない !!! */
-}
-
-void open_files_by_paste_( const std::string &dnd_str )
-{
-	/* DNDで取込んだ複数のファイルパスを1パスごとに格納 */
-	std::vector<std::string> strs( split_( dnd_str ,'\n' ) );
 
 	/* 必要な情報に変える */
-	std::vector<int> diffs;
+	std::string dpath , head , num_form , ext;
+	int number=-1;
 	std::vector<int> nums;
-	int start_num=0;
-	int end_num=0;
-	std::string dire;
-	std::string head;
-	std::string exte;
-	const bool error_sw = check_(
-		strs ,nums ,start_num ,end_num ,diffs ,dire ,head ,exte
+	ids::path::level_from_files(
+		dnd_str ,dpath ,head ,num_form ,number ,ext ,nums
 	);
-	std::sort( nums.begin() ,nums.end() ); /* 昇順ソート */
 
-	/* 拡張子のチェック(tga/tif/txt) */
-	/* ファイルパスの種類と組み合わせがダメ */
-	if ((exte != "tga"
-	&&   exte != "tif"
-	&&   exte != "txt"
-	) 
-	||  error_sw) {
-		message_bad_files_( strs ,diffs ,nums );
-		return;
+	/* 拡張子が対応外エラー */
+	if (ext != ".tga" && ext != ".tif" && ext != ".txt") {
+		return "Error : Need Extension .tga/.tif/.txt";
 	}
 
-	if (exte == "txt") { /* config file */
-
-	} else {	/* level */
-		cl_gts_gui.filinp_level_dir->value( dire.c_str() );
-		cl_gts_gui.strinp_level_file->value( head.c_str() );
-		cl_gts_gui.valinp_level_start->value( start_num );
-		cl_gts_gui.valinp_level_end->value( end_num );
-		if ( exte == "tif" ) {
-		 cl_gts_gui.choice_level_image_file_format->value(0);
-		} else
-		if ( exte == "tga" ) {
-		 cl_gts_gui.choice_level_image_file_format->value(1);
+	/* Config file */
+	if (ext == ".txt") {
+		std::string dpa,fna;
+		ids::path::from_fpath_to_dpath_fname(
+			dnd_str ,dpa ,fna
+		);
+		if (dpa.empty()) {
+			return "Error : Need directroy";
 		}
-		cl_gts_master.cl_bro_level.cb_set_image_file_extension();
-		cl_gts_master.cl_bro_level.level_set(
-			nums ,start_num ,end_num
+		if (fna.empty()) {
+			return "Error : Need filename";
+		}
+		cl_gts_gui.filinp_config_load_dir->value(  dpa.c_str() );
+		cl_gts_gui.strinp_config_load_file->value( fna.c_str() );
+
+		cl_gts_master.cl_bro_config.cb_load_ok();
+	}
+	/* Level(tif,tga) file */
+	else {
+		cl_gts_master.cl_level.set_level_open(
+			dpath ,head ,ext ,nums
 		);
 	}
+	return std::string();
 }
 /*------ dnd処理ここまで ------*/
 
@@ -375,7 +242,12 @@ int fltk_opengl::handle( int event )
 	case FL_DND_RELEASE:
 		return 1;
 	case FL_PASTE:
-		open_files_by_paste_( Fl::event_text() );
+	{
+		std::string err(open_files_by_paste_( Fl::event_text() ));
+		if (!err.empty()) {
+			fl_alert( err.c_str() );
+		}
+	}
 		return 1;
 
 	default:

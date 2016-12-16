@@ -5,7 +5,7 @@
 
 void gtsfbro06cb_level::cb_level_name( void )
 {
-	std::string level_name( cl_gts_gui.strinp_level_file->value() );
+	std::string level_name( cl_gts_gui.strinp_level_save_file_head->value() );
 
 // std::cout << "level_name=" << level_name << std::endl;
 
@@ -28,13 +28,13 @@ void gtsfbro06cb_level::cb_level_name( void )
 		Fl_Color col = FL_YELLOW;
 		//Fl_Color col = (Fl_Color)92;
 		//Fl_Color col = (Fl_Color)213;/* satsuei list checkに近い色 */
-		cl_gts_gui.strinp_level_file->color(col);
-		cl_gts_gui.strinp_level_file->redraw();
+		cl_gts_gui.strinp_level_save_file_head->color(col);
+		cl_gts_gui.strinp_level_save_file_head->redraw();
 // std::cout << "overwrite" << std::endl;
 	} else {	/* 新規ファイル */
 		Fl_Color col = FL_WHITE;
-		cl_gts_gui.strinp_level_file->color(col);
-		cl_gts_gui.strinp_level_file->redraw();
+		cl_gts_gui.strinp_level_save_file_head->color(col);
+		cl_gts_gui.strinp_level_save_file_head->redraw();
 // std::cout << "new file" << std::endl;
 	}
 }

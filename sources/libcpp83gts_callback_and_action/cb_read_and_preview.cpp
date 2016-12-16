@@ -4,7 +4,7 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-void gts_master::cb_read_and_preview( void )
+void gts_master::cb_read_and_preview( void ) // =legacy
 {
 	char *filepath;
 

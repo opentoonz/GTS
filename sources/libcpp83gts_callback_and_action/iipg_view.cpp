@@ -53,7 +53,7 @@ int gts_master::_iipg_view_setup( int i_max_area_sw )
 		this->set_scrollbar();
 
 		/* zoom値表示 */
-		this->_print_window_headline();
+		this->print_window_headline();
 	}
 
 	return OK;

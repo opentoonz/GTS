@@ -42,7 +42,7 @@ public:
 protected:
 	const char *ccp_text_file_ext( void ) const
 	{ return this->_ccp_text_file_ext; }
-	/*** const char *get_imagefile_extension( void ) const
+	/*** const char *get_save_imagefile_extension( void ) const
 	{ return this->imagefile_extension_; } ***/
 	const char *ccp_dir_mark( void ) const
 	{ return this->_ccp_dir_mark; }

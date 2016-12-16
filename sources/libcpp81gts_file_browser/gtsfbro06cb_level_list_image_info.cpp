@@ -178,11 +178,11 @@ int gtsfbro06cb_level::_info_image_by_dir_and_num( const char *ccp_file_for_head
 __FILE__,
 __LINE__,
 cl_gts_gui.menite_level_view_rgb_full_sw->value(),
-cl_gts_gui.filinp_level_rgb_scan_dir->value()
+cl_gts_gui.filinp_level_open_dir_path->value()
 );***/
 	if (cl_gts_gui.menite_level_view_rgb_full_sw->value()) {
 		ccp_gui_dir =
-			cl_gts_gui.filinp_level_rgb_scan_dir->value();
+			cl_gts_gui.filinp_level_open_dir_path->value();
 		if (OK != this->i_lpath_cat_file_for_full(
 			ccp_file_for_head, i_num
 		)) {
@@ -194,7 +194,7 @@ cl_gts_gui.filinp_level_rgb_scan_dir->value()
 			return NG;
 		}
 	} else {
-		ccp_gui_dir = cl_gts_gui.filinp_level_dir->value();
+		ccp_gui_dir = cl_gts_gui.filinp_level_save_dir_path->value();
 		if (OK != this->i_lpath_cat_file_by_num(
 			ccp_file_for_head, i_num
 		)) {
@@ -234,11 +234,11 @@ int gtsfbro06cb_level::_list_image_info( ST_DIR_OR_FILE_INFO *stp_dir_or_file_in
 	if (E_DIR_OR_FILE_IS_NOT_TRACEING_RGB_IMAGE ==
 	stp_dir_or_file_info->e_type) {
 		ccp_gui_dir =
-			cl_gts_gui.filinp_level_rgb_scan_dir->value();
+			cl_gts_gui.filinp_level_open_dir_path->value();
 	} else
 	if (E_DIR_OR_FILE_IS_NUM_IMAGE ==
 	stp_dir_or_file_info->e_type) {
-		ccp_gui_dir = cl_gts_gui.filinp_level_dir->value();
+		ccp_gui_dir = cl_gts_gui.filinp_level_save_dir_path->value();
 	}
 	else {
 		pri_funct_err_bttvr(
@@ -326,12 +326,12 @@ void gtsfbro06cb_level::cb_info_redisplay( void )
 		if (E_DIR_OR_FILE_IS_NOT_TRACEING_RGB_IMAGE ==
 		stp_dir_or_file_info->e_type) {
 			ccp_gui_dir =
-			 cl_gts_gui.filinp_level_rgb_scan_dir->value();
+			 cl_gts_gui.filinp_level_open_dir_path->value();
 		} else
 		if (E_DIR_OR_FILE_IS_NUM_IMAGE ==
 		stp_dir_or_file_info->e_type) {
 			ccp_gui_dir =
-			 cl_gts_gui.filinp_level_dir->value();
+			 cl_gts_gui.filinp_level_save_dir_path->value();
 		}
 		else {
 			pri_funct_err_bttvr(

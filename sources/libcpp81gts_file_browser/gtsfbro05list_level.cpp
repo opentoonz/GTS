@@ -184,7 +184,7 @@ int gtsfbro05list_level::_make_dir_or_file_level( const char *ccp_gui_main_dir, 
 		return NG;
 	}
 
-	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_open_browse->value()) {
 		e_1st_main_type = E_DIR_OR_FILE_IS_DIR;
 		e_1st_sub_type = E_DIR_OR_FILE_IS_NOTHING;
 	} else {
@@ -248,10 +248,10 @@ int gtsfbro05list_level::change_level_list( void )
 	const char *ccp_dir;
 	char ca_msg[PTBL_PATH_MAX];
 
-	ccp_gui_main_dir= cl_gts_gui.filinp_level_dir->value();
-	ccp_gui_sub_dir = cl_gts_gui.filinp_level_rgb_scan_dir->value();
+	ccp_gui_main_dir= cl_gts_gui.filinp_level_save_dir_path->value();
+	ccp_gui_sub_dir = cl_gts_gui.filinp_level_open_dir_path->value();
 
-	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
+	if (0 == cl_gts_gui.togbut_level_open_browse->value()) {
 		ccp_dir = ccp_gui_main_dir;;
 	} else {
 		ccp_dir = ccp_gui_sub_dir;;
@@ -342,12 +342,12 @@ void gtsfbro05list_level::change_level_dir( const char *ccp_dir )
 		cp_gui_dir = (char *)ccp_dir;
 	}
 
-	if (0 == cl_gts_gui.togbut_level_rgb_scan_browse_sw->value()) {
-	 cl_gts_gui.filinp_level_dir->value(cp_gui_dir);
-	 cl_gts_gui.filinp_level_dir->position(strlen(cp_gui_dir));
+	if (0 == cl_gts_gui.togbut_level_open_browse->value()) {
+	 cl_gts_gui.filinp_level_save_dir_path->value(cp_gui_dir);
+	 cl_gts_gui.filinp_level_save_dir_path->position(strlen(cp_gui_dir));
 	}
-	cl_gts_gui.filinp_level_rgb_scan_dir->value(cp_gui_dir);
-	cl_gts_gui.filinp_level_rgb_scan_dir->position(
+	cl_gts_gui.filinp_level_open_dir_path->value(cp_gui_dir);
+	cl_gts_gui.filinp_level_open_dir_path->position(
 		strlen(cp_gui_dir)
 	);
 }
@@ -355,7 +355,7 @@ void gtsfbro05list_level::change_level_dir( const char *ccp_dir )
 /* configディレクトリのconfigファイル読み込みによる設定で使う... */
 void gtsfbro05list_level::init_level_dir( const char *ccp_dir )
 {
-	cl_gts_gui.filinp_level_dir->value(ccp_dir);
-	cl_gts_gui.filinp_level_dir->position(strlen(ccp_dir));
+	cl_gts_gui.filinp_level_save_dir_path->value(ccp_dir);
+	cl_gts_gui.filinp_level_save_dir_path->position(strlen(ccp_dir));
 	this->v_path_memory(ccp_dir);
 }

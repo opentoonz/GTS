@@ -35,10 +35,9 @@ int gts_master::rotate_per_90( const bool crop_sw )
 	 * 画像あれば回転処理し表示する
 	 */
 
-	this->rot_and_trace_and_preview_( 
+	this->rot_and_trace_and_enoise_and_preview_( 
 		this->cl_iip_ro90.get_clp_parent()
 		, i_rot90_new
-		, 3
 		, crop_sw
 	);
 

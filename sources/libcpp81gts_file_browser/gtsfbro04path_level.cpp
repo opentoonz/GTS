@@ -24,10 +24,10 @@ int gtsfbro04path_level::i_lpath_cat_file_by_num( const char *ccp_file, int i_nu
 		return NG;
 	}
 
-	if (OK != this->i_path_cat_part( this->get_imagefile_extension() )) {
+	if (OK != this->i_path_cat_part( this->get_save_imagefile_extension() )) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_path_cat_part(%s) returns NULL.",
-			this->get_imagefile_extension()
+			this->get_save_imagefile_extension()
 		);
 		return NG;
 	}
@@ -67,10 +67,10 @@ int gtsfbro04path_level::i_lpath_cat_file_for_full( const char *ccp_file, int i_
 		return NG;
 	}
 
-	if (OK != this->i_path_cat_part( this->get_imagefile_extension() )) {
+	if (OK != this->i_path_cat_part( this->get_save_imagefile_extension() )) {
 		pri_funct_err_bttvr(
 	 "Error : this->i_path_cat_part(%s) returns NULL.",
-			this->get_imagefile_extension()
+			this->get_save_imagefile_extension()
 		);
 		return NG;
 	}

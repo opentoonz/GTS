@@ -16,9 +16,11 @@
 class gtsfbro01path_base {
 public:
 	gtsfbro01path_base()
-		/*,imagefile_extensions_({ ".tif" ,".tga" })*/
+		//imagefile_extensions_({ ".tif" ,".tga" })
+		//,imagefile_extensions_({ ".txt" })
 		:_i_dir_part_length(0)
-		,current_imagefile_extension_(0)
+		,current_save_imagefile_extension_(0)
+		,current_open_imagefile_extension_(0)
 	{
 #if defined _WIN32
 		strcpy( this->_ca_path   ,"C:/" );
@@ -33,10 +35,13 @@ public:
 	void setup_path( const char *path );
 
 
-	const char* get_imagefile_extension( void ) const;
 	void add_imagefile_extension( const std::string& ext );
-	const int get_current_imagefile_extension( void ) const;
-	void set_current_imagefile_extension( const int current );
+	const char* get_save_imagefile_extension( void ) const;
+	const char* get_open_imagefile_extension( void ) const;
+	const int get_current_save_imagefile_extension( void ) const;
+	const int get_current_open_imagefile_extension( void ) const;
+	void set_current_save_imagefile_extension( const int current );
+	void set_current_open_imagefile_extension( const int current );
 
 protected:
 	/* ファイル名が数字と拡張子をもったものかどうか調べる */
@@ -98,7 +103,8 @@ private:
 	char _ca_memory[PTBL_PATH_MAX];
 
 	std::vector<std::string> imagefile_extensions_;/* ここでは入れ物、継承後のインスタンス時に値をセットする */
-	int current_imagefile_extension_;
+	int current_save_imagefile_extension_;
+	int current_open_imagefile_extension_;
 };
 
 #endif /* !gtsfbro01path_base_h */
@@ -141,7 +147,7 @@ gtsfbro01path_base::i_path_cat_head(-)
 gtsfbro02list_base::e_dir_or_file_type(-)
 gtsfbro06cb_level::_rename_file_tif(-)
 +-- gtsfbro01path_base::ccp_num4_and_ext(-)
-    +-- get_imagefile_extension()
+    +-- get_save_imagefile_extension()
 
 gtsfbro04path_level::i_lpath_cat_file_by_num(-)
 gtsfbro04path_level::i_lpath_cat_file_for_full(-)

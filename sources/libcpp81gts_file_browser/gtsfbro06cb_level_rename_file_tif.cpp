@@ -16,9 +16,9 @@ int gtsfbro06cb_level::_rename_file_tif( int i_num, const char *ccp_old, char *c
 
 	if (E_DIR_OR_FILE_IS_NOT_TRACEING_RGB_IMAGE ==
 	stp_dir_or_file->e_type) {
-		ccp_dir =cl_gts_gui.filinp_level_rgb_scan_dir->value();
+		ccp_dir =cl_gts_gui.filinp_level_open_dir_path->value();
 	} else {
-		ccp_dir =cl_gts_gui.filinp_level_dir->value();
+		ccp_dir =cl_gts_gui.filinp_level_save_dir_path->value();
 	}
 
 	/* Dialogのメッセージ生成 */

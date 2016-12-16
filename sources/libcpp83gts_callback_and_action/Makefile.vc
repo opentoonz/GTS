@@ -37,6 +37,7 @@ cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
 cb_config_save.cpp\
 cb_file_number_list.cpp\
+cb_level.cpp\
 cb_quit.cpp\
 cb_read_and_preview.cpp\
 cb_read_and_save.cpp\
@@ -56,6 +57,8 @@ fltk_event.cpp\
 fltk_opengl_draw.cpp\
 fltk_opengl_handle.cpp\
 igs_lex_white_space_and_double_quote.cpp\
+ids_path_fltk_native_browse.cpp\
+ids_path_level_from_files.cpp\
 iipg_color_trace.cpp\
 iipg_rot90.cpp\
 iipg_save.cpp\
