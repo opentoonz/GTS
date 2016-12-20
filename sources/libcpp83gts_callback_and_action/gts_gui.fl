@@ -31,7 +31,8 @@ class gts_gui {open
         } {
           MenuItem {} {
             label {Open Level...}
-            callback {cl_gts_master.cl_level.browse_and_set_of_open();}
+            callback {cl_gts_master.cl_level.display_tab_to_level_open();
+cl_gts_master.cl_level.browse_and_set_of_open();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
@@ -101,8 +102,21 @@ cl_gts_master.cb_scan_full_area_and_crop();}
           }
           MenuItem {} {
             label {RGB Convert...}
-            callback {cl_gts_master.cb_read_and_save_start();}
+            callback {cl_gts_master.cl_level.display_tab_to_level_open();
+cl_gts_master.cb_read_and_save_start();}
             xywh {5 5 100 20} shortcut 0x54
+          }
+          MenuItem {} {
+            label Rename
+            callback {cl_gts_master.cl_level.display_tab_to_level_open();
+cl_gts_master.cl_level.dialog_rename_at_open();}
+            xywh {0 0 30 20}
+          }
+          MenuItem {} {
+            label Renumber
+            callback {cl_gts_master.cl_level.display_tab_to_level_open();
+cl_gts_master.cl_level.dialog_renumber_at_open();}
+            xywh {0 0 30 20}
           }
         }
         Submenu {} {
@@ -464,7 +478,7 @@ cl_gts_master.cl_bro_level.cb_dir();
 window_level_browse->show();}
         xywh {30 5 80 25} hide
       }
-      Fl_Tabs {} {open
+      Fl_Tabs tabs_level_action {open
         xywh {1 1 198 189} box BORDER_BOX
       } {
         Fl_Group {} {
@@ -484,7 +498,7 @@ window_level_browse->show();}
             }
           }
         }
-        Fl_Group {} {
+        Fl_Group group_level_open {
           label Open open
           xywh {1 25 198 165} align 5
         } {
@@ -643,16 +657,18 @@ cl_gts_master.cl_level.check_save_level_by_existing_file();}
         } {
           Fl_Check_Button chkbtn_filter_rgb_color_trace_sw {
             label {RGB Trace}
-            callback {cl_gts_master.cb_read_and_trace_and_preview();
+            callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
-	o->labelcolor(FL_BLUE);
+//	o->labelcolor(FL_BLUE);
+	o->box(FL_SHADOW_BOX);
 	o->redraw();
 }
 else {
-	o->labelcolor(FL_FOREGROUND_COLOR);
+//	o->labelcolor(FL_FOREGROUND_COLOR);
+	o->box(FL_FLAT_BOX);
 	o->redraw();
 }}
-            xywh {5 335 160 25} down_box DOWN_BOX value 1
+            xywh {5 335 160 25} down_box DOWN_BOX
           }
           Fl_Box {} {
             xywh {165 335 34 25} resizable
@@ -663,13 +679,15 @@ else {
         } {
           Fl_Check_Button chkbtn_filter_rgb_erase_dot_noise_sw {
             label {RGB Erase dot noise}
-            callback {cl_gts_master.cb_read_and_trace_and_preview();
+            callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
-	o->labelcolor(FL_BLUE);
+//	o->labelcolor(FL_BLUE);
+	o->box(FL_SHADOW_BOX);
 	o->redraw();
 }
 else {
-	o->labelcolor(FL_FOREGROUND_COLOR);
+//	o->labelcolor(FL_FOREGROUND_COLOR);
+	o->box(FL_FLAT_BOX);
 	o->redraw();
 }}
             xywh {5 365 160 25} down_box DOWN_BOX
@@ -688,13 +706,15 @@ else {
         } {
           Fl_File_Input filinp_level_save_dir_path {
             label Directory
-            callback {cl_gts_master.cl_level.check_save_level_by_existing_file();}
+            callback {cl_gts_master.cl_level.check_save_level_by_existing_file();
+cl_gts_master.cl_level.set_number_and_savelevelname();}
             xywh {5 440 175 35} box BORDER_BOX align 5 when 1 resizable
           }
           Fl_Button togbut_level_save_browse {
             label {<}
             callback {cl_gts_master.cl_level.browse_and_set_of_save();
-cl_gts_master.cl_level.check_save_level_by_existing_file();}
+cl_gts_master.cl_level.check_save_level_by_existing_file();
+cl_gts_master.cl_level.set_number_and_savelevelname();}
             xywh {180 450 15 25}
           }
         }
@@ -706,7 +726,9 @@ cl_gts_master.cl_level.check_save_level_by_existing_file();}
           }
           Fl_Input strinp_level_save_file_head {
             label Level
-            callback {cl_gts_master.cl_level.check_save_level_by_existing_file();}
+            callback {cl_gts_master.cl_level.check_save_level_by_existing_file();
+cl_gts_master.cl_level.set_number_and_savelevelname();
+norout_crnt_scan_level_of_fnum->value( o->value() );}
             xywh {80 480 115 25} box BORDER_BOX when 1 resizable
           }
         }
@@ -718,7 +740,8 @@ cl_gts_master.cl_level.check_save_level_by_existing_file();}
           }
           Fl_Choice choice_level_save_image_format {
             label Format
-            callback {cl_gts_master.cl_level.check_save_level_by_existing_file();} open
+            callback {cl_gts_master.cl_level.check_save_level_by_existing_file();
+cl_gts_master.cl_level.set_number_and_savelevelname();} open
             xywh {80 510 100 25} down_box BORDER_BOX
           } {}
           Fl_Box {} {

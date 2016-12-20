@@ -179,6 +179,10 @@ int gts_master::exec( const char *comm )
 		this->cl_level.ext_save.size() - 1/*".tga"*/ );
 	}
 
+	/* gts guiの初期設定 Filterの初期スイッチ */
+	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->box( FL_SHADOW_BOX );
+	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value( 1 );
+
 	/* install_setupによる2次設定 */
 
 	if (!this->cl_memo_install_setup.browser_directory_path.empty()) {

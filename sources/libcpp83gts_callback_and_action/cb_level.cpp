@@ -40,11 +40,31 @@ const std::string ids::path::extensions::get_native_filters( void )
 {
 	std::string str;
 
+	/* Exsamples
+		"Text\t*.txt\n"
+		"C Files\t*.{cxx,h,c}"
+	*/
 	for (int ii=0 ;ii<static_cast<int>(this->dotex_.size()) ;++ii) {
 		str += this->names_.at(ii);
 		str += "\t*";
 		str += this->dotex_.at(ii);
 		str += "\n";
+	}
+	/* 拡張子が2個以上のときは全部をまとめたFilterも追加しとく */
+	if (2 <= this->dotex_.size()) {
+		str += "Image Files\t*.{";
+		for(int ii=0;ii<static_cast<int>(this->dotex_.size());++ii){
+			if (0 < ii) {
+				str += ',';
+			}
+			if (this->dotex_.at(ii).at(0) == '.') {
+				str += this->dotex_.at(ii).substr(1);
+			}
+			else {
+				str += this->dotex_.at(ii);
+			}
+		}
+		str += "}";
 	}
 	return str;
 }
@@ -132,7 +152,7 @@ void cb_level::set_level_open(
 	cl_gts_gui.window_fnum_list->flush();
 
 	/* 08 Mainウインドウ バーにlevel名表示 */
-	cl_gts_master.print_window_headline();
+	//cl_gts_master.print_window_headline();
 
 	/* 09 画像読込表示 */
 	cl_gts_master.cb_read_and_trace_and_preview();
@@ -349,7 +369,7 @@ void cb_level::set_number_and_savelevelname( void )
 	);
 
 	/* Mainウインドウ バーにlevel名表示 */
-	cl_gts_master.print_window_headline();
+	//cl_gts_master.print_window_headline();
 
 	/* 画像読込表示はしない */
 }
@@ -428,7 +448,7 @@ void cb_level::dialog_rename_at_open(void)
 		/* 最初にこれでいいかユーザーに確認する */
 		if (ii==0) {
 			if (fl_ask(
-				"Rename from\n%s\nto\n%s\n%s\nOK?"
+ "Rename\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
 				,opa.c_str()
 				,npa.c_str()
 				,numost.str().c_str()
@@ -471,10 +491,29 @@ void cb_level::dialog_renumber_at_open(void)
 	/* 新しいStart番号との差 */
 	const int diff_num = std::stoi(new_start_num) - nums.at(0);
 
+	/* エラー数値をチェックしつつ番号を文字列に入れる */
 	std::ostringstream numost;
+	bool error_sw = false;
 	for (auto nu : nums) {
 		numost << nu + diff_num;
 		numost << " ";
+		if ( nu + diff_num < 0 || 9999 < nu + diff_num ) {
+			error_sw = true;
+		}
+	}
+
+	/* ゼロ以下数値があるとエラーメッセージダイオローグを出して終わる */
+	if (error_sw) {
+		std::string opa( this->get_openfilepath( nums.at(0) ) );
+		std::string npa( this->get_openfilepath(
+				nums.at(0) + diff_num ) );
+		fl_alert(
+"Error : Number need 0...9999 range\nFrom\n %s\nTo\n %s\nNumber List\n %s\n"
+			,opa.c_str()
+			,npa.c_str()
+			,numost.str().c_str()
+		);
+		return;
 	}
 
 	/* ファイル毎名前を変更する */
@@ -485,7 +524,7 @@ void cb_level::dialog_renumber_at_open(void)
 		/* 最初にこれでいいかユーザーに確認する */
 		if (ii==0) {
 			if (fl_ask(
-				"Renumber from\n%s\nto\n%s\n%s\nOK?"
+"Renumber\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
 				,opa.c_str()
 				,npa.c_str()
 				,numost.str().c_str()
@@ -495,5 +534,11 @@ void cb_level::dialog_renumber_at_open(void)
 		}
 		std::rename( opa.c_str() ,npa.c_str() );
 	}
+}
+
+/* openのtabに表示を切替 */
+void cb_level::display_tab_to_level_open( void )
+{
+	cl_gts_gui.tabs_level_action->value( cl_gts_gui.group_level_open );
 }
 

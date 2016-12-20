@@ -243,17 +243,27 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 		((words.at(0) == this->str_filter_rgb_erase_dot_noise_sw_) ||
 		 (words.at(0) == this->str_filter_rgb_erase_dot_noise_sw_legacy2016_))
 		) {
-			cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value(
-				(words.at(1) == this->str_on_) ?1 :0
-			);
+			if (words.at(1) == this->str_on_) {
+	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->box(FL_SHADOW_BOX);
+	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value(1);
+			}
+			else {
+	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->box(FL_FLAT_BOX);
+	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value(0);
+			}
 		}
 		else if ((2 == words.size()) && (
 		(words.at(0) == this->str_filter_rgb_color_trace_sw_)
 //|| (words.at(0) == this->str_filter_rgb_color_trace_sw_legacy2016_)
 		)) {
-			cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value(
-				(words.at(1) == this->str_on_) ?1 :0
-			);
+			if (words.at(1) == this->str_on_) {
+	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->box(FL_SHADOW_BOX);
+	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value(1);
+			}
+			else {
+	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->box(FL_FLAT_BOX);
+	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value(0);
+			}
 		}
 
 		else if ((2 == words.size()) &&

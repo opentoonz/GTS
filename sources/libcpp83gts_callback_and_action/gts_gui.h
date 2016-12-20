@@ -69,6 +69,10 @@ private:
   static void cb_Preview1(Fl_Menu_*, void*);
   inline void cb_RGB_i(Fl_Menu_*, void*);
   static void cb_RGB(Fl_Menu_*, void*);
+  inline void cb_Rename_i(Fl_Menu_*, void*);
+  static void cb_Rename(Fl_Menu_*, void*);
+  inline void cb_Renumber_i(Fl_Menu_*, void*);
+  static void cb_Renumber(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_level;
 private:
@@ -222,8 +226,14 @@ private:
   static void cb_window_level_set(Fl_Double_Window*, void*);
   inline void cb_Browse_i(Fl_Button*, void*);
   static void cb_Browse(Fl_Button*, void*);
+public:
+  Fl_Tabs *tabs_level_action;
+private:
   inline void cb_Scan_i(Fl_Button*, void*);
   static void cb_Scan(Fl_Button*, void*);
+public:
+  Fl_Group *group_level_open;
+private:
   inline void cb_RGB1_i(Fl_Button*, void*);
   static void cb_RGB1(Fl_Button*, void*);
 public:
@@ -298,8 +308,8 @@ private:
   static Fl_Menu_Item menu_1[];
   inline void cb_Make_i(Fl_Menu_*, void*);
   static void cb_Make(Fl_Menu_*, void*);
-  inline void cb_Rename_i(Fl_Menu_*, void*);
-  static void cb_Rename(Fl_Menu_*, void*);
+  inline void cb_Rename1_i(Fl_Menu_*, void*);
+  static void cb_Rename1(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_level_shift_number;
 private:
