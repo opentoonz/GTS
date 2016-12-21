@@ -107,13 +107,13 @@ cl_gts_master.cb_read_and_save_start();}
             xywh {5 5 100 20} shortcut 0x54
           }
           MenuItem {} {
-            label Rename
+            label {Rename...}
             callback {cl_gts_master.cl_level.display_tab_to_level_open();
 cl_gts_master.cl_level.dialog_rename_at_open();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
-            label Renumber
+            label {Renumber...}
             callback {cl_gts_master.cl_level.display_tab_to_level_open();
 cl_gts_master.cl_level.dialog_renumber_at_open();}
             xywh {0 0 30 20}
@@ -236,16 +236,6 @@ cl_gts_master.cl_level.dialog_renumber_at_open();}
             xywh {25 25 100 20}
           } {
             MenuItem {} {
-              label x1
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);}
-              xywh {30 30 100 20} shortcut 0x6e
-            }
-            MenuItem {} {
-              label {All Figure}
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);}
-              xywh {25 25 100 20} shortcut 0x6d
-            }
-            MenuItem {} {
               label {zoom In}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x7a
@@ -254,6 +244,16 @@ cl_gts_master.cl_level.dialog_renumber_at_open();}
               label {zoom Out}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x78
+            }
+            MenuItem {} {
+              label x1
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);}
+              xywh {30 30 100 20} shortcut 0x6e
+            }
+            MenuItem {} {
+              label {All Figure}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);}
+              xywh {25 25 100 20} shortcut 0x6d
             }
           }
           Submenu {} {
@@ -511,7 +511,7 @@ window_level_browse->show();}
             Fl_Button {} {
               label {RGB Convert...}
               callback {cl_gts_master.cb_read_and_save_start();}
-              xywh {95 30 99 25}
+              xywh {95 30 100 25}
             }
           }
           Fl_Group {} {open
@@ -558,17 +558,17 @@ window_level_browse->show();}
             xywh {1 165 198 20}
           } {
             Fl_Box {} {
-              xywh {1 165 119 20} resizable
+              xywh {1 165 29 20} resizable
             }
             Fl_Button {} {
-              label {A->B}
+              label {Rename...}
               callback {cl_gts_master.cl_level.dialog_rename_at_open();}
-              tooltip Rename xywh {120 165 35 20}
+              tooltip Rename xywh {30 165 75 20}
             }
             Fl_Button {} {
-              label {1->2}
+              label {Renumber...}
               callback {cl_gts_master.cl_level.dialog_renumber_at_open();}
-              tooltip Renumber xywh {160 165 35 20}
+              tooltip Renumber xywh {110 165 85 20}
             }
           }
         }

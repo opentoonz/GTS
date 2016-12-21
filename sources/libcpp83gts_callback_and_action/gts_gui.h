@@ -121,14 +121,14 @@ private:
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
-  inline void cb_x1_i(Fl_Menu_*, void*);
-  static void cb_x1(Fl_Menu_*, void*);
-  inline void cb_All_i(Fl_Menu_*, void*);
-  static void cb_All(Fl_Menu_*, void*);
   inline void cb_zoom_i(Fl_Menu_*, void*);
   static void cb_zoom(Fl_Menu_*, void*);
   inline void cb_zoom1_i(Fl_Menu_*, void*);
   static void cb_zoom1(Fl_Menu_*, void*);
+  inline void cb_x1_i(Fl_Menu_*, void*);
+  static void cb_x1(Fl_Menu_*, void*);
+  inline void cb_All_i(Fl_Menu_*, void*);
+  static void cb_All(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_frame_cyclic;
 private:
@@ -252,10 +252,10 @@ public:
 private:
   inline void cb_choice_level_open_image_format_i(Fl_Choice*, void*);
   static void cb_choice_level_open_image_format(Fl_Choice*, void*);
-  inline void cb_A_i(Fl_Button*, void*);
-  static void cb_A(Fl_Button*, void*);
-  inline void cb_1_i(Fl_Button*, void*);
-  static void cb_1(Fl_Button*, void*);
+  inline void cb_Rename1_i(Fl_Button*, void*);
+  static void cb_Rename1(Fl_Button*, void*);
+  inline void cb_Renumber1_i(Fl_Button*, void*);
+  static void cb_Renumber1(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_level_num_start;
   Fl_Choice *choice_level_num_continue_type;
@@ -308,8 +308,8 @@ private:
   static Fl_Menu_Item menu_1[];
   inline void cb_Make_i(Fl_Menu_*, void*);
   static void cb_Make(Fl_Menu_*, void*);
-  inline void cb_Rename1_i(Fl_Menu_*, void*);
-  static void cb_Rename1(Fl_Menu_*, void*);
+  inline void cb_Rename2_i(Fl_Menu_*, void*);
+  static void cb_Rename2(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_level_shift_number;
 private:
@@ -373,8 +373,8 @@ public:
 private:
   inline void cb_window_config_load_i(Fl_Double_Window*, void*);
   static void cb_window_config_load(Fl_Double_Window*, void*);
-  inline void cb_2_i(Fl_Button*, void*);
-  static void cb_2(Fl_Button*, void*);
+  inline void cb_1_i(Fl_Button*, void*);
+  static void cb_1(Fl_Button*, void*);
 public:
   Fl_File_Input *filinp_config_load_dir;
 private:
@@ -398,8 +398,8 @@ public:
 private:
   inline void cb_window_config_save_as_i(Fl_Double_Window*, void*);
   static void cb_window_config_save_as(Fl_Double_Window*, void*);
-  inline void cb_3_i(Fl_Button*, void*);
-  static void cb_3(Fl_Button*, void*);
+  inline void cb_2_i(Fl_Button*, void*);
+  static void cb_2(Fl_Button*, void*);
 public:
   Fl_File_Input *filinp_config_save_as_dir;
 private:
@@ -1075,8 +1075,8 @@ public:
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
   static void cb_window_trace_batch(Fl_Double_Window*, void*);
-  inline void cb_4_i(Fl_Button*, void*);
-  static void cb_4(Fl_Button*, void*);
+  inline void cb_3_i(Fl_Button*, void*);
+  static void cb_3(Fl_Button*, void*);
   static Fl_Menu_Item menu_3[];
   inline void cb_Add_i(Fl_Menu_*, void*);
   static void cb_Add(Fl_Menu_*, void*);

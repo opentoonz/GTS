@@ -245,20 +245,6 @@ void gts_gui::cb_menite_edit_color(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_edit_color_i(o,v);
 }
 
-void gts_gui::cb_x1_i(Fl_Menu_*, void*) {
-  cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);
-}
-void gts_gui::cb_x1(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_x1_i(o,v);
-}
-
-void gts_gui::cb_All_i(Fl_Menu_*, void*) {
-  cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);
-}
-void gts_gui::cb_All(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_All_i(o,v);
-}
-
 void gts_gui::cb_zoom_i(Fl_Menu_*, void*) {
   cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);
 }
@@ -271,6 +257,20 @@ void gts_gui::cb_zoom1_i(Fl_Menu_*, void*) {
 }
 void gts_gui::cb_zoom1(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_zoom1_i(o,v);
+}
+
+void gts_gui::cb_x1_i(Fl_Menu_*, void*) {
+  cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);
+}
+void gts_gui::cb_x1(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_x1_i(o,v);
+}
+
+void gts_gui::cb_All_i(Fl_Menu_*, void*) {
+  cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);
+}
+void gts_gui::cb_All(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_All_i(o,v);
 }
 
 void gts_gui::cb_Prev_i(Fl_Menu_*, void*) {
@@ -451,8 +451,8 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview Trace File", 0,  (Fl_Callback*)gts_gui::cb_Preview1, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {"RGB Convert...", 0x54,  (Fl_Callback*)gts_gui::cb_RGB, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Rename", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Renumber", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Renumber...", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Window", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Level...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_level, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
@@ -468,10 +468,10 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Zoom", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"x1", 0x6e,  (Fl_Callback*)gts_gui::cb_x1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"All Figure", 0x6d,  (Fl_Callback*)gts_gui::cb_All, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"zoom In", 0x7a,  (Fl_Callback*)gts_gui::cb_zoom, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"zoom Out", 0x78,  (Fl_Callback*)gts_gui::cb_zoom1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"x1", 0x6e,  (Fl_Callback*)gts_gui::cb_x1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"All Figure", 0x6d,  (Fl_Callback*)gts_gui::cb_All, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Frame", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cyclic", 0,  0, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
@@ -618,18 +618,18 @@ void gts_gui::cb_choice_level_open_image_format(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_choice_level_open_image_format_i(o,v);
 }
 
-void gts_gui::cb_A_i(Fl_Button*, void*) {
+void gts_gui::cb_Rename1_i(Fl_Button*, void*) {
   cl_gts_master.cl_level.dialog_rename_at_open();
 }
-void gts_gui::cb_A(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_A_i(o,v);
+void gts_gui::cb_Rename1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Rename1_i(o,v);
 }
 
-void gts_gui::cb_1_i(Fl_Button*, void*) {
+void gts_gui::cb_Renumber1_i(Fl_Button*, void*) {
   cl_gts_master.cl_level.dialog_renumber_at_open();
 }
-void gts_gui::cb_1(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_1_i(o,v);
+void gts_gui::cb_Renumber1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Renumber1_i(o,v);
 }
 
 void gts_gui::cb_choice_level_num_continue_type_i(Fl_Choice* o, void*) {
@@ -749,11 +749,11 @@ void gts_gui::cb_Make(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Make_i(o,v);
 }
 
-void gts_gui::cb_Rename1_i(Fl_Menu_*, void*) {
+void gts_gui::cb_Rename2_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_bro_level.cb_rename();
 }
-void gts_gui::cb_Rename1(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Rename1_i(o,v);
+void gts_gui::cb_Rename2(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Rename2_i(o,v);
 }
 
 void gts_gui::cb_menite_level_shift_number_i(Fl_Menu_*, void*) {
@@ -816,7 +816,7 @@ void gts_gui::cb_menite_level_image_x1_sw(Fl_Menu_* o, void* v) {
 Fl_Menu_Item gts_gui::menu_1[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Make Directory...", 0,  (Fl_Callback*)gts_gui::cb_Make, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename2, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Shift Number...", 0,  (Fl_Callback*)gts_gui::cb_menite_level_shift_number, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Explorer...", 0,  (Fl_Callback*)gts_gui::cb_Explorer, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
@@ -907,11 +907,11 @@ void gts_gui::cb_window_config_load(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_config_load_i(o,v);
 }
 
-void gts_gui::cb_2_i(Fl_Button*, void*) {
+void gts_gui::cb_1_i(Fl_Button*, void*) {
   cl_gts_master.cl_bro_config.cb_load_dir_up();
 }
-void gts_gui::cb_2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_2_i(o,v);
+void gts_gui::cb_1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_1_i(o,v);
 }
 
 void gts_gui::cb_filinp_config_load_dir_i(Fl_File_Input*, void*) {
@@ -949,11 +949,11 @@ void gts_gui::cb_window_config_save_as(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_config_save_as_i(o,v);
 }
 
-void gts_gui::cb_3_i(Fl_Button*, void*) {
+void gts_gui::cb_2_i(Fl_Button*, void*) {
   cl_gts_master.cl_bro_config.cb_save_as_dir_up();
 }
-void gts_gui::cb_3(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_3_i(o,v);
+void gts_gui::cb_2(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_2_i(o,v);
 }
 
 void gts_gui::cb_filinp_config_save_as_dir_i(Fl_File_Input*, void*) {
@@ -2169,11 +2169,11 @@ void gts_gui::cb_window_trace_batch(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_trace_batch_i(o,v);
 }
 
-void gts_gui::cb_4_i(Fl_Button*, void*) {
+void gts_gui::cb_3_i(Fl_Button*, void*) {
   cl_gts_master.cl_bro_trace_batch.cb_dir_up();
 }
-void gts_gui::cb_4(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_4_i(o,v);
+void gts_gui::cb_3(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_3_i(o,v);
 }
 
 void gts_gui::cb_Add_i(Fl_Menu_*, void*) {
@@ -5448,7 +5448,7 @@ Fl_Double_Window* gts_gui::make_window() {
           { Fl_Box* o = new Fl_Box(1, 30, 94, 25);
             Fl_Group::current()->resizable(o);
           } // Fl_Box* o
-          { Fl_Button* o = new Fl_Button(95, 30, 99, 25, "RGB Convert...");
+          { Fl_Button* o = new Fl_Button(95, 30, 100, 25, "RGB Convert...");
             o->callback((Fl_Callback*)cb_RGB1);
           } // Fl_Button* o
           o->end();
@@ -5488,16 +5488,16 @@ Fl_Double_Window* gts_gui::make_window() {
           o->end();
         } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(1, 165, 198, 20);
-          { Fl_Box* o = new Fl_Box(1, 165, 119, 20);
+          { Fl_Box* o = new Fl_Box(1, 165, 29, 20);
             Fl_Group::current()->resizable(o);
           } // Fl_Box* o
-          { Fl_Button* o = new Fl_Button(120, 165, 35, 20, "A->B");
+          { Fl_Button* o = new Fl_Button(30, 165, 75, 20, "Rename...");
             o->tooltip("Rename");
-            o->callback((Fl_Callback*)cb_A);
+            o->callback((Fl_Callback*)cb_Rename1);
           } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(160, 165, 35, 20, "1->2");
+          { Fl_Button* o = new Fl_Button(110, 165, 85, 20, "Renumber...");
             o->tooltip("Renumber");
-            o->callback((Fl_Callback*)cb_1);
+            o->callback((Fl_Callback*)cb_Renumber1);
           } // Fl_Button* o
           o->end();
         } // Fl_Group* o
@@ -5726,7 +5726,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_config_load->callback((Fl_Callback*)cb_window_config_load, (void*)(this));
     { Fl_Button* o = new Fl_Button(0, 0, 0, 0);
       o->shortcut(0x40075);
-      o->callback((Fl_Callback*)cb_2);
+      o->callback((Fl_Callback*)cb_1);
     } // Fl_Button* o
     { filinp_config_load_dir = new Fl_File_Input(0, 20, 300, 35, "Directory");
       filinp_config_load_dir->box(FL_BORDER_BOX);
@@ -5785,7 +5785,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_config_save_as->callback((Fl_Callback*)cb_window_config_save_as, (void*)(this));
     { Fl_Button* o = new Fl_Button(0, 0, 0, 0);
       o->shortcut(0x40075);
-      o->callback((Fl_Callback*)cb_3);
+      o->callback((Fl_Callback*)cb_2);
     } // Fl_Button* o
     { filinp_config_save_as_dir = new Fl_File_Input(0, 20, 300, 35, "Directory");
       filinp_config_save_as_dir->box(FL_BORDER_BOX);
@@ -6927,7 +6927,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_batch->callback((Fl_Callback*)cb_window_trace_batch, (void*)(this));
     { Fl_Button* o = new Fl_Button(0, 0, 0, 0);
       o->shortcut(0x40075);
-      o->callback((Fl_Callback*)cb_4);
+      o->callback((Fl_Callback*)cb_3);
     } // Fl_Button* o
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 300, 25);
       o->menu(menu_3);
