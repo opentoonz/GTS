@@ -205,7 +205,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
-					sources/libcpp83gts_callback_and_action/cb_config_save.cpp \
+					sources/libcpp83gts_callback_and_action/cb_config.cpp \
 					sources/libcpp83gts_callback_and_action/cb_file_number_list.cpp \
 					sources/libcpp83gts_callback_and_action/cb_level.cpp \
 					sources/libcpp83gts_callback_and_action/cb_quit.cpp \

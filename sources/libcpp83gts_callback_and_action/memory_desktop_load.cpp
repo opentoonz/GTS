@@ -93,7 +93,8 @@ int memory_desktop::load( void ) {
 		if (6 <= ret) { hh = atoi(words.at(5).c_str()); }
 
 		if ((this->str_config_dir_ == key) && (2 == ret)) {
-		cl_gts_master.cl_bro_config.init_config_dir(di.c_str());
+			cl_gts_master.cl_config.set_dir_path(
+				di.c_str() );
 		}
 		else if ((this->str_window_opengl_==key) && (6==ret)) {
 		cl_gts_gui.window_opengl->resize(xx,yy,ww,hh);
@@ -115,6 +116,7 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_level_set->position(xx,yy);
 		}
+#if 0
 		else if ((this->str_window_level_browse_==key)
 		&& (6==ret)) {
 		cl_gts_gui.window_level_browse->resize(xx,yy,ww,hh);
@@ -135,6 +137,7 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_config_save_as->resize(xx,yy,ww,hh);
 		}
+#endif
 		else if ((this->str_window_crop_area_and_rot90_==key)&&(4==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_crop_area_and_rot90->set();

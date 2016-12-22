@@ -34,32 +34,21 @@ void gts_gui::cb_Set(Fl_Menu_* o, void* v) {
 }
 
 void gts_gui::cb_menite_config_load_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_config_load->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_config_load->show();
-} else {
-    cl_gts_gui.window_config_load->hide();
-};
+  cl_gts_master.cl_config.open();
 }
 void gts_gui::cb_menite_config_load(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_config_load_i(o,v);
 }
 
 void gts_gui::cb_Save_i(Fl_Menu_*, void*) {
-  cl_gts_master.cb_config_save();
+  cl_gts_master.cl_config.save();
 }
 void gts_gui::cb_Save(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Save_i(o,v);
 }
 
 void gts_gui::cb_menite_config_save_as_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_config_save_as->value()) {
-    cl_gts_master.cl_bro_config.cb_save_as_file();
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_config_save_as->show();
-} else {
-    cl_gts_gui.window_config_save_as->hide();
-};
+  cl_gts_master.cl_config.save_as();
 }
 void gts_gui::cb_menite_config_save_as(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_config_save_as_i(o,v);
@@ -440,9 +429,9 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Open Level...", 0,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Set Saving Level...", 0,  (Fl_Callback*)gts_gui::cb_Set, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
- {"Open Config...", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_config_load, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Open Config...", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_config_load, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Save Config", 0x40073,  (Fl_Callback*)gts_gui::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Save As Config...", 0x50073,  (Fl_Callback*)gts_gui::cb_menite_config_save_as, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Save As Config...", 0x50073,  (Fl_Callback*)gts_gui::cb_menite_config_save_as, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Quit", 0x40071,  (Fl_Callback*)gts_gui::cb_Quit, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Action", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},

@@ -88,20 +88,8 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 
 	/* Config file */
 	if (ext == ".txt") {
-		std::string dpa,fna;
-		ids::path::from_fpath_to_dpath_fname(
-			dnd_str ,dpa ,fna
-		);
-		if (dpa.empty()) {
-			return "Error : Need directroy";
-		}
-		if (fna.empty()) {
-			return "Error : Need filename";
-		}
-		cl_gts_gui.filinp_config_load_dir->value(  dpa.c_str() );
-		cl_gts_gui.strinp_config_load_file->value( fna.c_str() );
-
-		cl_gts_master.cl_bro_config.cb_load_ok();
+		cl_gts_master.cl_config.loading_and_set_dpath_fname(
+			dnd_str );
 	}
 	/* Level(tif,tga) file */
 	else {

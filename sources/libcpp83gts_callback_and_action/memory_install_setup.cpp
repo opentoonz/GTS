@@ -25,7 +25,7 @@ void memory_install_setup::load( const std::string& exe_file_path )
 
 		if (words.at(0) == "browser_directory_path") {
 			this->browser_directory_path = words.at(1);
- cl_gts_master.cl_bro_config.setup_path(words.at(1).c_str());
+			cl_gts_master.cl_config.set_dir_path( words.at(1) );
  cl_gts_master.cl_bro_trace_batch.setup_path(words.at(1).c_str());
 		} else
 		if (words.at(0) == "image_file_format") {

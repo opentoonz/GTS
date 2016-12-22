@@ -7,6 +7,18 @@
 namespace ids {
 namespace path {
 
+/* ファイルパスをディレクトリパスとファイル名に分割する */
+void from_fpath_to_dpath_fname(
+	const std::string& fpath
+	,std::string& dpath
+	,std::string& fname
+);
+/* ディレクトリパスとファイル名をファイルパスにする */
+const std::string fpath_from_dpath_fname(
+	const std::string& dpath
+	,const std::string& fname
+);
+
 /*
 fpathからdpath,head,num,number,extをセットする
 dpathから、head,num書式,extの一致する連番のファイルを探し、numsにセットする
@@ -33,15 +45,6 @@ num_form
 const std::string str_from_number(
 	const int number
 	, const std::string& num_form=".0000"
-);
-
-/*
-ファイルパスをディレクトリパスとファイル名に分割する
-*/
-void from_fpath_to_dpath_fname(
-	const std::string& fpath
-	,std::string& dpath
-	,std::string& fname
 );
 
 } // path

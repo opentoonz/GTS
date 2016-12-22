@@ -24,6 +24,7 @@
 
 #include "memory_desktop.h"
 #include "memory_config.h"
+#include "cb_config.h"
 #include "cb_level.h"
 #include "cb_file_number_list.h"
 #include "cb_color_trace_edit_color.h"
@@ -161,9 +162,9 @@ public:
 
 
 	/* クラスコンポーネント */
-	gtsfbro06cb_config      cl_bro_config;
-	gtsfbro06cb_level       cl_bro_level;
-	gtsfbro06cb_trace_batch	cl_bro_trace_batch;
+	gtsfbro06cb_config      cl_bro_config;		/* 将来削除予定 */
+	gtsfbro06cb_level       cl_bro_level;		/* 将来削除予定 */
+	gtsfbro06cb_trace_batch	cl_bro_trace_batch;	/* 将来削除予定 */
 
 	fltk_event	cl_fltk_event;	/* イベントドリブン */
 	memory_desktop	cl_memo_desktop;	/* desktopの再現 */
@@ -172,6 +173,7 @@ public:
 	memory_short_cut_key	cl_memo_short_cut_key;
 	memory_install_setup	cl_memo_install_setup;
 
+	cb_config		cl_config;
 	cb_level		cl_level;
 	cb_file_number_list	cl_file_number_list;
 
