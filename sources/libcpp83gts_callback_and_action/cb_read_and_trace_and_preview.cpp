@@ -96,6 +96,31 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	);
 }
 
+/* (画像生成(Scan/Open)以外の)再処理、再表示 */
+void gts_master::cb_rot_trace_enoise_preview( void )
+{
+	/* ファイル読込後の再表示 */
+	if ( &(this->cl_iip_read) == this->cl_iip_ro90.get_clp_parent() ) {
+		/* 画像を回転、２値化、ドットノイズ消去、表示する */
+		this->rot_and_trace_and_enoise_and_preview_(
+			&(this->cl_iip_read)
+			,0
+		);
+	}
+	else
+	/* スキャン後の再表示 */
+	if ( this->cl_iip_scan.get_clp_canvas()
+	==   this->cl_iip_ro90.get_clp_parent() ) {
+		/* 画像を回転、２値化、ドットノイズ消去、表示する */
+		this->rot_and_trace_and_enoise_and_preview_(
+			this->cl_iip_scan.get_clp_canvas()
+			,cl_gts_gui.choice_rot90->value()
+		);
+	}
+}
+
+//------------------------------------------------------------
+
 void gts_master::rot_and_trace_and_enoise_and_preview_(
 	iip_canvas *parent
 	, int rotate_per_90_type 

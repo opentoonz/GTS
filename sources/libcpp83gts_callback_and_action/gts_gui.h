@@ -9,6 +9,7 @@
 #include <FL/Fl_Scrollbar.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Output.H>
+#include <FL/Fl_Tabs.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_File_Input.H>
@@ -68,6 +69,10 @@ private:
   static void cb_Preview1(Fl_Menu_*, void*);
   inline void cb_RGB_i(Fl_Menu_*, void*);
   static void cb_RGB(Fl_Menu_*, void*);
+  inline void cb_Rename_i(Fl_Menu_*, void*);
+  static void cb_Rename(Fl_Menu_*, void*);
+  inline void cb_Renumber_i(Fl_Menu_*, void*);
+  static void cb_Renumber(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_level;
 private:
@@ -116,14 +121,14 @@ private:
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
-  inline void cb_x1_i(Fl_Menu_*, void*);
-  static void cb_x1(Fl_Menu_*, void*);
-  inline void cb_All_i(Fl_Menu_*, void*);
-  static void cb_All(Fl_Menu_*, void*);
   inline void cb_zoom_i(Fl_Menu_*, void*);
   static void cb_zoom(Fl_Menu_*, void*);
   inline void cb_zoom1_i(Fl_Menu_*, void*);
   static void cb_zoom1(Fl_Menu_*, void*);
+  inline void cb_x1_i(Fl_Menu_*, void*);
+  static void cb_x1(Fl_Menu_*, void*);
+  inline void cb_All_i(Fl_Menu_*, void*);
+  static void cb_All(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_frame_cyclic;
 private:
@@ -221,8 +226,14 @@ private:
   static void cb_window_level_set(Fl_Double_Window*, void*);
   inline void cb_Browse_i(Fl_Button*, void*);
   static void cb_Browse(Fl_Button*, void*);
+public:
+  Fl_Tabs *tabs_level_action;
+private:
   inline void cb_Scan_i(Fl_Button*, void*);
   static void cb_Scan(Fl_Button*, void*);
+public:
+  Fl_Group *group_level_open;
+private:
   inline void cb_RGB1_i(Fl_Button*, void*);
   static void cb_RGB1(Fl_Button*, void*);
 public:
@@ -241,6 +252,10 @@ public:
 private:
   inline void cb_choice_level_open_image_format_i(Fl_Choice*, void*);
   static void cb_choice_level_open_image_format(Fl_Choice*, void*);
+  inline void cb_Rename1_i(Fl_Button*, void*);
+  static void cb_Rename1(Fl_Button*, void*);
+  inline void cb_Renumber1_i(Fl_Button*, void*);
+  static void cb_Renumber1(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_level_num_start;
   Fl_Choice *choice_level_num_continue_type;
@@ -256,15 +271,15 @@ private:
   inline void cb_Set1_i(Fl_Button*, void*);
   static void cb_Set1(Fl_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_filter_rgb_erase_dot_noise_sw;
-private:
-  inline void cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_filter_rgb_erase_dot_noise_sw(Fl_Check_Button*, void*);
-public:
   Fl_Check_Button *chkbtn_filter_rgb_color_trace_sw;
 private:
   inline void cb_chkbtn_filter_rgb_color_trace_sw_i(Fl_Check_Button*, void*);
   static void cb_chkbtn_filter_rgb_color_trace_sw(Fl_Check_Button*, void*);
+public:
+  Fl_Check_Button *chkbtn_filter_rgb_erase_dot_noise_sw;
+private:
+  inline void cb_chkbtn_filter_rgb_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_filter_rgb_erase_dot_noise_sw(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_level_save_dir_path;
 private:
@@ -293,8 +308,8 @@ private:
   static Fl_Menu_Item menu_1[];
   inline void cb_Make_i(Fl_Menu_*, void*);
   static void cb_Make(Fl_Menu_*, void*);
-  inline void cb_Rename_i(Fl_Menu_*, void*);
-  static void cb_Rename(Fl_Menu_*, void*);
+  inline void cb_Rename2_i(Fl_Menu_*, void*);
+  static void cb_Rename2(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_level_shift_number;
 private:

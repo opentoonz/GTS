@@ -22,27 +22,19 @@ int gts_master::print_window_headline( void )
 		config_filename = nothing_str;
 	}
 
-	/* Save Level名 */ 
-	std::string level_name(
-		cl_gts_gui.strinp_level_save_file_head->value()
-	);
-	if (level_name.empty()) { /* セットできないときはnothing表示 */
-		level_name = nothing_str;
-	}
-
 	/* 画像拡大率 */
 	const long l_zoom = this->cl_ogl_view.get_l_zoom();
 
 	/* Main Window Barに表示
-	Exsample1 "gts-2.3.0  Config A  SaveLevel A_full"
-	Exsample2 "gts-2.3.0  Config A  SaveLevel A_full  Zoom x1"
-	Exsample3 "gts-2.3.0  Config A  SaveLevel A_full  Zoom x1/16"
+	Exsample1 "gts-2.3.0  Config A"
+	Exsample2 "gts-2.3.0  Config A  Zoom x1"
+	Exsample3 "gts-2.3.0  Config A  Zoom x1/16"
 	*/
 	std::ostringstream ost;
 	ost	<< cl_gts_master.cp_release_name()
 		<< "-" << cl_gts_master.cp_release_number()
 		<< "  Config " << config_filename
-		<< "  SaveLevel " << level_name;
+		;
 	if  (0 < l_zoom) {	ost << "  Zoom x" << l_zoom; }
 	else if (l_zoom < 0) {	ost << "  Zoom x1/" << -l_zoom; }
 	cl_gts_gui.window_opengl->label( ost.str().c_str() );

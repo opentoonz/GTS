@@ -1,6 +1,8 @@
 #include <algorithm> // std::find(-)
+#include <cstdio> // std::rename(-)
 #include <utility> // std::swap(-)
-#include <FL/fl_ask.H>  // fl_alert(-)
+#include <sstream> // std::ostringstream
+#include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
 #include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
@@ -38,11 +40,31 @@ const std::string ids::path::extensions::get_native_filters( void )
 {
 	std::string str;
 
+	/* Exsamples
+		"Text\t*.txt\n"
+		"C Files\t*.{cxx,h,c}"
+	*/
 	for (int ii=0 ;ii<static_cast<int>(this->dotex_.size()) ;++ii) {
 		str += this->names_.at(ii);
 		str += "\t*";
 		str += this->dotex_.at(ii);
 		str += "\n";
+	}
+	/* 拡張子が2個以上のときは全部をまとめたFilterも追加しとく */
+	if (2 <= this->dotex_.size()) {
+		str += "Image Files\t*.{";
+		for(int ii=0;ii<static_cast<int>(this->dotex_.size());++ii){
+			if (0 < ii) {
+				str += ',';
+			}
+			if (this->dotex_.at(ii).at(0) == '.') {
+				str += this->dotex_.at(ii).substr(1);
+			}
+			else {
+				str += this->dotex_.at(ii);
+			}
+		}
+		str += "}";
 	}
 	return str;
 }
@@ -130,7 +152,7 @@ void cb_level::set_level_open(
 	cl_gts_gui.window_fnum_list->flush();
 
 	/* 08 Mainウインドウ バーにlevel名表示 */
-	cl_gts_master.print_window_headline();
+	//cl_gts_master.print_window_headline();
 
 	/* 09 画像読込表示 */
 	cl_gts_master.cb_read_and_trace_and_preview();
@@ -179,10 +201,12 @@ void cb_level::set_level_save(
 	this->set_number_and_savelevelname();
 }
 
-const std::string cb_level::get_openfilename( const int num )
+const std::string cb_level::openfilename_from_level_num_(
+	const std::string& open_level
+	,const int num
+)
 {
-	std::string filename;
-	filename += cl_gts_gui.strinp_level_open_file_head->value();
+	std::string filename(open_level);
 	if (filename.empty()) {
 	 filename += "untitled";
 	}
@@ -194,6 +218,23 @@ const std::string cb_level::get_openfilename( const int num )
 	);
 	return filename;
 }
+const std::string cb_level::openfilepath_from_level_num_(
+	const std::string& open_level
+	,const int num
+)
+{
+	std::string filepath;
+	filepath += cl_gts_gui.filinp_level_open_dir_path->value();
+	filepath += '/';
+	filepath += this->openfilename_from_level_num_( open_level ,num );
+	return filepath;
+}
+const std::string cb_level::get_openfilename( const int num )
+{
+	return this->openfilename_from_level_num_( 
+		cl_gts_gui.strinp_level_open_file_head->value() ,num );
+}
+
 const std::string cb_level::get_savefilename( const int num )
 {
 	std::string filename;
@@ -328,7 +369,7 @@ void cb_level::set_number_and_savelevelname( void )
 	);
 
 	/* Mainウインドウ バーにlevel名表示 */
-	cl_gts_master.print_window_headline();
+	//cl_gts_master.print_window_headline();
 
 	/* 画像読込表示はしない */
 }
@@ -365,3 +406,139 @@ void cb_level::check_save_level_by_existing_file(void)
 		cl_gts_gui.strinp_level_save_file_head->redraw();
 	}
 }
+
+/* (openの)連番ファイルの名前変更 */
+void cb_level::dialog_rename_at_open(void)
+{
+	/* Openファイルのフルパスを得る */
+	const std::string filepath = this->get_openfilepath( 1 );
+
+	/* 連番ファイルの存在チェックして必要な情報に変える */
+	std::string dpath , head , num , ext;
+	int number=-1;
+	std::vector<int> nums;
+	ids::path::level_from_files(
+		filepath ,dpath ,head ,num ,number ,ext ,nums
+	);
+	if (head.empty() || nums.size() <= 0) {
+		fl_alert( "Not exist files" );
+		return;
+	}
+	std::ostringstream numost;
+	for (auto nu : nums) {
+		numost << nu;
+		numost << " ";
+	}
+
+	/* ユーザーから新しい名前を得る */
+	const char* new_level_ptr = fl_input(
+		"Enter New Level Name" ,head.c_str()
+	);
+	if (new_level_ptr == nullptr || head == new_level_ptr ) {
+		return; /* Cancel or 同じ名前なら何もしない */
+	}
+	const std::string new_level(new_level_ptr);
+
+	/* ファイル毎名前を変更する */
+	for (size_t ii=0; ii<nums.size() ; ++ii) {
+		std::string opa( this->get_openfilepath( nums.at(ii) ) );
+		std::string npa( this->openfilepath_from_level_num_(
+				new_level.c_str()
+				,nums.at(ii) ));
+		/* 最初にこれでいいかユーザーに確認する */
+		if (ii==0) {
+			if (fl_ask(
+ "Rename\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
+				,opa.c_str()
+				,npa.c_str()
+				,numost.str().c_str()
+			) != 1) {
+				return; // Cancel
+			}
+		}
+		std::rename( opa.c_str() ,npa.c_str() );
+	}
+}
+
+/* (openの)連番ファイルの番号のシフト */
+void cb_level::dialog_renumber_at_open(void)
+{
+	/* Openファイルのフルパスを得る */
+	const std::string filepath = this->get_openfilepath( 1 );
+
+	/* 連番ファイルの存在チェックして必要な情報に変える */
+	std::string dpath , head , num , ext;
+	int number=-1;
+	std::vector<int> nums;
+	ids::path::level_from_files(
+		filepath ,dpath ,head ,num ,number ,ext ,nums
+	);
+	if (head.empty() || nums.size() <= 0) {
+		fl_alert( "Not exist files" );
+		return;
+	}
+
+	/* ユーザーから新しいStart番号を得る */
+	const char* new_start_num_ptr = fl_input(
+		"Enter New Start Number" ,std::to_string(nums.at(0)).c_str()
+	);
+	if (new_start_num_ptr == nullptr
+	||  std::stoi(std::string(new_start_num_ptr))==nums.at(0)) {
+		return; /* Cancel or 同じ名前なら何もしない */
+	}
+	const std::string new_start_num( new_start_num_ptr );
+
+	/* 新しいStart番号との差 */
+	const int diff_num = std::stoi(new_start_num) - nums.at(0);
+
+	/* エラー数値をチェックしつつ番号を文字列に入れる */
+	std::ostringstream numost;
+	bool error_sw = false;
+	for (auto nu : nums) {
+		numost << nu + diff_num;
+		numost << " ";
+		if ( nu + diff_num < 0 || 9999 < nu + diff_num ) {
+			error_sw = true;
+		}
+	}
+
+	/* ゼロ以下数値があるとエラーメッセージダイオローグを出して終わる */
+	if (error_sw) {
+		std::string opa( this->get_openfilepath( nums.at(0) ) );
+		std::string npa( this->get_openfilepath(
+				nums.at(0) + diff_num ) );
+		fl_alert(
+"Error : Number need 0...9999 range\nFrom\n %s\nTo\n %s\nNumber List\n %s\n"
+			,opa.c_str()
+			,npa.c_str()
+			,numost.str().c_str()
+		);
+		return;
+	}
+
+	/* ファイル毎名前を変更する */
+	for (size_t ii=0; ii<nums.size() ; ++ii) {
+		std::string opa( this->get_openfilepath( nums.at(ii) ) );
+		std::string npa( this->get_openfilepath(
+				nums.at(ii) + diff_num ) );
+		/* 最初にこれでいいかユーザーに確認する */
+		if (ii==0) {
+			if (fl_ask(
+"Renumber\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
+				,opa.c_str()
+				,npa.c_str()
+				,numost.str().c_str()
+			) != 1) {
+				return; // Cancel
+			}
+		}
+		std::rename( opa.c_str() ,npa.c_str() );
+	}
+}
+
+/* openのtabに表示を切替 */
+void cb_level::display_tab_to_level_open( void )
+{
+	cl_gts_gui.tabs_level_action->value( cl_gts_gui.group_level_open );
+}
+

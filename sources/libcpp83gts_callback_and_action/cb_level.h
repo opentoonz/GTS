@@ -70,8 +70,18 @@ public:
 	void set_number_and_savelevelname( void );
 
 	void check_save_level_by_existing_file(void);
+
+	void dialog_rename_at_open(void);  /* (open)連番Fileの名前変更  */
+	void dialog_renumber_at_open(void);/* (open)連番Fileの番号Shift */
+
+	void display_tab_to_level_open( void ); /* openのtabに表示を切替 */
+
 private:
 	bool is_exist_save_files_(void);
+	const std::string openfilename_from_level_num_(
+		const std::string& open_level ,const int num );
+	const std::string openfilepath_from_level_num_(
+		const std::string& open_level ,const int num );
 };
 
 #endif /* !cb_level_h */

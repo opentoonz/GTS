@@ -105,6 +105,7 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 	}
 	/* Level(tif,tga) file */
 	else {
+		cl_gts_master.cl_level.display_tab_to_level_open();
 		cl_gts_master.cl_level.set_level_open(
 			dpath ,head ,ext ,nums
 		);
