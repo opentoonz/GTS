@@ -185,9 +185,9 @@ void gts_gui::cb_menite_color_trace(Fl_Menu_* o, void* v) {
 void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_batch->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch->show();
+    cl_gts_gui.window_trace_batch_job->show();
 } else {
-    cl_gts_gui.window_trace_batch->hide();
+    cl_gts_gui.window_trace_batch_job->hide();
 };
 }
 void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
@@ -2151,6 +2151,41 @@ void gts_gui::cb_selbro_fnum_list(Fl_Browser* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_selbro_fnum_list_i(o,v);
 }
 
+void gts_gui::cb_Add_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_batch.cb_add_or_select();
+}
+void gts_gui::cb_Add(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Add_i(o,v);
+}
+
+void gts_gui::cb_Upper_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_batch.cb_upper();
+}
+void gts_gui::cb_Upper(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Upper_i(o,v);
+}
+
+void gts_gui::cb_Lower_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_batch.cb_lower();
+}
+void gts_gui::cb_Lower(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Lower_i(o,v);
+}
+
+void gts_gui::cb_Delete1_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_batch.cb_delete();
+}
+void gts_gui::cb_Delete1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Delete1_i(o,v);
+}
+
+void gts_gui::cb_Run_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_batch.cb_run();
+}
+void gts_gui::cb_Run(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Run_i(o,v);
+}
+
 void gts_gui::cb_window_trace_batch_i(Fl_Double_Window*, void*) {
   cl_gts_master.cl_bro_trace_batch.cb_cancel();
 }
@@ -2165,11 +2200,11 @@ void gts_gui::cb_3(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_3_i(o,v);
 }
 
-void gts_gui::cb_Add_i(Fl_Menu_*, void*) {
+void gts_gui::cb_Add1_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_bro_trace_batch.cb_add();
 }
-void gts_gui::cb_Add(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Add_i(o,v);
+void gts_gui::cb_Add1(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Add1_i(o,v);
 }
 
 void gts_gui::cb_All3_i(Fl_Menu_*, void*) {
@@ -2189,7 +2224,7 @@ void gts_gui::cb_Select1(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Select1_i(o,v);
 }
 
-void gts_gui::cb_Delete1_i(Fl_Menu_*, void*) {
+void gts_gui::cb_Delete2_i(Fl_Menu_*, void*) {
   int     ii;
 for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();) {
               if ( cl_gts_gui.selbro_trace_batch_run_list->selected(ii) ) {
@@ -2197,16 +2232,16 @@ for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();) {
               } else { ++ii; }
 };
 }
-void gts_gui::cb_Delete1(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Delete1_i(o,v);
+void gts_gui::cb_Delete2(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Delete2_i(o,v);
 }
 
 Fl_Menu_Item gts_gui::menu_3[] = {
  {"Edit", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Add", 0x40073,  (Fl_Callback*)gts_gui::cb_Add, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Add", 0x40073,  (Fl_Callback*)gts_gui::cb_Add1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"All Add", 0x50073,  (Fl_Callback*)gts_gui::cb_All3, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select All", 0x40061,  (Fl_Callback*)gts_gui::cb_Select1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Delete", 0x40078,  (Fl_Callback*)gts_gui::cb_Delete1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Delete", 0x40078,  (Fl_Callback*)gts_gui::cb_Delete2, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
 };
@@ -2225,11 +2260,11 @@ void gts_gui::cb_selbro_trace_batch_list(Fl_Browser* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_selbro_trace_batch_list_i(o,v);
 }
 
-void gts_gui::cb_Run_i(Fl_Button*, void*) {
+void gts_gui::cb_Run1_i(Fl_Button*, void*) {
   cl_gts_master.cl_bro_trace_batch.cb_run();
 }
-void gts_gui::cb_Run(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Run_i(o,v);
+void gts_gui::cb_Run1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Run1_i(o,v);
 }
 
 void gts_gui::cb_Cancel3_i(Fl_Button*, void*) {
@@ -6166,7 +6201,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->end();
     window_pixel_type_and_bright->resizable(window_pixel_type_and_bright);
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_color_trace = new Fl_Double_Window(285, 755, "Color Trace Enhancement");
+  { window_color_trace = new Fl_Double_Window(285, 755, "Trace Parameters");
     window_color_trace->callback((Fl_Callback*)cb_window_color_trace, (void*)(this));
     { Fl_Group* o = new Fl_Group(5, 5, 280, 120);
       { Fl_Text_Display* o = new Fl_Text_Display(5, 10, 0, 0, "1");
@@ -6912,6 +6947,42 @@ Fl_Double_Window* gts_gui::make_window() {
     window_fnum_list->size_range(116, 0, 200, 4000);
     window_fnum_list->end();
   } // Fl_Double_Window* window_fnum_list
+  { window_trace_batch_job = new Fl_Double_Window(300, 185, "Trace Batch");
+    window_trace_batch_job->user_data((void*)(this));
+    { Fl_Group* o = new Fl_Group(0, 4, 300, 30);
+      { Fl_Button* o = new Fl_Button(5, 5, 40, 25, "Add...");
+        o->callback((Fl_Callback*)cb_Add);
+      } // Fl_Button* o
+      { Fl_Button* o = new Fl_Button(55, 5, 45, 25, "Upper");
+        o->callback((Fl_Callback*)cb_Upper);
+      } // Fl_Button* o
+      { Fl_Button* o = new Fl_Button(105, 5, 45, 25, "Lower");
+        o->callback((Fl_Callback*)cb_Lower);
+      } // Fl_Button* o
+      { Fl_Button* o = new Fl_Button(155, 5, 45, 25, "Delete");
+        o->callback((Fl_Callback*)cb_Delete1);
+      } // Fl_Button* o
+      { Fl_Box* o = new Fl_Box(200, 5, 65, 25);
+        Fl_Group::current()->resizable(o);
+      } // Fl_Box* o
+      { Fl_Button* o = new Fl_Button(265, 5, 30, 25, "Run");
+        o->callback((Fl_Callback*)cb_Run);
+      } // Fl_Button* o
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(0, 35, 300, 150);
+      { selbro_trace_batch_config_list = new Fl_Browser(0, 35, 300, 150);
+        selbro_trace_batch_config_list->type(3);
+        selbro_trace_batch_config_list->box(FL_DOWN_BOX);
+        Fl_Group::current()->resizable(selbro_trace_batch_config_list);
+      } // Fl_Browser* selbro_trace_batch_config_list
+      o->end();
+      Fl_Group::current()->resizable(o);
+    } // Fl_Group* o
+    window_trace_batch_job->set_non_modal();
+    window_trace_batch_job->size_range(200, 125);
+    window_trace_batch_job->end();
+  } // Fl_Double_Window* window_trace_batch_job
   { window_trace_batch = new Fl_Double_Window(300, 415, "Color Trace Batch");
     window_trace_batch->callback((Fl_Callback*)cb_window_trace_batch, (void*)(this));
     { Fl_Button* o = new Fl_Button(0, 0, 0, 0);
@@ -6957,7 +7028,7 @@ Fl_Double_Window* gts_gui::make_window() {
     } // Fl_Tile* o
     { Fl_Group* o = new Fl_Group(0, 385, 300, 25);
       { Fl_Button* o = new Fl_Button(10, 385, 80, 25, "Run");
-        o->callback((Fl_Callback*)cb_Run);
+        o->callback((Fl_Callback*)cb_Run1);
       } // Fl_Button* o
       { Fl_Box* o = new Fl_Box(90, 385, 120, 25);
         Fl_Group::current()->resizable(o);
@@ -6971,7 +7042,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_batch->size_range(200, 125);
     window_trace_batch->end();
   } // Fl_Double_Window* window_trace_batch
-  { window_thickness = new Fl_Double_Window(330, 225, "Thickness");
+  { window_thickness = new Fl_Double_Window(330, 225, "Trace Thickness");
     window_thickness->callback((Fl_Callback*)cb_window_thickness, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 15, 330, 20);
       { chkbtn_thickness_01_chk = new Fl_Check_Button(15, 15, 20, 20, "1");
@@ -7231,7 +7302,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_thickness->end();
     window_thickness->resizable(window_thickness);
   } // Fl_Double_Window* window_thickness
-  { window_hab_histogram = new Fl_Double_Window(1000, 565, "Input Color(HSV Min Max)");
+  { window_hab_histogram = new Fl_Double_Window(1000, 565, "Trace Input Color(HSV Min Max)");
     window_hab_histogram->callback((Fl_Callback*)cb_window_hab_histogram, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 1000, 25);
       o->menu(menu_4);
@@ -7418,7 +7489,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_hab_histogram->set_non_modal();
     window_hab_histogram->end();
   } // Fl_Double_Window* window_hab_histogram
-  { window_edit_color = new Fl_Double_Window(385, 100, "Output Color(RGB)");
+  { window_edit_color = new Fl_Double_Window(385, 100, "Trace Output Color(RGB)");
     window_edit_color->callback((Fl_Callback*)cb_window_edit_color, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 10, 385, 20);
       { Fl_Group* o = new Fl_Group(0, 10, 340, 20);

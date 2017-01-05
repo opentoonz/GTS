@@ -42,7 +42,7 @@ void cb_config::open( void )
 		,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,0
-	);
+	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
 		return;
@@ -70,7 +70,7 @@ void cb_config::save_as( void )
 		,this->save_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,0
-	);
+	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
 		return;

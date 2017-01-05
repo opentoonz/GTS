@@ -174,9 +174,9 @@ int memory_desktop::load( void ) {
 			if (di == "show") {
 		cl_gts_gui.menite_trace_batch->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_batch->show();
+		cl_gts_gui.window_trace_batch_job->show();
 			}
-		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
+		cl_gts_gui.window_trace_batch_job->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_thickness_==key) && (6==ret)) {
 			if (di == "show") {

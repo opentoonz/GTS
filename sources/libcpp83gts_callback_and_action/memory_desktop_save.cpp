@@ -109,10 +109,10 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
 	, this->str_window_trace_batch_
 	, cl_gts_gui.menite_trace_batch->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_batch->x()
-	, cl_gts_gui.window_trace_batch->y()
-	, cl_gts_gui.window_trace_batch->w()
-	, cl_gts_gui.window_trace_batch->h()
+	, cl_gts_gui.window_trace_batch_job->x()
+	, cl_gts_gui.window_trace_batch_job->y()
+	, cl_gts_gui.window_trace_batch_job->w()
+	, cl_gts_gui.window_trace_batch_job->h()
 	);
 	if (i_ret < 0) { return NG; }
 

@@ -48,6 +48,7 @@ cb_scan_and_preview.cpp\
 cb_scan_and_save.cpp\
 cb_scan_full_area_and_crop.cpp\
 cb_scnr_area.cpp\
+cb_trace_batch.cpp\
 dogascan_area_rot90.cpp\
 dogascan_area_val_and_opengl_rect.cpp\
 dogascan_event.cpp\

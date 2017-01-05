@@ -171,10 +171,10 @@ cl_gts_master.cl_level.dialog_renumber_at_open();}
             label {Color Trace Batch...}
             callback {if (cl_gts_gui.menite_trace_batch->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch->show();
+    cl_gts_gui.window_trace_batch_job->show();
 } else {
-    cl_gts_gui.window_trace_batch->hide();
-}}
+    cl_gts_gui.window_trace_batch_job->hide();
+}} selected
             xywh {0 0 100 20} type Toggle divider
           }
           MenuItem menite_thickness {
@@ -1374,7 +1374,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
       }
     }
     Fl_Window window_color_trace {
-      label {Color Trace Enhancement}
+      label {Trace Parameters}
       callback {cl_gts_gui.window_color_trace->hide();
 cl_gts_gui.menite_color_trace->clear();
 cl_gts_gui.window_edit_color->hide();
@@ -2070,10 +2070,54 @@ cl_gts_gui.menite_fnum_list->clear();}
         xywh {0 75 116 275} type Multi resizable
       }
     }
+    Fl_Window window_trace_batch_job {
+      label {Trace Batch}
+      xywh {50 50 300 185} type Double resizable non_modal size_range {200 125 0 0} visible
+    } {
+      Fl_Group {} {open
+        xywh {0 4 300 30}
+      } {
+        Fl_Button {} {
+          label {Add...}
+          callback {cl_gts_master.cl_trace_batch.cb_add_or_select();}
+          xywh {5 5 40 25}
+        }
+        Fl_Button {} {
+          label Upper
+          callback {cl_gts_master.cl_trace_batch.cb_upper();}
+          xywh {55 5 45 25}
+        }
+        Fl_Button {} {
+          label Lower
+          callback {cl_gts_master.cl_trace_batch.cb_lower();}
+          xywh {105 5 45 25}
+        }
+        Fl_Button {} {
+          label Delete
+          callback {cl_gts_master.cl_trace_batch.cb_delete();}
+          xywh {155 5 45 25}
+        }
+        Fl_Box {} {
+          xywh {200 5 65 25} resizable
+        }
+        Fl_Button {} {
+          label Run
+          callback {cl_gts_master.cl_trace_batch.cb_run();}
+          xywh {265 5 30 25}
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 35 300 150} resizable
+      } {
+        Fl_Browser selbro_trace_batch_config_list {
+          xywh {0 35 300 150} type Multi box DOWN_BOX resizable
+        }
+      }
+    }
     Fl_Window window_trace_batch {
       label {Color Trace Batch}
       callback {cl_gts_master.cl_bro_trace_batch.cb_cancel();}
-      xywh {50 50 300 415} type Double resizable non_modal size_range {200 125 0 0} visible
+      xywh {55 55 300 415} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Button {} {
         callback {cl_gts_master.cl_bro_trace_batch.cb_dir_up();}
@@ -2166,7 +2210,7 @@ for (ii = 1; ii <= cl_gts_gui.selbro_trace_batch_run_list->size();) {
       }
     }
     Fl_Window window_thickness {
-      label Thickness
+      label {Trace Thickness}
       callback {cl_gts_gui.window_thickness->hide();
 cl_gts_gui.menite_thickness->clear();
 cl_gts_gui.window_edit_color->hide();
@@ -2447,7 +2491,7 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
       }
     }
     Fl_Window window_hab_histogram {
-      label {Input Color(HSV Min Max)}
+      label {Trace Input Color(HSV Min Max)}
       callback {cl_gts_gui.window_hab_histogram->hide();
 cl_gts_gui.menite_edit_hsv_min_max->clear();}
       xywh {50 50 1000 565} type Double non_modal visible
@@ -2665,7 +2709,7 @@ fltkp_bb_histogram->redraw();}
       }
     }
     Fl_Window window_edit_color {
-      label {Output Color(RGB)}
+      label {Trace Output Color(RGB)}
       callback {cl_gts_gui.window_edit_color->hide();
 cl_gts_gui.menite_edit_color->clear();}
       xywh {50 50 385 100} type Double resizable non_modal size_range {200 100 1000 100} visible
