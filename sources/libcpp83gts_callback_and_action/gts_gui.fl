@@ -2072,6 +2072,8 @@ cl_gts_gui.menite_fnum_list->clear();}
     }
     Fl_Window window_trace_batch_job {
       label {Trace Batch}
+      callback {cl_gts_gui.window_trace_batch_job->hide();  /* Window閉じる */
+cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
       xywh {50 50 300 185} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
       Fl_Group {} {open

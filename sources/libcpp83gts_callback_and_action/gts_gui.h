@@ -1073,6 +1073,8 @@ private:
 public:
   Fl_Double_Window *window_trace_batch_job;
 private:
+  inline void cb_window_trace_batch_job_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_batch_job(Fl_Double_Window*, void*);
   inline void cb_Add_i(Fl_Button*, void*);
   static void cb_Add(Fl_Button*, void*);
   inline void cb_Upper_i(Fl_Button*, void*);

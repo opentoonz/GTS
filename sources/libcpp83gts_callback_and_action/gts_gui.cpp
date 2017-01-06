@@ -2151,6 +2151,14 @@ void gts_gui::cb_selbro_fnum_list(Fl_Browser* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_selbro_fnum_list_i(o,v);
 }
 
+void gts_gui::cb_window_trace_batch_job_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_batch_job->hide();  /* Window閉じる */
+cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */;
+}
+void gts_gui::cb_window_trace_batch_job(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_batch_job_i(o,v);
+}
+
 void gts_gui::cb_Add_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_batch.cb_add_or_select();
 }
@@ -6948,7 +6956,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_fnum_list->end();
   } // Fl_Double_Window* window_fnum_list
   { window_trace_batch_job = new Fl_Double_Window(300, 185, "Trace Batch");
-    window_trace_batch_job->user_data((void*)(this));
+    window_trace_batch_job->callback((Fl_Callback*)cb_window_trace_batch_job, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 4, 300, 30);
       { Fl_Button* o = new Fl_Button(5, 5, 40, 25, "Add...");
         o->callback((Fl_Callback*)cb_Add);
