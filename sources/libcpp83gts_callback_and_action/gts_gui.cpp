@@ -6959,10 +6959,10 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Button* o = new Fl_Button(105, 5, 45, 25, "Lower");
         o->callback((Fl_Callback*)cb_Lower);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(155, 5, 45, 25, "Delete");
+      { Fl_Button* o = new Fl_Button(160, 5, 45, 25, "Delete");
         o->callback((Fl_Callback*)cb_Delete1);
       } // Fl_Button* o
-      { Fl_Box* o = new Fl_Box(200, 5, 65, 25);
+      { Fl_Box* o = new Fl_Box(205, 5, 60, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { Fl_Button* o = new Fl_Button(265, 5, 30, 25, "Run");

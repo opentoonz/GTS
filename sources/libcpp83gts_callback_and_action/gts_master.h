@@ -89,7 +89,7 @@ public:
 	void cb_read_and_trace_and_preview( void );
 	void cb_rot_trace_enoise_preview( void );
 
-	int cb_read_and_save_start( void );
+	int cb_read_and_save_start( const bool interactive_sw=true );
 	void cb_scan_and_preview( void );
 	void cb_scan_and_save_start( void );
 	void cb_scan_and_save_next( void );

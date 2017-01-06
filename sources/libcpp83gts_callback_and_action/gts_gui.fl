@@ -174,7 +174,7 @@ cl_gts_master.cl_level.dialog_renumber_at_open();}
     cl_gts_gui.window_trace_batch_job->show();
 } else {
     cl_gts_gui.window_trace_batch_job->hide();
-}} selected
+}}
             xywh {0 0 100 20} type Toggle divider
           }
           MenuItem menite_thickness {
@@ -2095,10 +2095,10 @@ cl_gts_gui.menite_fnum_list->clear();}
         Fl_Button {} {
           label Delete
           callback {cl_gts_master.cl_trace_batch.cb_delete();}
-          xywh {155 5 45 25}
+          xywh {160 5 45 25}
         }
         Fl_Box {} {
-          xywh {200 5 65 25} resizable
+          xywh {205 5 60 25} resizable
         }
         Fl_Button {} {
           label Run

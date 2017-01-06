@@ -1,7 +1,5 @@
-//#include <assert.h>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
-//#include "pri.h"
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_config.h"
@@ -23,6 +21,7 @@ void cb_config::loading_and_set_dpath_fname( const std::string& fpath )
 		,this->dir_path_
 		,this->open_file_name_
 	);
+	this->save_file_name_ = this->open_file_name_;
 }
 void cb_config::open( void )
 {

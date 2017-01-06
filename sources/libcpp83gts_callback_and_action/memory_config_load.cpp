@@ -588,9 +588,6 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	 cl_gts_gui.strinp_level_save_file_head->value()
 	);
 
-	/* numberリストは選択状態にしておく(config読込直後の表示のため) */
-	cl_gts_master.cl_file_number_list.select_all();
-
 	/* LevelのEnd/Endless指定がない時はStart...End指定にする */
 	if (!level_num_continue_type_sw) {
 		cl_gts_gui.valinp_level_num_end->show();

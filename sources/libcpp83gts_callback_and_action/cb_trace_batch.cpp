@@ -30,7 +30,7 @@ void cb_trace_batch::cb_run( void )
 	 Fl::check();
 
 	 /* trace実行 */
-	 if (cl_gts_master.cb_read_and_save_start() == NG) {
+	 if (cl_gts_master.cb_read_and_save_start( false ) == NG) {
 		break; /* Error then break */
 	 }
 
@@ -101,6 +101,7 @@ int how_many_select_(int& crntnum)
 	;++ii) {
 	 if (cl_gts_gui.selbro_trace_batch_config_list->selected(ii)==1) {
 		++counter;
+		crntnum = ii;
 	 }
 	}
 	return counter;
