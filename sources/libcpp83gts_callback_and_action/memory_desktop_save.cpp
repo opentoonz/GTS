@@ -40,38 +40,6 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	);
 	if (i_ret < 0) { return NG; }
 
-/*
-	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_level_browse_
-	, ccp_hide
-	, cl_gts_gui.window_level_browse->x()
-	, cl_gts_gui.window_level_browse->y()
-	, cl_gts_gui.window_level_browse->w()
-	, cl_gts_gui.window_level_browse->h()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_config_load_
-	, cl_gts_gui.menite_config_load->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_config_load->x()
-	, cl_gts_gui.window_config_load->y()
-	, cl_gts_gui.window_config_load->w()
-	, cl_gts_gui.window_config_load->h()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_config_save_as_
-	, cl_gts_gui.menite_config_save_as->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_config_save_as->x()
-	, cl_gts_gui.window_config_save_as->y()
-	, cl_gts_gui.window_config_save_as->w()
-	, cl_gts_gui.window_config_save_as->h()
-	);
-	if (i_ret < 0) { return NG; }
-*/
-
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
 	, this->str_window_crop_area_and_rot90_
 	, cl_gts_gui.menite_crop_area_and_rot90->value()?ccp_show:ccp_hide
@@ -161,15 +129,10 @@ int memory_desktop::_save_startup_path_by_fp( FILE *fp )
 	int i_ret;
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
-		, this->str_config_dir_
-		, cl_gts_gui.filinp_config_load_dir->value()
+		,this->str_config_dir_
+		,cl_gts_master.cl_config.get_dir_path().c_str()
 	);
 	if (i_ret < 0) { return NG; }
-
-	/******i_ret = fprintf(fp, "%-24s \"%s\"\n"
-		, this->str_config_file_
-		, cl_gts_gui.strinp_config_load_file->value() );
-	if (i_ret < 0) { return NG; }******/
 
 	return OK;
 }

@@ -1,6 +1,7 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H> // fl_alert()
 #include <ctime>
+#include <iostream>
 #include <iomanip>	// std::setw()
 #include <string>
 #include <fstream>
@@ -59,11 +60,11 @@ void memory_config::save_head_( std::ofstream& ofs )
 void memory_config::save_config_( std::ofstream& ofs )
 {
 	this->save_str_( this->str_config_dir_
-		,cl_gts_gui.filinp_config_load_dir->value() ,ofs );
+		,cl_gts_master.cl_config.get_dir_path() ,ofs );
 	this->save_str_( this->str_config_load_file_
-		,cl_gts_gui.strinp_config_load_file->value() ,ofs );
+		,cl_gts_master.cl_config.get_open_file_name() ,ofs );
 	this->save_str_( this->str_config_save_as_file_
-		,cl_gts_gui.strinp_config_save_as_file->value() ,ofs );
+		,cl_gts_master.cl_config.get_save_file_name() ,ofs );
 }
 void memory_config::save_level_( std::ofstream& ofs )
 {
@@ -99,9 +100,6 @@ void memory_config::save_level_( std::ofstream& ofs )
 		,cl_gts_gui.strinp_level_open_file_head->value() ,ofs );
 	this->save_str_( this->str_level_open_image_format_
 		,cl_gts_gui.choice_level_open_image_format->text() ,ofs );
-
-	this->save_str_( this->str_level_list_form_
-		,cl_gts_gui.choice_level_list_form->text() ,ofs );
 }
 void memory_config::save_area_( std::ofstream& ofs )
 {
@@ -170,13 +168,13 @@ void memory_config::save_fnum_( std::ofstream& ofs )
 void memory_config::save_trace_batch_( std::ofstream& ofs )
 {
 	this->save_str_( this->str_trace_batch_dir_
-		,cl_gts_gui.filinp_trace_batch_dir->value() ,ofs );
+		,cl_gts_master.cl_trace_batch.get_dir_path() ,ofs );
 
 	/* リストを全てサーチ */
 	for (int ii = 1;
-	ii <= cl_gts_gui.selbro_trace_batch_run_list->size(); ++ii) {
+	ii <= cl_gts_gui.selbro_trace_batch_config_list->size(); ++ii) {
 	 this->save_str_(this->str_trace_batch_list_
-		,cl_gts_gui.selbro_trace_batch_run_list->text(ii) ,ofs );
+		,cl_gts_gui.selbro_trace_batch_config_list->text(ii) ,ofs );
 	}
 }
 //----------

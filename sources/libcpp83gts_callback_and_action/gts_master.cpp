@@ -119,10 +119,6 @@ int gts_master::exec( const char *comm )
 
 	/*---------- GUI初期設定 ----------*/
 
-	/* GUIのsaveで指定した順に拡張子リストを作る */
-
-	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
-
 	/* color trace enhancement */
 	this->cl_color_trace_enhancement.src_init_histogram_window();
 
@@ -144,13 +140,6 @@ int gts_master::exec( const char *comm )
 	this->cl_memo_short_cut_key.set_shortcut();
 
 	/* fltk設定各種 --- ここまで */
-
-	/* trace batchシステム初期ディレクトリを設定 */
-	if (OK != this->cl_bro_trace_batch.i_init()) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_trace_batch.i_init() returns NG");
-		return NG;
-	}
 
 	/* ファイル拡張子、元設定からGUI設定し、初期指定(.tga)する */
 	for(int ii=0;ii<this->cl_level.ext_open.size() ;++ii) {

@@ -20,7 +20,6 @@ for %%a in (
  libcpp69iip_scale_by_subpixel
  libcpp71iip_color_trace_hab
  libcpp72iip_erase_dot_noise
- libcpp81gts_file_browser
  libcpp82gts_hsv_histogram
  libcpp83gts_callback_and_action
  main

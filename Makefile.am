@@ -201,7 +201,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_hsv_minmax.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_src.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_tgt.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_full_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
@@ -209,9 +208,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_file_number_list.cpp \
 					sources/libcpp83gts_callback_and_action/cb_level.cpp \
 					sources/libcpp83gts_callback_and_action/cb_quit.cpp \
-					sources/libcpp83gts_callback_and_action/cb_read_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_save.cpp \
-					sources/libcpp83gts_callback_and_action/cb_read_and_trace.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_rotate_per_90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \

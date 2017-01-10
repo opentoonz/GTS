@@ -61,33 +61,6 @@ void set_level_open_image_format_( const std::string& str1 )
 	if (crnt == nullptr) { return; }
 	cl_gts_gui.choice_level_open_image_format->value(crnt);
 }
-void set_level_list_form_( const std::string& str1 )
-{
-#if 0
-	if (isdigit(str1.c_str()[0])) {/* For Legacy Format...Delete sameday */
-		cl_gts_gui.choice_level_list_form->value(
-		 std::stoi(str1) // use C++11,throw exception then error
-		);
-	}
-	else {
-#endif
-		const Fl_Menu_Item *crnt =
-		 cl_gts_gui.choice_level_list_form->find_item(
-			str1.c_str() );
-		if (crnt == nullptr) { return; }
-		cl_gts_gui.choice_level_list_form->value( crnt );
-//	}
-
-	/* File/Level表示によってボタンを表示/非表示する */
-	if (cl_gts_gui.choice_level_list_form->text()
-	== std::string("File")) {
-		cl_gts_gui.menite_level_shift_number->deactivate();
-		cl_gts_gui.menite_level_view_rgb_full_sw->deactivate();
-	} else {
-		cl_gts_gui.menite_level_shift_number->activate();
-		cl_gts_gui.menite_level_view_rgb_full_sw->activate();
-	}
-}
 void set_rotate_per_90_( const std::string& str1 )
 {
 	if (isdigit(str1.c_str()[0])) {/* For Legacy Format...Delete sameday */
@@ -165,7 +138,6 @@ void memory_config::load_ifs_(
 		if (words.size() < 2) { continue; }/* キーワードしかない */
 
 		/* キーワードと、数値が1語以上(2<=words.size())ある */
-std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 
 		//---------- config ----------
 
@@ -183,8 +155,7 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 		(words.at(0) == this->str_config_save_as_file_)) {
 			std::string fname( words.at(1) );
 			cl_gts_master.cl_config.add_ext_if_not_exist(fname);
-			cl_gts_master.cl_config.set_save_file_name(
-				fname );
+			cl_gts_master.cl_config.set_save_file_name( fname );
 		}
 
 		//---------- level ----------
@@ -287,11 +258,6 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 		else if ((2 == words.size()) && (words.at(0)
 		==this->str_level_open_image_format_)) {
 			set_level_open_image_format_( words.at(1) );
-		}
-		else if ((2 == words.size()) &&
-		(words.at(0) == this->str_level_list_form_)) {
-			set_level_list_form_( words.at(1) );
-			level_list_redisplay_sw = true;
 		}
 
 		//---------- area ----------
@@ -446,14 +412,6 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 			);
 		}
 
-		//---------- legacy ----------
-
-		/* color trace real time sw情報
-		は固定にしたので設定しない
-		this->str_color_trace_real_time_
-		cl_gts_gui.menite_color_trace_real_time
-		*/
-
 		//---------- Number ----------
 
 		else if (( (2==words.size())
@@ -503,8 +461,7 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 		(words.at(0) == this->str_trace_batch_dir_ )) {
 			if (ON != load_trace_batch_sw) { continue; }
 
-		 cl_gts_master.cl_bro_trace_batch.init_trace_batch_dir(
-				words.at(1).c_str() );
+		 cl_gts_master.cl_trace_batch.set_dir_path( words.at(1) );
 		}
 
 		else if ( (2==words.size()) &&
@@ -517,14 +474,14 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 				trace_batch_list_sw = true;
 				/* 以前のリストをすべて削除 */
 				while (0 <
-			cl_gts_gui.selbro_trace_batch_run_list->size()) {
-			cl_gts_gui.selbro_trace_batch_run_list->remove(1);
+			cl_gts_gui.selbro_trace_batch_config_list->size()) {
+			cl_gts_gui.selbro_trace_batch_config_list->remove(1);
 				}
 			}
 
 			/* リストの最後に追加する */
-			cl_gts_gui.selbro_trace_batch_run_list->insert(
-			cl_gts_gui.selbro_trace_batch_run_list->size()+1,
+			cl_gts_gui.selbro_trace_batch_config_list->insert(
+			cl_gts_gui.selbro_trace_batch_config_list->size()+1,
 				words.at(1).c_str()
 			);
 		}

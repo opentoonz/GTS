@@ -4,11 +4,6 @@
 
 void gts_master::color_trace_in_view_area( void )
 {
-	/* メニューのリアルタイム指示を確認 */
-	if (0 == cl_gts_gui.menite_color_trace_real_time->value()) {
-		return;
-	}
-
 	/* データがなければ実行しない */
 	if (NULL == this->cl_iip_ro90.get_clp_parent()) {
 		return;
