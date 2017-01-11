@@ -24,7 +24,6 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libcpp69iip_scale_by_subpixel \
 				   -Isources/libcpp71iip_color_trace_hab \
 				   -Isources/libcpp72iip_erase_dot_noise \
-				   -Isources/libcpp81gts_file_browser \
 				   -Isources/libcpp82gts_hsv_histogram \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
@@ -133,62 +132,6 @@ libgts_la_SOURCES = \
 					sources/libcpp72iip_erase_dot_noise/calcu_erase_dot_noise.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_exec.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_uchar.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro01path_base.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro02list_base.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro03list_gui.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro04path_level.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro04text_gui.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro05list_config.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro05list_level.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro05list_level_fold.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro05list_trace_batch.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_init.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_load_cancel.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_load_dir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_load_dir_up.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_load_list.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_load_ok.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_load_wintgl.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_cancel.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_dir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_dir_up.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_file.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_list.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_ok.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_config_save_as_wintgl.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_browse_sw.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_cancel.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_dir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_dir_up.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_file_or_level.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_init.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_list.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_list_image.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_list_image_info.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_list_redisplay.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_mkdir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_name.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_ok.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_rename.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_rename_dir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_rename_file_tif.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_rename_level_tif.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_renumber.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_renumber_level_tif.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_rgb_scan_dir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_set_image_file_ext.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_wintgl.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_level_x1view.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_add.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_alladd.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_cancel.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_dir.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_dir_up.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_init.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_list.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_run.cpp \
-					sources/libcpp81gts_file_browser/gtsfbro06cb_trace_batch_wintgl.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000_range_cyclic.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000_range_minmax.cpp \
 					sources/libcpp82gts_hsv_histogram/fltk_1000x100_histogram.cpp \
