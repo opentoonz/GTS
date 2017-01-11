@@ -46,6 +46,11 @@ void memory_config::save_3int_(
 //----------
 void memory_config::save_head_( std::ofstream& ofs )
 {
+	ofs	<< "# "  << cl_gts_master.cp_release_name()
+		<< " : " << cl_gts_master.cp_release_number()
+		<< " "   << cl_gts_master.cp_release_date()
+		<< "\n";
+
 	time_t tt = time(nullptr);
 	ofs << "# date and time : " << asctime(localtime(&tt));
 	/* asctime()の戻り値は26文字とヌル文字の入った文字列へのポインター
@@ -55,7 +60,7 @@ void memory_config::save_head_( std::ofstream& ofs )
 
 	const char* cp = ptbl_get_cp_username();
 	if (cp == nullptr) { cp = "unknown"; }
-	ofs << "# current user  : " << cp << "\n#\n";
+	ofs << "# current user  : " << cp << "\n\n";
 }
 void memory_config::save_config_( std::ofstream& ofs )
 {

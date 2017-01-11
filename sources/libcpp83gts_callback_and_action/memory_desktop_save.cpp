@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <string>
 #include <string.h>
+#include <ctime>
+#include <string>
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"
 #include "pri.h"
@@ -13,6 +14,28 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	int i_ret;
 	const char	*ccp_show = this->str_show_,
 			*ccp_hide = this->str_hide_;
+
+	i_ret = fprintf(fp, "# %s : %s %s\n"
+	,cl_gts_master.cp_release_name()
+	,cl_gts_master.cp_release_number()
+	,cl_gts_master.cp_release_date()
+	);
+	if (i_ret < 0) { return NG; }
+
+	time_t tt = time(nullptr);
+	i_ret = fprintf(fp, "# date and time : %s"
+	,asctime(localtime(&tt))
+	);
+	if (i_ret < 0) { return NG; }
+
+	const char* cp = ptbl_get_cp_username();
+	if (cp == nullptr) { cp = "unknown"; }
+	i_ret = fprintf(fp, "# current user  : %s\n\n"
+	,cp
+	);
+	if (i_ret < 0) { return NG; }
+
+	//---------------------------------------
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
 	, this->str_window_opengl_
