@@ -35,15 +35,15 @@ public:
 	    "window_crop_area_and_rot90" )
 	,str_window_pixel_type_and_bright_(
 	    "window_pixel_type_and_bright" )
-	,str_window_color_trace_(
+	,str_window_trace_parameters_(
 	    "window_color_trace" )
-	,str_window_fnum_list_(
+	,str_window_number_(
 	    "window_fnum_list" )
 	,str_window_trace_batch_(
 	    "window_trace_batch" )
-	,str_window_thickness_(
+	,str_window_trace_thickness_(
 	    "window_thickness" )
-	,str_window_edit_color_(
+	,str_window_trace_output_color(
 	    "window_edit_color" )
 	,str_window_edit_hab_min_max_(
 	    "window_edit_hab_min_max" )
@@ -84,11 +84,11 @@ private:
 
 	const char* str_window_crop_area_and_rot90_;
 	const char* str_window_pixel_type_and_bright_;
-	const char* str_window_color_trace_;
-	const char* str_window_fnum_list_;
+	const char* str_window_trace_parameters_;
+	const char* str_window_number_;
 	const char* str_window_trace_batch_;
-	const char* str_window_thickness_;
-	const char* str_window_edit_color_;
+	const char* str_window_trace_thickness_;
+	const char* str_window_trace_output_color;
 	const char* str_window_edit_hab_min_max_;
 # ifndef _WIN32
 	const char* str_desktop_dir_;

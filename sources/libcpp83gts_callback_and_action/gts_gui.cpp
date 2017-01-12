@@ -147,84 +147,84 @@ void gts_gui::cb_menite_pixel_type_and_bright(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_pixel_type_and_bright_i(o,v);
 }
 
-void gts_gui::cb_menite_fnum_list_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_fnum_list->value()) {
+void gts_gui::cb_menite_number_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_number->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_fnum_list->show();
+    cl_gts_gui.window_number->show();
 } else {
-    cl_gts_gui.window_fnum_list->hide();
+    cl_gts_gui.window_number->hide();
 };
 }
-void gts_gui::cb_menite_fnum_list(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_fnum_list_i(o,v);
+void gts_gui::cb_menite_number(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_number_i(o,v);
 }
 
-void gts_gui::cb_menite_color_trace_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_color_trace->value()) {
+void gts_gui::cb_menite_trace_parameters_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_parameters->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_color_trace->show();
+    cl_gts_gui.window_trace_parameters->show();
 } else {
-    cl_gts_gui.window_color_trace->hide();
-    cl_gts_gui.window_edit_color->hide();
-    cl_gts_gui.menite_edit_color->clear();
-    cl_gts_gui.window_hab_histogram->hide();
-    cl_gts_gui.menite_edit_hsv_min_max->clear();
+    cl_gts_gui.window_trace_parameters->hide();
+    cl_gts_gui.window_trace_output_color->hide();
+    cl_gts_gui.menite_trace_output_color->clear();
+    cl_gts_gui.window_trace_input_color->hide();
+    cl_gts_gui.menite_trace_input_color->clear();
 };
 }
-void gts_gui::cb_menite_color_trace(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_color_trace_i(o,v);
+void gts_gui::cb_menite_trace_parameters(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_parameters_i(o,v);
 }
 
 void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_batch->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch_job->show();
+    cl_gts_gui.window_trace_batch->show();
 } else {
-    cl_gts_gui.window_trace_batch_job->hide();
+    cl_gts_gui.window_trace_batch->hide();
 };
 }
 void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_batch_i(o,v);
 }
 
-void gts_gui::cb_menite_thickness_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_thickness->value()) {
+void gts_gui::cb_menite_trace_thickness_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_thickness->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_thickness->show();
+    cl_gts_gui.window_trace_thickness->show();
 } else {
-    cl_gts_gui.window_thickness->hide();
-    cl_gts_gui.window_edit_color->hide();
-    cl_gts_gui.menite_edit_color->clear();
-    cl_gts_gui.window_hab_histogram->hide();
-    cl_gts_gui.menite_edit_hsv_min_max->clear();
+    cl_gts_gui.window_trace_thickness->hide();
+    cl_gts_gui.window_trace_output_color->hide();
+    cl_gts_gui.menite_trace_output_color->clear();
+    cl_gts_gui.window_trace_input_color->hide();
+    cl_gts_gui.menite_trace_input_color->clear();
 };
 }
-void gts_gui::cb_menite_thickness(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_thickness_i(o,v);
+void gts_gui::cb_menite_trace_thickness(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_thickness_i(o,v);
 }
 
-void gts_gui::cb_menite_edit_hsv_min_max_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_edit_hsv_min_max->value()) {
+void gts_gui::cb_menite_trace_input_color_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_input_color->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_hab_histogram->show();
+    cl_gts_gui.window_trace_input_color->show();
 } else {
-    cl_gts_gui.window_hab_histogram->hide();
+    cl_gts_gui.window_trace_input_color->hide();
 };
 }
-void gts_gui::cb_menite_edit_hsv_min_max(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_edit_hsv_min_max_i(o,v);
+void gts_gui::cb_menite_trace_input_color(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_input_color_i(o,v);
 }
 
-void gts_gui::cb_menite_edit_color_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_edit_color->value()) {
+void gts_gui::cb_menite_trace_output_color_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_output_color->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_edit_color->show();
+    cl_gts_gui.window_trace_output_color->show();
 } else {
-    cl_gts_gui.window_edit_color->hide();
+    cl_gts_gui.window_trace_output_color->hide();
 };
 }
-void gts_gui::cb_menite_edit_color(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_edit_color_i(o,v);
+void gts_gui::cb_menite_trace_output_color(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_output_color_i(o,v);
 }
 
 void gts_gui::cb_zoom_i(Fl_Menu_*, void*) {
@@ -404,12 +404,12 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Level...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_level, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
  {"Area and Rot90...", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_crop_area_and_rot90, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Pixel Type and Bright...", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"File Number ...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_fnum_list, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
- {"Color Trace Enhancement...", 0,  (Fl_Callback*)gts_gui::cb_menite_color_trace, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Color Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
- {"Thickness...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Input Color(HSV Min Max)...", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_edit_hsv_min_max, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Output Color(RGB)...", 0xffc5,  (Fl_Callback*)gts_gui::cb_menite_edit_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Number ...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Thickness...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Input Color(HSV Min Max)...", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_input_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Output Color(RGB)...", 0xffc5,  (Fl_Callback*)gts_gui::cb_menite_trace_output_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -449,12 +449,12 @@ Fl_Menu_Item* gts_gui::menite_start_scan = gts_gui::menu_ + 11;
 Fl_Menu_Item* gts_gui::menite_level = gts_gui::menu_ + 17;
 Fl_Menu_Item* gts_gui::menite_crop_area_and_rot90 = gts_gui::menu_ + 18;
 Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 19;
-Fl_Menu_Item* gts_gui::menite_fnum_list = gts_gui::menu_ + 20;
-Fl_Menu_Item* gts_gui::menite_color_trace = gts_gui::menu_ + 21;
+Fl_Menu_Item* gts_gui::menite_number = gts_gui::menu_ + 20;
+Fl_Menu_Item* gts_gui::menite_trace_parameters = gts_gui::menu_ + 21;
 Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 22;
-Fl_Menu_Item* gts_gui::menite_thickness = gts_gui::menu_ + 23;
-Fl_Menu_Item* gts_gui::menite_edit_hsv_min_max = gts_gui::menu_ + 24;
-Fl_Menu_Item* gts_gui::menite_edit_color = gts_gui::menu_ + 25;
+Fl_Menu_Item* gts_gui::menite_trace_thickness = gts_gui::menu_ + 23;
+Fl_Menu_Item* gts_gui::menite_trace_input_color = gts_gui::menu_ + 24;
+Fl_Menu_Item* gts_gui::menite_trace_output_color = gts_gui::menu_ + 25;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 26;
 Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 36;
 Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 41;
@@ -891,12 +891,12 @@ void gts_gui::cb_valinp_rgb_gamma(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_rgb_gamma_i(o,v);
 }
 
-void gts_gui::cb_window_fnum_list_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();
+void gts_gui::cb_window_number_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_number->hide();
+cl_gts_gui.menite_number->clear();
 }
-void gts_gui::cb_window_fnum_list(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_fnum_list_i(o,v);
+void gts_gui::cb_window_number(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_number_i(o,v);
 }
 
 void gts_gui::cb_Select_i(Fl_Menu_*, void*) {
@@ -935,16 +935,16 @@ void gts_gui::cb_selbro_fnum_list(Fl_Browser* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_selbro_fnum_list_i(o,v);
 }
 
-void gts_gui::cb_window_color_trace_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_color_trace->hide();
-cl_gts_gui.menite_color_trace->clear();
-cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();
-cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();
+void gts_gui::cb_window_trace_parameters_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_parameters->hide();
+cl_gts_gui.menite_trace_parameters->clear();
+cl_gts_gui.window_trace_output_color->hide();
+cl_gts_gui.menite_trace_output_color->clear();
+cl_gts_gui.window_trace_input_color->hide();
+cl_gts_gui.menite_trace_input_color->clear();
 }
-void gts_gui::cb_window_color_trace(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_color_trace_i(o,v);
+void gts_gui::cb_window_trace_parameters(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_parameters_i(o,v);
 }
 
 void gts_gui::cb_chkbtn_color_trace_01_chk_i(Fl_Check_Button* o, void*) {
@@ -1794,12 +1794,12 @@ void gts_gui::cb_button_color_trace_06_src(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_color_trace_06_src_i(o,v);
 }
 
-void gts_gui::cb_window_trace_batch_job_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_trace_batch_job->hide();  /* Window閉じる */
+void gts_gui::cb_window_trace_batch_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_batch->hide();  /* Window閉じる */
 cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */;
 }
-void gts_gui::cb_window_trace_batch_job(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_trace_batch_job_i(o,v);
+void gts_gui::cb_window_trace_batch(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_batch_i(o,v);
 }
 
 void gts_gui::cb_Add_i(Fl_Button*, void*) {
@@ -1837,16 +1837,16 @@ void gts_gui::cb_Run(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Run_i(o,v);
 }
 
-void gts_gui::cb_window_thickness_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_thickness->hide();
-cl_gts_gui.menite_thickness->clear();
-cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();
-cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();
+void gts_gui::cb_window_trace_thickness_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_thickness->hide();
+cl_gts_gui.menite_trace_thickness->clear();
+cl_gts_gui.window_trace_output_color->hide();
+cl_gts_gui.menite_trace_output_color->clear();
+cl_gts_gui.window_trace_input_color->hide();
+cl_gts_gui.menite_trace_input_color->clear();
 }
-void gts_gui::cb_window_thickness(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_thickness_i(o,v);
+void gts_gui::cb_window_trace_thickness(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_thickness_i(o,v);
 }
 
 void gts_gui::cb_chkbtn_thickness_01_chk_i(Fl_Check_Button* o, void*) {
@@ -2155,12 +2155,12 @@ void gts_gui::cb_valinp_thickness_06(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_thickness_06_i(o,v);
 }
 
-void gts_gui::cb_window_hab_histogram_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();
+void gts_gui::cb_window_trace_input_color_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_input_color->hide();
+cl_gts_gui.menite_trace_input_color->clear();
 }
-void gts_gui::cb_window_hab_histogram(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_hab_histogram_i(o,v);
+void gts_gui::cb_window_trace_input_color(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_input_color_i(o,v);
 }
 
 void gts_gui::cb_menite_limit_nothing_i(Fl_Menu_*, void*) {
@@ -4900,12 +4900,12 @@ void gts_gui::cb_Color2(Fl_Light_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_Color2_i(o,v);
 }
 
-void gts_gui::cb_window_edit_color_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();
+void gts_gui::cb_window_trace_output_color_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_output_color->hide();
+cl_gts_gui.menite_trace_output_color->clear();
 }
-void gts_gui::cb_window_edit_color(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_edit_color_i(o,v);
+void gts_gui::cb_window_trace_output_color(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_output_color_i(o,v);
 }
 
 void gts_gui::cb_scrbar_edit_color_red_i(Fl_Scrollbar* o, void*) {
@@ -5544,8 +5544,8 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->end();
     window_pixel_type_and_bright->resizable(window_pixel_type_and_bright);
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_fnum_list = new Fl_Double_Window(116, 350, "Number");
-    window_fnum_list->callback((Fl_Callback*)cb_window_fnum_list, (void*)(this));
+  { window_number = new Fl_Double_Window(116, 350, "Number");
+    window_number->callback((Fl_Callback*)cb_window_number, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 116, 25);
       o->menu(menu_1);
     } // Fl_Menu_Bar* o
@@ -5562,12 +5562,12 @@ Fl_Double_Window* gts_gui::make_window() {
       selbro_fnum_list->callback((Fl_Callback*)cb_selbro_fnum_list);
       Fl_Group::current()->resizable(selbro_fnum_list);
     } // Fl_Browser* selbro_fnum_list
-    window_fnum_list->set_non_modal();
-    window_fnum_list->size_range(116, 0, 200, 4000);
-    window_fnum_list->end();
-  } // Fl_Double_Window* window_fnum_list
-  { window_color_trace = new Fl_Double_Window(285, 755, "Trace Parameters");
-    window_color_trace->callback((Fl_Callback*)cb_window_color_trace, (void*)(this));
+    window_number->set_non_modal();
+    window_number->size_range(116, 0, 200, 4000);
+    window_number->end();
+  } // Fl_Double_Window* window_number
+  { window_trace_parameters = new Fl_Double_Window(285, 755, "Trace Parameters");
+    window_trace_parameters->callback((Fl_Callback*)cb_window_trace_parameters, (void*)(this));
     { Fl_Group* o = new Fl_Group(5, 5, 280, 120);
       { Fl_Text_Display* o = new Fl_Text_Display(5, 10, 0, 0, "1");
         o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
@@ -6264,11 +6264,11 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* group_color_trace_06grp
       o->end();
     } // Fl_Group* o
-    window_color_trace->set_non_modal();
-    window_color_trace->end();
-  } // Fl_Double_Window* window_color_trace
-  { window_trace_batch_job = new Fl_Double_Window(300, 185, "Trace Batch");
-    window_trace_batch_job->callback((Fl_Callback*)cb_window_trace_batch_job, (void*)(this));
+    window_trace_parameters->set_non_modal();
+    window_trace_parameters->end();
+  } // Fl_Double_Window* window_trace_parameters
+  { window_trace_batch = new Fl_Double_Window(300, 185, "Trace Batch");
+    window_trace_batch->callback((Fl_Callback*)cb_window_trace_batch, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 4, 300, 30);
       { Fl_Button* o = new Fl_Button(5, 5, 40, 25, "Add...");
         o->callback((Fl_Callback*)cb_Add);
@@ -6299,12 +6299,12 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
       Fl_Group::current()->resizable(o);
     } // Fl_Group* o
-    window_trace_batch_job->set_non_modal();
-    window_trace_batch_job->size_range(200, 125);
-    window_trace_batch_job->end();
-  } // Fl_Double_Window* window_trace_batch_job
-  { window_thickness = new Fl_Double_Window(330, 225, "Trace Thickness");
-    window_thickness->callback((Fl_Callback*)cb_window_thickness, (void*)(this));
+    window_trace_batch->set_non_modal();
+    window_trace_batch->size_range(200, 125);
+    window_trace_batch->end();
+  } // Fl_Double_Window* window_trace_batch
+  { window_trace_thickness = new Fl_Double_Window(330, 225, "Trace Thickness");
+    window_trace_thickness->callback((Fl_Callback*)cb_window_trace_thickness, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 15, 330, 20);
       { chkbtn_thickness_01_chk = new Fl_Check_Button(15, 15, 20, 20, "1");
         chkbtn_thickness_01_chk->down_box(FL_DOWN_BOX);
@@ -6558,13 +6558,13 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* group_thickness_06grp
       o->end();
     } // Fl_Group* o
-    window_thickness->set_non_modal();
-    window_thickness->size_range(200, 225, 1000, 225);
-    window_thickness->end();
-    window_thickness->resizable(window_thickness);
-  } // Fl_Double_Window* window_thickness
-  { window_hab_histogram = new Fl_Double_Window(1000, 565, "Trace Input Color(HSV Min Max)");
-    window_hab_histogram->callback((Fl_Callback*)cb_window_hab_histogram, (void*)(this));
+    window_trace_thickness->set_non_modal();
+    window_trace_thickness->size_range(200, 225, 1000, 225);
+    window_trace_thickness->end();
+    window_trace_thickness->resizable(window_trace_thickness);
+  } // Fl_Double_Window* window_trace_thickness
+  { window_trace_input_color = new Fl_Double_Window(1000, 565, "Trace Input Color(HSV Min Max)");
+    window_trace_input_color->callback((Fl_Callback*)cb_window_trace_input_color, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 1000, 25);
       o->menu(menu_2);
     } // Fl_Menu_Bar* o
@@ -6747,11 +6747,11 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       o->end();
     } // Fl_Scroll* o
-    window_hab_histogram->set_non_modal();
-    window_hab_histogram->end();
-  } // Fl_Double_Window* window_hab_histogram
-  { window_edit_color = new Fl_Double_Window(385, 100, "Trace Output Color(RGB)");
-    window_edit_color->callback((Fl_Callback*)cb_window_edit_color, (void*)(this));
+    window_trace_input_color->set_non_modal();
+    window_trace_input_color->end();
+  } // Fl_Double_Window* window_trace_input_color
+  { window_trace_output_color = new Fl_Double_Window(385, 100, "Trace Output Color(RGB)");
+    window_trace_output_color->callback((Fl_Callback*)cb_window_trace_output_color, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 10, 385, 20);
       { Fl_Group* o = new Fl_Group(0, 10, 340, 20);
         { scrbar_edit_color_red = new Fl_Scrollbar(45, 10, 295, 20, "Red");
@@ -6818,11 +6818,11 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Value_Input* valinp_edit_color_blu
       o->end();
     } // Fl_Group* o
-    window_edit_color->set_non_modal();
-    window_edit_color->size_range(200, 100, 1000, 100);
-    window_edit_color->end();
-    window_edit_color->resizable(window_edit_color);
-  } // Fl_Double_Window* window_edit_color
-  return window_edit_color;
+    window_trace_output_color->set_non_modal();
+    window_trace_output_color->size_range(200, 100, 1000, 100);
+    window_trace_output_color->end();
+    window_trace_output_color->resizable(window_trace_output_color);
+  } // Fl_Double_Window* window_trace_output_color
+  return window_trace_output_color;
 }
 gts_gui cl_gts_gui; 

@@ -181,7 +181,7 @@ int gts_master::redraw_image_(
 		this->cl_color_trace_enhancement.src_set_histogram_max();
 
 		/* color trace histogram windowの再描画 */
-		cl_gts_gui.window_hab_histogram->flush();
+		cl_gts_gui.window_trace_input_color->flush();
 	}
 	return OK;
 }

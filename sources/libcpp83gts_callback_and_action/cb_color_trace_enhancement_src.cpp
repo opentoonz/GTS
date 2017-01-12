@@ -287,13 +287,13 @@ namespace {
 		//tbut->size( 30+mgn ,20+mgn );
 		//tbut->label( label );
 		tbut->box( btype );
-		cl_gts_gui.window_thickness->redraw();
+		cl_gts_gui.window_trace_thickness->redraw();
 	}
 	if (ebut != nullptr) {
 		//ebut->size( 30+mgn ,25+mgn );
 		//ebut->label( label );
 		ebut->box( btype );
-		cl_gts_gui.window_color_trace->redraw();
+		cl_gts_gui.window_trace_parameters->redraw();
 	}
  }
 }
@@ -321,9 +321,9 @@ int cb_color_trace_enhancement::src_open_histogram_window_( E_COLOR_TRACE_HAB_CO
 		return NG;
 	}
 	cl_gts_gui.window_opengl->show();/* Need for Minimize */
-	cl_gts_gui.window_hab_histogram->redraw();
-	cl_gts_gui.window_hab_histogram->show();
-	cl_gts_gui.menite_edit_hsv_min_max->set();//Check menu sw
+	cl_gts_gui.window_trace_input_color->redraw();
+	cl_gts_gui.window_trace_input_color->show();
+	cl_gts_gui.menite_trace_input_color->set();//Check menu sw
 
 	return OK;
 }
@@ -767,14 +767,14 @@ void cb_color_trace_enhancement::reset_saturation_belt_when_modify_hue_min_or_ma
 
 	cl_gts_gui.fltkp_aa_color_belt->set_right_color(rr,gg,bb);
 
-	//cl_gts_gui.window_hab_histogram->redraw();
+	//cl_gts_gui.window_trace_input_color->redraw();
 	cl_gts_gui.fltkp_aa_color_belt->redraw();
 /*
 Bug	2016-08-01
 	画像を表示せず、histogramを非表示の場合、
 	cl_gts_gui.fltkp_aa_color_belt->redraw();で、
 	fltk_1000x10_color_belt::draw();を実行するはずが実行しない。
-	cl_gts_gui.window_hab_histogram->redraw();に替えても同じ。
+	cl_gts_gui.window_trace_input_color->redraw();に替えても同じ。
 	原因不明。重要性低く今のところ保留
 */
 

@@ -188,13 +188,13 @@ namespace {
 		//tbut->size( 30+mgn ,20+mgn );
 		//tbut->label( label );
 		tbut->box( btype );
-		cl_gts_gui.window_thickness->redraw();
+		cl_gts_gui.window_trace_thickness->redraw();
 	}
 	if (ebut != nullptr) {
 		//ebut->size( 30+mgn ,45+mgn );
 		//ebut->label( label );
 		ebut->box( btype );
-		cl_gts_gui.window_color_trace->redraw();
+		cl_gts_gui.window_trace_parameters->redraw();
 	}
  }
 }
@@ -246,9 +246,9 @@ void cb_color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS t
 		(double)blu);
 
 	/* edit color windowを表示 */
-	cl_gts_gui.menite_edit_color->set();
+	cl_gts_gui.menite_trace_output_color->set();
 	cl_gts_gui.window_opengl->show();/* Need for Minimize */
-	cl_gts_gui.window_edit_color->show();
+	cl_gts_gui.window_trace_output_color->show();
 }
 
 /* color trace enhancement windowから、

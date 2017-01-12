@@ -138,71 +138,71 @@ cl_gts_master.cl_level.dialog_renumber_at_open();}
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc1
           }
-          MenuItem menite_fnum_list {
-            label {File Number ...}
-            callback {if (cl_gts_gui.menite_fnum_list->value()) {
+          MenuItem menite_number {
+            label {Number ...}
+            callback {if (cl_gts_gui.menite_number->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_fnum_list->show();
+    cl_gts_gui.window_number->show();
 } else {
-    cl_gts_gui.window_fnum_list->hide();
+    cl_gts_gui.window_number->hide();
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc2 divider
           }
-          MenuItem menite_color_trace {
-            label {Color Trace Enhancement...}
-            callback {if (cl_gts_gui.menite_color_trace->value()) {
+          MenuItem menite_trace_parameters {
+            label {Trace Parameters...}
+            callback {if (cl_gts_gui.menite_trace_parameters->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_color_trace->show();
+    cl_gts_gui.window_trace_parameters->show();
 } else {
-    cl_gts_gui.window_color_trace->hide();
-    cl_gts_gui.window_edit_color->hide();
-    cl_gts_gui.menite_edit_color->clear();
-    cl_gts_gui.window_hab_histogram->hide();
-    cl_gts_gui.menite_edit_hsv_min_max->clear();
+    cl_gts_gui.window_trace_parameters->hide();
+    cl_gts_gui.window_trace_output_color->hide();
+    cl_gts_gui.menite_trace_output_color->clear();
+    cl_gts_gui.window_trace_input_color->hide();
+    cl_gts_gui.menite_trace_input_color->clear();
 }}
             xywh {0 0 100 20} type Toggle
           }
           MenuItem menite_trace_batch {
-            label {Color Trace Batch...}
+            label {Trace Batch...}
             callback {if (cl_gts_gui.menite_trace_batch->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch_job->show();
+    cl_gts_gui.window_trace_batch->show();
 } else {
-    cl_gts_gui.window_trace_batch_job->hide();
+    cl_gts_gui.window_trace_batch->hide();
 }}
             xywh {0 0 100 20} type Toggle divider
           }
-          MenuItem menite_thickness {
-            label {Thickness...}
-            callback {if (cl_gts_gui.menite_thickness->value()) {
+          MenuItem menite_trace_thickness {
+            label {Trace Thickness...}
+            callback {if (cl_gts_gui.menite_trace_thickness->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_thickness->show();
+    cl_gts_gui.window_trace_thickness->show();
 } else {
-    cl_gts_gui.window_thickness->hide();
-    cl_gts_gui.window_edit_color->hide();
-    cl_gts_gui.menite_edit_color->clear();
-    cl_gts_gui.window_hab_histogram->hide();
-    cl_gts_gui.menite_edit_hsv_min_max->clear();
+    cl_gts_gui.window_trace_thickness->hide();
+    cl_gts_gui.window_trace_output_color->hide();
+    cl_gts_gui.menite_trace_output_color->clear();
+    cl_gts_gui.window_trace_input_color->hide();
+    cl_gts_gui.menite_trace_input_color->clear();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc3
           }
-          MenuItem menite_edit_hsv_min_max {
-            label {Input Color(HSV Min Max)...}
-            callback {if (cl_gts_gui.menite_edit_hsv_min_max->value()) {
+          MenuItem menite_trace_input_color {
+            label {Trace Input Color(HSV Min Max)...}
+            callback {if (cl_gts_gui.menite_trace_input_color->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_hab_histogram->show();
+    cl_gts_gui.window_trace_input_color->show();
 } else {
-    cl_gts_gui.window_hab_histogram->hide();
+    cl_gts_gui.window_trace_input_color->hide();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc4
           }
-          MenuItem menite_edit_color {
-            label {Output Color(RGB)...}
-            callback {if (cl_gts_gui.menite_edit_color->value()) {
+          MenuItem menite_trace_output_color {
+            label {Trace Output Color(RGB)...}
+            callback {if (cl_gts_gui.menite_trace_output_color->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_edit_color->show();
+    cl_gts_gui.window_trace_output_color->show();
 } else {
-    cl_gts_gui.window_edit_color->hide();
+    cl_gts_gui.window_trace_output_color->hide();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc5
           }
@@ -1020,10 +1020,10 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         }
       }
     }
-    Fl_Window window_fnum_list {
+    Fl_Window window_number {
       label Number
-      callback {cl_gts_gui.window_fnum_list->hide();
-cl_gts_gui.menite_fnum_list->clear();}
+      callback {cl_gts_gui.window_number->hide();
+cl_gts_gui.menite_number->clear();}
       xywh {50 50 116 350} type Double resizable non_modal size_range {116 0 200 4000} visible
     } {
       Fl_Menu_Bar {} {open
@@ -1057,14 +1057,14 @@ cl_gts_gui.menite_fnum_list->clear();}
         xywh {0 75 116 275} type Multi resizable
       }
     }
-    Fl_Window window_color_trace {
+    Fl_Window window_trace_parameters {
       label {Trace Parameters}
-      callback {cl_gts_gui.window_color_trace->hide();
-cl_gts_gui.menite_color_trace->clear();
-cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();
-cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();}
+      callback {cl_gts_gui.window_trace_parameters->hide();
+cl_gts_gui.menite_trace_parameters->clear();
+cl_gts_gui.window_trace_output_color->hide();
+cl_gts_gui.menite_trace_output_color->clear();
+cl_gts_gui.window_trace_input_color->hide();
+cl_gts_gui.menite_trace_input_color->clear();}
       xywh {50 0 285 755} type Double non_modal visible
     } {
       Fl_Group {} {
@@ -1692,9 +1692,9 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         }
       }
     }
-    Fl_Window window_trace_batch_job {
+    Fl_Window window_trace_batch {
       label {Trace Batch}
-      callback {cl_gts_gui.window_trace_batch_job->hide();  /* Window閉じる */
+      callback {cl_gts_gui.window_trace_batch->hide();  /* Window閉じる */
 cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
       xywh {50 50 300 185} type Double resizable non_modal size_range {200 125 0 0} visible
     } {
@@ -1738,14 +1738,14 @@ cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
         }
       }
     }
-    Fl_Window window_thickness {
+    Fl_Window window_trace_thickness {
       label {Trace Thickness}
-      callback {cl_gts_gui.window_thickness->hide();
-cl_gts_gui.menite_thickness->clear();
-cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();
-cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();}
+      callback {cl_gts_gui.window_trace_thickness->hide();
+cl_gts_gui.menite_trace_thickness->clear();
+cl_gts_gui.window_trace_output_color->hide();
+cl_gts_gui.menite_trace_output_color->clear();
+cl_gts_gui.window_trace_input_color->hide();
+cl_gts_gui.menite_trace_input_color->clear();}
       xywh {50 50 330 225} type Double resizable non_modal size_range {200 225 1000 225} visible
     } {
       Fl_Group {} {open
@@ -2019,10 +2019,10 @@ cl_gts_master.cb_color_trace_src_redraw_image();}
         }
       }
     }
-    Fl_Window window_hab_histogram {
+    Fl_Window window_trace_input_color {
       label {Trace Input Color(HSV Min Max)}
-      callback {cl_gts_gui.window_hab_histogram->hide();
-cl_gts_gui.menite_edit_hsv_min_max->clear();}
+      callback {cl_gts_gui.window_trace_input_color->hide();
+cl_gts_gui.menite_trace_input_color->clear();}
       xywh {50 50 1000 565} type Double non_modal visible
     } {
       Fl_Menu_Bar {} {open
@@ -2237,10 +2237,10 @@ fltkp_bb_histogram->redraw();}
         }
       }
     }
-    Fl_Window window_edit_color {
+    Fl_Window window_trace_output_color {
       label {Trace Output Color(RGB)}
-      callback {cl_gts_gui.window_edit_color->hide();
-cl_gts_gui.menite_edit_color->clear();}
+      callback {cl_gts_gui.window_trace_output_color->hide();
+cl_gts_gui.menite_trace_output_color->clear();}
       xywh {50 50 385 100} type Double resizable non_modal size_range {200 100 1000 100} visible
     } {
       Fl_Group {} {open

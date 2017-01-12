@@ -80,56 +80,56 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_color_trace_
-	, cl_gts_gui.menite_color_trace->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_color_trace->x()
-	, cl_gts_gui.window_color_trace->y()
+	, this->str_window_trace_parameters_
+	, cl_gts_gui.menite_trace_parameters->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_parameters->x()
+	, cl_gts_gui.window_trace_parameters->y()
 	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_fnum_list_
-	, cl_gts_gui.menite_fnum_list->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_fnum_list->x()
-	, cl_gts_gui.window_fnum_list->y()
-	, cl_gts_gui.window_fnum_list->w()
-	, cl_gts_gui.window_fnum_list->h()
+	, this->str_window_number_
+	, cl_gts_gui.menite_number->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_number->x()
+	, cl_gts_gui.window_number->y()
+	, cl_gts_gui.window_number->w()
+	, cl_gts_gui.window_number->h()
 	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
 	, this->str_window_trace_batch_
 	, cl_gts_gui.menite_trace_batch->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_batch_job->x()
-	, cl_gts_gui.window_trace_batch_job->y()
-	, cl_gts_gui.window_trace_batch_job->w()
-	, cl_gts_gui.window_trace_batch_job->h()
+	, cl_gts_gui.window_trace_batch->x()
+	, cl_gts_gui.window_trace_batch->y()
+	, cl_gts_gui.window_trace_batch->w()
+	, cl_gts_gui.window_trace_batch->h()
 	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_thickness_
-	, cl_gts_gui.menite_thickness->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_thickness->x()
-	, cl_gts_gui.window_thickness->y()
-	, cl_gts_gui.window_thickness->w()
-	, cl_gts_gui.window_thickness->h()
+	, this->str_window_trace_thickness_
+	, cl_gts_gui.menite_trace_thickness->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_thickness->x()
+	, cl_gts_gui.window_trace_thickness->y()
+	, cl_gts_gui.window_trace_thickness->w()
+	, cl_gts_gui.window_trace_thickness->h()
 	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_edit_color_
-	, cl_gts_gui.menite_edit_color->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_edit_color->x()
-	, cl_gts_gui.window_edit_color->y()
+	, this->str_window_trace_output_color
+	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_output_color->x()
+	, cl_gts_gui.window_trace_output_color->y()
 	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
 	, this->str_window_edit_hab_min_max_
-	, cl_gts_gui.menite_edit_hsv_min_max->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_hab_histogram->x()
-	, cl_gts_gui.window_hab_histogram->y()
+	, cl_gts_gui.menite_trace_input_color->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_input_color->x()
+	, cl_gts_gui.window_trace_input_color->y()
 	);
 	if (i_ret < 0) { return NG; }
 
