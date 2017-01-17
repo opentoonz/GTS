@@ -36,9 +36,7 @@ cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
 cb_config.cpp\
 cb_file_number_list.cpp\
-cb_level.cpp\
 cb_quit.cpp\
-cb_read_and_save.cpp\
 cb_read_and_trace_and_preview.cpp\
 cb_rotate_per_90.cpp\
 cb_scan_and_preview.cpp\
@@ -46,6 +44,7 @@ cb_scan_and_save.cpp\
 cb_scan_full_area_and_crop.cpp\
 cb_scnr_area.cpp\
 cb_trace_batch.cpp\
+cb_trace_files.cpp\
 dogascan_area_rot90.cpp\
 dogascan_area_val_and_opengl_rect.cpp\
 dogascan_event.cpp\
@@ -55,6 +54,7 @@ fltk_event.cpp\
 fltk_opengl_draw.cpp\
 fltk_opengl_handle.cpp\
 igs_lex_white_space_and_double_quote.cpp\
+ids_path_extensions.cpp\
 ids_path_fltk_native_browse.cpp\
 ids_path_level_from_files.cpp\
 iipg_color_trace.cpp\

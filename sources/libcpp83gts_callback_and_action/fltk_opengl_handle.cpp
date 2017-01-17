@@ -91,12 +91,12 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		cl_gts_master.cl_config.loading_and_set_dpath_fname(
 			dnd_str );
 	}
-	/* Level(tif,tga) file */
+	/* Files(tif,tga) */
 	else {
-		cl_gts_master.cl_level.display_tab_to_level_open();
-		cl_gts_master.cl_level.set_level_open(
-			dpath ,head ,ext ,nums
+		cl_gts_master.cl_trace_files.set_gui_for_open(
+			dpath ,head ,num_form ,ext ,nums
 		);
+		cl_gts_master.cb_read_and_trace_and_preview();
 	}
 	return std::string();
 }

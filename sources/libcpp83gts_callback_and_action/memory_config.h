@@ -25,48 +25,48 @@ public:
 	,str_config_save_as_file_(
 	    "config_save_as_file")
 
-	,str_level_save_dir_path_(
+	,str_scan_save_dir_path_(
 	    "level_save_dir_path")
-	,str_level_save_dir_path_legacy2016_(
+	,str_scan_save_dir_path_legacy2016_(
 	    "level_dir")
 
-	,str_level_save_file_head_(
+	,str_scan_save_file_head_(
 	    "level_save_file_head")
-	,str_level_save_file_head_legacy2016_(
+	,str_scan_save_file_head_legacy2016_(
 	    "level_file")
 
-	,str_level_num_start_(
+	,str_scan_num_start_(
 	    "level_num_start")
-	,str_level_num_end_(
+	,str_scan_num_end_(
 	    "level_num_end")
-	,str_level_num_continue_type_(
+	,str_scan_num_continue_type_(
 	    "level_num_continue_type")
-	,str_level_num_endless_direction_(
+	,str_scan_num_endless_direction_(
 	    "level_num_endless_direction")
 
-	,str_level_save_image_format_(
+	,str_scan_save_image_format_(
 	    "level_save_image_format")
-	,str_level_save_image_format_legacy2016_(
+	,str_scan_save_image_format_legacy2016_(
 	    "level_image_file_format")
 
-	,str_filter_rgb_erase_dot_noise_sw_(
+	,str_scan_erase_dot_noise_sw_(
 	    "filter_rgb_erase_dot_noise_sw")
-	,str_filter_rgb_erase_dot_noise_sw_legacy2016_(
+	,str_scan_erase_dot_noise_sw_legacy2016_(
 	    "color_trace_erase_1dot")
 
-	,str_filter_rgb_color_trace_sw_(
+	,str_scan_trace_sw_(
 	    "filter_rgb_color_trace_sw")
-	,str_filter_rgb_color_trace_sw_legacy2016_(
+	,str_scan_trace_sw_legacy2016_(
 	    "level_rgb_trace_save_sw")
 
-	,str_level_open_dir_path_(
+	,str_trace_open_dir_path_(
 	    "level_open_dir_path")
-	,str_level_open_dir_path_legacy2016_(
+	,str_trace_open_dir_path_legacy2016_(
 	    "level_rgb_scan_dir")
 
-	,str_level_open_file_head_(
+	,str_trace_open_file_head_(
 	    "level_open_file_head")
-	,str_level_open_image_format_(
+	,str_trace_open_image_format_(
 	    "level_open_image_format")
 
 	,str_area_select_(
@@ -258,26 +258,27 @@ private:
 	const char* str_config_load_file_;
 	const char* str_config_save_as_file_;
 
-	const char* str_level_save_dir_path_;
-	const char* str_level_save_dir_path_legacy2016_;
-	const char* str_level_save_file_head_;
-	const char* str_level_save_file_head_legacy2016_;
-	const char* str_level_num_start_;
-	const char* str_level_num_end_;
-	const char* str_level_num_continue_type_;
-	const char* str_level_num_endless_direction_;
-	const char* str_level_save_image_format_;
-	const char* str_level_save_image_format_legacy2016_;
+	const char* str_scan_save_dir_path_;
+	const char* str_scan_save_dir_path_legacy2016_;
+	const char* str_scan_save_file_head_;
+	const char* str_scan_save_file_head_legacy2016_;
 
-	const char* str_filter_rgb_erase_dot_noise_sw_;
-	const char* str_filter_rgb_erase_dot_noise_sw_legacy2016_;
-	const char* str_filter_rgb_color_trace_sw_;
-	const char* str_filter_rgb_color_trace_sw_legacy2016_;
+	const char* str_scan_num_start_;
+	const char* str_scan_num_end_;
+	const char* str_scan_num_continue_type_;
+	const char* str_scan_num_endless_direction_;
+	const char* str_scan_save_image_format_;
+	const char* str_scan_save_image_format_legacy2016_;
 
-	const char* str_level_open_dir_path_;
-	const char* str_level_open_dir_path_legacy2016_;
-	const char* str_level_open_file_head_;
-	const char* str_level_open_image_format_;
+	const char* str_scan_erase_dot_noise_sw_;
+	const char* str_scan_erase_dot_noise_sw_legacy2016_;
+	const char* str_scan_trace_sw_;
+	const char* str_scan_trace_sw_legacy2016_;
+
+	const char* str_trace_open_dir_path_;
+	const char* str_trace_open_dir_path_legacy2016_;
+	const char* str_trace_open_file_head_;
+	const char* str_trace_open_image_format_;
 
 	const char* str_area_select_;
 	const char* str_area_x_pos_;

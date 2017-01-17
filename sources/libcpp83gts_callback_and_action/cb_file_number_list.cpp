@@ -140,43 +140,6 @@ void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 	);
 }
 
-/* 後方互換のため保持しているが将来廃止 */
-void cb_file_number_list::append_numbers_with_exist_mark(
-	const std::vector<int>& num_list /* こちら優先して使い設定 */
-	, const int start_num   /* num_listが空ならこちらで設定 */
-	, const int end_num
-)
-{
-	/* num_listにセットしてあるならそれをGUIリストに設定する */
-	if (!num_list.empty()) {
-		for (int num : num_list) {
-			this->append_fnum_list_with_chk_mark( num );
-		}
-		return;
-	}
-
-	/* startからendまでをGUIリストに設定する */
-	if (cl_gts_gui.choice_level_num_continue_type->value()
-	==  this->get_end_type_value()) {
-		// End type
-	 if (start_num <= end_num) {
-		for (int ii = start_num; ii <= end_num; ++ii) { 
-			this->append_fnum_list_with_chk_mark( ii );
-		}
-	 }
-	 else {
-		for (int ii = end_num; ii <= start_num; ++ii) { 
-			this->append_fnum_list_with_chk_mark( ii );
-		}
-	 }
-	}
-	else { // Endless type
-		this->append_fnum_list_with_chk_mark(
-	static_cast<int>( cl_gts_gui.valinp_level_num_start->value() )
-		);
-	}
-}
-
 void cb_file_number_list::append_without_S( const int file_num )
 {
 	insert_without_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1);
@@ -292,7 +255,10 @@ namespace {
 }
 
 /* 現位置と現番号から次の処理位置と処理番号を得る */
-void cb_file_number_list::set_next_num_from_crnt_( const int continue_type_value )
+void cb_file_number_list::set_next_num_from_crnt_(
+	const int continue_type_value
+	,const bool forward_sw
+)
 {
 	/* 現位置がなければ次もない */
 	if (this->crnt_list_num_ < 1 || this->crnt_file_num_ < 1) {
@@ -302,10 +268,7 @@ void cb_file_number_list::set_next_num_from_crnt_( const int continue_type_value
 	}
 	if ( continue_type_value == this->end_type_value_ ) {
 		/* End指定 */
-		if (
-			cl_gts_gui.valinp_level_num_start->value()
-			<= cl_gts_gui.valinp_level_num_end->value()
-		) {
+		if ( forward_sw ) {
 			/* 順送り(start <= end)の次選択位置 */
 			this->next_list_num_= next_selected_(
 				this->crnt_list_num_ + 1
@@ -331,12 +294,12 @@ void cb_file_number_list::set_next_num_from_crnt_( const int continue_type_value
 	else	/* Endless指定 */
 	if ( continue_type_value == this->endless_type_value_ ) {
 
-		if (cl_gts_gui.choice_level_num_endless_direction->value() == 0)
+		if (cl_gts_gui.choice_scan_num_endless_direction->value() == 0)
 		{
 			this->next_list_num_ = this->crnt_list_num_ + 1;
 			this->next_file_num_ = this->crnt_file_num_ + 1;
 		}
-		if (cl_gts_gui.choice_level_num_endless_direction->value() == 1)
+		if (cl_gts_gui.choice_scan_num_endless_direction->value() == 1)
 		{
 			this->next_list_num_ = this->crnt_list_num_;
 			this->next_file_num_ = this->crnt_file_num_ - 1;
@@ -364,8 +327,8 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 		/* 処理後のマーキングと選択解除は外で行う */
 
 		if (
-			cl_gts_gui.valinp_level_num_start->value()
-			<= cl_gts_gui.valinp_level_num_end->value()
+			cl_gts_gui.valinp_scan_num_start->value()
+			<= cl_gts_gui.valinp_scan_num_end->value()
 		) {
 			/* 順送り(start <= end)の初期位置 */
 			this->crnt_list_num_= next_selected_(1);
@@ -394,7 +357,7 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 
 		/* LevelのStart番号から始まる */
 		this->crnt_file_num_ = 
-		 static_cast<int>(cl_gts_gui.valinp_level_num_start->value());
+		 static_cast<int>(cl_gts_gui.valinp_scan_num_start->value());
 
 		/* start番号が範囲外 */
 		if (this->crnt_file_num_< 1 || 9999< this->crnt_file_num_) {
@@ -418,7 +381,11 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 	}
 	/* 次番号を得る(次処理があるか判断のためここで取る)
 	次位置がなければ-1をセット */
-	this->set_next_num_from_crnt_( continue_type_value );
+	this->set_next_num_from_crnt_(
+		continue_type_value
+		,cl_gts_gui.valinp_scan_num_start->value() <=
+		 cl_gts_gui.valinp_scan_num_end->value()
+	);
 }
 
 /* 現位置を得る */
@@ -446,7 +413,11 @@ void cb_file_number_list::counter_next( const int continue_type_value )
 	}
 	/* 次番号を得る(次処理があるか判断のためここで取る)
 	次位置がなければ-1をセット */
-	this->set_next_num_from_crnt_( continue_type_value );
+	this->set_next_num_from_crnt_(
+		continue_type_value
+		,cl_gts_gui.valinp_scan_num_start->value() <=
+		 cl_gts_gui.valinp_scan_num_end->value()
+	);
 }
 
 /* 選択のフレーム送り/戻しをする */

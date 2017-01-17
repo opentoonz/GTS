@@ -143,47 +143,47 @@ int gts_master::exec( const char *comm )
 
 	/* ファイル拡張子、元設定からGUI設定し、初期指定(.tga)する */
 	for(int ii=0;ii<this->cl_level.ext_open.size() ;++ii) {
-		   cl_gts_gui.choice_level_open_image_format->add(
+		   cl_gts_gui.choice_trace_open_image_format->add(
 			this->cl_level.ext_open.get_fltk_filter(ii).c_str()
 		);
 	}
 	for(int ii=0;ii<this->cl_level.ext_save.size() ;++ii) {
-		   cl_gts_gui.choice_level_save_image_format->add(
+		   cl_gts_gui.choice_scan_save_image_format->add(
 			this->cl_level.ext_save.get_fltk_filter(ii).c_str()
 		);
 	}
 	if (0 < this->cl_level.ext_open.size()) {
-	   cl_gts_gui.choice_level_open_image_format->value(
+	   cl_gts_gui.choice_trace_open_image_format->value(
 		this->cl_level.ext_open.size() - 1/*".tga"*/ );
 	}
 	if (0 < this->cl_level.ext_save.size()) {
-	   cl_gts_gui.choice_level_save_image_format->value(
+	   cl_gts_gui.choice_scan_save_image_format->value(
 		this->cl_level.ext_save.size() - 1/*".tga"*/ );
 	}
 
 	/* gts guiの初期設定 Filterの初期スイッチ */
-	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->box( FL_SHADOW_BOX );
-	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value( 1 );
+	cl_gts_gui.chkbtn_scan_trace_sw->box( FL_SHADOW_BOX );
+	cl_gts_gui.chkbtn_scan_trace_sw->value( 1 );
 
 	/* install_setupによる2次設定 */
 
 	if (!this->cl_memo_install_setup.browser_directory_path.empty()) {
-	  cl_gts_gui.filinp_level_open_dir_path->value(
+	  cl_gts_gui.filinp_trace_open_dir_path->value(
 	     this->cl_memo_install_setup.browser_directory_path.c_str()
 	  );
-	  cl_gts_gui.filinp_level_save_dir_path->value(
+	  cl_gts_gui.filinp_scan_save_dir_path->value(
 	     this->cl_memo_install_setup.browser_directory_path.c_str()
 	  );
 	}
 
 	if (!this->cl_memo_install_setup.image_file_format.empty()) {
 	 if (this->cl_memo_install_setup.image_file_format=="TIFF"){
-	  cl_gts_gui.choice_level_open_image_format->value(0);
-	  cl_gts_gui.choice_level_save_image_format->value(0);
+	  cl_gts_gui.choice_trace_open_image_format->value(0);
+	  cl_gts_gui.choice_scan_save_image_format->value(0);
 	 } else if (
 	     this->cl_memo_install_setup.image_file_format=="TGA") {
-	  cl_gts_gui.choice_level_open_image_format->value(1);
-	  cl_gts_gui.choice_level_save_image_format->value(1);
+	  cl_gts_gui.choice_trace_open_image_format->value(1);
+	  cl_gts_gui.choice_scan_save_image_format->value(1);
 	 }
 	}
 

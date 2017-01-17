@@ -84,7 +84,6 @@ public:
 	void cb_read_and_trace_and_preview( void );
 	void cb_rot_trace_enoise_preview( void );
 
-	int cb_read_and_save_start( const bool interactive_sw=true );
 	void cb_scan_and_preview( void );
 	void cb_scan_and_save_start( void );
 	void cb_scan_and_save_next( void );
@@ -296,7 +295,6 @@ private:
 	void _trace_batch_add( char *cp_path );
 
 	int next_scan_and_save_( void );
-	int read_and_save_crnt_( void );
 
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
 

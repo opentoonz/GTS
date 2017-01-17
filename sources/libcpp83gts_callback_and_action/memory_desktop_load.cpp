@@ -107,14 +107,23 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
 		}
-		else if ((this->str_window_level_==key)
+		else if ((this->str_window_scan_and_save_==key)
 		&& ((4==ret) || (6==ret)/* for old format */)) {
 			if (di == "show") {
-		cl_gts_gui.menite_level->set();
+		cl_gts_gui.menite_scan_and_save->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_level_set->show();
+		cl_gts_gui.window_scan_and_save->show();
 			}
-		cl_gts_gui.window_level_set->position(xx,yy);
+		cl_gts_gui.window_scan_and_save->position(xx,yy);
+		}
+		else if ((this->str_window_trace_files_==key)
+		&& ((4==ret) || (6==ret)/* for old format */)) {
+			if (di == "show") {
+		cl_gts_gui.menite_trace_files->set();
+		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_trace_files->show();
+			}
+		cl_gts_gui.window_trace_files->position(xx,yy);
 		}
 		else if ((this->str_window_crop_area_and_rot90_==key)&&(4==ret)) {
 			if (di == "show") {

@@ -22,10 +22,10 @@ public:
 	,str_window_next_scan_(
 	    "window_next_scan" )
 
-	,str_window_level_(
+	,str_window_scan_and_save_(
 	    "window_level" )
-	,str_window_level_browse_(
-	    "window_level_browse" )
+	,str_window_trace_files_(
+	    "window_trace_files" )
 	,str_window_config_load_(
 	    "window_config_load" )
 	,str_window_config_save_as_(
@@ -77,8 +77,8 @@ private:
 	const char* str_window_opengl_;
 	const char* str_window_next_scan_;
 
-	const char* str_window_level_;
-	const char* str_window_level_browse_;
+	const char* str_window_scan_and_save_;
+	const char* str_window_trace_files_;
 	const char* str_window_config_load_;
 	const char* str_window_config_save_as_;
 

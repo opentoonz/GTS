@@ -31,13 +31,13 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	/*------ ファイルパス ------*/
 
 	std::string fpath_open(
-		this->cl_level.get_openfilepath(crnt_file_num)
+		this->cl_trace_files.get_open_path(crnt_file_num)
 	);
 
 	/* 番号に対するファイルパスを得ることはできるか */
 	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-	"Error : this->cl_level.get_openfilepath(%d) returns nullptr."
+	"Error : this->cl_trace_files.get_open_path(%d) returns nullptr."
 			, crnt_file_num
 		);
 		return;

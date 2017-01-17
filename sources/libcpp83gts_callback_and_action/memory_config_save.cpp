@@ -73,38 +73,38 @@ void memory_config::save_config_( std::ofstream& ofs )
 }
 void memory_config::save_level_( std::ofstream& ofs )
 {
-	this->save_str_( this->str_level_save_dir_path_
-		,cl_gts_gui.filinp_level_save_dir_path->value() ,ofs );
-	this->save_str_( this->str_level_save_file_head_
-		,cl_gts_gui.strinp_level_save_file_head->value() ,ofs );
-	this->save_f64_( this->str_level_num_start_
-		,cl_gts_gui.valinp_level_num_start->value()
+	this->save_str_( this->str_scan_save_dir_path_
+		,cl_gts_gui.filinp_scan_save_dir_path->value() ,ofs );
+	this->save_str_( this->str_scan_save_file_head_
+		,cl_gts_gui.strinp_scan_save_file_head->value() ,ofs );
+	this->save_f64_( this->str_scan_num_start_
+		,cl_gts_gui.valinp_scan_num_start->value()
 		,ofs );
-	this->save_f64_( this->str_level_num_end_
-		,cl_gts_gui.valinp_level_num_end->value()
+	this->save_f64_( this->str_scan_num_end_
+		,cl_gts_gui.valinp_scan_num_end->value()
 		,ofs );
-	this->save_str_( this->str_level_num_continue_type_
-		,cl_gts_gui.choice_level_num_continue_type->text()
+	this->save_str_( this->str_scan_num_continue_type_
+		,cl_gts_gui.choice_scan_num_continue_type->text()
 		,ofs);
-	this->save_str_( this->str_level_num_endless_direction_
-		,cl_gts_gui.choice_level_num_endless_direction->text()
+	this->save_str_( this->str_scan_num_endless_direction_
+		,cl_gts_gui.choice_scan_num_endless_direction->text()
 		,ofs );
-	this->save_str_( this->str_level_save_image_format_
-		,cl_gts_gui.choice_level_save_image_format->text() ,ofs );
+	this->save_str_( this->str_scan_save_image_format_
+		,cl_gts_gui.choice_scan_save_image_format->text() ,ofs );
 
-	this->save_word_( this->str_filter_rgb_erase_dot_noise_sw_
-		, cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value()?
+	this->save_word_( this->str_scan_erase_dot_noise_sw_
+		, cl_gts_gui.chkbtn_scan_erase_dot_noise_sw->value()?
 		 this->str_on_:this->str_off_,ofs );
-	this->save_word_( this->str_filter_rgb_color_trace_sw_
-		, cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()?
+	this->save_word_( this->str_scan_trace_sw_
+		, cl_gts_gui.chkbtn_scan_trace_sw->value()?
 			this->str_on_:this->str_off_ ,ofs );
 
-	this->save_str_( this->str_level_open_dir_path_
-		,cl_gts_gui.filinp_level_open_dir_path->value() ,ofs );
-	this->save_str_( this->str_level_open_file_head_
-		,cl_gts_gui.strinp_level_open_file_head->value() ,ofs );
-	this->save_str_( this->str_level_open_image_format_
-		,cl_gts_gui.choice_level_open_image_format->text() ,ofs );
+	this->save_str_( this->str_trace_open_dir_path_
+		,cl_gts_gui.filinp_trace_open_dir_path->value() ,ofs );
+	this->save_str_( this->str_trace_open_file_head_
+		,cl_gts_gui.strinp_trace_open_file_head->value() ,ofs );
+	this->save_str_( this->str_trace_open_image_format_
+		,cl_gts_gui.choice_trace_open_image_format->text() ,ofs );
 }
 void memory_config::save_area_( std::ofstream& ofs )
 {

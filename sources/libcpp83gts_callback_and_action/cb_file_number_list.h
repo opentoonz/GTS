@@ -24,13 +24,6 @@ public:
 	/* level okの時使用 */
 	void append_fnum_list_with_chk_mark( const int file_num );
 
-	/* 指定範囲の番号でlistを追加生成する(ファイル存在マーク付き) */
-	void append_numbers_with_exist_mark(
-		const std::vector<int>& num_list /* こちら優先し使い設定 */
-		, const int start_num   /* num_listが空ならこちらで設定 */
-		, const int end_num
-	);
-
 	/* 上記二つの関数は後方互換のため保持しているが将来廃止 */
 	/* 上記二つの関数は使わないようにして以下の関数を使う */
 	void append_without_S( const int file_num );
@@ -94,7 +87,10 @@ private:
 		,endless_type_value_	// 1
 	};
 
-	void set_next_num_from_crnt_( const int continue_type_value );
+	void set_next_num_from_crnt_(
+		const int continue_type_value
+		,const bool forward_sw
+	);
 };
 
 #endif /* !cb_file_number_list_h */

@@ -17,49 +17,49 @@ namespace {
 void set_level_num_continue_type_( const std::string& str1 )
 {
 	const Fl_Menu_Item* crnt =
-		cl_gts_gui.choice_level_num_continue_type->find_item(
+		cl_gts_gui.choice_scan_num_continue_type->find_item(
 			str1.c_str() );
 	if (crnt == nullptr) { return; }
 
-	    cl_gts_gui.choice_level_num_continue_type->value(crnt);
-	//if (cl_gts_gui.choice_level_num_continue_type->value() == 0) {
-	if (cl_gts_gui.choice_level_num_continue_type->text()
+	    cl_gts_gui.choice_scan_num_continue_type->value(crnt);
+	//if (cl_gts_gui.choice_scan_num_continue_type->value() == 0) {
+	if (cl_gts_gui.choice_scan_num_continue_type->text()
 	== std::string("End")) {
-		cl_gts_gui.valinp_level_num_end->show();
-		cl_gts_gui.choice_level_num_endless_direction->hide();
+		cl_gts_gui.valinp_scan_num_end->show();
+		cl_gts_gui.choice_scan_num_endless_direction->hide();
 		cl_gts_gui.selbro_fnum_list->activate();
 	}
 	else {
-		cl_gts_gui.valinp_level_num_end->hide();
-		cl_gts_gui.choice_level_num_endless_direction->show();
+		cl_gts_gui.valinp_scan_num_end->hide();
+		cl_gts_gui.choice_scan_num_endless_direction->show();
 		cl_gts_gui.selbro_fnum_list->deactivate();
 	}
 }
 void set_level_num_endless_direction_( const std::string& str1 )
 {
 	const Fl_Menu_Item *crnt =
-		cl_gts_gui.choice_level_num_endless_direction->find_item(
+		cl_gts_gui.choice_scan_num_endless_direction->find_item(
 			str1.c_str() );
 	if (crnt == nullptr) { return; }
 
-	cl_gts_gui.choice_level_num_endless_direction->value(crnt);
+	cl_gts_gui.choice_scan_num_endless_direction->value(crnt);
 }
 void set_level_save_image_format_( const std::string& str1 )
 {
 	const Fl_Menu_Item *crnt =
-		cl_gts_gui.choice_level_save_image_format->find_item(
+		cl_gts_gui.choice_scan_save_image_format->find_item(
 			str1.c_str() );
 	if (crnt == nullptr) { return; }
 
-	cl_gts_gui.choice_level_save_image_format->value(crnt);
+	cl_gts_gui.choice_scan_save_image_format->value(crnt);
 }
 void set_level_open_image_format_( const std::string& str1 )
 {
 	const Fl_Menu_Item *crnt =
-		cl_gts_gui.choice_level_open_image_format->find_item(
+		cl_gts_gui.choice_trace_open_image_format->find_item(
 			str1.c_str() );
 	if (crnt == nullptr) { return; }
-	cl_gts_gui.choice_level_open_image_format->value(crnt);
+	cl_gts_gui.choice_trace_open_image_format->value(crnt);
 }
 void set_rotate_per_90_( const std::string& str1 )
 {
@@ -161,51 +161,51 @@ void memory_config::load_ifs_(
 		//---------- level ----------
 
 		else if ((2 == words.size()) &&
-		((words.at(0)==this->str_level_save_dir_path_) ||
-		 (words.at(0)==this->str_level_save_dir_path_legacy2016_))
+		((words.at(0)== this->str_scan_save_dir_path_) ||
+		 (words.at(0)== this->str_scan_save_dir_path_legacy2016_))
 		) {
-			cl_gts_gui.filinp_level_save_dir_path->value(
+			cl_gts_gui.filinp_scan_save_dir_path->value(
 				words.at(1).c_str() );
-			cl_gts_gui.filinp_level_save_dir_path->position(
+			cl_gts_gui.filinp_scan_save_dir_path->position(
 				words.at(1).size() );
 			level_list_redisplay_sw = true;
 		}
 		else if ((2 == words.size()) &&
-		((words.at(0)==this->str_level_save_file_head_) ||
-		 (words.at(0)==this->str_level_save_file_head_legacy2016_))
+		((words.at(0)== this->str_scan_save_file_head_) ||
+		 (words.at(0)== this->str_scan_save_file_head_legacy2016_))
 		) {
-			cl_gts_gui.strinp_level_save_file_head->value(
+			cl_gts_gui.strinp_scan_save_file_head->value(
 				words.at(1).c_str() );
 			/* openも同時に設定、ファイル後述で別設定可能 */
-			cl_gts_gui.strinp_level_open_file_head->value(
+			cl_gts_gui.strinp_trace_open_file_head->value(
 				words.at(1).c_str() );
 		}
 		else if ((2 == words.size()) &&
-		(words.at(0) == this->str_level_num_start_)) {
-			cl_gts_gui.valinp_level_num_start->value(
+		(words.at(0) == this->str_scan_num_start_)) {
+			cl_gts_gui.valinp_scan_num_start->value(
 			//atof(words.at(1).c_str()) // not return error
 			//strtod(words.at(1).c_str()) // return error
 	std::stod(words.at(1)) // use C++11,throw exception then error
 			);
 		}
 		else if ((2 == words.size()) &&
-		(words.at(0) == this->str_level_num_end_ )) {
-			cl_gts_gui.valinp_level_num_end->value(
+		(words.at(0) == this->str_scan_num_end_ )) {
+			cl_gts_gui.valinp_scan_num_end->value(
 	std::stod(words.at(1)) // use C++11,throw exception then error
 			);
 		}
 		else if ((2 == words.size()) && (words.at(0)
-		==this->str_level_num_continue_type_)) {
+		==this->str_scan_num_continue_type_)) {
 			set_level_num_continue_type_( words.at(1) );
 			level_num_continue_type_sw = true;
 		}
 		else if ((2 == words.size()) && (words.at(0)
-		==this->str_level_num_endless_direction_)) {
+		==this->str_scan_num_endless_direction_)) {
 			set_level_num_endless_direction_( words.at(1) );
 		}
 		else if ((2 == words.size()) &&
-		((words.at(0) ==this->str_level_save_image_format_) ||
-		 (words.at(0) ==this->str_level_save_image_format_legacy2016_))
+		((words.at(0)==this->str_scan_save_image_format_) ||
+		 (words.at(0)==this->str_scan_save_image_format_legacy2016_))
 		) {
 			set_level_save_image_format_( words.at(1) );
 			/* openも同時に設定、ファイル後述で別設定可能 */
@@ -213,50 +213,50 @@ void memory_config::load_ifs_(
 		}
 
 		else if ((2 == words.size()) &&
-		((words.at(0) == this->str_filter_rgb_erase_dot_noise_sw_) ||
-		 (words.at(0) == this->str_filter_rgb_erase_dot_noise_sw_legacy2016_))
+		((words.at(0) == this->str_scan_erase_dot_noise_sw_) ||
+		 (words.at(0) == this->str_scan_erase_dot_noise_sw_legacy2016_))
 		) {
 			if (words.at(1) == this->str_on_) {
-	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->box(FL_SHADOW_BOX);
-	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value(1);
+	cl_gts_gui.chkbtn_scan_erase_dot_noise_sw->box(FL_SHADOW_BOX);
+	cl_gts_gui.chkbtn_scan_erase_dot_noise_sw->value(1);
 			}
 			else {
-	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->box(FL_FLAT_BOX);
-	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value(0);
+	cl_gts_gui.chkbtn_scan_erase_dot_noise_sw->box(FL_FLAT_BOX);
+	cl_gts_gui.chkbtn_scan_erase_dot_noise_sw->value(0);
 			}
 		}
 		else if ((2 == words.size()) && (
-		(words.at(0) == this->str_filter_rgb_color_trace_sw_)
-//|| (words.at(0) == this->str_filter_rgb_color_trace_sw_legacy2016_)
+		(words.at(0) == this->str_scan_trace_sw_)
+//|| (words.at(0) == this->str_scan_trace_sw_legacy2016_)
 		)) {
 			if (words.at(1) == this->str_on_) {
-	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->box(FL_SHADOW_BOX);
-	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value(1);
+	cl_gts_gui.chkbtn_scan_trace_sw->box(FL_SHADOW_BOX);
+	cl_gts_gui.chkbtn_scan_trace_sw->value(1);
 			}
 			else {
-	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->box(FL_FLAT_BOX);
-	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value(0);
+	cl_gts_gui.chkbtn_scan_trace_sw->box(FL_FLAT_BOX);
+	cl_gts_gui.chkbtn_scan_trace_sw->value(0);
 			}
 		}
 
 		else if ((2 == words.size()) &&
-		((words.at(0) == this->str_level_open_dir_path_ ) ||
-		 (words.at(0) == this->str_level_open_dir_path_legacy2016_))
+		((words.at(0) == this->str_trace_open_dir_path_ ) ||
+		 (words.at(0) == this->str_trace_open_dir_path_legacy2016_))
 		) {
-			cl_gts_gui.filinp_level_open_dir_path->value(
+			cl_gts_gui.filinp_trace_open_dir_path->value(
 				words.at(1).c_str() );
-			cl_gts_gui.filinp_level_open_dir_path->position(
+			cl_gts_gui.filinp_trace_open_dir_path->position(
 				words.at(1).size() );
 			level_list_redisplay_sw = true;
 		}
 
 		else if ((2 == words.size()) &&
-		(words.at(0) == this->str_level_open_file_head_)) {
-			cl_gts_gui.strinp_level_open_file_head->value(
+		(words.at(0) == this->str_trace_open_file_head_)) {
+			cl_gts_gui.strinp_trace_open_file_head->value(
 				words.at(1).c_str() );
 		}
 		else if ((2 == words.size()) && (words.at(0)
-		==this->str_level_open_image_format_)) {
+		==this->str_trace_open_image_format_)) {
 			set_level_open_image_format_( words.at(1) );
 		}
 
@@ -542,15 +542,15 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 
 	/* frame number listにlevel名を表示する */
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-	 cl_gts_gui.strinp_level_save_file_head->value()
+	 cl_gts_gui.strinp_scan_save_file_head->value()
 	);
 
 	/* LevelのEnd/Endless指定がない時はStart...End指定にする */
 	if (!level_num_continue_type_sw) {
-		cl_gts_gui.valinp_level_num_end->show();
-		cl_gts_gui.choice_level_num_endless_direction->hide();
+		cl_gts_gui.valinp_scan_num_end->show();
+		cl_gts_gui.choice_scan_num_continue_type->value(0/*End*/);
+		cl_gts_gui.choice_scan_num_endless_direction->hide();
 		cl_gts_gui.selbro_fnum_list->activate();
-		cl_gts_gui.choice_level_num_continue_type->value(0/*End*/);
 	}
 
 	/* 画面は空白表示する指定(データは残っている) */
