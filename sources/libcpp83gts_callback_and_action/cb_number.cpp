@@ -1,4 +1,4 @@
-#include <cstdlib>	// atoi()
+#include <string>	// std::stoi() C++11
 #include <cctype>	// isdigit()
 #include <cassert>	// assert()
 #include <cstring>
@@ -6,7 +6,7 @@
 #include <iomanip>	// std::setw()
 #include "ptbl_funct.h"
 #include "ids_path_level_from_files.h"
-#include "cb_file_number_list.h"
+#include "cb_number.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -39,7 +39,7 @@ namespace {
 	/* 数値を得る */
 	if ( 0 < jj ) {
 		buffer[jj] = '\0';
-		*file_num = atoi( buffer );
+		*file_num = std::stoi( buffer );
 	}
 
 	/* 続けて、次の10進数字('0'〜'9')の文字位置(ii)を探す */
@@ -82,7 +82,7 @@ void insert_with_S_( const int file_num ,const int list_num/*1,2,3...*/)
 
 } // namespace
 
-void cb_file_number_list::set_list_from_string( void )
+void cb_number::set_list_from_string( void )
 {
 	/* 複数数値含文字列 "1" ,"0001" ,"1 2 3" ,"0001 0002 0003" ,etc. */
 	const char* str = cl_gts_gui.norinp_fnum_insert->value();
@@ -97,8 +97,8 @@ void cb_file_number_list::set_list_from_string( void )
 		int jj = -1;
 		/* file number listから、insertする
 		(file_numと同じかより大きいfile(jj)の)位置(ii)を得る */
-		for (ii=1;ii<=cl_gts_gui.selbro_fnum_list->size();++ii){
-			jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
+		for (ii=1 ;ii<=cl_gts_gui.selbro_fnum_list->size() ;++ii) {
+			jj = this->file_num_from_list_num( ii );
 			if (file_num <= jj) { break; }
 		}
 		/* すでにあるフレームは飛ばして次へ */
@@ -122,7 +122,7 @@ void cb_file_number_list::set_list_from_string( void )
 
 /* saveファイル存在マークを付加したファイル番号をlistの最後に追加 */
 /* 後方互換のため保持しているが将来廃止 */
-void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
+void cb_number::append_fnum_list_with_chk_mark( const int file_num )
 {
 	std::string fpath(
 		cl_gts_master.cl_level.get_savefilepath( file_num )
@@ -140,11 +140,11 @@ void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 	);
 }
 
-void cb_file_number_list::append_without_S( const int file_num )
+void cb_number::append_without_S( const int file_num )
 {
 	insert_without_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1);
 }
-void cb_file_number_list::append_with_S( const int file_num )
+void cb_number::append_with_S( const int file_num )
 {
 	insert_with_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1 );
 }
@@ -152,7 +152,7 @@ void cb_file_number_list::append_with_S( const int file_num )
 //------------------------------------------------------------
 
 /* 全て選択状態にする */
-void cb_file_number_list::select_all( void )
+void cb_number::select_all( void )
 {
 	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
 		cl_gts_gui.selbro_fnum_list->select(ii);
@@ -160,7 +160,7 @@ void cb_file_number_list::select_all( void )
 }
 
 /* 選択に関わらずすべて削除 */
-void cb_file_number_list::remove_all( void )
+void cb_number::remove_all( void )
 {
 	// GUI Scroll
 	cl_gts_gui.selbro_fnum_list->topline(0);
@@ -172,7 +172,7 @@ void cb_file_number_list::remove_all( void )
 }
 
 /* 選択状態の項目をすべて削除 */
-void cb_file_number_list::remove_selected( void )
+void cb_number::remove_selected( void )
 {
 	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
 		if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
@@ -182,12 +182,12 @@ void cb_file_number_list::remove_selected( void )
 }
 
 /* 選択状態を外す */
-void cb_file_number_list::unselect( int list_num )
+void cb_number::unselect( int list_num )
 {
 	cl_gts_gui.selbro_fnum_list->select(list_num, 0);
 }
 
-void cb_file_number_list::add_S( const int list_num )
+void cb_number::add_S( const int list_num )
 {
 	std::string numstr( cl_gts_gui.selbro_fnum_list->text(list_num) );
 	if (numstr.size() == 4) {
@@ -197,17 +197,32 @@ void cb_file_number_list::add_S( const int list_num )
 }
 
 //------------------------------------------------------------
+/* cb_trace_files.h,cpp使用 */
 
-namespace {
- int next_selected_( int list_num )
- {
+int cb_number::file_num_from_list_num( int list_num )
+{
+	if (list_num<1 || cl_gts_gui.selbro_fnum_list->size() < list_num) {
+		return -1;
+	}
+	return std::stoi( cl_gts_gui.selbro_fnum_list->text(list_num) );
+}
+
+int cb_number::next_selected_list_num( int list_num )
+{
+	if (list_num<1 || cl_gts_gui.selbro_fnum_list->size() < list_num) {
+		return -1;
+	}
 	for (;list_num <= cl_gts_gui.selbro_fnum_list->size() ;++list_num) {
 		if (cl_gts_gui.selbro_fnum_list->selected(list_num)) {
 			return list_num;
 		}
 	}
 	return -1;
- }
+}
+
+//------------------------------------------------------------
+
+namespace {
  int prev_selected_( int list_num )
  {
 	for (;1 <= list_num ;--list_num) {
@@ -232,7 +247,7 @@ namespace {
 
 	/* size + 1までループして最後でも追加するようにする */
 	for (ii= 1 ;ii <= cl_gts_gui.selbro_fnum_list->size() ;++ii) {
-		jj = atoi( cl_gts_gui.selbro_fnum_list->text(ii) );
+		jj = this->file_num_from_list_num( ii );
 		if (file_num == jj) {/* 既にあるなら何もしないで... */
 			cl_gts_gui.selbro_fnum_list->select( ii );/* 選択 */
 			return ii;
@@ -255,7 +270,7 @@ namespace {
 }
 
 /* 現位置と現番号から次の処理位置と処理番号を得る */
-void cb_file_number_list::set_next_num_from_crnt_(
+void cb_number::set_next_num_from_crnt_(
 	const int continue_type_value
 	,const bool forward_sw
 )
@@ -270,7 +285,7 @@ void cb_file_number_list::set_next_num_from_crnt_(
 		/* End指定 */
 		if ( forward_sw ) {
 			/* 順送り(start <= end)の次選択位置 */
-			this->next_list_num_= next_selected_(
+			this->next_list_num_= this->next_selected_list_num(
 				this->crnt_list_num_ + 1
 			);
 		}
@@ -284,11 +299,8 @@ void cb_file_number_list::set_next_num_from_crnt_(
 			this->next_file_num_ = -1;
 		}
 		else { /* 選択あったら、その項目の表示番号を得る */
-			this->next_file_num_ = atoi( 
-				cl_gts_gui.selbro_fnum_list->text(
-					this->next_list_num_
-				)
-			);
+			this->next_file_num_ =
+			 this->file_num_from_list_num(this->next_list_num);
 		}
 	}
 	else	/* Endless指定 */
@@ -318,7 +330,7 @@ void cb_file_number_list::set_next_num_from_crnt_(
 }
 
 /* 初期化 */
-void cb_file_number_list::counter_start( const int continue_type_value )
+void cb_number::counter_start( const int continue_type_value )
 {
 	if ( continue_type_value == this->end_type_value_ ) {
 		/* End指定 */
@@ -331,7 +343,7 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 			<= cl_gts_gui.valinp_scan_num_end->value()
 		) {
 			/* 順送り(start <= end)の初期位置 */
-			this->crnt_list_num_= next_selected_(1);
+			this->crnt_list_num_= this->next_selected_list_num(1);
 		}
 		else {
 			/* 逆送り(start > end)の初期位置 */
@@ -343,11 +355,8 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 			this->crnt_file_num_ = -1;
 		}
 		else { /* 選択があるなら、項目の表示番号を得る */
-			this->crnt_file_num_ = atoi( 
-				cl_gts_gui.selbro_fnum_list->text(
-					this->crnt_list_num_
-				)
-			);
+			this->crnt_file_num_ =
+			 this->file_num_from_list_num(this->crnt_list_num_);
 		}
 	}
 	else /* Endless指定 */
@@ -389,7 +398,7 @@ void cb_file_number_list::counter_start( const int continue_type_value )
 }
 
 /* 現位置を得る */
-void cb_file_number_list::counter_next( const int continue_type_value )
+void cb_number::counter_next( const int continue_type_value )
 {
 	/* 次へ */
 	this->crnt_list_num_ = this->next_list_num_;
@@ -421,7 +430,7 @@ void cb_file_number_list::counter_next( const int continue_type_value )
 }
 
 /* 選択のフレーム送り/戻しをする */
-bool cb_file_number_list::selected_prev_frame(void)
+bool cb_number::selected_prev_frame(void)
 {
 	if (cl_gts_gui.selbro_fnum_list->size() < 1) {
 		return false; /* File Number Listないときはなにもしない */
@@ -455,12 +464,12 @@ bool cb_file_number_list::selected_prev_frame(void)
 	return true;
 }
 
-bool cb_file_number_list::selected_next_frame(void)
+bool cb_number::selected_next_frame(void)
 {
 	if (cl_gts_gui.selbro_fnum_list->size() < 1) {
 		return false; /* File Number Listないときはなにもしない */
 	}
-	const int ll = next_selected_(1); /* 選択の先頭番号 */
+	const int ll = this->next_selected_list_num(1); /* 選択の先頭番号 */
 	if (ll < 0) {	/* なにも選択がない */
 		cl_gts_gui.selbro_fnum_list->select(1); /* List先頭を選択 */
 	}

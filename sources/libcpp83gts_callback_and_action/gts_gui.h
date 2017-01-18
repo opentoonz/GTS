@@ -56,8 +56,8 @@ public:
 private:
   inline void cb_menite_start_scan_i(Fl_Menu_*, void*);
   static void cb_menite_start_scan(Fl_Menu_*, void*);
-  inline void cb_RGB_i(Fl_Menu_*, void*);
-  static void cb_RGB(Fl_Menu_*, void*);
+  inline void cb_Trace_i(Fl_Menu_*, void*);
+  static void cb_Trace(Fl_Menu_*, void*);
   inline void cb_Rename_i(Fl_Menu_*, void*);
   static void cb_Rename(Fl_Menu_*, void*);
   inline void cb_Renumber_i(Fl_Menu_*, void*);
@@ -67,11 +67,6 @@ public:
 private:
   inline void cb_menite_scan_and_save_i(Fl_Menu_*, void*);
   static void cb_menite_scan_and_save(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_trace_files;
-private:
-  inline void cb_menite_trace_files_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_files(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_crop_area_and_rot90;
 private:
@@ -88,16 +83,6 @@ private:
   inline void cb_menite_number_i(Fl_Menu_*, void*);
   static void cb_menite_number(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_trace_parameters;
-private:
-  inline void cb_menite_trace_parameters_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_parameters(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_trace_batch;
-private:
-  inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_batch(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_trace_thickness;
 private:
   inline void cb_menite_trace_thickness_i(Fl_Menu_*, void*);
@@ -112,6 +97,21 @@ public:
 private:
   inline void cb_menite_trace_output_color_i(Fl_Menu_*, void*);
   static void cb_menite_trace_output_color(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_trace_parameters;
+private:
+  inline void cb_menite_trace_parameters_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_parameters(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_trace_files;
+private:
+  inline void cb_menite_trace_files_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_files(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_trace_batch;
+private:
+  inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_batch(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
@@ -407,8 +407,10 @@ private:
 public:
   Fl_Double_Window *window_trace_files;
 private:
-  inline void cb_Trace_i(Fl_Button*, void*);
-  static void cb_Trace(Fl_Button*, void*);
+  inline void cb_window_trace_files_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_files(Fl_Double_Window*, void*);
+  inline void cb_Trace1_i(Fl_Button*, void*);
+  static void cb_Trace1(Fl_Button*, void*);
 public:
   Fl_File_Input *filinp_trace_open_dir_path;
 private:
@@ -434,6 +436,11 @@ public:
 private:
   inline void cb_chkbtn_trace_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
   static void cb_chkbtn_trace_erase_dot_noise_sw(Fl_Check_Button*, void*);
+public:
+  Fl_Check_Button *chkbtn_trace_trace_sw;
+private:
+  inline void cb_chkbtn_trace_trace_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_trace_trace_sw(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_trace_save_dir_path;
 private:

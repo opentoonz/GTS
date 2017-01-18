@@ -30,13 +30,13 @@ class gts_gui {open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {Open Images...}
-            callback {cl_gts_master.cl_trace_files.browse_and_set_of_open();}
+            label {Open File Images...}
+            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
             label {Set Saving Scan Images...}
-            callback {cl_gts_master.cl_scan_and_save.browse_and_set_of_save();}
+            callback {cl_gts_master.cl_scan_and_save.cb_browse_save_folder();}
             xywh {0 0 30 20} divider
           }
           MenuItem {} {
@@ -84,7 +84,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             xywh {5 5 100 20} divider
           }
           MenuItem {} {
-            label {RGB Convert...}
+            label {Trace Files...}
             callback {cl_gts_master.cl_trace_files.cb_start();}
             xywh {5 5 100 20} shortcut 0x54
           }
@@ -112,16 +112,6 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_scan_and_save->hide();
 }}
             xywh {10 10 100 20} type Toggle shortcut 0xffbf
-          }
-          MenuItem menite_trace_files {
-            label {Trace Files}
-            callback {if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_files->show();
-} else {
-    cl_gts_gui.window_trace_files->hide();
-}}
-            xywh {0 0 30 20} divider
           }
           MenuItem menite_crop_area_and_rot90 {
             label {Area and Rot90...}
@@ -152,30 +142,6 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_number->hide();
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc2 divider
-          }
-          MenuItem menite_trace_parameters {
-            label {Trace Parameters...}
-            callback {if (cl_gts_gui.menite_trace_parameters->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_parameters->show();
-} else {
-    cl_gts_gui.window_trace_parameters->hide();
-    cl_gts_gui.window_trace_output_color->hide();
-    cl_gts_gui.menite_trace_output_color->clear();
-    cl_gts_gui.window_trace_input_color->hide();
-    cl_gts_gui.menite_trace_input_color->clear();
-}}
-            xywh {0 0 100 20} type Toggle
-          }
-          MenuItem menite_trace_batch {
-            label {Trace Batch...}
-            callback {if (cl_gts_gui.menite_trace_batch->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch->show();
-} else {
-    cl_gts_gui.window_trace_batch->hide();
-}}
-            xywh {0 0 100 20} type Toggle divider
           }
           MenuItem menite_trace_thickness {
             label {Trace Thickness...}
@@ -210,6 +176,40 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_trace_output_color->hide();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc5
+          }
+          MenuItem menite_trace_parameters {
+            label {Trace Parameters...}
+            callback {if (cl_gts_gui.menite_trace_parameters->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_parameters->show();
+} else {
+    cl_gts_gui.window_trace_parameters->hide();
+    cl_gts_gui.window_trace_output_color->hide();
+    cl_gts_gui.menite_trace_output_color->clear();
+    cl_gts_gui.window_trace_input_color->hide();
+    cl_gts_gui.menite_trace_input_color->clear();
+}}
+            xywh {0 0 100 20} type Toggle divider
+          }
+          MenuItem menite_trace_files {
+            label {Trace Files...}
+            callback {if (cl_gts_gui.menite_trace_files->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_files->show();
+} else {
+    cl_gts_gui.window_trace_files->hide();
+}}
+            xywh {0 0 30 20} type Toggle
+          }
+          MenuItem menite_trace_batch {
+            label {Trace Batch...}
+            callback {if (cl_gts_gui.menite_trace_batch->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_batch->show();
+} else {
+    cl_gts_gui.window_trace_batch->hide();
+}}
+            xywh {0 0 100 20} type Toggle
           }
           MenuItem menite_sane_device {
             label {Select SANE device...}
@@ -255,14 +255,14 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             }
             MenuItem {} {
               label Prev
-              callback {if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
+              callback {if (cl_gts_master.cl_number.selected_prev_frame()) {
     cl_gts_master.cb_read_and_trace_and_preview();
 }}
               xywh {0 0 30 20} shortcut 0xff52
             }
             MenuItem {} {
               label Next
-              callback {if (cl_gts_master.cl_file_number_list.selected_next_frame()) {
+              callback {if (cl_gts_master.cl_number.selected_next_frame()) {
     cl_gts_master.cb_read_and_trace_and_preview();
 }}
               xywh {0 0 30 20} shortcut 0xff54
@@ -392,12 +392,12 @@ fl_message( ost.str().c_str() );}
     } {
       Fl_Button button_rescan {
         label Rescan
-        callback {cl_gts_master.cb_scan_and_save_prev();}
+        callback {cl_gts_master.cb_rescan();}
         xywh {60 75 110 25}
       }
       Fl_Button button_next_scan {
         label Next
-        callback {cl_gts_master.cb_scan_and_save_next();}
+        callback {cl_gts_master.cb_next();}
         xywh {325 40 120 60}
       }
       Fl_Button button_stop_scan {
@@ -749,8 +749,8 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     }
     Fl_Window window_scan_and_save {
       label {Scan and Save}
-      callback {cl_gts_gui.window_window_scan_and_save->hide();
-cl_gts_gui..menite_scan_and_save->clear();}
+      callback {cl_gts_gui.window_scan_and_save->hide();
+cl_gts_gui.menite_scan_and_save->clear();}
       xywh {50 50 200 320} type Double resizable non_modal size_range {200 555 1000 555} visible
     } {
       Fl_Group {} {open
@@ -761,7 +761,7 @@ cl_gts_gui..menite_scan_and_save->clear();}
         }
         Fl_Button {} {
           label Scan
-          callback {cl_gts_master.cl_scan_and_save.cb_scan_and_save_start();}
+          callback {cl_gts_master.cl_scan_and_save.cb_start();}
           xywh {100 5 99 25}
         }
       }
@@ -898,7 +898,7 @@ else {
           }
           Fl_Button {} {
             label {...}
-            callback {cl_gts_master.cl_scan_and_save.browse_and_set_of_save();
+            callback {cl_gts_master.cl_scan_and_save.cb_browse_save_folder();
 cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             xywh {180 260 15 24}
           }
@@ -928,6 +928,8 @@ norout_crnt_scan_level_of_fnum->value( o->value() );}
     }
     Fl_Window window_trace_files {
       label {Trace Files}
+      callback {cl_gts_gui.window_trace_files->hide();
+cl_gts_gui.menite_trace_files->clear();}
       xywh {350 50 200 405} type Double resizable size_range {200 435 1000 435} visible
     } {
       Fl_Group {} {open
@@ -958,7 +960,7 @@ norout_crnt_scan_level_of_fnum->value( o->value() );}
           }
           Fl_Button {} {
             label {...}
-            callback {cl_gts_master.cl_trace_files.cb_browse_for_open();}
+            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
             xywh {184 60 15 25}
           }
         }
@@ -987,12 +989,12 @@ norout_crnt_scan_level_of_fnum->value( o->value() );}
           }
           Fl_Button {} {
             label {Rename...}
-            callback {cl_gts_master.cl_level.dialog_rename_at_open();}
+            callback {cl_gts_master.cl_level.cb_rename();}
             tooltip Rename xywh {110 120 85 20}
           }
           Fl_Button {} {
             label {Renumber...}
-            callback {cl_gts_master.cl_level.dialog_renumber_at_open();}
+            callback {cl_gts_master.cl_level.cb_renumber();}
             tooltip Renumber xywh {110 145 85 20}
           }
         }
@@ -1059,6 +1061,26 @@ else {
             xywh {131 280 68 25} resizable
           }
         }
+        Fl_Group {} {open
+          xywh {1 285 198 25} hide
+        } {
+          Fl_Check_Button chkbtn_trace_trace_sw {
+            label Trace
+            callback {cl_gts_master.cb_rot_trace_enoise_preview();
+if (o->value()) {
+	o->box(FL_SHADOW_BOX);
+	o->redraw();
+}
+else {
+	o->box(FL_FLAT_BOX);
+	o->redraw();
+}}
+            xywh {1 285 130 25} down_box DOWN_BOX
+          }
+          Fl_Box {} {
+            xywh {131 285 68 25} resizable
+          }
+        }
       }
       Fl_Group {} {
         label Save open
@@ -1077,7 +1099,7 @@ else {
           }
           Fl_Button {} {
             label {...}
-            callback {cl_gts_master.cl_trace_files.browse_and_set_of_save();
+            callback {cl_gts_master.cl_trace_files.cb_browse_save_folder();
 cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
             xywh {184 345 15 25}
           }
@@ -1120,18 +1142,18 @@ cl_gts_gui.menite_number->clear();}
         } {
           MenuItem {} {
             label {Select All}
-            callback {cl_gts_master.cl_file_number_list.select_all();}
+            callback {cl_gts_master.cl_number.select_all();}
             xywh {0 0 116 20} shortcut 0x40061
           }
           MenuItem {} {
             label Delete
-            callback {cl_gts_master.cl_file_number_list.remove_selected();}
+            callback {cl_gts_master.cl_number.remove_selected();}
             xywh {0 0 116 20} shortcut 0x40078
           }
         }
       }
       Fl_Input norinp_fnum_insert {
-        callback {cl_gts_master.cl_file_number_list.set_list_from_string();}
+        callback {cl_gts_master.cl_number.set_list_from_string();}
         xywh {0 25 116 25} box BORDER_BOX align 5 when 8
       }
       Fl_Output norout_crnt_scan_level_of_fnum {

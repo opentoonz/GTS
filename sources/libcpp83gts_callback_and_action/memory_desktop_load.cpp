@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <string>
+#include <string>	// std::stoi() C++11
 #include <fstream>
 #include <cerrno>
 #include "pri.h"
@@ -87,10 +87,10 @@ int memory_desktop::load( void ) {
 		int xx=0,yy=0,ww=0,hh=0;
 		if (1 <= ret) { key = words.at(0); }
 		if (2 <= ret) { di = words.at(1); }
-		if (3 <= ret) { xx = atoi(words.at(2).c_str()); }
-		if (4 <= ret) { yy = atoi(words.at(3).c_str()); }
-		if (5 <= ret) { ww = atoi(words.at(4).c_str()); }
-		if (6 <= ret) { hh = atoi(words.at(5).c_str()); }
+		if (3 <= ret) { xx = std::stoi(words.at(2)); }
+		if (4 <= ret) { yy = std::stoi(words.at(3)); }
+		if (5 <= ret) { ww = std::stoi(words.at(4)); }
+		if (6 <= ret) { hh = std::stoi(words.at(5)); }
 
 		if ((this->str_config_dir_ == key) && (2 == ret)) {
 			cl_gts_master.cl_config.set_dir_path(

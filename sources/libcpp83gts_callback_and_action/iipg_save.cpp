@@ -3,10 +3,10 @@
 #include "gts_master.h"
 
 /* 画像カンバスに、回転情報を加えて、指定の名前で、保存 */
-int gts_master::_iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, int i_rot90, iip_read *clp_read )
+int gts_master::iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, int i_rot90, iip_read *clp_read )
 {
 	if (ON == this->i_mv_sw()) {
-		pri_funct_msg_ttvr( "gts_master::_iipg_save()" );
+		pri_funct_msg_ttvr( "gts_master::iipg_save()" );
 	}
 
 	/* 親と接続 */

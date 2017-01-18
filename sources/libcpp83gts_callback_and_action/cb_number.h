@@ -1,11 +1,11 @@
-#ifndef cb_file_number_list_h
-#define cb_file_number_list_h
+#ifndef cb_number_h
+#define cb_number_h
 
 #include <vector>
 
-class cb_file_number_list {
+class cb_number {
 public:
-	cb_file_number_list()
+	cb_number()
 		:crnt_list_num_(-1)
 		,crnt_file_num_(-1)
 		,next_list_num_(-1)
@@ -75,6 +75,11 @@ public:
 
 	//--------------------------------------------------
 
+	/* 独自に選択をたどるための機能 */
+	int next_selected_list_num( int list_num );
+
+	//--------------------------------------------------
+
 private:
 	int	crnt_list_num_
 		, crnt_file_num_
@@ -93,4 +98,4 @@ private:
 	);
 };
 
-#endif /* !cb_file_number_list_h */
+#endif /* !cb_number_h */

@@ -44,7 +44,7 @@ int fl_shortcut_up_down_left_right_( int key )
 	}
 	/* フレーム送り戻し：Cropでない、あるいは、Crop選択されてない */
 	else {
-		cb_file_number_list& fn = cl_gts_master.cl_file_number_list;
+		cb_number& fn = cl_gts_master.cl_number;
 		switch (key) {
 		case FL_Up:
 			if (fn.selected_prev_frame()) {

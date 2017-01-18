@@ -19,14 +19,14 @@ void gts_gui::cb_window_opengl(Fl_Double_Window* o, void* v) {
 }
 
 void gts_gui::cb_Open_i(Fl_Menu_*, void*) {
-  cl_gts_master.cl_trace_files.browse_and_set_of_open();
+  cl_gts_master.cl_trace_files.cb_browse_open_file();
 }
 void gts_gui::cb_Open(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Open_i(o,v);
 }
 
 void gts_gui::cb_Set_i(Fl_Menu_*, void*) {
-  cl_gts_master.cl_scan_and_save.browse_and_set_of_save();
+  cl_gts_master.cl_scan_and_save.cb_browse_save_folder();
 }
 void gts_gui::cb_Set(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Set_i(o,v);
@@ -85,11 +85,11 @@ void gts_gui::cb_menite_start_scan(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_start_scan_i(o,v);
 }
 
-void gts_gui::cb_RGB_i(Fl_Menu_*, void*) {
+void gts_gui::cb_Trace_i(Fl_Menu_*, void*) {
   cl_gts_master.cl_trace_files.cb_start();
 }
-void gts_gui::cb_RGB(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_RGB_i(o,v);
+void gts_gui::cb_Trace(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Trace_i(o,v);
 }
 
 void gts_gui::cb_Rename_i(Fl_Menu_*, void*) {
@@ -116,18 +116,6 @@ void gts_gui::cb_menite_scan_and_save_i(Fl_Menu_*, void*) {
 }
 void gts_gui::cb_menite_scan_and_save(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_scan_and_save_i(o,v);
-}
-
-void gts_gui::cb_menite_trace_files_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_files->show();
-} else {
-    cl_gts_gui.window_trace_files->hide();
-};
-}
-void gts_gui::cb_menite_trace_files(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_files_i(o,v);
 }
 
 void gts_gui::cb_menite_crop_area_and_rot90_i(Fl_Menu_*, void*) {
@@ -164,34 +152,6 @@ void gts_gui::cb_menite_number_i(Fl_Menu_*, void*) {
 }
 void gts_gui::cb_menite_number(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_number_i(o,v);
-}
-
-void gts_gui::cb_menite_trace_parameters_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_trace_parameters->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_parameters->show();
-} else {
-    cl_gts_gui.window_trace_parameters->hide();
-    cl_gts_gui.window_trace_output_color->hide();
-    cl_gts_gui.menite_trace_output_color->clear();
-    cl_gts_gui.window_trace_input_color->hide();
-    cl_gts_gui.menite_trace_input_color->clear();
-};
-}
-void gts_gui::cb_menite_trace_parameters(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_parameters_i(o,v);
-}
-
-void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_trace_batch->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch->show();
-} else {
-    cl_gts_gui.window_trace_batch->hide();
-};
-}
-void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_batch_i(o,v);
 }
 
 void gts_gui::cb_menite_trace_thickness_i(Fl_Menu_*, void*) {
@@ -234,6 +194,46 @@ void gts_gui::cb_menite_trace_output_color(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_output_color_i(o,v);
 }
 
+void gts_gui::cb_menite_trace_parameters_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_parameters->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_parameters->show();
+} else {
+    cl_gts_gui.window_trace_parameters->hide();
+    cl_gts_gui.window_trace_output_color->hide();
+    cl_gts_gui.menite_trace_output_color->clear();
+    cl_gts_gui.window_trace_input_color->hide();
+    cl_gts_gui.menite_trace_input_color->clear();
+};
+}
+void gts_gui::cb_menite_trace_parameters(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_parameters_i(o,v);
+}
+
+void gts_gui::cb_menite_trace_files_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_files->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_files->show();
+} else {
+    cl_gts_gui.window_trace_files->hide();
+};
+}
+void gts_gui::cb_menite_trace_files(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_files_i(o,v);
+}
+
+void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_batch->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_batch->show();
+} else {
+    cl_gts_gui.window_trace_batch->hide();
+};
+}
+void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_batch_i(o,v);
+}
+
 void gts_gui::cb_zoom_i(Fl_Menu_*, void*) {
   cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);
 }
@@ -263,7 +263,7 @@ void gts_gui::cb_All(Fl_Menu_* o, void* v) {
 }
 
 void gts_gui::cb_Prev_i(Fl_Menu_*, void*) {
-  if (cl_gts_master.cl_file_number_list.selected_prev_frame()) {
+  if (cl_gts_master.cl_number.selected_prev_frame()) {
     cl_gts_master.cb_read_and_trace_and_preview();
 };
 }
@@ -272,7 +272,7 @@ void gts_gui::cb_Prev(Fl_Menu_* o, void* v) {
 }
 
 void gts_gui::cb_Next_i(Fl_Menu_*, void*) {
-  if (cl_gts_master.cl_file_number_list.selected_next_frame()) {
+  if (cl_gts_master.cl_number.selected_next_frame()) {
     cl_gts_master.cb_read_and_trace_and_preview();
 };
 }
@@ -392,7 +392,7 @@ void gts_gui::cb_menite_help_about(Fl_Menu_* o, void* v) {
 
 Fl_Menu_Item gts_gui::menu_[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Open Images...", 0,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Open File Images...", 0,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Set Saving Scan Images...", 0,  (Fl_Callback*)gts_gui::cb_Set, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Open Config...", 0xffbe,  (Fl_Callback*)gts_gui::cb_Open1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Save Config", 0x40073,  (Fl_Callback*)gts_gui::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
@@ -403,21 +403,21 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Crop", 0,  (Fl_Callback*)gts_gui::cb_Crop, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview", 0x70,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
- {"RGB Convert...", 0x54,  (Fl_Callback*)gts_gui::cb_RGB, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Files...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Renumber...", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Window", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan and Save...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_scan_and_save, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Files", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Area and Rot90...", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_crop_area_and_rot90, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Pixel Type and Bright...", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Number ...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Thickness...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Input Color(HSV Min Max)...", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_input_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Output Color(RGB)...", 0xffc5,  (Fl_Callback*)gts_gui::cb_menite_trace_output_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Files...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -455,15 +455,15 @@ Fl_Menu_Item gts_gui::menu_[] = {
 };
 Fl_Menu_Item* gts_gui::menite_start_scan = gts_gui::menu_ + 11;
 Fl_Menu_Item* gts_gui::menite_scan_and_save = gts_gui::menu_ + 17;
-Fl_Menu_Item* gts_gui::menite_trace_files = gts_gui::menu_ + 18;
-Fl_Menu_Item* gts_gui::menite_crop_area_and_rot90 = gts_gui::menu_ + 19;
-Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 20;
-Fl_Menu_Item* gts_gui::menite_number = gts_gui::menu_ + 21;
-Fl_Menu_Item* gts_gui::menite_trace_parameters = gts_gui::menu_ + 22;
-Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 23;
-Fl_Menu_Item* gts_gui::menite_trace_thickness = gts_gui::menu_ + 24;
-Fl_Menu_Item* gts_gui::menite_trace_input_color = gts_gui::menu_ + 25;
-Fl_Menu_Item* gts_gui::menite_trace_output_color = gts_gui::menu_ + 26;
+Fl_Menu_Item* gts_gui::menite_crop_area_and_rot90 = gts_gui::menu_ + 18;
+Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 19;
+Fl_Menu_Item* gts_gui::menite_number = gts_gui::menu_ + 20;
+Fl_Menu_Item* gts_gui::menite_trace_thickness = gts_gui::menu_ + 21;
+Fl_Menu_Item* gts_gui::menite_trace_input_color = gts_gui::menu_ + 22;
+Fl_Menu_Item* gts_gui::menite_trace_output_color = gts_gui::menu_ + 23;
+Fl_Menu_Item* gts_gui::menite_trace_parameters = gts_gui::menu_ + 24;
+Fl_Menu_Item* gts_gui::menite_trace_files = gts_gui::menu_ + 25;
+Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 26;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 27;
 Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 37;
 Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 42;
@@ -487,14 +487,14 @@ void gts_gui::cb_scrbar_view_y(Fl_Scrollbar* o, void* v) {
 }
 
 void gts_gui::cb_button_rescan_i(Fl_Button*, void*) {
-  cl_gts_master.cb_scan_and_save_prev();
+  cl_gts_master.cb_rescan();
 }
 void gts_gui::cb_button_rescan(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_button_rescan_i(o,v);
 }
 
 void gts_gui::cb_button_next_scan_i(Fl_Button*, void*) {
-  cl_gts_master.cb_scan_and_save_next();
+  cl_gts_master.cb_next();
 }
 void gts_gui::cb_button_next_scan(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_button_next_scan_i(o,v);
@@ -741,15 +741,15 @@ void gts_gui::cb_valinp_rgb_gamma(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_window_scan_and_save_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_window_scan_and_save->hide();
-cl_gts_gui..menite_scan_and_save->clear();
+  cl_gts_gui.window_scan_and_save->hide();
+cl_gts_gui.menite_scan_and_save->clear();
 }
 void gts_gui::cb_window_scan_and_save(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_scan_and_save_i(o,v);
 }
 
 void gts_gui::cb_Scan_i(Fl_Button*, void*) {
-  cl_gts_master.cl_scan_and_save.cb_scan_and_save_start();
+  cl_gts_master.cl_scan_and_save.cb_start();
 }
 void gts_gui::cb_Scan(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Scan_i(o,v);
@@ -827,7 +827,7 @@ void gts_gui::cb_filinp_scan_save_dir_path(Fl_File_Input* o, void* v) {
 }
 
 void gts_gui::cb__i(Fl_Button*, void*) {
-  cl_gts_master.cl_scan_and_save.browse_and_set_of_save();
+  cl_gts_master.cl_scan_and_save.cb_browse_save_folder();
 cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 }
 void gts_gui::cb_(Fl_Button* o, void* v) {
@@ -856,29 +856,37 @@ void gts_gui::cb_choice_scan_save_image_format(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_scan_save_image_format_i(o,v);
 }
 
-void gts_gui::cb_Trace_i(Fl_Button*, void*) {
+void gts_gui::cb_window_trace_files_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_files->hide();
+cl_gts_gui.menite_trace_files->clear();
+}
+void gts_gui::cb_window_trace_files(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_files_i(o,v);
+}
+
+void gts_gui::cb_Trace1_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_files.cb_start();
 }
-void gts_gui::cb_Trace(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Trace_i(o,v);
+void gts_gui::cb_Trace1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Trace1_i(o,v);
 }
 
 void gts_gui::cb_1_i(Fl_Button*, void*) {
-  cl_gts_master.cl_trace_files.cb_browse_for_open();
+  cl_gts_master.cl_trace_files.cb_browse_open_file();
 }
 void gts_gui::cb_1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_1_i(o,v);
 }
 
 void gts_gui::cb_Rename1_i(Fl_Button*, void*) {
-  cl_gts_master.cl_level.dialog_rename_at_open();
+  cl_gts_master.cl_level.cb_rename();
 }
 void gts_gui::cb_Rename1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_Rename1_i(o,v);
 }
 
 void gts_gui::cb_Renumber1_i(Fl_Button*, void*) {
-  cl_gts_master.cl_level.dialog_renumber_at_open();
+  cl_gts_master.cl_level.cb_renumber();
 }
 void gts_gui::cb_Renumber1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_Renumber1_i(o,v);
@@ -906,6 +914,21 @@ void gts_gui::cb_chkbtn_trace_erase_dot_noise_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chkbtn_trace_erase_dot_noise_sw_i(o,v);
 }
 
+void gts_gui::cb_chkbtn_trace_trace_sw_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cb_rot_trace_enoise_preview();
+if (o->value()) {
+	o->box(FL_SHADOW_BOX);
+	o->redraw();
+}
+else {
+	o->box(FL_FLAT_BOX);
+	o->redraw();
+};
+}
+void gts_gui::cb_chkbtn_trace_trace_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chkbtn_trace_trace_sw_i(o,v);
+}
+
 void gts_gui::cb_filinp_trace_save_dir_path_i(Fl_File_Input*, void*) {
   cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
@@ -914,7 +937,7 @@ void gts_gui::cb_filinp_trace_save_dir_path(Fl_File_Input* o, void* v) {
 }
 
 void gts_gui::cb_2_i(Fl_Button*, void*) {
-  cl_gts_master.cl_trace_files.browse_and_set_of_save();
+  cl_gts_master.cl_trace_files.cb_browse_save_folder();
 cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
 void gts_gui::cb_2(Fl_Button* o, void* v) {
@@ -952,14 +975,14 @@ void gts_gui::cb_window_number(Fl_Double_Window* o, void* v) {
 }
 
 void gts_gui::cb_Select_i(Fl_Menu_*, void*) {
-  cl_gts_master.cl_file_number_list.select_all();
+  cl_gts_master.cl_number.select_all();
 }
 void gts_gui::cb_Select(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Select_i(o,v);
 }
 
 void gts_gui::cb_Delete_i(Fl_Menu_*, void*) {
-  cl_gts_master.cl_file_number_list.remove_selected();
+  cl_gts_master.cl_number.remove_selected();
 }
 void gts_gui::cb_Delete(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Delete_i(o,v);
@@ -974,7 +997,7 @@ Fl_Menu_Item gts_gui::menu_1[] = {
 };
 
 void gts_gui::cb_norinp_fnum_insert_i(Fl_Input*, void*) {
-  cl_gts_master.cl_file_number_list.set_list_from_string();
+  cl_gts_master.cl_number.set_list_from_string();
 }
 void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);
@@ -5522,13 +5545,13 @@ Fl_Double_Window* gts_gui::make_window() {
     window_scan_and_save->resizable(window_scan_and_save);
   } // Fl_Double_Window* window_scan_and_save
   { window_trace_files = new Fl_Double_Window(200, 405, "Trace Files");
-    window_trace_files->user_data((void*)(this));
+    window_trace_files->callback((Fl_Callback*)cb_window_trace_files, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 5, 200, 25);
       { Fl_Box* o = new Fl_Box(0, 5, 100, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { Fl_Button* o = new Fl_Button(100, 5, 95, 25, "Trace Files...");
-        o->callback((Fl_Callback*)cb_Trace);
+        o->callback((Fl_Callback*)cb_Trace1);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
@@ -5623,6 +5646,17 @@ Fl_Double_Window* gts_gui::make_window() {
           chkbtn_trace_erase_dot_noise_sw->callback((Fl_Callback*)cb_chkbtn_trace_erase_dot_noise_sw);
         } // Fl_Check_Button* chkbtn_trace_erase_dot_noise_sw
         { Fl_Box* o = new Fl_Box(131, 280, 68, 25);
+          Fl_Group::current()->resizable(o);
+        } // Fl_Box* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Group* o = new Fl_Group(1, 285, 198, 25);
+        o->hide();
+        { chkbtn_trace_trace_sw = new Fl_Check_Button(1, 285, 130, 25, "Trace");
+          chkbtn_trace_trace_sw->down_box(FL_DOWN_BOX);
+          chkbtn_trace_trace_sw->callback((Fl_Callback*)cb_chkbtn_trace_trace_sw);
+        } // Fl_Check_Button* chkbtn_trace_trace_sw
+        { Fl_Box* o = new Fl_Box(131, 285, 68, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();

@@ -423,7 +423,7 @@ void memory_config::load_ifs_(
 			 /* ファイル番号リストの存在の有無 */
 			 fnum_list_sw = true;
 			 /* 以前のリストをすべて削除 */
-			 cl_gts_master.cl_file_number_list.remove_all();
+			 cl_gts_master.cl_number.remove_all();
 			}
 
 			/* 実際の画像ファイルの有無を調べて
@@ -434,10 +434,10 @@ void memory_config::load_ifs_(
 	if (ptbl_dir_or_file_is_exist(const_cast<char*>(
 		cl_gts_master.cl_level.get_savefilepath(num).c_str()
 	))) {
-		cl_gts_master.cl_file_number_list.append_with_S(num);
+		cl_gts_master.cl_number.append_with_S(num);
 	}
 	else {
-		cl_gts_master.cl_file_number_list.append_without_S(num);
+		cl_gts_master.cl_number.append_without_S(num);
 	}
 
 			/* 選択状態の再現 */
