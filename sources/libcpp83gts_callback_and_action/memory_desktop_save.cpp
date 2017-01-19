@@ -23,15 +23,22 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	time_t tt = time(nullptr);
-	i_ret = fprintf(fp, "# date and time : %s"
+	i_ret = fprintf(fp, "# date time : %s"
 	,asctime(localtime(&tt))
 	);
 	if (i_ret < 0) { return NG; }
 
-	const char* cp = ptbl_get_cp_username();
-	if (cp == nullptr) { cp = "unknown"; }
-	i_ret = fprintf(fp, "# current user  : %s\n\n"
-	,cp
+	const char* un = ptbl_get_cp_username();
+	if (un == nullptr) { un = "unknown"; }
+	i_ret = fprintf(fp, "# username  : %s\n\n"
+	,un
+	);
+	if (i_ret < 0) { return NG; }
+
+	const char* hn = ptbl_get_cp_hostname();
+	if (hn == nullptr) { hn = "unknown"; }
+	i_ret = fprintf(fp, "# hostname  : %s\n\n"
+	,hn
 	);
 	if (i_ret < 0) { return NG; }
 

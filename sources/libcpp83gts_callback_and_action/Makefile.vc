@@ -64,8 +64,6 @@ iipg_scan.cpp\
 iipg_view.cpp\
 memory_config_load.cpp\
 memory_config_save.cpp\
-memory_config_trace_src_hsv_load.cpp\
-memory_config_trace_src_hsv_save.cpp\
 memory_desktop_load.cpp\
 memory_desktop_save.cpp\
 memory_install_setup.cpp\

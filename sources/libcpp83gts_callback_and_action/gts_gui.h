@@ -359,29 +359,15 @@ private:
   inline void cb_Scan_i(Fl_Button*, void*);
   static void cb_Scan(Fl_Button*, void*);
 public:
-  Fl_Value_Input *valinp_scan_num_start;
-  Fl_Choice *choice_scan_num_continue_type;
+  Fl_Check_Button *chkbtn_scan_filter_trace_sw;
 private:
-  inline void cb_choice_scan_num_continue_type_i(Fl_Choice*, void*);
-  static void cb_choice_scan_num_continue_type(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_scan_num_continue_type[];
+  inline void cb_chkbtn_scan_filter_trace_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_scan_filter_trace_sw(Fl_Check_Button*, void*);
 public:
-  Fl_Choice *choice_scan_num_endless_direction;
-  static Fl_Menu_Item menu_choice_scan_num_endless_direction[];
-  Fl_Value_Input *valinp_scan_num_end;
+  Fl_Check_Button *chkbtn_scan_filter_erase_dot_noise_sw;
 private:
-  inline void cb_Set1_i(Fl_Button*, void*);
-  static void cb_Set1(Fl_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_scan_trace_sw;
-private:
-  inline void cb_chkbtn_scan_trace_sw_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_scan_trace_sw(Fl_Check_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_scan_erase_dot_noise_sw;
-private:
-  inline void cb_chkbtn_scan_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_scan_erase_dot_noise_sw(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_scan_filter_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_scan_filter_erase_dot_noise_sw(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_scan_save_dir_path;
 private:
@@ -404,6 +390,20 @@ public:
 private:
   inline void cb_choice_scan_save_image_format_i(Fl_Choice*, void*);
   static void cb_choice_scan_save_image_format(Fl_Choice*, void*);
+public:
+  Fl_Value_Input *valinp_scan_num_start;
+  Fl_Choice *choice_scan_num_continue_type;
+private:
+  inline void cb_choice_scan_num_continue_type_i(Fl_Choice*, void*);
+  static void cb_choice_scan_num_continue_type(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_scan_num_continue_type[];
+public:
+  Fl_Choice *choice_scan_num_endless_direction;
+  static Fl_Menu_Item menu_choice_scan_num_endless_direction[];
+  Fl_Value_Input *valinp_scan_num_end;
+private:
+  inline void cb_Set1_i(Fl_Button*, void*);
+  static void cb_Set1(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_files;
 private:
@@ -432,15 +432,15 @@ private:
   inline void cb_Set2_i(Fl_Button*, void*);
   static void cb_Set2(Fl_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_trace_erase_dot_noise_sw;
+  Fl_Check_Button *chkbtn_trace_filter_trace_sw;
 private:
-  inline void cb_chkbtn_trace_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_trace_erase_dot_noise_sw(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_trace_filter_trace_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_trace_filter_trace_sw(Fl_Check_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_trace_trace_sw;
+  Fl_Check_Button *chkbtn_trace_filter_erase_dot_noise_sw;
 private:
-  inline void cb_chkbtn_trace_trace_sw_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_trace_trace_sw(Fl_Check_Button*, void*);
+  inline void cb_chkbtn_trace_filter_erase_dot_noise_sw_i(Fl_Check_Button*, void*);
+  static void cb_chkbtn_trace_filter_erase_dot_noise_sw(Fl_Check_Button*, void*);
 public:
   Fl_File_Input *filinp_trace_save_dir_path;
 private:

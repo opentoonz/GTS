@@ -61,9 +61,6 @@ public:
 	/* 関数から呼ぶためMethodにしてあるが、意味としてはprivate */
 	void action( E_ACT e_act );
 
-	/* color histogram Min-Max windowの色ベルト画像表示設定 */
-	void make_hab_belt_image( void );
-
 	/* ユーザインターフェースからの実行(fltk callback) */
 	void cb_config_load_dir( void );
 	void cb_config_load_list( void );
@@ -125,10 +122,6 @@ public:
 	void change_config_dir_by_read_file( const char *cp_dir );
 
 	void change_trace_batch_dir( const char *cp_dir );
-
-	void change_level_dir_by_key_in( const char *cp_dir );
-	void change_level_dir_by_click_list( const char *cp_dir );
-	void change_level_dir_by_read_file( const char *cp_dir );
 
 	/* マウス、キーボードからの実行(set_idle()使用) */
 	void reserve( E_ACT e_act );
