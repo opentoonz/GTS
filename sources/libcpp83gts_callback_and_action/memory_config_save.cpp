@@ -114,8 +114,15 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 	save_stri_( this->str_trace_open_image_format_
 	   ,cl_gts_gui.choice_trace_open_image_format->text() ,ofs );
 
+	save_fl64_( this->str_trace_num_start_
+	   ,cl_gts_gui.valinp_trace_num_start->value() ,ofs );
+	save_fl64_( this->str_trace_num_end_
+	   ,cl_gts_gui.valinp_trace_num_end->value() ,ofs );
+
+/*
 	save_bool_( this->str_trace_filter_trace_sw_
 	  , cl_gts_gui.chkbtn_trace_filter_trace_sw->value() ,ofs );
+*/
 	save_bool_( this->str_trace_filter_erase_dot_noise_sw_
 	  , cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
 

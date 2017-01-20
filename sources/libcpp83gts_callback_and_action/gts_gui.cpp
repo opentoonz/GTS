@@ -823,15 +823,7 @@ void gts_gui::cb_choice_scan_save_image_format(Fl_Choice* o, void* v) {
 }
 
 void gts_gui::cb_choice_scan_num_continue_type_i(Fl_Choice* o, void*) {
-  if (o->value() == 0) {
- cl_gts_gui.valinp_scan_num_end->show();
- cl_gts_gui.choice_scan_num_endless_direction->hide();
- cl_gts_gui.selbro_fnum_list->activate();
-} else {
- cl_gts_gui.valinp_scan_num_end->hide();
- cl_gts_gui.choice_scan_num_endless_direction->show();
- cl_gts_gui.selbro_fnum_list->deactivate();
-};
+  cl_gts_master.cl_scan_and_save.cb_change_num_continue_type(o->text());
 }
 void gts_gui::cb_choice_scan_num_continue_type(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_scan_num_continue_type_i(o,v);

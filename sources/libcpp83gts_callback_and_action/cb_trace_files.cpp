@@ -623,3 +623,20 @@ const std::string cb_trace_files::get_save_name_( const int number )
 	return filename;
 }
 //----------------------------------------------------------------------
+void cb_trace_files::cb_choice_open_image_format( const std::string& type )
+{
+	const Fl_Menu_Item *crnt =
+	cl_gts_gui.choice_trace_open_image_format->find_item(
+		type.c_str() );
+	if (crnt == nullptr) { return; }
+	cl_gts_gui.choice_trace_open_image_format->value(crnt);
+}
+void cb_trace_files::cb_choice_save_image_format( const std::string& type )
+{
+	const Fl_Menu_Item *crnt =
+	cl_gts_gui.choice_trace_save_image_format->find_item(
+		type.c_str() );
+	if (crnt == nullptr) { return; }
+	cl_gts_gui.choice_trace_save_image_format->value(crnt);
+}
+//----------------------------------------------------------------------

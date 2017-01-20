@@ -20,7 +20,7 @@ public:
 	
 	,str_config_dir_path_(
 	    "config_dir_path")
-		,str_config_dir_legacy2016_(
+		,str_config_dir_path_legacy2016_(
 		    "config_dir")
 	,str_config_open_file_name_(
 	    "config_open_file_name")
@@ -96,6 +96,11 @@ public:
 	    "trace_open_image_format")
 		,str_trace_open_image_format_legacy2016_(
 		    "level_open_image_format")
+
+	,str_trace_num_start_(
+	    "trace_num_start")
+	,str_trace_num_end_(
+	    "trace_num_end")
 
 	,str_trace_filter_trace_sw_(
 	    "trace_filter_trace_sw")

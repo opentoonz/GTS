@@ -32,15 +32,33 @@ public:
 
 	void set_number_and_savelevelname( void );
 
-	void cb_check_existing_saved_file(void);
+	void cb_check_existing_saved_file( void );
 
-	void dialog_rename_at_open(void);  /* (open)連番Fileの名前変更  */
-	void dialog_renumber_at_open(void);/* (open)連番Fileの番号Shift */
+	void dialog_rename_at_open( void );  /* (open)連番Fileの名前変更  */
+	void dialog_renumber_at_open( void );/* (open)連番Fileの番号Shift */
+
+	//---------- fltk GUI access ----------
+
+	/* End/Endless表示のChoice含めた切替 */
+	void cb_choice_and_num_continue_type(const std::string& type);
+
+	/* End/Endless表示のChoice以外の切替 */
+	void cb_change_num_continue_type( const std::string& type );
+
+	/* Endlessの方向選択の表示切替 */
+	void cb_choice_num_endless_direction( const std::string& type );
+
+	/* 保存するファイル拡張子設定 */
+	void cb_choice_save_image_format( const std::string& type );
+
+	/* スイッチの協調ON/OFF */
+	void cb_switch_scan_filter_trace( const bool sw );
+	void cb_switch_scan_filter_erase_dot_noise( const bool sw );
 
 private:
 	int next_scan_and_save_( void );
 
-	bool is_exist_save_files_(void);
+	bool is_exist_save_files_( void );
 	const std::string openfilename_from_level_num_(
 		const std::string& open_level ,const int num );
 	const std::string openfilepath_from_level_num_(

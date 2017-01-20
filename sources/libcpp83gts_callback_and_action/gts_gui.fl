@@ -873,15 +873,7 @@ norout_crnt_scan_level_of_fnum->value( o->value() );}
           xywh {1 260 198 25}
         } {
           Fl_Choice choice_scan_num_continue_type {
-            callback {if (o->value() == 0) {
- cl_gts_gui.valinp_scan_num_end->show();
- cl_gts_gui.choice_scan_num_endless_direction->hide();
- cl_gts_gui.selbro_fnum_list->activate();
-} else {
- cl_gts_gui.valinp_scan_num_end->hide();
- cl_gts_gui.choice_scan_num_endless_direction->show();
- cl_gts_gui.selbro_fnum_list->deactivate();
-}} open
+            callback {cl_gts_master.cl_scan_and_save.cb_change_num_continue_type(o->text());} open
             xywh {5 260 75 25} down_box BORDER_BOX
           } {
             MenuItem {} {

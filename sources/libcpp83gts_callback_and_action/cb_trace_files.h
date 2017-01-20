@@ -33,6 +33,12 @@ public:
 	/* numマイナスでファイル名に番号付かない */
 	const std::string get_open_path( const int num );
 
+	/* 開くファイル拡張子設定 */
+	void cb_choice_open_image_format( const std::string& type );
+
+	/* 保存するファイル拡張子設定 */
+	void cb_choice_save_image_format( const std::string& type );
+
 private:
 	int read_and_save_crnt_(
 		const int crnt_file_num

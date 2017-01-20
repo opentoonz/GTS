@@ -364,4 +364,75 @@ const std::string cb_scan_and_save::get_save_name_( const int number )
 	filename += cl_gts_gui.choice_scan_save_image_format->text();
 	return filename;
 }
+
 //----------------------------------------------------------------------
+void cb_scan_and_save::cb_choice_and_num_continue_type(const std::string& type)
+{
+	const Fl_Menu_Item* crnt =
+	cl_gts_gui.choice_scan_num_continue_type->find_item( type.c_str() );
+	if (crnt == nullptr) { return; }
+
+	/* End/Endless表示のChoice切替 */
+	cl_gts_gui.choice_scan_num_continue_type->value(crnt);
+
+	/* End/Endless表示のChoice以外の切替 */
+	this->cb_change_num_continue_type( type );
+}
+void cb_scan_and_save::cb_change_num_continue_type(const std::string& type)
+{
+	if (std::string("End") == type) {
+		cl_gts_gui.valinp_scan_num_end->show();
+		cl_gts_gui.choice_scan_num_endless_direction->hide();
+		cl_gts_gui.selbro_fnum_list->activate();
+	} else
+	if (std::string("Endless") == type) {
+		cl_gts_gui.valinp_scan_num_end->hide();
+		cl_gts_gui.choice_scan_num_endless_direction->show();
+		cl_gts_gui.selbro_fnum_list->deactivate();
+	}
+}
+
+void cb_scan_and_save::cb_choice_num_endless_direction( const std::string& type )
+{
+	const Fl_Menu_Item *crnt =
+	cl_gts_gui.choice_scan_num_endless_direction->find_item(
+		type.c_str() );
+	if (crnt == nullptr) { return; }
+
+	cl_gts_gui.choice_scan_num_endless_direction->value(crnt);
+}
+
+void cb_scan_and_save::cb_choice_save_image_format( const std::string& type );
+{
+	const Fl_Menu_Item *crnt =
+	cl_gts_gui.choice_scan_save_image_format->find_item(
+		type.c_str() );
+	if (crnt == nullptr) { return; }
+
+	cl_gts_gui.choice_scan_save_image_format->value(crnt);
+}
+
+void cb_scan_and_save::cb_switch_scan_filter_trace( const bool sw )
+{
+	if (sw) {
+		cl_gts_gui.chkbtn_scan_filter_trace_sw->box(FL_SHADOW_BOX);
+		cl_gts_gui.chkbtn_scan_filter_trace_sw->value(1);//ON
+	}
+	else {
+		cl_gts_gui.chkbtn_scan_filter_trace_sw->box(FL_FLAT_BOX);
+		cl_gts_gui.chkbtn_scan_filter_trace_sw->value(0);//OFF
+	}
+}
+
+void cb_scan_and_save::cb_switch_scan_filter_erase_dot_noise( const bool sw )
+{
+	if (sw) {
+ cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->box(FL_SHADOW_BOX);
+ cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->value(1);//ON
+	}
+	else {
+ cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->box(FL_FLAT_BOX);
+ cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->value(0);//OFF
+	}
+}
+
