@@ -82,7 +82,21 @@ void insert_with_S_( const int file_num ,const int list_num/*1,2,3...*/)
 
 } // namespace
 
-void cb_number::set_list_from_string( void )
+//------------------------------------------------------------
+
+/* saveファイル存在マーク付加した(orしない)ファイル番号をlistの最後に追加 */
+void cb_number::append_without_S( const int file_num )
+{
+	insert_without_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1);
+}
+void cb_number::append_with_S( const int file_num )
+{
+	insert_with_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1 );
+}
+
+//------------------------------------------------------------
+
+void cb_number::cb_set_list_from_string( void )
 {
 	/* 複数数値含文字列 "1" ,"0001" ,"1 2 3" ,"0001 0002 0003" ,etc. */
 	const char* str = cl_gts_gui.norinp_fnum_insert->value();
@@ -106,7 +120,7 @@ void cb_number::set_list_from_string( void )
 
 		/* insert&Scroll for viewing */
 		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
-		 cl_gts_master.cl_level.get_savefilepath(file_num).c_str()
+			this->get_save_path( file_num ).c_str()
 		))) {
 			insert_with_S_( file_num ,ii);
 		}
@@ -116,37 +130,6 @@ void cb_number::set_list_from_string( void )
 
 		cl_gts_gui.selbro_fnum_list->middleline( ii );
 	}
-}
-
-//------------------------------------------------------------
-
-/* saveファイル存在マークを付加したファイル番号をlistの最後に追加 */
-/* 後方互換のため保持しているが将来廃止 */
-void cb_number::append_fnum_list_with_chk_mark( const int file_num )
-{
-	std::string fpath(
-		cl_gts_master.cl_level.get_savefilepath( file_num )
-	);
-
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num;
-	if (ptbl_dir_or_file_is_exist(const_cast<char*>(fpath.c_str()))) {
-		ost << " S";
-	}
-
-	cl_gts_gui.selbro_fnum_list->insert(
-		cl_gts_gui.selbro_fnum_list->size()+1,
-		ost.str().c_str()
-	);
-}
-
-void cb_number::append_without_S( const int file_num )
-{
-	insert_without_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1);
-}
-void cb_number::append_with_S( const int file_num )
-{
-	insert_with_S_( file_num ,cl_gts_gui.selbro_fnum_list->size()+1 );
 }
 
 //------------------------------------------------------------
@@ -162,6 +145,7 @@ void cb_number::select_all( void )
 /* 選択に関わらずすべて削除 */
 void cb_number::remove_all( void )
 {
+/*
 	// GUI Scroll
 	cl_gts_gui.selbro_fnum_list->topline(0);
 
@@ -169,6 +153,8 @@ void cb_number::remove_all( void )
 	while (0 < cl_gts_gui.selbro_fnum_list->size()) { 
 	   	cl_gts_gui.selbro_fnum_list->remove(1);
 	}
+*/
+	cl_gts_gui.selbro_fnum_list->clear();
 }
 
 /* 選択状態の項目をすべて削除 */
@@ -239,8 +225,10 @@ namespace {
 		cl_gts_gui.selbro_fnum_list->select(ii ,0);
 	}
  }
+ } // namespace
+
  /* listの順位置に挿入し、選択状態にして、既にあるならその位置を返す */
- int insert_and_select_fnum_in_list_( const int file_num )
+ int cb_number::insert_and_select_fnum_in_list_( const int file_num )
  {
 	int ii,jj;
 	char buffer[8];
@@ -266,7 +254,6 @@ namespace {
 	 cl_gts_gui.selbro_fnum_list->size()
 	);/* 選択 */
 	return ii;
- }
 }
 
 /* 現位置と現番号から次の処理位置と処理番号を得る */
@@ -300,7 +287,7 @@ void cb_number::set_next_num_from_crnt_(
 		}
 		else { /* 選択あったら、その項目の表示番号を得る */
 			this->next_file_num_ =
-			 this->file_num_from_list_num(this->next_list_num);
+			 this->file_num_from_list_num(this->next_list_num_);
 		}
 	}
 	else	/* Endless指定 */
@@ -493,5 +480,144 @@ bool cb_number::selected_next_frame(void)
 }
 
 //--------------------------------------------------
+/* Scan/Trace別の動作 */
+void cb_number::set_type_to_scan(void)
+{
+	cl_gts_gui.texdis_number_type->insert_position(0);
+	cl_gts_gui.texdis_number_type->overstrike( this->str_type_scan_ );
+}
 
+void cb_number::set_type_to_trace(void)
+{
+	cl_gts_gui.texdis_number_type->insert_position(0);
+	cl_gts_gui.texdis_number_type->overstrike( this->str_type_trace_ );
+}
 
+const std::string cb_number::get_type_(void)
+{
+	Fl_Text_Buffer* buf = cl_gts_gui.texdis_number_type->buffer();
+	if (buf == nullptr || buf->text() == nullptr) {
+		return std::string();
+	}
+	return std::string(buf->text());
+}
+/* numsをリスト表示しファイル存在なら'S'マーク付ける & 保存名表示 */
+void cb_number::append_checked_S_and_set_name_by_number_list_( const std::vector<int>& nums )
+{
+	const std::string ty( this->get_type_() );
+	if (ty.empty()) {
+		return;
+	}
+	if      (ty == this->str_type_scan_) {
+		for (int nn : nums) {
+			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+	cl_gts_master.cl_scan_and_save.get_save_path(nn).c_str()
+			))) {
+				this->append_with_S(nn);
+			}
+			else {
+				this->append_without_S(nn);
+			}
+		}
+		/* Numberウインドウ 保存level名表示 */
+		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
+		cl_gts_gui.strinp_scan_save_file_head->value()
+		);
+	}
+	else if (ty == this->str_type_trace_) {
+		for (int nn : nums) {
+			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+	cl_gts_master.cl_trace_files.get_save_path(nn).c_str()
+		))) {
+				this->append_with_S(nn);
+			}
+			else {
+				this->append_without_S(nn);
+			}
+		}
+		/* Numberウインドウ 保存level名表示 */
+		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
+		cl_gts_gui.strinp_trace_save_file_head->value()
+		);
+	}
+}
+/* s,eをリスト表示しファイル存在なら'S'マーク付ける & 保存名表示 */
+void cb_number::append_checked_S_and_set_name_from_start_to_end( const int num_start ,const int num_end )
+{
+	const std::string ty( this->get_type_() );
+	if (ty.empty()) {
+		return;
+	}
+	if      (ty == this->str_type_scan_) {
+		for (int nn = num_start ;nn <= num_end ;++nn) {
+			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+	cl_gts_master.cl_scan_and_save.get_save_path(nn).c_str()
+			))) {
+				this->append_with_S(nn);
+			}
+			else {
+				this->append_without_S(nn);
+			}
+		}
+		/* Numberウインドウ 保存level名表示 */
+		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
+		cl_gts_gui.strinp_scan_save_file_head->value()
+		);
+	}
+	else if (ty == this->str_type_trace_) {
+		for (int nn = num_start ;nn <= num_end ;++nn) {
+			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+	cl_gts_master.cl_trace_files.get_save_path(nn).c_str()
+		))) {
+				this->append_with_S(nn);
+			}
+			else {
+				this->append_without_S(nn);
+			}
+		}
+		/* Numberウインドウ 保存level名表示 */
+		cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
+		cl_gts_gui.strinp_trace_save_file_head->value()
+		);
+	}
+}
+
+const std::string cb_number::get_save_path( const int number )
+{
+	const std::string ty( this->get_type_() );
+	if (ty.empty()) {
+		return std::string();
+	}
+	if      (ty == this->str_type_scan_) {
+		return cl_gts_master.cl_scan_and_save.get_save_path(number);
+	}
+	else if (ty == this->str_type_trace_) {
+		return cl_gts_master.cl_trace_files.get_save_path(number);
+	}
+	return std::string();
+}
+
+/* Numberウインドウをnumberリストで再構築 */
+void cb_number::reset_by_number_list( const std::vector<int>& nums )
+{
+	/* Numberウインドウ List再構築 */
+	this->remove_all(); /* リスト全消去 */
+	this->append_checked_S_and_set_name_by_number_list_( nums );
+	this->select_all(); /* リスト全選択 */
+
+	/* Numberウインドウ 即表示 */
+	cl_gts_gui.window_number->flush();
+}
+/* Numberウインドウをnumberリストで再構築 */
+void cb_number::reset_from_start_to_end( const int num_start ,const int num_end )
+{
+	/* Numberウインドウ List再構築 */
+	this->remove_all(); /* リスト全消去 */
+	this->append_checked_S_and_set_name_from_start_to_end(
+		num_start ,num_end
+	);
+	this->select_all(); /* リスト全選択 */
+
+	/* Numberウインドウ 即表示 */
+	cl_gts_gui.window_number->flush();
+}

@@ -134,11 +134,11 @@ std::cout
 		/***this->cl_iip_scan.d_threshold( 0.0 );***/
 
 		this->cl_iip_scan.d_brightness(
-			cl_gts_gui.valinp_grays_brightness->value() );
+			cl_gts_gui.valinp_grayscale_brightness->value() );
 		this->cl_iip_scan.d_contrast(
-			cl_gts_gui.valinp_grays_contrast->value() );
+			cl_gts_gui.valinp_grayscale_contrast->value() );
 		this->cl_iip_scan.d_gamma(
-			cl_gts_gui.valinp_grays_gamma->value() );
+			cl_gts_gui.valinp_grayscale_gamma->value() );
 		break;
 	case 2:	/* rgb */
 		this->cl_iip_scan.e_pixeltype( E_PIXELTYPE_RGB );
@@ -217,7 +217,7 @@ std::cout
 
 /*---------------------------------------------------------*/
 
-iip_canvas *gts_master::_iipg_scan( const bool full_area_sw )
+iip_canvas *gts_master::iipg_scan( const bool full_area_sw )
 {
 	int	i_ret;
 
@@ -306,10 +306,10 @@ std::cout
 	((Fl_Valuator *)cl_gts_gui.scrbar_bw_threshold)->value(
 		this->cl_iip_scan.d_threshold()
 	);
-	cl_gts_gui.valinp_grays_brightness->value(
+	cl_gts_gui.valinp_grayscale_brightness->value(
 		this->cl_iip_scan.d_brightness()
 	);
-	((Fl_Valuator *)cl_gts_gui.scrbar_grays_brightness)->value(
+	((Fl_Valuator *)cl_gts_gui.scrbar_grayscale_brightness)->value(
 		this->cl_iip_scan.d_brightness()
 	);
 	cl_gts_gui.valinp_rgb_brightness->value(
@@ -318,10 +318,10 @@ std::cout
 	((Fl_Valuator *)cl_gts_gui.scrbar_rgb_brightness)->value(
 		this->cl_iip_scan.d_brightness()
 	);
-	cl_gts_gui.valinp_grays_contrast->value(
+	cl_gts_gui.valinp_grayscale_contrast->value(
 		this->cl_iip_scan.d_contrast()
 	);
-	((Fl_Valuator *)cl_gts_gui.scrbar_grays_contrast)->value(
+	((Fl_Valuator *)cl_gts_gui.scrbar_grayscale_contrast)->value(
 		this->cl_iip_scan.d_contrast()
 	);
 	cl_gts_gui.valinp_rgb_contrast->value(

@@ -20,9 +20,10 @@ void cb_trace_batch::cb_run( void )
 	 /* 読込んで設定する。このときtrace batch情報のみ設定しない */
 	 const char *fpath
 	    =cl_gts_gui.selbro_trace_batch_config_list->text(ii);
-	 if (OK != cl_gts_master.cl_memo_config.load(fpath,OFF)) {
+	 if (OK !=
+	 cl_gts_master.cl_config.loading_and_set_dpath_fname(fpath,false)) {
 		pri_funct_err_bttvr(
-	  "Error : cl_gts_master.cl_memo_config.load(%s,OFF) returns NG"
+"Error : cl_gts_master.cl_config.loading_and_set_dpath_fname(%s,false) returns NG"
 		 	,fpath );
 		return;
 	 }
@@ -31,7 +32,7 @@ void cb_trace_batch::cb_run( void )
 	 Fl::check();
 
 	 /* trace実行 */
-	 if (cl_gts_master.cb_read_and_save_start( false ) == NG) {
+	 if (cl_gts_master.cl_trace_files.cb_start( false ) == NG) {
 		break; /* Error then break */
 	 }
 

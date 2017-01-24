@@ -1,11 +1,9 @@
 #ifndef memory_config_h
 #define memory_config_h
 
-#include <cstdio>
 #include <string>
 #include <vector>
-#include "ptbl_path_max.h"
-#include "ptbl_returncode.h"
+#include <fstream> // std::ifstream , std::ofstream,
 
 class memory_config {
 public:
@@ -103,7 +101,7 @@ public:
 	    "trace_num_end")
 
 	,str_trace_filter_trace_sw_(
-	    "trace_filter_trace_sw")
+	    "trace_filter_trace_sw")	/* 実装は固定値 */
 	,str_trace_filter_erase_dot_noise_sw_(
 	    "trace_filter_erase_dot_noise_sw")
 
@@ -285,13 +283,22 @@ public:
 	    "color_trace_06_tgt_rgb")
 	,str_color_trace_06_tgt_color_(
 	    "color_trace_06_tgt_color")
+
+	,load_config_sw_(true)
+	,load_scan_and_save_sw_(true)
+	,load_trace_files_sw_(true)
+	,load_crop_area_and_rot90_sw_(true)
+	,load_pixel_type_and_bright_sw_(true)
+	,load_trace_parameters_sw_(true)
+	,load_trace_batch_sw_(true)
+	,load_number_sw_(true)
 	{
 	}
 
-	int save( const char *file_path );
-	int load( const std::string& file_path,int load_trace_batch_sw=ON );
-
-	std::string memory_of_path;
+	int save( const std::string& file_path );
+	int load( const std::string& file_path
+		,const bool load_trace_batch_sw=true );
+	int load_only_trace_parameters( const std::string& file_path );
 
 private:
 	const char* str_on_;
@@ -301,8 +308,11 @@ private:
 	const char* str_color_not_black_;
 
 	const char* str_config_dir_path_;
-	const char* str_config_load_file_;
-	const char* str_config_save_as_file_;
+	const char* str_config_dir_path_legacy2016_;
+	const char* str_config_open_file_name_;
+	const char* str_config_open_file_name_legacy2016_;
+	const char* str_config_save_file_name_;
+	const char* str_config_save_file_name_legacy2016_;
 
 	const char* str_scan_filter_trace_sw_;
 	const char* str_scan_filter_trace_sw_legacy2017_;
@@ -338,6 +348,9 @@ private:
 	const char* str_trace_open_number_format_;
 	const char* str_trace_open_image_format_;
 	const char* str_trace_open_image_format_legacy2016_;
+
+	const char* str_trace_num_start_;
+	const char* str_trace_num_end_;
 
 	const char* str_trace_filter_trace_sw_;
 	const char* str_trace_filter_erase_dot_noise_sw_;
@@ -437,8 +450,20 @@ private:
 	const char* str_color_trace_06_tgt_rgb_;
 	const char* str_color_trace_06_tgt_color_;
 
+	bool load_config_sw_;
+	bool load_scan_and_save_sw_;
+	bool load_trace_files_sw_;
+	bool load_crop_area_and_rot90_sw_;
+	bool load_pixel_type_and_bright_sw_;
+	bool load_trace_parameters_sw_;
+	bool load_trace_batch_sw_;
+	bool load_number_sw_;
+
 	//-------------------------------------
 
+	void save_bool_(
+		const std::string& key ,const char sw ,std::ofstream& ofs
+	);
 	void save_head_( std::ofstream& ofs );
 	void save_config_( std::ofstream& ofs );
 	void save_scan_and_save_( std::ofstream& ofs );
@@ -453,20 +478,19 @@ private:
 
 	void load_ifs_(
 		std::ifstream& ifs
-		,const int load_trace_batch_sw
-		,bool& fnum_list_sw
-		,bool& trace_batch_list_sw
-		,bool& level_list_redisplay_sw
-		,bool& level_num_continue_type_sw
+		,bool& scan_num_continue_type_sw
 	);
 	bool load_config_( std::vector< std::string >& words );
-	bool load_scan_and_save_( std::vector< std::string >& words );
+	bool load_scan_and_save_( std::vector< std::string >& words
+		,bool& scan_num_continue_type_sw );
 	bool load_trace_files_( std::vector< std::string >& words );
 	bool load_crop_area_and_rot90_( std::vector< std::string >& words );
 	bool load_pixel_type_and_bright_(std::vector< std::string >& words);
 	bool load_trace_parameters_( std::vector< std::string >& words );
-	bool load_trace_batch_( std::vector< std::string >& words );
-	bool load_number_( std::vector< std::string >& words );
+	bool load_trace_batch_( std::vector< std::string >& words
+		,bool& delete_trace_batch_list_sw);
+	bool load_number_( std::vector< std::string >& words
+		,bool& delete_number_list_sw);
 };
 
 #endif /* !memory_config_h */

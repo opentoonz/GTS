@@ -9,7 +9,10 @@ public:
 		:ext_(".txt")
 	{}
 
-	void loading_and_set_dpath_fname( const std::string& fpath );
+	int loading_and_set_dpath_fname(
+		const std::string& fpath
+		,const bool load_trace_batch_sw=true
+	);
 	void open(void);
 	void save_as(void);
 	void save(void);
@@ -32,8 +35,8 @@ public:
 
 private:
 	std::string	dir_path_
-			,open_file_name_
-			,save_file_name_;
+			,open_file_name_ /* Openの時のみ設定する */
+			,save_file_name_;/* Open/Save両方で設定する */
 	const std::string ext_;
 };
 

@@ -6,15 +6,24 @@
 #include "cb_config.h"
 #include "gts_master.h"
 
-void cb_config::loading_and_set_dpath_fname( const std::string& fpath )
+int cb_config::loading_and_set_dpath_fname(
+	const std::string& fpath
+	,const bool load_trace_batch_sw
+)
 {
 	/* config情報を保存する */
-	if (OK != cl_gts_master.cl_memo_config.load( fpath.c_str() )) {
+	if (OK != cl_gts_master.cl_memo_config.load(
+		fpath ,load_trace_batch_sw
+	)) {
 		pri_funct_err_bttvr(
-	 "Error : cl_gts_master.cl_memo_config.load(%s) returns NG",
-			fpath.c_str() );
-		return;
+	 "Error : cl_gts_master.cl_memo_config.load(%s,%s) returns NG"
+	 		, fpath.c_str()
+			, load_trace_batch_sw ?"true" :"false"
+		);
+		return NG;
 	}
+
+	//---------- after reading ----------
 
 	/* DirPath&OpenName記憶 */
 	ids::path::from_fpath_to_dpath_fname(
@@ -22,7 +31,14 @@ void cb_config::loading_and_set_dpath_fname( const std::string& fpath )
 		,this->dir_path_
 		,this->open_file_name_
 	);
+
+	/* 開いたconfigファイルに保存するように名前を記憶 */
 	this->save_file_name_ = this->open_file_name_;
+
+	/* 記憶した名前を表示する */
+	cl_gts_master.print_window_headline();
+
+	return OK;
 }
 void cb_config::open( void )
 {
@@ -80,24 +96,27 @@ void cb_config::save_as( void )
 	this->add_ext_if_not_exist( fpath );
 
 	/* config情報を保存する */
-	if (OK != cl_gts_master.cl_memo_config.save( fpath.c_str() )) {
+	if (OK != cl_gts_master.cl_memo_config.save( fpath )) {
 		pri_funct_err_bttvr(
 	 "Error : cl_gts_master.cl_memo_config.save(%s) returns NG",
 			fpath.c_str() );
 		return;
 	}
 
-	/* DirPath&SaveName記憶 */
+	/* 保存名を記憶(開いた名前は変わらない) */
 	ids::path::from_fpath_to_dpath_fname(
 		fpath
 		,this->dir_path_
 		,this->save_file_name_
 	);
+
+	/* 記憶した名前を表示する */
+	cl_gts_master.print_window_headline();
 }
 
 void cb_config::save( void )
 {
-	/* まだconfigファイルをOpenもSaveAsもしていないとき */
+	/* まだconfigファイルをOpenもSaveAsもしていない */
 	if ( this->dir_path_.empty() || this->save_file_name_.empty() ) {
 		fl_alert("Use \'Save As Config\'");
 		return;
@@ -123,7 +142,7 @@ void cb_config::save( void )
 	}
 
 	/* config情報を保存する */
-	if (OK != cl_gts_master.cl_memo_config.save( fpath.c_str() )) {
+	if (OK != cl_gts_master.cl_memo_config.save( fpath )) {
 		pri_funct_err_bttvr(
 	 "Error : cl_gts_master.cl_memo_config.save(%s) returns NG",
 			fpath.c_str() );

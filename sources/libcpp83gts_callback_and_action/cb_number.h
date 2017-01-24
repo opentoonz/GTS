@@ -10,22 +10,19 @@ public:
 		,crnt_file_num_(-1)
 		,next_list_num_(-1)
 		,next_file_num_(-1)
+		,str_type_scan_("Scan")
+		,str_type_trace_("Trace")
 	{
 	}
 
 	//--------------------------------------------------
 
 	/* Insert項目に入力したフレーム番号をリストに追加(sort)セットする */
-	void set_list_from_string( void );
+	void cb_set_list_from_string( void );
 
 	//--------------------------------------------------
 
-	/* ファイル存在マークを付加したファイル番号をlistの最後に追加 */
-	/* level okの時使用 */
-	void append_fnum_list_with_chk_mark( const int file_num );
-
-	/* 上記二つの関数は後方互換のため保持しているが将来廃止 */
-	/* 上記二つの関数は使わないようにして以下の関数を使う */
+	/* ファイル存在マーク付加(orしない)ファイル番号をlistの最後に追加 */
 	void append_without_S( const int file_num );
 	void append_with_S( const int file_num );
 
@@ -75,10 +72,20 @@ public:
 
 	//--------------------------------------------------
 
+	int file_num_from_list_num( int list_num );
+
 	/* 独自に選択をたどるための機能 */
 	int next_selected_list_num( int list_num );
 
 	//--------------------------------------------------
+	/* Scan動作なのかTrace動作なのかを示す仕組み */
+	void set_type_to_scan(void);
+	void set_type_to_trace(void);
+
+	void reset_by_number_list( const std::vector<int>& nums );
+	void reset_from_start_to_end(const int num_start,const int num_end);
+
+	const std::string get_save_path( const int num );
 
 private:
 	int	crnt_list_num_
@@ -87,15 +94,31 @@ private:
 		, next_file_num_
 		;
 
+	const char* str_type_scan_;
+	const char* str_type_trace_;
+
+	//-------------------------------------
+
 	enum choice_level_continue_type_value_ {
 		end_type_value_		// 0
 		,endless_type_value_	// 1
 	};
 
+	int insert_and_select_fnum_in_list_( const int file_num );
+
 	void set_next_num_from_crnt_(
 		const int continue_type_value
 		,const bool forward_sw
 	);
+
+	const std::string get_type_(void);
+	void append_checked_S_and_set_name_by_number_list_(
+		const std::vector<int>& nums
+	);
+	void append_checked_S_and_set_name_from_start_to_end(
+		const int num_start ,const int num_end
+	);
+	const std::string get_save_head_( void );
 };
 
 #endif /* !cb_number_h */

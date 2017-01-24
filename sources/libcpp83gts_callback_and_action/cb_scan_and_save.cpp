@@ -50,7 +50,7 @@ void cb_scan_and_save::cb_start( void )
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
-	this->cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
+ cl_gts_master.cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
 		cl_gts_gui.window_next_scan->show();
@@ -74,7 +74,7 @@ void cb_scan_and_save::cb_next( void )
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
-	this->cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
+ cl_gts_master.cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
 		cl_gts_gui.window_next_scan->show();
@@ -93,7 +93,7 @@ void cb_scan_and_save::cb_rescan( void )
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
 		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
-	this->cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
+ cl_gts_master.cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
 		cl_gts_gui.window_next_scan->show();
@@ -115,10 +115,10 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	/* 02 保存するファイルパスを得る
 		DirPath/Level.Number.Ext-->例:"C:/users/public/A.0001.tif"
 	*/
-	std::string fpath_save( this->get_save_path_(crnt_file_num) );
+	std::string fpath_save( this->get_save_path(crnt_file_num) );
 	if (fpath_save.empty()) {
 		pri_funct_err_bttvr(
-			"Error : this->get_save_path_(%d) returns empty"
+			"Error : this->get_save_path(%d) returns empty"
 			, crnt_file_num );
 		return NG;
 	}
@@ -127,17 +127,17 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	cl_gts_gui.selbro_fnum_list->middleline(crnt_list_num);
 
 	/* 04 スキャンを実行 */
-	iip_canvas* clp_scan = this->_iipg_scan();
+	iip_canvas* clp_scan = cl_gts_master.iipg_scan();
 	if (nullptr == clp_scan) {
 		pri_funct_err_bttvr(
-		      "Error : this->_iipg_scan() returns nullptr" );
+		      "Error : cl_gts_master.iipg_scan() returns nullptr" );
 // std::string str("Error in scaning at next!";
 // fl_alert(str.c_str());
 		return NG;
 	}
 
 	/* 05 回転、2値化、ドットノイズ消去　処理 */
-	if (this->rot_and_trace_and_enoise(
+	if (cl_gts_master.rot_and_trace_and_enoise(
 		clp_scan ,cl_gts_gui.choice_rot90->value()
 	) != OK) {
 		return NG;
@@ -146,7 +146,7 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	/* 06 画像を保存する
 		BW/Grayscale/RGB/RGBTraceのどれか
 	*/
-	if (OK != this->iipg_save(
+	if (OK != cl_gts_master.iipg_save(
 		&(cl_gts_master.cl_iip_edot)/* Effectの最後Node画像を保存 */
 		, const_cast<char *>(fpath_save.c_str())
 		, cl_gts_gui.valinp_area_reso->value()
@@ -164,12 +164,12 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	cl_gts_master.cl_number.unselect(crnt_list_num);
 
 	/* 09 画像表示 */
-	if (this->redraw_image( clp_scan ,false ,false ) != OK) {
+	if (cl_gts_master.redraw_image( clp_scan ,false ,false ) != OK) {
 		return NG;
 	}
 
 	/* 10 保存するタイプで画像を表示する */
-	if ( cl_gts_gui.chkbtn_scan_trace_sw->value() ) {
+	if ( cl_gts_gui.chkbtn_scan_filter_trace_sw->value() ) {
 		/* TracenImage画像のみ表示 */
 		cl_gts_master.cb_change_wview_sub();
 
@@ -185,7 +185,7 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	}
 
 	/* 11 切抜きはしないのでOFFにしておく */
-	this->cl_ogl_view.set_crop_disp_sw(OFF);
+	cl_gts_master.cl_ogl_view.set_crop_disp_sw(OFF);
 
 	/* 12 次のフレーム番号があるなら、
 	次の処理を促すwindowの設定をしておく */
@@ -264,6 +264,9 @@ void cb_scan_and_save::cb_browse_save_folder( void )
 /* numberセット表示/file存在確認表示 */
 void cb_scan_and_save::cb_set_number( void )
 {
+	/* Scanの番号であることを表示して示す */
+	cl_gts_master.cl_number.set_type_to_scan();
+
 	/* 番号範囲(start ,end)を得る */
 	int num_s = -1;
 	int num_e = -1;
@@ -280,29 +283,13 @@ void cb_scan_and_save::cb_set_number( void )
 		}
 	}
 
-	/* 全削除 */
-	cl_gts_master.cl_number.remove_all();
-	/* Numberウインドウ List再構築 ファイル存在マーク付ける */
-	for (int num =num_s ;num <= num_e ; ++num) {
-		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
-			this->get_save_path_(num).c_str()
-		))) {
-		 cl_gts_master.cl_number.append_with_S(num);
-		}
-		else {
-		 cl_gts_master.cl_number.append_without_S(num);
-		}
-	}
-	/* 全選択 */
-	cl_gts_master.cl_number.select_all();
-
-	/* Numberウインドウ 保存level名表示 */
-	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-	 cl_gts_gui.strinp_scan_save_file_head->value()
+	/* End/EndlessによるNumberリストのdeactivate/activete */
+	this->cb_change_num_continue_type(
+	 cl_gts_gui.choice_scan_num_continue_type->text()
 	);
 
-	/* 即表示 */
-	cl_gts_gui.window_number->flush();
+	/* Numberウインドウ再構築 */
+	cl_gts_master.cl_number.reset_from_start_to_end( num_s ,num_e );
 }
 
 //------------------------------------------------------------
@@ -325,7 +312,7 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 {
 /* Numberの非選択含めた番号ファイルで一つでも存在するならtrueを返す */
 	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
-		std::string filepath( this->get_save_path_(
+		std::string filepath( this->get_save_path(
 			std::stoi( /* リストの項目に表示した番号 */
 				cl_gts_gui.selbro_fnum_list->text(ii)
 			)
@@ -341,7 +328,7 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 
 //----------------------------------------------------------------------
 /* save file/path */
-const std::string cb_scan_and_save::get_save_path_( const int number )
+const std::string cb_scan_and_save::get_save_path( const int number )
 {
 	std::string filepath;
 	filepath += cl_gts_gui.filinp_scan_save_dir_path->value();
@@ -402,11 +389,23 @@ void cb_scan_and_save::cb_choice_num_endless_direction( const std::string& type 
 	cl_gts_gui.choice_scan_num_endless_direction->value(crnt);
 }
 
-void cb_scan_and_save::cb_choice_save_image_format( const std::string& type );
+std::string cb_scan_and_save::get_save_ext_for_legacy_(const std::string& type)
 {
+	if (type.size() == 4) { return type; }
+	for (int ii=0;ii<this->ext_save.size() ;++ii)  {
+		if (	 this->ext_save.get_fltk_filter( ii ) == type) {
+		 return	 this->ext_save.str_from_num( ii );
+		}
+	}
+	return type;
+}
+void cb_scan_and_save::cb_choice_save_image_format( const std::string& type )
+{
+	std::string typestr( this->get_save_ext_for_legacy_(type) );
+
 	const Fl_Menu_Item *crnt =
 	cl_gts_gui.choice_scan_save_image_format->find_item(
-		type.c_str() );
+		typestr.c_str() );
 	if (crnt == nullptr) { return; }
 
 	cl_gts_gui.choice_scan_save_image_format->value(crnt);

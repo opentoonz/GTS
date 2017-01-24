@@ -173,7 +173,7 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_thickness->resize(xx,yy,ww,hh);
 		}
-		else if ((this->str_window_trace_output_color==key) && (4==ret)) {
+		else if ((this->str_window_trace_output_color_==key) && (4==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_trace_output_color->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */

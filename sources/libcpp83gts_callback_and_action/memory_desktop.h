@@ -43,7 +43,7 @@ public:
 	    "window_trace_batch" )
 	,str_window_trace_thickness_(
 	    "window_thickness" )
-	,str_window_trace_output_color(
+	,str_window_trace_output_color_(
 	    "window_edit_color" )
 	,str_window_edit_hab_min_max_(
 	    "window_edit_hab_min_max" )
@@ -88,7 +88,7 @@ private:
 	const char* str_window_number_;
 	const char* str_window_trace_batch_;
 	const char* str_window_trace_thickness_;
-	const char* str_window_trace_output_color;
+	const char* str_window_trace_output_color_;
 	const char* str_window_edit_hab_min_max_;
 # ifndef _WIN32
 	const char* str_desktop_dir_;

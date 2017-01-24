@@ -4,7 +4,8 @@
 #include <sstream>
 #include "fltk_opengl.h"
 #include "ids_path_level_from_files.h"
-#include "cb_level.h"
+#include "cb_scan_and_save.h"
+#include "cb_trace_files.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 
@@ -93,10 +94,14 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 	}
 	/* Files(tif,tga) */
 	else {
-		cl_gts_master.cl_trace_files.set_gui_for_open(
-			dpath ,head ,num_form ,ext ,nums
-		);
-		cl_gts_master.cb_read_and_trace_and_preview();
+		const int ext_num =
+		 cl_gts_master.cl_trace_files.ext_open.num_from_str(ext);
+		if (!(head.empty()) && 0 <= ext_num && !(nums.empty())) {
+			cl_gts_master.cl_trace_files.set_gui_for_open(
+				dpath ,head ,num_form ,ext ,nums
+			);
+			cl_gts_master.cb_read_and_trace_and_preview();
+		}
 	}
 	return std::string();
 }

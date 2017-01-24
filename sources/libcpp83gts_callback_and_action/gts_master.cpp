@@ -110,8 +110,8 @@ int gts_master::exec( const char *comm )
 		cl_trace_files.ext_open
 		cl_trace_files.ext_save
 	*/ 
-	this->cl_scan_and_save.ext_open.set_filter("TIFF",".tif");/*0番目 */
-	this->cl_scan_and_save.ext_open.set_filter( "TGA",".tga");/*1番目 */
+	this->cl_scan_and_save.ext_save.set_filter("TIFF",".tif");/*0番目 */
+	this->cl_scan_and_save.ext_save.set_filter( "TGA",".tga");/*1番目 */
 	this->cl_trace_files.ext_open.set_filter("TIFF",".tif");/* 0番目 */
 	this->cl_trace_files.ext_open.set_filter( "TGA",".tga");/* 1番目 */
 	this->cl_trace_files.ext_save.set_filter("TIFF",".tif");/* 0番目 */

@@ -71,7 +71,7 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_files
+	, this->str_window_trace_files_
 	, cl_gts_gui.menite_trace_files->value()?ccp_show:ccp_hide
 	, cl_gts_gui.window_trace_files->x()
 	, cl_gts_gui.window_trace_files->y()
@@ -133,7 +133,7 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_output_color
+	, this->str_window_trace_output_color_
 	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
 	, cl_gts_gui.window_trace_output_color->x()
 	, cl_gts_gui.window_trace_output_color->y()

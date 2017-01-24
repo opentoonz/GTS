@@ -189,6 +189,7 @@ public:
 		iip_canvas *clp_canvas ,char *cp_path ,double d_dpi
 		,int i_rot90 = 0 ,iip_read *clp_read = NULL
 	);
+	iip_canvas *iipg_scan( const bool full_area_sw=false );
 
 private:
 	int	_i_mv_sw,
@@ -284,7 +285,6 @@ private:
 	void _iipg_scan_set_physical_param( void );
 	void _iipg_scan_get_from_gui( const bool full_area_sw );
 	int _iipg_scan_action( const bool full_area_sw );
-	iip_canvas *_iipg_scan( const bool full_area_sw=false );
 	int _iipg_scan_get_scanner_info( void );
 
 	void __area_rot90_d_pos_and_size( int i_rot90, double d_x, double d_y, double d_w, double d_h, double d_max_w, double d_max_h, double *dp_x, double *dp_y, double *dp_w, double *dp_h );

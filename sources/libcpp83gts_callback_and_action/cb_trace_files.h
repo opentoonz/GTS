@@ -30,14 +30,19 @@ public:
 
 	void cb_check_existing_saved_file(void);
 
-	/* numマイナスでファイル名に番号付かない */
-	const std::string get_open_path( const int num );
-
 	/* 開くファイル拡張子設定 */
 	void cb_choice_open_image_format( const std::string& type );
 
 	/* 保存するファイル拡張子設定 */
 	void cb_choice_save_image_format( const std::string& type );
+
+	//----------
+
+	/* numマイナスでファイル名に番号付かない */
+	const std::string get_open_path( const int num );
+	const std::string get_save_path( const int num );
+
+	void cb_switch_trace_filter_erase_dot_noise( const bool sw );
 
 private:
 	int read_and_save_crnt_(
@@ -59,8 +64,9 @@ private:
 		const std::string& file_head
 		,const int number
 	);
-	const std::string get_save_path_( const int num );
 	const std::string get_save_name_( const int num );
+	std::string get_open_ext_for_legacy_(const std::string& type);
+	std::string get_save_ext_for_legacy_(const std::string& type);
 };
 
 #endif /* !cb_trace_files_h */

@@ -5,10 +5,10 @@
 void gts_master::cb_scan_and_preview( void )
 {
 	/* スキャンを実行 */
-	iip_canvas* clp_scan = this->_iipg_scan();
+	iip_canvas* clp_scan = this->iipg_scan();
 	if (NULL == clp_scan) {
 		pri_funct_err_bttvr(
-		      "Error : this->_iipg_scan() returns NULL" );
+		      "Error : this->iipg_scan() returns NULL" );
 		return;
 	}
 

@@ -291,35 +291,35 @@ private:
   static void cb_valinp_bw_threshold(Fl_Value_Input*, void*);
 public:
   Fl_Group *group_grays;
-  Fl_Scrollbar *scrbar_grays_brightness;
+  Fl_Scrollbar *scrbar_grayscale_brightness;
 private:
-  inline void cb_scrbar_grays_brightness_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_grays_brightness(Fl_Scrollbar*, void*);
+  inline void cb_scrbar_grayscale_brightness_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_grayscale_brightness(Fl_Scrollbar*, void*);
 public:
-  Fl_Value_Input *valinp_grays_brightness;
+  Fl_Value_Input *valinp_grayscale_brightness;
 private:
-  inline void cb_valinp_grays_brightness_i(Fl_Value_Input*, void*);
-  static void cb_valinp_grays_brightness(Fl_Value_Input*, void*);
+  inline void cb_valinp_grayscale_brightness_i(Fl_Value_Input*, void*);
+  static void cb_valinp_grayscale_brightness(Fl_Value_Input*, void*);
 public:
-  Fl_Scrollbar *scrbar_grays_contrast;
+  Fl_Scrollbar *scrbar_grayscale_contrast;
 private:
-  inline void cb_scrbar_grays_contrast_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_grays_contrast(Fl_Scrollbar*, void*);
+  inline void cb_scrbar_grayscale_contrast_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_grayscale_contrast(Fl_Scrollbar*, void*);
 public:
-  Fl_Value_Input *valinp_grays_contrast;
+  Fl_Value_Input *valinp_grayscale_contrast;
 private:
-  inline void cb_valinp_grays_contrast_i(Fl_Value_Input*, void*);
-  static void cb_valinp_grays_contrast(Fl_Value_Input*, void*);
+  inline void cb_valinp_grayscale_contrast_i(Fl_Value_Input*, void*);
+  static void cb_valinp_grayscale_contrast(Fl_Value_Input*, void*);
 public:
-  Fl_Scrollbar *scrbar_grays_gamma;
+  Fl_Scrollbar *scrbar_grayscale_gamma;
 private:
-  inline void cb_scrbar_grays_gamma_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_grays_gamma(Fl_Scrollbar*, void*);
+  inline void cb_scrbar_grayscale_gamma_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_grayscale_gamma(Fl_Scrollbar*, void*);
 public:
-  Fl_Value_Input *valinp_grays_gamma;
+  Fl_Value_Input *valinp_grayscale_gamma;
 private:
-  inline void cb_valinp_grays_gamma_i(Fl_Value_Input*, void*);
-  static void cb_valinp_grays_gamma(Fl_Value_Input*, void*);
+  inline void cb_valinp_grayscale_gamma_i(Fl_Value_Input*, void*);
+  static void cb_valinp_grayscale_gamma(Fl_Value_Input*, void*);
 public:
   Fl_Group *group_rgb;
   Fl_Scrollbar *scrbar_rgb_brightness;
@@ -479,6 +479,7 @@ private:
   inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
   static void cb_norinp_fnum_insert(Fl_Input*, void*);
 public:
+  Fl_Text_Display *texdis_number_type;
   Fl_Output *norout_crnt_scan_level_of_fnum;
   Fl_Browser *selbro_fnum_list;
 private:

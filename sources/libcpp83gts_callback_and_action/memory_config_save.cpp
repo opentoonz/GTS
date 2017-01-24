@@ -20,18 +20,11 @@ void save_stri_(
 	ofs << std::setw(28) << std::left  << key
 	    << ' ' << '\"'  << std::right << val << '\"' << '\n';
 }
-void save_bool_(
-	const std::string& key ,const bool sw ,std::ofstream& ofs
-)
-{
-	ofs << std::setw(28) << std::left << key
-	  << ' ' << std::right << (sw ?this->str_on_:this->str_off) << '\n';
-}
 void save_fl64_(
 	const std::string& key ,const double val ,std::ofstream& ofs
 )
 {
-	fs << std::setw(28) << std::left << key
+	ofs << std::setw(28) << std::left << key
 	    << ' ' << std::right << std::setprecision(16) << val<< '\n';
 	/*	double(=倍精度浮動小数点数)の精度は
 		53bit約16桁(=53log10(2)=15.954589...) */
@@ -47,6 +40,12 @@ void save_3int_(
 
 } // namespace
 
+void memory_config::save_bool_( const std::string& key ,const char sw ,std::ofstream& ofs )
+{
+	ofs	<< std::setw(28) << std::left << key
+		<< ' ' << std::right
+		<< (sw==1 ?this->str_on_:this->str_off_) << '\n';
+}
 void memory_config::save_head_( std::ofstream& ofs )
 {
 	ofs	<< "# "  << cl_gts_master.cp_release_name()
@@ -80,17 +79,17 @@ void memory_config::save_config_( std::ofstream& ofs )
 }
 void memory_config::save_scan_and_save_( std::ofstream& ofs )
 {
-	save_bool_( this->str_scan_filter_trace_sw_
-	  , cl_gts_gui.chkbtn_scan_filter_trace_sw->value() ,ofs );
-	save_bool_( this->str_scan_filter_erase_dot_noise_sw_
-	  , cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->value() ,ofs);
+	this->save_bool_( this->str_scan_filter_trace_sw_
+		, cl_gts_gui.chkbtn_scan_filter_trace_sw->value() ,ofs );
+	this->save_bool_( this->str_scan_filter_erase_dot_noise_sw_
+		, cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->value() ,ofs);
 
 	save_stri_( this->str_scan_save_dir_path_
 	   ,cl_gts_gui.filinp_scan_save_dir_path->value() ,ofs );
 	save_stri_( this->str_scan_save_file_head_
 	   ,cl_gts_gui.strinp_scan_save_file_head->value() ,ofs );
 	save_stri_( this->str_scan_save_number_format_
-	   ,cl_gts_gui.choice_scan_save_number_format->value() ,ofs );
+	   ,cl_gts_gui.strinp_scan_save_number_format->value() ,ofs );
 	save_stri_( this->str_scan_save_image_format_
 	   ,cl_gts_gui.choice_scan_save_image_format->text() ,ofs );
 
@@ -110,7 +109,7 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 	save_stri_( this->str_trace_open_file_head_
 	   ,cl_gts_gui.strinp_trace_open_file_head->value() ,ofs );
 	save_stri_( this->str_trace_open_number_format_
-	   ,cl_gts_gui.choice_trace_open_number_format->value() ,ofs );
+	   ,cl_gts_gui.strinp_trace_open_number_format->value() ,ofs );
 	save_stri_( this->str_trace_open_image_format_
 	   ,cl_gts_gui.choice_trace_open_image_format->text() ,ofs );
 
@@ -120,18 +119,18 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 	   ,cl_gts_gui.valinp_trace_num_end->value() ,ofs );
 
 /*
-	save_bool_( this->str_trace_filter_trace_sw_
+	this->save_bool_( this->str_trace_filter_trace_sw_
 	  , cl_gts_gui.chkbtn_trace_filter_trace_sw->value() ,ofs );
 */
-	save_bool_( this->str_trace_filter_erase_dot_noise_sw_
-	  , cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
+	this->save_bool_( this->str_trace_filter_erase_dot_noise_sw_
+		, cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
 
 	save_stri_( this->str_trace_save_dir_path_
 	   ,cl_gts_gui.filinp_trace_save_dir_path->value() ,ofs );
 	save_stri_( this->str_trace_save_file_head_
 	   ,cl_gts_gui.strinp_trace_save_file_head->value() ,ofs );
 	save_stri_( this->str_trace_save_number_format_
-	   ,cl_gts_gui.choice_trace_save_number_format->value() ,ofs );
+	   ,cl_gts_gui.strinp_trace_save_number_format->value() ,ofs );
 	save_stri_( this->str_trace_save_image_format_
 	   ,cl_gts_gui.choice_trace_save_image_format->text() ,ofs );
 }
@@ -173,11 +172,11 @@ void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 	   ,cl_gts_gui.valinp_bw_threshold->value() ,ofs );
 
 	save_fl64_( this->str_grayscale_brightness_
-	   ,cl_gts_gui.valinp_grays_brightness->value() ,ofs );
+	   ,cl_gts_gui.valinp_grayscale_brightness->value() ,ofs );
 	save_fl64_( this->str_grayscale_contrast_
-	   ,cl_gts_gui.valinp_grays_contrast->value() ,ofs );
+	   ,cl_gts_gui.valinp_grayscale_contrast->value() ,ofs );
 	save_fl64_( this->str_grayscale_gamma_
-	   ,cl_gts_gui.valinp_grays_gamma->value() ,ofs );
+	   ,cl_gts_gui.valinp_grayscale_gamma->value() ,ofs );
 
 	save_fl64_( this->str_rgb_brightness_
 	   ,cl_gts_gui.valinp_rgb_brightness->value() ,ofs );
@@ -191,8 +190,8 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 	unsigned char uchar_red, uchar_gre, uchar_blu;
 
 	/* 01 ------------------------------------------------ */
-	save_bool_( this->str_color_trace_01_chk_
-	  , cl_gts_gui.chkbtn_color_trace_01_chk->value() ,ofs );
+	this->save_bool_( this->str_color_trace_01_chk_
+		, cl_gts_gui.chkbtn_color_trace_01_chk->value() ,ofs );
 	save_fl64_( this->str_color_trace_01_src_hh_min_
 	  , cl_gts_gui.valinp_color_trace_01_src_hh_min->value(),ofs);
 	save_fl64_( this->str_color_trace_01_src_hh_max_
@@ -216,8 +215,8 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 		, ofs
 	);
 	/* 02 ------------------------------------------------*/
-	save_bool_( this->str_color_trace_02_chk_
-	  , cl_gts_gui.chkbtn_color_trace_02_chk->value() ,ofs );
+	this->save_bool_( this->str_color_trace_02_chk_
+		, cl_gts_gui.chkbtn_color_trace_02_chk->value() ,ofs );
 	save_fl64_( this->str_color_trace_02_src_hh_min_
 	  , cl_gts_gui.valinp_color_trace_02_src_hh_min->value(),ofs);
 	save_fl64_( this->str_color_trace_02_src_hh_max_
@@ -241,8 +240,8 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 		, ofs
 	);
 	/* 03 ------------------------------------------------*/
-	save_bool_( this->str_color_trace_03_chk_
-	  , cl_gts_gui.chkbtn_color_trace_03_chk->value() ,ofs );
+	this->save_bool_( this->str_color_trace_03_chk_
+		, cl_gts_gui.chkbtn_color_trace_03_chk->value() ,ofs );
 	save_fl64_( this->str_color_trace_03_src_hh_min_
 	  , cl_gts_gui.valinp_color_trace_03_src_hh_min->value(),ofs);
 	save_fl64_( this->str_color_trace_03_src_hh_max_
@@ -266,8 +265,8 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 		, ofs
 	);
 	/* 04 ------------------------------------------------*/
-	save_bool_( this->str_color_trace_04_chk_
-	  , cl_gts_gui.chkbtn_color_trace_04_chk->value() ,ofs );
+	this->save_bool_( this->str_color_trace_04_chk_
+		, cl_gts_gui.chkbtn_color_trace_04_chk->value() ,ofs );
 	save_fl64_( this->str_color_trace_04_src_hh_min_
 	  , cl_gts_gui.valinp_color_trace_04_src_hh_min->value(),ofs);
 	save_fl64_( this->str_color_trace_04_src_hh_max_
@@ -291,8 +290,8 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 		, ofs
 	);
 	/* 05 ------------------------------------------------*/
-	save_bool_( this->str_color_trace_05_chk_
-	  , cl_gts_gui.chkbtn_color_trace_05_chk->value() ,ofs );
+	this->save_bool_( this->str_color_trace_05_chk_
+		, cl_gts_gui.chkbtn_color_trace_05_chk->value() ,ofs );
 	save_fl64_( this->str_color_trace_05_src_hh_min_
 	  , cl_gts_gui.valinp_color_trace_05_src_hh_min->value(),ofs);
 	save_fl64_( this->str_color_trace_05_src_hh_max_
@@ -316,8 +315,8 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 		, ofs
 	);
 	/* 06 ------------------------------------------------*/
-	save_bool_( this->str_color_trace_06_chk_
-	  , cl_gts_gui.chkbtn_color_trace_06_chk->value() ,ofs );
+	this->save_bool_( this->str_color_trace_06_chk_
+		, cl_gts_gui.chkbtn_color_trace_06_chk->value() ,ofs );
 	save_fl64_( this->str_color_trace_06_src_hh_min_
 	  , cl_gts_gui.valinp_color_trace_06_src_hh_min->value(),ofs);
 	save_fl64_( this->str_color_trace_06_src_hh_max_
@@ -366,7 +365,7 @@ void memory_config::save_number_( std::ofstream& ofs )
 	}
 }
 
-int memory_config::save( const char *file_path )
+int memory_config::save( const std::string& file_path )
 {
  try {
 	std::ofstream ofs(file_path); /* ファイル開く */
@@ -381,9 +380,6 @@ int memory_config::save( const char *file_path )
 	this->save_trace_batch_(ofs);
 	this->save_number_(ofs);
 	ofs.close(); /* ファイル閉じる */
-
-	this->memory_of_path = file_path; /* 正常保存ならファイル名の記憶 */
-	cl_gts_master.print_window_headline(); /* ファイル名を表示する */
  }
  catch (const std::ios_base::failure& e) {
 	std::ostringstream ost;
