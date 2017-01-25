@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include <fstream>
 #include "pri.h"
 #include "igs_lex_white_space_and_double_quote.h"

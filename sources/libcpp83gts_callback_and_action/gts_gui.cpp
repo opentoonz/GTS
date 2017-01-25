@@ -5467,16 +5467,19 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Group* o = new Fl_Group(1, 175, 198, 25);
         { new Fl_Box(1, 175, 49, 25);
         } // Fl_Box* o
-        { strinp_scan_save_file_head = new Fl_Input(50, 175, 60, 25, "Level");
+        { strinp_scan_save_file_head = new Fl_Input(50, 175, 50, 25, "File");
           strinp_scan_save_file_head->box(FL_BORDER_BOX);
           strinp_scan_save_file_head->callback((Fl_Callback*)cb_strinp_scan_save_file_head);
           strinp_scan_save_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_scan_save_file_head);
         } // Fl_Input* strinp_scan_save_file_head
-        { strinp_scan_save_number_format = new Fl_Input(110, 175, 40, 25);
+        { strinp_scan_save_number_format = new Fl_Input(100, 175, 45, 25);
           strinp_scan_save_number_format->callback((Fl_Callback*)cb_strinp_scan_save_number_format);
+          strinp_scan_save_number_format->deactivate();
         } // Fl_Input* strinp_scan_save_number_format
-        { choice_scan_save_image_format = new Fl_Choice(150, 175, 49, 25);
+        { output_scan_save_number_format = new Fl_Output(100, 175, 45, 25);
+        } // Fl_Output* output_scan_save_number_format
+        { choice_scan_save_image_format = new Fl_Choice(145, 175, 54, 25);
           choice_scan_save_image_format->down_box(FL_BORDER_BOX);
           choice_scan_save_image_format->callback((Fl_Callback*)cb_choice_scan_save_image_format);
         } // Fl_Choice* choice_scan_save_image_format
@@ -5488,36 +5491,36 @@ Fl_Double_Window* gts_gui::make_window() {
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Group* o = new Fl_Group(1, 230, 198, 25);
-        { new Fl_Box(1, 230, 79, 25);
+        { new Fl_Box(1, 230, 84, 25);
         } // Fl_Box* o
-        { valinp_scan_num_start = new Fl_Value_Input(80, 230, 50, 25, "Start");
+        { valinp_scan_num_start = new Fl_Value_Input(85, 230, 50, 25, "Start");
           valinp_scan_num_start->box(FL_BORDER_BOX);
           valinp_scan_num_start->minimum(1);
           valinp_scan_num_start->maximum(9999);
           valinp_scan_num_start->value(1);
         } // Fl_Value_Input* valinp_scan_num_start
-        { Fl_Box* o = new Fl_Box(130, 230, 69, 25);
+        { Fl_Box* o = new Fl_Box(135, 230, 64, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(1, 260, 198, 25);
-        { choice_scan_num_continue_type = new Fl_Choice(5, 260, 75, 25);
+        { choice_scan_num_continue_type = new Fl_Choice(5, 260, 80, 25);
           choice_scan_num_continue_type->down_box(FL_BORDER_BOX);
           choice_scan_num_continue_type->callback((Fl_Callback*)cb_choice_scan_num_continue_type);
           choice_scan_num_continue_type->menu(menu_choice_scan_num_continue_type);
         } // Fl_Choice* choice_scan_num_continue_type
-        { choice_scan_num_endless_direction = new Fl_Choice(80, 260, 50, 25);
+        { choice_scan_num_endless_direction = new Fl_Choice(85, 260, 50, 25);
           choice_scan_num_endless_direction->down_box(FL_BORDER_BOX);
           choice_scan_num_endless_direction->menu(menu_choice_scan_num_endless_direction);
         } // Fl_Choice* choice_scan_num_endless_direction
-        { valinp_scan_num_end = new Fl_Value_Input(80, 260, 50, 25);
+        { valinp_scan_num_end = new Fl_Value_Input(85, 260, 50, 25);
           valinp_scan_num_end->box(FL_BORDER_BOX);
           valinp_scan_num_end->minimum(1);
           valinp_scan_num_end->maximum(9999);
           valinp_scan_num_end->value(1);
         } // Fl_Value_Input* valinp_scan_num_end
-        { Fl_Box* o = new Fl_Box(130, 260, 69, 25);
+        { Fl_Box* o = new Fl_Box(135, 260, 64, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();
@@ -5534,7 +5537,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     window_scan_and_save->set_non_modal();
-    window_scan_and_save->size_range(200, 555, 1000, 555);
+    window_scan_and_save->size_range(200, 320, 1000, 320);
     window_scan_and_save->end();
     window_scan_and_save->resizable(window_scan_and_save);
   } // Fl_Double_Window* window_scan_and_save
@@ -5567,14 +5570,14 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Group* o = new Fl_Group(1, 90, 198, 25);
         { new Fl_Box(1, 90, 49, 25);
         } // Fl_Box* o
-        { strinp_trace_open_file_head = new Fl_Input(50, 90, 60, 25, "File");
+        { strinp_trace_open_file_head = new Fl_Input(50, 90, 50, 25, "File");
           strinp_trace_open_file_head->box(FL_BORDER_BOX);
           strinp_trace_open_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_trace_open_file_head);
         } // Fl_Input* strinp_trace_open_file_head
-        { strinp_trace_open_number_format = new Fl_Input(110, 90, 40, 25);
+        { strinp_trace_open_number_format = new Fl_Input(100, 90, 45, 25);
         } // Fl_Input* strinp_trace_open_number_format
-        { choice_trace_open_image_format = new Fl_Choice(150, 90, 49, 25);
+        { choice_trace_open_image_format = new Fl_Choice(145, 90, 54, 25);
           choice_trace_open_image_format->down_box(FL_BORDER_BOX);
         } // Fl_Choice* choice_trace_open_image_format
         o->end();
@@ -5636,23 +5639,23 @@ Fl_Double_Window* gts_gui::make_window() {
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Group* o = new Fl_Group(1, 285, 198, 25);
         o->hide();
-        { chkbtn_trace_filter_trace_sw = new Fl_Check_Button(1, 285, 130, 25, "Trace");
+        { chkbtn_trace_filter_trace_sw = new Fl_Check_Button(5, 285, 130, 25, "Trace");
           chkbtn_trace_filter_trace_sw->box(FL_SHADOW_BOX);
           chkbtn_trace_filter_trace_sw->down_box(FL_DOWN_BOX);
           chkbtn_trace_filter_trace_sw->value(1);
           chkbtn_trace_filter_trace_sw->callback((Fl_Callback*)cb_chkbtn_trace_filter_trace_sw);
         } // Fl_Check_Button* chkbtn_trace_filter_trace_sw
-        { Fl_Box* o = new Fl_Box(131, 285, 68, 25);
+        { Fl_Box* o = new Fl_Box(135, 285, 64, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(1, 280, 198, 25);
-        { chkbtn_trace_filter_erase_dot_noise_sw = new Fl_Check_Button(1, 280, 130, 25, "Erase dot noise");
+        { chkbtn_trace_filter_erase_dot_noise_sw = new Fl_Check_Button(5, 280, 130, 25, "Erase dot noise");
           chkbtn_trace_filter_erase_dot_noise_sw->down_box(FL_DOWN_BOX);
           chkbtn_trace_filter_erase_dot_noise_sw->callback((Fl_Callback*)cb_chkbtn_trace_filter_erase_dot_noise_sw);
         } // Fl_Check_Button* chkbtn_trace_filter_erase_dot_noise_sw
-        { Fl_Box* o = new Fl_Box(131, 280, 68, 25);
+        { Fl_Box* o = new Fl_Box(135, 280, 64, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         o->end();
@@ -5678,16 +5681,19 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Group* o = new Fl_Group(1, 375, 198, 25);
         { new Fl_Box(1, 375, 49, 25);
         } // Fl_Box* o
-        { strinp_trace_save_file_head = new Fl_Input(50, 375, 60, 25, "File");
+        { strinp_trace_save_file_head = new Fl_Input(50, 375, 50, 25, "File");
           strinp_trace_save_file_head->box(FL_BORDER_BOX);
           strinp_trace_save_file_head->callback((Fl_Callback*)cb_strinp_trace_save_file_head);
           strinp_trace_save_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_trace_save_file_head);
         } // Fl_Input* strinp_trace_save_file_head
-        { strinp_trace_save_number_format = new Fl_Input(110, 375, 40, 25);
+        { strinp_trace_save_number_format = new Fl_Input(100, 375, 45, 25);
           strinp_trace_save_number_format->callback((Fl_Callback*)cb_strinp_trace_save_number_format);
+          strinp_trace_save_number_format->deactivate();
         } // Fl_Input* strinp_trace_save_number_format
-        { choice_trace_save_image_format = new Fl_Choice(150, 375, 49, 25);
+        { output_trace_save_number_format = new Fl_Output(100, 375, 45, 25);
+        } // Fl_Output* output_trace_save_number_format
+        { choice_trace_save_image_format = new Fl_Choice(145, 375, 54, 25);
           choice_trace_save_image_format->down_box(FL_BORDER_BOX);
           choice_trace_save_image_format->callback((Fl_Callback*)cb_choice_trace_save_image_format);
         } // Fl_Choice* choice_trace_save_image_format
@@ -5695,7 +5701,8 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       o->end();
     } // Fl_Group* o
-    window_trace_files->size_range(200, 435, 1000, 435);
+    window_trace_files->set_non_modal();
+    window_trace_files->size_range(200, 405, 1000, 405);
     window_trace_files->end();
     window_trace_files->resizable(window_trace_files);
   } // Fl_Double_Window* window_trace_files
@@ -5710,9 +5717,14 @@ Fl_Double_Window* gts_gui::make_window() {
       norinp_fnum_insert->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       norinp_fnum_insert->when(FL_WHEN_ENTER_KEY);
     } // Fl_Input* norinp_fnum_insert
-    { texdis_number_type = new Fl_Text_Display(0, 50, 0, 25);
-      texdis_number_type->align(Fl_Align(FL_ALIGN_RIGHT));
-    } // Fl_Text_Display* texdis_number_type
+    { Fl_Group* o = new Fl_Group(0, 50, 116, 25);
+      { new Fl_Box(0, 50, 50, 25);
+      } // Fl_Box* o
+      { output_number_type = new Fl_Output(50, 50, 66, 25, "Action");
+        Fl_Group::current()->resizable(output_number_type);
+      } // Fl_Output* output_number_type
+      o->end();
+    } // Fl_Group* o
     { norout_crnt_scan_level_of_fnum = new Fl_Output(0, 75, 116, 25);
     } // Fl_Output* norout_crnt_scan_level_of_fnum
     { selbro_fnum_list = new Fl_Browser(0, 100, 116, 250);
@@ -6908,11 +6920,11 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_input_color->set_non_modal();
     window_trace_input_color->end();
   } // Fl_Double_Window* window_trace_input_color
-  { window_trace_output_color = new Fl_Double_Window(385, 100, "Trace Output Color(RGB)");
+  { window_trace_output_color = new Fl_Double_Window(200, 100, "Trace Output Color(RGB)");
     window_trace_output_color->callback((Fl_Callback*)cb_window_trace_output_color, (void*)(this));
-    { Fl_Group* o = new Fl_Group(0, 10, 385, 20);
-      { Fl_Group* o = new Fl_Group(0, 10, 340, 20);
-        { scrbar_edit_color_red = new Fl_Scrollbar(45, 10, 295, 20, "Red");
+    { Fl_Group* o = new Fl_Group(0, 10, 200, 20);
+      { Fl_Group* o = new Fl_Group(0, 10, 155, 20);
+        { scrbar_edit_color_red = new Fl_Scrollbar(45, 10, 110, 20, "Red");
           scrbar_edit_color_red->type(1);
           scrbar_edit_color_red->box(FL_BORDER_BOX);
           scrbar_edit_color_red->maximum(255);
@@ -6924,7 +6936,7 @@ Fl_Double_Window* gts_gui::make_window() {
         o->end();
         Fl_Group::current()->resizable(o);
       } // Fl_Group* o
-      { valinp_edit_color_red = new Fl_Value_Input(345, 10, 35, 20);
+      { valinp_edit_color_red = new Fl_Value_Input(160, 10, 35, 20);
         valinp_edit_color_red->box(FL_BORDER_BOX);
         valinp_edit_color_red->maximum(255);
         valinp_edit_color_red->step(1);
@@ -6932,9 +6944,9 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Value_Input* valinp_edit_color_red
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 40, 385, 20);
-      { Fl_Group* o = new Fl_Group(0, 40, 340, 20);
-        { scrbar_edit_color_gre = new Fl_Scrollbar(45, 40, 295, 20, "Green");
+    { Fl_Group* o = new Fl_Group(0, 40, 200, 20);
+      { Fl_Group* o = new Fl_Group(0, 40, 155, 20);
+        { scrbar_edit_color_gre = new Fl_Scrollbar(45, 40, 110, 20, "Green");
           scrbar_edit_color_gre->type(1);
           scrbar_edit_color_gre->box(FL_BORDER_BOX);
           scrbar_edit_color_gre->maximum(255);
@@ -6946,7 +6958,7 @@ Fl_Double_Window* gts_gui::make_window() {
         o->end();
         Fl_Group::current()->resizable(o);
       } // Fl_Group* o
-      { valinp_edit_color_gre = new Fl_Value_Input(345, 40, 35, 20);
+      { valinp_edit_color_gre = new Fl_Value_Input(160, 40, 35, 20);
         valinp_edit_color_gre->box(FL_BORDER_BOX);
         valinp_edit_color_gre->maximum(255);
         valinp_edit_color_gre->step(1);
@@ -6954,9 +6966,9 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Value_Input* valinp_edit_color_gre
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 70, 385, 20);
-      { Fl_Group* o = new Fl_Group(0, 70, 340, 20);
-        { scrbar_edit_color_blu = new Fl_Scrollbar(45, 70, 295, 20, "Blue");
+    { Fl_Group* o = new Fl_Group(0, 70, 200, 20);
+      { Fl_Group* o = new Fl_Group(0, 70, 155, 20);
+        { scrbar_edit_color_blu = new Fl_Scrollbar(45, 70, 110, 20, "Blue");
           scrbar_edit_color_blu->type(1);
           scrbar_edit_color_blu->box(FL_BORDER_BOX);
           scrbar_edit_color_blu->maximum(255);
@@ -6968,7 +6980,7 @@ Fl_Double_Window* gts_gui::make_window() {
         o->end();
         Fl_Group::current()->resizable(o);
       } // Fl_Group* o
-      { valinp_edit_color_blu = new Fl_Value_Input(345, 70, 35, 20);
+      { valinp_edit_color_blu = new Fl_Value_Input(160, 70, 35, 20);
         valinp_edit_color_blu->box(FL_BORDER_BOX);
         valinp_edit_color_blu->maximum(255);
         valinp_edit_color_blu->step(1);

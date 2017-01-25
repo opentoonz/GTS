@@ -386,6 +386,7 @@ private:
   inline void cb_strinp_scan_save_number_format_i(Fl_Input*, void*);
   static void cb_strinp_scan_save_number_format(Fl_Input*, void*);
 public:
+  Fl_Output *output_scan_save_number_format;
   Fl_Choice *choice_scan_save_image_format;
 private:
   inline void cb_choice_scan_save_image_format_i(Fl_Choice*, void*);
@@ -459,6 +460,7 @@ private:
   inline void cb_strinp_trace_save_number_format_i(Fl_Input*, void*);
   static void cb_strinp_trace_save_number_format(Fl_Input*, void*);
 public:
+  Fl_Output *output_trace_save_number_format;
   Fl_Choice *choice_trace_save_image_format;
 private:
   inline void cb_choice_trace_save_image_format_i(Fl_Choice*, void*);
@@ -479,7 +481,7 @@ private:
   inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
   static void cb_norinp_fnum_insert(Fl_Input*, void*);
 public:
-  Fl_Text_Display *texdis_number_type;
+  Fl_Output *output_number_type;
   Fl_Output *norout_crnt_scan_level_of_fnum;
   Fl_Browser *selbro_fnum_list;
 private:

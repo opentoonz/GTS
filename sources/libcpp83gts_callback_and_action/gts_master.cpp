@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include <stdlib.h> /* getenv() */
 #include <FL/x.H> /* for fl_xid() */
 #include "pri.h"
@@ -143,24 +144,28 @@ int gts_master::exec( const char *comm )
 	}
 	for(int ii=0;ii<this->cl_trace_files.ext_open.size() ;++ii) {
 	       cl_gts_gui.choice_trace_open_image_format->add(
-			this->cl_trace_files.ext_open.get_fltk_filter(ii).c_str()
+			this->cl_trace_files.ext_open.str_from_num(ii).c_str()
 		);
 	}
 	for(int ii=0;ii<this->cl_trace_files.ext_save.size() ;++ii) {
 	       cl_gts_gui.choice_trace_save_image_format->add(
-			this->cl_trace_files.ext_save.get_fltk_filter(ii).c_str()
+			this->cl_trace_files.ext_save.str_from_num(ii).c_str()
 		);
 	}
 
 	/* 画像番号書式設定 */
-	cl_gts_gui.strinp_scan_save_number_format->value(".0000");
+/*	cl_gts_gui.strinp_scan_save_number_format->value(".0000");
 	cl_gts_gui.strinp_trace_open_number_format->value(".0000");
 	cl_gts_gui.strinp_trace_save_number_format->value(".0000");
+*/
+
+	cl_gts_gui.output_scan_save_number_format->value(".0000");
+	cl_gts_gui.output_trace_save_number_format->value(".0000");
 
 	/* install_setup.txtによるフォルダ設定 */
 	if (!this->cl_memo_install_setup.browser_directory_path.empty()) {
 		std::string dpath(
-			this->cl_memo_install_setup.browser_directory_path
+	     this->cl_memo_install_setup.browser_directory_path
 		);
 		cl_gts_gui.filinp_scan_save_dir_path->value( dpath.c_str());
 		cl_gts_gui.filinp_trace_open_dir_path->value(dpath.c_str());
@@ -172,16 +177,24 @@ int gts_master::exec( const char *comm )
 	/* install_setup.txtによる画像書式設定 */
 	if (!this->cl_memo_install_setup.image_file_format.empty()) {
 		const std::string fform(
-			this->cl_memo_install_setup.image_file_format
+	     this->cl_memo_install_setup.image_file_format
 		);
 		if (fform == "TIFF"){
 			cl_gts_gui.choice_scan_save_image_format->value(0);
 			cl_gts_gui.choice_trace_open_image_format->value(0);
 			cl_gts_gui.choice_trace_save_image_format->value(0);
+
+			cl_gts_gui.choice_scan_save_image_format->redraw();
+			cl_gts_gui.choice_trace_open_image_format->redraw();
+			cl_gts_gui.choice_trace_save_image_format->redraw();
 		} else if (fform == "TGA") {
 			cl_gts_gui.choice_scan_save_image_format->value(1);
 			cl_gts_gui.choice_trace_open_image_format->value(1);
 			cl_gts_gui.choice_trace_save_image_format->value(1);
+
+			cl_gts_gui.choice_scan_save_image_format->redraw();
+			cl_gts_gui.choice_trace_open_image_format->redraw();
+			cl_gts_gui.choice_trace_save_image_format->redraw();
 		}
 	}
 

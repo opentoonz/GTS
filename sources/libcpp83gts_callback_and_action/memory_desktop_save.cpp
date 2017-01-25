@@ -45,7 +45,7 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	//---------------------------------------
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_opengl_
+	, this->str_window_main_
 	, cl_gts_gui.window_opengl->visible()?ccp_show:ccp_hide
 	, cl_gts_gui.window_opengl->x()
 	, cl_gts_gui.window_opengl->y()
@@ -59,22 +59,6 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	, cl_gts_gui.window_next_scan->visible()?ccp_show:ccp_hide
 	, cl_gts_gui.window_next_scan->x()
 	, cl_gts_gui.window_next_scan->y()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_scan_and_save_
-	, cl_gts_gui.menite_scan_and_save->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_scan_and_save->x()
-	, cl_gts_gui.window_scan_and_save->y()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_files_
-	, cl_gts_gui.menite_trace_files->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_files->x()
-	, cl_gts_gui.window_trace_files->y()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -94,11 +78,23 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	);
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_parameters_
-	, cl_gts_gui.menite_trace_parameters->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_parameters->x()
-	, cl_gts_gui.window_trace_parameters->y()
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
+	, this->str_window_scan_and_save_
+	, cl_gts_gui.menite_scan_and_save->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_scan_and_save->x()
+	, cl_gts_gui.window_scan_and_save->y()
+	, cl_gts_gui.window_scan_and_save->w()
+	, cl_gts_gui.window_scan_and_save->h()
+	);
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
+	, this->str_window_trace_files_
+	, cl_gts_gui.menite_trace_files->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_files->x()
+	, cl_gts_gui.window_trace_files->y()
+	, cl_gts_gui.window_trace_files->w()
+	, cl_gts_gui.window_trace_files->h()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -109,6 +105,14 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	, cl_gts_gui.window_number->y()
 	, cl_gts_gui.window_number->w()
 	, cl_gts_gui.window_number->h()
+	);
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-28s %s %d %d\n"
+	, this->str_window_trace_parameters_
+	, cl_gts_gui.menite_trace_parameters->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_parameters->x()
+	, cl_gts_gui.window_trace_parameters->y()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -133,18 +137,20 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_output_color_
-	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_output_color->x()
-	, cl_gts_gui.window_trace_output_color->y()
+	, this->str_window_trace_input_color_
+	, cl_gts_gui.menite_trace_input_color->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_input_color->x()
+	, cl_gts_gui.window_trace_input_color->y()
 	);
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_edit_hab_min_max_
-	, cl_gts_gui.menite_trace_input_color->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_input_color->x()
-	, cl_gts_gui.window_trace_input_color->y()
+	, this->str_window_trace_output_color_
+	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_output_color->x()
+	, cl_gts_gui.window_trace_output_color->y()
+	, cl_gts_gui.window_trace_output_color->w()
+	, cl_gts_gui.window_trace_output_color->h()
 	);
 	if (i_ret < 0) { return NG; }
 

@@ -17,36 +17,34 @@ public:
 	,str_config_dir_(
 	    "config_dir" )
 
-	,str_window_opengl_(
+	,str_window_main_(
 	    "window_main" )
 	,str_window_next_scan_(
 	    "window_next_scan" )
-
-	,str_window_scan_and_save_(
-	    "window_level" )
-	,str_window_trace_files_(
-	    "window_trace_files" )
-	,str_window_config_load_(
-	    "window_config_load" )
-	,str_window_config_save_as_(
-	    "window_config_save_as" )
 
 	,str_window_crop_area_and_rot90_(
 	    "window_crop_area_and_rot90" )
 	,str_window_pixel_type_and_bright_(
 	    "window_pixel_type_and_bright" )
-	,str_window_trace_parameters_(
-	    "window_color_trace" )
+
+	,str_window_scan_and_save_(
+	    "window_scan_and_save" )
+	,str_window_trace_files_(
+	    "window_trace_files" )
+
 	,str_window_number_(
-	    "window_fnum_list" )
+	    "window_number" )
+
+	,str_window_trace_parameters_(
+	    "window_trace_parameters" )
 	,str_window_trace_batch_(
 	    "window_trace_batch" )
 	,str_window_trace_thickness_(
-	    "window_thickness" )
+	    "window_trace_thickness" )
+	,str_window_trace_input_color_(
+	    "window_trace_input_color" )
 	,str_window_trace_output_color_(
-	    "window_edit_color" )
-	,str_window_edit_hab_min_max_(
-	    "window_edit_hab_min_max" )
+	    "window_trace_output_color" )
 # ifndef _WIN32
 	,str_desktop_dir_( ".GTS" )
 	,str_sane_device_name_(
@@ -74,22 +72,22 @@ private:
 
 	const char* str_config_dir_;
 
-	const char* str_window_opengl_;
+	const char* str_window_main_;
 	const char* str_window_next_scan_;
-
-	const char* str_window_scan_and_save_;
-	const char* str_window_trace_files_;
-	const char* str_window_config_load_;
-	const char* str_window_config_save_as_;
 
 	const char* str_window_crop_area_and_rot90_;
 	const char* str_window_pixel_type_and_bright_;
-	const char* str_window_trace_parameters_;
+
+	const char* str_window_scan_and_save_;
+	const char* str_window_trace_files_;
+
 	const char* str_window_number_;
+
+	const char* str_window_trace_parameters_;
 	const char* str_window_trace_batch_;
 	const char* str_window_trace_thickness_;
+	const char* str_window_trace_input_color_;
 	const char* str_window_trace_output_color_;
-	const char* str_window_edit_hab_min_max_;
 # ifndef _WIN32
 	const char* str_desktop_dir_;
 	const char* str_sane_device_name_;

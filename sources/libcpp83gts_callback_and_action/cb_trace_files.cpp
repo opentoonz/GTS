@@ -1,4 +1,5 @@
 #include <cstdio> // std::rename(-)
+#include <iostream> // std::cout
 #include <sstream> // std::ostringstream
 #include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
 #include "pri.h"
@@ -422,11 +423,13 @@ void cb_trace_files::cb_browse_save_folder( void )
 {
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_save(
-		"Set Saving Folder(&File) for Trace"
+		"Set Saving Folder for Trace"
 		,cl_gts_gui.filinp_trace_save_dir_path->value()
+
 		,this->get_save_name_(
 		static_cast<int>(cl_gts_gui.valinp_trace_num_start->value())
-		)
+	 	) + " " /* 保存を聞いてこないよう存在しない名前にする */
+
 		,this->ext_save.get_native_filters()
 		,cl_gts_gui.choice_trace_save_image_format->value()
 	).at(0);
@@ -436,39 +439,12 @@ void cb_trace_files::cb_browse_save_folder( void )
 		return;
 	}
 
-	/* 必要な情報に変える */
-	std::string dpath , head , num , ext;
-	int number=-1;
-	std::vector<int> nums;
-	ids::path::level_from_files(
-		filepath ,dpath ,head ,num ,number ,ext ,nums
-	);
-
-	/* ファイルヘッド(Level名)が空だとなにもしない */
-	if (head.empty()) {
-		fl_alert("No Head of SaveFileName");
-		return;
-	}
-
-	/* 拡張子が対応した種類かどうか確認 */
-	if (!ext.empty()) {
-	 const int ext_num = this->ext_save.num_from_str( ext );
-	 if ( ext_num < 0 ) {
-		fl_alert("Bad Extension\"%s\" of SaveFileName",ext.c_str());
-		return;
-	 }
-	}
-
 	/* Save設定 */
+	std::string dpath ,fname;
+	ids::path::from_fpath_to_dpath_fname(
+		filepath ,dpath ,fname
+	);
 	cl_gts_gui.filinp_trace_save_dir_path->value(dpath.c_str());
-/*
-	cl_gts_gui.strinp_trace_save_file_head->value(head.c_str());
-	cl_gts_gui.strinp_trace_save_number_format->value(num.c_str());
-	if (!ext.empty()) {
-	 const int ext_num = this->ext_save.num_from_str( ext );
-	 cl_gts_gui.choice_trace_save_image_format->value(ext_num);
-	}
-*/
 }
 
 //----------------------------------------------------------------------
@@ -557,7 +533,9 @@ const std::string cb_trace_files::get_open_name_from_head_and_number_(
 	   number , cl_gts_gui.strinp_trace_open_number_format->value()
 	 );
 	}
-	filename += cl_gts_gui.choice_trace_open_image_format->text() ;
+	if (cl_gts_gui.choice_trace_open_image_format->text() != nullptr) {
+filename += cl_gts_gui.choice_trace_open_image_format->text();
+	}
 	return filename;
 }
 
@@ -595,10 +573,14 @@ const std::string cb_trace_files::get_save_name_( const int number )
 	}
 	if (0 <= number) {
 	 filename += ids::path::str_from_number(
-	   number , cl_gts_gui.strinp_trace_save_number_format->value()
+		number
+		//, cl_gts_gui.strinp_trace_save_number_format->value()
+		, cl_gts_gui.output_trace_save_number_format->value()
 	 );
 	}
-	filename += cl_gts_gui.choice_trace_save_image_format->text() ;
+	if (cl_gts_gui.choice_trace_save_image_format->text() != nullptr) {
+filename += cl_gts_gui.choice_trace_save_image_format->text();
+	}
 	return filename;
 }
 //----------------------------------------------------------------------

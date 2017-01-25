@@ -96,7 +96,7 @@ int memory_desktop::load( void ) {
 			cl_gts_master.cl_config.set_dir_path(
 				di.c_str() );
 		}
-		else if ((this->str_window_opengl_==key) && (6==ret)) {
+		else if ((this->str_window_main_==key) && (6==ret)) {
 		cl_gts_gui.window_opengl->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_next_scan_==key) && (4==ret)) {
@@ -106,6 +106,22 @@ int memory_desktop::load( void ) {
 		//cl_gts_gui.window_next_scan->show();
 			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
+		}
+		else if ((this->str_window_crop_area_and_rot90_==key)&&(4==ret)) {
+			if (di == "show") {
+		cl_gts_gui.menite_crop_area_and_rot90->set();
+		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_crop_area_and_rot90->show();
+			}
+		cl_gts_gui.window_crop_area_and_rot90->position(xx,yy);
+		}
+		else if ((this->str_window_pixel_type_and_bright_==key)&&(4==ret)) {
+			if (di == "show") {
+		cl_gts_gui.menite_pixel_type_and_bright->set();
+		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_pixel_type_and_bright->show();
+			}
+		cl_gts_gui.window_pixel_type_and_bright->position(xx,yy);
 		}
 		else if ((this->str_window_scan_and_save_==key)
 		&& ((4==ret) || (6==ret)/* for old format */)) {
@@ -125,21 +141,13 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_files->position(xx,yy);
 		}
-		else if ((this->str_window_crop_area_and_rot90_==key)&&(4==ret)) {
+		else if ((this->str_window_number_==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_crop_area_and_rot90->set();
+		cl_gts_gui.menite_number->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_crop_area_and_rot90->show();
+		cl_gts_gui.window_number->show();
 			}
-		cl_gts_gui.window_crop_area_and_rot90->position(xx,yy);
-		}
-		else if ((this->str_window_pixel_type_and_bright_==key)&&(4==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_pixel_type_and_bright->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_pixel_type_and_bright->show();
-			}
-		cl_gts_gui.window_pixel_type_and_bright->position(xx,yy);
+		cl_gts_gui.window_number->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_trace_parameters_==key) && (4==ret)) {
 			if (di == "show") {
@@ -148,14 +156,6 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_trace_parameters->show();
 			}
 		cl_gts_gui.window_trace_parameters->position(xx,yy);
-		}
-		else if ((this->str_window_number_==key) && (6==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_number->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_number->show();
-			}
-		cl_gts_gui.window_number->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_trace_batch_==key) && (6==ret)) {
 			if (di == "show") {
@@ -171,7 +171,16 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_thickness->show();
 			}
-		cl_gts_gui.window_trace_thickness->resize(xx,yy,ww,hh);
+		//cl_gts_gui.window_trace_thickness->resize(xx,yy,ww,hh);
+		cl_gts_gui.window_trace_thickness->position(xx,yy);
+		}
+		else if ((this->str_window_trace_input_color_==key) && (4==ret)) {
+			if (di == "show") {
+		cl_gts_gui.menite_trace_input_color->set();
+		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_trace_input_color->show();
+			}
+		cl_gts_gui.window_trace_input_color->position(xx,yy);
 		}
 		else if ((this->str_window_trace_output_color_==key) && (4==ret)) {
 			if (di == "show") {
@@ -180,14 +189,6 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_trace_output_color->show();
 			}
 		cl_gts_gui.window_trace_output_color->position(xx,yy);
-		}
-		else if ((this->str_window_edit_hab_min_max_==key) && (4==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_trace_input_color->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_input_color->show();
-			}
-		cl_gts_gui.window_trace_input_color->position(xx,yy);
 		}
 #ifndef _WIN32
 		else if ((this->str_sane_device_name_ == key) && (2 == ret)) {

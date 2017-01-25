@@ -483,23 +483,17 @@ bool cb_number::selected_next_frame(void)
 /* Scan/Trace別の動作 */
 void cb_number::set_type_to_scan(void)
 {
-	cl_gts_gui.texdis_number_type->insert_position(0);
-	cl_gts_gui.texdis_number_type->overstrike( this->str_type_scan_ );
+	cl_gts_gui.output_number_type->value( this->str_type_scan_ );
 }
 
 void cb_number::set_type_to_trace(void)
 {
-	cl_gts_gui.texdis_number_type->insert_position(0);
-	cl_gts_gui.texdis_number_type->overstrike( this->str_type_trace_ );
+	cl_gts_gui.output_number_type->value( this->str_type_trace_ );
 }
 
 const std::string cb_number::get_type_(void)
 {
-	Fl_Text_Buffer* buf = cl_gts_gui.texdis_number_type->buffer();
-	if (buf == nullptr || buf->text() == nullptr) {
-		return std::string();
-	}
-	return std::string(buf->text());
+	return cl_gts_gui.output_number_type->value();
 }
 /* numsをリスト表示しファイル存在なら'S'マーク付ける & 保存名表示 */
 void cb_number::append_checked_S_and_set_name_by_number_list_( const std::vector<int>& nums )
