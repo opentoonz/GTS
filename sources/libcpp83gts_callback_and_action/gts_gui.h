@@ -68,10 +68,10 @@ private:
   inline void cb_menite_scan_and_save_i(Fl_Menu_*, void*);
   static void cb_menite_scan_and_save(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_crop_area_and_rot90;
+  static Fl_Menu_Item *menite_area_and_rot90;
 private:
-  inline void cb_menite_crop_area_and_rot90_i(Fl_Menu_*, void*);
-  static void cb_menite_crop_area_and_rot90(Fl_Menu_*, void*);
+  inline void cb_menite_area_and_rot90_i(Fl_Menu_*, void*);
+  static void cb_menite_area_and_rot90(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_pixel_type_and_bright;
 private:
@@ -200,10 +200,10 @@ public:
   Fl_Output *norout_crnt_scan_level;
   Fl_Output *norout_crnt_scan_number;
   Fl_Output *norout_next_scan_number;
-  Fl_Double_Window *window_crop_area_and_rot90;
+  Fl_Double_Window *window_area_and_rot90;
 private:
-  inline void cb_window_crop_area_and_rot90_i(Fl_Double_Window*, void*);
-  static void cb_window_crop_area_and_rot90(Fl_Double_Window*, void*);
+  inline void cb_window_area_and_rot90_i(Fl_Double_Window*, void*);
+  static void cb_window_area_and_rot90(Fl_Double_Window*, void*);
   inline void cb_Crop1_i(Fl_Button*, void*);
   static void cb_Crop1(Fl_Button*, void*);
 public:

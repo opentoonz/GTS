@@ -128,8 +128,20 @@ int gts_master::exec( const char *comm )
 	/* color trace enhancement */
 	this->cl_color_trace_enhancement.src_init_histogram_window();
 
-	/* 回転値(システム設定値)をメモリする */
+	/* 回転値(システム設定値) */
+	if (!this->cl_memo_install_setup.area_rot90.empty()) {
+		const int idx = cl_gts_gui.choice_rot90->find_index(
+			this->cl_memo_install_setup.area_rot90.c_str()
+		);
+		if (0 <= idx) {
+			cl_gts_gui.choice_rot90->value(idx);
+		}
+	}
 	this->_i_rotate_per_90 = cl_gts_gui.choice_rot90->value();
+
+	/* Pixel Type */
+	cl_gts_gui.choice_pixel_type->value(2); // Initial is RGB
+	cl_gts_master.cb_choice_pixel_type();
 
 	/* short cut key設定 */
 	this->cl_memo_short_cut_key.set_shortcut();

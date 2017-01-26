@@ -33,6 +33,9 @@ void memory_install_setup::load( const std::string& exe_file_path )
 		if (words.at(0) == "image_file_format") {
 			this->image_file_format = words.at(1);
 		} else
+		if (words.at(0) == "area_rot90") {
+			this->area_rot90 = words.at(1);
+		} else
 		if (words.at(0) == "short_cut_key_start_scan") {
 			// start_scan	Enter(Default)
  cl_gts_master.cl_memo_short_cut_key.setup_start_scan(words.at(1).c_str());

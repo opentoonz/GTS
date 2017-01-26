@@ -63,10 +63,10 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_crop_area_and_rot90_
-	, cl_gts_gui.menite_crop_area_and_rot90->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_crop_area_and_rot90->x()
-	, cl_gts_gui.window_crop_area_and_rot90->y()
+	, this->str_window_area_and_rot90
+	, cl_gts_gui.menite_area_and_rot90->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_area_and_rot90->x()
+	, cl_gts_gui.window_area_and_rot90->y()
 	);
 	if (i_ret < 0) { return NG; }
 

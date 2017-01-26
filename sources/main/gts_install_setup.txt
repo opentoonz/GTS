@@ -4,6 +4,9 @@ browser_directory_path "C:\"
 # TIFF/TGA
 image_file_format	TGA
 #
+# Area Rot90 is CW_-90/CW_0/CW_90/CW_180
+area_rot90		CW_0
+#
 # Short Cut Key for "Next Scan" (Space,"",Enter,Esc only)
 short_cut_key_start_scan	Enter
 short_cut_key_rescan		Space

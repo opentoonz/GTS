@@ -30,7 +30,7 @@ public:
 
 	void select_all( void );	/* 全て選択状態にする */
 	void remove_all( void );	/* 選択に関わらずすべて削除 */
-	void remove_selected( void );	/* 選択状態の項目をすべて削除 */
+	void cb_remove_selected( void );/* 選択状態の項目をすべて削除 */
 
 	//--------------------------------------------------
 
@@ -81,6 +81,8 @@ public:
 	/* Scan動作なのかTrace動作なのかを示す仕組み */
 	void set_type_to_scan(void);
 	void set_type_to_trace(void);
+	bool is_scan(void);
+	bool is_trace(void);
 
 	void reset_by_number_list( const std::vector<int>& nums );
 	void reset_from_start_to_end(const int num_start,const int num_end);
@@ -111,7 +113,6 @@ private:
 		,const bool forward_sw
 	);
 
-	const std::string get_type_(void);
 	void append_checked_S_and_set_name_by_number_list_(
 		const std::vector<int>& nums
 	);
@@ -119,6 +120,7 @@ private:
 		const int num_start ,const int num_end
 	);
 	const std::string get_save_head_( void );
+	const std::string get_type_(void);
 };
 
 #endif /* !cb_number_h */

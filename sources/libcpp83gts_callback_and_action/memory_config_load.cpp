@@ -563,6 +563,7 @@ bool memory_config::load_trace_parameters_( std::vector< std::string >& words )
 	 else {
 		return false; // not defined
 	 }
+	 return true;
 	}
 
 	/* ここ以後は2項目のparameterのみ見る */

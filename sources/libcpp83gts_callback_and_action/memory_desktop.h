@@ -22,8 +22,8 @@ public:
 	,str_window_next_scan_(
 	    "window_next_scan" )
 
-	,str_window_crop_area_and_rot90_(
-	    "window_crop_area_and_rot90" )
+	,str_window_area_and_rot90(
+	    "window_area_and_rot90" )
 	,str_window_pixel_type_and_bright_(
 	    "window_pixel_type_and_bright" )
 
@@ -75,7 +75,7 @@ private:
 	const char* str_window_main_;
 	const char* str_window_next_scan_;
 
-	const char* str_window_crop_area_and_rot90_;
+	const char* str_window_area_and_rot90;
 	const char* str_window_pixel_type_and_bright_;
 
 	const char* str_window_scan_and_save_;

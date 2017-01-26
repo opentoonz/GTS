@@ -1,6 +1,7 @@
-#include <cstdio> // std::rename(-)
-#include <iostream> // std::cout
-#include <sstream> // std::ostringstream
+#include <cstdio>	// std::rename(-)
+#include <iostream>	// std::cout
+#include <sstream>	// std::ostringstream
+#include <iomanip>	// std::setfill(-) ,std::setw(-)
 #include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
 #include "pri.h"
 #include "ptbl_returncode.h"
@@ -387,7 +388,7 @@ void cb_trace_files::cb_browse_open_file( void )
 	/* ファイルパスから生成した部品を、GUI、その他セット */
 	this->set_gui_for_open( dpath ,head ,num ,ext ,nums );
 
-	/* 11 画像読込表示 */
+	/* 画像読込表示 */
 	cl_gts_master.cb_read_and_trace_and_preview();
 }
 void cb_trace_files::set_gui_for_open(
@@ -428,7 +429,7 @@ void cb_trace_files::cb_browse_save_folder( void )
 
 		,this->get_save_name_(
 		static_cast<int>(cl_gts_gui.valinp_trace_num_start->value())
-	 	) + " " /* 保存を聞いてこないよう存在しない名前にする */
+	 	) + "_" /* 保存を聞いてこないよう存在しない名前にする */
 
 		,this->ext_save.get_native_filters()
 		,cl_gts_gui.choice_trace_save_image_format->value()
@@ -455,13 +456,20 @@ void cb_trace_files::cb_set_number( void )
 	cl_gts_master.cl_number.set_type_to_trace();
 
 	/* 必要な情報に変える */
-	std::string filepath( this->get_save_path( 0 ) );
+	std::string filepath( this->get_open_path( 0 ) );
 	std::string dpath , head , num , ext;
 	int number=-1;
 	std::vector<int> nums;
 	ids::path::level_from_files(
 		filepath ,dpath ,head ,num ,number ,ext ,nums
 	);
+
+	/* Trace Filesウインドウ Number設定 */
+	cl_gts_gui.valinp_trace_num_start->value( nums.front() );
+	cl_gts_gui.valinp_trace_num_end->value( nums.back() );
+
+	/* Trace Filesウインドウ 即表示 */
+	cl_gts_gui.window_trace_files->flush();
 
 	/* Numberウインドウ Listを操作可能にする */
 	cl_gts_gui.selbro_fnum_list->activate();
@@ -474,34 +482,55 @@ void cb_trace_files::cb_set_number( void )
 /* 保存する連番ファイルが存在するならファイル名の背景を黄色表示 */
 void cb_trace_files::cb_check_existing_saved_file(void)
 {
-	bool overwrite_sw = this->is_exist_save_files_();
-
-	if (overwrite_sw) {	/* 上書き */
-		Fl_Color col = FL_YELLOW;
-		cl_gts_gui.strinp_trace_save_file_head->color(col);
-		cl_gts_gui.strinp_trace_save_file_head->redraw();
-	} else {	/* 新規ファイル */
-		Fl_Color col = FL_WHITE;
-		cl_gts_gui.strinp_trace_save_file_head->color(col);
-		cl_gts_gui.strinp_trace_save_file_head->redraw();
+	if ( !cl_gts_master.cl_number.is_trace() ) {
+		return;
 	}
+
+	Fl_Color col = 0;
+	if ( this->is_exist_save_files_() ) {	/* 上書き */
+		col = FL_YELLOW;
+	} else {	/* 新規ファイル */
+		col = FL_WHITE;
+	}
+	cl_gts_gui.filinp_trace_save_dir_path->color(col);
+	cl_gts_gui.filinp_trace_save_dir_path->redraw();
+	cl_gts_gui.strinp_trace_save_file_head->color(col);
+	cl_gts_gui.strinp_trace_save_file_head->redraw();
+	//cl_gts_gui.strinp_trace_save_number_format->color(col);
+	//cl_gts_gui.strinp_trace_save_number_format->redraw();
+	cl_gts_gui.output_trace_save_number_format->color(col);
+	cl_gts_gui.output_trace_save_number_format->redraw();
+	cl_gts_gui.choice_trace_save_image_format->color(col);
+	cl_gts_gui.choice_trace_save_image_format->redraw();
 }
 bool cb_trace_files::is_exist_save_files_(void)
 {
 /* Numberの非選択含めた番号ファイルで一つでも存在するならtrueを返す */
+	bool sw=false;
 	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
-		std::string filepath( this->get_save_path(
-			std::stoi( /* リストの項目に表示した番号 */
-				cl_gts_gui.selbro_fnum_list->text(ii)
-			)
-		) );
+		/* リストの項目に表示した番号 */
+		const int file_num = std::stoi(
+			cl_gts_gui.selbro_fnum_list->text(ii)
+		);
+		/* 番号によるファイルパス */
+		std::string filepath( this->get_save_path( file_num ) );
+		/* ファイルの存在の表示チェック */
 		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
 			filepath.c_str()
 		))) {
-			return true;
+			sw = true;
+
+	std::ostringstream ost;
+	ost << std::setfill('0') << std::setw(4) << file_num << " S";
+	cl_gts_gui.selbro_fnum_list->text( ii ,ost.str().c_str() );
+		}
+		else {
+	std::ostringstream ost;
+	ost << std::setfill('0') << std::setw(4) << file_num;
+	cl_gts_gui.selbro_fnum_list->text( ii ,ost.str().c_str() );
 		}
 	}
-	return false;
+	return sw;
 }
 
 //----------------------------------------------------------------------

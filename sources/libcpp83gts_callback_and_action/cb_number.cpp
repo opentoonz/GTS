@@ -130,6 +130,10 @@ void cb_number::cb_set_list_from_string( void )
 
 		cl_gts_gui.selbro_fnum_list->middleline( ii );
 	}
+
+	/* 新たにセットした数値を元に存在チェック表示 */
+	cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
+	cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
 
 //------------------------------------------------------------
@@ -158,13 +162,17 @@ void cb_number::remove_all( void )
 }
 
 /* 選択状態の項目をすべて削除 */
-void cb_number::remove_selected( void )
+void cb_number::cb_remove_selected( void )
 {
 	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size();) {
 		if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
 			cl_gts_gui.selbro_fnum_list->remove(ii);
 		} else { ++ii; }
 	}
+
+	/* 新たにセットした数値を元に存在チェック表示 */
+	cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
+	cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
 
 /* 選択状態を外す */
@@ -489,6 +497,14 @@ void cb_number::set_type_to_scan(void)
 void cb_number::set_type_to_trace(void)
 {
 	cl_gts_gui.output_number_type->value( this->str_type_trace_ );
+}
+bool cb_number::is_scan(void)
+{
+	return this->get_type_() == this->str_type_scan_;
+}
+bool cb_number::is_trace(void)
+{
+	return this->get_type_() == this->str_type_trace_;
 }
 
 const std::string cb_number::get_type_(void)

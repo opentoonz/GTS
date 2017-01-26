@@ -113,13 +113,13 @@ cl_gts_master.cb_scan_full_area_and_crop();}
 }}
             xywh {10 10 100 20} type Toggle shortcut 0xffbf
           }
-          MenuItem menite_crop_area_and_rot90 {
+          MenuItem menite_area_and_rot90 {
             label {Area and Rot90...}
-            callback {if (cl_gts_gui.menite_crop_area_and_rot90->value()) {
+            callback {if (cl_gts_gui.menite_area_and_rot90->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_crop_area_and_rot90->show();
+    cl_gts_gui.window_area_and_rot90->show();
 } else {
-    cl_gts_gui.window_crop_area_and_rot90->hide();
+    cl_gts_gui.window_area_and_rot90->hide();
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc0
           }
@@ -415,10 +415,10 @@ fl_message( ost.str().c_str() );}
         xywh {180 40 145 60} align 6 textsize 60
       }
     }
-    Fl_Window window_crop_area_and_rot90 {
+    Fl_Window window_area_and_rot90 {
       label {Area and Rot90}
-      callback {cl_gts_gui.window_crop_area_and_rot90->hide();
-cl_gts_gui.menite_crop_area_and_rot90->clear();}
+      callback {cl_gts_gui.window_area_and_rot90->hide();
+cl_gts_gui.menite_area_and_rot90->clear();}
       xywh {50 50 200 265} type Double non_modal visible
     } {
       Fl_Button {} {
@@ -530,7 +530,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
           Fl_Value_Input valinp_area_reso {
             label DPI
             callback {cl_gts_master.cb_scnr_area_reso();}
-            xywh {75 200 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 50
+            xywh {75 200 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 144
           }
         }
       }
@@ -838,7 +838,9 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
           Fl_Input strinp_scan_save_file_head {
             label File
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
-norout_crnt_scan_level_of_fnum->value( o->value() );}
+if (cl_gts_master.cl_number.is_scan()) {
+	norout_crnt_scan_level_of_fnum->value( o->value() );
+}}
             xywh {50 175 50 25} box BORDER_BOX when 1 resizable
           }
           Fl_Input strinp_scan_save_number_format {
@@ -915,7 +917,8 @@ norout_crnt_scan_level_of_fnum->value( o->value() );}
           }
           Fl_Button {} {
             label {Set Number}
-            callback {cl_gts_master.cl_scan_and_save.cb_set_number();}
+            callback {cl_gts_master.cl_scan_and_save.cb_set_number();
+cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             xywh {110 290 85 25}
           }
         }
@@ -999,36 +1002,37 @@ cl_gts_gui.menite_trace_files->clear();}
         xywh {1 190 198 65} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
-          xywh {1 195 198 25}
-        } {
-          Fl_Box {} {
-            xywh {1 195 49 25}
-          }
-          Fl_Value_Input valinp_trace_num_start {
-            label Start
-            xywh {50 195 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-          }
-          Fl_Box {} {
-            xywh {100 195 35 25}
-          }
-          Fl_Value_Input valinp_trace_num_end {
-            label End
-            xywh {135 195 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
-          }
-          Fl_Box {} {
-            xywh {185 195 14 25} resizable
-          }
-        }
-        Fl_Group {} {open
           xywh {1 225 198 25}
         } {
           Fl_Box {} {
-            xywh {1 225 109 25} resizable
+            xywh {1 225 49 25}
+          }
+          Fl_Value_Input valinp_trace_num_start {
+            label Start
+            xywh {50 225 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+          }
+          Fl_Box {} {
+            xywh {100 225 35 25}
+          }
+          Fl_Value_Input valinp_trace_num_end {
+            label End
+            xywh {135 225 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+          }
+          Fl_Box {} {
+            xywh {185 225 14 25} resizable
+          }
+        }
+        Fl_Group {} {open
+          xywh {1 195 198 25}
+        } {
+          Fl_Box {} {
+            xywh {1 195 109 25} resizable
           }
           Fl_Button {} {
             label {Set Number}
-            callback {cl_gts_master.cl_trace_files.cb_set_number();}
-            xywh {110 225 85 25}
+            callback {cl_gts_master.cl_trace_files.cb_set_number();
+cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
+            xywh {110 195 85 25}
           }
         }
       }
@@ -1108,7 +1112,9 @@ cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
           Fl_Input strinp_trace_save_file_head {
             label File
             callback {cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
-norout_crnt_scan_level_of_fnum->value( o->value() );}
+if (cl_gts_master.cl_number.is_trace()) {
+	norout_crnt_scan_level_of_fnum->value( o->value() );
+}}
             xywh {50 375 50 25} box BORDER_BOX when 1 resizable
           }
           Fl_Input strinp_trace_save_number_format {
@@ -1145,7 +1151,7 @@ cl_gts_gui.menite_number->clear();}
           }
           MenuItem {} {
             label Delete
-            callback {cl_gts_master.cl_number.remove_selected();}
+            callback {cl_gts_master.cl_number.cb_remove_selected();}
             xywh {0 0 116 20} shortcut 0x40078
           }
         }

@@ -94,14 +94,20 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 	}
 	/* Files(tif,tga) */
 	else {
-		const int ext_num =
-		 cl_gts_master.cl_trace_files.ext_open.num_from_str(ext);
-		if (!(head.empty()) && 0 <= ext_num && !(nums.empty())) {
-			cl_gts_master.cl_trace_files.set_gui_for_open(
-				dpath ,head ,num_form ,ext ,nums
-			);
-			cl_gts_master.cb_read_and_trace_and_preview();
-		}
+	 const int ext_num =
+		cl_gts_master.cl_trace_files.ext_open.num_from_str(ext);
+	 if (!(head.empty()) && 0 <= ext_num && !(nums.empty())) {
+		/* Scanの番号であることを表示して示す */
+		cl_gts_master.cl_number.set_type_to_trace();
+
+		/* ファイルパスから生成した部品を、GUI、その他セット */
+		cl_gts_master.cl_trace_files.set_gui_for_open(
+			dpath ,head ,num_form ,ext ,nums
+		);
+
+		/* 画像読込表示 */
+		cl_gts_master.cb_read_and_trace_and_preview();
+	 }
 	}
 	return std::string();
 }
