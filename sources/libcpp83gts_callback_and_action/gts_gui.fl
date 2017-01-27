@@ -839,7 +839,7 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             label File
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_scan()) {
-	norout_crnt_scan_level_of_fnum->value( o->value() );
+	output_number_file_head_name->value( o->value() );
 }}
             xywh {50 175 50 25} box BORDER_BOX when 1 resizable
           }
@@ -1113,7 +1113,7 @@ cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
             label File
             callback {cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_trace()) {
-	norout_crnt_scan_level_of_fnum->value( o->value() );
+	output_number_file_head_name->value( o->value() );
 }}
             xywh {50 375 50 25} box BORDER_BOX when 1 resizable
           }
@@ -1156,7 +1156,7 @@ cl_gts_gui.menite_number->clear();}
           }
         }
       }
-      Fl_Input norinp_fnum_insert {
+      Fl_Input norinp_number_input {
         callback {cl_gts_master.cl_number.cb_set_list_from_string();}
         xywh {0 25 116 25} box BORDER_BOX align 5 when 8
       }
@@ -1166,15 +1166,15 @@ cl_gts_gui.menite_number->clear();}
         Fl_Box {} {
           xywh {0 50 50 25}
         }
-        Fl_Output output_number_type {
+        Fl_Output output_number_action_type {
           label Action
           xywh {50 50 66 25} resizable
         }
       }
-      Fl_Output norout_crnt_scan_level_of_fnum {
+      Fl_Output output_number_file_head_name {
         xywh {0 75 116 25}
       }
-      Fl_Browser selbro_fnum_list {
+      Fl_Browser selbro_number_list {
         callback {cl_gts_master.cb_read_and_trace_and_preview();}
         xywh {0 100 116 250} type Multi resizable
       }

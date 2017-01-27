@@ -476,17 +476,17 @@ private:
   inline void cb_Delete_i(Fl_Menu_*, void*);
   static void cb_Delete(Fl_Menu_*, void*);
 public:
-  Fl_Input *norinp_fnum_insert;
+  Fl_Input *norinp_number_input;
 private:
-  inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
-  static void cb_norinp_fnum_insert(Fl_Input*, void*);
+  inline void cb_norinp_number_input_i(Fl_Input*, void*);
+  static void cb_norinp_number_input(Fl_Input*, void*);
 public:
-  Fl_Output *output_number_type;
-  Fl_Output *norout_crnt_scan_level_of_fnum;
-  Fl_Browser *selbro_fnum_list;
+  Fl_Output *output_number_action_type;
+  Fl_Output *output_number_file_head_name;
+  Fl_Browser *selbro_number_list;
 private:
-  inline void cb_selbro_fnum_list_i(Fl_Browser*, void*);
-  static void cb_selbro_fnum_list(Fl_Browser*, void*);
+  inline void cb_selbro_number_list_i(Fl_Browser*, void*);
+  static void cb_selbro_number_list(Fl_Browser*, void*);
 public:
   Fl_Double_Window *window_trace_parameters;
 private:

@@ -17,6 +17,11 @@
 /* スキャン＆保存実行 */
 void cb_scan_and_save::cb_start( void )
 {
+	if ( !cl_gts_master.cl_number.is_scan() ) {
+		fl_alert("Set Number for Scan");
+		return;
+	}
+
 	/* 先頭を得る */
 	cl_gts_master.cl_number.counter_start(
 		cl_gts_gui.choice_scan_num_continue_type->value()
@@ -126,7 +131,7 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	}
 
 	/* 03 フレーム番号(crnt_list_num)を表示するようリストをスクロール */
-	cl_gts_gui.selbro_fnum_list->middleline(crnt_list_num);
+	cl_gts_gui.selbro_number_list->middleline(crnt_list_num);
 
 	/* 04 スキャンを実行 */
 	iip_canvas* clp_scan = cl_gts_master.iipg_scan();
@@ -276,7 +281,10 @@ void cb_scan_and_save::cb_check_existing_saved_file(void)
 	if ( !cl_gts_master.cl_number.is_scan() ) {
 		return;
 	}
-
+	this->check_existing_saved_file();
+}
+void cb_scan_and_save::check_existing_saved_file(void)
+{
 	Fl_Color col = 0;
 	if ( this->is_exist_save_files_() ) {	/* 上書き */
 		col = FL_YELLOW;
@@ -298,10 +306,10 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 {
 /* Numberの非選択含めた番号ファイルで一つでも存在するならtrueを返す */
 	bool sw=false;
-	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+	for (int ii = 1; ii <= cl_gts_gui.selbro_number_list->size(); ++ii) {
 		/* リストの項目に表示した番号 */
 		const int file_num = std::stoi(
-			cl_gts_gui.selbro_fnum_list->text(ii)
+			cl_gts_gui.selbro_number_list->text(ii)
 		);
 		/* 番号によるファイルパス */
 		std::string filepath( this->get_save_path( file_num ) );
@@ -313,12 +321,12 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 
 	std::ostringstream ost;
 	ost << std::setfill('0') << std::setw(4) << file_num << " S";
-	cl_gts_gui.selbro_fnum_list->text( ii ,ost.str().c_str() );
+	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
 		}
 		else {
 	std::ostringstream ost;
 	ost << std::setfill('0') << std::setw(4) << file_num;
-	cl_gts_gui.selbro_fnum_list->text( ii ,ost.str().c_str() );
+	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
 		}
 	}
 	return sw;
@@ -372,12 +380,12 @@ void cb_scan_and_save::cb_change_num_continue_type(const std::string& type)
 	if (std::string("End") == type) {
 		cl_gts_gui.valinp_scan_num_end->show();
 		cl_gts_gui.choice_scan_num_endless_direction->hide();
-		cl_gts_gui.selbro_fnum_list->activate();
+		cl_gts_gui.selbro_number_list->activate();
 	} else
 	if (std::string("Endless") == type) {
 		cl_gts_gui.valinp_scan_num_end->hide();
 		cl_gts_gui.choice_scan_num_endless_direction->show();
-		cl_gts_gui.selbro_fnum_list->deactivate();
+		cl_gts_gui.selbro_number_list->deactivate();
 	}
 }
 

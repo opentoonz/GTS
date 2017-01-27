@@ -16,7 +16,8 @@ public:
 	void cb_rescan( void );	/* 同じ番号で再処理 */
 	void cb_browse_save_folder( void );
 	void cb_set_number( void );
-	void cb_check_existing_saved_file( void );
+	void cb_check_existing_saved_file( void ); /* Scan typeの時動作 */
+	void check_existing_saved_file(void);
 
 	//----------
 

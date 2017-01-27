@@ -354,11 +354,14 @@ void memory_config::save_trace_batch_( std::ofstream& ofs )
 }
 void memory_config::save_number_( std::ofstream& ofs )
 {
+	save_stri_( this->str_number_action_type_
+	    ,cl_gts_gui.output_number_action_type->value() ,ofs );
+
 	/* リストを全てサーチ */
-	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+	for (int ii = 1; ii <= cl_gts_gui.selbro_number_list->size(); ++ii) {
 		ofs	<< this->str_file_number_frame_
-			<< ' ' << cl_gts_gui.selbro_fnum_list->text(ii);
-		if ( cl_gts_gui.selbro_fnum_list->selected(ii) ) {
+			<< ' ' << cl_gts_gui.selbro_number_list->text(ii);
+		if ( cl_gts_gui.selbro_number_list->selected(ii) ) {
 		 ofs	<< ' ' << this->str_file_number_selected_;
 		}
 		ofs	<< '\n';
@@ -401,7 +404,7 @@ int memory_config::save( const std::string& file_path )
  }
  catch (...) {
 	std::ostringstream ost;
-	ost << "Error(other) in saving.";/* ユーザーに知らせる */
+	ost << "Error(other) in saving.";
 	std::cerr << ost.str();
 	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
 	return NG;

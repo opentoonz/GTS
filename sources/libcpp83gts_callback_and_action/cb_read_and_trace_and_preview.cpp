@@ -24,7 +24,7 @@ void gts_master::cb_read_and_trace_and_preview( void )
 		this->cl_number.get_crnt_file_num();
 
 	/* 選択の先頭を中心位置にスクロール */
-	cl_gts_gui.selbro_fnum_list->middleline(
+	cl_gts_gui.selbro_number_list->middleline(
 		this->cl_number.get_crnt_list_num()
 	);
 

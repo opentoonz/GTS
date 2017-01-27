@@ -160,6 +160,8 @@ public:
 
 	,str_color_trace_real_time_(
 	    "color_trace_real_time")
+	,str_number_action_type_(
+	    "number_action_type")
 	,str_file_number_frame_(
 			"frame")
 	,str_file_number_selected_(
@@ -384,6 +386,7 @@ private:
 	const char* str_rgb_gamma_;
 
 	const char* str_color_trace_real_time_;
+	const char* str_number_action_type_;
 	const char* str_file_number_frame_;
 	const char* str_file_number_selected_;
 
@@ -487,10 +490,8 @@ private:
 	bool load_crop_area_and_rot90_( std::vector< std::string >& words );
 	bool load_pixel_type_and_bright_(std::vector< std::string >& words);
 	bool load_trace_parameters_( std::vector< std::string >& words );
-	bool load_trace_batch_( std::vector< std::string >& words
-		,bool& delete_trace_batch_list_sw);
-	bool load_number_( std::vector< std::string >& words
-		,bool& delete_number_list_sw);
+	bool load_trace_batch_( std::vector< std::string >& words );
+	bool load_number_( std::vector< std::string >& words );
 };
 
 #endif /* !memory_config_h */

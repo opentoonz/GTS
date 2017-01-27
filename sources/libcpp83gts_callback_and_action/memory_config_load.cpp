@@ -77,8 +77,17 @@ void memory_config::load_ifs_(
 	,bool& scan_num_continue_type_sw
 )
 {
-	bool delete_number_list_sw = true;
-	bool delete_trace_batch_list_sw = true;
+	if ( this->load_number_sw_ ) {
+		/* リストをすべて削除 */
+		cl_gts_gui.selbro_number_list->clear();
+		cl_gts_gui.selbro_number_list->redraw();
+	}
+
+	if ( this->load_trace_batch_sw_ ) {
+		/* リストをすべて削除 */
+		cl_gts_gui.selbro_trace_batch_config_list->clear();
+	}
+
 	std::string str;
 	for (int ii = 1 ;std::getline(ifs,str) ;++ii) {/* 一行読む */
 		if (str.empty()) { continue; }/* 空行は無視 */
@@ -111,13 +120,11 @@ void memory_config::load_ifs_(
 			continue;
 		}
 		if (	this->load_trace_batch_sw_
-		&&	this->load_trace_batch_(words
-		,delete_trace_batch_list_sw)) {
+		&&	this->load_trace_batch_(words)) {
 			continue;
 		}
 		if (	this->load_number_sw_
-		&&	this->load_number_(words
-		,delete_number_list_sw)) {
+		&&	this->load_number_(words)) {
 			continue;
 		}
 		if (	this->load_trace_parameters_sw_
@@ -419,7 +426,6 @@ bool memory_config::load_pixel_type_and_bright_(std::vector< std::string >& word
 
 bool memory_config::load_trace_batch_(
 	std::vector< std::string >& words
-	,bool& delete_trace_batch_list_sw
 )
 {
 	if (words.size() != 2) {
@@ -430,20 +436,9 @@ bool memory_config::load_trace_batch_(
 	const std::string& va = words.at(1);
 
 	if (this->str_trace_batch_dir_ == ke) {
-	  cl_gts_master.cl_trace_batch.set_dir_path( va );
+		cl_gts_master.cl_trace_batch.set_dir_path( va );
 	}
 	else if (this->str_trace_batch_list_ == ke) {
-		/* ファイル番号リストの一番始めにやること */
-		if (delete_trace_batch_list_sw) {
-			/* ファイル番号リストの存在の有無 */
-			delete_trace_batch_list_sw = false;
-			/* 以前のリストをすべて削除 */
-			while (0 <
-		cl_gts_gui.selbro_trace_batch_config_list->size()) {
-		cl_gts_gui.selbro_trace_batch_config_list->remove(1);
-			}
-		}
-
 		/* リストの最後に追加する */
 		cl_gts_gui.selbro_trace_batch_config_list->insert(
 		 cl_gts_gui.selbro_trace_batch_config_list->size()+1,
@@ -458,7 +453,6 @@ bool memory_config::load_trace_batch_(
 
 bool memory_config::load_number_(
 	std::vector< std::string >& words
-	,bool& delete_number_list_sw
 )
 {
 	if ( words.size() < 2 || 4 < words.size() ) {
@@ -466,14 +460,6 @@ bool memory_config::load_number_(
 	}
 
 	if ( words.at(0) == this->str_file_number_frame_ ) {
-		/* ファイル番号リストの一番始めにやること */
-		if (delete_number_list_sw) {
-			/* ファイル番号リストの存在の有無 */
-			delete_number_list_sw = false;
-			/* 以前のリストをすべて削除 */
-			cl_gts_master.cl_number.remove_all();
-		}
-
 		/* 実際の画像ファイルの有無を調べて
 		リストの最後に追加する */
 		// use C++11,throw exception then error
@@ -498,9 +484,12 @@ bool memory_config::load_number_(
 			&&(words.at(3) == this->str_file_number_selected_)
 		 )
 		) {
-			cl_gts_gui.selbro_fnum_list->select(
-			cl_gts_gui.selbro_fnum_list->size());
+			cl_gts_gui.selbro_number_list->select(
+			cl_gts_gui.selbro_number_list->size());
 		}
+	}
+	else if ( this->str_number_action_type_ == words.at(0) ) {
+	  cl_gts_gui.output_number_action_type->value(words.at(1).c_str());
 	}
 	else {
 		return false; // not defined
@@ -956,15 +945,26 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	cl_gts_master.cl_color_trace_thickness.cb_enh_05();
 	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 
-	/* frame number listにlevel名を表示する */
-	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
-	 cl_gts_gui.strinp_scan_save_file_head->value()
-	);
-
-	/* LevelのEnd/Endless指定がない時はStart...End指定にする */
+	/* Scan and SaveのEnd/Endless指定がない時はStart...End指定にする */
 	if (!scan_num_continue_type_sw) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
 	 	"End" );
+	}
+
+	/* 保存の確認表示 */
+	cl_gts_master.cl_scan_and_save.check_existing_saved_file();
+	cl_gts_master.cl_trace_files.check_existing_saved_file();
+
+	/* numberウインドウにaction名とnumber_list等を表示する */
+	if (	cl_gts_master.cl_number.is_scan()) {
+		cl_gts_gui.output_number_file_head_name->value(
+		 cl_gts_gui.strinp_scan_save_file_head->value()
+		);
+	} else
+	if (	cl_gts_master.cl_number.is_trace()) {
+		cl_gts_gui.output_number_file_head_name->value(
+		 cl_gts_gui.strinp_trace_save_file_head->value()
+		);
 	}
 
 	/* 画面は空白表示する指定(データは残っている) */

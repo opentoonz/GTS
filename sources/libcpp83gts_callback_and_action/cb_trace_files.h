@@ -28,7 +28,8 @@ public:
 
 	void cb_set_number( void );
 
-	void cb_check_existing_saved_file(void);
+	void cb_check_existing_saved_file(void); /* Trace Typeの時動作 */
+	void check_existing_saved_file(void);
 
 	/* 開くファイル拡張子設定 */
 	void cb_choice_open_image_format( const std::string& type );

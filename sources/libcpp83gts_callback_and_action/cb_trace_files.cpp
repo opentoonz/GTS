@@ -20,13 +20,13 @@ int cb_trace_files::read_and_save_crnt_(
 )
 {
 	/* 表示：リストを対象項目が見える場所にスクロール */
-	cl_gts_gui.selbro_fnum_list->middleline(list_num);
+	cl_gts_gui.selbro_number_list->middleline(list_num);
 
 	/* 読込：番号に対するファイルパスを得る */
-	std::string fpath_open( this->get_open_path(file_num) );
+	std::string fpath_open(  this->get_open_path(file_num) );
 	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-		       "Error : this->get_open_path(%d) returns nullptr"
+			"Error : this->get_open_path(%d) returns nullptr"
 			, file_num
 		);
 		return NG;
@@ -132,6 +132,11 @@ int cb_trace_files::read_and_save_crnt_(
 
 int cb_trace_files::cb_start( const bool interactive_sw )
 {
+	if ( !cl_gts_master.cl_number.is_trace() ) {
+		fl_alert("Set Number for Trace");
+		return OK;
+	}
+
 	/* チェック：開くファイルのLevel名がない */
 	{
 	std::string name(cl_gts_gui.strinp_trace_open_file_head->value());
@@ -231,19 +236,19 @@ void cb_trace_files::cb_rename(void)
 	}
 
 	/* ユーザーから新しい名前を得る */
-	const char* new_level_ptr = fl_input(
+	const char* new_head_ptr = fl_input(
 		"Enter New Level Name" ,head.c_str()
 	);
-	if (new_level_ptr == nullptr || head == new_level_ptr ) {
+	if (new_head_ptr == nullptr || head == new_head_ptr ) {
 		return; /* Cancel or 同じ名前なら何もしない */
 	}
-	const std::string new_level(new_level_ptr);
+	const std::string new_head(new_head_ptr);
 
 	/* ファイル毎名前を変更する */
 	for (size_t ii=0; ii<nums.size() ; ++ii) {
 		std::string opa( this->get_open_path( nums.at(ii) ) );
 		std::string npa( this->get_open_path_from_head_and_number_(
-			new_level.c_str() ,nums.at(ii)
+			new_head.c_str() ,nums.at(ii)
 		));
 		/* 最初にこれでいいかユーザーに確認する */
 		if (ii==0) {
@@ -258,6 +263,9 @@ void cb_trace_files::cb_rename(void)
 		}
 		std::rename( opa.c_str() ,npa.c_str() );
 	}
+
+	/* rename成功したら、新しい名前に表示変更 */
+	cl_gts_gui.strinp_trace_open_file_head->value( new_head.c_str() );
 }
 
 void cb_trace_files::cb_renumber(void)
@@ -333,6 +341,9 @@ void cb_trace_files::cb_renumber(void)
 		}
 		std::rename( opa.c_str() ,npa.c_str() );
 	}
+
+	/* renumber成功したら、新しいStart,End,Numberに表示変更 */
+	this->cb_set_number();
 }
 
 //----------------------------------------------------------------------
@@ -415,7 +426,7 @@ void cb_trace_files::set_gui_for_open(
 	cl_gts_gui.window_trace_files->flush();
 
 	/* Numberウインドウ Listを操作可能にする */
-	cl_gts_gui.selbro_fnum_list->activate();
+	cl_gts_gui.selbro_number_list->activate();
 
 	/* Numberウインドウ再構築 */
 	cl_gts_master.cl_number.reset_by_number_list( nums );
@@ -463,6 +474,10 @@ void cb_trace_files::cb_set_number( void )
 	ids::path::level_from_files(
 		filepath ,dpath ,head ,num ,number ,ext ,nums
 	);
+	if (head.empty() || nums.empty() || nums.size() <= 0) {
+		fl_alert( "Not exist file about \'%s\'" ,filepath.c_str() );
+		return;
+	}
 
 	/* Trace Filesウインドウ Number設定 */
 	cl_gts_gui.valinp_trace_num_start->value( nums.front() );
@@ -472,7 +487,7 @@ void cb_trace_files::cb_set_number( void )
 	cl_gts_gui.window_trace_files->flush();
 
 	/* Numberウインドウ Listを操作可能にする */
-	cl_gts_gui.selbro_fnum_list->activate();
+	cl_gts_gui.selbro_number_list->activate();
 
 	/* Numberウインドウ再構築 */
 	cl_gts_master.cl_number.reset_by_number_list( nums );
@@ -485,7 +500,10 @@ void cb_trace_files::cb_check_existing_saved_file(void)
 	if ( !cl_gts_master.cl_number.is_trace() ) {
 		return;
 	}
-
+	this->check_existing_saved_file();
+}
+void cb_trace_files::check_existing_saved_file(void)
+{
 	Fl_Color col = 0;
 	if ( this->is_exist_save_files_() ) {	/* 上書き */
 		col = FL_YELLOW;
@@ -507,10 +525,10 @@ bool cb_trace_files::is_exist_save_files_(void)
 {
 /* Numberの非選択含めた番号ファイルで一つでも存在するならtrueを返す */
 	bool sw=false;
-	for (int ii = 1; ii <= cl_gts_gui.selbro_fnum_list->size(); ++ii) {
+	for (int ii = 1; ii <= cl_gts_gui.selbro_number_list->size(); ++ii) {
 		/* リストの項目に表示した番号 */
 		const int file_num = std::stoi(
-			cl_gts_gui.selbro_fnum_list->text(ii)
+			cl_gts_gui.selbro_number_list->text(ii)
 		);
 		/* 番号によるファイルパス */
 		std::string filepath( this->get_save_path( file_num ) );
@@ -522,12 +540,12 @@ bool cb_trace_files::is_exist_save_files_(void)
 
 	std::ostringstream ost;
 	ost << std::setfill('0') << std::setw(4) << file_num << " S";
-	cl_gts_gui.selbro_fnum_list->text( ii ,ost.str().c_str() );
+	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
 		}
 		else {
 	std::ostringstream ost;
 	ost << std::setfill('0') << std::setw(4) << file_num;
-	cl_gts_gui.selbro_fnum_list->text( ii ,ost.str().c_str() );
+	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
 		}
 	}
 	return sw;

@@ -803,7 +803,7 @@ void gts_gui::cb_(Fl_Button* o, void* v) {
 void gts_gui::cb_strinp_scan_save_file_head_i(Fl_Input* o, void*) {
   cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_scan()) {
-	norout_crnt_scan_level_of_fnum->value( o->value() );
+	output_number_file_head_name->value( o->value() );
 };
 }
 void gts_gui::cb_strinp_scan_save_file_head(Fl_Input* o, void* v) {
@@ -943,7 +943,7 @@ void gts_gui::cb_2(Fl_Button* o, void* v) {
 void gts_gui::cb_strinp_trace_save_file_head_i(Fl_Input* o, void*) {
   cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_trace()) {
-	norout_crnt_scan_level_of_fnum->value( o->value() );
+	output_number_file_head_name->value( o->value() );
 };
 }
 void gts_gui::cb_strinp_trace_save_file_head(Fl_Input* o, void* v) {
@@ -994,18 +994,18 @@ Fl_Menu_Item gts_gui::menu_1[] = {
  {0,0,0,0,0,0,0,0,0}
 };
 
-void gts_gui::cb_norinp_fnum_insert_i(Fl_Input*, void*) {
+void gts_gui::cb_norinp_number_input_i(Fl_Input*, void*) {
   cl_gts_master.cl_number.cb_set_list_from_string();
 }
-void gts_gui::cb_norinp_fnum_insert(Fl_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_norinp_fnum_insert_i(o,v);
+void gts_gui::cb_norinp_number_input(Fl_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_norinp_number_input_i(o,v);
 }
 
-void gts_gui::cb_selbro_fnum_list_i(Fl_Browser*, void*) {
+void gts_gui::cb_selbro_number_list_i(Fl_Browser*, void*) {
   cl_gts_master.cb_read_and_trace_and_preview();
 }
-void gts_gui::cb_selbro_fnum_list(Fl_Browser* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_selbro_fnum_list_i(o,v);
+void gts_gui::cb_selbro_number_list(Fl_Browser* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_selbro_number_list_i(o,v);
 }
 
 void gts_gui::cb_window_trace_parameters_i(Fl_Double_Window*, void*) {
@@ -5717,27 +5717,27 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 116, 25);
       o->menu(menu_1);
     } // Fl_Menu_Bar* o
-    { norinp_fnum_insert = new Fl_Input(0, 25, 116, 25);
-      norinp_fnum_insert->box(FL_BORDER_BOX);
-      norinp_fnum_insert->callback((Fl_Callback*)cb_norinp_fnum_insert);
-      norinp_fnum_insert->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      norinp_fnum_insert->when(FL_WHEN_ENTER_KEY);
-    } // Fl_Input* norinp_fnum_insert
+    { norinp_number_input = new Fl_Input(0, 25, 116, 25);
+      norinp_number_input->box(FL_BORDER_BOX);
+      norinp_number_input->callback((Fl_Callback*)cb_norinp_number_input);
+      norinp_number_input->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+      norinp_number_input->when(FL_WHEN_ENTER_KEY);
+    } // Fl_Input* norinp_number_input
     { Fl_Group* o = new Fl_Group(0, 50, 116, 25);
       { new Fl_Box(0, 50, 50, 25);
       } // Fl_Box* o
-      { output_number_type = new Fl_Output(50, 50, 66, 25, "Action");
-        Fl_Group::current()->resizable(output_number_type);
-      } // Fl_Output* output_number_type
+      { output_number_action_type = new Fl_Output(50, 50, 66, 25, "Action");
+        Fl_Group::current()->resizable(output_number_action_type);
+      } // Fl_Output* output_number_action_type
       o->end();
     } // Fl_Group* o
-    { norout_crnt_scan_level_of_fnum = new Fl_Output(0, 75, 116, 25);
-    } // Fl_Output* norout_crnt_scan_level_of_fnum
-    { selbro_fnum_list = new Fl_Browser(0, 100, 116, 250);
-      selbro_fnum_list->type(3);
-      selbro_fnum_list->callback((Fl_Callback*)cb_selbro_fnum_list);
-      Fl_Group::current()->resizable(selbro_fnum_list);
-    } // Fl_Browser* selbro_fnum_list
+    { output_number_file_head_name = new Fl_Output(0, 75, 116, 25);
+    } // Fl_Output* output_number_file_head_name
+    { selbro_number_list = new Fl_Browser(0, 100, 116, 250);
+      selbro_number_list->type(3);
+      selbro_number_list->callback((Fl_Callback*)cb_selbro_number_list);
+      Fl_Group::current()->resizable(selbro_number_list);
+    } // Fl_Browser* selbro_number_list
     window_number->set_non_modal();
     window_number->size_range(116, 0, 200, 4000);
     window_number->end();
