@@ -210,18 +210,6 @@ void gts_gui::cb_menite_trace_parameters(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_parameters_i(o,v);
 }
 
-void gts_gui::cb_menite_trace_files_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_files->show();
-} else {
-    cl_gts_gui.window_trace_files->hide();
-};
-}
-void gts_gui::cb_menite_trace_files(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_files_i(o,v);
-}
-
 void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_batch->value()) {
     cl_gts_gui.window_opengl->show();/* Need for Minimize */
@@ -232,6 +220,18 @@ void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
 }
 void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_batch_i(o,v);
+}
+
+void gts_gui::cb_menite_trace_files_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_files->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_files->show();
+} else {
+    cl_gts_gui.window_trace_files->hide();
+};
+}
+void gts_gui::cb_menite_trace_files(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_files_i(o,v);
 }
 
 void gts_gui::cb_zoom_i(Fl_Menu_*, void*) {
@@ -415,9 +415,9 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Trace Thickness...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Input Color(HSV Min Max)...", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_input_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Output Color(RGB)...", 0xffc5,  (Fl_Callback*)gts_gui::cb_menite_trace_output_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Files...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Files...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -462,8 +462,8 @@ Fl_Menu_Item* gts_gui::menite_trace_thickness = gts_gui::menu_ + 21;
 Fl_Menu_Item* gts_gui::menite_trace_input_color = gts_gui::menu_ + 22;
 Fl_Menu_Item* gts_gui::menite_trace_output_color = gts_gui::menu_ + 23;
 Fl_Menu_Item* gts_gui::menite_trace_parameters = gts_gui::menu_ + 24;
-Fl_Menu_Item* gts_gui::menite_trace_files = gts_gui::menu_ + 25;
-Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 26;
+Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 25;
+Fl_Menu_Item* gts_gui::menite_trace_files = gts_gui::menu_ + 26;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 27;
 Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 37;
 Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 42;

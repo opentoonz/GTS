@@ -14,7 +14,11 @@ void gts_master::cb_scan_full_area_and_crop( void )
 		return;
 	}
 
+	/* スキャンした画像とCropエリアの表示 */
 	this->rot_and_trace_and_enoise_and_preview_(
 		clp_scan ,cl_gts_gui.choice_rot90->value() ,true ,true
 	);
+
+	/* CropしたときAreaが数値と違う問題の暫定解決のため以下入れる!!! */
+	this->_from_area_val_to_opengl_rect();
 }

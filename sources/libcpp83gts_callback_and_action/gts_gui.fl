@@ -110,7 +110,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_scan_and_save->show();
 } else {
     cl_gts_gui.window_scan_and_save->hide();
-}}
+}} selected
             xywh {10 10 100 20} type Toggle shortcut 0xffbf
           }
           MenuItem menite_area_and_rot90 {
@@ -189,17 +189,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_trace_input_color->hide();
     cl_gts_gui.menite_trace_input_color->clear();
 }}
-            xywh {0 0 100 20} type Toggle divider
-          }
-          MenuItem menite_trace_files {
-            label {Trace Files...}
-            callback {if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_files->show();
-} else {
-    cl_gts_gui.window_trace_files->hide();
-}}
-            xywh {0 0 30 20} type Toggle
+            xywh {0 0 100 20} type Toggle
           }
           MenuItem menite_trace_batch {
             label {Trace Batch...}
@@ -210,6 +200,16 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_trace_batch->hide();
 }}
             xywh {0 0 100 20} type Toggle
+          }
+          MenuItem menite_trace_files {
+            label {Trace Files...}
+            callback {if (cl_gts_gui.menite_trace_files->value()) {
+    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_files->show();
+} else {
+    cl_gts_gui.window_trace_files->hide();
+}}
+            xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_sane_device {
             label {Select SANE device...}

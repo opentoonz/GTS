@@ -103,15 +103,15 @@ private:
   inline void cb_menite_trace_parameters_i(Fl_Menu_*, void*);
   static void cb_menite_trace_parameters(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_trace_files;
-private:
-  inline void cb_menite_trace_files_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_files(Fl_Menu_*, void*);
-public:
   static Fl_Menu_Item *menite_trace_batch;
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_trace_files;
+private:
+  inline void cb_menite_trace_files_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_files(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
