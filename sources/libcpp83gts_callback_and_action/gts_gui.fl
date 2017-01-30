@@ -84,7 +84,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             xywh {5 5 100 20} divider
           }
           MenuItem {} {
-            label {Trace Files...}
+            label {Trace...}
             callback {cl_gts_master.cl_trace_files.cb_start();}
             xywh {5 5 100 20} shortcut 0x54
           }
@@ -110,7 +110,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
     cl_gts_gui.window_scan_and_save->show();
 } else {
     cl_gts_gui.window_scan_and_save->hide();
-}} selected
+}}
             xywh {10 10 100 20} type Toggle shortcut 0xffbf
           }
           MenuItem menite_area_and_rot90 {
@@ -937,7 +937,7 @@ cl_gts_gui.menite_trace_files->clear();}
           xywh {0 5 100 25} resizable
         }
         Fl_Button {} {
-          label {Trace Files...}
+          label {Trace...}
           callback {cl_gts_master.cl_trace_files.cb_start();}
           xywh {100 5 95 25}
         }
@@ -972,7 +972,7 @@ cl_gts_gui.menite_trace_files->clear();}
             label File
             xywh {50 90 50 25} box BORDER_BOX when 1 resizable
           }
-          Fl_Input strinp_trace_open_number_format {
+          Fl_Input strinp_trace_open_number_format {selected
             xywh {100 90 45 25}
           }
           Fl_Choice choice_trace_open_image_format {open
@@ -1007,16 +1007,16 @@ cl_gts_gui.menite_trace_files->clear();}
           Fl_Box {} {
             xywh {1 225 49 25}
           }
-          Fl_Value_Input valinp_trace_num_start {
+          Fl_Value_Output valout_trace_num_start {
             label Start
-            xywh {50 225 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+            xywh {50 225 50 25}
           }
           Fl_Box {} {
             xywh {100 225 35 25}
           }
-          Fl_Value_Input valinp_trace_num_end {
+          Fl_Value_Output valout_trace_num_end {
             label End
-            xywh {135 225 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+            xywh {135 225 50 25}
           }
           Fl_Box {} {
             xywh {185 225 14 25} resizable

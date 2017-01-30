@@ -403,7 +403,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Crop", 0,  (Fl_Callback*)gts_gui::cb_Crop, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview", 0x70,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Files...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Renumber...", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
@@ -5553,7 +5553,7 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Box* o = new Fl_Box(0, 5, 100, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Button* o = new Fl_Button(100, 5, 95, 25, "Trace Files...");
+      { Fl_Button* o = new Fl_Button(100, 5, 95, 25, "Trace...");
         o->callback((Fl_Callback*)cb_Trace1);
       } // Fl_Button* o
       o->end();
@@ -5610,20 +5610,12 @@ Fl_Double_Window* gts_gui::make_window() {
       { Fl_Group* o = new Fl_Group(1, 225, 198, 25);
         { new Fl_Box(1, 225, 49, 25);
         } // Fl_Box* o
-        { valinp_trace_num_start = new Fl_Value_Input(50, 225, 50, 25, "Start");
-          valinp_trace_num_start->box(FL_BORDER_BOX);
-          valinp_trace_num_start->minimum(1);
-          valinp_trace_num_start->maximum(9999);
-          valinp_trace_num_start->value(1);
-        } // Fl_Value_Input* valinp_trace_num_start
+        { valout_trace_num_start = new Fl_Value_Output(50, 225, 50, 25, "Start");
+        } // Fl_Value_Output* valout_trace_num_start
         { new Fl_Box(100, 225, 35, 25);
         } // Fl_Box* o
-        { valinp_trace_num_end = new Fl_Value_Input(135, 225, 50, 25, "End");
-          valinp_trace_num_end->box(FL_BORDER_BOX);
-          valinp_trace_num_end->minimum(1);
-          valinp_trace_num_end->maximum(9999);
-          valinp_trace_num_end->value(1);
-        } // Fl_Value_Input* valinp_trace_num_end
+        { valout_trace_num_end = new Fl_Value_Output(135, 225, 50, 25, "End");
+        } // Fl_Value_Output* valout_trace_num_end
         { Fl_Box* o = new Fl_Box(185, 225, 14, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o

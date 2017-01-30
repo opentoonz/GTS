@@ -427,8 +427,8 @@ private:
   inline void cb_Renumber1_i(Fl_Button*, void*);
   static void cb_Renumber1(Fl_Button*, void*);
 public:
-  Fl_Value_Input *valinp_trace_num_start;
-  Fl_Value_Input *valinp_trace_num_end;
+  Fl_Value_Output *valout_trace_num_start;
+  Fl_Value_Output *valout_trace_num_end;
 private:
   inline void cb_Set2_i(Fl_Button*, void*);
   static void cb_Set2(Fl_Button*, void*);

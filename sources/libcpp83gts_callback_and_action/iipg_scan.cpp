@@ -288,18 +288,15 @@ std::cout
 	<< " H=" << this->cl_iip_scan.d_physical_height()
 	<< std::endl;
 
-	// override some GUI default values from gts_gui.fl
-	if(this->cl_iip_scan.d_x_native_resolution()) {
-		// from scanner
+	/* スキャナーの最大解像度よりGUI値が大きいならlimitする */
+	if(this->cl_iip_scan.d_x_native_resolution()
+	<  cl_gts_gui.valinp_area_reso->value()) {
 		cl_gts_gui.valinp_area_reso->value(
 			this->cl_iip_scan.d_x_native_resolution()
 		);
-	} else {
-		// from header
-		cl_gts_gui.valinp_area_reso->value(
-			this->cl_iip_scan.d_x_resolution()
-		);
 	}
+
+	// override some GUI default values from gts_gui.fl
 	cl_gts_gui.valinp_bw_threshold->value(
 		this->cl_iip_scan.d_threshold()
 	);

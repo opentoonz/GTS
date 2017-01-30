@@ -314,7 +314,8 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 		/* 番号によるファイルパス */
 		std::string filepath( this->get_save_path( file_num ) );
 		/* ファイルの存在の表示チェック */
-		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+		if (	!filepath.empty()
+		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 			filepath.c_str()
 		))) {
 			sw = true;
@@ -336,6 +337,12 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 /* save file/path */
 const std::string cb_scan_and_save::get_save_path( const int number )
 {
+	/* Folder & File名が設定していないと空を返す */
+	if (cl_gts_gui.filinp_scan_save_dir_path->value() == nullptr
+	||  this->get_save_name_(number).empty()) {
+		return std::string();
+	}
+
 	std::string filepath;
 	filepath += cl_gts_gui.filinp_scan_save_dir_path->value();
 	filepath += '/';
@@ -344,21 +351,24 @@ const std::string cb_scan_and_save::get_save_path( const int number )
 }
 const std::string cb_scan_and_save::get_save_name_( const int number )
 {
+	/* 名(head,num_form,ext)が設定していないと空を返す */
+	if (cl_gts_gui.strinp_scan_save_file_head->value() == nullptr
+	||  (0<=number
+	&&  cl_gts_gui.output_scan_save_number_format->value() == nullptr)
+	||  cl_gts_gui.choice_scan_save_image_format->text() == nullptr) {
+		return std::string();
+	}
+
 	std::string filename;
 	filename += cl_gts_gui.strinp_scan_save_file_head->value();
-	if (filename.empty()) {
-	 filename += "untitled";
-	}
 	if (0 <= number) {
 	 filename += ids::path::str_from_number(
 		number
-		//, cl_gts_gui.strinp_scan_save_number_format->value()
+	      //, cl_gts_gui.strinp_scan_save_number_format->value()
 		, cl_gts_gui.output_scan_save_number_format->value()
 	 );
 	}
-	if (cl_gts_gui.choice_scan_save_image_format->text() != nullptr) {
-filename += cl_gts_gui.choice_scan_save_image_format->text();
-	}
+	filename += cl_gts_gui.choice_scan_save_image_format->text();
 	return filename;
 }
 

@@ -20,5 +20,19 @@ void gts_master::cb_scan_full_area_and_crop( void )
 	);
 
 	/* CropしたときAreaが数値と違う問題の暫定解決のため以下入れる!!! */
+	/* 初期値は物理的最大範囲 */
+	if (cl_gts_gui.valinp_area_x_pos->value() == 0
+	&&  cl_gts_gui.valinp_area_y_pos->value() == 0
+	&&  cl_gts_gui.valinp_area_x_size->value() == 0
+	&&  cl_gts_gui.valinp_area_y_size->value() == 0
+	) {
+	    cl_gts_gui.valinp_area_y_size->value(
+	    	this->cl_iip_scan.d_physical_height()
+	    );
+	    cl_gts_gui.valinp_area_x_size->value(
+	    	this->cl_iip_scan.d_physical_width()
+	    );
+	}
+	/* GUI数値を画像表示ルーチンにセット */
 	this->_from_area_val_to_opengl_rect();
 }

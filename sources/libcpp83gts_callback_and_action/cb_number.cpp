@@ -119,7 +119,8 @@ void cb_number::cb_set_list_from_string( void )
 		if (jj == file_num) { continue; }
 
 		/* insert&Scroll for viewing */
-		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+		if ( !this->get_save_path( file_num ).empty()
+		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 			this->get_save_path( file_num ).c_str()
 		))) {
 			insert_with_S_( file_num ,ii);
@@ -492,11 +493,19 @@ bool cb_number::selected_next_frame(void)
 void cb_number::set_type_to_scan(void)
 {
 	cl_gts_gui.output_number_action_type->value( this->str_type_scan_ );
+	cl_gts_gui.window_scan_and_save->color( FL_BACKGROUND_COLOR );
+	cl_gts_gui.window_scan_and_save->redraw();
+	cl_gts_gui.window_trace_files->color( FL_DARK2 );
+	cl_gts_gui.window_trace_files->redraw();
 }
 
 void cb_number::set_type_to_trace(void)
 {
-	cl_gts_gui.output_number_action_type->value( this->str_type_trace_ );
+	cl_gts_gui.output_number_action_type->value(this->str_type_trace_);
+	cl_gts_gui.window_scan_and_save->color( FL_DARK2 );
+	cl_gts_gui.window_scan_and_save->redraw();
+	cl_gts_gui.window_trace_files->color( FL_BACKGROUND_COLOR );
+	cl_gts_gui.window_trace_files->redraw();
 }
 bool cb_number::is_scan(void)
 {
@@ -520,7 +529,9 @@ void cb_number::append_checked_S_and_set_name_by_number_list_( const std::vector
 	}
 	if      (ty == this->str_type_scan_) {
 		for (int nn : nums) {
-			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			if (
+	!cl_gts_master.cl_scan_and_save.get_save_path(nn).empty()
+			&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 	cl_gts_master.cl_scan_and_save.get_save_path(nn).c_str()
 			))) {
 				this->append_with_S(nn);
@@ -536,7 +547,9 @@ void cb_number::append_checked_S_and_set_name_by_number_list_( const std::vector
 	}
 	else if (ty == this->str_type_trace_) {
 		for (int nn : nums) {
-			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			if (
+	!cl_gts_master.cl_trace_files.get_save_path(nn).empty()
+			&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 	cl_gts_master.cl_trace_files.get_save_path(nn).c_str()
 		))) {
 				this->append_with_S(nn);
@@ -560,7 +573,9 @@ void cb_number::append_checked_S_and_set_name_from_start_to_end( const int num_s
 	}
 	if      (ty == this->str_type_scan_) {
 		for (int nn = num_start ;nn <= num_end ;++nn) {
-			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			if (
+	!cl_gts_master.cl_scan_and_save.get_save_path(nn).empty()
+			&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 	cl_gts_master.cl_scan_and_save.get_save_path(nn).c_str()
 			))) {
 				this->append_with_S(nn);
@@ -576,7 +591,9 @@ void cb_number::append_checked_S_and_set_name_from_start_to_end( const int num_s
 	}
 	else if (ty == this->str_type_trace_) {
 		for (int nn = num_start ;nn <= num_end ;++nn) {
-			if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+			if (
+	!cl_gts_master.cl_trace_files.get_save_path(nn).empty()
+			&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 	cl_gts_master.cl_trace_files.get_save_path(nn).c_str()
 		))) {
 				this->append_with_S(nn);

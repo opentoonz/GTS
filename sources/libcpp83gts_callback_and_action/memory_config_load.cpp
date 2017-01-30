@@ -281,10 +281,10 @@ bool memory_config::load_trace_files_( std::vector< std::string >& words )
 	) {	      tf.cb_choice_open_image_format( va );
 	}
 	else if (  this->str_trace_num_start_ == ke ) {
-	   cl_gts_gui.valinp_trace_num_start->value( std::stoi(va) );
+	   cl_gts_gui.valout_trace_num_start->value( std::stoi(va) );
 	}
 	else if (  this->str_trace_num_end_ == ke ) {
-	   cl_gts_gui.valinp_trace_num_end->value( std::stoi(va) );
+	   cl_gts_gui.valout_trace_num_end->value( std::stoi(va) );
 	}
 	/* trace_swはON固定 */
 	else if ( this->str_trace_filter_erase_dot_noise_sw_ == ke
@@ -465,7 +465,8 @@ bool memory_config::load_number_(
 		// use C++11,throw exception then error
 		const int num = std::stoi(words.at(1));
 
-		if (ptbl_dir_or_file_is_exist(const_cast<char*>(
+		if (   !cl_gts_master.cl_number.get_save_path(num).empty()
+		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 			cl_gts_master.cl_number.get_save_path(num).c_str()
 		))) {
 			cl_gts_master.cl_number.append_with_S(num);

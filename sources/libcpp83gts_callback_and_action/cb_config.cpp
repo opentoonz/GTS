@@ -1,3 +1,4 @@
+#include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
@@ -42,15 +43,6 @@ int cb_config::loading_and_set_dpath_fname(
 }
 void cb_config::open( void )
 {
-	/* DirctoryPathとFileNameを得る */
-	if (	this->dir_path_.empty() ) {
-		this->dir_path_ = ".";
-	}
-	if (	this->open_file_name_.empty() ) {
-		this->open_file_name_ = "untitled";
-		this->open_file_name_ += this->ext_;
-	}
-
 	/* NativeブラウザーOpenで開く */
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config"
@@ -70,15 +62,6 @@ void cb_config::open( void )
 
 void cb_config::save_as( void )
 {
-	/* DirctoryPathとFileNameを得る */
-	if (	this->dir_path_.empty() ) {
-		this->dir_path_ = ".";
-	}
-	if (	this->save_file_name_.empty() ) {
-		this->save_file_name_ = "untitled";
-		this->save_file_name_ += this->ext_;
-	}
-
 	/* NativeブラウザーSaveで開く */
 	std::string fpath = ids::path::fltk_native_browse_save(
 		"Save As Config"
