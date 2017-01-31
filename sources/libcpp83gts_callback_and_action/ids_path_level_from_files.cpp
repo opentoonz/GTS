@@ -8,6 +8,7 @@
 #include "FL/filename.H" // fl_filename_list()
 #include "ids_path_level_from_files.h"
 
+/* ファイルパスをディレクトリパスとファイル名に分割する */
 void ids::path::from_fpath_to_dpath_fname(
 	const std::string& fpath
 	,std::string& dpath
@@ -56,6 +57,19 @@ void ids::path::from_fpath_to_dpath_fname(
 
 	/* ディレクトリパスをセット */
 	dpath = fpath.substr(0,pos+1);
+}
+
+/* ディレクトリパスとファイル名をファイルパスにする */
+const std::string ids::path::fpath_from_dpath_fname(
+	const std::string& dpath
+	,const std::string& fname
+)
+{
+	std::string fpath;
+	fpath = dpath;
+	fpath += '/';
+	fpath += fname;
+	return fpath;
 }
 
 namespace {

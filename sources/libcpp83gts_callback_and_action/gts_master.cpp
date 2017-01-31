@@ -121,7 +121,6 @@ int gts_master::exec( const char *comm )
 
 	/* GUIのsaveで指定した順に拡張子リストを作る */
 
-	this->cl_bro_config.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 	this->cl_bro_trace_batch.add_imagefile_extension( ".txt" );/* 未使用2016-5-18 */
 
 	/* color trace enhancement */
@@ -146,13 +145,7 @@ int gts_master::exec( const char *comm )
 
 	/* fltk設定各種 --- ここまで */
 
-	/* levelシステム初期ディレクトリを設定 */
-	/* text viewのバッファー設定 */
-	if (OK != this->cl_bro_config.i_init()) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_bro_config.i_init() returns NG");
-		return NG;
-	}
+	/* trace batchシステム初期ディレクトリを設定 */
 	if (OK != this->cl_bro_trace_batch.i_init()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_bro_trace_batch.i_init() returns NG");

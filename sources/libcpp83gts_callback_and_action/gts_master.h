@@ -24,8 +24,10 @@
 
 #include "memory_desktop.h"
 #include "memory_config.h"
+#include "cb_config.h"
 #include "cb_level.h"
 #include "cb_file_number_list.h"
+#include "cb_trace_batch.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
 #include "cb_color_trace_enhancement.h"
@@ -87,7 +89,7 @@ public:
 	void cb_read_and_trace_and_preview( void );
 	void cb_rot_trace_enoise_preview( void );
 
-	void cb_read_and_save_start( void );
+	int cb_read_and_save_start( const bool interactive_sw=true );
 	void cb_scan_and_preview( void );
 	void cb_scan_and_save_start( void );
 	void cb_scan_and_save_next( void );
@@ -161,9 +163,9 @@ public:
 
 
 	/* クラスコンポーネント */
-	gtsfbro06cb_config      cl_bro_config;
-	gtsfbro06cb_level       cl_bro_level;
-	gtsfbro06cb_trace_batch	cl_bro_trace_batch;
+	gtsfbro06cb_config      cl_bro_config;		/* 将来削除予定 */
+	gtsfbro06cb_level       cl_bro_level;		/* 将来削除予定 */
+	gtsfbro06cb_trace_batch	cl_bro_trace_batch;	/* 将来削除予定 */
 
 	fltk_event	cl_fltk_event;	/* イベントドリブン */
 	memory_desktop	cl_memo_desktop;	/* desktopの再現 */
@@ -172,8 +174,10 @@ public:
 	memory_short_cut_key	cl_memo_short_cut_key;
 	memory_install_setup	cl_memo_install_setup;
 
+	cb_config		cl_config;
 	cb_level		cl_level;
 	cb_file_number_list	cl_file_number_list;
+	cb_trace_batch		cl_trace_batch;
 
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
 	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;

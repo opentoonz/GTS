@@ -35,7 +35,7 @@ cb_color_trace_full_area.cpp\
 cb_color_trace_src.cpp\
 cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
-cb_config_save.cpp\
+cb_config.cpp\
 cb_file_number_list.cpp\
 cb_level.cpp\
 cb_quit.cpp\
@@ -48,6 +48,7 @@ cb_scan_and_preview.cpp\
 cb_scan_and_save.cpp\
 cb_scan_full_area_and_crop.cpp\
 cb_scnr_area.cpp\
+cb_trace_batch.cpp\
 dogascan_area_rot90.cpp\
 dogascan_area_val_and_opengl_rect.cpp\
 dogascan_event.cpp\

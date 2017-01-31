@@ -5,10 +5,10 @@
 #include <sstream>	// std::ostringstream
 #include <iomanip>	// std::setw()
 #include "ptbl_funct.h"
+#include "ids_path_level_from_files.h"
+#include "cb_file_number_list.h"
 #include "gts_gui.h"
 #include "gts_master.h"
-#include "cb_file_number_list.h"
-#include "ids_path_level_from_files.h"
 
 namespace {
  const char *next_num_( const char* str ,int* rsz ,int* file_num )
@@ -124,15 +124,9 @@ void cb_file_number_list::set_list_from_string( void )
 /* 後方互換のため保持しているが将来廃止 */
 void cb_file_number_list::append_fnum_list_with_chk_mark( const int file_num )
 {
-	std::string fpath;
-	fpath += cl_gts_gui.filinp_level_save_dir_path->value();
-	fpath += "/";
-	fpath += cl_gts_gui.strinp_level_save_file_head->value();
-	fpath += ids::path::str_from_number( file_num );
-	switch (cl_gts_gui.choice_level_save_image_format->value()) {
-	case 0: fpath += ".tif"; break;
-	case 1: fpath += ".tga"; break;
-	}
+	std::string fpath(
+		cl_gts_master.cl_level.get_savefilepath( file_num )
+	);
 
 	std::ostringstream ost;
 	ost << std::setfill('0') << std::setw(4) << file_num;

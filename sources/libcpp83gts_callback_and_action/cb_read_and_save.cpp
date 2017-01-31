@@ -143,7 +143,7 @@ int gts_master::read_and_save_crnt_( void )
 
 /*--------------------------------------------------------*/
 
-void gts_master::cb_read_and_save_start( void )
+int gts_master::cb_read_and_save_start( const bool interactive_sw )
 {
 	/* 先頭を得る - End設定で選択したフレーム番号をたどっていく */
 	this->cl_file_number_list.counter_start(
@@ -155,7 +155,7 @@ void gts_master::cb_read_and_save_start( void )
 	std::string name(cl_gts_gui.strinp_level_open_file_head->value());
 	if ( name.empty() ) {
 		fl_alert("Need Open Level Name!");
-		return;
+		return NG;
 	}
 	}
 
@@ -164,31 +164,33 @@ void gts_master::cb_read_and_save_start( void )
 	std::string name(cl_gts_gui.strinp_level_save_file_head->value());
 	if ( name.empty() ) {
 		fl_alert("Need Save Level Name!");
-		return;
+		return NG;
 	}
 	}
 
 	/* 最初に番号が選択がない */
 	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
 		fl_alert("Select number!");
-		return;
+		return NG;
 	}
 
 	/* 実行確認 */
-	const int crnt_file_num =
+	if (interactive_sw) {
+	 const int crnt_file_num =
 		this->cl_file_number_list.get_crnt_file_num();
-	const bool tsw =
+	 const bool tsw =
 		cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value() != 0;
-	const bool esw =
+	 const bool esw =
 		cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value()!=0;
-	if (fl_ask(
+	 if (fl_ask(
 		"%s%s\n%s\n-->\n%s\n..."
 		,tsw ?"Trace" :"Not trace"
 		,esw ?" and Erase Dot Noise" :""
 		,this->cl_level.get_openfilepath(crnt_file_num).c_str()
 		,this->cl_level.get_savefilepath(crnt_file_num).c_str()
-	) != 1) {
-		return; // Cancel
+	 ) != 1) {
+		return OK; // Cancel
+	 }
 	}
 
 	while (1 <= this->cl_file_number_list.get_crnt_list_num()) {
@@ -196,7 +198,7 @@ void gts_master::cb_read_and_save_start( void )
 		if (OK != this->read_and_save_crnt_()) {
 			pri_funct_err_bttvr(
 		 "Error : this->read_and_save_crnt_() returns NG" );
-			return;
+			return NG;
 		}
 		/* 次を得る - End設定で選択したフレーム番号をたどっていく */
 		this->cl_file_number_list.counter_next(
@@ -215,4 +217,5 @@ void gts_master::cb_read_and_save_start( void )
 			break;
 		}
 	}
+	return OK;
 }

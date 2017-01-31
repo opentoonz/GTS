@@ -2,15 +2,13 @@
 #include <FL/fl_ask.H> // fl_alert()
 #include <FL/Fl_Native_File_Chooser.H>
 #include <iostream>
-#include <string>
-#include <vector>
 #include <sstream> // std::ostringstream
 #include <algorithm> // std::replace(-)
 #include "ids_path_fltk_native_browse.h"
 
 namespace {
 
-const std::string fltk_native_file_chooser_(
+const std::vector<std::string> fltk_native_file_chooser_(
 	const std::string& title
 	,const int type_flag
 	/* type_flag
@@ -46,30 +44,73 @@ const std::string fltk_native_file_chooser_(
 Ubuntu16.04-desktopで::Fl_Native_File_Chooser単独で実行すると落ちる
 他のfltkウィジェット(Fl_Window等)の表示が必要
 */
-	native.title( title.c_str() );
-	native.type( type_flag );
-	native.directory( dpath.c_str() );
-	native.preset_file( preset_file.c_str() );
-	native.options( options_flag );
-	native.filter( filter_str.c_str() );
-	native.filter_value( filter_current );
+	if (!title.empty()) {
+		native.title( title.c_str() );
+	}
+	if (type_flag != 0) {
+		native.type( type_flag );
+	}
+	if (!dpath.empty()) {
+		native.directory( dpath.c_str() );
+	}
+	if (!preset_file.empty()) {
+		native.preset_file( preset_file.c_str() );
+	}
+	if (	(options_flag&(::Fl_Native_File_Chooser::NO_OPTIONS))
+	==	::Fl_Native_File_Chooser::NO_OPTIONS
+	) {
+		native.options( options_flag );
+	}
+	if (!filter_str.empty()) {
+		native.filter( filter_str.c_str() );
+	}
+	if (0 <= filter_current) {
+		native.filter_value( filter_current );
+	}
+
 	const int ret = native.show();
+	std::vector<std::string> vecstr;
 	if ( ret == -1 ) {	/* Error */
 		throw native.errmsg();
 	}
-	else if (ret==0&&native.filename()) {/* 正常終了しファイル名ある */
-		return native.filename();
+	/* 正常終了しファイル名ある */
+	else if (ret==0 && 0 < native.count() && native.filename()) {
+		for (int ii = 0 ;ii < native.count() ;++ii) {
+			vecstr.push_back(std::string(native.filename(ii)));
+		}
+		return vecstr;
 	}
-	return std::string(); // Cancel
+	vecstr.push_back( "" ); /* 一行目で判別するため空のパスを入れとく */
+	return vecstr; // Cancel
 }
 
 } // namespace
 
-const std::string ids::path::fltk_native_browse_save(
+const std::vector<std::string> ids::path::fltk_native_browse_open(
 	const std::string& title
 	,const std::string& dpath
 	,const std::string& preset_file
-	,const std::string& filter
+	,const std::string& filter_str
+	,const int filter_current
+)
+{
+	return fltk_native_file_chooser_(
+		title
+		,::Fl_Native_File_Chooser::BROWSE_FILE /* 開く */
+		,dpath
+		,preset_file
+		,::Fl_Native_File_Chooser::PREVIEW
+		|::Fl_Native_File_Chooser::USE_FILTER_EXT
+		,filter_str
+		,filter_current
+	);
+}
+
+const std::vector<std::string> ids::path::fltk_native_browse_save(
+	const std::string& title
+	,const std::string& dpath
+	,const std::string& preset_file
+	,const std::string& filter_str
 	,const int filter_current
 )
 {
@@ -82,27 +123,27 @@ const std::string ids::path::fltk_native_browse_save(
 		|::Fl_Native_File_Chooser::NEW_FOLDER
 		|::Fl_Native_File_Chooser::PREVIEW
 		|::Fl_Native_File_Chooser::USE_FILTER_EXT
-		,filter.c_str()
+		,filter_str
 		,filter_current
 	);
 }
 
-const std::string ids::path::fltk_native_browse_open(
+const std::vector<std::string> ids::path::fltk_native_browse_open_files(
 	const std::string& title
 	,const std::string& dpath
 	,const std::string& preset_file
-	,const std::string& filter
+	,const std::string& filter_str
 	,const int filter_current
 )
 {
 	return fltk_native_file_chooser_(
 		title
-		,::Fl_Native_File_Chooser::BROWSE_FILE /* 開く */
+		,::Fl_Native_File_Chooser::BROWSE_MULTI_FILE /* 開く */
 		,dpath
 		,preset_file
 		,::Fl_Native_File_Chooser::PREVIEW
 		|::Fl_Native_File_Chooser::USE_FILTER_EXT
-		,filter.c_str()
+		,filter_str
 		,filter_current
 	);
 }
@@ -116,13 +157,6 @@ int main(int argc ,const char* argv[])
 	}
 
  try {
- 	class ext_title {
-	public:
-		std::string title;
-		std::string ext;
-	};
- 	std::vector< ext_title > exts;
-
 	/* --- 注意 ---
 	Windowsでは不要だが、Ubuntu16.04-desktopでは
 	何か他のfltkウィジェット(Fl_Window等)を開いておかないと落ちる
@@ -130,21 +164,37 @@ int main(int argc ,const char* argv[])
 	Fl_Window win(600, 100, "FLTK Window");
 	win.show();
 
-	/* save */
-	std::cout << "save=\"" << ids::path::fltk_native_browse_save(
-		argv[1]
-		, "tmpsave.tga"
-		, "TIFF\t*.tif\n" "Targa\t*.tga"
-		, 0 /* "TIFF\t*.tif"を示す */
-	) << "\"\n";
-
 	/* open */
 	std::cout << "open=\"" << ids::path::fltk_native_browse_open(
-		argv[1]
+		"Open" /* 開く */
+		,argv[1]
 		, "A.tga"
 		, "TIFF\t*.tif\n" "Targa\t*.tga"
 		, 1 /* "Targe\t*.tga"を示す */
-	) << "\"\n";
+	).at(0) << "\"\n";
+
+	/* save */
+	std::cout << "save=\"" << ids::path::fltk_native_browse_save(
+		"Save as" /* 名前を付けて保存 */
+		,argv[1]
+		, "tmpsave.tga"
+		, "TIFF\t*.tif\n" "Targa\t*.tga"
+		, 0 /* "TIFF\t*.tif"を示す */
+	).at(0) << "\"\n";
+
+	/* open files */
+	std::vector<std::string> vecstr(
+		ids::path::fltk_native_browse_open_files(
+		"Open Files" /* 開く */
+		,argv[1]
+		, ""
+		, "TEXT\t*.txt\n"
+		, 0 /* "TEXT\t*.txt"を示す */
+	));
+	std::cout << "open_files=\n";
+	for (auto ss : vecstr) {
+		std::cout << "\"" << ss << "\"\n";
+	}
  }
  catch (std::exception& e) {
 	std::ostringstream ost;

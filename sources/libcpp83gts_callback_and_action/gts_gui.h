@@ -1071,6 +1071,22 @@ private:
   inline void cb_selbro_fnum_list_i(Fl_Browser*, void*);
   static void cb_selbro_fnum_list(Fl_Browser*, void*);
 public:
+  Fl_Double_Window *window_trace_batch_job;
+private:
+  inline void cb_window_trace_batch_job_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_batch_job(Fl_Double_Window*, void*);
+  inline void cb_Add_i(Fl_Button*, void*);
+  static void cb_Add(Fl_Button*, void*);
+  inline void cb_Upper_i(Fl_Button*, void*);
+  static void cb_Upper(Fl_Button*, void*);
+  inline void cb_Lower_i(Fl_Button*, void*);
+  static void cb_Lower(Fl_Button*, void*);
+  inline void cb_Delete1_i(Fl_Button*, void*);
+  static void cb_Delete1(Fl_Button*, void*);
+  inline void cb_Run_i(Fl_Button*, void*);
+  static void cb_Run(Fl_Button*, void*);
+public:
+  Fl_Browser *selbro_trace_batch_config_list;
   Fl_Double_Window *window_trace_batch;
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
@@ -1078,14 +1094,14 @@ private:
   inline void cb_3_i(Fl_Button*, void*);
   static void cb_3(Fl_Button*, void*);
   static Fl_Menu_Item menu_3[];
-  inline void cb_Add_i(Fl_Menu_*, void*);
-  static void cb_Add(Fl_Menu_*, void*);
+  inline void cb_Add1_i(Fl_Menu_*, void*);
+  static void cb_Add1(Fl_Menu_*, void*);
   inline void cb_All3_i(Fl_Menu_*, void*);
   static void cb_All3(Fl_Menu_*, void*);
   inline void cb_Select1_i(Fl_Menu_*, void*);
   static void cb_Select1(Fl_Menu_*, void*);
-  inline void cb_Delete1_i(Fl_Menu_*, void*);
-  static void cb_Delete1(Fl_Menu_*, void*);
+  inline void cb_Delete2_i(Fl_Menu_*, void*);
+  static void cb_Delete2(Fl_Menu_*, void*);
 public:
   Fl_File_Input *filinp_trace_batch_dir;
 private:
@@ -1100,8 +1116,8 @@ public:
   Fl_Text_Display *txtdis_trace_batch_text;
   Fl_Browser *selbro_trace_batch_run_list;
 private:
-  inline void cb_Run_i(Fl_Button*, void*);
-  static void cb_Run(Fl_Button*, void*);
+  inline void cb_Run1_i(Fl_Button*, void*);
+  static void cb_Run1(Fl_Button*, void*);
   inline void cb_Cancel3_i(Fl_Button*, void*);
   static void cb_Cancel3(Fl_Button*, void*);
 public:

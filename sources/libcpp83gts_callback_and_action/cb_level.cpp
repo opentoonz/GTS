@@ -279,7 +279,7 @@ void cb_level::browse_and_set_of_open( void )
 		)
 		,this->ext_open.get_native_filters()
 		,cl_gts_gui.choice_level_open_image_format->value()
-	);
+	).at(0);
 
 	/* Cancel */
 	if (filepath.empty()) {
@@ -309,7 +309,7 @@ void cb_level::browse_and_set_of_save( void )
 		)
 		,this->ext_save.get_native_filters()
 		,cl_gts_gui.choice_level_save_image_format->value()
-	);
+	).at(0);
 
 	/* Cancel */
 	if (filepath.empty()) {

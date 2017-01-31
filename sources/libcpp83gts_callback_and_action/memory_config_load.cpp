@@ -171,18 +171,20 @@ std::cerr << __FILE__ << " " << __LINE__ << " \"" << str << "\"" << std::endl;
 
 		if ((2 == words.size()) &&
 		(words.at(0) == this->str_config_dir_)) {
-			cl_gts_master.cl_bro_config.init_config_dir(
-				words.at(1).c_str() );
+			cl_gts_master.cl_config.set_dir_path(
+				words.at(1) );
 		}
 		else if ((2 == words.size()) &&
 		(words.at(0) == this->str_config_load_file_ )) {
-			cl_gts_gui.strinp_config_load_file->value(
-				words.at(1).c_str() );
+			cl_gts_master.cl_config.set_open_file_name(
+				words.at(1) );
 		}
 		else if ((2 == words.size()) &&
 		(words.at(0) == this->str_config_save_as_file_)) {
-			cl_gts_gui.strinp_config_save_as_file->value(
-				words.at(1).c_str() );
+			std::string fname( words.at(1) );
+			cl_gts_master.cl_config.add_ext_if_not_exist(fname);
+			cl_gts_master.cl_config.set_save_file_name(
+				fname );
 		}
 
 		//---------- level ----------
@@ -585,9 +587,6 @@ int memory_config::load( const std::string& file_path, int load_trace_batch_sw )
 	cl_gts_gui.norout_crnt_scan_level_of_fnum->value(
 	 cl_gts_gui.strinp_level_save_file_head->value()
 	);
-
-	/* numberリストは選択状態にしておく(config読込直後の表示のため) */
-	cl_gts_master.cl_file_number_list.select_all();
 
 	/* LevelのEnd/Endless指定がない時はStart...End指定にする */
 	if (!level_num_continue_type_sw) {
