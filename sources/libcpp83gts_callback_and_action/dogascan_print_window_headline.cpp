@@ -6,20 +6,10 @@
 
 int gts_master::print_window_headline( void )
 {
-	const char* nothing_str = "nothing";
-
-	/* Configファイル名
-	過去にloadしたconfigファイルで一番最新の名前 */
-	std::string config_filename;
-	{
-		std::string dpath;
-		ids::path::from_fpath_to_dpath_fname(
-			this->cl_memo_config.memory_of_path
-			,dpath ,config_filename
-		);
-	}
-	if (config_filename.empty()) { /* セットできないときはnothing表示 */
-		config_filename = nothing_str;
+	/* 過去にOpen/Saveしたconfigファイルで一番最新の名前 */ 
+	std::string fname( cl_gts_master.cl_config.get_save_file_name() );
+	if (fname.empty()) {
+		fname = "nothing";
 	}
 
 	/* 画像拡大率 */
@@ -33,7 +23,7 @@ int gts_master::print_window_headline( void )
 	std::ostringstream ost;
 	ost	<< cl_gts_master.cp_release_name()
 		<< "-" << cl_gts_master.cp_release_number()
-		<< "  Config " << config_filename
+		<< "  Config " << fname
 		;
 	if  (0 < l_zoom) {	ost << "  Zoom x" << l_zoom; }
 	else if (l_zoom < 0) {	ost << "  Zoom x1/" << -l_zoom; }

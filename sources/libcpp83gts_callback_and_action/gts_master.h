@@ -21,8 +21,9 @@
 #include "memory_desktop.h"
 #include "memory_config.h"
 #include "cb_config.h"
-#include "cb_level.h"
-#include "cb_file_number_list.h"
+#include "cb_scan_and_save.h"
+#include "cb_trace_files.h"
+#include "cb_number.h"
 #include "cb_trace_batch.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
@@ -60,9 +61,6 @@ public:
 	/* 関数から呼ぶためMethodにしてあるが、意味としてはprivate */
 	void action( E_ACT e_act );
 
-	/* color histogram Min-Max windowの色ベルト画像表示設定 */
-	void make_hab_belt_image( void );
-
 	/* ユーザインターフェースからの実行(fltk callback) */
 	void cb_config_load_dir( void );
 	void cb_config_load_list( void );
@@ -84,11 +82,7 @@ public:
 	void cb_read_and_trace_and_preview( void );
 	void cb_rot_trace_enoise_preview( void );
 
-	int cb_read_and_save_start( const bool interactive_sw=true );
 	void cb_scan_and_preview( void );
-	void cb_scan_and_save_start( void );
-	void cb_scan_and_save_next( void );
-	void cb_scan_and_save_prev( void );
 
 	void cb_area_selecter( void );
 	void cb_scnr_area_x_pos( void );
@@ -129,10 +123,6 @@ public:
 
 	void change_trace_batch_dir( const char *cp_dir );
 
-	void change_level_dir_by_key_in( const char *cp_dir );
-	void change_level_dir_by_click_list( const char *cp_dir );
-	void change_level_dir_by_read_file( const char *cp_dir );
-
 	/* マウス、キーボードからの実行(set_idle()使用) */
 	void reserve( E_ACT e_act );
 	void reserve_by_menu( E_ACT e_act );
@@ -162,8 +152,9 @@ public:
 	memory_install_setup	cl_memo_install_setup;
 
 	cb_config		cl_config;
-	cb_level		cl_level;
-	cb_file_number_list	cl_file_number_list;
+	cb_scan_and_save	cl_scan_and_save;
+	cb_trace_files		cl_trace_files;
+	cb_number		cl_number;
 	cb_trace_batch		cl_trace_batch;
 
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
@@ -183,6 +174,22 @@ public:
 	int print_window_headline( void );
 
 	void from_opengl_rect_to_area_val( void );
+
+	int rot_and_trace_and_enoise( // Rot90 and Effects
+		iip_canvas *parent
+		, int rotate_per_90_type 
+	);
+	int redraw_image(
+		iip_canvas *parent
+		, const bool crop_sw
+		, const bool force_view_scanimage_sw
+	);
+
+	int iipg_save(
+		iip_canvas *clp_canvas ,char *cp_path ,double d_dpi
+		,int i_rot90 = 0 ,iip_read *clp_read = NULL
+	);
+	iip_canvas *iipg_scan( const bool full_area_sw=false );
 
 private:
 	int	_i_mv_sw,
@@ -272,15 +279,12 @@ private:
 
 	void _iipg_mem_free( void );
 
-	int _iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, int i_rot90 = 0, iip_read *clp_read = NULL );
-
 	int _iipg_view_setup( int i_max_area_sw=OFF );
 	void iipg_view_redraw_( void );
 
 	void _iipg_scan_set_physical_param( void );
 	void _iipg_scan_get_from_gui( const bool full_area_sw );
 	int _iipg_scan_action( const bool full_area_sw );
-	iip_canvas *_iipg_scan( const bool full_area_sw=false );
 	int _iipg_scan_get_scanner_info( void );
 
 	void __area_rot90_d_pos_and_size( int i_rot90, double d_x, double d_y, double d_w, double d_h, double d_max_w, double d_max_h, double *dp_x, double *dp_y, double *dp_w, double *dp_h );
@@ -295,9 +299,6 @@ private:
 	void _trace_batch_run( char *cp_path );
 	void _trace_batch_add( char *cp_path );
 
-	int next_scan_and_save_( void );
-	int read_and_save_crnt_( void );
-
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
 
 	void rot_and_trace_and_enoise_and_preview_(
@@ -305,15 +306,6 @@ private:
 		,int rotate_per_90_type
 		,const bool crop_sw=false
 		,const bool force_view_scanimage_sw=false
-	);
-	int rot_and_trace_and_enoise_( // Rot90 and Effects
-		iip_canvas *parent
-		, int rotate_per_90_type 
-	);
-	int redraw_image_(
-		iip_canvas *parent
-		, const bool crop_sw
-		, const bool force_view_scanimage_sw
 	);
 };
 extern gts_master cl_gts_master;

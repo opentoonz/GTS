@@ -138,6 +138,7 @@ libgts_la_SOURCES = \
 					sources/libcpp82gts_hsv_histogram/fltk_1000x10_color_belt.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
+					sources/libcpp83gts_callback_and_action/cb_area_and_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
 					sources/libcpp83gts_callback_and_action/cb_choice_pixel_type.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
@@ -148,17 +149,15 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config.cpp \
-					sources/libcpp83gts_callback_and_action/cb_file_number_list.cpp \
-					sources/libcpp83gts_callback_and_action/cb_level.cpp \
+					sources/libcpp83gts_callback_and_action/cb_number.cpp \
 					sources/libcpp83gts_callback_and_action/cb_quit.cpp \
-					sources/libcpp83gts_callback_and_action/cb_read_and_save.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
-					sources/libcpp83gts_callback_and_action/cb_rotate_per_90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_full_area_and_crop.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scnr_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
+					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_area_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_area_val_and_opengl_rect.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
@@ -168,6 +167,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/fltk_opengl_draw.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_opengl_handle.cpp \
 					sources/libcpp83gts_callback_and_action/igs_lex_white_space_and_double_quote.cpp \
+					sources/libcpp83gts_callback_and_action/ids_path_extensions.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_fltk_native_browse.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_level_from_files.cpp \
 					sources/libcpp83gts_callback_and_action/iipg_color_trace.cpp \
@@ -177,8 +177,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/iipg_view.cpp \
 					sources/libcpp83gts_callback_and_action/memory_config_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_config_save.cpp \
-					sources/libcpp83gts_callback_and_action/memory_config_trace_src_hsv_load.cpp \
-					sources/libcpp83gts_callback_and_action/memory_config_trace_src_hsv_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_install_setup.cpp \

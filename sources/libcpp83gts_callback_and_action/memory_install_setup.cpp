@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include <fstream>
 #include "pri.h"
 #include "igs_lex_white_space_and_double_quote.h"
@@ -26,11 +27,12 @@ void memory_install_setup::load( const std::string& exe_file_path )
 
 		if (words.at(0) == "browser_directory_path") {
 			this->browser_directory_path = words.at(1);
- cl_gts_master.cl_config.set_dir_path( words.at(1) );
- cl_gts_master.cl_trace_batch.set_dir_path(words.at(1));
 		} else
 		if (words.at(0) == "image_file_format") {
 			this->image_file_format = words.at(1);
+		} else
+		if (words.at(0) == "area_rot90") {
+			this->area_rot90 = words.at(1);
 		} else
 		if (words.at(0) == "short_cut_key_start_scan") {
 			// start_scan	Enter(Default)

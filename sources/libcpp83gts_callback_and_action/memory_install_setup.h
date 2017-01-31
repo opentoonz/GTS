@@ -9,6 +9,7 @@ public:
 
 	std::string browser_directory_path;
 	std::string image_file_format;
+	std::string area_rot90;
 private:
 };
 

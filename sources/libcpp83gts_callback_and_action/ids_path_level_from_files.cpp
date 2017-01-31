@@ -259,6 +259,9 @@ const std::string ids::path::str_from_number(
 	, const std::string& num_form
 )
 {
+	if (number < 0 || num_form.empty()) {
+		return std::string();
+	}
 	int ww = num_form.size();
 	std::string sep;
 	if (!isalpha( num_form.at(0) )) {

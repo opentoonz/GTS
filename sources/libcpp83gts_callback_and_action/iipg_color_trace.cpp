@@ -114,10 +114,24 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 		);
 	}
 
+	/* 実行スイッチ */
+	bool trace_sw = false;
+	bool e_d_n_sw = false;
+	if (
+    cl_gts_master.cl_number.is_scan() ) {
+ trace_sw = (cl_gts_gui.chkbtn_scan_filter_trace_sw->value()==1);
+ e_d_n_sw = (cl_gts_gui.chkbtn_scan_filter_erase_dot_noise_sw->value()==1);
+	}
+	else if (
+    cl_gts_master.cl_number.is_trace() ) {
+ trace_sw = (cl_gts_gui.chkbtn_trace_filter_trace_sw->value()==1);
+ e_d_n_sw = (cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value()==1);
+	}
+	/* Scan/Traceの判別が付かないときは処理しない */
+
 	/* トレース */
-	if (	(this->cl_iip_trac.get_l_channels() == 3L)
-	&&	cl_gts_gui.chkbtn_filter_rgb_color_trace_sw->value()
-	) {	// RGB
+	if ((	this->cl_iip_trac.get_l_channels() == 3L) && trace_sw) {
+		// RGB
 		this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
 	}
 	else {	// BW,Grayscale
@@ -127,9 +141,8 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	}
 
 	/* erase dot noise */
-	if (	(this->cl_iip_edot.get_l_channels() == 3L)
-	&&	cl_gts_gui.chkbtn_filter_rgb_erase_dot_noise_sw->value()
-	) {	// RGB
+	if ((	this->cl_iip_edot.get_l_channels() == 3L) && e_d_n_sw) {
+		// RGB
 		this->cl_iip_edot.exec();
 	}
 }

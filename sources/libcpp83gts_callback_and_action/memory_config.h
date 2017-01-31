@@ -1,11 +1,9 @@
 #ifndef memory_config_h
 #define memory_config_h
 
-#include <cstdio>
 #include <string>
 #include <vector>
-#include "ptbl_path_max.h"
-#include "ptbl_returncode.h"
+#include <fstream> // std::ifstream , std::ofstream,
 
 class memory_config {
 public:
@@ -18,56 +16,103 @@ public:
 	,str_color_not_black_(
 		  "not black")
 	
-	,str_config_dir_(
-	    "config_dir")
-	,str_config_load_file_(
-	    "config_load_file")
-	,str_config_save_as_file_(
-	    "config_save_as_file")
+	,str_config_dir_path_(
+	    "config_dir_path")
+		,str_config_dir_path_legacy2016_(
+		    "config_dir")
+	,str_config_open_file_name_(
+	    "config_open_file_name")
+		,str_config_open_file_name_legacy2016_(
+		    "config_load_file")
+	,str_config_save_file_name_(
+	    "config_save_file_name")
+		,str_config_save_file_name_legacy2016_(
+		    "config_save_as_file")
 
-	,str_level_save_dir_path_(
-	    "level_save_dir_path")
-	,str_level_save_dir_path_legacy2016_(
-	    "level_dir")
+	,str_scan_filter_trace_sw_(
+	    "scan_filter_trace_sw")
+		,str_scan_filter_trace_sw_legacy2017_(
+	       "filter_rgb_color_trace_sw")
+		,str_scan_filter_trace_sw_legacy2016_(
+		 "level_rgb_trace_save_sw")
+	,str_scan_filter_erase_dot_noise_sw_(
+	    "scan_filter_erase_dot_noise_sw")
+		,str_scan_filter_erase_dot_noise_sw_legacy2017_(
+		     "filter_rgb_erase_dot_noise_sw")
+		,str_scan_filter_erase_dot_noise_sw_legacy2016_(
+		    "color_trace_erase_1dot")
 
-	,str_level_save_file_head_(
-	    "level_save_file_head")
-	,str_level_save_file_head_legacy2016_(
-	    "level_file")
+	,str_scan_save_dir_path_(
+	    "scan_save_dir_path")
+		,str_scan_save_dir_path_legacy2017_(
+		   "level_save_dir_path")
+		,str_scan_save_dir_path_legacy2016_(
+			"level_dir")
+	,str_scan_save_file_head_(
+	    "scan_save_file_head")
+		,str_scan_save_file_head_legacy2017_(
+		   "level_save_file_head")
+		,str_scan_save_file_head_legacy2016_(
+			"level_file")
+	,str_scan_save_number_format_(
+	    "scan_save_number_format")
+	,str_scan_save_image_format_(
+	    "scan_save_image_format")
+		,str_scan_save_image_format_legacy2017_(
+		   "level_save_image_format")
+		,str_scan_save_image_format_legacy2016_(
+		   "level_image_file_format")
 
-	,str_level_num_start_(
-	    "level_num_start")
-	,str_level_num_end_(
-	    "level_num_end")
-	,str_level_num_continue_type_(
-	    "level_num_continue_type")
-	,str_level_num_endless_direction_(
-	    "level_num_endless_direction")
+	,str_scan_num_start_(
+	    "scan_num_start")
+		,str_scan_num_start_legacy2016_(
+		   "level_num_start")
+	,str_scan_num_end_(
+	    "scan_num_end")
+		,str_scan_num_end_legacy2016_(
+		   "level_num_end")
+	,str_scan_num_continue_type_(
+	    "scan_num_continue_type")
+		,str_scan_num_continue_type_legacy2016_(
+		   "level_num_continue_type")
+	,str_scan_num_endless_direction_(
+	    "scan_num_endless_direction")
+		,str_scan_num_endless_direction_legacy2016_(
+		   "level_num_endless_direction")
 
-	,str_level_save_image_format_(
-	    "level_save_image_format")
-	,str_level_save_image_format_legacy2016_(
-	    "level_image_file_format")
+	,str_trace_open_dir_path_(
+	    "trace_open_dir_path")
+		,str_trace_open_dir_path_legacy2016_(
+		"level_rgb_scan_dir")
+	,str_trace_open_file_head_(
+	    "trace_open_file_head")
+		,str_trace_open_file_head_legacy2016_(
+		    "level_open_file_head")
+	,str_trace_open_number_format_(
+	    "trace_open_number_format")
+	,str_trace_open_image_format_(
+	    "trace_open_image_format")
+		,str_trace_open_image_format_legacy2016_(
+		    "level_open_image_format")
 
-	,str_filter_rgb_erase_dot_noise_sw_(
-	    "filter_rgb_erase_dot_noise_sw")
-	,str_filter_rgb_erase_dot_noise_sw_legacy2016_(
-	    "color_trace_erase_1dot")
+	,str_trace_num_start_(
+	    "trace_num_start")
+	,str_trace_num_end_(
+	    "trace_num_end")
 
-	,str_filter_rgb_color_trace_sw_(
-	    "filter_rgb_color_trace_sw")
-	,str_filter_rgb_color_trace_sw_legacy2016_(
-	    "level_rgb_trace_save_sw")
+	,str_trace_filter_trace_sw_(
+	    "trace_filter_trace_sw")	/* 実装は固定値 */
+	,str_trace_filter_erase_dot_noise_sw_(
+	    "trace_filter_erase_dot_noise_sw")
 
-	,str_level_open_dir_path_(
-	    "level_open_dir_path")
-	,str_level_open_dir_path_legacy2016_(
-	    "level_rgb_scan_dir")
-
-	,str_level_open_file_head_(
-	    "level_open_file_head")
-	,str_level_open_image_format_(
-	    "level_open_image_format")
+	,str_trace_save_dir_path_(
+	    "trace_save_dir_path")
+	,str_trace_save_file_head_(
+	    "trace_save_file_head")
+	,str_trace_save_number_format_(
+	    "trace_save_number_format")
+	,str_trace_save_image_format_(
+	    "trace_save_image_format")
 
 	,str_area_select_(
 	    "area_select")
@@ -115,6 +160,8 @@ public:
 
 	,str_color_trace_real_time_(
 	    "color_trace_real_time")
+	,str_number_action_type_(
+	    "number_action_type")
 	,str_file_number_frame_(
 			"frame")
 	,str_file_number_selected_(
@@ -238,14 +285,22 @@ public:
 	    "color_trace_06_tgt_rgb")
 	,str_color_trace_06_tgt_color_(
 	    "color_trace_06_tgt_color")
+
+	,load_config_sw_(true)
+	,load_scan_and_save_sw_(true)
+	,load_trace_files_sw_(true)
+	,load_crop_area_and_rot90_sw_(true)
+	,load_pixel_type_and_bright_sw_(true)
+	,load_trace_parameters_sw_(true)
+	,load_trace_batch_sw_(true)
+	,load_number_sw_(true)
 	{
 	}
 
-	int save( const char *file_path );
-	//int load( const char *file_path, int load_trace_batch_sw=ON );
-	int load( const std::string& file_path,int load_trace_batch_sw=ON );
-
-	std::string memory_of_path;
+	int save( const std::string& file_path );
+	int load( const std::string& file_path
+		,const bool load_trace_batch_sw=true );
+	int load_only_trace_parameters( const std::string& file_path );
 
 private:
 	const char* str_on_;
@@ -254,30 +309,58 @@ private:
 	const char* str_color_black_;
 	const char* str_color_not_black_;
 
-	const char* str_config_dir_;
-	const char* str_config_load_file_;
-	const char* str_config_save_as_file_;
+	const char* str_config_dir_path_;
+	const char* str_config_dir_path_legacy2016_;
+	const char* str_config_open_file_name_;
+	const char* str_config_open_file_name_legacy2016_;
+	const char* str_config_save_file_name_;
+	const char* str_config_save_file_name_legacy2016_;
 
-	const char* str_level_save_dir_path_;
-	const char* str_level_save_dir_path_legacy2016_;
-	const char* str_level_save_file_head_;
-	const char* str_level_save_file_head_legacy2016_;
-	const char* str_level_num_start_;
-	const char* str_level_num_end_;
-	const char* str_level_num_continue_type_;
-	const char* str_level_num_endless_direction_;
-	const char* str_level_save_image_format_;
-	const char* str_level_save_image_format_legacy2016_;
+	const char* str_scan_filter_trace_sw_;
+	const char* str_scan_filter_trace_sw_legacy2017_;
+	const char* str_scan_filter_trace_sw_legacy2016_;
+	const char* str_scan_filter_erase_dot_noise_sw_;
+	const char* str_scan_filter_erase_dot_noise_sw_legacy2017_;
+	const char* str_scan_filter_erase_dot_noise_sw_legacy2016_;
 
-	const char* str_filter_rgb_erase_dot_noise_sw_;
-	const char* str_filter_rgb_erase_dot_noise_sw_legacy2016_;
-	const char* str_filter_rgb_color_trace_sw_;
-	const char* str_filter_rgb_color_trace_sw_legacy2016_;
+	const char* str_scan_save_dir_path_;
+	const char* str_scan_save_dir_path_legacy2017_;
+	const char* str_scan_save_dir_path_legacy2016_;
+	const char* str_scan_save_file_head_;
+	const char* str_scan_save_file_head_legacy2017_;
+	const char* str_scan_save_file_head_legacy2016_;
+	const char* str_scan_save_number_format_;
+	const char* str_scan_save_image_format_;
+	const char* str_scan_save_image_format_legacy2017_;
+	const char* str_scan_save_image_format_legacy2016_;
 
-	const char* str_level_open_dir_path_;
-	const char* str_level_open_dir_path_legacy2016_;
-	const char* str_level_open_file_head_;
-	const char* str_level_open_image_format_;
+	const char* str_scan_num_start_;
+	const char* str_scan_num_start_legacy2016_;
+	const char* str_scan_num_end_;
+	const char* str_scan_num_end_legacy2016_;
+	const char* str_scan_num_continue_type_;
+	const char* str_scan_num_continue_type_legacy2016_;
+	const char* str_scan_num_endless_direction_;
+	const char* str_scan_num_endless_direction_legacy2016_;
+
+	const char* str_trace_open_dir_path_;
+	const char* str_trace_open_dir_path_legacy2016_;
+	const char* str_trace_open_file_head_;
+	const char* str_trace_open_file_head_legacy2016_;
+	const char* str_trace_open_number_format_;
+	const char* str_trace_open_image_format_;
+	const char* str_trace_open_image_format_legacy2016_;
+
+	const char* str_trace_num_start_;
+	const char* str_trace_num_end_;
+
+	const char* str_trace_filter_trace_sw_;
+	const char* str_trace_filter_erase_dot_noise_sw_;
+
+	const char* str_trace_save_dir_path_;
+	const char* str_trace_save_file_head_;
+	const char* str_trace_save_number_format_;
+	const char* str_trace_save_image_format_;
 
 	const char* str_area_select_;
 	const char* str_area_x_pos_;
@@ -303,6 +386,7 @@ private:
 	const char* str_rgb_gamma_;
 
 	const char* str_color_trace_real_time_;
+	const char* str_number_action_type_;
 	const char* str_file_number_frame_;
 	const char* str_file_number_selected_;
 
@@ -369,40 +453,45 @@ private:
 	const char* str_color_trace_06_tgt_rgb_;
 	const char* str_color_trace_06_tgt_color_;
 
+	bool load_config_sw_;
+	bool load_scan_and_save_sw_;
+	bool load_trace_files_sw_;
+	bool load_crop_area_and_rot90_sw_;
+	bool load_pixel_type_and_bright_sw_;
+	bool load_trace_parameters_sw_;
+	bool load_trace_batch_sw_;
+	bool load_number_sw_;
+
 	//-------------------------------------
 
-	void save_str_(
-	 const std::string& key ,const std::string& val ,std::ofstream& ofs
-	);
-	void save_word_(
-	 const std::string& key ,const std::string& val ,std::ofstream& ofs
-	);
-	void save_f64_(
-	 const std::string& key ,const double val ,std::ofstream& ofs
-	);
-	void save_3int_(
-	 const std::string& key ,const int rr ,const int gg ,const int bb
-	 ,std::ofstream& ofs
+	void save_bool_(
+		const std::string& key ,const char sw ,std::ofstream& ofs
 	);
 	void save_head_( std::ofstream& ofs );
 	void save_config_( std::ofstream& ofs );
-	void save_level_( std::ofstream& ofs );
-	void save_area_( std::ofstream& ofs );
-	void save_pixel_type_( std::ofstream& ofs );
-	void save_fnum_( std::ofstream& ofs );
+	void save_scan_and_save_( std::ofstream& ofs );
+	void save_trace_files_( std::ofstream& ofs );
+	void save_crop_area_and_rot90_( std::ofstream& ofs );
+	void save_pixel_type_and_bright_( std::ofstream& ofs );
+	void save_trace_parameters_( std::ofstream& ofs );
 	void save_trace_batch_( std::ofstream& ofs );
-	void save_trace_src_hsv_( std::ofstream& ofs );
+	void save_number_( std::ofstream& ofs );
+
+	//-------------------------------------
 
 	void load_ifs_(
 		std::ifstream& ifs
-		,const int load_trace_batch_sw
-		,bool& fnum_list_sw
-		,bool& trace_batch_list_sw
-		,bool& level_list_redisplay_sw
-		,bool& level_num_continue_type_sw
+		,bool& scan_num_continue_type_sw
 	);
-
-	bool load_trace_src_hsv_( std::vector< std::string >& words );
+	bool load_config_( std::vector< std::string >& words );
+	bool load_scan_and_save_( std::vector< std::string >& words
+		,bool& scan_num_continue_type_sw );
+	bool load_trace_files_( std::vector< std::string >& words );
+	bool load_crop_area_and_rot90_( std::vector< std::string >& words );
+	bool load_pixel_type_and_bright_(std::vector< std::string >& words);
+	bool load_trace_parameters_( std::vector< std::string >& words );
+	bool load_trace_batch_( std::vector< std::string >& words );
+	bool load_number_( std::vector< std::string >& words );
 };
 
 #endif /* !memory_config_h */

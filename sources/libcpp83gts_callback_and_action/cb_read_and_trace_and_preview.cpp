@@ -10,34 +10,34 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	/*------ ファイル番号を得て、その位置にスクロールする ------*/
 
 	/* File Number Listの選択の先頭項目を得る... */
-	this->cl_file_number_list.counter_start(
-		cl_gts_master.cl_file_number_list.get_end_type_value()
+	this->cl_number.counter_start(
+		cl_gts_master.cl_number.get_end_type_value()
 	);
 
 	/* ...選択がない */
-	if (this->cl_file_number_list.get_crnt_file_num() < 1) {
+	if (this->cl_number.get_crnt_file_num() < 1) {
 		// fl_alert("Select number!");
 /* alertは必要なら呼出元で出す */
 		return;
 	}
 	const int crnt_file_num =
-		this->cl_file_number_list.get_crnt_file_num();
+		this->cl_number.get_crnt_file_num();
 
 	/* 選択の先頭を中心位置にスクロール */
-	cl_gts_gui.selbro_fnum_list->middleline(
-		this->cl_file_number_list.get_crnt_list_num()
+	cl_gts_gui.selbro_number_list->middleline(
+		this->cl_number.get_crnt_list_num()
 	);
 
 	/*------ ファイルパス ------*/
 
 	std::string fpath_open(
-		this->cl_level.get_openfilepath(crnt_file_num)
+		this->cl_trace_files.get_open_path(crnt_file_num)
 	);
 
 	/* 番号に対するファイルパスを得ることはできるか */
 	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-	"Error : this->cl_level.get_openfilepath(%d) returns nullptr."
+	"Error : this->cl_trace_files.get_open_path(%d) returns nullptr."
 			, crnt_file_num
 		);
 		return;
@@ -123,10 +123,10 @@ void gts_master::rot_and_trace_and_enoise_and_preview_(
 	, const bool force_view_scanimage_sw
 )
 {
-	this->rot_and_trace_and_enoise_( parent , rotate_per_90_type );
-	this->redraw_image_( parent , crop_sw , force_view_scanimage_sw );
+	this->rot_and_trace_and_enoise( parent , rotate_per_90_type );
+	this->redraw_image( parent , crop_sw , force_view_scanimage_sw );
 }
-int gts_master::rot_and_trace_and_enoise_( // Rot90 and Effects
+int gts_master::rot_and_trace_and_enoise( // Rot90 and Effects
 	iip_canvas *parent
 	, int rotate_per_90_type 
 )
@@ -149,7 +149,7 @@ int gts_master::rot_and_trace_and_enoise_( // Rot90 and Effects
 
 	return OK;
 }
-int gts_master::redraw_image_(
+int gts_master::redraw_image(
 	iip_canvas *parent
 	, const bool crop_sw
 	, const bool force_view_scanimage_sw

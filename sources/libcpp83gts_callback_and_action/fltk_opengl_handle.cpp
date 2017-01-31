@@ -4,7 +4,8 @@
 #include <sstream>
 #include "fltk_opengl.h"
 #include "ids_path_level_from_files.h"
-#include "cb_level.h"
+#include "cb_scan_and_save.h"
+#include "cb_trace_files.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 
@@ -44,7 +45,7 @@ int fl_shortcut_up_down_left_right_( int key )
 	}
 	/* フレーム送り戻し：Cropでない、あるいは、Crop選択されてない */
 	else {
-		cb_file_number_list& fn = cl_gts_master.cl_file_number_list;
+		cb_number& fn = cl_gts_master.cl_number;
 		switch (key) {
 		case FL_Up:
 			if (fn.selected_prev_frame()) {
@@ -91,12 +92,22 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		cl_gts_master.cl_config.loading_and_set_dpath_fname(
 			dnd_str );
 	}
-	/* Level(tif,tga) file */
+	/* Files(tif,tga) */
 	else {
-		cl_gts_master.cl_level.display_tab_to_level_open();
-		cl_gts_master.cl_level.set_level_open(
-			dpath ,head ,ext ,nums
+	 const int ext_num =
+		cl_gts_master.cl_trace_files.ext_open.num_from_str(ext);
+	 if (!(head.empty()) && 0 <= ext_num && !(nums.empty())) {
+		/* Scanの番号であることを表示して示す */
+		cl_gts_master.cl_number.set_type_to_trace();
+
+		/* ファイルパスから生成した部品を、GUI、その他セット */
+		cl_gts_master.cl_trace_files.set_gui_for_open(
+			dpath ,head ,num_form ,ext ,nums
 		);
+
+		/* 画像読込表示 */
+		cl_gts_master.cb_read_and_trace_and_preview();
+	 }
 	}
 	return std::string();
 }

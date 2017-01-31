@@ -23,22 +23,29 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	time_t tt = time(nullptr);
-	i_ret = fprintf(fp, "# date and time : %s"
+	i_ret = fprintf(fp, "# date time : %s"
 	,asctime(localtime(&tt))
 	);
 	if (i_ret < 0) { return NG; }
 
-	const char* cp = ptbl_get_cp_username();
-	if (cp == nullptr) { cp = "unknown"; }
-	i_ret = fprintf(fp, "# current user  : %s\n\n"
-	,cp
+	const char* un = ptbl_get_cp_username();
+	if (un == nullptr) { un = "unknown"; }
+	i_ret = fprintf(fp, "# username  : %s\n\n"
+	,un
+	);
+	if (i_ret < 0) { return NG; }
+
+	const char* hn = ptbl_get_cp_hostname();
+	if (hn == nullptr) { hn = "unknown"; }
+	i_ret = fprintf(fp, "# hostname  : %s\n\n"
+	,hn
 	);
 	if (i_ret < 0) { return NG; }
 
 	//---------------------------------------
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
-	, this->str_window_opengl_
+	, this->str_window_main_
 	, cl_gts_gui.window_opengl->visible()?ccp_show:ccp_hide
 	, cl_gts_gui.window_opengl->x()
 	, cl_gts_gui.window_opengl->y()
@@ -56,34 +63,40 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_level_
-	, cl_gts_gui.menite_level->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_level_set->x()
-	, cl_gts_gui.window_level_set->y()
+	, this->str_window_area_and_rot90
+	, cl_gts_gui.menite_area_and_rot90->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_area_and_rot90->x()
+	, cl_gts_gui.window_area_and_rot90->y()
 	);
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_crop_area_and_rot90_
-	, cl_gts_gui.menite_crop_area_and_rot90->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_crop_area_and_rot90->x()
-	, cl_gts_gui.window_crop_area_and_rot90->y()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
 	, this->str_window_pixel_type_and_bright_
 	, cl_gts_gui.menite_pixel_type_and_bright->value()?ccp_show:ccp_hide
 	, cl_gts_gui.window_pixel_type_and_bright->x()
 	, cl_gts_gui.window_pixel_type_and_bright->y()
+	, cl_gts_gui.window_pixel_type_and_bright->w()
+	, cl_gts_gui.window_pixel_type_and_bright->h()
 	);
 	if (i_ret < 0) { return NG; }
 
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_parameters_
-	, cl_gts_gui.menite_trace_parameters->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_parameters->x()
-	, cl_gts_gui.window_trace_parameters->y()
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
+	, this->str_window_scan_and_save_
+	, cl_gts_gui.menite_scan_and_save->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_scan_and_save->x()
+	, cl_gts_gui.window_scan_and_save->y()
+	, cl_gts_gui.window_scan_and_save->w()
+	, cl_gts_gui.window_scan_and_save->h()
+	);
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
+	, this->str_window_trace_files_
+	, cl_gts_gui.menite_trace_files->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_files->x()
+	, cl_gts_gui.window_trace_files->y()
+	, cl_gts_gui.window_trace_files->w()
+	, cl_gts_gui.window_trace_files->h()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -94,6 +107,14 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	, cl_gts_gui.window_number->y()
 	, cl_gts_gui.window_number->w()
 	, cl_gts_gui.window_number->h()
+	);
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-28s %s %d %d\n"
+	, this->str_window_trace_parameters_
+	, cl_gts_gui.menite_trace_parameters->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_parameters->x()
+	, cl_gts_gui.window_trace_parameters->y()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -118,18 +139,20 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_trace_output_color
-	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_output_color->x()
-	, cl_gts_gui.window_trace_output_color->y()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-28s %s %d %d\n"
-	, this->str_window_edit_hab_min_max_
+	, this->str_window_trace_input_color_
 	, cl_gts_gui.menite_trace_input_color->value()?ccp_show:ccp_hide
 	, cl_gts_gui.window_trace_input_color->x()
 	, cl_gts_gui.window_trace_input_color->y()
+	);
+	if (i_ret < 0) { return NG; }
+
+	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
+	, this->str_window_trace_output_color_
+	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_output_color->x()
+	, cl_gts_gui.window_trace_output_color->y()
+	, cl_gts_gui.window_trace_output_color->w()
+	, cl_gts_gui.window_trace_output_color->h()
 	);
 	if (i_ret < 0) { return NG; }
 
