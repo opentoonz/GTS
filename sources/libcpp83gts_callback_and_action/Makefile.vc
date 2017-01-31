@@ -31,7 +31,6 @@ cb_color_trace_edit_color.cpp\
 cb_color_trace_edit_hsv_minmax.cpp\
 cb_color_trace_enhancement_src.cpp\
 cb_color_trace_enhancement_tgt.cpp\
-cb_color_trace_full_area.cpp\
 cb_color_trace_src.cpp\
 cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
@@ -39,9 +38,7 @@ cb_config.cpp\
 cb_file_number_list.cpp\
 cb_level.cpp\
 cb_quit.cpp\
-cb_read_and_preview.cpp\
 cb_read_and_save.cpp\
-cb_read_and_trace.cpp\
 cb_read_and_trace_and_preview.cpp\
 cb_rotate_per_90.cpp\
 cb_scan_and_preview.cpp\

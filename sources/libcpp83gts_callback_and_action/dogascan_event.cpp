@@ -225,24 +225,6 @@ void gts_master::_move_start( void )
 
 	/* 3 選択から移動の開始点の設定 */
 	this->cl_ogl_view.drag_move_start();
-
-	if (cl_gts_gui.menite_heavy_view_mode_in->value()) {
-	 /* リアルタイムスイッチが入っているときに */
-	 if (cl_gts_gui.menite_color_trace_real_time->value()) {
-		iip_canvas *clp_sub;
-		clp_sub = this->cl_ogl_view.get_clp_sub_canvas();
-		/* sub画像がある(２画面表示)なら画面を白クリア */
-		if (NULL != clp_sub) {
-			(void)memset(
-				clp_sub->get_vp_canvas(),
-				0xff,
-				clp_sub->get_l_height()*
-				clp_sub->get_l_channels()*
-				clp_sub->get_l_scanline_channel_bytes()
-			);
-		}
-	 }
-	}
 }
 void gts_master::_move_drag( void )
 {

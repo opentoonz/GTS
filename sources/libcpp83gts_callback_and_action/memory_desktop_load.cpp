@@ -116,28 +116,6 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_level_set->position(xx,yy);
 		}
-#if 0
-		else if ((this->str_window_level_browse_==key)
-		&& (6==ret)) {
-		cl_gts_gui.window_level_browse->resize(xx,yy,ww,hh);
-		}
-		else if ((this->str_window_config_load_==key) && (6==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_config_load->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_config_load->show();
-			}
-		cl_gts_gui.window_config_load->resize(xx,yy,ww,hh);
-		}
-		else if ((this->str_window_config_save_as_==key) && (6==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_config_save_as->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_config_save_as->show();
-			}
-		cl_gts_gui.window_config_save_as->resize(xx,yy,ww,hh);
-		}
-#endif
 		else if ((this->str_window_crop_area_and_rot90_==key)&&(4==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_crop_area_and_rot90->set();
@@ -154,53 +132,53 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_pixel_type_and_bright->position(xx,yy);
 		}
-		else if ((this->str_window_color_trace_==key) && (4==ret)) {
+		else if ((this->str_window_trace_parameters_==key) && (4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_color_trace->set();
+		cl_gts_gui.menite_trace_parameters->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_color_trace->show();
+		cl_gts_gui.window_trace_parameters->show();
 			}
-		cl_gts_gui.window_color_trace->position(xx,yy);
+		cl_gts_gui.window_trace_parameters->position(xx,yy);
 		}
-		else if ((this->str_window_fnum_list_==key) && (6==ret)) {
+		else if ((this->str_window_number_==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_fnum_list->set();
+		cl_gts_gui.menite_number->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_fnum_list->show();
+		cl_gts_gui.window_number->show();
 			}
-		cl_gts_gui.window_fnum_list->resize(xx,yy,ww,hh);
+		cl_gts_gui.window_number->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_trace_batch_==key) && (6==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_trace_batch->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_batch_job->show();
+		cl_gts_gui.window_trace_batch->show();
 			}
-		cl_gts_gui.window_trace_batch_job->resize(xx,yy,ww,hh);
+		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
 		}
-		else if ((this->str_window_thickness_==key) && (6==ret)) {
+		else if ((this->str_window_trace_thickness_==key) && (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_thickness->set();
+		cl_gts_gui.menite_trace_thickness->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_thickness->show();
+		cl_gts_gui.window_trace_thickness->show();
 			}
-		cl_gts_gui.window_thickness->resize(xx,yy,ww,hh);
+		cl_gts_gui.window_trace_thickness->resize(xx,yy,ww,hh);
 		}
-		else if ((this->str_window_edit_color_==key) && (4==ret)) {
+		else if ((this->str_window_trace_output_color==key) && (4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_edit_color->set();
+		cl_gts_gui.menite_trace_output_color->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_edit_color->show();
+		cl_gts_gui.window_trace_output_color->show();
 			}
-		cl_gts_gui.window_edit_color->position(xx,yy);
+		cl_gts_gui.window_trace_output_color->position(xx,yy);
 		}
 		else if ((this->str_window_edit_hab_min_max_==key) && (4==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_edit_hsv_min_max->set();
+		cl_gts_gui.menite_trace_input_color->set();
 		cl_gts_gui.window_opengl->show();/* Need for Minimize */
-		cl_gts_gui.window_hab_histogram->show();
+		cl_gts_gui.window_trace_input_color->show();
 			}
-		cl_gts_gui.window_hab_histogram->position(xx,yy);
+		cl_gts_gui.window_trace_input_color->position(xx,yy);
 		}
 #ifndef _WIN32
 		else if ((this->str_sane_device_name_ == key) && (2 == ret)) {

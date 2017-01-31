@@ -7,11 +7,6 @@
 
 void gts_master::cb_read_and_trace_and_preview( void )
 {
-	/* Regacy→将来削除:画像大処理重用操作の時は何もしない */
-	if (cl_gts_gui.menite_heavy_view_mode_in->value() != 0) {
-		return;
-	}
-
 	/*------ ファイル番号を得て、その位置にスクロールする ------*/
 
 	/* File Number Listの選択の先頭項目を得る... */
@@ -186,7 +181,7 @@ int gts_master::redraw_image_(
 		this->cl_color_trace_enhancement.src_set_histogram_max();
 
 		/* color trace histogram windowの再描画 */
-		cl_gts_gui.window_hab_histogram->flush();
+		cl_gts_gui.window_trace_input_color->flush();
 	}
 	return OK;
 }

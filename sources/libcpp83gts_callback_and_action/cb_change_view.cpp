@@ -4,53 +4,6 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-void gts_master::cb_real_time_on_off( void )
-{
-	/* データがないときはなにもしない */
-	if (NULL == this->cl_iip_ro90.get_clp_parent()) {
-		return;
-	}
-
-	/* データが、RGBフルカラーでないと実行しない */
-	if (this->cl_iip_ro90.get_l_channels() < 3L) {
-		return;
-	}
-
-	/* メニュー選択が、RGBフルカラーでないと実行しない */
-	switch (cl_gts_gui.choice_pixel_type->value()) {
-	case 0:
-	case 1:
-		return;
-	}
-
-	/* トレス準備をまだやっていないときは実行 */
-	if (this->cl_iip_trac.get_l_channels() < 3L) {
-		if (OK != this->_iipg_color_trace_setup()) {
-			pri_funct_err_bttvr(
-		 "Error : this->_iipg_color_trace_setup() returns NG" );
-			return;
-		}
-	}
-
-	/* 表示準備 */
-	/***if (OK != this->_iipg_view_setup()) {
-		pri_funct_err_bttvr(
-	 "Error : this->_iipg_view_setup() returns NG" );
-		return;
-	}***/
-
-	/* 分割画面でなければなにもしない */
-	switch (this->cl_ogl_view.get_e_wview_type()) {
-	case E_WVIEW_TYPE_NOTHING: break;
-	case E_WVIEW_TYPE_MAIN: break;
-	case E_WVIEW_TYPE_SUB: this->iipg_view_redraw_(); break;
-	case E_WVIEW_TYPE_LR_PARALLEL: this->iipg_view_redraw_(); break;
-	case E_WVIEW_TYPE_UD_PARALLEL: this->iipg_view_redraw_(); break;
-	case E_WVIEW_TYPE_LR_ONION: break;
-	case E_WVIEW_TYPE_UD_ONION: break;
-	}
-}
-
 void gts_master::cb_change_wview_( E_WVIEW_TYPE wview_type )
 {
 	/* 画面の表示変更 */

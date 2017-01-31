@@ -4,11 +4,6 @@
 
 void gts_master::color_trace_in_view_area( void )
 {
-	/* メニューのリアルタイム指示を確認 */
-	if (0 == cl_gts_gui.menite_color_trace_real_time->value()) {
-		return;
-	}
-
 	/* データがなければ実行しない */
 	if (NULL == this->cl_iip_ro90.get_clp_parent()) {
 		return;
@@ -53,5 +48,5 @@ void gts_master::color_trace_in_view_area( void )
 	this->_iipg_color_trace_exec(ON);
 
 	/* color trace histogramの再描画 */
-	cl_gts_gui.window_hab_histogram->redraw();
+	cl_gts_gui.window_trace_input_color->redraw();
 }

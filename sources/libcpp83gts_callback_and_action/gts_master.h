@@ -4,10 +4,6 @@
 #include <FL/Fl_Value_Input.H>
 #include "fltk_event.h"
 
-#include "gtsfbro06cb_config.h"
-#include "gtsfbro06cb_level.h"
-#include "gtsfbro06cb_trace_batch.h"
-
 #if defined _WIN32
 #include "tw_win_l4_scan.h"
 #else
@@ -85,7 +81,6 @@ public:
 	void cb_quit( void );
 
 	void cb_read_and_preview( void );
-	void cb_read_and_trace( void );
 	void cb_read_and_trace_and_preview( void );
 	void cb_rot_trace_enoise_preview( void );
 
@@ -107,16 +102,12 @@ public:
 	void cb_scan_full_area_and_crop( void );
 	void cb_rotate_per_90( void );
 
-	void cb_color_trace_full_area( void );
-
 	void cb_color_trace_src_edit_value( void );
 	void cb_color_trace_src_redraw_image( void );
 	void cb_color_trace_src_limit_nothing( void );
 	void cb_color_trace_src_limit_hh( void );
 	void cb_color_trace_src_limit_aa( void );
 	void cb_color_trace_src_limit_bb( void );
-
-	void cb_real_time_on_off( void );
 
 	bool check_change_wview( void );
 	void cb_change_wview_main( void );
@@ -163,10 +154,6 @@ public:
 
 
 	/* クラスコンポーネント */
-	gtsfbro06cb_config      cl_bro_config;		/* 将来削除予定 */
-	gtsfbro06cb_level       cl_bro_level;		/* 将来削除予定 */
-	gtsfbro06cb_trace_batch	cl_bro_trace_batch;	/* 将来削除予定 */
-
 	fltk_event	cl_fltk_event;	/* イベントドリブン */
 	memory_desktop	cl_memo_desktop;	/* desktopの再現 */
 	memory_config	cl_memo_config;	/* 各パラメータの再現 */

@@ -17,13 +17,11 @@
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Check_Button.H>
-#include <iostream>
-#include <FL/Fl_Tile.H>
-#include <FL/Fl_Browser.H>
 #include <FL/Fl_Text_Display.H>
-#include <FL/Fl_Scroll.H>
 #include <FL/Fl_Value_Output.H>
+#include <FL/Fl_Browser.H>
 #include <FL/Fl_Round_Button.H>
+#include <FL/Fl_Scroll.H>
 #include "fltk_1000x100_histogram.h"
 #include "fltk_1000_range_cyclic.h"
 #include <FL/Fl_Light_Button.H>
@@ -42,18 +40,12 @@ private:
   static void cb_Open(Fl_Menu_*, void*);
   inline void cb_Set_i(Fl_Menu_*, void*);
   static void cb_Set(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_config_load;
-private:
-  inline void cb_menite_config_load_i(Fl_Menu_*, void*);
-  static void cb_menite_config_load(Fl_Menu_*, void*);
+  inline void cb_Open1_i(Fl_Menu_*, void*);
+  static void cb_Open1(Fl_Menu_*, void*);
   inline void cb_Save_i(Fl_Menu_*, void*);
   static void cb_Save(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_config_save_as;
-private:
-  inline void cb_menite_config_save_as_i(Fl_Menu_*, void*);
-  static void cb_menite_config_save_as(Fl_Menu_*, void*);
+  inline void cb_Save1_i(Fl_Menu_*, void*);
+  static void cb_Save1(Fl_Menu_*, void*);
   inline void cb_Quit_i(Fl_Menu_*, void*);
   static void cb_Quit(Fl_Menu_*, void*);
   inline void cb_Crop_i(Fl_Menu_*, void*);
@@ -65,8 +57,6 @@ public:
 private:
   inline void cb_menite_start_scan_i(Fl_Menu_*, void*);
   static void cb_menite_start_scan(Fl_Menu_*, void*);
-  inline void cb_Preview1_i(Fl_Menu_*, void*);
-  static void cb_Preview1(Fl_Menu_*, void*);
   inline void cb_RGB_i(Fl_Menu_*, void*);
   static void cb_RGB(Fl_Menu_*, void*);
   inline void cb_Rename_i(Fl_Menu_*, void*);
@@ -89,35 +79,35 @@ private:
   inline void cb_menite_pixel_type_and_bright_i(Fl_Menu_*, void*);
   static void cb_menite_pixel_type_and_bright(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_fnum_list;
+  static Fl_Menu_Item *menite_number;
 private:
-  inline void cb_menite_fnum_list_i(Fl_Menu_*, void*);
-  static void cb_menite_fnum_list(Fl_Menu_*, void*);
+  inline void cb_menite_number_i(Fl_Menu_*, void*);
+  static void cb_menite_number(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_color_trace;
+  static Fl_Menu_Item *menite_trace_parameters;
 private:
-  inline void cb_menite_color_trace_i(Fl_Menu_*, void*);
-  static void cb_menite_color_trace(Fl_Menu_*, void*);
+  inline void cb_menite_trace_parameters_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_parameters(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_trace_batch;
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_thickness;
+  static Fl_Menu_Item *menite_trace_thickness;
 private:
-  inline void cb_menite_thickness_i(Fl_Menu_*, void*);
-  static void cb_menite_thickness(Fl_Menu_*, void*);
+  inline void cb_menite_trace_thickness_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_thickness(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_edit_hsv_min_max;
+  static Fl_Menu_Item *menite_trace_input_color;
 private:
-  inline void cb_menite_edit_hsv_min_max_i(Fl_Menu_*, void*);
-  static void cb_menite_edit_hsv_min_max(Fl_Menu_*, void*);
+  inline void cb_menite_trace_input_color_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_input_color(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_edit_color;
+  static Fl_Menu_Item *menite_trace_output_color;
 private:
-  inline void cb_menite_edit_color_i(Fl_Menu_*, void*);
-  static void cb_menite_edit_color(Fl_Menu_*, void*);
+  inline void cb_menite_trace_output_color_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_output_color(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
@@ -170,20 +160,6 @@ private:
   static void cb_Green1(Fl_Menu_*, void*);
   inline void cb_Blue1_i(Fl_Menu_*, void*);
   static void cb_Blue1(Fl_Menu_*, void*);
-  inline void cb_Show_i(Fl_Menu_*, void*);
-  static void cb_Show(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_heavy_view_mode_in;
-  static Fl_Menu_Item *menite_color_trace_real_time;
-private:
-  inline void cb_menite_color_trace_real_time_i(Fl_Menu_*, void*);
-  static void cb_menite_color_trace_real_time(Fl_Menu_*, void*);
-  inline void cb_Preview2_i(Fl_Menu_*, void*);
-  static void cb_Preview2(Fl_Menu_*, void*);
-  inline void cb_Preview3_i(Fl_Menu_*, void*);
-  static void cb_Preview3(Fl_Menu_*, void*);
-  inline void cb_All1_i(Fl_Menu_*, void*);
-  static void cb_All1(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_help_about;
 private:
@@ -224,8 +200,6 @@ public:
 private:
   inline void cb_window_level_set_i(Fl_Double_Window*, void*);
   static void cb_window_level_set(Fl_Double_Window*, void*);
-  inline void cb_Browse_i(Fl_Button*, void*);
-  static void cb_Browse(Fl_Button*, void*);
 public:
   Fl_Tabs *tabs_level_action;
 private:
@@ -301,126 +275,6 @@ private:
   inline void cb_choice_level_save_image_format_i(Fl_Choice*, void*);
   static void cb_choice_level_save_image_format(Fl_Choice*, void*);
 public:
-  Fl_Double_Window *window_level_browse;
-private:
-  inline void cb_window_level_browse_i(Fl_Double_Window*, void*);
-  static void cb_window_level_browse(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_1[];
-  inline void cb_Make_i(Fl_Menu_*, void*);
-  static void cb_Make(Fl_Menu_*, void*);
-  inline void cb_Rename2_i(Fl_Menu_*, void*);
-  static void cb_Rename2(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_level_shift_number;
-private:
-  inline void cb_menite_level_shift_number_i(Fl_Menu_*, void*);
-  static void cb_menite_level_shift_number(Fl_Menu_*, void*);
-  inline void cb_Explorer_i(Fl_Menu_*, void*);
-  static void cb_Explorer(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_level_view_sw;
-private:
-  inline void cb_menite_level_view_sw_i(Fl_Menu_*, void*);
-  static void cb_menite_level_view_sw(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_level_view_rgb_full_sw;
-private:
-  inline void cb_menite_level_view_rgb_full_sw_i(Fl_Menu_*, void*);
-  static void cb_menite_level_view_rgb_full_sw(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_level_image_x1_sw;
-private:
-  inline void cb_menite_level_image_x1_sw_i(Fl_Menu_*, void*);
-  static void cb_menite_level_image_x1_sw(Fl_Menu_*, void*);
-  inline void cb__i(Fl_Button*, void*);
-  static void cb_(Fl_Button*, void*);
-public:
-  Fl_Choice *choice_level_list_form;
-private:
-  inline void cb_choice_level_list_form_i(Fl_Choice*, void*);
-  static void cb_choice_level_list_form(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_level_list_form[];
-public:
-  Fl_Browser *selbro_level_list;
-private:
-  inline void cb_selbro_level_list_i(Fl_Browser*, void*);
-  static void cb_selbro_level_list(Fl_Browser*, void*);
-public:
-  Fl_Box *box_level_image;
-  Fl_Text_Display *txtdis_level_info;
-  Fl_Scrollbar *scroll_level_info_number;
-private:
-  inline void cb_scroll_level_info_number_i(Fl_Scrollbar*, void*);
-  static void cb_scroll_level_info_number(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_level_crnt;
-private:
-  inline void cb_valinp_level_crnt_i(Fl_Value_Input*, void*);
-  static void cb_valinp_level_crnt(Fl_Value_Input*, void*);
-  inline void cb_Set2_i(Fl_Button*, void*);
-  static void cb_Set2(Fl_Button*, void*);
-  inline void cb_Cancel_i(Fl_Button*, void*);
-  static void cb_Cancel(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_x1view;
-private:
-  inline void cb_window_x1view_i(Fl_Double_Window*, void*);
-  static void cb_window_x1view(Fl_Double_Window*, void*);
-public:
-  Fl_Scroll *scroll_level_x1view;
-  Fl_Box *box_level_x1view;
-  Fl_Double_Window *window_config_load;
-private:
-  inline void cb_window_config_load_i(Fl_Double_Window*, void*);
-  static void cb_window_config_load(Fl_Double_Window*, void*);
-  inline void cb_1_i(Fl_Button*, void*);
-  static void cb_1(Fl_Button*, void*);
-public:
-  Fl_File_Input *filinp_config_load_dir;
-private:
-  inline void cb_filinp_config_load_dir_i(Fl_File_Input*, void*);
-  static void cb_filinp_config_load_dir(Fl_File_Input*, void*);
-public:
-  Fl_Browser *selbro_config_load_list;
-private:
-  inline void cb_selbro_config_load_list_i(Fl_Browser*, void*);
-  static void cb_selbro_config_load_list(Fl_Browser*, void*);
-public:
-  Fl_Text_Display *txtdis_config_load_text;
-  Fl_Input *strinp_config_load_file;
-private:
-  inline void cb_Load_i(Fl_Button*, void*);
-  static void cb_Load(Fl_Button*, void*);
-  inline void cb_Cancel1_i(Fl_Button*, void*);
-  static void cb_Cancel1(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_config_save_as;
-private:
-  inline void cb_window_config_save_as_i(Fl_Double_Window*, void*);
-  static void cb_window_config_save_as(Fl_Double_Window*, void*);
-  inline void cb_2_i(Fl_Button*, void*);
-  static void cb_2(Fl_Button*, void*);
-public:
-  Fl_File_Input *filinp_config_save_as_dir;
-private:
-  inline void cb_filinp_config_save_as_dir_i(Fl_File_Input*, void*);
-  static void cb_filinp_config_save_as_dir(Fl_File_Input*, void*);
-public:
-  Fl_Browser *selbro_config_save_as_list;
-private:
-  inline void cb_selbro_config_save_as_list_i(Fl_Browser*, void*);
-  static void cb_selbro_config_save_as_list(Fl_Browser*, void*);
-public:
-  Fl_Text_Display *txtdis_config_save_as_text;
-  Fl_Input *strinp_config_save_as_file;
-private:
-  inline void cb_strinp_config_save_as_file_i(Fl_Input*, void*);
-  static void cb_strinp_config_save_as_file(Fl_Input*, void*);
-  inline void cb_Save1_i(Fl_Button*, void*);
-  static void cb_Save1(Fl_Button*, void*);
-  inline void cb_Cancel2_i(Fl_Button*, void*);
-  static void cb_Cancel2(Fl_Button*, void*);
-public:
   Fl_Double_Window *window_crop_area_and_rot90;
 private:
   inline void cb_window_crop_area_and_rot90_i(Fl_Double_Window*, void*);
@@ -491,8 +345,8 @@ public:
 private:
   inline void cb_window_pixel_type_and_bright_i(Fl_Double_Window*, void*);
   static void cb_window_pixel_type_and_bright(Fl_Double_Window*, void*);
-  inline void cb_Preview4_i(Fl_Button*, void*);
-  static void cb_Preview4(Fl_Button*, void*);
+  inline void cb_Preview1_i(Fl_Button*, void*);
+  static void cb_Preview1(Fl_Button*, void*);
 public:
   Fl_Choice *choice_pixel_type;
 private:
@@ -573,10 +427,31 @@ private:
   inline void cb_valinp_rgb_gamma_i(Fl_Value_Input*, void*);
   static void cb_valinp_rgb_gamma(Fl_Value_Input*, void*);
 public:
-  Fl_Double_Window *window_color_trace;
+  Fl_Double_Window *window_number;
 private:
-  inline void cb_window_color_trace_i(Fl_Double_Window*, void*);
-  static void cb_window_color_trace(Fl_Double_Window*, void*);
+  inline void cb_window_number_i(Fl_Double_Window*, void*);
+  static void cb_window_number(Fl_Double_Window*, void*);
+  static Fl_Menu_Item menu_1[];
+  inline void cb_Select_i(Fl_Menu_*, void*);
+  static void cb_Select(Fl_Menu_*, void*);
+  inline void cb_Delete_i(Fl_Menu_*, void*);
+  static void cb_Delete(Fl_Menu_*, void*);
+public:
+  Fl_Input *norinp_fnum_insert;
+private:
+  inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
+  static void cb_norinp_fnum_insert(Fl_Input*, void*);
+public:
+  Fl_Output *norout_crnt_scan_level_of_fnum;
+  Fl_Browser *selbro_fnum_list;
+private:
+  inline void cb_selbro_fnum_list_i(Fl_Browser*, void*);
+  static void cb_selbro_fnum_list(Fl_Browser*, void*);
+public:
+  Fl_Double_Window *window_trace_parameters;
+private:
+  inline void cb_window_trace_parameters_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_parameters(Fl_Double_Window*, void*);
 public:
   Fl_Check_Button *chkbtn_color_trace_01_chk;
 private:
@@ -1034,47 +909,10 @@ private:
   inline void cb_button_color_trace_06_src_i(Fl_Button*, void*);
   static void cb_button_color_trace_06_src(Fl_Button*, void*);
 public:
-  Fl_Check_Button *chkbtn_color_trace_erase_1dot__;
+  Fl_Double_Window *window_trace_batch;
 private:
-  inline void cb_chkbtn_color_trace_erase_1dot___i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_erase_1dot__(Fl_Check_Button*, void*);
-public:
-  Fl_Check_Button *menite_color_trace_real_time__;
-private:
-  inline void cb_menite_color_trace_real_time___i(Fl_Check_Button*, void*);
-  static void cb_menite_color_trace_real_time__(Fl_Check_Button*, void*);
-  inline void cb_Preview5_i(Fl_Button*, void*);
-  static void cb_Preview5(Fl_Button*, void*);
-  inline void cb_Preview6_i(Fl_Button*, void*);
-  static void cb_Preview6(Fl_Button*, void*);
-  inline void cb_All2_i(Fl_Button*, void*);
-  static void cb_All2(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_fnum_list;
-private:
-  inline void cb_window_fnum_list_i(Fl_Double_Window*, void*);
-  static void cb_window_fnum_list(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_2[];
-  inline void cb_Select_i(Fl_Menu_*, void*);
-  static void cb_Select(Fl_Menu_*, void*);
-  inline void cb_Delete_i(Fl_Menu_*, void*);
-  static void cb_Delete(Fl_Menu_*, void*);
-public:
-  Fl_Input *norinp_fnum_insert;
-private:
-  inline void cb_norinp_fnum_insert_i(Fl_Input*, void*);
-  static void cb_norinp_fnum_insert(Fl_Input*, void*);
-public:
-  Fl_Output *norout_crnt_scan_level_of_fnum;
-  Fl_Browser *selbro_fnum_list;
-private:
-  inline void cb_selbro_fnum_list_i(Fl_Browser*, void*);
-  static void cb_selbro_fnum_list(Fl_Browser*, void*);
-public:
-  Fl_Double_Window *window_trace_batch_job;
-private:
-  inline void cb_window_trace_batch_job_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_batch_job(Fl_Double_Window*, void*);
+  inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_batch(Fl_Double_Window*, void*);
   inline void cb_Add_i(Fl_Button*, void*);
   static void cb_Add(Fl_Button*, void*);
   inline void cb_Upper_i(Fl_Button*, void*);
@@ -1087,44 +925,10 @@ private:
   static void cb_Run(Fl_Button*, void*);
 public:
   Fl_Browser *selbro_trace_batch_config_list;
-  Fl_Double_Window *window_trace_batch;
+  Fl_Double_Window *window_trace_thickness;
 private:
-  inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_batch(Fl_Double_Window*, void*);
-  inline void cb_3_i(Fl_Button*, void*);
-  static void cb_3(Fl_Button*, void*);
-  static Fl_Menu_Item menu_3[];
-  inline void cb_Add1_i(Fl_Menu_*, void*);
-  static void cb_Add1(Fl_Menu_*, void*);
-  inline void cb_All3_i(Fl_Menu_*, void*);
-  static void cb_All3(Fl_Menu_*, void*);
-  inline void cb_Select1_i(Fl_Menu_*, void*);
-  static void cb_Select1(Fl_Menu_*, void*);
-  inline void cb_Delete2_i(Fl_Menu_*, void*);
-  static void cb_Delete2(Fl_Menu_*, void*);
-public:
-  Fl_File_Input *filinp_trace_batch_dir;
-private:
-  inline void cb_filinp_trace_batch_dir_i(Fl_File_Input*, void*);
-  static void cb_filinp_trace_batch_dir(Fl_File_Input*, void*);
-public:
-  Fl_Browser *selbro_trace_batch_list;
-private:
-  inline void cb_selbro_trace_batch_list_i(Fl_Browser*, void*);
-  static void cb_selbro_trace_batch_list(Fl_Browser*, void*);
-public:
-  Fl_Text_Display *txtdis_trace_batch_text;
-  Fl_Browser *selbro_trace_batch_run_list;
-private:
-  inline void cb_Run1_i(Fl_Button*, void*);
-  static void cb_Run1(Fl_Button*, void*);
-  inline void cb_Cancel3_i(Fl_Button*, void*);
-  static void cb_Cancel3(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_thickness;
-private:
-  inline void cb_window_thickness_i(Fl_Double_Window*, void*);
-  static void cb_window_thickness(Fl_Double_Window*, void*);
+  inline void cb_window_trace_thickness_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_thickness(Fl_Double_Window*, void*);
 public:
   Fl_Check_Button *chkbtn_thickness_01_chk;
 private:
@@ -1312,11 +1116,11 @@ private:
   inline void cb_valinp_thickness_06_i(Fl_Value_Input*, void*);
   static void cb_valinp_thickness_06(Fl_Value_Input*, void*);
 public:
-  Fl_Double_Window *window_hab_histogram;
+  Fl_Double_Window *window_trace_input_color;
 private:
-  inline void cb_window_hab_histogram_i(Fl_Double_Window*, void*);
-  static void cb_window_hab_histogram(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_4[];
+  inline void cb_window_trace_input_color_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_input_color(Fl_Double_Window*, void*);
+  static Fl_Menu_Item menu_2[];
 public:
   static Fl_Menu_Item *menite_limit_nothing;
 private:
@@ -1395,10 +1199,10 @@ private:
   inline void cb_Color2_i(Fl_Light_Button*, void*);
   static void cb_Color2(Fl_Light_Button*, void*);
 public:
-  Fl_Double_Window *window_edit_color;
+  Fl_Double_Window *window_trace_output_color;
 private:
-  inline void cb_window_edit_color_i(Fl_Double_Window*, void*);
-  static void cb_window_edit_color(Fl_Double_Window*, void*);
+  inline void cb_window_trace_output_color_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_output_color(Fl_Double_Window*, void*);
 public:
   Fl_Scrollbar *scrbar_edit_color_red;
 private:

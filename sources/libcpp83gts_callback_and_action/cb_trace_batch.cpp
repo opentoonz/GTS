@@ -1,4 +1,5 @@
 #include "FL/fl_ask.H"  // fl_alert(-)
+#include "pri.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_trace_batch.h"
 #include "gts_gui.h"

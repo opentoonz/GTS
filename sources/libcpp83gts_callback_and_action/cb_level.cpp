@@ -149,7 +149,7 @@ void cb_level::set_level_open(
 	);
 
 	/* 即表示 */
-	cl_gts_gui.window_fnum_list->flush();
+	cl_gts_gui.window_number->flush();
 
 	/* 08 Mainウインドウ バーにlevel名表示 */
 	//cl_gts_master.print_window_headline();

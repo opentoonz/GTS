@@ -17,6 +17,9 @@ public:
 
 	void set_dir_path(const std::string&ss) {
 	   this->dir_path_ = ss; }
+
+	std::string get_dir_path(void) {
+	   return this->dir_path_; }
 private:
 	std::string	dir_path_;
 };

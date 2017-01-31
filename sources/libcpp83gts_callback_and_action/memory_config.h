@@ -69,9 +69,6 @@ public:
 	,str_level_open_image_format_(
 	    "level_open_image_format")
 
-	,str_level_list_form_(
-	    "level_list_form")
-
 	,str_area_select_(
 	    "area_select")
 	,str_area_x_pos_(
@@ -281,8 +278,6 @@ private:
 	const char* str_level_open_dir_path_legacy2016_;
 	const char* str_level_open_file_head_;
 	const char* str_level_open_image_format_;
-
-	const char* str_level_list_form_;
 
 	const char* str_area_select_;
 	const char* str_area_x_pos_;
