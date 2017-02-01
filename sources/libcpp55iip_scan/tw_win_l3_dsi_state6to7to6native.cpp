@@ -108,14 +108,13 @@ Sourceの状態はまだ７です。
 				this->twain_state =
 					TWAIN_STATE5_SOURCE_ENABLE;
 			}
-			/* キャンセルにより取り込み中止なので、
-			画像転送ループ処理から抜ける */
-			//return OK;
 
-			/* TWAIN からの Cancel はエラーとする 2014-02-10 */
 			pri_funct_msg_ttvr(
 	"DG_IMAGE,DAT_IMAGENATIVEXFER,MSG_GET --> TWRC_CANCEL" );
-			return NG;
+
+			/* キャンセルにより取り込み中止なので、
+			画像転送ループ処理から抜ける 2017-02-01 */
+			return OK;
 		}
 
 		/* 画像の転送が完了した */

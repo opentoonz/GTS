@@ -395,11 +395,14 @@ int iip_scan::read( void )
 
 	if (OK != this->state4to5( h_wnd, us_show_ui, us_model_ui )) {
 		pri_funct_err_bttvr(
-	 "Error : this->state4to5() returns NG." ); return NG; }
+	 "Error : this->state4to5() returns NG." ); return NG;
+	}
 	if (OK != this->state5to6to5event()) { pri_funct_err_bttvr(
-	 "Error : this->state5to6to5event() returns NG." ); return NG; }
+	 "Error : this->state5to6to5event() returns NG." ); return NG;
+	}
 	if (OK != this->state5to4()) { pri_funct_err_bttvr(
-	 "Error : this->state5to4() returns NG." ); return NG; }
+	 "Error : this->state5to4() returns NG." ); return NG;
+	}
 
 	if (NULL != this->_p_dib_bitmapinfo) {
 		/* Nativeスキャンのときの画像情報 */
