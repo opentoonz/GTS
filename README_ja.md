@@ -47,7 +47,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 3. 外部ライブラリを準備
 
  ソースコードを以下の場所にフォルダー構成そのままに置きます。
- - `GTS/thirdparty/fltk/fltk-1.3.3/`
+ - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
 4. ビルドする
