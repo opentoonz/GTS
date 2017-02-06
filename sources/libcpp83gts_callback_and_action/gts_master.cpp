@@ -237,6 +237,10 @@ int gts_master::exec( const char *comm )
 		return NG;
 	}
 
+	/* Scan and SaveでSet Numberしておく */
+	this->cl_scan_and_save.cb_set_number();
+	this->cl_scan_and_save.cb_check_existing_saved_file();
+
 	/*------------------------------------------------*/
 	/* window TWAINのためにウインドウハンドルを設定する */
 

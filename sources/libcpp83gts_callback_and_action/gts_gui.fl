@@ -30,12 +30,12 @@ class gts_gui {open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {Open File Images...}
+            label {Open Image...}
             callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
-            label {Set Saving Scan Images...}
+            label {Set Saving Folder for Scan...}
             callback {cl_gts_master.cl_scan_and_save.cb_browse_save_folder();}
             xywh {0 0 30 20} divider
           }
@@ -972,7 +972,7 @@ cl_gts_gui.menite_trace_files->clear();}
             label File
             xywh {50 90 50 25} box BORDER_BOX when 1 resizable
           }
-          Fl_Input strinp_trace_open_number_format {selected
+          Fl_Input strinp_trace_open_number_format {
             xywh {100 90 45 25}
           }
           Fl_Choice choice_trace_open_image_format {open

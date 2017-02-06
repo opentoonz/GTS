@@ -50,8 +50,9 @@ void cb_scan_and_save::cb_start( void )
 	}
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if (this->next_scan_and_save_() != OK) {
-		return;
+	this->prev_scan_action_is_ = this->next_scan_and_save_();
+	if (this->prev_scan_action_is_ != OK) { // NG or CANCEL
+		return; /* 始めにエラーやキャンセルしたら次はしない */
 	}
 
 	/* 次のスキャンがあるなら */
@@ -68,14 +69,19 @@ void cb_scan_and_save::cb_next( void )
 	/* windowを消す */
 	cl_gts_gui.window_next_scan->hide();
 
-	/* 次の番号を得る */
+	/* 次の番号を得る。ただし以前CANCELであったら以前のまま */
 	cl_gts_master.cl_number.counter_next(
 		cl_gts_gui.choice_scan_num_continue_type->value()
 	);
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if (this->next_scan_and_save_() != OK) {
+	this->prev_scan_action_is_ = this->next_scan_and_save_();
+	if (this->prev_scan_action_is_ == NG) {
 		return;
+	}
+	/* キャンセルであっても次を... */
+	if (this->prev_scan_action_is_ == CANCEL) {
+		cl_gts_master.cl_number.counter_cancel_one_step();
 	}
 
 	/* 次のスキャンがあるなら */
@@ -93,9 +99,11 @@ void cb_scan_and_save::cb_rescan( void )
 	cl_gts_gui.window_next_scan->hide();
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	if ( this->next_scan_and_save_() != OK ) {
+	this->prev_scan_action_is_ = this->next_scan_and_save_();
+	if ( this->prev_scan_action_is_ == NG ) {
 		return;
 	}
+	/* キャンセルであっても次を... */
 
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
@@ -134,12 +142,19 @@ int cb_scan_and_save::next_scan_and_save_( void )
 	cl_gts_gui.selbro_number_list->middleline(crnt_list_num);
 
 	/* 04 スキャンを実行 */
-	iip_canvas* clp_scan = cl_gts_master.iipg_scan();
+	int return_code=NG;
+	iip_canvas* clp_scan = cl_gts_master.iipg_scan( return_code );
+	if (return_code == NG) {
+		pri_funct_err_bttvr(
+		      "Error : cl_gts_master.iipg_scan() returns NG" );
+		return NG;
+	}
+	if (return_code == CANCEL) {
+		return CANCEL;
+	}
 	if (nullptr == clp_scan) {
 		pri_funct_err_bttvr(
 		      "Error : cl_gts_master.iipg_scan() returns nullptr" );
-// std::string str("Error in scaning at next!";
-// fl_alert(str.c_str());
 		return NG;
 	}
 

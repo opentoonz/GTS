@@ -5,7 +5,16 @@
 void gts_master::cb_scan_and_preview( void )
 {
 	/* スキャンを実行 */
-	iip_canvas* clp_scan = this->iipg_scan();
+	int return_code=NG;
+	iip_canvas* clp_scan = this->iipg_scan( return_code );
+	if (return_code == NG) {
+		pri_funct_err_bttvr(
+		      "Error : this->iipg_scan() returns NG" );
+		return;
+	}
+	if (return_code == CANCEL) {
+		return;
+	}
 	if (NULL == clp_scan) {
 		pri_funct_err_bttvr(
 		      "Error : this->iipg_scan() returns NULL" );

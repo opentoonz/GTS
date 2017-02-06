@@ -207,20 +207,24 @@ std::cout
 	}
 
 	/* 画像をスキャンして読む */
-	if (OK != this->cl_iip_scan.read()) {
+	const int ret = this->cl_iip_scan.read();
+	if (NG == ret) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_iip_scan.read() returns NG.");
 		return NG;
+	}
+	if (ret == CANCEL) {
+		return CANCEL;
 	}
 	return OK;
 }
 
 /*---------------------------------------------------------*/
 
-iip_canvas *gts_master::iipg_scan( const bool full_area_sw )
+iip_canvas *gts_master::iipg_scan(
+	int&return_code/* OK/NG/CANCEL*/ ,const bool full_area_sw
+)
 {
-	int	i_ret;
-
 	/* すべてセンチメータ単位で処理する */
 	this->cl_iip_scan.i_centimeters_sw(ON);
 
@@ -230,12 +234,11 @@ iip_canvas *gts_master::iipg_scan( const bool full_area_sw )
 		return NULL;
 	}
 
-	i_ret = OK;
-	if (OK != this->_iipg_scan_action( full_area_sw )) {
+	return_code = this->_iipg_scan_action( full_area_sw );
+	if (return_code == NG) {
 		pri_funct_err_bttvr(
 	 "Error : this->_iipg_scan_action(-) returns NG.");
 		/* ここでエラーがおきてもclose()はやる */
-		i_ret = NG;
 std::string str("Scan Critical Error!\nSave Config and Restart!");
 fl_alert(str.c_str());
 	}
@@ -247,7 +250,6 @@ std::string str("Scan Close Critical Error!\nSave Config and Restart!");
 fl_alert(str.c_str());
 		return NULL;
 	}
-	if (NG == i_ret) { return NULL; }
 
 	return this->cl_iip_scan.get_clp_canvas();
 }

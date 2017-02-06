@@ -393,9 +393,23 @@ void cb_number::counter_start( const int continue_type_value )
 	);
 }
 
+/* Cancel動作のため一つ前に戻す */
+void cb_number::counter_cancel_one_step( void )
+{
+	this->next_list_num_ = this->crnt_list_num_;
+	this->next_file_num_ = this->crnt_file_num_;
+
+	this->crnt_list_num_ = this->backup_crnt_list_num_;
+	this->crnt_file_num_ = this->backup_crnt_file_num_;
+}
+
 /* 現位置を得る */
 void cb_number::counter_next( const int continue_type_value )
 {
+	/* Cancel動作のためcrnt値を保持 */
+	this->backup_crnt_list_num_ = this->crnt_list_num_;
+	this->backup_crnt_file_num_ = this->crnt_file_num_;
+
 	/* 次へ */
 	this->crnt_list_num_ = this->next_list_num_;
 	this->crnt_file_num_ = this->next_file_num_;

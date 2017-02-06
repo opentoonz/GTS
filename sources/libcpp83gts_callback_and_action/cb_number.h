@@ -10,6 +10,8 @@ public:
 		,crnt_file_num_(-1)
 		,next_list_num_(-1)
 		,next_file_num_(-1)
+		,backup_crnt_list_num_(-1)
+		,backup_crnt_file_num_(-1)
 		,str_type_scan_("Scan")
 		,str_type_trace_("Trace")
 	{
@@ -65,6 +67,8 @@ public:
 	void counter_start( const int continue_type_value );
 	/* 2 次へ辿り、現位置を得る */
 	void counter_next( const int continue_type_value );
+	/* 3 Cancel動作のため一つ前に戻す */
+	void counter_cancel_one_step( void );
 
 	/* 選択のフレーム送り/戻しをする */
 	bool selected_prev_frame(void);
@@ -94,6 +98,8 @@ private:
 		, crnt_file_num_
 		, next_list_num_
 		, next_file_num_
+		, backup_crnt_list_num_
+		, backup_crnt_file_num_
 		;
 
 	const char* str_type_scan_;

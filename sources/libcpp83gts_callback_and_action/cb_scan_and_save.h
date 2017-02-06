@@ -3,11 +3,14 @@
 
 #include <vector>
 #include <string>
+#include "ptbl_returncode.h"
 #include "ids_path_extensions.h"
 
 class cb_scan_and_save {
 public:
-	cb_scan_and_save() {}
+	cb_scan_and_save()
+	:prev_scan_action_is_(OK)
+	{}
 
 	ids::path::extensions ext_save;
 
@@ -42,6 +45,8 @@ public:
 	void cb_switch_scan_filter_erase_dot_noise( const bool sw );
 
 private:
+	int prev_scan_action_is_;
+
 	int next_scan_and_save_( void );
 
 	bool is_exist_save_files_( void );

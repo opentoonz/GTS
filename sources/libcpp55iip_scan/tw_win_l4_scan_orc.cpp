@@ -397,7 +397,8 @@ int iip_scan::read( void )
 		pri_funct_err_bttvr(
 	 "Error : this->state4to5() returns NG." ); return NG;
 	}
-	if (OK != this->state5to6to5event()) { pri_funct_err_bttvr(
+	const int ret = this->state5to6to5event();
+	if (NG == ret) { pri_funct_err_bttvr(
 	 "Error : this->state5to6to5event() returns NG." ); return NG;
 	}
 	if (OK != this->state5to4()) { pri_funct_err_bttvr(
@@ -424,6 +425,9 @@ int iip_scan::read( void )
 		}
 	}
 
+	if (ret == CANCEL) {
+		return CANCEL;
+	}
 	return OK;
 }
 
