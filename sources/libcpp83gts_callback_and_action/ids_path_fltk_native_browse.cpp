@@ -215,12 +215,12 @@ int main(int argc ,const char* argv[])
 /*
 :165,167 w! make.bat
 rem windows make
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_INO /I..\..\thirdparty\fltk\fltk-1.3.3 ..\..\thirdparty\fltk\fltk-1.3.3\lib\fltk-1.3.3-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib ids_path_fltk_native_browse.cpp /Fet
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_INO /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib ids_path_fltk_native_browse.cpp /Fet
 del ids_path_fltk_native_browse.obj
 
 :270,270 w! make.csh
 # linux make
-#g++ -Ifltk-1.3.3/fltk-1.3.3 -DDEBUG_INO -std=c++11 ids_path_fltk_native_browse.cpp fltk-1.3.3/fltk-1.3.3/lib/libfltk.a -ldl -lX11 -lXext -lXcursor -lXfixes -lXinerama
+#g++ -Ifltk-1.3.4-1/fltk-1.3.4-1 -DDEBUG_INO -std=c++11 ids_path_fltk_native_browse.cpp fltk-1.3.4-1/fltk-1.3.4-1/lib/libfltk.a -ldl -lX11 -lXext -lXcursor -lXfixes -lXinerama
 g++ -DDEBUG_INO -std=c++11 ids_path_fltk_native_browse.cpp -lfltk
 */
 #endif // DEBUG_INO
