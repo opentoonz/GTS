@@ -34,7 +34,7 @@ const std::vector<std::string> fltk_native_file_chooser_(
 )
 {
 #if _WIN32
-	// path separater must be '\\' in Windows
+	// path separator must be '\\' in Windows
 	std::replace(dpath.begin(), dpath.end(), '/', '\\');
 #endif
 

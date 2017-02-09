@@ -217,7 +217,7 @@ bool memory_config::load_scan_and_save_(
 	  cl_gts_gui.strinp_trace_save_file_head->value( va.c_str() );
 	}
 	else if (  this->str_scan_save_number_format_ == ke ) {
-	   cl_gts_gui.strinp_scan_save_number_format->value( va.c_str() );
+	   cl_gts_gui.output_scan_save_number_format->value( va.c_str() );
 	}
 	else if (  this->str_scan_save_image_format_ == ke) {
 		     ss.cb_choice_save_image_format( va );
@@ -297,7 +297,7 @@ bool memory_config::load_trace_files_( std::vector< std::string >& words )
 	   cl_gts_gui.strinp_trace_save_file_head->value( va.c_str() );
 	}
 	else if (  this->str_trace_save_number_format_ == ke ) {
-	   cl_gts_gui.strinp_trace_save_number_format->value( va.c_str() );
+	   cl_gts_gui.output_trace_save_number_format->value( va.c_str() );
 	}
 	else if (  this->str_trace_save_image_format_ == ke ) {
 		      tf.cb_choice_save_image_format( va );
@@ -956,16 +956,25 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	cl_gts_master.cl_scan_and_save.check_existing_saved_file();
 	cl_gts_master.cl_trace_files.check_existing_saved_file();
 
-	/* numberウインドウにaction名とnumber_list等を表示する */
 	if (	cl_gts_master.cl_number.is_scan()) {
+		/* Numberウインドウに保存するFileHead名をセット */
 		cl_gts_gui.output_number_file_head_name->value(
 		 cl_gts_gui.strinp_scan_save_file_head->value()
 		);
+
+		/* NumberウインドウのActionTypeセット
+		Scan/TraceウインドウのBGのセット */
+		cl_gts_master.cl_number.set_type_to_scan();
 	} else
 	if (	cl_gts_master.cl_number.is_trace()) {
+		/* Numberウインドウに保存するFileHead名をセット */
 		cl_gts_gui.output_number_file_head_name->value(
 		 cl_gts_gui.strinp_trace_save_file_head->value()
 		);
+
+		/* NumberウインドウのActionTypeセット
+		Scan/TraceウインドウのBGのセット */
+		cl_gts_master.cl_number.set_type_to_trace();
 	}
 
 	/* 画面は空白表示する指定(データは残っている) */

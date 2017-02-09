@@ -19,6 +19,9 @@ const std::string fpath_from_dpath_fname(
 	,const std::string& fname
 );
 
+/* level_from_files(-)でファイル名のヘッドと数値との区切文字 */
+const char* get_separator_codes_for_level_from_files(void);
+
 /*
 fpathからdpath,head,num,number,extをセットする
 dpathから、head,num書式,extの一致する連番のファイルを探し、numsにセットする

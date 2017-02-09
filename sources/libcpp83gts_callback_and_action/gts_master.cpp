@@ -2,6 +2,7 @@
 #include <stdlib.h> /* getenv() */
 #include <FL/x.H> /* for fl_xid() */
 #include "pri.h"
+#include "ids_path_level_from_files.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 
@@ -173,6 +174,16 @@ int gts_master::exec( const char *comm )
 
 	cl_gts_gui.output_scan_save_number_format->value(".0000");
 	cl_gts_gui.output_trace_save_number_format->value(".0000");
+
+	std::string codes(
+		ids::path::get_separator_codes_for_level_from_files()
+	);
+	cl_gts_gui.choice_input_num_form_separator->add("\' \'");
+	for (auto cc : codes) {
+		std::string tt;
+		tt = "\'"; tt += cc; tt += "\'";
+		cl_gts_gui.choice_input_num_form_separator->add(tt.c_str());
+	}
 
 	/* install_setup.txtによるフォルダ設定 */
 	if (!this->cl_memo_install_setup.browser_directory_path.empty()) {
