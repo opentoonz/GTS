@@ -20,7 +20,8 @@ const std::string fpath_from_dpath_fname(
 );
 
 /* level_from_files(-)でファイル名のヘッドと数値との区切文字 */
-const char* get_separator_codes_for_level_from_files(void);
+const char*  get_separator_codes_for_level_from_files(void);
+const char** get_separator_names_for_level_from_files(void);
 
 /*
 fpathからdpath,head,num,number,extをセットする

@@ -2432,7 +2432,7 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
       Fl_Choice choice_input_num_form_separator {
         label Separator
         callback {cl_gts_master.cl_input_number_format.cb_separator();} open
-        xywh {130 10 50 25} down_box BORDER_BOX
+        xywh {80 10 105 25} down_box BORDER_BOX
       } {}
       Fl_Counter counte_input_num_form_num_of_digits {
         label {Number of digits}

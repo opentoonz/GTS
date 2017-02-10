@@ -7028,7 +7028,7 @@ Fl_Double_Window* gts_gui::make_window() {
   } // Fl_Double_Window* window_trace_output_color
   { window_input_number_format = new Fl_Double_Window(200, 150, "Input Number Format");
     window_input_number_format->callback((Fl_Callback*)cb_window_input_number_format, (void*)(this));
-    { choice_input_num_form_separator = new Fl_Choice(130, 10, 50, 25, "Separator");
+    { choice_input_num_form_separator = new Fl_Choice(80, 10, 105, 25, "Separator");
       choice_input_num_form_separator->down_box(FL_BORDER_BOX);
       choice_input_num_form_separator->callback((Fl_Callback*)cb_choice_input_num_form_separator);
     } // Fl_Choice* choice_input_num_form_separator

@@ -175,14 +175,12 @@ int gts_master::exec( const char *comm )
 	cl_gts_gui.output_scan_save_number_format->value(".0000");
 	cl_gts_gui.output_trace_save_number_format->value(".0000");
 
-	std::string codes(
-		ids::path::get_separator_codes_for_level_from_files()
-	);
-	cl_gts_gui.choice_input_num_form_separator->add("\' \'");
-	for (auto cc : codes) {
-		std::string tt;
-		tt = "\'"; tt += cc; tt += "\'";
-		cl_gts_gui.choice_input_num_form_separator->add(tt.c_str());
+	const char** names =
+		ids::path::get_separator_names_for_level_from_files();
+
+	cl_gts_gui.choice_input_num_form_separator->add("Nothing");
+	for (int ii=0; names[ii] != nullptr ;++ii) {
+		cl_gts_gui.choice_input_num_form_separator->add(names[ii]);
 	}
 
 	/* install_setup.txtによるフォルダ設定 */

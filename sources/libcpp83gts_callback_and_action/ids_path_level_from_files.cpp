@@ -75,6 +75,12 @@ const std::string ids::path::fpath_from_dpath_fname(
 namespace {
 
 const char* separator_codes_ = "._-";
+const char* separator_names_[] = {
+	"Period"
+	,"Underscore"
+	,"Hyphen"
+	,nullptr
+};
 
 bool is_separator_(int cc)
 {
@@ -237,6 +243,10 @@ pr_filename_( ii ,list_count ,list_pp[ii]->d_name ,he ,nu ,number ,ex );
 const char* ids::path::get_separator_codes_for_level_from_files(void)
 {
 	return separator_codes_;
+}
+const char** ids::path::get_separator_names_for_level_from_files(void)
+{
+	return separator_names_;
 }
 
 void ids::path::level_from_files(
