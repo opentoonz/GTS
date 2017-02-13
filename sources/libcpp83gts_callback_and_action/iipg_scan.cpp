@@ -11,7 +11,7 @@ void gts_master::_iipg_scan_set_physical_param( void )
 	double	d_maxcm_w ,d_maxcm_h;
 
 	/* スキャナーから回転処理含んだメニューに設定する最大広さ値を得る */
-	this->__area_rot90_size(
+	this->cl_area_and_rot90.calc_rot90_size(
 		cl_gts_gui.choice_rot90->value()
 		, this->cl_iip_scan.d_physical_width()
 		, this->cl_iip_scan.d_physical_height()
@@ -52,7 +52,7 @@ std::cout
 	if (full_area_sw) {
 		double	d_maxcm_w,d_maxcm_h;
 		/* スキャナーからメニューに設定する最大広さ値を得る */
-		this->__area_rot90_size(
+		this->cl_area_and_rot90.calc_rot90_size(
 			cl_gts_gui.choice_rot90->value()
 			, this->cl_iip_scan.d_physical_width()
 			, this->cl_iip_scan.d_physical_height()
@@ -60,7 +60,7 @@ std::cout
 			, &d_maxcm_h
 		);
 		/* メニュー値からスキャナーへ渡す値を得る */
-		this->__area_rot90_d_pos_and_size(
+		this->cl_area_and_rot90.calc_rot90_offset_and_size(
 			-cl_gts_gui.choice_rot90->value()/* マイナス回転 */
 			, 0.0
 			, 0.0
@@ -75,7 +75,7 @@ std::cout
 		);
 	}
 	else {
-		this->__area_rot90_d_pos_and_size(
+		this->cl_area_and_rot90.calc_rot90_offset_and_size(
 			-cl_gts_gui.choice_rot90->value()/* マイナス回転 */
 			, cl_gts_gui.valinp_area_x_pos->value()
 			, cl_gts_gui.valinp_area_y_pos->value()

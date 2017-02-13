@@ -599,7 +599,7 @@ void gts_gui::cb_valinp_area_reso(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_choice_rot90_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_rotate_per_90();
+  cl_gts_master.cl_area_and_rot90.cb_rotate_per_90_when_scan();
 }
 void gts_gui::cb_choice_rot90(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_rot90_i(o,v);

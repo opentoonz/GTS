@@ -22,7 +22,6 @@ gts_master::gts_master(
 	/* メニューの初期設定値に合わせる、また、
 	cb_config_load_ok(),cb_level_ok()の時も
 	んだ設定に合わせること */
-	,_i_rotate_per_90(0)
 {
 }
 
@@ -136,9 +135,11 @@ int gts_master::exec( const char *comm )
 		);
 		if (0 <= idx) {
 			cl_gts_gui.choice_rot90->value(idx);
+			this->cl_area_and_rot90.set_previous_choice_rot90_(
+						  cl_gts_gui.choice_rot90->value()
+			);
 		}
 	}
-	this->_i_rotate_per_90 = cl_gts_gui.choice_rot90->value();
 
 	/* Pixel Type */
 	cl_gts_gui.choice_pixel_type->value(2); // Initial is RGB

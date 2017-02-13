@@ -21,6 +21,7 @@
 #include "memory_desktop.h"
 #include "memory_config.h"
 #include "cb_config.h"
+#include "cb_area_and_rot90.h"
 #include "cb_scan_and_save.h"
 #include "cb_trace_files.h"
 #include "cb_number.h"
@@ -95,7 +96,6 @@ public:
 	void cb_scnr_area_reso( void );
 	void cb_area_aspect_ratio_selecter( void );
 	void cb_scan_full_area_and_crop( void );
-	void cb_rotate_per_90( void );
 
 	void cb_color_trace_src_edit_value( void );
 	void cb_color_trace_src_redraw_image( void );
@@ -131,14 +131,8 @@ public:
 	void reserve_by_scroll_x( int ii );
 	void reserve_by_scroll_y( int ii );
 
-	/* メニュー、クロップエリア、画像を同時に回転する */
-	int rotate_per_90( const bool crop_sw=false );
-
 	/* スクロールバー設定 */
 	void set_scrollbar( void );
-
-	/* 回転値のメモリ */
-	void set_i_rotate_per_90( int ii ) { this->_i_rotate_per_90=ii; }
 
 	/* 表示エリアのみのトレス線処理 */
 	void color_trace_in_view_area( void );
@@ -153,6 +147,7 @@ public:
 	memory_install_setup	cl_memo_install_setup;
 
 	cb_config		cl_config;
+	cb_area_and_rot90	cl_area_and_rot90;
 	cb_scan_and_save	cl_scan_and_save;
 	cb_trace_files		cl_trace_files;
 	cb_number		cl_number;
@@ -207,8 +202,6 @@ private:
 
 	int	_i_enable_act_menu_sw,
 		_i_enable_act_key_event_sw;
-
-	int	_i_rotate_per_90;
 
 	int _make_level_frame_number_list( void );
 	int _read_and_view_frame_number_list_1st_image( void );
@@ -292,11 +285,6 @@ private:
 	int _iipg_scan_action( const bool full_area_sw );
 	int _iipg_scan_get_scanner_info( void );
 
-	void __area_rot90_d_pos_and_size( int i_rot90, double d_x, double d_y, double d_w, double d_h, double d_max_w, double d_max_h, double *dp_x, double *dp_y, double *dp_w, double *dp_h );
-	void __area_rot90_l_pos_and_size( int i_rot90, long l_x, long l_y, long l_w, long l_h, long l_max_w, long l_max_h, long *lp_x, long *lp_y, long *lp_w, long *lp_h );
-	void __area_rot90_size( int i_rot90, double d_w, double d_h, double *dp_w, double *dp_h );
-	void _area_rot90_menu( int i_rot90_old, int i_rot90_new );
-	void _area_rot90_openglrect( int i_rot90_old, int i_rot90_new );
 	void _from_area_val_to_opengl_rect( void );
 
 	int _cb_open_text( char *cp_path );
