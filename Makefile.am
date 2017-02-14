@@ -159,7 +159,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_scnr_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
-					sources/libcpp83gts_callback_and_action/dogascan_area_val_and_opengl_rect.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \

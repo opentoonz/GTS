@@ -46,7 +46,6 @@ cb_scan_full_area_and_crop.cpp\
 cb_scnr_area.cpp\
 cb_trace_batch.cpp\
 cb_trace_files.cpp\
-dogascan_area_val_and_opengl_rect.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\

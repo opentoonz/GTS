@@ -10,7 +10,7 @@ void cb_color_trace_edit_hsv_minmax::cb_hh_minmax( double minval, double maxval 
 	);
 
 	/* エリアhistogram生成、画像の表示変更 */
-	cl_gts_master.cb_color_trace_src_redraw_image();
+	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
 
 	/* "edit hsv minmax"ウインドウの数値表示入力GUIの変更 */
 	cl_gts_gui.valinp_hab_histogram_hh_min->value(minval);
@@ -32,7 +32,7 @@ void cb_color_trace_edit_hsv_minmax::cb_aa_minmax( double minval, double maxval 
 	);
 
 	/* エリアhistogram生成、画像の表示変更 */
-	cl_gts_master.cb_color_trace_src_redraw_image();
+	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
 
 	/* "edit hsv minmax"ウインドウの数値表示入力GUIの変更 */
 	cl_gts_gui.valinp_hab_histogram_aa_min->value(minval*100.0);
@@ -54,7 +54,7 @@ void cb_color_trace_edit_hsv_minmax::cb_bb_minmax( double minval, double maxval 
 	);
 
 	/* エリアhistogram生成、画像の表示変更 */
-	cl_gts_master.cb_color_trace_src_redraw_image();
+	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
 
 	/* "edit hsv minmax"ウインドウの数値表示入力GUIの変更 */
 	cl_gts_gui.valinp_hab_histogram_bb_min->value(minval*100.0);

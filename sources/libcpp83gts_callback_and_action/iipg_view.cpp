@@ -58,7 +58,3 @@ int gts_master::_iipg_view_setup( int i_max_area_sw )
 
 	return OK;
 }
-void gts_master::iipg_view_redraw_( void )
-{
-	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
-}

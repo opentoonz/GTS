@@ -1034,7 +1034,7 @@ void gts_gui::cb_chkbtn_color_trace_01_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_thickness_01_chk->clear();
     cl_gts_gui.group_thickness_01grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_color_trace_01_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_01_chk_i(o,v);
@@ -1311,7 +1311,7 @@ void gts_gui::cb_chkbtn_color_trace_02_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_thickness_02_chk->clear();
     cl_gts_gui.group_thickness_02grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_color_trace_02_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_02_chk_i(o,v);
@@ -1425,7 +1425,7 @@ void gts_gui::cb_chkbtn_color_trace_03_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_thickness_03_chk->clear();
     cl_gts_gui.group_thickness_03grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_color_trace_03_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_03_chk_i(o,v);
@@ -1539,7 +1539,7 @@ void gts_gui::cb_chkbtn_color_trace_04_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_thickness_04_chk->clear();
     cl_gts_gui.group_thickness_04grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_color_trace_04_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_04_chk_i(o,v);
@@ -1653,7 +1653,7 @@ void gts_gui::cb_chkbtn_color_trace_05_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_thickness_05_chk->clear();
     cl_gts_gui.group_thickness_05grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_color_trace_05_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_05_chk_i(o,v);
@@ -1767,7 +1767,7 @@ void gts_gui::cb_chkbtn_color_trace_06_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_thickness_06_chk->clear();
     cl_gts_gui.group_thickness_06grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_color_trace_06_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_color_trace_06_chk_i(o,v);
@@ -1936,7 +1936,7 @@ void gts_gui::cb_chkbtn_thickness_01_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_color_trace_01_chk->clear();
     cl_gts_gui.group_thickness_01grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_thickness_01_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_01_chk_i(o,v);
@@ -1987,7 +1987,7 @@ void gts_gui::cb_chkbtn_thickness_02_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_color_trace_02_chk->clear();
     cl_gts_gui.group_thickness_02grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_thickness_02_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_02_chk_i(o,v);
@@ -2038,7 +2038,7 @@ void gts_gui::cb_chkbtn_thickness_03_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_color_trace_03_chk->clear();
     cl_gts_gui.group_thickness_03grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_thickness_03_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_03_chk_i(o,v);
@@ -2089,7 +2089,7 @@ void gts_gui::cb_chkbtn_thickness_04_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_color_trace_04_chk->clear();
     cl_gts_gui.group_thickness_04grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_thickness_04_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_04_chk_i(o,v);
@@ -2140,7 +2140,7 @@ void gts_gui::cb_chkbtn_thickness_05_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_color_trace_05_chk->clear();
     cl_gts_gui.group_thickness_05grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_thickness_05_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_05_chk_i(o,v);
@@ -2191,7 +2191,7 @@ void gts_gui::cb_chkbtn_thickness_06_chk_i(Fl_Check_Button* o, void*) {
     cl_gts_gui.chkbtn_color_trace_06_chk->clear();
     cl_gts_gui.group_thickness_06grp->deactivate();
 }
-cl_gts_master.cb_color_trace_src_redraw_image();
+cl_gts_gui.opengl_view->redraw();
 }
 void gts_gui::cb_chkbtn_thickness_06_chk(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_chkbtn_thickness_06_chk_i(o,v);

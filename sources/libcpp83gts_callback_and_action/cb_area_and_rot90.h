@@ -20,37 +20,39 @@ public:
 	}
 
 	/* 回転計算 pos(x2,y2),size(w2,h2) */
-	template <class T> void calc_rot90_offset_and_size(
-		int choice_rot90 , T x , T y , T w , T h , T maxw , T maxh
-		, T *x2 , T *y2 , T *w2 , T *h2
-	)
-	{
-		/* 回転差計算をしてマイナスの場合の値をプラスにする
-		0	 #   0       degree clock works
-		1 = -3+4 #  90(-270) degree clock works
-		2 = -2+4 # 180(-180) degree clock works
-		3 = -1+4 # 270( -90) degree clock works
-		*/
-		if (choice_rot90 < 0) { choice_rot90 += 4; }
-
-		/* 左上原点で90degree単位回転計算 */
-		switch (choice_rot90) {
-		case 0: *x2=x;		*y2=y;          *w2=w; *h2=h; break;
-		case 1: *x2=maxh-(y+h); *y2=x;          *w2=h; *h2=w; break;
-		case 2: *x2=maxw-(x+w); *y2=maxh-(y+h); *w2=w; *h2=h; break;
-		case 3: *x2=y;		*y2=maxw-(x+w); *w2=h; *h2=w; break;
-		}
-	}
+	void calc_rot90_offset_and_size(
+		int choice_rot90
+		, const double x , const double y
+		, const double w , const double h
+		, const double maxw , const double maxh
+		, double *x2 , double *y2 , double *w2 , double *h2
+	);
 
 	/* 回転計算 size(w2,h2) */
 	void calc_rot90_size(
-	 int choice_rot90 , double w , double h , double *w2 , double *h2
+		int choice_rot90
+		, const double w , const double h , double *w2 , double *h2
 	);
+
+	/*
+		変換
+	*/
+
+	void copy_opengl_to_value( void );
+	void copy_value_to_opengl( void );
+
 private:
 	int previous_choice_rot90_;
 
-	/* 表示値を回転する */
-	void rot90_about_area_GUI_values_( const int rot90_diff );
+	/*
+		変換
+	*/
+
+	/* pixel単位をcm単位に変換 */
+	double cm_from_pixel_( const double pixel , const double dpi );
+
+	/* cm単位をpixel単位に変換 */
+	double pixel_from_cm_( const double cm , const double dpi );
 };
 
 #endif /* !cb_area_and_rot90_h */

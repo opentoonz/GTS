@@ -98,7 +98,6 @@ public:
 	void cb_scan_full_area_and_crop( void );
 
 	void cb_color_trace_src_edit_value( void );
-	void cb_color_trace_src_redraw_image( void );
 	void cb_color_trace_src_limit_nothing( void );
 	void cb_color_trace_src_limit_hh( void );
 	void cb_color_trace_src_limit_aa( void );
@@ -170,12 +169,17 @@ public:
 
 	int print_window_headline( void );
 
-	void from_opengl_rect_to_area_val( void );
-
 	int rot_and_trace_and_enoise( // Rot90 and Effects
 		iip_canvas *parent
 		, int rotate_per_90_type 
 	);
+	void rot_and_trace_and_enoise_and_preview(
+		iip_canvas *parent
+		,int rotate_per_90_type
+		,const bool crop_sw=false
+		,const bool force_view_scanimage_sw=false
+	);
+
 	int redraw_image(
 		iip_canvas *parent
 		, const bool crop_sw
@@ -278,14 +282,11 @@ private:
 	void _iipg_mem_free( void );
 
 	int _iipg_view_setup( int i_max_area_sw=OFF );
-	void iipg_view_redraw_( void );
 
 	void _iipg_scan_set_physical_param( void );
 	void _iipg_scan_get_from_gui( const bool full_area_sw );
 	int _iipg_scan_action( const bool full_area_sw );
 	int _iipg_scan_get_scanner_info( void );
-
-	void _from_area_val_to_opengl_rect( void );
 
 	int _cb_open_text( char *cp_path );
 
@@ -293,13 +294,6 @@ private:
 	void _trace_batch_add( char *cp_path );
 
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
-
-	void rot_and_trace_and_enoise_and_preview_(
-		iip_canvas *parent
-		,int rotate_per_90_type
-		,const bool crop_sw=false
-		,const bool force_view_scanimage_sw=false
-	);
 };
 extern gts_master cl_gts_master;
 

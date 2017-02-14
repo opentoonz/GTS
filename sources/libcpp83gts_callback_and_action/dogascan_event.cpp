@@ -292,7 +292,7 @@ void gts_master::_move_drag( void )
 	this->set_scrollbar();
 
 	/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
-	this->from_opengl_rect_to_area_val();
+	this->cl_area_and_rot90.copy_opengl_to_value();
 }
 void gts_master::_move_stop( void )
 {

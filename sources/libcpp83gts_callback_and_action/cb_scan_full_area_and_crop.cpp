@@ -24,7 +24,7 @@ void gts_master::cb_scan_full_area_and_crop( void )
 	}
 
 	/* スキャンした画像とCropエリアの表示 */
-	this->rot_and_trace_and_enoise_and_preview_(
+	this->rot_and_trace_and_enoise_and_preview(
 		clp_scan ,cl_gts_gui.choice_rot90->value() ,true ,true
 	);
 
@@ -43,5 +43,6 @@ void gts_master::cb_scan_full_area_and_crop( void )
 	    );
 	}
 	/* GUI数値を画像表示ルーチンにセット */
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }

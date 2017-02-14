@@ -48,7 +48,8 @@ void gts_master::cb_area_selecter( void ) {
 		cl_gts_gui.group_area_crop->deactivate();
 
 		/* Cropエリア(OpenGL)再表示 */
-		this->_from_area_val_to_opengl_rect();
+		this->cl_area_and_rot90.copy_value_to_opengl();
+		cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 	}
 }
 void gts_master::cb_area_aspect_ratio_selecter( void ) {
@@ -77,7 +78,8 @@ void gts_master::cb_area_aspect_ratio_selecter( void ) {
 		);
 
 		/* Cropエリア(OpenGL)再表示 */
-		this->_from_area_val_to_opengl_rect();
+		this->cl_area_and_rot90.copy_value_to_opengl();
+		cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 	}
 }
 //--------------------------------------------------------------------

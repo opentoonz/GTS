@@ -39,7 +39,7 @@ int fl_shortcut_up_down_left_right_( int key )
 		cl_gts_gui.opengl_view->redraw();
 
 		/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
-		cl_gts_master.from_opengl_rect_to_area_val();
+		cl_gts_master.cl_area_and_rot90.copy_opengl_to_value();
 
 		return 1;
 	}
