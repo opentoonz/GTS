@@ -557,16 +557,11 @@ bool cb_trace_files::is_exist_save_files_(void)
 		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 			filepath.c_str()
 		))) {
-			sw = true;
-
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num << " S";
-	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
+		 sw = true;
+		 cl_gts_master.cl_number.replace_with_S( file_num ,ii );
 		}
 		else {
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num;
-	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
+		 cl_gts_master.cl_number.replace_without_S( file_num ,ii );
 		}
 	}
 	return sw;
@@ -669,7 +664,6 @@ const std::string cb_trace_files::get_save_name_( const int number )
 	if (0 <= number) {
 	 filename += ids::path::str_from_number(
 		number
-		//, cl_gts_gui.strinp_trace_save_number_format->value()
 		, cl_gts_gui.output_trace_save_number_format->value()
 	 );
 	}

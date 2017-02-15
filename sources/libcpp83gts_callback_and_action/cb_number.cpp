@@ -2,6 +2,7 @@
 #include <cctype>	// isdigit()
 #include <cassert>	// assert()
 #include <cstring>
+#include <iostream>
 #include <sstream>	// std::ostringstream
 #include <iomanip>	// std::setw()
 #include "ptbl_funct.h"
@@ -62,22 +63,58 @@ namespace {
 
 namespace {
 
-void insert_( const std::string& str ,const int list_num/* 1,2,3... */)
-{
-	cl_gts_gui.selbro_number_list->insert( list_num ,str.c_str() );
+const int get_number_of_digits_( void ) {
+	std::string num_form;
+	if ( cl_gts_master.cl_number.is_scan() ) {
+	 num_form = cl_gts_gui.output_scan_save_number_format->value();
+	} else
+	if ( cl_gts_master.cl_number.is_trace() ) {
+	 num_form = cl_gts_gui.output_trace_save_number_format->value();
+	}
+	else {
+		return 4;
+	}
+
+	if (num_form.empty() || num_form.size() <=0) {
+		return 4;
+	}
+
+	if (isdigit( num_form.front() )) {/* 区切り文字はない */
+		return num_form.size();
+	}
+	return num_form.size() - 1; /* 区切り文字が一つのみであること前提 */
 }
 
+std::string get_number_string_( const int file_num ) {
+	std::ostringstream ost;
+	const int dig_num = get_number_of_digits_();
+	ost << std::setfill('0') << std::setw(dig_num) << file_num;
+	return ost.str();
+}
+//------
+void insert_( const std::string& str ,const int list_num/* 1,2,3... */) {
+	cl_gts_gui.selbro_number_list->insert( list_num ,str.c_str() );
+}
+void replace_( const std::string& str ,const int list_num/* 1,2,3... */) {
+	cl_gts_gui.selbro_number_list->text( list_num ,str.c_str() );
+}
+//------
 void insert_without_S_( const int file_num ,const int list_num/*1,2,3...*/)
 {
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num;
-	insert_( ost.str() ,list_num );
+	insert_( get_number_string_(file_num) ,list_num );
 }
 void insert_with_S_( const int file_num ,const int list_num/*1,2,3...*/)
 {
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num << " S";
-	insert_( ost.str() ,list_num );
+	insert_( get_number_string_(file_num) + " S",list_num );
+}
+//------
+void replace_without_S_( const int file_num ,const int list_num/*1,2,3...*/)
+{
+	replace_( get_number_string_(file_num) ,list_num );
+}
+void replace_with_S_( const int file_num ,const int list_num/*1,2,3...*/)
+{
+	replace_( get_number_string_(file_num) + " S",list_num );
 }
 
 } // namespace
@@ -85,13 +122,19 @@ void insert_with_S_( const int file_num ,const int list_num/*1,2,3...*/)
 //------------------------------------------------------------
 
 /* saveファイル存在マーク付加した(orしない)ファイル番号をlistの最後に追加 */
-void cb_number::append_without_S( const int file_num )
-{
+void cb_number::append_without_S( const int file_num ) {
 	insert_without_S_( file_num ,cl_gts_gui.selbro_number_list->size()+1);
 }
-void cb_number::append_with_S( const int file_num )
-{
+void cb_number::append_with_S( const int file_num ) {
 	insert_with_S_( file_num ,cl_gts_gui.selbro_number_list->size()+1 );
+}
+
+/* saveファイル存在マーク付加した(orしない)ファイル番号に書き直し */
+void cb_number::replace_without_S(const int file_num , const int list_num) {
+	replace_without_S_( file_num ,list_num );
+}
+void cb_number::replace_with_S( const int file_num , const int list_num ) {
+	replace_with_S_( file_num ,list_num );
 }
 
 //------------------------------------------------------------
@@ -158,7 +201,9 @@ void cb_number::remove_all( void )
 	while (0 < cl_gts_gui.selbro_number_list->size()) { 
 	   	cl_gts_gui.selbro_number_list->remove(1);
 	}
+	cl_gts_gui.selbro_number_list->redraw();
 */
+
 	cl_gts_gui.selbro_number_list->clear();
 }
 
@@ -185,9 +230,11 @@ void cb_number::unselect( int list_num )
 void cb_number::add_S( const int list_num )
 {
 	std::string numstr( cl_gts_gui.selbro_number_list->text(list_num) );
-	if (numstr.size() == 4) {
+	if ( isdigit(numstr.back()) != 0 ) { /* 数字である -> Sマークない */
 		numstr += " S";
-		cl_gts_gui.selbro_number_list->text(list_num, numstr.c_str());
+		cl_gts_gui.selbro_number_list->text(
+			list_num , numstr.c_str()
+		);
 	}
 }
 
@@ -246,19 +293,17 @@ namespace {
 	for (ii= 1 ;ii <= cl_gts_gui.selbro_number_list->size() ;++ii) {
 		jj = this->file_num_from_list_num( ii );
 		if (file_num == jj) {/* 既にあるなら何もしないで... */
-			cl_gts_gui.selbro_number_list->select( ii );/* 選択 */
+			cl_gts_gui.selbro_number_list->select(ii);/* 選択 */
 			return ii;
 		}
 		if (file_num < jj) { /* listの順位置に挿入 */
-			(void)sprintf(buffer, "%04d", file_num );
-			cl_gts_gui.selbro_number_list->insert( ii ,buffer );
-			cl_gts_gui.selbro_number_list->select( ii );/* 選択 */
+			insert_without_S_( file_num ,ii );
+			cl_gts_gui.selbro_number_list->select(ii);/* 選択 */
 			return ii;
 		}
 	}
 	/* listの最後に追加 */
-	(void)sprintf(buffer, "%04d", file_num );
-	cl_gts_gui.selbro_number_list->add( buffer );
+	insert_without_S_(file_num,cl_gts_gui.selbro_number_list->size()+1);
 	cl_gts_gui.selbro_number_list->select(
 	 cl_gts_gui.selbro_number_list->size()
 	);/* 選択 */
