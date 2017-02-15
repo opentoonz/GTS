@@ -372,7 +372,7 @@ void cb_trace_files::cb_browse_open_file( void )
 {
 	/* NativeブラウザーOpenで開く */
 	const std::string filepath = ids::path::fltk_native_browse_open(
-		"Open File"
+		"Open Image"
 		,cl_gts_gui.filinp_trace_open_dir_path->value()
 		,this->get_open_name_from_number_(
 		static_cast<int>(cl_gts_gui.valout_trace_num_start->value())

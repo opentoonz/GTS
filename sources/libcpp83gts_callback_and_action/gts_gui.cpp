@@ -392,8 +392,8 @@ void gts_gui::cb_menite_help_about(Fl_Menu_* o, void* v) {
 
 Fl_Menu_Item gts_gui::menu_[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Open File Images...", 0,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Set Saving Scan Images...", 0,  (Fl_Callback*)gts_gui::cb_Set, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Open Image...", 0,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Set Saving Folder for Scan...", 0,  (Fl_Callback*)gts_gui::cb_Set, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Open Config...", 0xffbe,  (Fl_Callback*)gts_gui::cb_Open1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Save Config", 0x40073,  (Fl_Callback*)gts_gui::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Save As Config...", 0x50073,  (Fl_Callback*)gts_gui::cb_Save1, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},

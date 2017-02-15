@@ -189,7 +189,10 @@ public:
 		iip_canvas *clp_canvas ,char *cp_path ,double d_dpi
 		,int i_rot90 = 0 ,iip_read *clp_read = NULL
 	);
-	iip_canvas *iipg_scan( const bool full_area_sw=false );
+	iip_canvas *iipg_scan(
+		int&return_code/* OK/NG/CANCEL*/
+		,const bool full_area_sw=false
+	);
 
 private:
 	int	_i_mv_sw,

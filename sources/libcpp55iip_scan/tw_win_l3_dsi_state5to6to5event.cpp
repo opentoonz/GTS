@@ -65,10 +65,13 @@ int tw_win_l3_dsi::state5to6to5event( void )
 
 		/* 画像転送でエラーだったときは、
 		MSG_RESETしてからエラーリターン */
-		if (OK != i_ret) {
+		if (NG == i_ret) {
 			pri_funct_err_bttvr(
 		 "Error : this->state6to7select() returns NG." );
 			return NG;
+		}
+		if (CANCEL == i_ret) {
+			return CANCEL;
 		}
 
 		/* GUIを使わないときこのイベントループから抜ける */

@@ -40,7 +40,7 @@ Execute "./gts" in unziped folder.
 3. Get third party libraries
 
  third party libraries unarchived in:
- - `GTS/thirdparty/fltk/fltk-1.3.3/`
+ - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
 4. How to build

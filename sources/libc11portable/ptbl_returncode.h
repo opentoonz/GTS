@@ -8,6 +8,9 @@
 #ifndef	NG
 #define	NG	(-1)
 #endif
+#ifndef	CANCEL	/* スキャン中のキャンセルの感知のため作成 2017-02-06 */
+#define	CANCEL	(2)
+#endif
 
 #ifndef	OFF
 #define	OFF	(0)

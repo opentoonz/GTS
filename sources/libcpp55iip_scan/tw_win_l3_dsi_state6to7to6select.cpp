@@ -22,10 +22,16 @@ int tw_win_l3_dsi::_state6to7to6select( void )
 			pri_funct_msg_ttvr( "TWSX_NATIVE" );
 		}
 		/* 画像の転送 */
-		if (OK != this->_state6to7to6native()) {
+		{
+		const int ret = this->_state6to7to6native();
+		if (NG == ret) {
 			pri_funct_err_bttvr(
 		 "Error : this->_state6to7to6native() returns NG." );
 			return NG;
+		}
+		if (CANCEL == ret) {
+			return CANCEL;
+		}
 		}
 		break;
 	case TWSX_MEMORY:

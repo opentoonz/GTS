@@ -7,10 +7,19 @@ void gts_master::cb_scan_full_area_and_crop( void )
 	iip_canvas *clp_scan;
 
 	/* フルエリアでスキャンを実行 */
-	clp_scan = this->iipg_scan( true/* full_area_sw */ );
-	if (NULL == clp_scan) {
+	int return_code=NG;
+	clp_scan = this->iipg_scan( return_code ,true/* full_area_sw */ );
+	if (return_code == NG) {
 		pri_funct_err_bttvr(
-	  "Error : this->iipg_scan() returns NULL" );
+	  "Error : this->iipg_scan() returns NG" );
+		return;
+	}
+	if (return_code == CANCEL) {
+		return;
+	}
+	if (nullptr == clp_scan) {
+		pri_funct_err_bttvr(
+	  "Error : this->iipg_scan() returns nullptr" );
 		return;
 	}
 
