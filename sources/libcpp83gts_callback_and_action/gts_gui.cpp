@@ -810,11 +810,13 @@ void gts_gui::cb_strinp_scan_save_file_head(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_strinp_scan_save_file_head_i(o,v);
 }
 
-void gts_gui::cb_strinp_scan_save_number_format_i(Fl_Input*, void*) {
-  cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
+void gts_gui::cb_output_scan_save_number_format_i(Fl_Output* o, void*) {
+  cl_gts_master.cl_input_number_format.cb_dialog_input_number_format(
+	window_scan_and_save ,output_scan_save_number_format ,o
+);
 }
-void gts_gui::cb_strinp_scan_save_number_format(Fl_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_strinp_scan_save_number_format_i(o,v);
+void gts_gui::cb_output_scan_save_number_format(Fl_Output* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_output_scan_save_number_format_i(o,v);
 }
 
 void gts_gui::cb_choice_scan_save_image_format_i(Fl_Choice*, void*) {
@@ -950,11 +952,13 @@ void gts_gui::cb_strinp_trace_save_file_head(Fl_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_strinp_trace_save_file_head_i(o,v);
 }
 
-void gts_gui::cb_strinp_trace_save_number_format_i(Fl_Input*, void*) {
-  cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
+void gts_gui::cb_output_trace_save_number_format_i(Fl_Output* o, void*) {
+  cl_gts_master.cl_input_number_format.cb_dialog_input_number_format(
+	window_trace_files ,output_trace_save_number_format ,o
+);
 }
-void gts_gui::cb_strinp_trace_save_number_format(Fl_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_strinp_trace_save_number_format_i(o,v);
+void gts_gui::cb_output_trace_save_number_format(Fl_Output* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_output_trace_save_number_format_i(o,v);
 }
 
 void gts_gui::cb_choice_trace_save_image_format_i(Fl_Choice*, void*) {
@@ -5029,6 +5033,43 @@ void gts_gui::cb_valinp_edit_color_blu(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_valinp_edit_color_blu_i(o,v);
 }
 
+void gts_gui::cb_window_input_number_format_i(Fl_Double_Window* o, void*) {
+  o->hide();
+}
+void gts_gui::cb_window_input_number_format(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_input_number_format_i(o,v);
+}
+
+void gts_gui::cb_choice_input_num_form_separator_i(Fl_Choice*, void*) {
+  cl_gts_master.cl_input_number_format.cb_separator();
+}
+void gts_gui::cb_choice_input_num_form_separator(Fl_Choice* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_choice_input_num_form_separator_i(o,v);
+}
+
+void gts_gui::cb_counte_input_num_form_num_of_digits_i(Fl_Counter*, void*) {
+  cl_gts_master.cl_input_number_format.cb_digits();
+}
+void gts_gui::cb_counte_input_num_form_num_of_digits(Fl_Counter* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_counte_input_num_form_num_of_digits_i(o,v);
+}
+
+void gts_gui::cb_button_input_num_form_ok_i(Fl_Button*, void*) {
+  cl_gts_master.cl_input_number_format.cb_ok();
+cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
+cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
+}
+void gts_gui::cb_button_input_num_form_ok(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_button_input_num_form_ok_i(o,v);
+}
+
+void gts_gui::cb_button_input_num_form_cancel_i(Fl_Button*, void*) {
+  cl_gts_master.cl_input_number_format.cb_cancel();
+}
+void gts_gui::cb_button_input_num_form_cancel(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_button_input_num_form_cancel_i(o,v);
+}
+
 Fl_Double_Window* gts_gui::make_window() {
   { window_opengl = new Fl_Double_Window(720, 565, "GTS");
     window_opengl->callback((Fl_Callback*)cb_window_opengl, (void*)(this));
@@ -5479,11 +5520,8 @@ Fl_Double_Window* gts_gui::make_window() {
           strinp_scan_save_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_scan_save_file_head);
         } // Fl_Input* strinp_scan_save_file_head
-        { strinp_scan_save_number_format = new Fl_Input(100, 175, 45, 25);
-          strinp_scan_save_number_format->callback((Fl_Callback*)cb_strinp_scan_save_number_format);
-          strinp_scan_save_number_format->deactivate();
-        } // Fl_Input* strinp_scan_save_number_format
         { output_scan_save_number_format = new Fl_Output(100, 175, 45, 25);
+          output_scan_save_number_format->callback((Fl_Callback*)cb_output_scan_save_number_format);
         } // Fl_Output* output_scan_save_number_format
         { choice_scan_save_image_format = new Fl_Choice(145, 175, 54, 25);
           choice_scan_save_image_format->down_box(FL_BORDER_BOX);
@@ -5685,11 +5723,8 @@ Fl_Double_Window* gts_gui::make_window() {
           strinp_trace_save_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_trace_save_file_head);
         } // Fl_Input* strinp_trace_save_file_head
-        { strinp_trace_save_number_format = new Fl_Input(100, 375, 45, 25);
-          strinp_trace_save_number_format->callback((Fl_Callback*)cb_strinp_trace_save_number_format);
-          strinp_trace_save_number_format->deactivate();
-        } // Fl_Input* strinp_trace_save_number_format
         { output_trace_save_number_format = new Fl_Output(100, 375, 45, 25);
+          output_trace_save_number_format->callback((Fl_Callback*)cb_output_trace_save_number_format);
         } // Fl_Output* output_trace_save_number_format
         { choice_trace_save_image_format = new Fl_Choice(145, 375, 54, 25);
           choice_trace_save_image_format->down_box(FL_BORDER_BOX);
@@ -6991,6 +7026,31 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_output_color->end();
     window_trace_output_color->resizable(window_trace_output_color);
   } // Fl_Double_Window* window_trace_output_color
-  return window_trace_output_color;
+  { window_input_number_format = new Fl_Double_Window(200, 150, "Input Number Format");
+    window_input_number_format->callback((Fl_Callback*)cb_window_input_number_format, (void*)(this));
+    { choice_input_num_form_separator = new Fl_Choice(80, 10, 105, 25, "Separator");
+      choice_input_num_form_separator->down_box(FL_BORDER_BOX);
+      choice_input_num_form_separator->callback((Fl_Callback*)cb_choice_input_num_form_separator);
+    } // Fl_Choice* choice_input_num_form_separator
+    { counte_input_num_form_num_of_digits = new Fl_Counter(130, 40, 50, 25, "Number of digits");
+      counte_input_num_form_num_of_digits->type(1);
+      counte_input_num_form_num_of_digits->minimum(2);
+      counte_input_num_form_num_of_digits->maximum(4);
+      counte_input_num_form_num_of_digits->step(1);
+      counte_input_num_form_num_of_digits->callback((Fl_Callback*)cb_counte_input_num_form_num_of_digits);
+      counte_input_num_form_num_of_digits->align(Fl_Align(FL_ALIGN_LEFT));
+    } // Fl_Counter* counte_input_num_form_num_of_digits
+    { output_input_num_form_sample = new Fl_Output(60, 80, 80, 25);
+    } // Fl_Output* output_input_num_form_sample
+    { button_input_num_form_ok = new Fl_Button(20, 115, 60, 25, "OK");
+      button_input_num_form_ok->callback((Fl_Callback*)cb_button_input_num_form_ok);
+    } // Fl_Button* button_input_num_form_ok
+    { button_input_num_form_cancel = new Fl_Button(120, 115, 60, 25, "Cancel");
+      button_input_num_form_cancel->callback((Fl_Callback*)cb_button_input_num_form_cancel);
+    } // Fl_Button* button_input_num_form_cancel
+    window_input_number_format->set_modal();
+    window_input_number_format->end();
+  } // Fl_Double_Window* window_input_number_format
+  return window_input_number_format;
 }
 gts_gui cl_gts_gui; 

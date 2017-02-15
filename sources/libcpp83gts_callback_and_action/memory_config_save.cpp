@@ -89,7 +89,7 @@ void memory_config::save_scan_and_save_( std::ofstream& ofs )
 	save_stri_( this->str_scan_save_file_head_
 	   ,cl_gts_gui.strinp_scan_save_file_head->value() ,ofs );
 	save_stri_( this->str_scan_save_number_format_
-	   ,cl_gts_gui.strinp_scan_save_number_format->value() ,ofs );
+	   ,cl_gts_gui.output_scan_save_number_format->value() ,ofs );
 	save_stri_( this->str_scan_save_image_format_
 	   ,cl_gts_gui.choice_scan_save_image_format->text() ,ofs );
 
@@ -130,7 +130,7 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 	save_stri_( this->str_trace_save_file_head_
 	   ,cl_gts_gui.strinp_trace_save_file_head->value() ,ofs );
 	save_stri_( this->str_trace_save_number_format_
-	   ,cl_gts_gui.strinp_trace_save_number_format->value() ,ofs );
+	   ,cl_gts_gui.output_trace_save_number_format->value() ,ofs );
 	save_stri_( this->str_trace_save_image_format_
 	   ,cl_gts_gui.choice_trace_save_image_format->text() ,ofs );
 }

@@ -74,6 +74,23 @@ const std::string ids::path::fpath_from_dpath_fname(
 
 namespace {
 
+const char* separator_codes_ = "._-";
+const char* separator_names_[] = {
+	"Period"
+	,"Underscore"
+	,"Hyphen"
+	,nullptr
+};
+
+bool is_separator_(int cc)
+{
+	const std::string codes( separator_codes_ );
+	if (std::string::npos == codes.find(static_cast<char>(cc))) {
+		return false;
+	}
+	return true;
+}
+
 void from_fname_to_head_num_ext_(
 	const std::string& fname
 	,std::string& head
@@ -90,7 +107,8 @@ void from_fname_to_head_num_ext_(
 		return;
 	}
 
-	/* ファイル名の後ろから拡張子の先頭位置を得る
+	/* 拡張子(ext)とそれ以外(head_num)に分離
+		ファイル名の後ろから拡張子の先頭位置を得る
 		例１ 拡張子がある
 		A.0001.tif
 		0123456789
@@ -116,24 +134,26 @@ void from_fname_to_head_num_ext_(
 		return;
 	}
 
-	/* 数値とその前にある区切子を得る(".0001") */
+	/* 拡張子以外(head_num)から、
+	数値書式(num_form)と(数値(number)と)ファイルヘッド名(head)を得る
+		数値以外で区切るが、指定記号のみ区切子とする
+		例１	A.0001		A	.0001
+		例２	A001		A	001
+	*/
 	pos = head_num.find_last_not_of("0123456789");
 	if (std::string::npos==pos) { /* 全部数値 */
-		if (pos==0 && !isalpha(head_num.at(pos))) { /* 区切子と数値のみ */
-			number = std::stoi( head_num.substr(1) );
-		}
-		else {
-			number = std::stoi( head_num );
-		}
+		number = std::stoi( head_num );
 		num_form = head_num;
 	}
 	else if ((head_num.size()-1) <= pos) { /* 数値がない */
 		head = head_num;
 	}
 	else {
+		/* 数値の部分のみを見て数値にする */
 		number = std::stoi( head_num.substr(pos+1) );
-		if (isalpha(head_num.at(pos))) {
-			++pos; /* 区切子ならば数値に含む */
+		/* 区切子あれば区切子ごと数値書式とする */
+		if (!is_separator_(head_num.at(pos))) {
+			++pos; /* 区切子はない */
 		}
 		num_form = head_num.substr(pos);
 		head = head_num.substr(0 ,pos);
@@ -204,9 +224,9 @@ void from_dpath_head_num_ext_to_nums_(
 	/* WindowsではDirectoryの場合d_nameの最後に/が付く、Fileは付かない
 	   "../"が始めに来て、"./"が２番目に来る
 	*/
-#if DEBUG_INO
+#if DEBUG_IDS_PATH_STR_FROM_NUMBER
 pr_filename_( ii ,list_count ,list_pp[ii]->d_name ,he ,nu ,number ,ex );
-#endif //DEBUG_INO
+#endif //DEBUG_IDS_PATH_STR_FROM_NUMBER
 		if (	0 <= number && he == head && ex == ext
 			&& save_as_num_form_(num,nu)
 		) {
@@ -219,6 +239,15 @@ pr_filename_( ii ,list_count ,list_pp[ii]->d_name ,he ,nu ,number ,ex );
 } // namespace
 
 //----------------------------------------------------------------------
+
+const char* ids::path::get_separator_codes_for_level_from_files(void)
+{
+	return separator_codes_;
+}
+const char** ids::path::get_separator_names_for_level_from_files(void)
+{
+	return separator_names_;
+}
 
 void ids::path::level_from_files(
 	const std::string& fpath
@@ -234,24 +263,24 @@ void ids::path::level_from_files(
 	ids::path::from_fpath_to_dpath_fname( fpath ,dpath ,fname );
 	from_fname_to_head_num_ext_(fname,head,num,number,ext);
 
-#if DEBUG_INO
+#if DEBUG_IDS_PATH_STR_FROM_NUMBER
 std::cout << "--------------------------------------------------\n";
 std::cout << "dpath=\"" << dpath << "\"\n";
 std::cout << "--------------------------------------------------\n";
 	pr_filename_( 0 ,1 ,fname ,head ,num ,number ,ext );
 std::cout << "--------------------------------------------------\n";
-#endif //DEBUG_INO
+#endif //DEBUG_IDS_PATH_STR_FROM_NUMBER
 
 	from_dpath_head_num_ext_to_nums_(dpath,head,num,ext,nums);
 	std::sort( nums.begin() ,nums.end() ); /* 昇順ソート */
 
-#if DEBUG_INO
+#if DEBUG_IDS_PATH_STR_FROM_NUMBER
 std::cout << "--------------------------------------------------\n";
 for( const int& num : nums ) {
 std::cout << num << "\n";
 }
 std::cout << "--------------------------------------------------\n";
-#endif //DEBUG_INO
+#endif //DEBUG_IDS_PATH_STR_FROM_NUMBER
 }
 
 const std::string ids::path::str_from_number(
@@ -264,7 +293,7 @@ const std::string ids::path::str_from_number(
 	}
 	int ww = num_form.size();
 	std::string sep;
-	if (!isalpha( num_form.at(0) )) {
+	if (isdigit( num_form.at(0) ) == 0) {
 		--ww;
 		sep = num_form.at(0);
 	}
@@ -274,7 +303,7 @@ const std::string ids::path::str_from_number(
 }
 
 //----------------------------------------------------------------------
-#if DEBUG_INO
+#if DEBUG_IDS_PATH_STR_FROM_NUMBER
 int main(int argc ,const char* argv[])
 {
 	if (argc < 2) {
@@ -303,13 +332,13 @@ std::cout << "--------------------------------------------------\n";
 	return 0;
 }
 /*
-:262,264 w! make.bat
+:321,323 w! make.bat
 rem windows make
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_INO /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ids_path_level_from_files.cpp /Fet
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_IDS_PATH_STR_FROM_NUMBER /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ids_path_level_from_files.cpp /Fet
 del ids_path_level_from_files.obj
 
-:270,270 w! make.csh
+:326,327 w! make.csh
 # linux make
-g++ -DDEBUG_INO -std=c++11 ids_path_level_from_files.cpp -lfltk
+g++ -DDEBUG_IDS_PATH_STR_FROM_NUMBER -std=c++11 ids_path_level_from_files.cpp -lfltk
 */
-#endif //DEBUG_INO
+#endif //DEBUG_IDS_PATH_STR_FROM_NUMBER

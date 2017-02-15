@@ -25,6 +25,7 @@
 #include "cb_trace_files.h"
 #include "cb_number.h"
 #include "cb_trace_batch.h"
+#include "cb_input_number_format.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
 #include "cb_color_trace_enhancement.h"
@@ -156,6 +157,7 @@ public:
 	cb_trace_files		cl_trace_files;
 	cb_number		cl_number;
 	cb_trace_batch		cl_trace_batch;
+	cb_input_number_format	cl_input_number_format;
 
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
 	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;

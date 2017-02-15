@@ -26,6 +26,7 @@
 #include <FL/Fl_Light_Button.H>
 #include "fltk_1000x10_color_belt.h"
 #include "fltk_1000_range_minmax.h"
+#include <FL/Fl_Counter.H>
 
 class gts_gui {
 public:
@@ -381,12 +382,11 @@ private:
   inline void cb_strinp_scan_save_file_head_i(Fl_Input*, void*);
   static void cb_strinp_scan_save_file_head(Fl_Input*, void*);
 public:
-  Fl_Input *strinp_scan_save_number_format;
-private:
-  inline void cb_strinp_scan_save_number_format_i(Fl_Input*, void*);
-  static void cb_strinp_scan_save_number_format(Fl_Input*, void*);
-public:
   Fl_Output *output_scan_save_number_format;
+private:
+  inline void cb_output_scan_save_number_format_i(Fl_Output*, void*);
+  static void cb_output_scan_save_number_format(Fl_Output*, void*);
+public:
   Fl_Choice *choice_scan_save_image_format;
 private:
   inline void cb_choice_scan_save_image_format_i(Fl_Choice*, void*);
@@ -455,12 +455,11 @@ private:
   inline void cb_strinp_trace_save_file_head_i(Fl_Input*, void*);
   static void cb_strinp_trace_save_file_head(Fl_Input*, void*);
 public:
-  Fl_Input *strinp_trace_save_number_format;
-private:
-  inline void cb_strinp_trace_save_number_format_i(Fl_Input*, void*);
-  static void cb_strinp_trace_save_number_format(Fl_Input*, void*);
-public:
   Fl_Output *output_trace_save_number_format;
+private:
+  inline void cb_output_trace_save_number_format_i(Fl_Output*, void*);
+  static void cb_output_trace_save_number_format(Fl_Output*, void*);
+public:
   Fl_Choice *choice_trace_save_image_format;
 private:
   inline void cb_choice_trace_save_image_format_i(Fl_Choice*, void*);
@@ -1273,6 +1272,32 @@ public:
 private:
   inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
   static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
+public:
+  Fl_Double_Window *window_input_number_format;
+private:
+  inline void cb_window_input_number_format_i(Fl_Double_Window*, void*);
+  static void cb_window_input_number_format(Fl_Double_Window*, void*);
+public:
+  Fl_Choice *choice_input_num_form_separator;
+private:
+  inline void cb_choice_input_num_form_separator_i(Fl_Choice*, void*);
+  static void cb_choice_input_num_form_separator(Fl_Choice*, void*);
+public:
+  Fl_Counter *counte_input_num_form_num_of_digits;
+private:
+  inline void cb_counte_input_num_form_num_of_digits_i(Fl_Counter*, void*);
+  static void cb_counte_input_num_form_num_of_digits(Fl_Counter*, void*);
+public:
+  Fl_Output *output_input_num_form_sample;
+  Fl_Button *button_input_num_form_ok;
+private:
+  inline void cb_button_input_num_form_ok_i(Fl_Button*, void*);
+  static void cb_button_input_num_form_ok(Fl_Button*, void*);
+public:
+  Fl_Button *button_input_num_form_cancel;
+private:
+  inline void cb_button_input_num_form_cancel_i(Fl_Button*, void*);
+  static void cb_button_input_num_form_cancel(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif
