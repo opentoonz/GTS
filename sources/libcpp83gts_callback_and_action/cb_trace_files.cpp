@@ -364,6 +364,7 @@ void cb_trace_files::cb_renumber(void)
 
 	/* renumber成功したら、新しいStart,End,Numberに表示変更 */
 	this->cb_set_number();
+	this->cb_check_existing_saved_file();
 }
 
 //----------------------------------------------------------------------

@@ -78,13 +78,13 @@ void memory_config::load_ifs_(
 )
 {
 	if ( this->load_number_sw_ ) {
-		/* リストをすべて削除 */
+		/* numberリストをすべて削除 */
 		cl_gts_gui.selbro_number_list->clear();
 		cl_gts_gui.selbro_number_list->redraw();
 	}
 
 	if ( this->load_trace_batch_sw_ ) {
-		/* リストをすべて削除 */
+		/* trace_configリストをすべて削除 */
 		cl_gts_gui.selbro_trace_batch_config_list->clear();
 	}
 
@@ -464,16 +464,7 @@ bool memory_config::load_number_(
 		リストの最後に追加する */
 		// use C++11,throw exception then error
 		const int num = std::stoi(words.at(1));
-
-		if (   !cl_gts_master.cl_number.get_save_path(num).empty()
-		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
-			cl_gts_master.cl_number.get_save_path(num).c_str()
-		))) {
-			cl_gts_master.cl_number.append_with_S(num);
-		}
-		else {
-			cl_gts_master.cl_number.append_without_S(num);
-		}
+		cl_gts_master.cl_number.append_without_S(num);
 
 		/* 選択状態の再現 */
 		if (
@@ -952,10 +943,6 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	 	"End" );
 	}
 
-	/* 保存の確認表示 */
-	cl_gts_master.cl_scan_and_save.check_existing_saved_file();
-	cl_gts_master.cl_trace_files.check_existing_saved_file();
-
 	if (	cl_gts_master.cl_number.is_scan()) {
 		/* Numberウインドウに保存するFileHead名をセット */
 		cl_gts_gui.output_number_file_head_name->value(
@@ -965,6 +952,9 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		/* NumberウインドウのActionTypeセット
 		Scan/TraceウインドウのBGのセット */
 		cl_gts_master.cl_number.set_type_to_scan();
+
+		/* ファイル存在確認して'S'マーク表示 */
+		cl_gts_master.cl_scan_and_save.check_existing_saved_file();
 	} else
 	if (	cl_gts_master.cl_number.is_trace()) {
 		/* Numberウインドウに保存するFileHead名をセット */
@@ -975,6 +965,9 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		/* NumberウインドウのActionTypeセット
 		Scan/TraceウインドウのBGのセット */
 		cl_gts_master.cl_number.set_type_to_trace();
+
+		/* ファイル存在確認して'S'マーク表示 */
+		cl_gts_master.cl_trace_files.check_existing_saved_file();
 	}
 
 	/* 画面は空白表示する指定(データは残っている) */

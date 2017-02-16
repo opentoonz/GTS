@@ -130,31 +130,21 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 
 void cb_area_and_rot90::copy_opengl_to_value( void )
 {
-	/* 画像上のエリアハンドルを選択していないとダメ
-		-->ここではなく外でやるべき?????? --> 再考 */
+	/* 画像上のエリアハンドルを選択していること */
 	if (
 	(E_SELECT_NOTHING == cl_gts_master.cl_ogl_view.get_e_select_part())
 	||
 	(E_SELECT_IMAGE == cl_gts_master.cl_ogl_view.get_e_select_part())
 	) {
 		/* Areaをつかんでいないときはなにもしない */
-		pri_funct_err_bttvr(
-	"Warning : cl_gts_master.cl_ogl_view.get_e_select_part()<%d>"
-			,cl_gts_master.cl_ogl_view.get_e_select_part() );
 		return;
 	}
 
-	/* 画像objあるかチェック
-		-->ここではなく外でやるべき?????? --> 再考 */
+	/* 表示する画像があること */
 	if ((cl_gts_master.cl_ogl_view.get_l_width() <= 0L)
 	||  (cl_gts_master.cl_ogl_view.get_l_height() <= 0L)
 	) {
 		/* データがない(表示していない)ときはなにもしない  */
-		pri_funct_err_bttvr(
-	"Warning : cl_gts_master.cl_ogl_view.get_l_width()<%d>/height()<%d>"
-			,cl_gts_master.cl_ogl_view.get_l_width()
-			,cl_gts_master.cl_ogl_view.get_l_height()
-		);
 		return;
 	}
 
