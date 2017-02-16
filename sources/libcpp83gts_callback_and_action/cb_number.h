@@ -28,6 +28,10 @@ public:
 	void append_without_S( const int file_num );
 	void append_with_S( const int file_num );
 
+	/* saveファイル存在マーク付加した(orしない)ファイル番号に書き直し */
+	void replace_without_S(const int file_num , const int list_num);
+	void replace_with_S( const int file_num , const int list_num );
+
 	//--------------------------------------------------
 
 	void select_all( void );	/* 全て選択状態にする */

@@ -21,7 +21,7 @@ void gts_master::cb_scan_and_preview( void )
 		return;
 	}
 
-	this->rot_and_trace_and_enoise_and_preview_(
+	this->rot_and_trace_and_enoise_and_preview(
 		clp_scan
 		, cl_gts_gui.choice_rot90->value()
 	);

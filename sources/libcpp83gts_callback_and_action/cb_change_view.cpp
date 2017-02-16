@@ -18,7 +18,7 @@ void gts_master::cb_change_wview_( E_WVIEW_TYPE wview_type )
 	}
 
 	/* 表示 */
-	this->iipg_view_redraw_();
+	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
 }
 
 bool gts_master::check_change_wview( void )

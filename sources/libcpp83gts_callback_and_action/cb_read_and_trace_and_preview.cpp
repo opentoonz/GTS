@@ -86,7 +86,7 @@ void gts_master::cb_read_and_trace_and_preview( void )
 
 	/*------ 画像を回転、２値化、ドットノイズ消去、表示する ------*/
 	/* ファイルからの読み込み時は回転処理はしない(ゼロ度回転をする) */
-	this->rot_and_trace_and_enoise_and_preview_(
+	this->rot_and_trace_and_enoise_and_preview(
 		&(this->cl_iip_read), 0
 	);
 }
@@ -97,7 +97,7 @@ void gts_master::cb_rot_trace_enoise_preview( void )
 	/* ファイル読込後の再表示 */
 	if ( &(this->cl_iip_read) == this->cl_iip_ro90.get_clp_parent() ) {
 		/* 画像を回転、２値化、ドットノイズ消去、表示する */
-		this->rot_and_trace_and_enoise_and_preview_(
+		this->rot_and_trace_and_enoise_and_preview(
 			&(this->cl_iip_read)
 			,0
 		);
@@ -107,7 +107,7 @@ void gts_master::cb_rot_trace_enoise_preview( void )
 	if ( this->cl_iip_scan.get_clp_canvas()
 	==   this->cl_iip_ro90.get_clp_parent() ) {
 		/* 画像を回転、２値化、ドットノイズ消去、表示する */
-		this->rot_and_trace_and_enoise_and_preview_(
+		this->rot_and_trace_and_enoise_and_preview(
 			this->cl_iip_scan.get_clp_canvas()
 			,cl_gts_gui.choice_rot90->value()
 		);
@@ -116,7 +116,7 @@ void gts_master::cb_rot_trace_enoise_preview( void )
 
 //------------------------------------------------------------
 
-void gts_master::rot_and_trace_and_enoise_and_preview_(
+void gts_master::rot_and_trace_and_enoise_and_preview(
 	iip_canvas *parent
 	, int rotate_per_90_type 
 	, const bool crop_sw
@@ -173,7 +173,7 @@ int gts_master::redraw_image(
 	} /* それ以外の場合は現在の表示モードを維持する */
 
 	/* 表示 */
-	this->iipg_view_redraw_();
+	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
 
 	/* color trace histogram表示設定 */
 	if (3L <= parent->get_l_channels()) {

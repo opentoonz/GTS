@@ -310,8 +310,6 @@ void cb_scan_and_save::check_existing_saved_file(void)
 	cl_gts_gui.filinp_scan_save_dir_path->redraw();
 	cl_gts_gui.strinp_scan_save_file_head->color(col);
 	cl_gts_gui.strinp_scan_save_file_head->redraw();
-	//cl_gts_gui.strinp_scan_save_number_format->color(col);
-	//cl_gts_gui.strinp_scan_save_number_format->redraw();
 	cl_gts_gui.output_scan_save_number_format->color(col);
 	cl_gts_gui.output_scan_save_number_format->redraw();
 	cl_gts_gui.choice_scan_save_image_format->color(col);
@@ -333,16 +331,11 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
 			filepath.c_str()
 		))) {
-			sw = true;
-
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num << " S";
-	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
+		 sw = true;
+		 cl_gts_master.cl_number.replace_with_S( file_num ,ii );
 		}
 		else {
-	std::ostringstream ost;
-	ost << std::setfill('0') << std::setw(4) << file_num;
-	cl_gts_gui.selbro_number_list->text( ii ,ost.str().c_str() );
+		 cl_gts_master.cl_number.replace_without_S( file_num ,ii );
 		}
 	}
 	return sw;
@@ -379,7 +372,6 @@ const std::string cb_scan_and_save::get_save_name_( const int number )
 	if (0 <= number) {
 	 filename += ids::path::str_from_number(
 		number
-	      //, cl_gts_gui.strinp_scan_save_number_format->value()
 		, cl_gts_gui.output_scan_save_number_format->value()
 	 );
 	}

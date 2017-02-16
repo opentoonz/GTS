@@ -15,10 +15,8 @@ namespace { //--------------------------------------------------------
 
 void set_rotate_per_90_( const std::string& str1 )
 {
-	if (isdigit(str1.c_str()[0])) {/* For Legacy Format...Delete sameday */
-		 cl_gts_gui.choice_rot90->value(
-		  std::stoi(str1) // use C++11,throw exception then error
-		 );
+	if (isdigit(str1.c_str()[0])) { /* For Legacy...Delete sameday */
+		 cl_gts_gui.choice_rot90->value( std::stoi(str1) );
 	}
 	else {
 	/*
@@ -28,13 +26,15 @@ void set_rotate_per_90_( const std::string& str1 )
 	*/
 		const Fl_Menu_Item *crnt =
 			cl_gts_gui.choice_rot90->find_item( str1.c_str() );
-		if (crnt == nullptr) { return; }
-
+		if (crnt == nullptr) {
+			return;
+		}
 		cl_gts_gui.choice_rot90->value( crnt );
 	}
-	/* 回転値(システム設定値)をメモリする */
-	cl_gts_master.set_i_rotate_per_90(
-	 cl_gts_gui.choice_rot90->value() );
+	/* 設定したGUI値をメモリしとく */
+	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90_(
+					  cl_gts_gui.choice_rot90->value()
+	);
 }
 void set_pixel_type_( const std::string& str1 )
 {

@@ -3,10 +3,12 @@
 #include "gts_master.h"
 
 void gts_master::cb_scnr_area_x_pos( void ) {
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void gts_master::cb_scnr_area_y_pos( void ) {
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 namespace {
  void fix_y_from_x_( void ) {
@@ -55,7 +57,8 @@ void gts_master::cb_scnr_area_x_size( void ) {
 	fix_y_from_x_();
 
 	/* OpenGL画像表示のエリア枠を再表示 */
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void gts_master::cb_scnr_area_y_size( void ) {
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
@@ -68,7 +71,8 @@ void gts_master::cb_scnr_area_y_size( void ) {
 	fix_x_from_y_();
 
 	/* OpenGL画像表示のエリア枠を再表示 */
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void gts_master::cb_scnr_area_x_pixel( void ) {
 	/* pixel幅値からcm幅値を計算してGUIに表示 */
@@ -81,7 +85,8 @@ void gts_master::cb_scnr_area_x_pixel( void ) {
 	fix_y_from_x_();
 
 	/* OpenGL画像表示のエリア枠を再表示 */
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void gts_master::cb_scnr_area_y_pixel( void ) {
 	/* pixel幅値からcm幅値を計算してGUIに表示 */
@@ -94,7 +99,8 @@ void gts_master::cb_scnr_area_y_pixel( void ) {
 	fix_x_from_y_();
 
 	/* OpenGL画像表示のエリア枠を再表示 */
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void gts_master::cb_scnr_area_reso( void ) {
 	if (cl_gts_gui.radbut_area_reso_fix_cm->value()) {
@@ -112,6 +118,7 @@ void gts_master::cb_scnr_area_reso( void ) {
 		cl_gts_gui.valinp_area_y_pixel->value() * 2.54
 		/ cl_gts_gui.valinp_area_reso->value() );
 	}
-	this->_from_area_val_to_opengl_rect();
+	this->cl_area_and_rot90.copy_value_to_opengl();
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 
