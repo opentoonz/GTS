@@ -32,7 +32,7 @@ void set_rotate_per_90_( const std::string& str1 )
 		cl_gts_gui.choice_rot90->value( crnt );
 	}
 	/* 設定したGUI値をメモリしとく */
-	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90_(
+	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90(
 					  cl_gts_gui.choice_rot90->value()
 	);
 }

@@ -58,6 +58,10 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 	/* 確認1：スキャン後の画像でなければ何もしない */
 	if (cl_gts_master.cl_iip_scan.get_clp_canvas()
 	!=  cl_gts_master.cl_iip_ro90.get_clp_parent()) {
+		/* 回転のGUIは元に戻す、つまり動作させない */
+		cl_gts_gui.choice_rot90->value(
+			this->previous_choice_rot90_
+		);
 		return;
 	}
 

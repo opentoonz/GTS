@@ -135,7 +135,7 @@ int gts_master::exec( const char *comm )
 		);
 		if (0 <= idx) {
 			cl_gts_gui.choice_rot90->value(idx);
-			this->cl_area_and_rot90.set_previous_choice_rot90_(
+			this->cl_area_and_rot90.set_previous_choice_rot90(
 						  cl_gts_gui.choice_rot90->value()
 			);
 		}

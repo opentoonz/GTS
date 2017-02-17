@@ -15,7 +15,7 @@ public:
 	void cb_rotate_per_90_when_scan( void );
 
 	/* Rot90を変更するときの元のRot90を保持する仕組み */
-	void set_previous_choice_rot90_( const int rot90 ) {
+	void set_previous_choice_rot90( const int rot90 ) {
 	   this->previous_choice_rot90_ = rot90;
 	}
 
