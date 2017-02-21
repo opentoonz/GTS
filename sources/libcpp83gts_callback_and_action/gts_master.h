@@ -63,21 +63,8 @@ public:
 	/* 関数から呼ぶためMethodにしてあるが、意味としてはprivate */
 	void action( E_ACT e_act );
 
-	/* ユーザインターフェースからの実行(fltk callback) */
-	void cb_config_load_dir( void );
-	void cb_config_load_list( void );
-	void cb_config_load_ok( void );
-	void cb_config_save( void );
-	void cb_config_save_as_dir( void );
-	void cb_config_save_as_list( void );
-	void cb_config_save_as_ok( void );
+	/* 実行 */
 	void cb_choice_pixel_type( void );
-	void cb_level_dir( void );
-	void cb_level_rgb_scan_dir( void );
-	void cb_level_mkdir( void );
-	void cb_level_list( void );
-	void cb_level_list_form_change( void );
-	void cb_level_ok( void );
 	void cb_quit( void );
 
 	void cb_read_and_preview( void );
@@ -85,17 +72,6 @@ public:
 	void cb_rot_trace_enoise_preview( void );
 
 	void cb_scan_and_preview( void );
-
-	void cb_area_selecter( void );
-	void cb_scnr_area_x_pos( void );
-	void cb_scnr_area_y_pos( void );
-	void cb_scnr_area_x_size( void );
-	void cb_scnr_area_y_size( void );
-	void cb_scnr_area_x_pixel( void );
-	void cb_scnr_area_y_pixel( void );
-	void cb_scnr_area_reso( void );
-	void cb_area_aspect_ratio_selecter( void );
-	void cb_scan_full_area_and_crop( void );
 
 	void cb_color_trace_src_edit_value( void );
 	void cb_color_trace_src_limit_nothing( void );
@@ -283,10 +259,6 @@ private:
 
 	int _iipg_view_setup( int i_max_area_sw=OFF );
 
-	void _iipg_scan_set_physical_param( void );
-	void _iipg_scan_get_from_gui( const bool full_area_sw );
-	int _iipg_scan_action( const bool full_area_sw );
-	int _iipg_scan_get_scanner_info( void );
 
 	int _cb_open_text( char *cp_path );
 
@@ -294,6 +266,11 @@ private:
 	void _trace_batch_add( char *cp_path );
 
 	void cb_change_wview_( E_WVIEW_TYPE wview_type );
+
+	int iipg_scan_get_scanner_info_( void );
+
+	int iipg_scan_open_setup_unit_get_spec_( void );
+	int iipg_scan_action_( const bool scan_full_area_sw );
 };
 extern gts_master cl_gts_master;
 

@@ -19,9 +19,6 @@ gts_master::gts_master(
 	,_cp_release_number(rele_num)
 	,_i_enable_act_menu_sw(ON)
 	,_i_enable_act_key_event_sw(OFF)
-	/* メニューの初期設定値に合わせる、また、
-	cb_config_load_ok(),cb_level_ok()の時も
-	んだ設定に合わせること */
 {
 }
 
@@ -262,9 +259,9 @@ int gts_master::exec( const char *comm )
 
 	/* TWAINからタイプと最大値をとってきてメニューへ表示する */
 	/* ->show();と.set_hw_parent()は先にやらなければ動作しない */
-	if (OK != this->_iipg_scan_get_scanner_info()) {
+	if (OK != this->iipg_scan_get_scanner_info_()) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iipg_scan_get_scanner_info() returns NG" );
+	 "Error : this->iipg_scan_get_scanner_info_() returns NG" );
 		//return NG;
 		/* エラーが起きても(Scanner接続してなくても)
 		動作させる */

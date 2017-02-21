@@ -155,8 +155,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
-					sources/libcpp83gts_callback_and_action/cb_scan_full_area_and_crop.cpp \
-					sources/libcpp83gts_callback_and_action/cb_scnr_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \

@@ -62,10 +62,7 @@ void gts_gui::cb_Quit(Fl_Menu_* o, void* v) {
 }
 
 void gts_gui::cb_Crop_i(Fl_Menu_*, void*) {
-  cl_gts_gui.choice_area_selecter->value(0);
-cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
-cl_gts_gui.group_area_crop->activate();
-cl_gts_master.cb_scan_full_area_and_crop();
+  cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();
 }
 void gts_gui::cb_Crop(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Crop_i(o,v);
@@ -516,17 +513,14 @@ void gts_gui::cb_window_area_and_rot90(Fl_Double_Window* o, void* v) {
 }
 
 void gts_gui::cb_Crop1_i(Fl_Button*, void*) {
-  cl_gts_gui.choice_area_selecter->value(0);
-cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
-cl_gts_gui.group_area_crop->activate();
-cl_gts_master.cb_scan_full_area_and_crop();
+  cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();
 }
 void gts_gui::cb_Crop1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Crop1_i(o,v);
 }
 
 void gts_gui::cb_choice_area_selecter_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_area_selecter();
+  cl_gts_master.cl_area_and_rot90.cb_area_selecter();
 }
 void gts_gui::cb_choice_area_selecter(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_area_selecter_i(o,v);
@@ -538,49 +532,49 @@ Fl_Menu_Item gts_gui::menu_choice_area_selecter[] = {
 };
 
 void gts_gui::cb_valinp_area_x_pos_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_x_pos();
+  cl_gts_master.cl_area_and_rot90.cb_area_x_pos();
 }
 void gts_gui::cb_valinp_area_x_pos(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_x_pos_i(o,v);
 }
 
 void gts_gui::cb_valinp_area_y_pos_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_y_pos();
+  cl_gts_master.cl_area_and_rot90.cb_area_y_pos();
 }
 void gts_gui::cb_valinp_area_y_pos(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_y_pos_i(o,v);
 }
 
 void gts_gui::cb_valinp_area_x_size_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_x_size();
+  cl_gts_master.cl_area_and_rot90.cb_area_x_size();
 }
 void gts_gui::cb_valinp_area_x_size(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_x_size_i(o,v);
 }
 
 void gts_gui::cb_valinp_area_y_size_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_y_size();
+  cl_gts_master.cl_area_and_rot90.cb_area_y_size();
 }
 void gts_gui::cb_valinp_area_y_size(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_y_size_i(o,v);
 }
 
 void gts_gui::cb_valinp_area_x_pixel_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_x_pixel();
+  cl_gts_master.cl_area_and_rot90.cb_area_x_pixel_size();
 }
 void gts_gui::cb_valinp_area_x_pixel(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_x_pixel_i(o,v);
 }
 
 void gts_gui::cb_valinp_area_y_pixel_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_y_pixel();
+  cl_gts_master.cl_area_and_rot90.cb_area_y_pixel_size();
 }
 void gts_gui::cb_valinp_area_y_pixel(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_y_pixel_i(o,v);
 }
 
 void gts_gui::cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_area_aspect_ratio_selecter();
+  cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
 }
 void gts_gui::cb_choice_area_aspect_ratio_selecter(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_area_aspect_ratio_selecter_i(o,v);
@@ -592,7 +586,7 @@ Fl_Menu_Item gts_gui::menu_choice_area_aspect_ratio_selecter[] = {
 };
 
 void gts_gui::cb_valinp_area_reso_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cb_scnr_area_reso();
+  cl_gts_master.cl_area_and_rot90.cb_area_reso();
 }
 void gts_gui::cb_valinp_area_reso(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_valinp_area_reso_i(o,v);

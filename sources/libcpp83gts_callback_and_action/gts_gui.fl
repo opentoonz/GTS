@@ -67,10 +67,7 @@ cl_gts_master.cb_quit();}
         } {
           MenuItem {} {
             label Crop
-            callback {cl_gts_gui.choice_area_selecter->value(0);
-cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
-cl_gts_gui.group_area_crop->activate();
-cl_gts_master.cb_scan_full_area_and_crop();}
+            callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
@@ -423,17 +420,14 @@ cl_gts_gui.menite_area_and_rot90->clear();}
     } {
       Fl_Button {} {
         label Crop
-        callback {cl_gts_gui.choice_area_selecter->value(0);
-cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
-cl_gts_gui.group_area_crop->activate();
-cl_gts_master.cb_scan_full_area_and_crop();}
+        callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
         xywh {135 5 60 25}
       }
       Fl_Group {} {open
         xywh {0 30 200 180} labeltype ENGRAVED_LABEL align 5
       } {
         Fl_Choice choice_area_selecter {
-          callback {cl_gts_master.cb_area_selecter();} open
+          callback {cl_gts_master.cl_area_and_rot90.cb_area_selecter();} open
           xywh {90 35 105 25} down_box BORDER_BOX align 13
         } {
           MenuItem {} {
@@ -451,12 +445,12 @@ cl_gts_master.cb_scan_full_area_and_crop();}
           } {
             Fl_Value_Input valinp_area_x_pos {
               label X
-              callback {cl_gts_master.cb_scnr_area_x_pos();}
+              callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pos();}
               xywh {30 80 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Value_Input valinp_area_y_pos {
               label Y
-              callback {cl_gts_master.cb_scnr_area_y_pos();}
+              callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pos();}
               xywh {100 80 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Text_Display {} {
@@ -473,12 +467,12 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             } {
               Fl_Value_Input valinp_area_x_size {
                 label W
-                callback {cl_gts_master.cb_scnr_area_x_size();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_size();}
                 xywh {30 120 55 25} box BORDER_BOX when 4 maximum 60
               }
               Fl_Value_Input valinp_area_y_size {
                 label H
-                callback {cl_gts_master.cb_scnr_area_y_size();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_size();}
                 xywh {100 120 55 25} box BORDER_BOX when 4 maximum 60
               }
             }
@@ -487,12 +481,12 @@ cl_gts_master.cb_scan_full_area_and_crop();}
             } {
               Fl_Value_Input valinp_area_x_pixel {
                 label W
-                callback {cl_gts_master.cb_scnr_area_x_pixel();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pixel_size();}
                 xywh {30 150 55 25} box BORDER_BOX when 4 maximum 10000
               }
               Fl_Value_Input valinp_area_y_pixel {
                 label H
-                callback {cl_gts_master.cb_scnr_area_y_pixel();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pixel_size();}
                 xywh {100 150 55 25} box BORDER_BOX when 4 maximum 10000
               }
             }
@@ -511,7 +505,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
           }
           Fl_Choice choice_area_aspect_ratio_selecter {
             label {Aspect Ratio}
-            callback {cl_gts_master.cb_area_aspect_ratio_selecter();} open
+            callback {cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();} open
             xywh {90 178 105 25} down_box BORDER_BOX
           } {
             MenuItem {} {
@@ -527,7 +521,7 @@ cl_gts_master.cb_scan_full_area_and_crop();}
       } {
         Fl_Value_Input valinp_area_reso {
           label DPI
-          callback {cl_gts_master.cb_scnr_area_reso();}
+          callback {cl_gts_master.cl_area_and_rot90.cb_area_reso();}
           xywh {50 230 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 144
         }
       }

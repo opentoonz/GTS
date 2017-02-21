@@ -8,6 +8,30 @@ public:
 	{}
 
 	/*
+		Scan
+	*/
+
+	void cb_scan_full_area_and_crop( void );
+
+	/*
+		Preset
+	*/
+
+	void cb_area_selecter( void );
+	void cb_area_aspect_ratio_selecter( void );
+
+	/*
+		Area
+	*/
+	void cb_area_x_pos( void );
+	void cb_area_y_pos( void );
+	void cb_area_x_size( void );
+	void cb_area_y_size( void );
+	void cb_area_x_pixel_size( void );
+	void cb_area_y_pixel_size( void );
+	void cb_area_reso( void );
+
+	/*
 		Rot90
 	*/
 

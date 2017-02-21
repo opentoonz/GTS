@@ -323,7 +323,7 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 				va.c_str() );
 		if (crnt != nullptr) {
 			cl_gts_gui.choice_area_selecter->value(crnt);
-			cl_gts_master.cb_area_selecter();
+			cl_gts_master.cl_area_and_rot90.cb_area_selecter();
 		}
 	}
 	else if ( this->str_area_x_pos_ == ke ) {
@@ -337,8 +337,8 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	       cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
 			va.c_str() );
 		if (crnt != 0) {
-		cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
-		 cl_gts_master.cb_area_aspect_ratio_selecter();
+	cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
+	cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
 		}
 	}
 	else if ( this->str_area_x_size_ == ke) {
