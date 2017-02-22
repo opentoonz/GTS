@@ -283,6 +283,8 @@ int gts_master::iipg_scan_get_scanner_info_( void )
 	cl_gts_gui.valinp_area_y_size->value(
 	 cl_gts_gui.valout_scanner_height_max->value()
 	);
+	this->cl_area_and_rot90.getset_x_pixel_from_x_size();
+	this->cl_area_and_rot90.getset_y_pixel_from_y_size();
 
 	/* TWAIN閉じる */
 	if (OK != this->cl_iip_scan.close()) {

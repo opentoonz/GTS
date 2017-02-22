@@ -519,6 +519,28 @@ void gts_gui::cb_Crop1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Crop1_i(o,v);
 }
 
+void gts_gui::cb_valinp_area_reso_i(Fl_Value_Input*, void*) {
+  cl_gts_master.cl_area_and_rot90.cb_area_reso();
+}
+void gts_gui::cb_valinp_area_reso(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_valinp_area_reso_i(o,v);
+}
+
+void gts_gui::cb_choice_rot90_i(Fl_Choice*, void*) {
+  cl_gts_master.cl_area_and_rot90.cb_rotate_per_90_when_scan();
+}
+void gts_gui::cb_choice_rot90(Fl_Choice* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_rot90_i(o,v);
+}
+
+Fl_Menu_Item gts_gui::menu_choice_rot90[] = {
+ {"CW_-90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_0", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"CW_180", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
 void gts_gui::cb_choice_area_selecter_i(Fl_Choice*, void*) {
   cl_gts_master.cl_area_and_rot90.cb_area_selecter();
 }
@@ -582,28 +604,6 @@ void gts_gui::cb_choice_area_aspect_ratio_selecter(Fl_Choice* o, void* v) {
 
 Fl_Menu_Item gts_gui::menu_choice_area_aspect_ratio_selecter[] = {
  {"Custom", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0}
-};
-
-void gts_gui::cb_valinp_area_reso_i(Fl_Value_Input*, void*) {
-  cl_gts_master.cl_area_and_rot90.cb_area_reso();
-}
-void gts_gui::cb_valinp_area_reso(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_valinp_area_reso_i(o,v);
-}
-
-void gts_gui::cb_choice_rot90_i(Fl_Choice*, void*) {
-  cl_gts_master.cl_area_and_rot90.cb_rotate_per_90_when_scan();
-}
-void gts_gui::cb_choice_rot90(Fl_Choice* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_rot90_i(o,v);
-}
-
-Fl_Menu_Item gts_gui::menu_choice_rot90[] = {
- {"CW_-90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"CW_0", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"CW_90", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"CW_180", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 
@@ -5121,101 +5121,11 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Button* o = new Fl_Button(135, 5, 60, 25, "Crop");
       o->callback((Fl_Callback*)cb_Crop1);
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(0, 30, 200, 180);
-      o->labeltype(FL_ENGRAVED_LABEL);
-      o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { choice_area_selecter = new Fl_Choice(90, 35, 105, 25);
-        choice_area_selecter->down_box(FL_BORDER_BOX);
-        choice_area_selecter->callback((Fl_Callback*)cb_choice_area_selecter);
-        choice_area_selecter->align(Fl_Align(FL_ALIGN_LEFT_BOTTOM));
-        choice_area_selecter->menu(menu_choice_area_selecter);
-      } // Fl_Choice* choice_area_selecter
-      { group_area_crop = new Fl_Group(1, 60, 198, 150, "Area");
-        group_area_crop->box(FL_BORDER_FRAME);
-        group_area_crop->color((Fl_Color)41);
-        group_area_crop->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-        { Fl_Group* o = new Fl_Group(4, 80, 192, 25, "Offset");
-          o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-          { valinp_area_x_pos = new Fl_Value_Input(30, 80, 55, 25, "X");
-            valinp_area_x_pos->box(FL_BORDER_BOX);
-            valinp_area_x_pos->maximum(60);
-            valinp_area_x_pos->callback((Fl_Callback*)cb_valinp_area_x_pos);
-            valinp_area_x_pos->when(FL_WHEN_RELEASE);
-          } // Fl_Value_Input* valinp_area_x_pos
-          { valinp_area_y_pos = new Fl_Value_Input(100, 80, 55, 25, "Y");
-            valinp_area_y_pos->box(FL_BORDER_BOX);
-            valinp_area_y_pos->maximum(60);
-            valinp_area_y_pos->callback((Fl_Callback*)cb_valinp_area_y_pos);
-            valinp_area_y_pos->when(FL_WHEN_RELEASE);
-          } // Fl_Value_Input* valinp_area_y_pos
-          { Fl_Text_Display* o = new Fl_Text_Display(165, 85, 0, 0, "cm");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          o->end();
-        } // Fl_Group* o
-        { Fl_Group* o = new Fl_Group(4, 118, 192, 60, "Size");
-          o->box(FL_BORDER_FRAME);
-          o->color((Fl_Color)41);
-          o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-          { Fl_Group* o = new Fl_Group(5, 120, 150, 25);
-            o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
-            { valinp_area_x_size = new Fl_Value_Input(30, 120, 55, 25, "W");
-              valinp_area_x_size->box(FL_BORDER_BOX);
-              valinp_area_x_size->maximum(60);
-              valinp_area_x_size->callback((Fl_Callback*)cb_valinp_area_x_size);
-              valinp_area_x_size->when(FL_WHEN_RELEASE);
-            } // Fl_Value_Input* valinp_area_x_size
-            { valinp_area_y_size = new Fl_Value_Input(100, 120, 55, 25, "H");
-              valinp_area_y_size->box(FL_BORDER_BOX);
-              valinp_area_y_size->maximum(60);
-              valinp_area_y_size->callback((Fl_Callback*)cb_valinp_area_y_size);
-              valinp_area_y_size->when(FL_WHEN_RELEASE);
-            } // Fl_Value_Input* valinp_area_y_size
-            o->end();
-          } // Fl_Group* o
-          { Fl_Group* o = new Fl_Group(5, 150, 150, 25);
-            o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
-            { valinp_area_x_pixel = new Fl_Value_Input(30, 150, 55, 25, "W");
-              valinp_area_x_pixel->box(FL_BORDER_BOX);
-              valinp_area_x_pixel->maximum(10000);
-              valinp_area_x_pixel->callback((Fl_Callback*)cb_valinp_area_x_pixel);
-              valinp_area_x_pixel->when(FL_WHEN_RELEASE);
-            } // Fl_Value_Input* valinp_area_x_pixel
-            { valinp_area_y_pixel = new Fl_Value_Input(100, 150, 55, 25, "H");
-              valinp_area_y_pixel->box(FL_BORDER_BOX);
-              valinp_area_y_pixel->maximum(10000);
-              valinp_area_y_pixel->callback((Fl_Callback*)cb_valinp_area_y_pixel);
-              valinp_area_y_pixel->when(FL_WHEN_RELEASE);
-            } // Fl_Value_Input* valinp_area_y_pixel
-            o->end();
-          } // Fl_Group* o
-          { Fl_Group* o = new Fl_Group(158, 120, 35, 55);
-            o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-            { radbut_area_reso_fix_cm = new Fl_Button(158, 120, 35, 25, "cm");
-              radbut_area_reso_fix_cm->type(102);
-            } // Fl_Button* radbut_area_reso_fix_cm
-            { radbut_area_reso_fix_pixel = new Fl_Button(158, 150, 35, 25, "pixel");
-              radbut_area_reso_fix_pixel->type(102);
-              radbut_area_reso_fix_pixel->value(1);
-            } // Fl_Button* radbut_area_reso_fix_pixel
-            o->end();
-          } // Fl_Group* o
-          o->end();
-        } // Fl_Group* o
-        { choice_area_aspect_ratio_selecter = new Fl_Choice(90, 178, 105, 25, "Aspect Ratio");
-          choice_area_aspect_ratio_selecter->down_box(FL_BORDER_BOX);
-          choice_area_aspect_ratio_selecter->callback((Fl_Callback*)cb_choice_area_aspect_ratio_selecter);
-          choice_area_aspect_ratio_selecter->menu(menu_choice_area_aspect_ratio_selecter);
-        } // Fl_Choice* choice_area_aspect_ratio_selecter
-        group_area_crop->end();
-      } // Fl_Group* group_area_crop
-      o->end();
-    } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(1, 230, 198, 25, "Resolution");
+    { Fl_Group* o = new Fl_Group(1, 45, 198, 25, "Resolution");
       o->box(FL_BORDER_FRAME);
       o->color((Fl_Color)41);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { valinp_area_reso = new Fl_Value_Input(50, 230, 40, 25, "DPI");
+      { valinp_area_reso = new Fl_Value_Input(50, 45, 40, 25, "DPI");
         valinp_area_reso->box(FL_BORDER_BOX);
         valinp_area_reso->minimum(50);
         valinp_area_reso->maximum(600);
@@ -5226,17 +5136,107 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Value_Input* valinp_area_reso
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(1, 275, 198, 25, "Rotate");
+    { Fl_Group* o = new Fl_Group(1, 90, 198, 25, "Rotate");
       o->box(FL_BORDER_FRAME);
       o->color((Fl_Color)41);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { choice_rot90 = new Fl_Choice(50, 275, 90, 25, "degree");
+      { choice_rot90 = new Fl_Choice(50, 90, 90, 25, "degree");
         choice_rot90->box(FL_BORDER_BOX);
         choice_rot90->down_box(FL_BORDER_BOX);
         choice_rot90->callback((Fl_Callback*)cb_choice_rot90);
         choice_rot90->align(Fl_Align(FL_ALIGN_RIGHT));
         choice_rot90->menu(menu_choice_rot90);
       } // Fl_Choice* choice_rot90
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(0, 120, 200, 180);
+      o->labeltype(FL_ENGRAVED_LABEL);
+      o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+      { choice_area_selecter = new Fl_Choice(90, 126, 105, 25);
+        choice_area_selecter->down_box(FL_BORDER_BOX);
+        choice_area_selecter->callback((Fl_Callback*)cb_choice_area_selecter);
+        choice_area_selecter->align(Fl_Align(FL_ALIGN_LEFT_BOTTOM));
+        choice_area_selecter->menu(menu_choice_area_selecter);
+      } // Fl_Choice* choice_area_selecter
+      { group_area_crop = new Fl_Group(1, 150, 198, 150, "Area");
+        group_area_crop->box(FL_BORDER_FRAME);
+        group_area_crop->color((Fl_Color)41);
+        group_area_crop->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        { Fl_Group* o = new Fl_Group(4, 170, 192, 25, "Offset");
+          o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+          { valinp_area_x_pos = new Fl_Value_Input(30, 170, 55, 25, "X");
+            valinp_area_x_pos->box(FL_BORDER_BOX);
+            valinp_area_x_pos->maximum(60);
+            valinp_area_x_pos->callback((Fl_Callback*)cb_valinp_area_x_pos);
+            valinp_area_x_pos->when(FL_WHEN_RELEASE);
+          } // Fl_Value_Input* valinp_area_x_pos
+          { valinp_area_y_pos = new Fl_Value_Input(100, 170, 55, 25, "Y");
+            valinp_area_y_pos->box(FL_BORDER_BOX);
+            valinp_area_y_pos->maximum(60);
+            valinp_area_y_pos->callback((Fl_Callback*)cb_valinp_area_y_pos);
+            valinp_area_y_pos->when(FL_WHEN_RELEASE);
+          } // Fl_Value_Input* valinp_area_y_pos
+          { Fl_Text_Display* o = new Fl_Text_Display(165, 175, 0, 0, "cm");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          o->end();
+        } // Fl_Group* o
+        { Fl_Group* o = new Fl_Group(4, 208, 192, 60, "Size");
+          o->box(FL_BORDER_FRAME);
+          o->color((Fl_Color)41);
+          o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+          { Fl_Group* o = new Fl_Group(5, 210, 150, 25);
+            o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+            { valinp_area_x_size = new Fl_Value_Input(30, 210, 55, 25, "W");
+              valinp_area_x_size->box(FL_BORDER_BOX);
+              valinp_area_x_size->maximum(60);
+              valinp_area_x_size->callback((Fl_Callback*)cb_valinp_area_x_size);
+              valinp_area_x_size->when(FL_WHEN_RELEASE);
+            } // Fl_Value_Input* valinp_area_x_size
+            { valinp_area_y_size = new Fl_Value_Input(100, 210, 55, 25, "H");
+              valinp_area_y_size->box(FL_BORDER_BOX);
+              valinp_area_y_size->maximum(60);
+              valinp_area_y_size->callback((Fl_Callback*)cb_valinp_area_y_size);
+              valinp_area_y_size->when(FL_WHEN_RELEASE);
+            } // Fl_Value_Input* valinp_area_y_size
+            o->end();
+          } // Fl_Group* o
+          { Fl_Group* o = new Fl_Group(5, 240, 150, 25);
+            o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+            { valinp_area_x_pixel = new Fl_Value_Input(30, 240, 55, 25, "W");
+              valinp_area_x_pixel->box(FL_BORDER_BOX);
+              valinp_area_x_pixel->maximum(10000);
+              valinp_area_x_pixel->callback((Fl_Callback*)cb_valinp_area_x_pixel);
+              valinp_area_x_pixel->when(FL_WHEN_RELEASE);
+            } // Fl_Value_Input* valinp_area_x_pixel
+            { valinp_area_y_pixel = new Fl_Value_Input(100, 240, 55, 25, "H");
+              valinp_area_y_pixel->box(FL_BORDER_BOX);
+              valinp_area_y_pixel->maximum(10000);
+              valinp_area_y_pixel->callback((Fl_Callback*)cb_valinp_area_y_pixel);
+              valinp_area_y_pixel->when(FL_WHEN_RELEASE);
+            } // Fl_Value_Input* valinp_area_y_pixel
+            o->end();
+          } // Fl_Group* o
+          { Fl_Group* o = new Fl_Group(158, 210, 35, 55);
+            o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+            { radbut_area_reso_fix_cm = new Fl_Button(158, 210, 35, 25, "cm");
+              radbut_area_reso_fix_cm->type(102);
+            } // Fl_Button* radbut_area_reso_fix_cm
+            { radbut_area_reso_fix_pixel = new Fl_Button(158, 240, 35, 25, "pixel");
+              radbut_area_reso_fix_pixel->type(102);
+              radbut_area_reso_fix_pixel->value(1);
+            } // Fl_Button* radbut_area_reso_fix_pixel
+            o->end();
+          } // Fl_Group* o
+          o->end();
+        } // Fl_Group* o
+        { choice_area_aspect_ratio_selecter = new Fl_Choice(90, 267, 105, 25, "Aspect Ratio");
+          choice_area_aspect_ratio_selecter->down_box(FL_BORDER_BOX);
+          choice_area_aspect_ratio_selecter->callback((Fl_Callback*)cb_choice_area_aspect_ratio_selecter);
+          choice_area_aspect_ratio_selecter->menu(menu_choice_area_aspect_ratio_selecter);
+        } // Fl_Choice* choice_area_aspect_ratio_selecter
+        group_area_crop->end();
+      } // Fl_Group* group_area_crop
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(1, 320, 198, 41, "Scanner");

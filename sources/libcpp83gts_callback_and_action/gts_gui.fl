@@ -423,116 +423,24 @@ cl_gts_gui.menite_area_and_rot90->clear();}
         callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
         xywh {135 5 60 25}
       }
-      Fl_Group {} {open
-        xywh {0 30 200 180} labeltype ENGRAVED_LABEL align 5
-      } {
-        Fl_Choice choice_area_selecter {
-          callback {cl_gts_master.cl_area_and_rot90.cb_area_selecter();} open
-          xywh {90 35 105 25} down_box BORDER_BOX align 13
-        } {
-          MenuItem {} {
-            label Custom
-            xywh {0 0 100 20}
-          }
-        }
-        Fl_Group group_area_crop {
-          label Area open
-          xywh {1 60 198 150} box BORDER_FRAME color 41 align 5
-        } {
-          Fl_Group {} {
-            label Offset open
-            xywh {4 80 192 25} align 5
-          } {
-            Fl_Value_Input valinp_area_x_pos {
-              label X
-              callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pos();}
-              xywh {30 80 55 25} box BORDER_BOX when 4 maximum 60
-            }
-            Fl_Value_Input valinp_area_y_pos {
-              label Y
-              callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pos();}
-              xywh {100 80 55 25} box BORDER_BOX when 4 maximum 60
-            }
-            Fl_Text_Display {} {
-              label cm
-              xywh {165 85 0 0} align 6
-            }
-          }
-          Fl_Group {} {
-            label Size open
-            xywh {4 118 192 60} box BORDER_FRAME color 41 align 5
-          } {
-            Fl_Group {} {open
-              xywh {5 120 150 25} align 20
-            } {
-              Fl_Value_Input valinp_area_x_size {
-                label W
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_size();}
-                xywh {30 120 55 25} box BORDER_BOX when 4 maximum 60
-              }
-              Fl_Value_Input valinp_area_y_size {
-                label H
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_size();}
-                xywh {100 120 55 25} box BORDER_BOX when 4 maximum 60
-              }
-            }
-            Fl_Group {} {open
-              xywh {5 150 150 25} align 20
-            } {
-              Fl_Value_Input valinp_area_x_pixel {
-                label W
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pixel_size();}
-                xywh {30 150 55 25} box BORDER_BOX when 4 maximum 10000
-              }
-              Fl_Value_Input valinp_area_y_pixel {
-                label H
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pixel_size();}
-                xywh {100 150 55 25} box BORDER_BOX when 4 maximum 10000
-              }
-            }
-            Fl_Group {} {open
-              xywh {158 120 35 55} align 21
-            } {
-              Fl_Button radbut_area_reso_fix_cm {
-                label cm
-                xywh {158 120 35 25} type Radio
-              }
-              Fl_Button radbut_area_reso_fix_pixel {
-                label pixel
-                xywh {158 150 35 25} type Radio value 1
-              }
-            }
-          }
-          Fl_Choice choice_area_aspect_ratio_selecter {
-            label {Aspect Ratio}
-            callback {cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();} open
-            xywh {90 178 105 25} down_box BORDER_BOX
-          } {
-            MenuItem {} {
-              label Custom
-              xywh {0 0 30 20}
-            }
-          }
-        }
-      }
       Fl_Group {} {
         label Resolution open
-        xywh {1 230 198 25} box BORDER_FRAME color 41 align 5
+        xywh {1 45 198 25} box BORDER_FRAME color 41 align 5
       } {
         Fl_Value_Input valinp_area_reso {
           label DPI
           callback {cl_gts_master.cl_area_and_rot90.cb_area_reso();}
-          xywh {50 230 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 144
+          xywh {50 45 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 144
         }
       }
       Fl_Group {} {
         label Rotate open
-        xywh {1 275 198 25} box BORDER_FRAME color 41 align 5
+        xywh {1 90 198 25} box BORDER_FRAME color 41 align 5
       } {
         Fl_Choice choice_rot90 {
           label degree
           callback {cl_gts_master.cl_area_and_rot90.cb_rotate_per_90_when_scan();} open
-          xywh {50 275 90 25} box BORDER_BOX down_box BORDER_BOX align 8
+          xywh {50 90 90 25} box BORDER_BOX down_box BORDER_BOX align 8
         } {
           MenuItem {} {
             label {CW_-90}
@@ -549,6 +457,98 @@ cl_gts_gui.menite_area_and_rot90->clear();}
           MenuItem {} {
             label CW_180
             xywh {5 5 100 20}
+          }
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 120 200 180} labeltype ENGRAVED_LABEL align 5
+      } {
+        Fl_Choice choice_area_selecter {
+          callback {cl_gts_master.cl_area_and_rot90.cb_area_selecter();} open
+          xywh {90 126 105 25} down_box BORDER_BOX align 13
+        } {
+          MenuItem {} {
+            label Custom
+            xywh {0 0 100 20}
+          }
+        }
+        Fl_Group group_area_crop {
+          label Area open
+          xywh {1 150 198 150} box BORDER_FRAME color 41 align 5
+        } {
+          Fl_Group {} {
+            label Offset open
+            xywh {4 170 192 25} align 5
+          } {
+            Fl_Value_Input valinp_area_x_pos {
+              label X
+              callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pos();}
+              xywh {30 170 55 25} box BORDER_BOX when 4 maximum 60
+            }
+            Fl_Value_Input valinp_area_y_pos {
+              label Y
+              callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pos();}
+              xywh {100 170 55 25} box BORDER_BOX when 4 maximum 60
+            }
+            Fl_Text_Display {} {
+              label cm
+              xywh {165 175 0 0} align 6
+            }
+          }
+          Fl_Group {} {
+            label Size open
+            xywh {4 208 192 60} box BORDER_FRAME color 41 align 5
+          } {
+            Fl_Group {} {open
+              xywh {5 210 150 25} align 20
+            } {
+              Fl_Value_Input valinp_area_x_size {
+                label W
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_size();}
+                xywh {30 210 55 25} box BORDER_BOX when 4 maximum 60
+              }
+              Fl_Value_Input valinp_area_y_size {
+                label H
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_size();}
+                xywh {100 210 55 25} box BORDER_BOX when 4 maximum 60
+              }
+            }
+            Fl_Group {} {open
+              xywh {5 240 150 25} align 20
+            } {
+              Fl_Value_Input valinp_area_x_pixel {
+                label W
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pixel_size();}
+                xywh {30 240 55 25} box BORDER_BOX when 4 maximum 10000
+              }
+              Fl_Value_Input valinp_area_y_pixel {
+                label H
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pixel_size();}
+                xywh {100 240 55 25} box BORDER_BOX when 4 maximum 10000
+              }
+            }
+            Fl_Group {} {open
+              xywh {158 210 35 55} align 21
+            } {
+              Fl_Button radbut_area_reso_fix_cm {
+                label cm
+                xywh {158 210 35 25} type Radio
+              }
+              Fl_Button radbut_area_reso_fix_pixel {
+                label pixel
+                xywh {158 240 35 25} type Radio value 1
+              }
+            }
+          }
+          Fl_Choice choice_area_aspect_ratio_selecter {
+            label {Aspect Ratio}
+            callback {cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();} open
+            xywh {90 267 105 25} down_box BORDER_BOX
+          } {
+            MenuItem {} {
+              label Custom
+              xywh {0 0 30 20}
+            }
           }
         }
       }

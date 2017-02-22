@@ -5,6 +5,7 @@ class cb_area_and_rot90 {
 public:
 	cb_area_and_rot90()
 	:previous_choice_rot90_(-1)
+	,dpi_when_cropped_(0.0)
 	{}
 
 	/*
@@ -65,8 +66,12 @@ public:
 	void copy_opengl_to_value( void );
 	void copy_value_to_opengl( void );
 
+	void getset_x_pixel_from_x_size( void );
+	void getset_y_pixel_from_y_size( void );
+
 private:
 	int previous_choice_rot90_;
+	double dpi_when_cropped_; /* 画像表示上のCropエリアはこの値で計算 */
 
 	/*
 		変換
@@ -77,6 +82,12 @@ private:
 
 	/* cm単位をpixel単位に変換 */
 	double pixel_from_cm_( const double cm , const double dpi );
+
+	void getset_y_size_from_x_size_( void );
+	void getset_x_size_from_y_size_( void );
+
+	void getset_x_size_from_x_pixel_( void );
+	void getset_y_size_from_y_pixel_( void );
 };
 
 #endif /* !cb_area_and_rot90_h */
