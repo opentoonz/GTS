@@ -832,7 +832,7 @@ if (cl_gts_master.cl_number.is_scan()) {
           }
           Fl_Output output_scan_save_number_format {
             callback {cl_gts_master.cl_input_number_format.cb_dialog_input_number_format(
-	window_scan_and_save ,output_scan_save_number_format ,o
+	window_scan_and_save ,o
 );}
             xywh {100 175 45 25}
           }
@@ -1105,7 +1105,7 @@ if (cl_gts_master.cl_number.is_trace()) {
           }
           Fl_Output output_trace_save_number_format {
             callback {cl_gts_master.cl_input_number_format.cb_dialog_input_number_format(
-	window_trace_files ,output_trace_save_number_format ,o
+	window_trace_files ,o
 );}
             xywh {100 375 45 25}
           }
@@ -2431,14 +2431,12 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
       }
       Fl_Button button_input_num_form_ok {
         label OK
-        callback {cl_gts_master.cl_input_number_format.cb_ok();
-cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
-cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
+        callback {cl_gts_master.cl_input_number_format.cb_ok();}
         xywh {20 115 60 25}
       }
       Fl_Button button_input_num_form_cancel {
         label Cancel
-        callback {cl_gts_master.cl_input_number_format.cb_cancel();}
+        callback {window_input_number_format->hide();}
         xywh {120 115 60 25}
       }
     }

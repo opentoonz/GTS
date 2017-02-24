@@ -806,7 +806,7 @@ void gts_gui::cb_strinp_scan_save_file_head(Fl_Input* o, void* v) {
 
 void gts_gui::cb_output_scan_save_number_format_i(Fl_Output* o, void*) {
   cl_gts_master.cl_input_number_format.cb_dialog_input_number_format(
-	window_scan_and_save ,output_scan_save_number_format ,o
+	window_scan_and_save ,o
 );
 }
 void gts_gui::cb_output_scan_save_number_format(Fl_Output* o, void* v) {
@@ -948,7 +948,7 @@ void gts_gui::cb_strinp_trace_save_file_head(Fl_Input* o, void* v) {
 
 void gts_gui::cb_output_trace_save_number_format_i(Fl_Output* o, void*) {
   cl_gts_master.cl_input_number_format.cb_dialog_input_number_format(
-	window_trace_files ,output_trace_save_number_format ,o
+	window_trace_files ,o
 );
 }
 void gts_gui::cb_output_trace_save_number_format(Fl_Output* o, void* v) {
@@ -5050,15 +5050,13 @@ void gts_gui::cb_counte_input_num_form_num_of_digits(Fl_Counter* o, void* v) {
 
 void gts_gui::cb_button_input_num_form_ok_i(Fl_Button*, void*) {
   cl_gts_master.cl_input_number_format.cb_ok();
-cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
-cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
 void gts_gui::cb_button_input_num_form_ok(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_button_input_num_form_ok_i(o,v);
 }
 
 void gts_gui::cb_button_input_num_form_cancel_i(Fl_Button*, void*) {
-  cl_gts_master.cl_input_number_format.cb_cancel();
+  window_input_number_format->hide();
 }
 void gts_gui::cb_button_input_num_form_cancel(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_button_input_num_form_cancel_i(o,v);

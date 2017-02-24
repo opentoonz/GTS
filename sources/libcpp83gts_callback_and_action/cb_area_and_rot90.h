@@ -83,11 +83,16 @@ private:
 	/* cm単位をpixel単位に変換 */
 	double pixel_from_cm_( const double cm , const double dpi );
 
+	/* cmサイズと対応するpixelサイズからdpiを得る */
+	double dpi_from_cm_per_pixel_(const double cm ,const double pixel);
+
 	void getset_y_size_from_x_size_( void );
 	void getset_x_size_from_y_size_( void );
 
 	void getset_x_size_from_x_pixel_( void );
 	void getset_y_size_from_y_pixel_( void );
+
+	void check_dpi_or_size_from_pixel_( void );
 };
 
 #endif /* !cb_area_and_rot90_h */

@@ -5,6 +5,14 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
+namespace {
+void differ_dpi_marking_(const bool sw)
+{
+	cl_gts_gui.valinp_area_reso->color(sw?FL_YELLOW:FL_WHITE);
+	cl_gts_gui.valinp_area_reso->redraw();
+}
+}//namespace
+
 /*
 	Crop
 */
@@ -39,16 +47,18 @@ void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 		return;
 	}
 
-	/* Cropしたときのdpiを記憶し、画像表示のdpiとする */
+	/* Cropしたときのdpiを記憶し、画像表示のdpiとする
+	cl_gts_master.cl_iip_scan.d_x_resolution()
+	の値はエラーやキャンセルの場合にもセットしてしまうので使えない */
 	this->dpi_when_cropped_ = cl_gts_gui.valinp_area_reso->value();
+	differ_dpi_marking_(false);
 
 	/* スキャンした画像とCropエリアの表示 */
 	cl_gts_master.rot_and_trace_and_enoise_and_preview(
 		clp_scan ,cl_gts_gui.choice_rot90->value() ,true ,true
 	);
 
-	/* Areaの設定(GUI値)を画像表示ルーチンにセット */
-	this->copy_value_to_opengl();
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 
@@ -91,8 +101,7 @@ void cb_area_and_rot90::cb_area_selecter( void )
 		/* 各項目入力できなくする */
 		cl_gts_gui.group_area_crop->deactivate();
 
-		/* Cropエリア(OpenGL)再表示 */
-		this->copy_value_to_opengl();
+		this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 		cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 	}
 }
@@ -120,8 +129,7 @@ void cb_area_and_rot90::cb_area_aspect_ratio_selecter( void )
 		/* Size H pixel */
 		this->getset_y_pixel_from_y_size();
 
-		/* Cropエリア(OpenGL)再表示 */
-		this->copy_value_to_opengl();
+		this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 		cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 	}
 }
@@ -147,7 +155,7 @@ void cb_area_and_rot90::cb_area_x_pos( void )
 	    cl_gts_gui.valinp_area_x_pos->value(0.0);
 	}
 
-	this->copy_value_to_opengl();
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void cb_area_and_rot90::cb_area_y_pos( void )
@@ -167,7 +175,7 @@ void cb_area_and_rot90::cb_area_y_pos( void )
 	    cl_gts_gui.valinp_area_y_pos->value(0.0);
 	}
 
-	this->copy_value_to_opengl();
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 
@@ -196,8 +204,7 @@ void cb_area_and_rot90::cb_area_x_size( void )
 	this->getset_x_pixel_from_x_size();
 	this->getset_y_pixel_from_y_size();
 
-	/* OpenGL画像表示のエリア枠を再表示 */
-	this->copy_value_to_opengl();
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 void cb_area_and_rot90::cb_area_y_size( void )
@@ -226,8 +233,7 @@ void cb_area_and_rot90::cb_area_y_size( void )
 	this->getset_x_pixel_from_x_size();
 	this->getset_y_pixel_from_y_size();
 
-	/* OpenGL画像表示のエリア枠を再表示 */
-	this->copy_value_to_opengl();
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 
@@ -244,28 +250,31 @@ void cb_area_and_rot90::cb_area_y_pixel_size( void )
 
 void cb_area_and_rot90::cb_area_reso( void )
 {
-	if ( this->dpi_when_cropped_ == cl_gts_gui.valinp_area_reso->value()
-	) {
-		return; /* 値の変化がなければなにもしない */
-	}
-
 	/* 変化したDPIに合わせてAreaサイズの値を変更する */
 	if (cl_gts_gui.radbut_area_reso_fix_cm->value()) {
 		this->getset_x_pixel_from_x_size();
 		this->getset_y_pixel_from_y_size();
 	}
 	else {
-	/* !!!!!!!!!! Pixel固定で解像度変えるとき問題あり!!!!!!!!!!!!! */
-		this->getset_x_size_from_x_pixel_();
-		this->getset_y_size_from_y_pixel_();
+		this->check_dpi_or_size_from_pixel_();
 	}
 
-	/* 解像度が変わった場合、表示する画像をその解像度のものにすべき */
-	if ( 0.0 < this->dpi_when_cropped_ ) {
-		/* 既にCropしていてその表示画像と、DPIが一致しなくなった */
-		fl_alert( "Crop again" );
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+
+	/* 既にCropしていて、かつ、その表示画像とDPIが一致しなくなった */
+	if (0.0 < this->dpi_when_cropped_
+	&&  this->dpi_when_cropped_ != cl_gts_gui.valinp_area_reso->value()
+	) {
+		differ_dpi_marking_(true);
+		fl_alert( "Crop again!" );
 	}
-	/* また一回もCropしてないときはdpiの変更は自由 */
+	else {
+		/* また一回もCropしてない、あるいは
+		既にCropしていてその表示画像とDPIが一致
+		のときはdpiの変更は自由 */
+		differ_dpi_marking_(false);
+	}
 }
 
 /*
@@ -387,8 +396,7 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 		, cl_gts_master.cl_ogl_view.get_crop_disp_sw()
 	);
 
-	/* 表示値からopengl rect値をセットする */
-	this->copy_value_to_opengl();
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
 }
 
@@ -407,6 +415,14 @@ double cb_area_and_rot90::pixel_from_cm_(
 	const double cm , const double dpi )
 {
 	return cm * dpi / 2.54;
+}
+
+/* cmサイズと対応するpixelサイズからdpiを得る */
+double cb_area_and_rot90::dpi_from_cm_per_pixel_(
+	const double cm ,const double pixel
+)
+{
+	return pixel * 2.54 / cm;
 }
 
 void cb_area_and_rot90::getset_x_pixel_from_x_size( void )
@@ -463,6 +479,43 @@ void cb_area_and_rot90::getset_x_size_from_y_size_( void )
 		cl_gts_gui.valinp_area_y_pixel->value() * ratio.w / ratio.h
 		);
 	}
+}
+
+void cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
+{
+	const double x_cm_size = this->cm_from_pixel_(
+		cl_gts_gui.valinp_area_x_pixel->value()
+		,cl_gts_gui.valinp_area_reso->value()
+	);
+	const double y_cm_size = this->cm_from_pixel_(
+		cl_gts_gui.valinp_area_y_pixel->value()
+		,cl_gts_gui.valinp_area_reso->value()
+	);
+	if (
+	((cl_gts_gui.valout_scanner_width_max->value()
+	<
+	( cl_gts_gui.valinp_area_x_pos->value() + x_cm_size )))
+	||
+	((cl_gts_gui.valout_scanner_height_max->value()
+	<
+	( cl_gts_gui.valinp_area_y_pos->value() + y_cm_size )))
+	) {	/* 範囲外ならDPIを範囲内に収める */
+		const double x_dpi = this->dpi_from_cm_per_pixel_(
+			cl_gts_gui.valout_scanner_width_max->value()
+			- cl_gts_gui.valinp_area_x_pos->value()
+			,cl_gts_gui.valinp_area_x_pixel->value()
+		);
+		const double y_dpi = this->dpi_from_cm_per_pixel_(
+			cl_gts_gui.valout_scanner_height_max->value()
+			- cl_gts_gui.valinp_area_y_pos->value()
+			,cl_gts_gui.valinp_area_y_pixel->value()
+		);
+		cl_gts_gui.valinp_area_reso->value(
+			ceil( max( x_dpi , y_dpi ) )
+		);
+	}
+	this->getset_x_size_from_x_pixel_();
+	this->getset_y_size_from_y_pixel_();
 }
 
 void cb_area_and_rot90::getset_x_size_from_x_pixel_( void )

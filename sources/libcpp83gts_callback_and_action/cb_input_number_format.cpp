@@ -4,6 +4,7 @@
 #include "ids_path_level_from_files.h"
 #include "cb_input_number_format.h"
 #include "gts_gui.h"
+#include "gts_master.h"
 
 namespace {
 
@@ -29,15 +30,14 @@ void set_sample_(void)
 
 void cb_input_number_format::cb_dialog_input_number_format(
 	Fl_Double_Window* flwin
-	,Fl_Widget* flwgt
 	,Fl_Output* flout
 )
 {
 	/* window開く */
 	cl_gts_gui.window_input_number_format->show();
 	cl_gts_gui.window_input_number_format->position(
-		 flwin->x() +flwgt->x() -10
-		,flwin->y() +flwgt->y() -160
+		 flwin->x() +flout->x() -10
+		,flwin->y() +flout->y() -160
 	);
 
 	/* OKの時の設定をするため記憶しとく */
@@ -97,9 +97,8 @@ void cb_input_number_format::cb_ok(void)
 {
 	this->o_->value( cl_gts_gui.output_input_num_form_sample->value() );
 	cl_gts_gui.window_input_number_format->hide();
+
+	cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
+	cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
 
-void cb_input_number_format::cb_cancel(void)
-{
-	cl_gts_gui.window_input_number_format->hide();
-}
