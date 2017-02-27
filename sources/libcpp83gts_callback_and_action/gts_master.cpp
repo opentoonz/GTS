@@ -227,8 +227,8 @@ int gts_master::exec( const char *comm )
 
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
-	cl_gts_gui.window_opengl->show();
-	cl_gts_gui.window_opengl->wait_for_expose();
+	cl_gts_gui.window_main_view->show();
+	cl_gts_gui.window_main_view->wait_for_expose();
 	Fl::flush();
 
 	/* desktop.txtによる fltk window位置とサイズを復元 */
@@ -253,7 +253,7 @@ int gts_master::exec( const char *comm )
 
 #if defined _WIN32
 	cl_gts_master.cl_iip_scan.set_hw_parent(
-		fl_xid( cl_gts_gui.window_opengl )
+		fl_xid( cl_gts_gui.window_main_view )
 	);
 #endif
 

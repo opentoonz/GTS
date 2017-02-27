@@ -97,12 +97,12 @@ int memory_desktop::load( void ) {
 				di.c_str() );
 		}
 		else if ((this->str_window_main_==key) && (6==ret)) {
-		cl_gts_gui.window_opengl->resize(xx,yy,ww,hh);
+		cl_gts_gui.window_main_view->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_next_scan_==key) && (4==ret)) {
 			if (di == "show") {
 		////cl_gts_gui.menite_next_scan->set();
-		//cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		//cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		//cl_gts_gui.window_next_scan->show();
 			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
@@ -111,7 +111,7 @@ int memory_desktop::load( void ) {
 		&&(4==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_area_and_rot90->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_area_and_rot90->show();
 			}
 		cl_gts_gui.window_area_and_rot90->position(xx,yy);
@@ -122,7 +122,7 @@ int memory_desktop::load( void ) {
 		,cl_gts_gui.window_pixel_type_and_bright->h()  );
 			if (di == "show") {
 		cl_gts_gui.menite_pixel_type_and_bright->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_pixel_type_and_bright->show();
 			}
 		}
@@ -132,7 +132,7 @@ int memory_desktop::load( void ) {
 		,cl_gts_gui.window_scan_and_save->h()  );
 			if (di == "show") {
 		cl_gts_gui.menite_scan_and_save->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_scan_and_save->show();
 			}
 		}
@@ -142,7 +142,7 @@ int memory_desktop::load( void ) {
 		,cl_gts_gui.window_trace_files->h()  );
 			if (di == "show") {
 		cl_gts_gui.menite_trace_files->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_files->show();
 			}
 		}
@@ -151,7 +151,7 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_number->resize( xx ,yy ,ww ,hh );
 			if (di == "show") {
 		cl_gts_gui.menite_number->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_number->show();
 			}
 		}
@@ -159,7 +159,7 @@ int memory_desktop::load( void ) {
 		&& (4==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_trace_parameters->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_parameters->show();
 			}
 		cl_gts_gui.window_trace_parameters->position(xx,yy);
@@ -168,7 +168,7 @@ int memory_desktop::load( void ) {
 		&& (6==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_trace_batch->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_batch->show();
 			}
 		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
@@ -179,7 +179,7 @@ int memory_desktop::load( void ) {
 		,cl_gts_gui.window_trace_thickness->h()  );
 			if (di == "show") {
 		cl_gts_gui.menite_trace_thickness->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_thickness->show();
 			}
 		}
@@ -187,7 +187,7 @@ int memory_desktop::load( void ) {
 		&& (4==ret)) {
 			if (di == "show") {
 		cl_gts_gui.menite_trace_input_color->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_input_color->show();
 			}
 		cl_gts_gui.window_trace_input_color->position(xx,yy);
@@ -198,7 +198,7 @@ int memory_desktop::load( void ) {
 		,cl_gts_gui.window_trace_output_color->h()  );
 			if (di == "show") {
 		cl_gts_gui.menite_trace_output_color->set();
-		cl_gts_gui.window_opengl->show();/* Need for Minimize */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_trace_output_color->show();
 			}
 		}

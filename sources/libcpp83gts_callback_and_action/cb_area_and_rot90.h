@@ -1,6 +1,8 @@
 #ifndef cb_area_and_rot90_h
 #define cb_area_and_rot90_h
 
+#include "iip_opengl_l1edit.h" // E_SELECT_PART
+
 class cb_area_and_rot90 {
 public:
 	cb_area_and_rot90()
@@ -63,7 +65,7 @@ public:
 		変換
 	*/
 
-	void copy_opengl_to_value( void );
+	void copy_opengl_to_value( const E_SELECT_PART sel_num );
 	void copy_value_to_opengl( void );
 
 	void getset_x_pixel_from_x_size( void );

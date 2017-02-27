@@ -11,11 +11,11 @@
 #include <FL/fl_ask.H>
 #include "gts_master.h"
 
-void gts_gui::cb_window_opengl_i(Fl_Double_Window*, void*) {
+void gts_gui::cb_window_main_view_i(Fl_Double_Window*, void*) {
   cl_gts_master.cb_quit();
 }
-void gts_gui::cb_window_opengl(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_opengl_i(o,v);
+void gts_gui::cb_window_main_view(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_main_view_i(o,v);
 }
 
 void gts_gui::cb_Open_i(Fl_Menu_*, void*) {
@@ -105,7 +105,7 @@ void gts_gui::cb_Renumber(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_scan_and_save_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_scan_and_save->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_scan_and_save->show();
 } else {
     cl_gts_gui.window_scan_and_save->hide();
@@ -117,7 +117,7 @@ void gts_gui::cb_menite_scan_and_save(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_area_and_rot90_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_area_and_rot90->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_area_and_rot90->show();
 } else {
     cl_gts_gui.window_area_and_rot90->hide();
@@ -129,7 +129,7 @@ void gts_gui::cb_menite_area_and_rot90(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_pixel_type_and_bright_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_pixel_type_and_bright->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_pixel_type_and_bright->show();
 } else {
     cl_gts_gui.window_pixel_type_and_bright->hide();
@@ -141,7 +141,7 @@ void gts_gui::cb_menite_pixel_type_and_bright(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_number_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_number->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_number->show();
 } else {
     cl_gts_gui.window_number->hide();
@@ -153,7 +153,7 @@ void gts_gui::cb_menite_number(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_thickness_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_thickness->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_trace_thickness->show();
 } else {
     cl_gts_gui.window_trace_thickness->hide();
@@ -169,7 +169,7 @@ void gts_gui::cb_menite_trace_thickness(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_input_color_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_input_color->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_trace_input_color->show();
 } else {
     cl_gts_gui.window_trace_input_color->hide();
@@ -181,7 +181,7 @@ void gts_gui::cb_menite_trace_input_color(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_output_color_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_output_color->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_trace_output_color->show();
 } else {
     cl_gts_gui.window_trace_output_color->hide();
@@ -193,7 +193,7 @@ void gts_gui::cb_menite_trace_output_color(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_parameters_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_parameters->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_trace_parameters->show();
 } else {
     cl_gts_gui.window_trace_parameters->hide();
@@ -209,7 +209,7 @@ void gts_gui::cb_menite_trace_parameters(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_batch_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_batch->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_trace_batch->show();
 } else {
     cl_gts_gui.window_trace_batch->hide();
@@ -221,7 +221,7 @@ void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_menite_trace_files_i(Fl_Menu_*, void*) {
   if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_opengl->show();/* Need for Minimize */
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
     cl_gts_gui.window_trace_files->show();
 } else {
     cl_gts_gui.window_trace_files->hide();
@@ -5063,8 +5063,8 @@ void gts_gui::cb_button_input_num_form_cancel(Fl_Button* o, void* v) {
 }
 
 Fl_Double_Window* gts_gui::make_window() {
-  { window_opengl = new Fl_Double_Window(720, 565, "GTS");
-    window_opengl->callback((Fl_Callback*)cb_window_opengl, (void*)(this));
+  { window_main_view = new Fl_Double_Window(720, 565, "GTS");
+    window_main_view->callback((Fl_Callback*)cb_window_main_view, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 720, 25);
       o->menu(menu_);
     } // Fl_Menu_Bar* o
@@ -5089,8 +5089,8 @@ Fl_Double_Window* gts_gui::make_window() {
       scrbar_view_y->box(FL_BORDER_BOX);
       scrbar_view_y->callback((Fl_Callback*)cb_scrbar_view_y);
     } // Fl_Scrollbar* scrbar_view_y
-    window_opengl->end();
-  } // Fl_Double_Window* window_opengl
+    window_main_view->end();
+  } // Fl_Double_Window* window_main_view
   { window_next_scan = new Fl_Double_Window(545, 100, "Next Scan");
     window_next_scan->user_data((void*)(this));
     { button_rescan = new Fl_Button(60, 75, 110, 25, "Rescan");

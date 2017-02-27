@@ -247,7 +247,7 @@ void cb_color_trace_enhancement::tgt_open_edit_color( E_COLOR_TRACE_HAB_COLORS t
 
 	/* edit color windowを表示 */
 	cl_gts_gui.menite_trace_output_color->set();
-	cl_gts_gui.window_opengl->show();/* Need for Minimize */
+	cl_gts_gui.window_main_view->show();/* Need for Minimize */
 	cl_gts_gui.window_trace_output_color->show();
 }
 

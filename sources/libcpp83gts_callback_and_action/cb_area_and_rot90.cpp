@@ -1,3 +1,4 @@
+#include <iostream> // std::cout
 #include <cmath> // floor(-)
 #include <FL/fl_ask.H> // fl_alert()
 #include "pri.h"
@@ -537,7 +538,7 @@ void cb_area_and_rot90::getset_y_size_from_y_pixel_( void )
 	);
 }
 
-void cb_area_and_rot90::copy_opengl_to_value( void )
+void cb_area_and_rot90::copy_opengl_to_value( const E_SELECT_PART sel_num )
 {
 	/* 画像上のエリアハンドルを選択していること */
 	if (
@@ -558,7 +559,8 @@ void cb_area_and_rot90::copy_opengl_to_value( void )
 	}
 
 	/* 解像度を得る */
-	const double dpi = cl_gts_gui.valinp_area_reso->value();
+	//const double dpi = cl_gts_gui.valinp_area_reso->value();
+	const double dpi = this->dpi_when_cropped_;
 	if (dpi <= 0.0) {
 		pri_funct_err_bttvr(
 	"Warning : cl_gts_gui.valinp_area_reso->value() returns <%g>"
@@ -581,14 +583,69 @@ void cb_area_and_rot90::copy_opengl_to_value( void )
 	const double cm_y = this->cm_from_pixel_( pix_y ,dpi );
 	const double cm_w = this->cm_from_pixel_( pix_w ,dpi );
 	const double cm_h = this->cm_from_pixel_( pix_h ,dpi );
+	const double pixdw = static_cast<double>(pix_w)
+		*cl_gts_gui.valinp_area_reso->value() /dpi;
+	const double pixdh = static_cast<double>(pix_h)
+		*cl_gts_gui.valinp_area_reso->value() /dpi;
 
 	/* 数値を表示 */
-	cl_gts_gui.valinp_area_x_pos->value(cm_x);
-	cl_gts_gui.valinp_area_y_pos->value(cm_y);
-	cl_gts_gui.valinp_area_x_size->value(cm_w);
-	cl_gts_gui.valinp_area_y_size->value(cm_h);
-	cl_gts_gui.valinp_area_x_pixel->value(static_cast<double>(pix_w));
-	cl_gts_gui.valinp_area_y_pixel->value(static_cast<double>(pix_h));
+
+	switch (sel_num) {
+	case E_SELECT_NOTHING:
+		break;
+	case E_SELECT_IMAGE:
+		break;
+	case E_SELECT_LEFT:
+		cl_gts_gui.valinp_area_x_pos->value(cm_x);
+		cl_gts_gui.valinp_area_x_size->value(cm_w);
+		cl_gts_gui.valinp_area_x_pixel->value(pixdw);
+		break;
+	case E_SELECT_TOP:
+		cl_gts_gui.valinp_area_y_pos->value(cm_y);
+		cl_gts_gui.valinp_area_y_size->value(cm_h);
+		cl_gts_gui.valinp_area_y_pixel->value(pixdh);
+		break;
+	case E_SELECT_RIGHT:
+		cl_gts_gui.valinp_area_x_size->value(cm_w);
+		cl_gts_gui.valinp_area_x_pixel->value(pixdw);
+		break;
+	case E_SELECT_BOTTOM:
+		cl_gts_gui.valinp_area_y_size->value(cm_h);
+		cl_gts_gui.valinp_area_y_pixel->value(pixdh);
+		break;
+	case E_SELECT_LEFTBOTTOM:
+		cl_gts_gui.valinp_area_x_pos->value(cm_x);
+		cl_gts_gui.valinp_area_x_size->value(cm_w);
+		cl_gts_gui.valinp_area_y_size->value(cm_h);
+		cl_gts_gui.valinp_area_x_pixel->value(pixdw);
+		cl_gts_gui.valinp_area_y_pixel->value(pixdh);
+		break;
+	case E_SELECT_RIGHTTOP:
+		cl_gts_gui.valinp_area_y_pos->value(cm_y);
+		cl_gts_gui.valinp_area_x_size->value(cm_w);
+		cl_gts_gui.valinp_area_y_size->value(cm_h);
+		cl_gts_gui.valinp_area_x_pixel->value(pixdw);
+		cl_gts_gui.valinp_area_y_pixel->value(pixdh);
+		break;
+	case E_SELECT_RIGHTBOTTOM:
+		cl_gts_gui.valinp_area_x_size->value(cm_w);
+		cl_gts_gui.valinp_area_y_size->value(cm_h);
+		cl_gts_gui.valinp_area_x_pixel->value(pixdw);
+		cl_gts_gui.valinp_area_y_pixel->value(pixdh);
+		break;
+	case E_SELECT_LEFTTOP:
+		cl_gts_gui.valinp_area_x_pos->value(cm_x);
+		cl_gts_gui.valinp_area_y_pos->value(cm_y);
+		cl_gts_gui.valinp_area_x_size->value(cm_w);
+		cl_gts_gui.valinp_area_y_size->value(cm_h);
+		cl_gts_gui.valinp_area_x_pixel->value(pixdw);
+		cl_gts_gui.valinp_area_y_pixel->value(pixdh);
+		break;
+	case E_SELECT_CENTER:
+		cl_gts_gui.valinp_area_x_pos->value(cm_x);
+		cl_gts_gui.valinp_area_y_pos->value(cm_y);
+		break;
+	}
 }
 
 void cb_area_and_rot90::copy_value_to_opengl( void )
@@ -622,7 +679,6 @@ void cb_area_and_rot90::copy_value_to_opengl( void )
 							cm_w ,dpi)));
 	const int pix_h = static_cast<int>(floor(this->pixel_from_cm_(
 							cm_h ,dpi)));
-
 	/* 座標系変換 Valueは左下原点 --> OpenGLは左上原点 */
 //	pix_y = cl_gts_master.cl_ogl_view.get_l_height() - (pix_y + pix_h);
 

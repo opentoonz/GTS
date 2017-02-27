@@ -48,8 +48,7 @@ dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\
 fltk_event.cpp\
-fltk_opengl_draw.cpp\
-fltk_opengl_handle.cpp\
+fltk_opengl.cpp\
 igs_lex_white_space_and_double_quote.cpp\
 ids_path_extensions.cpp\
 ids_path_fltk_native_browse.cpp\

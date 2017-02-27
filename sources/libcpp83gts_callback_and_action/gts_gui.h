@@ -31,10 +31,10 @@
 class gts_gui {
 public:
   Fl_Double_Window* make_window();
-  Fl_Double_Window *window_opengl;
+  Fl_Double_Window *window_main_view;
 private:
-  inline void cb_window_opengl_i(Fl_Double_Window*, void*);
-  static void cb_window_opengl(Fl_Double_Window*, void*);
+  inline void cb_window_main_view_i(Fl_Double_Window*, void*);
+  static void cb_window_main_view(Fl_Double_Window*, void*);
   static Fl_Menu_Item menu_[];
   inline void cb_Open_i(Fl_Menu_*, void*);
   static void cb_Open(Fl_Menu_*, void*);

@@ -46,11 +46,11 @@ int memory_desktop::_save_by_fp( FILE *fp )
 
 	i_ret = fprintf(fp, "%-28s %s %d %d %d %d\n"
 	, this->str_window_main_
-	, cl_gts_gui.window_opengl->visible()?ccp_show:ccp_hide
-	, cl_gts_gui.window_opengl->x()
-	, cl_gts_gui.window_opengl->y()
-	, cl_gts_gui.window_opengl->w()
-	, cl_gts_gui.window_opengl->h()
+	, cl_gts_gui.window_main_view->visible()?ccp_show:ccp_hide
+	, cl_gts_gui.window_main_view->x()
+	, cl_gts_gui.window_main_view->y()
+	, cl_gts_gui.window_main_view->w()
+	, cl_gts_gui.window_main_view->h()
 	);
 	if (i_ret < 0) { return NG; }
 
