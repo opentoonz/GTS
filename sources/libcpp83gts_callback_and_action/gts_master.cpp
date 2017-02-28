@@ -138,6 +138,11 @@ int gts_master::exec( const char *comm )
 		}
 	}
 
+	/* DPIの値をユーザー入力しキャンセルした時の値の復元用記憶 */
+	this->cl_area_and_rot90.set_dpi_before_change(
+		cl_gts_gui.valinp_area_reso->value()
+	);
+
 	/* Pixel Type */
 	cl_gts_gui.choice_pixel_type->value(2); // Initial is RGB
 	cl_gts_master.cb_choice_pixel_type();

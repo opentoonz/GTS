@@ -1,5 +1,5 @@
 #include <iostream> // std::cout
-#include <cmath> // floor(-)
+#include <cmath> // rint(-)
 #include <FL/fl_ask.H> // fl_alert()
 #include "pri.h"
 #include "cb_area_and_rot90.h"
@@ -251,14 +251,41 @@ void cb_area_and_rot90::cb_area_y_pixel_size( void )
 
 void cb_area_and_rot90::cb_area_reso( void )
 {
+	/* 入力したDPI値が範囲外 */
+	if (
+	( cl_gts_gui.valinp_area_reso->value()
+	< cl_gts_gui.valinp_area_reso->minimum())
+	||
+	( cl_gts_gui.valinp_area_reso->maximum()
+	< cl_gts_gui.valinp_area_reso->value())
+	) {
+		fl_alert( "Must be %g ... %g DPI"
+			,cl_gts_gui.valinp_area_reso->minimum()
+			,cl_gts_gui.valinp_area_reso->maximum()
+		);
+		cl_gts_gui.valinp_area_reso->value(
+			this->dpi_before_change_
+		);
+		return; /* Cancel */
+	}
+
 	/* 変化したDPIに合わせてAreaサイズの値を変更する */
 	if (cl_gts_gui.radbut_area_reso_fix_cm->value()) {
 		this->getset_x_pixel_from_x_size();
 		this->getset_y_pixel_from_y_size();
 	}
 	else {
-		this->check_dpi_or_size_from_pixel_();
+		if (this->check_dpi_or_size_from_pixel_()==false) {
+			/* 解像度の変更をキャンセルするとユーザーから指定 */
+			cl_gts_gui.valinp_area_reso->value(
+				this->dpi_before_change_
+			);
+			return; /* Cancel */
+		}
 	}
+
+	/* ユーザー入力した値を記憶し、Cancelに備える */
+	this->dpi_before_change_ = cl_gts_gui.valinp_area_reso->value();
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
@@ -482,8 +509,9 @@ void cb_area_and_rot90::getset_x_size_from_y_size_( void )
 	}
 }
 
-void cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
+const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 {
+	/* 変更後のDPIとPixel値による新しいAreaSize */
 	const double x_cm_size = this->cm_from_pixel_(
 		cl_gts_gui.valinp_area_x_pixel->value()
 		,cl_gts_gui.valinp_area_reso->value()
@@ -492,31 +520,72 @@ void cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 		cl_gts_gui.valinp_area_y_pixel->value()
 		,cl_gts_gui.valinp_area_reso->value()
 	);
+
+	/* AreaがScannerMax範囲内の場合 */
 	if (
-	((cl_gts_gui.valout_scanner_width_max->value()
-	<
-	( cl_gts_gui.valinp_area_x_pos->value() + x_cm_size )))
-	||
-	((cl_gts_gui.valout_scanner_height_max->value()
-	<
-	( cl_gts_gui.valinp_area_y_pos->value() + y_cm_size )))
-	) {	/* 範囲外ならDPIを範囲内に収める */
+	( ( cl_gts_gui.valinp_area_x_pos->value() + x_cm_size )
+	<=
+	cl_gts_gui.valout_scanner_width_max->value() )
+	&&
+	( ( cl_gts_gui.valinp_area_y_pos->value() + y_cm_size )
+	<=
+	cl_gts_gui.valout_scanner_height_max->value()
+	) ) {
+		this->getset_x_size_from_x_pixel_();
+		this->getset_y_size_from_y_pixel_();
+
+		return true;
+	}
+	
+	/* AreaがScannerMax範囲外だとLimitかける... */
+	switch (fl_choice("Not inside , Limit..."
+	,"Cancel"
+	,"Size"
+	,"DPI"
+	)) {
+	case 0: /* Cancel */
+		return false;
+	case 1: /* Sizeを範囲内に収めるLimit(default) */
+		if (cl_gts_gui.valout_scanner_width_max->value()
+		<
+		(cl_gts_gui.valinp_area_x_pos->value()+x_cm_size)) {
+			cl_gts_gui.valinp_area_x_size->value(
+			 cl_gts_gui.valout_scanner_width_max->value()
+			 - cl_gts_gui.valinp_area_x_pos->value()
+			);
+			this->getset_x_pixel_from_x_size();
+		}
+		if (cl_gts_gui.valout_scanner_height_max->value()
+		<
+		(cl_gts_gui.valinp_area_y_pos->value()+y_cm_size)) {
+			cl_gts_gui.valinp_area_y_size->value(
+			 cl_gts_gui.valout_scanner_height_max->value()
+			 - cl_gts_gui.valinp_area_y_pos->value()
+			);
+			this->getset_y_pixel_from_y_size();
+		}
+		break;
+	case 2: /* DPIを範囲内に収めるLimit */
+		{
 		const double x_dpi = this->dpi_from_cm_per_pixel_(
 			cl_gts_gui.valout_scanner_width_max->value()
 			- cl_gts_gui.valinp_area_x_pos->value()
-			,cl_gts_gui.valinp_area_x_pixel->value()
+			, cl_gts_gui.valinp_area_x_pixel->value()
 		);
 		const double y_dpi = this->dpi_from_cm_per_pixel_(
 			cl_gts_gui.valout_scanner_height_max->value()
 			- cl_gts_gui.valinp_area_y_pos->value()
-			,cl_gts_gui.valinp_area_y_pixel->value()
+			, cl_gts_gui.valinp_area_y_pixel->value()
 		);
 		cl_gts_gui.valinp_area_reso->value(
-			ceil( max( x_dpi , y_dpi ) )
+			rint( max( x_dpi , y_dpi ) )
 		);
+		this->getset_x_size_from_x_pixel_();
+		this->getset_y_size_from_y_pixel_();
+		}
+		break;
 	}
-	this->getset_x_size_from_x_pixel_();
-	this->getset_y_size_from_y_pixel_();
+	return true;
 }
 
 void cb_area_and_rot90::getset_x_size_from_x_pixel_( void )
@@ -563,7 +632,7 @@ void cb_area_and_rot90::copy_opengl_to_value( const E_SELECT_PART sel_num )
 	const double dpi = this->dpi_when_cropped_;
 	if (dpi <= 0.0) {
 		pri_funct_err_bttvr(
-	"Warning : cl_gts_gui.valinp_area_reso->value() returns <%g>"
+	"Warning : copy_opengl_to_value() : this->dpi_when_cropped_=<%g>"
 			, dpi);
 		return;
 	}
@@ -655,7 +724,7 @@ void cb_area_and_rot90::copy_value_to_opengl( void )
 	const double dpi = this->dpi_when_cropped_;
 	if (dpi <= 0.0) {
 		pri_funct_err_bttvr(
-	"Warning : cl_gts_gui.valinp_area_reso->value() returns <%g>"
+	"Warning : copy_value_to_opengl() : this->dpi_when_cropped_=<%g>"
 			, dpi);
 		return;
 	}

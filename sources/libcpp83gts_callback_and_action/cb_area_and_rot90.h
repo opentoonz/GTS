@@ -8,7 +8,16 @@ public:
 	cb_area_and_rot90()
 	:previous_choice_rot90_(-1)
 	,dpi_when_cropped_(0.0)
+	,dpi_before_change_(0.0)
 	{}
+
+	/*
+		Initial/Reset
+	*/
+	void set_dpi_before_change( const double dpi ) {
+		this->dpi_before_change_ = dpi; }
+	void reset_dpi_to_zero_by_scan_or_preview(void) {
+		this->dpi_when_cropped_ = 0.0; }
 
 	/*
 		Scan
@@ -74,6 +83,7 @@ public:
 private:
 	int previous_choice_rot90_;
 	double dpi_when_cropped_; /* 画像表示上のCropエリアはこの値で計算 */
+	double dpi_before_change_;
 
 	/*
 		変換
@@ -94,7 +104,7 @@ private:
 	void getset_x_size_from_x_pixel_( void );
 	void getset_y_size_from_y_pixel_( void );
 
-	void check_dpi_or_size_from_pixel_( void );
+	const bool check_dpi_or_size_from_pixel_( void );
 };
 
 #endif /* !cb_area_and_rot90_h */

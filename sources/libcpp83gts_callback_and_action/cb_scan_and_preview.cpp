@@ -25,4 +25,7 @@ void gts_master::cb_scan_and_preview( void )
 		clp_scan
 		, cl_gts_gui.choice_rot90->value()
 	);
+
+	/* Crop以外の画像表示をした場合 */
+	this->cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
 }

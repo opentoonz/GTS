@@ -919,7 +919,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	this->load_trace_batch_sw_ =  load_trace_batch_sw;
 	this->load_ifs_( ifs , scan_num_continue_type_sw ); /* 読む */
    }
-   catch ( std::fstream::failure& e ) {
+   catch ( std::fstream::failure& ) {
 	if ( std::ios_base::eofbit == false ) {
 		throw; /* EOF以外の例外はエラーなので再び投げる */
 	}

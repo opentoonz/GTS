@@ -89,6 +89,9 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	this->rot_and_trace_and_enoise_and_preview(
 		&(this->cl_iip_read), 0
 	);
+
+	/* Crop以外の画像表示をした場合 */
+	this->cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
 }
 
 /* (画像生成(Scan/Open)以外の)再処理、再表示 */

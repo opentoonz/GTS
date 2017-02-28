@@ -273,7 +273,6 @@ namespace {
  int cb_number::insert_and_select_fnum_in_list_( const int file_num )
  {
 	int ii,jj;
-	char buffer[8];
 
 	/* size + 1までループして最後でも追加するようにする */
 	for (ii= 1 ;ii <= cl_gts_gui.selbro_number_list->size() ;++ii) {
