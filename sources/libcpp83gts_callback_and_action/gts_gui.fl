@@ -557,7 +557,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
         xywh {1 320 198 41} box BORDER_FRAME color 41 align 5
       } {
         Fl_Output txtout_scanner_type {
-          xywh {2 320 196 20} box NO_BOX color 49
+          xywh {2 320 196 20} box NO_BOX color 49 textsize 13
         }
         Fl_Group {} {open
           xywh {2 340 196 20} align 20
@@ -572,7 +572,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
           }
           Fl_Text_Display {} {
             label cm
-            xywh {165 340 0 0} align 6
+            xywh {165 342 0 0} align 6
           }
         }
       }

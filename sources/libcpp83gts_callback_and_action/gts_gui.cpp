@@ -5244,6 +5244,7 @@ Fl_Double_Window* gts_gui::make_window() {
       { txtout_scanner_type = new Fl_Output(2, 320, 196, 20);
         txtout_scanner_type->box(FL_NO_BOX);
         txtout_scanner_type->color(FL_BACKGROUND_COLOR);
+        txtout_scanner_type->textsize(13);
       } // Fl_Output* txtout_scanner_type
       { Fl_Group* o = new Fl_Group(2, 340, 196, 20);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
@@ -5255,7 +5256,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valout_scanner_height_max->box(FL_FLAT_BOX);
           valout_scanner_height_max->maximum(60);
         } // Fl_Value_Output* valout_scanner_height_max
-        { Fl_Text_Display* o = new Fl_Text_Display(165, 340, 0, 0, "cm");
+        { Fl_Text_Display* o = new Fl_Text_Display(165, 342, 0, 0, "cm");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
         o->end();
