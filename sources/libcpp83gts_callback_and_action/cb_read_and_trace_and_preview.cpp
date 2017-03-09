@@ -30,9 +30,16 @@ void gts_master::cb_read_and_trace_and_preview( void )
 
 	/*------ ファイルパス ------*/
 
-	std::string fpath_open(
-		this->cl_trace_files.get_open_path(crnt_file_num)
-	);
+	std::string fpath_open;
+	if ( this->cl_number.is_scan() ) {
+	 fpath_open = this->cl_scan_and_save.get_save_path(crnt_file_num);
+	} else
+	if ( this->cl_number.is_trace() ) {
+	 fpath_open = this->cl_trace_files.get_open_path(crnt_file_num);
+	} else {
+		fl_alert("Click [Set Number]!");
+		return;
+	}
 
 	/* 番号に対するファイルパスを得ることはできるか */
 	if (fpath_open.empty()) {
