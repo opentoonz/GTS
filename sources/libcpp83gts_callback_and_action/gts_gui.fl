@@ -223,12 +223,20 @@ cl_gts_master.cb_quit();}
           } {
             MenuItem {} {
               label {zoom In}
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);}
+              callback {if ((Fl::event_state()&FL_SHIFT) == FL_SHIFT) {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_POS);
+} else {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);
+}}
               xywh {30 30 100 20} shortcut 0x7a
             }
             MenuItem {} {
               label {zoom Out}
-              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);}
+              callback {if ((Fl::event_state()&FL_SHIFT) == FL_SHIFT) {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_POS);
+} else {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);
+}}
               xywh {30 30 100 20} shortcut 0x78
             }
             MenuItem {} {

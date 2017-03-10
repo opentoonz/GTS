@@ -232,14 +232,22 @@ void gts_gui::cb_menite_trace_files(Fl_Menu_* o, void* v) {
 }
 
 void gts_gui::cb_zoom_i(Fl_Menu_*, void*) {
-  cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);
+  if ((Fl::event_state()&FL_SHIFT) == FL_SHIFT) {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_POS);
+} else {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);
+};
 }
 void gts_gui::cb_zoom(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_zoom_i(o,v);
 }
 
 void gts_gui::cb_zoom1_i(Fl_Menu_*, void*) {
-  cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);
+  if ((Fl::event_state()&FL_SHIFT) == FL_SHIFT) {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_POS);
+} else {
+cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);
+};
 }
 void gts_gui::cb_zoom1(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_zoom1_i(o,v);
