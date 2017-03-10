@@ -131,9 +131,9 @@ void memory_config::load_ifs_(
 		&&	this->load_trace_parameters_(words)) {
 			continue;
 		}
-		pri_funct_err_bttvr(
+		/* pri_funct_err_bttvr(
 			"Warning : ignore '%s' at line %d"
-			,str.c_str() ,ii );
+			,str.c_str() ,ii ); */
 	}
 }
 
@@ -903,7 +903,41 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 	this->load_trace_parameters_sw_ = true;	// True only this.
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
-	return this->load(file_path , this->load_trace_batch_sw_);
+
+	const int ret = this->load(file_path , this->load_trace_batch_sw_);
+
+	this->load_config_sw_ = true;
+	this->load_scan_and_save_sw_ = true;
+	this->load_trace_files_sw_ = true;
+	this->load_crop_area_and_rot90_sw_ = true;
+	this->load_pixel_type_and_bright_sw_ = true;
+	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_batch_sw_ = true;
+	this->load_number_sw_ = true;
+	return ret;
+}
+int memory_config::load_only_area_and_rot90( const std::string& file_path)
+{
+	this->load_config_sw_ = false;
+	this->load_scan_and_save_sw_ = false;
+	this->load_trace_files_sw_ = false;
+	this->load_crop_area_and_rot90_sw_ = true; // True only this.
+	this->load_pixel_type_and_bright_sw_ = false;
+	this->load_trace_parameters_sw_ = false;
+	this->load_trace_batch_sw_ = false;
+	this->load_number_sw_ = false;
+
+	const int ret = this->load(file_path , this->load_trace_batch_sw_);
+
+	this->load_config_sw_ = true;
+	this->load_scan_and_save_sw_ = true;
+	this->load_trace_files_sw_ = true;
+	this->load_crop_area_and_rot90_sw_ = true;
+	this->load_pixel_type_and_bright_sw_ = true;
+	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_batch_sw_ = true;
+	this->load_number_sw_ = true;
+	return ret;
 }
 
 int memory_config::load( const std::string& file_path ,const bool load_trace_batch_sw )

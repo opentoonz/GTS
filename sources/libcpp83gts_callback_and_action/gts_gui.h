@@ -9,6 +9,7 @@
 #include <FL/Fl_Scrollbar.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Output.H>
+#include "cb_area_and_rot90.h"
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Choice.H>
@@ -19,6 +20,7 @@
 #include <FL/Fl_File_Input.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Browser.H>
+#include "cb_trace_parameters.h"
 #include <FL/Fl_Round_Button.H>
 #include <FL/Fl_Scroll.H>
 #include "fltk_1000x100_histogram.h"
@@ -205,6 +207,11 @@ public:
 private:
   inline void cb_window_area_and_rot90_i(Fl_Double_Window*, void*);
   static void cb_window_area_and_rot90(Fl_Double_Window*, void*);
+public:
+  fltk_button_area_and_rot90 *button_area_and_rot90;
+private:
+  inline void cb_button_area_and_rot90_i(fltk_button_area_and_rot90*, void*);
+  static void cb_button_area_and_rot90(fltk_button_area_and_rot90*, void*);
   inline void cb_Crop1_i(Fl_Button*, void*);
   static void cb_Crop1(Fl_Button*, void*);
 public:
@@ -491,6 +498,11 @@ public:
 private:
   inline void cb_window_trace_parameters_i(Fl_Double_Window*, void*);
   static void cb_window_trace_parameters(Fl_Double_Window*, void*);
+public:
+  fltk_button_trace_parameters *button_trace_parameters;
+private:
+  inline void cb_button_trace_parameters_i(fltk_button_trace_parameters*, void*);
+  static void cb_button_trace_parameters(fltk_button_trace_parameters*, void*);
 public:
   Fl_Check_Button *chkbtn_color_trace_01_chk;
 private:
@@ -948,26 +960,15 @@ private:
   inline void cb_button_color_trace_06_src_i(Fl_Button*, void*);
   static void cb_button_color_trace_06_src(Fl_Button*, void*);
 public:
-  Fl_Double_Window *window_trace_batch;
-private:
-  inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_batch(Fl_Double_Window*, void*);
-  inline void cb_Add_i(Fl_Button*, void*);
-  static void cb_Add(Fl_Button*, void*);
-  inline void cb_Upper_i(Fl_Button*, void*);
-  static void cb_Upper(Fl_Button*, void*);
-  inline void cb_Lower_i(Fl_Button*, void*);
-  static void cb_Lower(Fl_Button*, void*);
-  inline void cb_Delete1_i(Fl_Button*, void*);
-  static void cb_Delete1(Fl_Button*, void*);
-  inline void cb_Run_i(Fl_Button*, void*);
-  static void cb_Run(Fl_Button*, void*);
-public:
-  Fl_Browser *selbro_trace_batch_config_list;
   Fl_Double_Window *window_trace_thickness;
 private:
   inline void cb_window_trace_thickness_i(Fl_Double_Window*, void*);
   static void cb_window_trace_thickness(Fl_Double_Window*, void*);
+public:
+  fltk_button_trace_parameters *button_trace_thickness;
+private:
+  inline void cb_button_trace_thickness_i(fltk_button_trace_parameters*, void*);
+  static void cb_button_trace_thickness(fltk_button_trace_parameters*, void*);
 public:
   Fl_Check_Button *chkbtn_thickness_01_chk;
 private:
@@ -1155,6 +1156,22 @@ private:
   inline void cb_valinp_thickness_06_i(Fl_Value_Input*, void*);
   static void cb_valinp_thickness_06(Fl_Value_Input*, void*);
 public:
+  Fl_Double_Window *window_trace_batch;
+private:
+  inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_batch(Fl_Double_Window*, void*);
+  inline void cb_Add_i(Fl_Button*, void*);
+  static void cb_Add(Fl_Button*, void*);
+  inline void cb_Upper_i(Fl_Button*, void*);
+  static void cb_Upper(Fl_Button*, void*);
+  inline void cb_Lower_i(Fl_Button*, void*);
+  static void cb_Lower(Fl_Button*, void*);
+  inline void cb_Delete1_i(Fl_Button*, void*);
+  static void cb_Delete1(Fl_Button*, void*);
+  inline void cb_Run_i(Fl_Button*, void*);
+  static void cb_Run(Fl_Button*, void*);
+public:
+  Fl_Browser *selbro_trace_batch_config_list;
   Fl_Double_Window *window_trace_input_color;
 private:
   inline void cb_window_trace_input_color_i(Fl_Double_Window*, void*);

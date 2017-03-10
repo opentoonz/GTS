@@ -44,6 +44,7 @@ cb_scan_and_preview.cpp\
 cb_scan_and_save.cpp\
 cb_trace_batch.cpp\
 cb_trace_files.cpp\
+cb_trace_parameters.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\
