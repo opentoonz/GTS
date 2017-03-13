@@ -418,10 +418,10 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 
  switch ( e_act ) {
  E_ACT_ALL_VIEW:               this->_all_view(); break;
- E_ACT_ZOOM_UP_TWICE_AT_CEN:   this->_zoom_up_twice_at_cen(); break;
- E_ACT_ZOOM_DOWN_HALF_AT_CEN:  this->_zoom_down_half_at_cen();break;
- E_ACT_ZOOM_UP_STEP_AT_CEN:    this->_zoom_up_step_at_cen(); break;
- E_ACT_ZOOM_DOWN_STEP_AT_CEN:  this->_zoom_down_step_at_cen();break;
+ E_ACT_ZOOM_IN_TWICE_AT_CEN:   this->_zoom_up_twice_at_cen(); break;
+ E_ACT_ZOOM_OUT_HALF_AT_CEN:   this->_zoom_down_half_at_cen();break;
+ E_ACT_ZOOM_IN_STEP_AT_CEN:    this->_zoom_up_step_at_cen(); break;
+ E_ACT_ZOOM_OUT_STEP_AT_CEN:   this->_zoom_down_step_at_cen();break;
  E_ACT_ZOOM_D16:               this->_zoom_d16(); break;
  E_ACT_ZOOM_D08:               this->_zoom_d08(); break;
  E_ACT_ZOOM_D04:               this->_zoom_d04(); break;
@@ -431,10 +431,10 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
  E_ACT_ZOOM_U04:               this->_zoom_u04(); break;
  E_ACT_ZOOM_U08:               this->_zoom_u08(); break;
  E_ACT_ZOOM_U16:               this->_zoom_u16(); break;
- E_ACT_ZOOM_UP_TWICE_AT_POS:   this->_zoom_up_twice_at_pos(); break;
- E_ACT_ZOOM_DOWN_HALF_AT_POS:  this->_zoom_down_half_at_pos(); break;
- E_ACT_ZOOM_UP_STEP_AT_POS:    this->_zoom_up_step_at_pos(); break;
- E_ACT_ZOOM_DOWN_STEP_AT_POS:  this->_zoom_down_step_at_pos(); break;
+ E_ACT_ZOOM_IN_TWICE_AT_POS:   this->_zoom_up_twice_at_pos(); break;
+ E_ACT_ZOOM_OUT_HALF_AT_POS:  this->_zoom_down_half_at_pos(); break;
+ E_ACT_ZOOM_IN_STEP_AT_POS:    this->_zoom_up_step_at_pos(); break;
+ E_ACT_ZOOM_OUT_STEP_AT_POS:  this->_zoom_down_step_at_pos(); break;
  E_ACT_SCROLL_CENTER:          this->_scroll_center(); break;
  E_ACT_SCROLL_LEFT_SIDE:       this->_scroll_left_side(); break;
  E_ACT_SCROLL_RIGHT_SIDE:      this->_scroll_right_side(); break;
@@ -479,16 +479,16 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 	if      (E_ACT_ALL_VIEW == e_act) {
 		this->_all_view();
 	}
-	else if (E_ACT_ZOOM_UP_TWICE_AT_CEN == e_act) {
+	else if (E_ACT_ZOOM_IN_TWICE_AT_CEN == e_act) {
 		this->_zoom_up_twice_at_cen();
 	}
-	else if (E_ACT_ZOOM_DOWN_HALF_AT_CEN == e_act) {
+	else if (E_ACT_ZOOM_OUT_HALF_AT_CEN == e_act) {
 		this->_zoom_down_half_at_cen();
 	}
-	else if (E_ACT_ZOOM_UP_STEP_AT_CEN == e_act) {
+	else if (E_ACT_ZOOM_IN_STEP_AT_CEN == e_act) {
 		this->_zoom_up_step_at_cen();
 	}
-	else if (E_ACT_ZOOM_DOWN_STEP_AT_CEN == e_act) {
+	else if (E_ACT_ZOOM_OUT_STEP_AT_CEN == e_act) {
 		this->_zoom_down_step_at_cen();
 	}
 	else if (E_ACT_ZOOM_D16 == e_act) {
@@ -518,16 +518,16 @@ gts_event.cxx:366: 警告: 列挙値 `E_ACT_ALL_VIEW' は switch 内で扱われ
 	else if (E_ACT_ZOOM_U16 == e_act) {
 		this->_zoom_u16();
 	}
-	else if (E_ACT_ZOOM_UP_TWICE_AT_POS == e_act) {
+	else if (E_ACT_ZOOM_IN_TWICE_AT_POS == e_act) {
 		this->_zoom_up_twice_at_pos();
 	}
-	else if (E_ACT_ZOOM_DOWN_HALF_AT_POS == e_act) {
+	else if (E_ACT_ZOOM_OUT_HALF_AT_POS == e_act) {
 		this->_zoom_down_half_at_pos();
 	}
-	else if (E_ACT_ZOOM_UP_STEP_AT_POS == e_act) {
+	else if (E_ACT_ZOOM_IN_STEP_AT_POS == e_act) {
 		this->_zoom_up_step_at_pos();
 	}
-	else if (E_ACT_ZOOM_DOWN_STEP_AT_POS == e_act) {
+	else if (E_ACT_ZOOM_OUT_STEP_AT_POS == e_act) {
 		this->_zoom_down_step_at_pos();
 	}
 	else if (E_ACT_SCROLL_CENTER == e_act) {

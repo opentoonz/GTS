@@ -56,10 +56,10 @@ void fltk_event::set_keyboard_to_act( void )
 	switch ( this->_i_keyboard ) {
 	case ' ': e_act = E_ACT_ALL_VIEW; break;
 
-	case '=': e_act = E_ACT_ZOOM_UP_TWICE_AT_CEN; break;
-	case '-': e_act = E_ACT_ZOOM_DOWN_HALF_AT_CEN; break;
-	case '+': e_act = E_ACT_ZOOM_UP_STEP_AT_CEN; break;
-	case '_': e_act = E_ACT_ZOOM_DOWN_STEP_AT_CEN; break;
+	case '=': e_act = E_ACT_ZOOM_IN_TWICE_AT_CEN; break;
+	case '-': e_act = E_ACT_ZOOM_OUT_HALF_AT_CEN; break;
+	case '+': e_act = E_ACT_ZOOM_IN_STEP_AT_CEN; break;
+	case '_': e_act = E_ACT_ZOOM_OUT_STEP_AT_CEN; break;
 	case '1': e_act = E_ACT_ZOOM_D16; break;
 	case '2': e_act = E_ACT_ZOOM_D08; break;
 	case '3': e_act = E_ACT_ZOOM_D04; break;
@@ -69,10 +69,10 @@ void fltk_event::set_keyboard_to_act( void )
 	case '7': e_act = E_ACT_ZOOM_U04; break;
 	case '8': e_act = E_ACT_ZOOM_U08; break;
 	case '9': e_act = E_ACT_ZOOM_U16; break;
-	case FL_Page_Up:   e_act = E_ACT_ZOOM_UP_TWICE_AT_POS; break;
-	case FL_Page_Down: e_act = E_ACT_ZOOM_DOWN_HALF_AT_POS; break;
-	case FL_Home: e_act = E_ACT_ZOOM_UP_STEP_AT_POS; break;
-	case FL_End:  e_act = E_ACT_ZOOM_DOWN_STEP_AT_POS; break;
+	case FL_Page_Up:   e_act = E_ACT_ZOOM_IN_TWICE_AT_POS; break;
+	case FL_Page_Down: e_act = E_ACT_ZOOM_OUT_HALF_AT_POS; break;
+	case FL_Home: e_act = E_ACT_ZOOM_IN_STEP_AT_POS; break;
+	case FL_End:  e_act = E_ACT_ZOOM_OUT_STEP_AT_POS; break;
 
 	case 'c': e_act = E_ACT_SCROLL_CENTER; break;
 	case 'H': e_act = E_ACT_SCROLL_LEFT_SIDE; break;

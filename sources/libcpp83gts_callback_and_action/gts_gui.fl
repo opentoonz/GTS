@@ -222,22 +222,24 @@ cl_gts_master.cb_quit();}
             xywh {25 25 100 20}
           } {
             MenuItem {} {
-              label {zoom In}
-              callback {if ((Fl::event_state()&FL_SHIFT) == FL_SHIFT) {
-cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_POS);
-} else {
-cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_CEN);
-}}
+              label {In (at center of view)}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x7a
             }
             MenuItem {} {
-              label {zoom Out}
-              callback {if ((Fl::event_state()&FL_SHIFT) == FL_SHIFT) {
-cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_POS);
-} else {
-cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_CEN);
-}}
+              label {Out (at center of view)}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x78
+            }
+            MenuItem {} {
+              label {In (at cursor position)}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_POS);}
+              xywh {0 0 30 20} shortcut 0x1007a
+            }
+            MenuItem {} {
+              label {Out (at cursor position)}
+              callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_POS);}
+              xywh {0 0 30 20} shortcut 0x10078
             }
             MenuItem {} {
               label x1
@@ -759,12 +761,12 @@ cl_gts_gui.menite_scan_and_save->clear();}
         xywh {1 5 198 25}
       } {
         Fl_Box {} {
-          xywh {1 5 99 25} resizable
+          xywh {1 5 114 25} resizable
         }
         Fl_Button {} {
           label Scan
           callback {cl_gts_master.cl_scan_and_save.cb_start();}
-          xywh {100 5 99 25}
+          xywh {115 5 80 25}
         }
       }
       Fl_Group {} {
@@ -932,15 +934,15 @@ cl_gts_gui.menite_trace_files->clear();}
       xywh {350 50 200 405} type Double resizable non_modal size_range {200 405 1000 405} visible
     } {
       Fl_Group {} {open
-        xywh {0 5 200 25}
+        xywh {1 5 198 25}
       } {
         Fl_Box {} {
-          xywh {0 5 100 25} resizable
+          xywh {1 5 114 25} resizable
         }
         Fl_Button {} {
           label {Trace...}
           callback {cl_gts_master.cl_trace_files.cb_start();}
-          xywh {100 5 95 25}
+          xywh {115 5 80 25}
         }
       }
       Fl_Group {} {
@@ -2124,7 +2126,7 @@ cl_gts_gui.opengl_view->redraw();}
       label {Trace Batch}
       callback {cl_gts_gui.window_trace_batch->hide();  /* Window閉じる */
 cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
-      xywh {50 50 300 185} type Double resizable non_modal size_range {200 125 0 0} visible
+      xywh {50 50 300 185} type Double resizable non_modal size_range {240 30 0 0} visible
     } {
       Fl_Group {} {open
         xywh {0 4 300 30}

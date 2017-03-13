@@ -282,10 +282,10 @@ int fltk_opengl::handle( int event )
 			Wheeling forward zoom up.
 		*/
 		if (0 < Fl::event_dy()) { /* Wheeling int the rear */
-		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_DOWN_HALF_AT_POS);
+		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_POS);
 		}
 		else {			  /* Wheeling forward */
-		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_UP_TWICE_AT_POS);
+		 cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_POS);
 		}
 		return 1;
 

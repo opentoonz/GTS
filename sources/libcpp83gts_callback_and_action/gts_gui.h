@@ -118,10 +118,14 @@ private:
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
-  inline void cb_zoom_i(Fl_Menu_*, void*);
-  static void cb_zoom(Fl_Menu_*, void*);
-  inline void cb_zoom1_i(Fl_Menu_*, void*);
-  static void cb_zoom1(Fl_Menu_*, void*);
+  inline void cb_In_i(Fl_Menu_*, void*);
+  static void cb_In(Fl_Menu_*, void*);
+  inline void cb_Out_i(Fl_Menu_*, void*);
+  static void cb_Out(Fl_Menu_*, void*);
+  inline void cb_In1_i(Fl_Menu_*, void*);
+  static void cb_In1(Fl_Menu_*, void*);
+  inline void cb_Out1_i(Fl_Menu_*, void*);
+  static void cb_Out1(Fl_Menu_*, void*);
   inline void cb_x1_i(Fl_Menu_*, void*);
   static void cb_x1(Fl_Menu_*, void*);
   inline void cb_All_i(Fl_Menu_*, void*);
