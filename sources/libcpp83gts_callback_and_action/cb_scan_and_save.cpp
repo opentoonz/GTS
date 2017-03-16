@@ -158,6 +158,9 @@ int cb_scan_and_save::next_scan_and_save_( void )
 		return NG;
 	}
 
+	/* Crop以外の画像表示をした場合 */
+	cl_gts_master.cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
+
 	/* 05 回転、2値化、ドットノイズ消去　処理 */
 	if (cl_gts_master.rot_and_trace_and_enoise(
 		clp_scan ,cl_gts_gui.choice_rot90->value()

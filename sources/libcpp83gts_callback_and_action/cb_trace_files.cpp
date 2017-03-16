@@ -64,6 +64,9 @@ int cb_trace_files::read_and_save_crnt_(
 		return NG;
 	}
 
+	/* Crop以外の画像表示をした場合 */
+	cl_gts_master.cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
+
 	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
 	if (cl_gts_master.rot_and_trace_and_enoise(
 		&(cl_gts_master.cl_iip_read)
@@ -364,6 +367,7 @@ void cb_trace_files::cb_renumber(void)
 
 	/* renumber成功したら、新しいStart,End,Numberに表示変更 */
 	this->cb_set_number();
+	this->cb_check_existing_saved_file();
 }
 
 //----------------------------------------------------------------------

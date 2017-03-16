@@ -24,9 +24,8 @@ public:
 
 	//--------------------------------------------------
 
-	/* ファイル存在マーク付加(orしない)ファイル番号をlistの最後に追加 */
+	/* (ファイル存在マーク付加しないで)ファイル番号をlistの最後に追加 */
 	void append_without_S( const int file_num );
-	void append_with_S( const int file_num );
 
 	/* saveファイル存在マーク付加した(orしない)ファイル番号に書き直し */
 	void replace_without_S(const int file_num , const int list_num);
@@ -123,12 +122,10 @@ private:
 		,const bool forward_sw
 	);
 
-	void append_checked_S_and_set_name_by_number_list_(
-		const std::vector<int>& nums
-	);
-	void append_checked_S_and_set_name_from_start_to_end(
-		const int num_start ,const int num_end
-	);
+	/* Scan/Traceどちらかから、保存ファイルヘッド名を、
+	Numberウインドウに表示 */
+	const bool cb_number::get_file_head_name_( void );
+
 	const std::string get_save_head_( void );
 	const std::string get_type_(void);
 };

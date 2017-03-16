@@ -1,13 +1,63 @@
 #include <cstdlib>
 #include <algorithm>	// std::sort()
-#include "FL/fl_ask.H"  // fl_alert(-)
 #include <sstream>
+#include "FL/fl_ask.H"  // fl_alert(-)
+#include "pri.h"
 #include "fltk_opengl.h"
 #include "ids_path_level_from_files.h"
 #include "cb_scan_and_save.h"
 #include "cb_trace_files.h"
 #include "gts_master.h"
 #include "gts_gui.h"
+
+void fltk_opengl::draw()
+{
+	static bool only_one_time_sw = true;
+
+	/* char Fl_Gl_Window::valid() const;
+	FLTKがこのウィンドウの新しいコンテキストを作成するとき、
+	またはウィンドウのサイズが変更されたときにoffになり、
+	draw()が呼び出された後にonになります
+	*/
+	/* reshape(windowサイズの変更か再表示の場合) */
+	if (!(this->valid())) {
+		/* Fl_Gl_Window widget,
+		The default mode is FL_RGB|FL_DOUBLE|FL_DEPTH. */
+
+		/* OpenGL初期化(アプリの生成後一回のみ実行) */
+		if (only_one_time_sw) {
+			cl_gts_master.cl_ogl_view.init_opengl();
+			only_one_time_sw = false;
+		}
+
+		/* viewport()とortho()を平行投影に設定する */
+		//this->ortho();
+
+		/* 画像データがあるとき */
+		if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
+			cl_gts_master.cl_ogl_view.reshape_opengl(
+				(long)(this->w()) , (long)(this->h())
+			);
+			cl_gts_master.set_scrollbar();
+		}
+		/* 画像データがないとき */
+		else {
+			cl_gts_master.cl_ogl_view.clear_opengl(
+				(long)(this->w()) , (long)(this->h())
+			);
+		}
+	}
+
+	if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
+
+		/* subエリアのカラートレス処理
+		と(指定にあれば)ドットノイズ除去 */
+		cl_gts_master.color_trace_in_view_area();
+
+		/* OpenGL全表示 */
+		cl_gts_master.cl_ogl_view.draw_opengl();
+	}
+}
 
 namespace {
 
@@ -35,11 +85,13 @@ int fl_shortcut_up_down_left_right_( int key )
 		og.drag_move_start();
 		og.drag_moving( xd , yd , 0.0 , 0.0 );
 
+		/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
+		cl_gts_master.cl_area_and_rot90.copy_opengl_to_value(
+			og.get_e_select_part()
+		);
+
 		/* 画像再表示 */
 		cl_gts_gui.opengl_view->redraw();
-
-		/* 画像表示パラメータの変更に合わせてGUIの値の変更 */
-		cl_gts_master.cl_area_and_rot90.copy_opengl_to_value();
 
 		return 1;
 	}

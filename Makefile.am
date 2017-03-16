@@ -155,16 +155,13 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
-					sources/libcpp83gts_callback_and_action/cb_scan_full_area_and_crop.cpp \
-					sources/libcpp83gts_callback_and_action/cb_scnr_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_event.cpp \
-					sources/libcpp83gts_callback_and_action/fltk_opengl_draw.cpp \
-					sources/libcpp83gts_callback_and_action/fltk_opengl_handle.cpp \
+					sources/libcpp83gts_callback_and_action/fltk_opengl.cpp \
 					sources/libcpp83gts_callback_and_action/igs_lex_white_space_and_double_quote.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_extensions.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_fltk_native_browse.cpp \

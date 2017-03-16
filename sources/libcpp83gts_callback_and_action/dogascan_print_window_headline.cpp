@@ -27,7 +27,7 @@ int gts_master::print_window_headline( void )
 		;
 	if  (0 < l_zoom) {	ost << "  Zoom x" << l_zoom; }
 	else if (l_zoom < 0) {	ost << "  Zoom x1/" << -l_zoom; }
-	cl_gts_gui.window_opengl->label( ost.str().c_str() );
+	cl_gts_gui.window_main_view->label( ost.str().c_str() );
 
 	return OK;
 }

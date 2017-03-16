@@ -32,7 +32,7 @@ void set_rotate_per_90_( const std::string& str1 )
 		cl_gts_gui.choice_rot90->value( crnt );
 	}
 	/* 設定したGUI値をメモリしとく */
-	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90_(
+	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90(
 					  cl_gts_gui.choice_rot90->value()
 	);
 }
@@ -78,13 +78,13 @@ void memory_config::load_ifs_(
 )
 {
 	if ( this->load_number_sw_ ) {
-		/* リストをすべて削除 */
+		/* numberリストをすべて削除 */
 		cl_gts_gui.selbro_number_list->clear();
 		cl_gts_gui.selbro_number_list->redraw();
 	}
 
 	if ( this->load_trace_batch_sw_ ) {
-		/* リストをすべて削除 */
+		/* trace_configリストをすべて削除 */
 		cl_gts_gui.selbro_trace_batch_config_list->clear();
 	}
 
@@ -323,7 +323,7 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 				va.c_str() );
 		if (crnt != nullptr) {
 			cl_gts_gui.choice_area_selecter->value(crnt);
-			cl_gts_master.cb_area_selecter();
+			cl_gts_master.cl_area_and_rot90.cb_area_selecter();
 		}
 	}
 	else if ( this->str_area_x_pos_ == ke ) {
@@ -337,8 +337,8 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	       cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
 			va.c_str() );
 		if (crnt != 0) {
-		cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
-		 cl_gts_master.cb_area_aspect_ratio_selecter();
+	cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
+	cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
 		}
 	}
 	else if ( this->str_area_x_size_ == ke) {
@@ -464,16 +464,7 @@ bool memory_config::load_number_(
 		リストの最後に追加する */
 		// use C++11,throw exception then error
 		const int num = std::stoi(words.at(1));
-
-		if (   !cl_gts_master.cl_number.get_save_path(num).empty()
-		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
-			cl_gts_master.cl_number.get_save_path(num).c_str()
-		))) {
-			cl_gts_master.cl_number.append_with_S(num);
-		}
-		else {
-			cl_gts_master.cl_number.append_without_S(num);
-		}
+		cl_gts_master.cl_number.append_without_S(num);
 
 		/* 選択状態の再現 */
 		if (
@@ -928,7 +919,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	this->load_trace_batch_sw_ =  load_trace_batch_sw;
 	this->load_ifs_( ifs , scan_num_continue_type_sw ); /* 読む */
    }
-   catch ( std::fstream::failure& e ) {
+   catch ( std::fstream::failure& ) {
 	if ( std::ios_base::eofbit == false ) {
 		throw; /* EOF以外の例外はエラーなので再び投げる */
 	}
@@ -952,10 +943,6 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	 	"End" );
 	}
 
-	/* 保存の確認表示 */
-	cl_gts_master.cl_scan_and_save.check_existing_saved_file();
-	cl_gts_master.cl_trace_files.check_existing_saved_file();
-
 	if (	cl_gts_master.cl_number.is_scan()) {
 		/* Numberウインドウに保存するFileHead名をセット */
 		cl_gts_gui.output_number_file_head_name->value(
@@ -965,6 +952,9 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		/* NumberウインドウのActionTypeセット
 		Scan/TraceウインドウのBGのセット */
 		cl_gts_master.cl_number.set_type_to_scan();
+
+		/* ファイル存在確認して'S'マーク表示 */
+		cl_gts_master.cl_scan_and_save.check_existing_saved_file();
 	} else
 	if (	cl_gts_master.cl_number.is_trace()) {
 		/* Numberウインドウに保存するFileHead名をセット */
@@ -975,6 +965,9 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		/* NumberウインドウのActionTypeセット
 		Scan/TraceウインドウのBGのセット */
 		cl_gts_master.cl_number.set_type_to_trace();
+
+		/* ファイル存在確認して'S'マーク表示 */
+		cl_gts_master.cl_trace_files.check_existing_saved_file();
 	}
 
 	/* 画面は空白表示する指定(データは残っている) */

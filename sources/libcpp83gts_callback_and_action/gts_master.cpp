@@ -19,9 +19,6 @@ gts_master::gts_master(
 	,_cp_release_number(rele_num)
 	,_i_enable_act_menu_sw(ON)
 	,_i_enable_act_key_event_sw(OFF)
-	/* メニューの初期設定値に合わせる、また、
-	cb_config_load_ok(),cb_level_ok()の時も
-	んだ設定に合わせること */
 {
 }
 
@@ -135,11 +132,16 @@ int gts_master::exec( const char *comm )
 		);
 		if (0 <= idx) {
 			cl_gts_gui.choice_rot90->value(idx);
-			this->cl_area_and_rot90.set_previous_choice_rot90_(
+			this->cl_area_and_rot90.set_previous_choice_rot90(
 						  cl_gts_gui.choice_rot90->value()
 			);
 		}
 	}
+
+	/* DPIの値をユーザー入力しキャンセルした時の値の復元用記憶 */
+	this->cl_area_and_rot90.set_dpi_before_change(
+		cl_gts_gui.valinp_area_reso->value()
+	);
 
 	/* Pixel Type */
 	cl_gts_gui.choice_pixel_type->value(2); // Initial is RGB
@@ -230,8 +232,8 @@ int gts_master::exec( const char *comm )
 
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
-	cl_gts_gui.window_opengl->show();
-	cl_gts_gui.window_opengl->wait_for_expose();
+	cl_gts_gui.window_main_view->show();
+	cl_gts_gui.window_main_view->wait_for_expose();
 	Fl::flush();
 
 	/* desktop.txtによる fltk window位置とサイズを復元 */
@@ -256,15 +258,15 @@ int gts_master::exec( const char *comm )
 
 #if defined _WIN32
 	cl_gts_master.cl_iip_scan.set_hw_parent(
-		fl_xid( cl_gts_gui.window_opengl )
+		fl_xid( cl_gts_gui.window_main_view )
 	);
 #endif
 
 	/* TWAINからタイプと最大値をとってきてメニューへ表示する */
 	/* ->show();と.set_hw_parent()は先にやらなければ動作しない */
-	if (OK != this->_iipg_scan_get_scanner_info()) {
+	if (OK != this->iipg_scan_get_scanner_info_()) {
 		pri_funct_err_bttvr(
-	 "Error : this->_iipg_scan_get_scanner_info() returns NG" );
+	 "Error : this->iipg_scan_get_scanner_info_() returns NG" );
 		//return NG;
 		/* エラーが起きても(Scanner接続してなくても)
 		動作させる */

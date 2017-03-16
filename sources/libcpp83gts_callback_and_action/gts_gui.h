@@ -10,8 +10,8 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Group.H>
-#include <FL/Fl_Choice.H>
 #include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Choice.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Box.H>
@@ -31,10 +31,10 @@
 class gts_gui {
 public:
   Fl_Double_Window* make_window();
-  Fl_Double_Window *window_opengl;
+  Fl_Double_Window *window_main_view;
 private:
-  inline void cb_window_opengl_i(Fl_Double_Window*, void*);
-  static void cb_window_opengl(Fl_Double_Window*, void*);
+  inline void cb_window_main_view_i(Fl_Double_Window*, void*);
+  static void cb_window_main_view(Fl_Double_Window*, void*);
   static Fl_Menu_Item menu_[];
   inline void cb_Open_i(Fl_Menu_*, void*);
   static void cb_Open(Fl_Menu_*, void*);
@@ -208,6 +208,17 @@ private:
   inline void cb_Crop1_i(Fl_Button*, void*);
   static void cb_Crop1(Fl_Button*, void*);
 public:
+  Fl_Value_Input *valinp_area_reso;
+private:
+  inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_reso(Fl_Value_Input*, void*);
+public:
+  Fl_Choice *choice_rot90;
+private:
+  inline void cb_choice_rot90_i(Fl_Choice*, void*);
+  static void cb_choice_rot90(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_rot90[];
+public:
   Fl_Choice *choice_area_selecter;
 private:
   inline void cb_choice_area_selecter_i(Fl_Choice*, void*);
@@ -224,12 +235,6 @@ public:
 private:
   inline void cb_valinp_area_y_pos_i(Fl_Value_Input*, void*);
   static void cb_valinp_area_y_pos(Fl_Value_Input*, void*);
-public:
-  Fl_Choice *choice_area_aspect_ratio_selecter;
-private:
-  inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
-  static void cb_choice_area_aspect_ratio_selecter(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
 public:
   Fl_Value_Input *valinp_area_x_size;
 private:
@@ -253,16 +258,11 @@ private:
 public:
   Fl_Button *radbut_area_reso_fix_cm;
   Fl_Button *radbut_area_reso_fix_pixel;
-  Fl_Value_Input *valinp_area_reso;
+  Fl_Choice *choice_area_aspect_ratio_selecter;
 private:
-  inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_reso(Fl_Value_Input*, void*);
-public:
-  Fl_Choice *choice_rot90;
-private:
-  inline void cb_choice_rot90_i(Fl_Choice*, void*);
-  static void cb_choice_rot90(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_rot90[];
+  inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
+  static void cb_choice_area_aspect_ratio_selecter(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
 public:
   Fl_Output *txtout_scanner_type;
   Fl_Value_Output *valout_scanner_width_max;
