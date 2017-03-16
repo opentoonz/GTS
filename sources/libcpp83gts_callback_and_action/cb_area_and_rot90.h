@@ -107,4 +107,20 @@ private:
 	const bool check_dpi_or_size_from_pixel_( void );
 };
 
+//--------------------
+
+#include <FL/Fl.H>
+#include <FL/Fl_Button.H>
+
+class fltk_button_area_and_rot90 : public Fl_Button {
+public:
+	fltk_button_area_and_rot90(
+	int x,int y,int w,int h,const char *l=0)
+	: Fl_Button(x,y,w,h,l)
+	{}
+private:
+	void draw();    
+	int handle(int);
+};
+
 #endif /* !cb_area_and_rot90_h */

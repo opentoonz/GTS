@@ -301,6 +301,7 @@ public:
 	int load( const std::string& file_path
 		,const bool load_trace_batch_sw=true );
 	int load_only_trace_parameters( const std::string& file_path );
+	int load_only_area_and_rot90( const std::string& file_path);
 
 private:
 	const char* str_on_;

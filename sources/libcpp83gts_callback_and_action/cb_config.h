@@ -14,6 +14,8 @@ public:
 		,const bool load_trace_batch_sw=true
 	);
 	void open(void);
+	void open_only_trace_parameters( void );
+	void open_only_area_and_rot90( void );
 	void save_as(void);
 	void save(void);
 

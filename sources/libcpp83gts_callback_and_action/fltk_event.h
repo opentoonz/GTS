@@ -54,10 +54,10 @@ private:
 typedef enum {
 E_ACT_NOTHING = 1,		/* 実行予約はなにもない */
 E_ACT_ALL_VIEW,			/* 全体を(step倍率で)表示 */
-E_ACT_ZOOM_UP_TWICE_AT_CEN,	/* Viewportの中心で2倍づつ拡大 */
-E_ACT_ZOOM_DOWN_HALF_AT_CEN,	/* Viewportの中心で1/2倍づつ縮小 */
-E_ACT_ZOOM_UP_STEP_AT_CEN,	/* Viewportの中心で1stepづつ拡大 */
-E_ACT_ZOOM_DOWN_STEP_AT_CEN,	/* Viewportの中心で1stepづつ縮小 */
+E_ACT_ZOOM_IN_TWICE_AT_CEN,	/* Viewportの中心で2倍づつ拡大 */
+E_ACT_ZOOM_OUT_HALF_AT_CEN,	/* Viewportの中心で1/2倍づつ縮小 */
+E_ACT_ZOOM_IN_STEP_AT_CEN,	/* Viewportの中心で1stepづつ拡大 */
+E_ACT_ZOOM_OUT_STEP_AT_CEN,	/* Viewportの中心で1stepづつ縮小 */
 E_ACT_ZOOM_D16,			/* 縮小1/16倍 */
 E_ACT_ZOOM_D08,			/* 縮小1/8倍 */
 E_ACT_ZOOM_D04,			/* 縮小1/4倍 */
@@ -67,10 +67,10 @@ E_ACT_ZOOM_U02,			/* 拡大2倍 */
 E_ACT_ZOOM_U04,			/* 拡大4倍 */
 E_ACT_ZOOM_U08,			/* 拡大8倍 */
 E_ACT_ZOOM_U16,			/* 拡大16倍 */
-E_ACT_ZOOM_UP_TWICE_AT_POS,	/* 指定位置で2倍づつ拡大 */
-E_ACT_ZOOM_DOWN_HALF_AT_POS,	/* 指定位置で1/2倍づつ縮小 */
-E_ACT_ZOOM_UP_STEP_AT_POS,	/* 指定位置で1stepづつ拡大 */
-E_ACT_ZOOM_DOWN_STEP_AT_POS,	/* 指定位置で1stepづつ縮小 */
+E_ACT_ZOOM_IN_TWICE_AT_POS,	/* 指定位置で2倍づつ拡大 */
+E_ACT_ZOOM_OUT_HALF_AT_POS,	/* 指定位置で1/2倍づつ縮小 */
+E_ACT_ZOOM_IN_STEP_AT_POS,	/* 指定位置で1stepづつ拡大 */
+E_ACT_ZOOM_OUT_STEP_AT_POS,	/* 指定位置で1stepづつ縮小 */
 E_ACT_SCROLL_CENTER,		/* 中心へ移動 */
 E_ACT_SCROLL_LEFT_SIDE,		/* 左端へ移動 */
 E_ACT_SCROLL_RIGHT_SIDE,	/* 右端へ移動 */
