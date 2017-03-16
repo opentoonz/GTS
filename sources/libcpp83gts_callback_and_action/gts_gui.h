@@ -11,10 +11,11 @@
 #include <FL/Fl_Output.H>
 #include "cb_area_and_rot90.h"
 #include <FL/Fl_Group.H>
-#include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Choice.H>
+#include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Value_Output.H>
+#include "cb_pixel_type_and_bright.h"
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Check_Button.H>
 #include <FL/Fl_File_Input.H>
@@ -219,17 +220,6 @@ private:
   inline void cb_Crop1_i(Fl_Button*, void*);
   static void cb_Crop1(Fl_Button*, void*);
 public:
-  Fl_Value_Input *valinp_area_reso;
-private:
-  inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_reso(Fl_Value_Input*, void*);
-public:
-  Fl_Choice *choice_rot90;
-private:
-  inline void cb_choice_rot90_i(Fl_Choice*, void*);
-  static void cb_choice_rot90(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_rot90[];
-public:
   Fl_Choice *choice_area_selecter;
 private:
   inline void cb_choice_area_selecter_i(Fl_Choice*, void*);
@@ -275,6 +265,17 @@ private:
   static void cb_choice_area_aspect_ratio_selecter(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
 public:
+  Fl_Value_Input *valinp_area_reso;
+private:
+  inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_reso(Fl_Value_Input*, void*);
+public:
+  Fl_Choice *choice_rot90;
+private:
+  inline void cb_choice_rot90_i(Fl_Choice*, void*);
+  static void cb_choice_rot90(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_rot90[];
+public:
   Fl_Output *txtout_scanner_type;
   Fl_Value_Output *valout_scanner_width_max;
   Fl_Value_Output *valout_scanner_height_max;
@@ -282,6 +283,11 @@ public:
 private:
   inline void cb_window_pixel_type_and_bright_i(Fl_Double_Window*, void*);
   static void cb_window_pixel_type_and_bright(Fl_Double_Window*, void*);
+public:
+  fltk_button_pixel_type_and_bright *button_pixel_type_and_bright;
+private:
+  inline void cb_button_pixel_type_and_bright_i(fltk_button_pixel_type_and_bright*, void*);
+  static void cb_button_pixel_type_and_bright(fltk_button_pixel_type_and_bright*, void*);
   inline void cb_Preview1_i(Fl_Button*, void*);
   static void cb_Preview1(Fl_Button*, void*);
 public:
