@@ -264,6 +264,8 @@ private:
   inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
   static void cb_choice_area_aspect_ratio_selecter(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
+  inline void cb_Set1_i(Fl_Button*, void*);
+  static void cb_Set1(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_area_reso;
 private:
@@ -420,8 +422,8 @@ public:
   static Fl_Menu_Item menu_choice_scan_num_endless_direction[];
   Fl_Value_Input *valinp_scan_num_end;
 private:
-  inline void cb_Set1_i(Fl_Button*, void*);
-  static void cb_Set1(Fl_Button*, void*);
+  inline void cb_Set2_i(Fl_Button*, void*);
+  static void cb_Set2(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_files;
 private:
@@ -447,8 +449,8 @@ public:
   Fl_Value_Output *valout_trace_num_start;
   Fl_Value_Output *valout_trace_num_end;
 private:
-  inline void cb_Set2_i(Fl_Button*, void*);
-  static void cb_Set2(Fl_Button*, void*);
+  inline void cb_Set3_i(Fl_Button*, void*);
+  static void cb_Set3(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_filter_trace_sw;
 private:

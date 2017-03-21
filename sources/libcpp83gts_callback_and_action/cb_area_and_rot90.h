@@ -31,6 +31,7 @@ public:
 
 	void cb_area_selecter( void );
 	void cb_area_aspect_ratio_selecter( void );
+	void cb_area_set_max( void );
 
 	/*
 		Area

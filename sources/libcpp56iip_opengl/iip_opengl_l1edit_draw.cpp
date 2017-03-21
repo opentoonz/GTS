@@ -1,4 +1,5 @@
 #include <math.h>
+#include <iostream>
 #include "pri.h"
 #include "iip_opengl_l1edit.h"
 
@@ -214,8 +215,33 @@ void iip_opengl_l1edit::_draw_image( void )
 			(double)(this->_gli_rasterpos_y) - 0.5 );
 下方位置（y値マイナス？）で画像消える現象。特定のマシンのみで起こる。原因不明。0.5を0.49999にして直る。2016-10-4
 */
+/*
+A3
+ 430dpi OK
+ 500dpi 1/8倍以下の縮小で表示しない
+ 600dpi 1/4倍以下の縮小で表示しない
+*/
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
+/*
+std::cout << __FILE__ << " " << __LINE__
+<< " px=" << this->_gli_rasterpos_x
+<< " py=" << this->_gli_rasterpos_y
+<< std::endl;
+
+std::cout << __FILE__ << " " << __LINE__
+<< " zm=" << this->_d_zoom
+<< std::endl;
+
+std::cout << __FILE__ << " " << __LINE__
+<< " wi=" << this->_glsi_width
+<< " he=" << this->_glsi_height
+<< " fmt=" << this->_gle_format
+<< " typ=" << this->_gle_type
+<< std::endl;
+	glRasterPos2d(	(double)(this->_gli_rasterpos_x)
+			,(double)(this->_gli_rasterpos_y) );
+*/
 
 	/* 拡大縮小 */
 	glPixelZoom( (GLfloat)this->_d_zoom, (GLfloat)this->_d_zoom );
