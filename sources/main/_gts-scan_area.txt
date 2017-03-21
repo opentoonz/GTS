@@ -1,4 +1,4 @@
-# 2016-02-09
+# 2017-03-21
 # Put "_gts-scan_area.txt" to ...
 #  Search 1st : %HOMEDRIVE%%HOMEPATH%
 #  Search 2nd : %ALLUSERSPROFILE%
@@ -8,10 +8,6 @@
 #	= "C:\Users\Public"	at Windows7
 #  Search 4th : Same as .exe folder
 #
-# AreaName	StartX(cm)	Y(cm)		SizeW(cm)	H(cm)
-A3		0		0		43.18		29.718
-NTSC_in_A3	1.778		0		39.624		29.718
-HD_in_A3	0		2.714625	43.18		24.28875
 # KeyWord	AspectRatioName	W(ratio)	H(ratio)
 aspect_ratio	HD		16		9
 aspect_ratio	NTSC		4		3
