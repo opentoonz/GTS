@@ -170,13 +170,15 @@ void cb_area_and_rot90::cb_area_x_pos( void )
 	    cl_gts_gui.valinp_area_x_size->value())
 	) {
 	    cl_gts_gui.valinp_area_x_pos->value(
-	    cl_gts_gui.valout_scanner_width_max->value() -
-	    cl_gts_gui.valinp_area_x_size->value()
+	     cl_gts_gui.valout_scanner_width_max->value() -
+	     cl_gts_gui.valinp_area_x_size->value()
 	    ); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
+	    fl_alert( "Too Big X!" );
 	}
 	/* 後：横位置が小さくてはみ出す場合、範囲に収める */
 	if (cl_gts_gui.valinp_area_x_pos->value() < 0.0) {
 	    cl_gts_gui.valinp_area_x_pos->value(0.0);
+	    fl_alert( "Too Small X!" );
 	}
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
@@ -190,13 +192,15 @@ void cb_area_and_rot90::cb_area_y_pos( void )
 	    cl_gts_gui.valinp_area_y_size->value())
 	) {
 	    cl_gts_gui.valinp_area_y_pos->value(
-	    cl_gts_gui.valout_scanner_height_max->value() -
-	    cl_gts_gui.valinp_area_y_size->value()
+	     cl_gts_gui.valout_scanner_height_max->value() -
+	     cl_gts_gui.valinp_area_y_size->value()
 	    ); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
+	    fl_alert( "Too Big Y!" );
 	}
 	/* 後：縦位置が小さくてはみ出す場合、範囲に収める */
 	if (cl_gts_gui.valinp_area_y_pos->value() < 0.0) {
 	    cl_gts_gui.valinp_area_y_pos->value(0.0);
+	    fl_alert( "Too Small Y!" );
 	}
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
@@ -211,18 +215,20 @@ void cb_area_and_rot90::cb_area_x_size( void )
 	    cl_gts_gui.valinp_area_x_size->value())
 	) {
 	    cl_gts_gui.valinp_area_x_size->value(
-	    cl_gts_gui.valout_scanner_width_max->value() -
-	    cl_gts_gui.valinp_area_x_pos->value()
+	     cl_gts_gui.valout_scanner_width_max->value() -
+	     cl_gts_gui.valinp_area_x_pos->value()
 	    ); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
+	    fl_alert( "Too Big W!" );
 	}
 	/* 後：横位置が小さくてはみ出す場合、範囲に収める */
 	if (cl_gts_gui.valinp_area_x_size->value() < 0.0) {
 	    cl_gts_gui.valinp_area_x_size->value(0.0);
+	    fl_alert( "Too Small W!" );
 	}
 
 	/* Screen Aspect Ratioの指定があるときは
 	cm高さ値とpixel高さ値を計算してGUIに表示 */
-	this->getset_y_size_from_x_size_();
+	//this->getset_y_size_from_x_size_();
 
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
 	this->getset_x_pixel_from_x_size();
@@ -242,16 +248,18 @@ void cb_area_and_rot90::cb_area_y_size( void )
 	    cl_gts_gui.valout_scanner_height_max->value() -
 	    cl_gts_gui.valinp_area_y_pos->value()
 	    ); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
+	    fl_alert( "Too Big H!" );
 	}
 
 	/* 後：縦位置が小さくてはみ出す場合、範囲に収める */
 	if (cl_gts_gui.valinp_area_y_size->value() < 0.0) {
 	    cl_gts_gui.valinp_area_y_size->value(0.0);
+	    fl_alert( "Too Small H!" );
 	}
 
 	/* Screen Aspect Ratioの指定があるときは
 	cm高さ値とpixel高さ値を計算してGUIに表示 */
-	this->getset_x_size_from_y_size_();
+	//this->getset_x_size_from_y_size_();
 
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
 	this->getset_x_pixel_from_x_size();
@@ -269,6 +277,34 @@ void cb_area_and_rot90::cb_area_x_pixel_size( void )
 void cb_area_and_rot90::cb_area_y_pixel_size( void )
 {
 	this->getset_y_size_from_y_pixel_();
+	this->cb_area_y_size();
+}
+
+void cb_area_and_rot90::cb_valinp_aspect_w( void )
+{
+	if (cl_gts_gui.valinp_aspect_h->value() <= 0.0) {
+		fl_alert( "Set H_Aspect_Ratio greater than zero!" );
+		return;
+	}
+	cl_gts_gui.valinp_area_x_size->value(
+		cl_gts_gui.valinp_area_y_size->value()
+		* cl_gts_gui.valinp_aspect_w->value()
+		/ cl_gts_gui.valinp_aspect_h->value()
+	);
+	this->cb_area_x_size();
+}
+
+void cb_area_and_rot90::cb_valinp_aspect_h( void )
+{
+	if (cl_gts_gui.valinp_aspect_w->value() <= 0.0) {
+		fl_alert( "Set W_Aspect_Ratio greater than zero!" );
+		return;
+	}
+	cl_gts_gui.valinp_area_y_size->value(
+		cl_gts_gui.valinp_area_x_size->value()
+		* cl_gts_gui.valinp_aspect_h->value()
+		/ cl_gts_gui.valinp_aspect_w->value()
+	);
 	this->cb_area_y_size();
 }
 

@@ -43,6 +43,8 @@ public:
 	void cb_area_x_pixel_size( void );
 	void cb_area_y_pixel_size( void );
 	void cb_area_reso( void );
+	void cb_valinp_aspect_w( void );
+	void cb_valinp_aspect_h( void );
 
 	/*
 		Rot90

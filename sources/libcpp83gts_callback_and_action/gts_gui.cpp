@@ -596,6 +596,20 @@ void gts_gui::cb_valinp_area_y_pixel(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_y_pixel_i(o,v);
 }
 
+void gts_gui::cb__i(Fl_Button*, void*) {
+  cl_gts_master.cl_area_and_rot90.cb_valinp_aspect_w();
+}
+void gts_gui::cb_(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb__i(o,v);
+}
+
+void gts_gui::cb_1_i(Fl_Button*, void*) {
+  cl_gts_master.cl_area_and_rot90.cb_valinp_aspect_h();
+}
+void gts_gui::cb_1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_1_i(o,v);
+}
+
 void gts_gui::cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*) {
   cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
 }
@@ -823,12 +837,12 @@ void gts_gui::cb_filinp_scan_save_dir_path(Fl_File_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_filinp_scan_save_dir_path_i(o,v);
 }
 
-void gts_gui::cb__i(Fl_Button*, void*) {
+void gts_gui::cb_2_i(Fl_Button*, void*) {
   cl_gts_master.cl_scan_and_save.cb_browse_save_folder();
 cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 }
-void gts_gui::cb_(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb__i(o,v);
+void gts_gui::cb_2(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_2_i(o,v);
 }
 
 void gts_gui::cb_strinp_scan_save_file_head_i(Fl_Input* o, void*) {
@@ -899,11 +913,11 @@ void gts_gui::cb_Trace1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Trace1_i(o,v);
 }
 
-void gts_gui::cb_1_i(Fl_Button*, void*) {
+void gts_gui::cb_3_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_files.cb_browse_open_file();
 }
-void gts_gui::cb_1(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_1_i(o,v);
+void gts_gui::cb_3(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_3_i(o,v);
 }
 
 void gts_gui::cb_Rename1_i(Fl_Button*, void*) {
@@ -965,12 +979,12 @@ void gts_gui::cb_filinp_trace_save_dir_path(Fl_File_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_filinp_trace_save_dir_path_i(o,v);
 }
 
-void gts_gui::cb_2_i(Fl_Button*, void*) {
+void gts_gui::cb_4_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_files.cb_browse_save_folder();
 cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 }
-void gts_gui::cb_2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_2_i(o,v);
+void gts_gui::cb_4(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_4_i(o,v);
 }
 
 void gts_gui::cb_strinp_trace_save_file_head_i(Fl_Input* o, void*) {
@@ -5198,19 +5212,19 @@ Fl_Double_Window* gts_gui::make_window() {
         group_area_crop->align(Fl_Align(FL_ALIGN_TOP_LEFT));
         { Fl_Group* o = new Fl_Group(4, 65, 192, 25, "Offset");
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-          { valinp_area_x_pos = new Fl_Value_Input(30, 65, 55, 25, "X");
+          { valinp_area_x_pos = new Fl_Value_Input(25, 65, 55, 25, "X");
             valinp_area_x_pos->box(FL_BORDER_BOX);
             valinp_area_x_pos->maximum(60);
             valinp_area_x_pos->callback((Fl_Callback*)cb_valinp_area_x_pos);
             valinp_area_x_pos->when(FL_WHEN_RELEASE);
           } // Fl_Value_Input* valinp_area_x_pos
-          { valinp_area_y_pos = new Fl_Value_Input(100, 65, 55, 25, "Y");
+          { valinp_area_y_pos = new Fl_Value_Input(95, 65, 55, 25, "Y");
             valinp_area_y_pos->box(FL_BORDER_BOX);
             valinp_area_y_pos->maximum(60);
             valinp_area_y_pos->callback((Fl_Callback*)cb_valinp_area_y_pos);
             valinp_area_y_pos->when(FL_WHEN_RELEASE);
           } // Fl_Value_Input* valinp_area_y_pos
-          { Fl_Text_Display* o = new Fl_Text_Display(165, 70, 0, 0, "cm");
+          { Fl_Text_Display* o = new Fl_Text_Display(163, 70, 0, 0, "cm");
             o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
           } // Fl_Text_Display* o
           o->end();
@@ -5221,13 +5235,13 @@ Fl_Double_Window* gts_gui::make_window() {
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
           { Fl_Group* o = new Fl_Group(5, 110, 150, 25);
             o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
-            { valinp_area_x_size = new Fl_Value_Input(30, 110, 55, 25, "W");
+            { valinp_area_x_size = new Fl_Value_Input(25, 110, 55, 25, "W");
               valinp_area_x_size->box(FL_BORDER_BOX);
               valinp_area_x_size->maximum(60);
               valinp_area_x_size->callback((Fl_Callback*)cb_valinp_area_x_size);
               valinp_area_x_size->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_x_size
-            { valinp_area_y_size = new Fl_Value_Input(100, 110, 55, 25, "H");
+            { valinp_area_y_size = new Fl_Value_Input(95, 110, 55, 25, "H");
               valinp_area_y_size->box(FL_BORDER_BOX);
               valinp_area_y_size->maximum(60);
               valinp_area_y_size->callback((Fl_Callback*)cb_valinp_area_y_size);
@@ -5237,13 +5251,13 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Group* o
           { Fl_Group* o = new Fl_Group(5, 140, 150, 25);
             o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
-            { valinp_area_x_pixel = new Fl_Value_Input(30, 140, 55, 25, "W");
+            { valinp_area_x_pixel = new Fl_Value_Input(25, 140, 55, 25, "W");
               valinp_area_x_pixel->box(FL_BORDER_BOX);
               valinp_area_x_pixel->maximum(10000);
               valinp_area_x_pixel->callback((Fl_Callback*)cb_valinp_area_x_pixel);
               valinp_area_x_pixel->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_x_pixel
-            { valinp_area_y_pixel = new Fl_Value_Input(100, 140, 55, 25, "H");
+            { valinp_area_y_pixel = new Fl_Value_Input(95, 140, 55, 25, "H");
               valinp_area_y_pixel->box(FL_BORDER_BOX);
               valinp_area_y_pixel->maximum(10000);
               valinp_area_y_pixel->callback((Fl_Callback*)cb_valinp_area_y_pixel);
@@ -5251,15 +5265,34 @@ Fl_Double_Window* gts_gui::make_window() {
             } // Fl_Value_Input* valinp_area_y_pixel
             o->end();
           } // Fl_Group* o
-          { Fl_Group* o = new Fl_Group(158, 110, 35, 55);
+          { Fl_Group* o = new Fl_Group(155, 110, 35, 55);
             o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-            { radbut_area_reso_fix_cm = new Fl_Button(158, 110, 35, 25, "cm");
+            { radbut_area_reso_fix_cm = new Fl_Button(155, 110, 35, 25, "cm");
               radbut_area_reso_fix_cm->type(102);
             } // Fl_Button* radbut_area_reso_fix_cm
-            { radbut_area_reso_fix_pixel = new Fl_Button(158, 140, 35, 25, "pixel");
+            { radbut_area_reso_fix_pixel = new Fl_Button(155, 140, 35, 25, "pixel");
               radbut_area_reso_fix_pixel->type(102);
               radbut_area_reso_fix_pixel->value(1);
             } // Fl_Button* radbut_area_reso_fix_pixel
+            o->end();
+          } // Fl_Group* o
+          { Fl_Group* o = new Fl_Group(5, 170, 150, 30);
+            { valinp_aspect_w = new Fl_Value_Input(25, 178, 55, 20, "W");
+            } // Fl_Value_Input* valinp_aspect_w
+            { valinp_aspect_h = new Fl_Value_Input(95, 178, 55, 20, "H");
+            } // Fl_Value_Input* valinp_aspect_h
+            { Fl_Button* o = new Fl_Button(45, 170, 35, 11, "^");
+              o->callback((Fl_Callback*)cb_);
+            } // Fl_Button* o
+            { Fl_Button* o = new Fl_Button(115, 170, 35, 11, "^");
+              o->callback((Fl_Callback*)cb_1);
+            } // Fl_Button* o
+            { Fl_Text_Display* o = new Fl_Text_Display(150, 170, 0, 0, "Aspect");
+              o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+            } // Fl_Text_Display* o
+            { Fl_Text_Display* o = new Fl_Text_Display(150, 183, 0, 0, "Ratio");
+              o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+            } // Fl_Text_Display* o
             o->end();
           } // Fl_Group* o
           o->end();
@@ -5267,6 +5300,7 @@ Fl_Double_Window* gts_gui::make_window() {
         { choice_area_aspect_ratio_selecter = new Fl_Choice(90, 170, 105, 25, "Aspect Ratio");
           choice_area_aspect_ratio_selecter->down_box(FL_BORDER_BOX);
           choice_area_aspect_ratio_selecter->callback((Fl_Callback*)cb_choice_area_aspect_ratio_selecter);
+          choice_area_aspect_ratio_selecter->hide();
           choice_area_aspect_ratio_selecter->menu(menu_choice_area_aspect_ratio_selecter);
         } // Fl_Choice* choice_area_aspect_ratio_selecter
         group_area_crop->end();
@@ -5575,7 +5609,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(filinp_scan_save_dir_path);
         } // Fl_File_Input* filinp_scan_save_dir_path
         { Fl_Button* o = new Fl_Button(180, 145, 15, 24, "...");
-          o->callback((Fl_Callback*)cb_);
+          o->callback((Fl_Callback*)cb_2);
         } // Fl_Button* o
         o->end();
       } // Fl_Group* o
@@ -5676,7 +5710,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(filinp_trace_open_dir_path);
         } // Fl_File_Input* filinp_trace_open_dir_path
         { Fl_Button* o = new Fl_Button(184, 60, 15, 25, "...");
-          o->callback((Fl_Callback*)cb_1);
+          o->callback((Fl_Callback*)cb_3);
         } // Fl_Button* o
         o->end();
       } // Fl_Group* o
@@ -5779,7 +5813,7 @@ Fl_Double_Window* gts_gui::make_window() {
           Fl_Group::current()->resizable(filinp_trace_save_dir_path);
         } // Fl_File_Input* filinp_trace_save_dir_path
         { Fl_Button* o = new Fl_Button(184, 345, 15, 25, "...");
-          o->callback((Fl_Callback*)cb_2);
+          o->callback((Fl_Callback*)cb_4);
         } // Fl_Button* o
         o->end();
       } // Fl_Group* o

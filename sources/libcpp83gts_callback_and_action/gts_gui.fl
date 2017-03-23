@@ -463,16 +463,16 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             Fl_Value_Input valinp_area_x_pos {
               label X
               callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pos();}
-              xywh {30 65 55 25} box BORDER_BOX when 4 maximum 60
+              xywh {25 65 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Value_Input valinp_area_y_pos {
               label Y
               callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pos();}
-              xywh {100 65 55 25} box BORDER_BOX when 4 maximum 60
+              xywh {95 65 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Text_Display {} {
               label cm
-              xywh {165 70 0 0} align 6
+              xywh {163 70 0 0} align 6
             }
           }
           Fl_Group {} {
@@ -485,12 +485,12 @@ cl_gts_gui.menite_area_and_rot90->clear();}
               Fl_Value_Input valinp_area_x_size {
                 label W
                 callback {cl_gts_master.cl_area_and_rot90.cb_area_x_size();}
-                xywh {30 110 55 25} box BORDER_BOX when 4 maximum 60
+                xywh {25 110 55 25} box BORDER_BOX when 4 maximum 60
               }
               Fl_Value_Input valinp_area_y_size {
                 label H
                 callback {cl_gts_master.cl_area_and_rot90.cb_area_y_size();}
-                xywh {100 110 55 25} box BORDER_BOX when 4 maximum 60
+                xywh {95 110 55 25} box BORDER_BOX when 4 maximum 60
               }
             }
             Fl_Group {} {open
@@ -499,31 +499,61 @@ cl_gts_gui.menite_area_and_rot90->clear();}
               Fl_Value_Input valinp_area_x_pixel {
                 label W
                 callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pixel_size();}
-                xywh {30 140 55 25} box BORDER_BOX when 4 maximum 10000
+                xywh {25 140 55 25} box BORDER_BOX when 4 maximum 10000
               }
               Fl_Value_Input valinp_area_y_pixel {
                 label H
                 callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pixel_size();}
-                xywh {100 140 55 25} box BORDER_BOX when 4 maximum 10000
+                xywh {95 140 55 25} box BORDER_BOX when 4 maximum 10000
               }
             }
             Fl_Group {} {open
-              xywh {158 110 35 55} align 21
+              xywh {155 110 35 55} align 21
             } {
               Fl_Button radbut_area_reso_fix_cm {
                 label cm
-                xywh {158 110 35 25} type Radio
+                xywh {155 110 35 25} type Radio
               }
               Fl_Button radbut_area_reso_fix_pixel {
                 label pixel
-                xywh {158 140 35 25} type Radio value 1
+                xywh {155 140 35 25} type Radio value 1
+              }
+            }
+            Fl_Group {} {open
+              xywh {5 170 150 30}
+            } {
+              Fl_Value_Input valinp_aspect_w {
+                label W
+                xywh {25 178 55 20}
+              }
+              Fl_Value_Input valinp_aspect_h {
+                label H
+                xywh {95 178 55 20}
+              }
+              Fl_Button {} {
+                label {^}
+                callback {cl_gts_master.cl_area_and_rot90.cb_valinp_aspect_w();}
+                xywh {45 170 35 11}
+              }
+              Fl_Button {} {
+                label {^}
+                callback {cl_gts_master.cl_area_and_rot90.cb_valinp_aspect_h();}
+                xywh {115 170 35 11}
+              }
+              Fl_Text_Display {} {
+                label Aspect
+                xywh {150 170 0 0} align 6
+              }
+              Fl_Text_Display {} {
+                label Ratio
+                xywh {150 183 0 0} align 6
               }
             }
           }
           Fl_Choice choice_area_aspect_ratio_selecter {
             label {Aspect Ratio}
             callback {cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();} open
-            xywh {90 170 105 25} down_box BORDER_BOX
+            xywh {90 170 105 25} down_box BORDER_BOX hide
           } {
             MenuItem {} {
               label Custom

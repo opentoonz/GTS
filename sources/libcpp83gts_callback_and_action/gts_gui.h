@@ -259,6 +259,14 @@ private:
 public:
   Fl_Button *radbut_area_reso_fix_cm;
   Fl_Button *radbut_area_reso_fix_pixel;
+  Fl_Value_Input *valinp_aspect_w;
+  Fl_Value_Input *valinp_aspect_h;
+private:
+  inline void cb__i(Fl_Button*, void*);
+  static void cb_(Fl_Button*, void*);
+  inline void cb_1_i(Fl_Button*, void*);
+  static void cb_1(Fl_Button*, void*);
+public:
   Fl_Choice *choice_area_aspect_ratio_selecter;
 private:
   inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
@@ -393,8 +401,8 @@ public:
 private:
   inline void cb_filinp_scan_save_dir_path_i(Fl_File_Input*, void*);
   static void cb_filinp_scan_save_dir_path(Fl_File_Input*, void*);
-  inline void cb__i(Fl_Button*, void*);
-  static void cb_(Fl_Button*, void*);
+  inline void cb_2_i(Fl_Button*, void*);
+  static void cb_2(Fl_Button*, void*);
 public:
   Fl_Input *strinp_scan_save_file_head;
 private:
@@ -434,8 +442,8 @@ private:
 public:
   Fl_File_Input *filinp_trace_open_dir_path;
 private:
-  inline void cb_1_i(Fl_Button*, void*);
-  static void cb_1(Fl_Button*, void*);
+  inline void cb_3_i(Fl_Button*, void*);
+  static void cb_3(Fl_Button*, void*);
 public:
   Fl_Input *strinp_trace_open_file_head;
   Fl_Input *strinp_trace_open_number_format;
@@ -466,8 +474,8 @@ public:
 private:
   inline void cb_filinp_trace_save_dir_path_i(Fl_File_Input*, void*);
   static void cb_filinp_trace_save_dir_path(Fl_File_Input*, void*);
-  inline void cb_2_i(Fl_Button*, void*);
-  static void cb_2(Fl_Button*, void*);
+  inline void cb_4_i(Fl_Button*, void*);
+  static void cb_4(Fl_Button*, void*);
 public:
   Fl_Input *strinp_trace_save_file_head;
 private:
