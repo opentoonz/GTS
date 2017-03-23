@@ -62,14 +62,15 @@ void memory_config::save_head_( std::ofstream& ofs )
 
 	const char* un = ptbl_get_cp_username();
 	if (un == nullptr) { un = "unknown"; }
-	ofs << "# username  : " << un << "\n\n";
+	ofs << "# username  : " << un << "\n";
 
 	const char* hn = ptbl_get_cp_hostname();
 	if (hn == nullptr) { hn = "unknown"; }
-	ofs << "# hostname  : " << hn << "\n\n";
+	ofs << "# hostname  : " << hn << "\n";
 }
 void memory_config::save_config_( std::ofstream& ofs )
 {
+	ofs << "\n# Config\n";
 	save_stri_( this->str_config_dir_path_
 	,cl_gts_master.cl_config.get_dir_path() ,ofs );
 	save_stri_( this->str_config_open_file_name_
@@ -79,6 +80,7 @@ void memory_config::save_config_( std::ofstream& ofs )
 }
 void memory_config::save_scan_and_save_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_scan_and_save->label() << "\n";
 	this->save_bool_( this->str_scan_filter_trace_sw_
 		, cl_gts_gui.chkbtn_scan_filter_trace_sw->value() ,ofs );
 	this->save_bool_( this->str_scan_filter_erase_dot_noise_sw_
@@ -104,6 +106,7 @@ void memory_config::save_scan_and_save_( std::ofstream& ofs )
 }
 void memory_config::save_trace_files_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_trace_files->label() << "\n";
 	save_stri_( this->str_trace_open_dir_path_
 	   ,cl_gts_gui.filinp_trace_open_dir_path->value() ,ofs );
 	save_stri_( this->str_trace_open_file_head_
@@ -136,6 +139,7 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 }
 void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_area_and_rot90->label() << "\n";
 	save_stri_( this->str_area_select_
 	   ,cl_gts_gui.choice_area_selecter->text() ,ofs );
 	save_fl64_( this->str_area_x_pos_
@@ -165,6 +169,7 @@ void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 }
 void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_pixel_type_and_bright->label() << "\n";
 	save_stri_( this->str_pixel_type_
 	   ,cl_gts_gui.choice_pixel_type->text() ,ofs );
 
@@ -188,6 +193,8 @@ void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 void memory_config::save_trace_parameters_( std::ofstream& ofs )
 {
 	unsigned char uchar_red, uchar_gre, uchar_blu;
+
+	ofs << "\n# " <<  cl_gts_gui.window_trace_parameters->label() << "\n";
 
 	/* 01 ------------------------------------------------ */
 	this->save_bool_( this->str_color_trace_01_chk_
@@ -342,6 +349,7 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 }
 void memory_config::save_trace_batch_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_trace_batch->label() << "\n";
 	save_stri_( this->str_trace_batch_dir_
 		,cl_gts_master.cl_trace_batch.get_dir_path() ,ofs );
 
@@ -354,6 +362,7 @@ void memory_config::save_trace_batch_( std::ofstream& ofs )
 }
 void memory_config::save_number_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_number->label() << "\n";
 	save_stri_( this->str_number_action_type_
 	    ,cl_gts_gui.output_number_action_type->value() ,ofs );
 

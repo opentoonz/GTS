@@ -36,38 +36,18 @@ void set_rotate_per_90_( const std::string& str1 )
 					  cl_gts_gui.choice_rot90->value()
 	);
 }
-void set_pixel_type_( const std::string& str1 )
+void set_pixel_type_( const std::string& str )
 {
-	if (isdigit(str1.c_str()[0])) {/* For Legacy Format...Delete sameday */
+	if (isdigit(str.c_str()[0])) {/* For Legacy Format...Delete sameday */
 		 cl_gts_gui.choice_pixel_type->value(
-		  std::stoi(str1) // use C++11,throw exception then error
+		  std::stoi(str) // use C++11,throw exception then error
 		 );
 	}
 	else {
-		const Fl_Menu_Item *crnt =
-			cl_gts_gui.choice_pixel_type->find_item(
-				str1.c_str() );
-		if (crnt == nullptr) { return; }
-
-		cl_gts_gui.choice_pixel_type->value( crnt );
+		cl_gts_master.cb_choice_pixel_type_title( str );
 	}
-	switch (cl_gts_gui.choice_pixel_type->value()) {
-	case 0:
-		cl_gts_gui.group_bw->show();
-		cl_gts_gui.group_grays->hide();
-		cl_gts_gui.group_rgb->hide();
-		break;
-	case 1:
-		cl_gts_gui.group_bw->hide();
-		cl_gts_gui.group_grays->show();
-		cl_gts_gui.group_rgb->hide();
-		break;
-	case 2:
-		cl_gts_gui.group_bw->hide();
-		cl_gts_gui.group_grays->hide();
-		cl_gts_gui.group_rgb->show();
-		break;
-	};
+
+	cl_gts_master.cb_choice_pixel_type_menu();
 }
 
 } // namespace -------------------------------------------------------

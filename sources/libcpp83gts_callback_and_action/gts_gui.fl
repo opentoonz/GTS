@@ -544,7 +544,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
         Fl_Value_Input valinp_area_reso {
           label DPI
           callback {cl_gts_master.cl_area_and_rot90.cb_area_reso();}
-          xywh {85 210 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 144
+          xywh {85 210 40 25} box BORDER_BOX align 8 when 4 minimum 50 maximum 600 value 400
         }
       }
       Fl_Group {} {
@@ -632,7 +632,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         }
         Fl_Choice choice_pixel_type {
           label {Pixel Type}
-          callback {cl_gts_master.cb_choice_pixel_type();} open
+          callback {cl_gts_master.cb_choice_pixel_type_menu();} open
           xywh {75 35 100 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
@@ -864,6 +864,7 @@ if (cl_gts_master.cl_number.is_scan()) {
 	window_scan_and_save ,o
 );}
             xywh {100 175 45 25}
+            code0 {o->value(".0000");}
           }
           Fl_Choice choice_scan_save_image_format {
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();} open
@@ -1137,6 +1138,7 @@ if (cl_gts_master.cl_number.is_trace()) {
 	window_trace_files ,o
 );}
             xywh {100 375 45 25}
+            code0 {o->value(".0000");}
           }
           Fl_Choice choice_trace_save_image_format {
             callback {cl_gts_master.cl_trace_files.cb_check_existing_saved_file();} open

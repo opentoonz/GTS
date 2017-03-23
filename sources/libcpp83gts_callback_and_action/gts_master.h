@@ -64,7 +64,8 @@ public:
 	void action( E_ACT e_act );
 
 	/* 実行 */
-	void cb_choice_pixel_type( void );
+	void cb_choice_pixel_type_title( const std::string& str );
+	void cb_choice_pixel_type_menu( void );
 	void cb_quit( void );
 
 	void cb_read_and_preview( void );

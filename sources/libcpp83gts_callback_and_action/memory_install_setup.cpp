@@ -25,30 +25,42 @@ void memory_install_setup::load( const std::string& exe_file_path )
 
 		/* キーワードと、数値が1語以上(2<=words.size())ある */
 
-		if (words.at(0) == "browser_directory_path") {
-			this->browser_directory_path = words.at(1);
+		if (	     "browser_top_folder" == words.at(0) ) {
+			this->browser_top_folder  =  words.at(1);
 		} else
-		if (words.at(0) == "image_file_format") {
-			this->image_file_format = words.at(1);
+		if (	     "save_number_format" == words.at(0)) {
+			this->save_number_format  =  words.at(1);
 		} else
-		if (words.at(0) == "area_rot90") {
-			this->area_rot90 = words.at(1);
+		if (	     "image_file_format" == words.at(0)) {
+			this->image_file_format  =  words.at(1);
 		} else
-		if (words.at(0) == "short_cut_key_start_scan") {
+		if (	     "area_resolution_dpi" == words.at(0) ) {
+			this->area_resolution_dpi  =  words.at(1);
+		} else
+		if (	     "area_rotate_per_90" == words.at(0) ) {
+			this->area_rotate_per_90  =  words.at(1);
+		} else
+		if (	     "pixel_type" == words.at(0) ) {
+			this->pixel_type  =  words.at(1);
+		} else
+		if (	     "scan_num_endless_direction" == words.at(0) ) {
+			this->scan_num_endless_direction = words.at(1);
+		} else
+		if (	"short_cut_key_start_scan" == words.at(0)) {
+   cl_gts_master.cl_memo_short_cut_key.setup_start_scan(words.at(1).c_str());
 			// start_scan	Enter(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_start_scan(words.at(1).c_str());
 		} else
-		if (words.at(0) == "short_cut_key_rescan") {
+		if (	"short_cut_key_rescan" == words.at(0)) {
+   cl_gts_master.cl_memo_short_cut_key.setup_rescan(words.at(1).c_str());
 			// rescan	Space(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_rescan(words.at(1).c_str());
 		} else
-		if (words.at(0) == "short_cut_key_next_scan") {
+		if (	"short_cut_key_next_scan" == words.at(0)) {
+   cl_gts_master.cl_memo_short_cut_key.setup_next_scan(words.at(1).c_str());
 			// next_scan	Enter(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_next_scan(words.at(1).c_str());
 		} else
-		if (words.at(0) == "short_cut_key_stop_scan") {
+		if (	"short_cut_key_stop_scan" == words.at(0)) {
+   cl_gts_master.cl_memo_short_cut_key.setup_stop_scan(words.at(1).c_str());
 			// stop_scan	Esc(Default)
- cl_gts_master.cl_memo_short_cut_key.setup_stop_scan(words.at(1).c_str());
 		}
 		else {
 			pri_funct_err_bttvr(

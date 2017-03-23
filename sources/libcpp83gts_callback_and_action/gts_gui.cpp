@@ -660,7 +660,7 @@ void gts_gui::cb_Preview1(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_choice_pixel_type_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_choice_pixel_type();
+  cl_gts_master.cb_choice_pixel_type_menu();
 }
 void gts_gui::cb_choice_pixel_type(Fl_Choice* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_pixel_type_i(o,v);
@@ -5284,7 +5284,7 @@ Fl_Double_Window* gts_gui::make_window() {
         valinp_area_reso->box(FL_BORDER_BOX);
         valinp_area_reso->minimum(50);
         valinp_area_reso->maximum(600);
-        valinp_area_reso->value(144);
+        valinp_area_reso->value(400);
         valinp_area_reso->callback((Fl_Callback*)cb_valinp_area_reso);
         valinp_area_reso->align(Fl_Align(FL_ALIGN_RIGHT));
         valinp_area_reso->when(FL_WHEN_RELEASE);
@@ -5588,8 +5588,9 @@ Fl_Double_Window* gts_gui::make_window() {
           strinp_scan_save_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_scan_save_file_head);
         } // Fl_Input* strinp_scan_save_file_head
-        { output_scan_save_number_format = new Fl_Output(100, 175, 45, 25);
+        { Fl_Output* o = output_scan_save_number_format = new Fl_Output(100, 175, 45, 25);
           output_scan_save_number_format->callback((Fl_Callback*)cb_output_scan_save_number_format);
+          o->value(".0000");
         } // Fl_Output* output_scan_save_number_format
         { choice_scan_save_image_format = new Fl_Choice(145, 175, 54, 25);
           choice_scan_save_image_format->down_box(FL_BORDER_BOX);
@@ -5791,8 +5792,9 @@ Fl_Double_Window* gts_gui::make_window() {
           strinp_trace_save_file_head->when(FL_WHEN_CHANGED);
           Fl_Group::current()->resizable(strinp_trace_save_file_head);
         } // Fl_Input* strinp_trace_save_file_head
-        { output_trace_save_number_format = new Fl_Output(100, 375, 45, 25);
+        { Fl_Output* o = output_trace_save_number_format = new Fl_Output(100, 375, 45, 25);
           output_trace_save_number_format->callback((Fl_Callback*)cb_output_trace_save_number_format);
+          o->value(".0000");
         } // Fl_Output* output_trace_save_number_format
         { choice_trace_save_image_format = new Fl_Choice(145, 375, 54, 25);
           choice_trace_save_image_format->down_box(FL_BORDER_BOX);

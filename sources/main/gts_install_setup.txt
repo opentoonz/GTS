@@ -1,15 +1,27 @@
-#
-browser_directory_path "C:\"
-#
-# TIFF/TGA
-image_file_format	TGA
-#
-# Area Rot90 is CW_-90/CW_0/CW_90/CW_180
-area_rot90		CW_0
-#
+# Browser Top Folder
+browser_top_folder	"C:\"
+
+# Save Number Format
+#save_number_format	".0000"
+
+# Image File Format is "TIFF"/"TGA"
+image_file_format	"TGA"
+
+# Area Resolution DPI is 50...600
+area_resolution_dpi	144
+
+# Area Rotate per 90 is "CW_-90"/"CW_0"/"CW_90"/"CW_180"
+area_rotate_per_90	"CW_0"
+
+# Pixel Type is "BW"/"Grayscale"/"RGB"
+pixel_type		"RGB"
+
+# Scan and Save Number Direction is "End"/"Endless"
+scan_num_endless_direction	"Endless"
+
 # Short Cut Key for "Next Scan" (Space,"",Enter,Esc only)
-short_cut_key_start_scan	Enter
-short_cut_key_rescan		Space
-short_cut_key_next_scan		Enter
-short_cut_key_stop_scan		Esc
-#
+short_cut_key_start_scan	"Enter"
+short_cut_key_rescan		"Space"
+short_cut_key_next_scan		"Enter"
+short_cut_key_stop_scan		"Esc"
+
