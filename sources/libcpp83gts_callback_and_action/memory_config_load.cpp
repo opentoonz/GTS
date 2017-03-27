@@ -939,6 +939,29 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 	this->load_number_sw_ = true;
 	return ret;
 }
+int memory_config::load_only_pixel_type_and_bright( const std::string& file_path)
+{
+	this->load_config_sw_ = false;
+	this->load_scan_and_save_sw_ = false;
+	this->load_trace_files_sw_ = false;
+	this->load_crop_area_and_rot90_sw_ = false;
+	this->load_pixel_type_and_bright_sw_ = true; // True only this.
+	this->load_trace_parameters_sw_ = false;
+	this->load_trace_batch_sw_ = false;
+	this->load_number_sw_ = false;
+
+	const int ret = this->load(file_path , this->load_trace_batch_sw_);
+
+	this->load_config_sw_ = true;
+	this->load_scan_and_save_sw_ = true;
+	this->load_trace_files_sw_ = true;
+	this->load_crop_area_and_rot90_sw_ = true;
+	this->load_pixel_type_and_bright_sw_ = true;
+	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_batch_sw_ = true;
+	this->load_number_sw_ = true;
+	return ret;
+}
 
 int memory_config::load( const std::string& file_path ,const bool load_trace_batch_sw )
 {

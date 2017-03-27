@@ -140,7 +140,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_area_and_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
-					sources/libcpp83gts_callback_and_action/cb_choice_pixel_type.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_hsv_minmax.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_src.cpp \
@@ -151,6 +150,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_config.cpp \
 					sources/libcpp83gts_callback_and_action/cb_input_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_number.cpp \
+					sources/libcpp83gts_callback_and_action/cb_pixel_type_and_bright.cpp \
 					sources/libcpp83gts_callback_and_action/cb_quit.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \

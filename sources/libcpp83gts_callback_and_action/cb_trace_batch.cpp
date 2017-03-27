@@ -61,7 +61,7 @@ void cb_trace_batch::cb_add_or_select( void )
 	/* ユーザーがブラウザーで複数のconfig.txtファイルを選択する */
 	std::vector< std::string > vecstr(
 		ids::path::fltk_native_browse_open_files(
-			"Open Files"
+			"Set Config File"
 			,this->dir_path_
 			,""
 			,"TEXT\t*.txt\n"

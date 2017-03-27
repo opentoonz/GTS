@@ -136,6 +136,28 @@ void cb_area_and_rot90::cb_area_aspect_ratio_selecter( void )
 	}
 }
 
+void cb_area_and_rot90::cb_area_set_max( void )
+{
+	/* Start X Y cm */
+	cl_gts_gui.valinp_area_x_pos->value( 0 );
+	cl_gts_gui.valinp_area_y_pos->value( 0 );
+
+	/* Size W H cm */
+	cl_gts_gui.valinp_area_x_size->value(
+		cl_gts_gui.valout_scanner_width_max->value()
+	);
+	cl_gts_gui.valinp_area_y_size->value(
+		cl_gts_gui.valout_scanner_height_max->value()
+	);
+
+	/* Size W H pixel */
+	this->getset_x_pixel_from_x_size();
+	this->getset_y_pixel_from_y_size();
+
+	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
+	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+}
+
 /*
 	Area
 */

@@ -111,6 +111,33 @@ void cb_config::open_only_area_and_rot90( void )
 		return;
 	}
 }
+void cb_config::open_only_pixel_type_and_bright( void )
+{
+	/* NativeブラウザーOpenで開く */
+	const std::string fpath = ids::path::fltk_native_browse_open(
+		"Open Config only Pixel Type and Bright"
+		,this->dir_path_
+		,this->open_file_name_
+		,std::string("Text(Config)\t*")+this->ext_
+		,0
+	).at(0);
+	/* Cancel */
+	if (fpath.empty()) {
+		return;
+	}
+
+	/* config情報を保存する */
+	if (OK !=
+	cl_gts_master.cl_memo_config.load_only_pixel_type_and_bright(
+		fpath
+	)) {
+		pri_funct_err_bttvr(
+"Error : cl_gts_master.cl_memo_config.load_only_pixel_type_and_bright(%s) returns NG"
+			, fpath.c_str()
+		);
+		return;
+	}
+}
 
 void cb_config::save_as( void )
 {
