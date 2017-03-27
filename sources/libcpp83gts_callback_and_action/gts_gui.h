@@ -259,14 +259,6 @@ private:
 public:
   Fl_Button *radbut_area_reso_fix_cm;
   Fl_Button *radbut_area_reso_fix_pixel;
-  Fl_Value_Input *valinp_aspect_w;
-  Fl_Value_Input *valinp_aspect_h;
-private:
-  inline void cb__i(Fl_Button*, void*);
-  static void cb_(Fl_Button*, void*);
-  inline void cb_1_i(Fl_Button*, void*);
-  static void cb_1(Fl_Button*, void*);
-public:
   Fl_Choice *choice_area_aspect_ratio_selecter;
 private:
   inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
@@ -274,6 +266,8 @@ private:
   static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
   inline void cb_Set1_i(Fl_Button*, void*);
   static void cb_Set1(Fl_Button*, void*);
+  inline void cb_Set2_i(Fl_Button*, void*);
+  static void cb_Set2(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_area_reso;
 private:
@@ -401,8 +395,8 @@ public:
 private:
   inline void cb_filinp_scan_save_dir_path_i(Fl_File_Input*, void*);
   static void cb_filinp_scan_save_dir_path(Fl_File_Input*, void*);
-  inline void cb_2_i(Fl_Button*, void*);
-  static void cb_2(Fl_Button*, void*);
+  inline void cb__i(Fl_Button*, void*);
+  static void cb_(Fl_Button*, void*);
 public:
   Fl_Input *strinp_scan_save_file_head;
 private:
@@ -430,8 +424,8 @@ public:
   static Fl_Menu_Item menu_choice_scan_num_endless_direction[];
   Fl_Value_Input *valinp_scan_num_end;
 private:
-  inline void cb_Set2_i(Fl_Button*, void*);
-  static void cb_Set2(Fl_Button*, void*);
+  inline void cb_Set3_i(Fl_Button*, void*);
+  static void cb_Set3(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_files;
 private:
@@ -442,8 +436,8 @@ private:
 public:
   Fl_File_Input *filinp_trace_open_dir_path;
 private:
-  inline void cb_3_i(Fl_Button*, void*);
-  static void cb_3(Fl_Button*, void*);
+  inline void cb_1_i(Fl_Button*, void*);
+  static void cb_1(Fl_Button*, void*);
 public:
   Fl_Input *strinp_trace_open_file_head;
   Fl_Input *strinp_trace_open_number_format;
@@ -457,8 +451,8 @@ public:
   Fl_Value_Output *valout_trace_num_start;
   Fl_Value_Output *valout_trace_num_end;
 private:
-  inline void cb_Set3_i(Fl_Button*, void*);
-  static void cb_Set3(Fl_Button*, void*);
+  inline void cb_Set4_i(Fl_Button*, void*);
+  static void cb_Set4(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_filter_trace_sw;
 private:
@@ -474,8 +468,8 @@ public:
 private:
   inline void cb_filinp_trace_save_dir_path_i(Fl_File_Input*, void*);
   static void cb_filinp_trace_save_dir_path(Fl_File_Input*, void*);
-  inline void cb_4_i(Fl_Button*, void*);
-  static void cb_4(Fl_Button*, void*);
+  inline void cb_2_i(Fl_Button*, void*);
+  static void cb_2(Fl_Button*, void*);
 public:
   Fl_Input *strinp_trace_save_file_head;
 private:
@@ -1326,15 +1320,22 @@ private:
   static void cb_counte_input_num_form_num_of_digits(Fl_Counter*, void*);
 public:
   Fl_Output *output_input_num_form_sample;
-  Fl_Button *button_input_num_form_ok;
 private:
-  inline void cb_button_input_num_form_ok_i(Fl_Button*, void*);
-  static void cb_button_input_num_form_ok(Fl_Button*, void*);
+  inline void cb_OK_i(Fl_Button*, void*);
+  static void cb_OK(Fl_Button*, void*);
+  inline void cb_Cancel_i(Fl_Button*, void*);
+  static void cb_Cancel(Fl_Button*, void*);
 public:
-  Fl_Button *button_input_num_form_cancel;
+  Fl_Double_Window *window_set_aspect_ratio;
+  Fl_Button *radbut_area_aspect_ratio_w;
+  Fl_Value_Input *valinp_area_aspect_ratio_w;
+  Fl_Button *radbut_area_aspect_ratio_h;
+  Fl_Value_Input *valinp_area_aspect_ratio_h;
 private:
-  inline void cb_button_input_num_form_cancel_i(Fl_Button*, void*);
-  static void cb_button_input_num_form_cancel(Fl_Button*, void*);
+  inline void cb_OK1_i(Fl_Button*, void*);
+  static void cb_OK1(Fl_Button*, void*);
+  inline void cb_Cancel1_i(Fl_Button*, void*);
+  static void cb_Cancel1(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

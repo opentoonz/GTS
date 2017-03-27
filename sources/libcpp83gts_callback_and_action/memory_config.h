@@ -132,6 +132,12 @@ public:
 	    "area_y_pixel")
 	,str_area_resolution_dpi_(
 	    "area_resolution_dpi")
+	,str_area_aspect_ratio_w_(
+	    "area_aspect_ratio_w")
+	,str_area_aspect_ratio_h_(
+	    "area_aspect_ratio_h")
+	,str_area_aspect_ratio_how_to_fix_(
+	    "area_aspect_ratio_how_to_fix")
 	,str_rotate_per_90_(
 	    "rotate_per_90")
 	,str_scanner_type_(
@@ -373,6 +379,9 @@ private:
 	const char* str_area_x_pixel_;
 	const char* str_area_y_pixel_;
 	const char* str_area_resolution_dpi_;
+	const char* str_area_aspect_ratio_w_;
+	const char* str_area_aspect_ratio_h_;
+	const char* str_area_aspect_ratio_how_to_fix_;
 	const char* str_rotate_per_90_;
 	const char* str_scanner_type_;
 	const char* str_scanner_x_max_;

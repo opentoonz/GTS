@@ -2,7 +2,6 @@
 #define cb_input_number_format_h
 
 #include <FL/Fl_Double_Window.H>
-#include <FL/Fl_Widget.H>
 #include <FL/Fl_Output.H>
 
 class cb_input_number_format {

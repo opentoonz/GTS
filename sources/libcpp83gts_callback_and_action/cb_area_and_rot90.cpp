@@ -280,34 +280,6 @@ void cb_area_and_rot90::cb_area_y_pixel_size( void )
 	this->cb_area_y_size();
 }
 
-void cb_area_and_rot90::cb_valinp_aspect_w( void )
-{
-	if (cl_gts_gui.valinp_aspect_h->value() <= 0.0) {
-		fl_alert( "Set H_Aspect_Ratio greater than zero!" );
-		return;
-	}
-	cl_gts_gui.valinp_area_x_size->value(
-		cl_gts_gui.valinp_area_y_size->value()
-		* cl_gts_gui.valinp_aspect_w->value()
-		/ cl_gts_gui.valinp_aspect_h->value()
-	);
-	this->cb_area_x_size();
-}
-
-void cb_area_and_rot90::cb_valinp_aspect_h( void )
-{
-	if (cl_gts_gui.valinp_aspect_w->value() <= 0.0) {
-		fl_alert( "Set W_Aspect_Ratio greater than zero!" );
-		return;
-	}
-	cl_gts_gui.valinp_area_y_size->value(
-		cl_gts_gui.valinp_area_x_size->value()
-		* cl_gts_gui.valinp_aspect_h->value()
-		/ cl_gts_gui.valinp_aspect_w->value()
-	);
-	this->cb_area_y_size();
-}
-
 void cb_area_and_rot90::cb_area_reso( void )
 {
 	/* 入力したDPI値が範囲外 */
@@ -877,4 +849,60 @@ int fltk_button_area_and_rot90::handle( int event )
 		return Fl_Button::handle(event);
 	}
 	return 0;
+}
+
+//---------------
+void cb_area_and_rot90::cb_dialog_set_aspect_ratio(
+	Fl_Double_Window* flwin
+	,Fl_Widget* flout
+)
+{
+	/* window開く */
+	cl_gts_gui.window_set_aspect_ratio->show();
+	cl_gts_gui.window_set_aspect_ratio->position(
+		 flwin->x() +flout->x() -30
+		,flwin->y() +flout->y() -90
+	);
+}
+void cb_area_and_rot90::cb_valinp_area_aspect_ratio_w_( void )
+{
+	if (cl_gts_gui.valinp_area_aspect_ratio_h->value() <= 0.0) {
+		fl_alert( "Set H_Aspect_Ratio greater than zero!" );
+		return;
+	}
+	cl_gts_gui.valinp_area_x_size->value(
+		cl_gts_gui.valinp_area_y_size->value()
+		* cl_gts_gui.valinp_area_aspect_ratio_w->value()
+		/ cl_gts_gui.valinp_area_aspect_ratio_h->value()
+	);
+	this->cb_area_x_size();
+}
+
+void cb_area_and_rot90::cb_valinp_area_aspect_ratio_h_( void )
+{
+	if (cl_gts_gui.valinp_area_aspect_ratio_w->value() <= 0.0) {
+		fl_alert( "Set W_Aspect_Ratio greater than zero!" );
+		return;
+	}
+	cl_gts_gui.valinp_area_y_size->value(
+		cl_gts_gui.valinp_area_x_size->value()
+		* cl_gts_gui.valinp_area_aspect_ratio_h->value()
+		/ cl_gts_gui.valinp_area_aspect_ratio_w->value()
+	);
+	this->cb_area_y_size();
+}
+
+void cb_area_and_rot90::cb_ok_aspect_ratio(void)
+{
+	if (cl_gts_gui.radbut_area_aspect_ratio_w->value()) {
+		this->cb_valinp_area_aspect_ratio_h_();
+	} else
+	if (cl_gts_gui.radbut_area_aspect_ratio_h->value()) {
+		this->cb_valinp_area_aspect_ratio_w_();
+	} else
+	{
+		fl_alert( "Click H or W button!" );
+	}
+
+	cl_gts_gui.window_set_aspect_ratio->hide();
 }

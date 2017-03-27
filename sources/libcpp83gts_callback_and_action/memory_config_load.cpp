@@ -336,6 +336,22 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	else if ( this->str_area_resolution_dpi_ ==  ke) {
 	  cl_gts_gui.valinp_area_reso->value( std::stod(va) );
 	}
+	else if ( this->str_area_aspect_ratio_w_ ==  ke) {
+	  cl_gts_gui.valinp_area_aspect_ratio_w->value( std::stod(va) );
+	}
+	else if ( this->str_area_aspect_ratio_h_ ==  ke) {
+	  cl_gts_gui.valinp_area_aspect_ratio_h->value( std::stod(va) );
+	}
+	else if ( this->str_area_aspect_ratio_how_to_fix_ ==  ke) {
+	  if (va == "W") {
+	   cl_gts_gui.radbut_area_aspect_ratio_w->value(1);
+	   cl_gts_gui.radbut_area_aspect_ratio_h->value(0);
+	  } else
+	  if (va == "H") {
+	   cl_gts_gui.radbut_area_aspect_ratio_w->value(0);
+	   cl_gts_gui.radbut_area_aspect_ratio_h->value(1);
+	  }
+	}
 	else if ( this->str_rotate_per_90_ == ke ) {
 			set_rotate_per_90_( va );
 	}
