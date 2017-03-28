@@ -156,10 +156,12 @@ public:
 		    "rotate_per_90")
 	,str_scanner_type_(
 	    "scanner_type")
-	,str_scanner_x_max_(
-	    "scanner_x_max")
-	,str_scanner_y_max_(
-	    "scanner_y_max")
+	,str_scanner_size_cm_w_(
+	    //"scanner_x_max")
+	    "scanner_size_cm_w")
+	,str_scanner_size_cm_h_(
+	    //"scanner_y_max")
+	    "scanner_size_cm_h")
 
 	,str_pixel_type_(
 	    "pixel_type")
@@ -405,8 +407,8 @@ private:
 	const char* str_area_rotate_per_90_;
 	const char* str_area_rotate_per_90_legacy2017_;
 	const char* str_scanner_type_;
-	const char* str_scanner_x_max_;
-	const char* str_scanner_y_max_;
+	const char* str_scanner_size_cm_w_;
+	const char* str_scanner_size_cm_h_;
 
 	const char* str_pixel_type_;
 	const char* str_bw_threshold_;

@@ -5342,14 +5342,14 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Output* txtout_scanner_type
       { Fl_Group* o = new Fl_Group(2, 300, 196, 20);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
-        { valout_scanner_width_max = new Fl_Value_Output(30, 300, 55, 20, "W");
-          valout_scanner_width_max->box(FL_FLAT_BOX);
-          valout_scanner_width_max->maximum(60);
-        } // Fl_Value_Output* valout_scanner_width_max
-        { valout_scanner_height_max = new Fl_Value_Output(100, 300, 55, 20, "H");
-          valout_scanner_height_max->box(FL_FLAT_BOX);
-          valout_scanner_height_max->maximum(60);
-        } // Fl_Value_Output* valout_scanner_height_max
+        { valout_scanner_size_cm_w = new Fl_Value_Output(30, 300, 55, 20, "W");
+          valout_scanner_size_cm_w->box(FL_FLAT_BOX);
+          valout_scanner_size_cm_w->maximum(60);
+        } // Fl_Value_Output* valout_scanner_size_cm_w
+        { valout_scanner_size_cm_h = new Fl_Value_Output(100, 300, 55, 20, "H");
+          valout_scanner_size_cm_h->box(FL_FLAT_BOX);
+          valout_scanner_size_cm_h->maximum(60);
+        } // Fl_Value_Output* valout_scanner_size_cm_h
         { Fl_Text_Display* o = new Fl_Text_Display(165, 302, 0, 0, "cm");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o

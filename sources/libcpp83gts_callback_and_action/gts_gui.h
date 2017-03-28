@@ -281,8 +281,8 @@ private:
   static Fl_Menu_Item menu_choice_rot90[];
 public:
   Fl_Output *txtout_scanner_type;
-  Fl_Value_Output *valout_scanner_width_max;
-  Fl_Value_Output *valout_scanner_height_max;
+  Fl_Value_Output *valout_scanner_size_cm_w;
+  Fl_Value_Output *valout_scanner_size_cm_h;
   Fl_Double_Window *window_pixel_type_and_bright;
 private:
   inline void cb_window_pixel_type_and_bright_i(Fl_Double_Window*, void*);

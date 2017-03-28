@@ -375,10 +375,10 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	/* スキャナー情報
 			this->str_scanner_type_
 			cl_gts_gui.txtout_scanner_type
-			this->str_scanner_x_max_
-			cl_gts_gui.valout_scanner_width_max
-			this->str_scanner_y_max_
-			cl_gts_gui.valout_scanner_height_max
+			this->str_scanner_size_cm_w_
+			cl_gts_gui.valout_scanner_size_cm_w
+			this->str_scanner_size_cm_h_
+			cl_gts_gui.valout_scanner_size_cm_h
 		はTWAINドライバーから取るべきなので、
 		ファイルからは設定しない
 	*/

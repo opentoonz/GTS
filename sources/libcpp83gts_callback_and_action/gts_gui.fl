@@ -591,11 +591,11 @@ cl_gts_gui.menite_area_and_rot90->clear();}
         Fl_Group {} {open
           xywh {2 300 196 20} align 20
         } {
-          Fl_Value_Output valout_scanner_width_max {
+          Fl_Value_Output valout_scanner_size_cm_w {
             label W
             xywh {30 300 55 20} box FLAT_BOX maximum 60
           }
-          Fl_Value_Output valout_scanner_height_max {
+          Fl_Value_Output valout_scanner_size_cm_h {
             label H
             xywh {100 300 55 20} box FLAT_BOX maximum 60
           }

@@ -60,8 +60,8 @@ std::cout
 	<< std::endl;
 
 	/* スキャナー幅高さをユーザー指定の回転してメニューに設定 */
-	cl_gts_gui.valout_scanner_width_max->value(d_maxcm_w);
-	cl_gts_gui.valout_scanner_height_max->value(d_maxcm_h);
+	cl_gts_gui.valout_scanner_size_cm_w->value(d_maxcm_w);
+	cl_gts_gui.valout_scanner_size_cm_h->value(d_maxcm_h);
 
 	/* スキャナー型番をメニューに設定 */
 	cl_gts_gui.txtout_scanner_type->value(
@@ -85,10 +85,10 @@ int gts_master::iipg_scan_action_( const bool full_area_sw )
 			-cl_gts_gui.choice_rot90->value()/* マイナス回転 */
 			, 0.0
 			, 0.0
-			, cl_gts_gui.valout_scanner_width_max->value()
-			, cl_gts_gui.valout_scanner_height_max->value()
-			, cl_gts_gui.valout_scanner_width_max->value()
-			, cl_gts_gui.valout_scanner_height_max->value()
+			, cl_gts_gui.valout_scanner_size_cm_w->value()
+			, cl_gts_gui.valout_scanner_size_cm_h->value()
+			, cl_gts_gui.valout_scanner_size_cm_w->value()
+			, cl_gts_gui.valout_scanner_size_cm_h->value()
 			, &d_cm_x
 			, &d_cm_y
 			, &d_cm_w
@@ -103,8 +103,8 @@ int gts_master::iipg_scan_action_( const bool full_area_sw )
 			, cl_gts_gui.valinp_area_offset_cm_y->value()
 			, cl_gts_gui.valinp_area_size_cm_w->value()
 			, cl_gts_gui.valinp_area_size_cm_h->value()
-			, cl_gts_gui.valout_scanner_width_max->value()
-			, cl_gts_gui.valout_scanner_height_max->value()
+			, cl_gts_gui.valout_scanner_size_cm_w->value()
+			, cl_gts_gui.valout_scanner_size_cm_h->value()
 			, &d_cm_x
 			, &d_cm_y
 			, &d_cm_w
@@ -278,10 +278,10 @@ int gts_master::iipg_scan_get_scanner_info_( void )
 	cl_gts_gui.valinp_area_offset_cm_x->value(0.0);
 	cl_gts_gui.valinp_area_offset_cm_y->value(0.0);
 	cl_gts_gui.valinp_area_size_cm_w->value(
-	 cl_gts_gui.valout_scanner_width_max->value()
+	 cl_gts_gui.valout_scanner_size_cm_w->value()
 	);
 	cl_gts_gui.valinp_area_size_cm_h->value(
-	 cl_gts_gui.valout_scanner_height_max->value()
+	 cl_gts_gui.valout_scanner_size_cm_h->value()
 	);
 	this->cl_area_and_rot90.getset_x_pixel_from_x_size();
 	this->cl_area_and_rot90.getset_y_pixel_from_y_size();

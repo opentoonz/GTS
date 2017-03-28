@@ -144,10 +144,10 @@ void cb_area_and_rot90::cb_area_set_max( void )
 
 	/* Size W H cm */
 	cl_gts_gui.valinp_area_size_cm_w->value(
-		cl_gts_gui.valout_scanner_width_max->value()
+		cl_gts_gui.valout_scanner_size_cm_w->value()
 	);
 	cl_gts_gui.valinp_area_size_cm_h->value(
-		cl_gts_gui.valout_scanner_height_max->value()
+		cl_gts_gui.valout_scanner_size_cm_h->value()
 	);
 
 	/* Size W H pixel */
@@ -165,12 +165,12 @@ void cb_area_and_rot90::cb_area_set_max( void )
 void cb_area_and_rot90::cb_area_offset_cm_x( void )
 {
 	/* 先：横位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_width_max->value()
+	if (cl_gts_gui.valout_scanner_size_cm_w->value()
 	 < (cl_gts_gui.valinp_area_offset_cm_x->value() +
 	    cl_gts_gui.valinp_area_size_cm_w->value())
 	) {
 	    cl_gts_gui.valinp_area_offset_cm_x->value(
-	     cl_gts_gui.valout_scanner_width_max->value() -
+	     cl_gts_gui.valout_scanner_size_cm_w->value() -
 	     cl_gts_gui.valinp_area_size_cm_w->value()
 	    ); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
 	    fl_alert( "Too Big X!" );
@@ -187,12 +187,12 @@ void cb_area_and_rot90::cb_area_offset_cm_x( void )
 void cb_area_and_rot90::cb_area_offset_cm_y( void )
 {
 	/* 先：縦位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_height_max->value()
+	if (cl_gts_gui.valout_scanner_size_cm_h->value()
 	 < (cl_gts_gui.valinp_area_offset_cm_y->value() +
 	    cl_gts_gui.valinp_area_size_cm_h->value())
 	) {
 	    cl_gts_gui.valinp_area_offset_cm_y->value(
-	     cl_gts_gui.valout_scanner_height_max->value() -
+	     cl_gts_gui.valout_scanner_size_cm_h->value() -
 	     cl_gts_gui.valinp_area_size_cm_h->value()
 	    ); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
 	    fl_alert( "Too Big Y!" );
@@ -210,12 +210,12 @@ void cb_area_and_rot90::cb_area_offset_cm_y( void )
 void cb_area_and_rot90::cb_area_size_cm_w( void )
 {
 	/* 先：横位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_width_max->value()
+	if (cl_gts_gui.valout_scanner_size_cm_w->value()
 	 < (cl_gts_gui.valinp_area_offset_cm_x->value() +
 	    cl_gts_gui.valinp_area_size_cm_w->value())
 	) {
 	    cl_gts_gui.valinp_area_size_cm_w->value(
-	     cl_gts_gui.valout_scanner_width_max->value() -
+	     cl_gts_gui.valout_scanner_size_cm_w->value() -
 	     cl_gts_gui.valinp_area_offset_cm_x->value()
 	    ); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
 	    fl_alert( "Too Big W!" );
@@ -240,12 +240,12 @@ void cb_area_and_rot90::cb_area_size_cm_w( void )
 void cb_area_and_rot90::cb_area_size_cm_h( void )
 {
 	/* 先：縦位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_height_max->value()
+	if (cl_gts_gui.valout_scanner_size_cm_h->value()
 	 < (cl_gts_gui.valinp_area_offset_cm_y->value() +
 	    cl_gts_gui.valinp_area_size_cm_h->value())
 	) {
 	    cl_gts_gui.valinp_area_size_cm_h->value(
-	    cl_gts_gui.valout_scanner_height_max->value() -
+	    cl_gts_gui.valout_scanner_size_cm_h->value() -
 	    cl_gts_gui.valinp_area_offset_cm_y->value()
 	    ); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
 	    fl_alert( "Too Big H!" );
@@ -418,8 +418,8 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 		, cl_gts_gui.valinp_area_offset_cm_y->value()
 		, cl_gts_gui.valinp_area_size_cm_w->value()
 		, cl_gts_gui.valinp_area_size_cm_h->value()
-		, cl_gts_gui.valout_scanner_width_max->value()
-		, cl_gts_gui.valout_scanner_height_max->value()
+		, cl_gts_gui.valout_scanner_size_cm_w->value()
+		, cl_gts_gui.valout_scanner_size_cm_h->value()
 		, &cm_x , &cm_y , &cm_w , &cm_h
 	);
 	this->calc_rot90_size(
@@ -430,8 +430,8 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 	);
 	this->calc_rot90_size(
 		rot90_diff
-		, cl_gts_gui.valout_scanner_width_max->value()
-		, cl_gts_gui.valout_scanner_height_max->value()
+		, cl_gts_gui.valout_scanner_size_cm_w->value()
+		, cl_gts_gui.valout_scanner_size_cm_h->value()
 		, &max_cm_w , &max_cm_h
 	);
 
@@ -442,8 +442,8 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 	cl_gts_gui.valinp_area_size_cm_h->value(cm_h);
 	cl_gts_gui.valinp_area_size_pixel_w->value(pix_w),
 	cl_gts_gui.valinp_area_size_pixel_h->value(pix_h),
-	cl_gts_gui.valout_scanner_width_max->value(max_cm_w);
-	cl_gts_gui.valout_scanner_height_max->value(max_cm_h);
+	cl_gts_gui.valout_scanner_size_cm_w->value(max_cm_w);
+	cl_gts_gui.valout_scanner_size_cm_h->value(max_cm_h);
 
 	/* 回転の現在値をメモリする */
 	this->previous_choice_rot90_ = cl_gts_gui.choice_rot90->value();
@@ -556,11 +556,11 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 	if (
 	( ( cl_gts_gui.valinp_area_offset_cm_x->value() + x_cm_size )
 	<=
-	cl_gts_gui.valout_scanner_width_max->value() )
+	cl_gts_gui.valout_scanner_size_cm_w->value() )
 	&&
 	( ( cl_gts_gui.valinp_area_offset_cm_y->value() + y_cm_size )
 	<=
-	cl_gts_gui.valout_scanner_height_max->value()
+	cl_gts_gui.valout_scanner_size_cm_h->value()
 	) ) {
 		this->getset_x_size_from_x_pixel_();
 		this->getset_y_size_from_y_pixel_();
@@ -577,20 +577,20 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 	case 0: /* Cancel */
 		return false;
 	case 1: /* Sizeを範囲内に収めるLimit(default) */
-		if (cl_gts_gui.valout_scanner_width_max->value()
+		if (cl_gts_gui.valout_scanner_size_cm_w->value()
 		<
 		(cl_gts_gui.valinp_area_offset_cm_x->value()+x_cm_size)) {
 			cl_gts_gui.valinp_area_size_cm_w->value(
-			 cl_gts_gui.valout_scanner_width_max->value()
+			 cl_gts_gui.valout_scanner_size_cm_w->value()
 			 - cl_gts_gui.valinp_area_offset_cm_x->value()
 			);
 			this->getset_x_pixel_from_x_size();
 		}
-		if (cl_gts_gui.valout_scanner_height_max->value()
+		if (cl_gts_gui.valout_scanner_size_cm_h->value()
 		<
 		(cl_gts_gui.valinp_area_offset_cm_y->value()+y_cm_size)) {
 			cl_gts_gui.valinp_area_size_cm_h->value(
-			 cl_gts_gui.valout_scanner_height_max->value()
+			 cl_gts_gui.valout_scanner_size_cm_h->value()
 			 - cl_gts_gui.valinp_area_offset_cm_y->value()
 			);
 			this->getset_y_pixel_from_y_size();
@@ -599,12 +599,12 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 	case 2: /* DPIを範囲内に収めるLimit */
 		{
 		const double x_dpi = this->dpi_from_cm_per_pixel_(
-			cl_gts_gui.valout_scanner_width_max->value()
+			cl_gts_gui.valout_scanner_size_cm_w->value()
 			- cl_gts_gui.valinp_area_offset_cm_x->value()
 			, cl_gts_gui.valinp_area_size_pixel_w->value()
 		);
 		const double y_dpi = this->dpi_from_cm_per_pixel_(
-			cl_gts_gui.valout_scanner_height_max->value()
+			cl_gts_gui.valout_scanner_size_cm_h->value()
 			- cl_gts_gui.valinp_area_offset_cm_y->value()
 			, cl_gts_gui.valinp_area_size_pixel_h->value()
 		);
@@ -767,7 +767,7 @@ void cb_area_and_rot90::copy_value_to_opengl( void )
 	const double cm_h = cl_gts_gui.valinp_area_size_cm_h->value();
 
 	/* 座標系変換 Valueは左下原点 --> OpenGLは左上原点 */
-	cm_y		  = cl_gts_gui.valout_scanner_height_max->value()
+	cm_y		  = cl_gts_gui.valout_scanner_size_cm_h->value()
 		- (cm_y + cm_h);
 
 	/* Area(offset(x,y) ,size(w,h))を得る */

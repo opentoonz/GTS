@@ -168,10 +168,10 @@ void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 	   ,cl_gts_gui.choice_rot90->text() ,ofs );
 	save_stri_( this->str_scanner_type_
 	   ,cl_gts_gui.txtout_scanner_type->value() ,ofs );
-	save_fl64_( this->str_scanner_x_max_
-	   ,cl_gts_gui.valout_scanner_width_max->value() ,ofs );
-	save_fl64_( this->str_scanner_y_max_
-	   ,cl_gts_gui.valout_scanner_height_max->value() ,ofs );
+	save_fl64_( this->str_scanner_size_cm_w_
+	   ,cl_gts_gui.valout_scanner_size_cm_w->value() ,ofs );
+	save_fl64_( this->str_scanner_size_cm_h_
+	   ,cl_gts_gui.valout_scanner_size_cm_h->value() ,ofs );
 }
 void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 {
