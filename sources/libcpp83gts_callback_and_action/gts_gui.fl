@@ -460,14 +460,14 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             label Offset open
             xywh {4 65 192 25} align 5
           } {
-            Fl_Value_Input valinp_area_x_pos {
+            Fl_Value_Input valinp_area_offset_cm_x {
               label X
-              callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pos();}
+              callback {cl_gts_master.cl_area_and_rot90.cb_area_offset_cm_x();}
               xywh {25 65 55 25} box BORDER_BOX when 4 maximum 60
             }
-            Fl_Value_Input valinp_area_y_pos {
+            Fl_Value_Input valinp_area_offset_cm_y {
               label Y
-              callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pos();}
+              callback {cl_gts_master.cl_area_and_rot90.cb_area_offset_cm_y();}
               xywh {95 65 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Text_Display {} {
@@ -482,28 +482,28 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             Fl_Group {} {open
               xywh {5 125 150 25} align 20
             } {
-              Fl_Value_Input valinp_area_x_size {
+              Fl_Value_Input valinp_area_size_cm_w {
                 label W
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_size();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_size_cm_w();}
                 xywh {25 125 55 25} box BORDER_BOX when 4 maximum 60
               }
-              Fl_Value_Input valinp_area_y_size {
+              Fl_Value_Input valinp_area_size_cm_h {
                 label H
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_size();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_size_cm_h();}
                 xywh {95 125 55 25} box BORDER_BOX when 4 maximum 60
               }
             }
             Fl_Group {} {open
               xywh {5 155 150 25} align 20
             } {
-              Fl_Value_Input valinp_area_x_pixel {
+              Fl_Value_Input valinp_area_size_pixel_w {
                 label W
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_x_pixel_size();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_size_pixel_w();}
                 xywh {25 155 55 25} box BORDER_BOX when 4 maximum 10000
               }
-              Fl_Value_Input valinp_area_y_pixel {
+              Fl_Value_Input valinp_area_size_pixel_h {
                 label H
-                callback {cl_gts_master.cl_area_and_rot90.cb_area_y_pixel_size();}
+                callback {cl_gts_master.cl_area_and_rot90.cb_area_size_pixel_h();}
                 xywh {95 155 55 25} box BORDER_BOX when 4 maximum 10000
               }
             }

@@ -306,11 +306,15 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 			cl_gts_master.cl_area_and_rot90.cb_area_selecter();
 		}
 	}
-	else if ( this->str_area_x_pos_ == ke ) {
-	  cl_gts_gui.valinp_area_x_pos->value( std::stod(va) );
+	else if ((this->str_area_offset_cm_x_		 == ke)
+	||	 (this->str_area_offset_cm_x_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_offset_cm_x->value( std::stod(va) );
 	}
-	else if ( this->str_area_y_pos_ == ke ) {
-	  cl_gts_gui.valinp_area_y_pos->value( std::stod(va) );
+	else if ((this->str_area_offset_cm_y_		 == ke)
+	||	 (this->str_area_offset_cm_y_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_offset_cm_y->value( std::stod(va) );
 	}
 	else if ( this->str_area_aspect_ratio_select_ == ke) {
 		const Fl_Menu_Item *crnt =
@@ -321,17 +325,25 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
 		}
 	}
-	else if ( this->str_area_x_size_ == ke) {
-	  cl_gts_gui.valinp_area_x_size->value( std::stod(va) );
+	else if ((this->str_area_size_cm_w_		== ke)
+	||	 (this->str_area_size_cm_w_legacy2017_  == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_cm_w->value( std::stod(va) );
 	}
-	else if ( this->str_area_y_size_ == ke) {
-	  cl_gts_gui.valinp_area_y_size->value( std::stod(va) );
+	else if ((this->str_area_size_cm_h_		== ke)
+	||	 (this->str_area_size_cm_h_legacy2017_  == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_cm_h->value( std::stod(va) );
 	}
-	else if ( this->str_area_x_pixel_  == ke) {
-	  cl_gts_gui.valinp_area_x_pixel->value( std::stod(va) );
+	else if ((this->str_area_size_pixel_w_		  == ke)
+	||	 (this->str_area_size_pixel_w_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_pixel_w->value( std::stod(va) );
 	}
-	else if ( this->str_area_y_pixel_  == ke) {
-	  cl_gts_gui.valinp_area_y_pixel->value( std::stod(va) );
+	else if ((this->str_area_size_pixel_h_		  == ke)
+	||	 (this->str_area_size_pixel_h_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_pixel_h->value( std::stod(va) );
 	}
 	else if ( this->str_area_resolution_dpi_ ==  ke) {
 	  cl_gts_gui.valinp_area_reso->value( std::stod(va) );
@@ -352,7 +364,9 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	   cl_gts_gui.radbut_area_aspect_ratio_h->value(1);
 	  }
 	}
-	else if ( this->str_rotate_per_90_ == ke ) {
+	else if ( (this->str_area_rotate_per_90_	    == ke)
+	||	  (this->str_area_rotate_per_90_legacy2017_ == ke)
+	) {
 			set_rotate_per_90_( va );
 	}
 

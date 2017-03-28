@@ -99,10 +99,10 @@ int gts_master::iipg_scan_action_( const bool full_area_sw )
 		/* ユーザー指定サイズ */
 		this->cl_area_and_rot90.calc_rot90_offset_and_size(
 			-cl_gts_gui.choice_rot90->value()/* マイナス回転 */
-			, cl_gts_gui.valinp_area_x_pos->value()
-			, cl_gts_gui.valinp_area_y_pos->value()
-			, cl_gts_gui.valinp_area_x_size->value()
-			, cl_gts_gui.valinp_area_y_size->value()
+			, cl_gts_gui.valinp_area_offset_cm_x->value()
+			, cl_gts_gui.valinp_area_offset_cm_y->value()
+			, cl_gts_gui.valinp_area_size_cm_w->value()
+			, cl_gts_gui.valinp_area_size_cm_h->value()
 			, cl_gts_gui.valout_scanner_width_max->value()
 			, cl_gts_gui.valout_scanner_height_max->value()
 			, &d_cm_x
@@ -275,12 +275,12 @@ int gts_master::iipg_scan_get_scanner_info_( void )
 	);
 #endif
 	/* Area位置とサイズの初期設定をGUIに表示 */
-	cl_gts_gui.valinp_area_x_pos->value(0.0);
-	cl_gts_gui.valinp_area_y_pos->value(0.0);
-	cl_gts_gui.valinp_area_x_size->value(
+	cl_gts_gui.valinp_area_offset_cm_x->value(0.0);
+	cl_gts_gui.valinp_area_offset_cm_y->value(0.0);
+	cl_gts_gui.valinp_area_size_cm_w->value(
 	 cl_gts_gui.valout_scanner_width_max->value()
 	);
-	cl_gts_gui.valinp_area_y_size->value(
+	cl_gts_gui.valinp_area_size_cm_h->value(
 	 cl_gts_gui.valout_scanner_height_max->value()
 	);
 	this->cl_area_and_rot90.getset_x_pixel_from_x_size();

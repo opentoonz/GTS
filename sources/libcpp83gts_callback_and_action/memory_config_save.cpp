@@ -142,20 +142,20 @@ void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 	ofs << "\n# " <<  cl_gts_gui.window_area_and_rot90->label() << "\n";
 //	save_stri_( this->str_area_select_
 //	   ,cl_gts_gui.choice_area_selecter->text() ,ofs );
-	save_fl64_( this->str_area_x_pos_
-	   ,cl_gts_gui.valinp_area_x_pos->value() ,ofs );
-	save_fl64_( this->str_area_y_pos_
-	   ,cl_gts_gui.valinp_area_y_pos->value() ,ofs );
+	save_fl64_( this->str_area_offset_cm_x_
+	   ,cl_gts_gui.valinp_area_offset_cm_x->value() ,ofs );
+	save_fl64_( this->str_area_offset_cm_y_
+	   ,cl_gts_gui.valinp_area_offset_cm_y->value() ,ofs );
 //	save_stri_( this->str_area_aspect_ratio_select_
 //	   ,cl_gts_gui.choice_area_aspect_ratio_selecter->text() ,ofs);
-	save_fl64_( this->str_area_x_size_
-	   ,cl_gts_gui.valinp_area_x_size->value() ,ofs );
-	save_fl64_( this->str_area_y_size_
-	   ,cl_gts_gui.valinp_area_y_size->value() ,ofs );
-	save_fl64_( this->str_area_x_pixel_
-	   ,cl_gts_gui.valinp_area_x_pixel->value() ,ofs );
-	save_fl64_( this->str_area_y_pixel_
-	   ,cl_gts_gui.valinp_area_y_pixel->value() ,ofs );
+	save_fl64_( this->str_area_size_cm_w_
+	   ,cl_gts_gui.valinp_area_size_cm_w->value() ,ofs );
+	save_fl64_( this->str_area_size_cm_h_
+	   ,cl_gts_gui.valinp_area_size_cm_h->value() ,ofs );
+	save_fl64_( this->str_area_size_pixel_w_
+	   ,cl_gts_gui.valinp_area_size_pixel_w->value() ,ofs );
+	save_fl64_( this->str_area_size_pixel_h_
+	   ,cl_gts_gui.valinp_area_size_pixel_h->value() ,ofs );
 	save_fl64_( this->str_area_resolution_dpi_
 	   ,cl_gts_gui.valinp_area_reso->value() ,ofs );
 	save_fl64_( this->str_area_aspect_ratio_w_
@@ -164,7 +164,7 @@ void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 	   ,cl_gts_gui.valinp_area_aspect_ratio_h->value() ,ofs );
 	save_stri_( this->str_area_aspect_ratio_how_to_fix_
 	   ,cl_gts_gui.radbut_area_aspect_ratio_w->value()?"W":"H" ,ofs );
-	save_stri_( this->str_rotate_per_90_
+	save_stri_( this->str_area_rotate_per_90_
 	   ,cl_gts_gui.choice_rot90->text() ,ofs );
 	save_stri_( this->str_scanner_type_
 	   ,cl_gts_gui.txtout_scanner_type->value() ,ofs );

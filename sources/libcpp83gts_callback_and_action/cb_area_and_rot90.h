@@ -38,12 +38,12 @@ public:
 	/*
 		Area
 	*/
-	void cb_area_x_pos( void );
-	void cb_area_y_pos( void );
-	void cb_area_x_size( void );
-	void cb_area_y_size( void );
-	void cb_area_x_pixel_size( void );
-	void cb_area_y_pixel_size( void );
+	void cb_area_offset_cm_x( void );
+	void cb_area_offset_cm_y( void );
+	void cb_area_size_cm_w( void );
+	void cb_area_size_cm_h( void );
+	void cb_area_size_pixel_w( void );
+	void cb_area_size_pixel_h( void );
 	void cb_area_reso( void );
 
 	void cb_dialog_set_aspect_ratio(

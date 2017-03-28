@@ -227,35 +227,35 @@ private:
   static Fl_Menu_Item menu_choice_area_selecter[];
 public:
   Fl_Group *group_area_crop;
-  Fl_Value_Input *valinp_area_x_pos;
+  Fl_Value_Input *valinp_area_offset_cm_x;
 private:
-  inline void cb_valinp_area_x_pos_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_x_pos(Fl_Value_Input*, void*);
+  inline void cb_valinp_area_offset_cm_x_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_offset_cm_x(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_area_y_pos;
+  Fl_Value_Input *valinp_area_offset_cm_y;
 private:
-  inline void cb_valinp_area_y_pos_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_y_pos(Fl_Value_Input*, void*);
+  inline void cb_valinp_area_offset_cm_y_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_offset_cm_y(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_area_x_size;
+  Fl_Value_Input *valinp_area_size_cm_w;
 private:
-  inline void cb_valinp_area_x_size_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_x_size(Fl_Value_Input*, void*);
+  inline void cb_valinp_area_size_cm_w_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_size_cm_w(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_area_y_size;
+  Fl_Value_Input *valinp_area_size_cm_h;
 private:
-  inline void cb_valinp_area_y_size_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_y_size(Fl_Value_Input*, void*);
+  inline void cb_valinp_area_size_cm_h_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_size_cm_h(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_area_x_pixel;
+  Fl_Value_Input *valinp_area_size_pixel_w;
 private:
-  inline void cb_valinp_area_x_pixel_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_x_pixel(Fl_Value_Input*, void*);
+  inline void cb_valinp_area_size_pixel_w_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_size_pixel_w(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_area_y_pixel;
+  Fl_Value_Input *valinp_area_size_pixel_h;
 private:
-  inline void cb_valinp_area_y_pixel_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_y_pixel(Fl_Value_Input*, void*);
+  inline void cb_valinp_area_size_pixel_h_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_size_pixel_h(Fl_Value_Input*, void*);
 public:
   Fl_Button *radbut_area_reso_fix_cm;
   Fl_Button *radbut_area_reso_fix_pixel;
