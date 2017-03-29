@@ -225,6 +225,7 @@ A3
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
 */
+/*
 std::cout << __FILE__ << " " << __LINE__ << "\n"
 << " px=" << this->_gli_rasterpos_x
 << " py=" << this->_gli_rasterpos_y
@@ -235,6 +236,7 @@ std::cout << __FILE__ << " " << __LINE__ << "\n"
 << " zm=" << this->_d_zoom
 << " wxh=" << this->_glsi_width * this->_glsi_height
 << std::endl;
+*/
 
 	//glWindowPos2d();
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
