@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip> // std::setprecision(std::numeric_limits<double>::max_digits10)
 #include "tw_win_l2_dss.h"
 
 int tw_win_l2_dss::cap_get_dp_x_native_resolution( double *dp_x_native_res )
@@ -43,16 +44,26 @@ int tw_win_l2_dss::cap_get_dp_physical_height( double *dp_height )
 		 ICAP_PHYSICALHEIGHT,
 		"ICAP_PHYSICALHEIGHT" );
 
-	if (43.18 < *dp_height)
+	/*
+	EPSON Scan v5.3.1.4でICAP_PHYSICALHEIGHTが254を返す問題の対処
+	EPSON Scan v5.3.1.5で43.180007934570313を返すようになった
+	*/
+	if (43.18001 < *dp_height)
 	{
 		std::cout
 			<< "Warning"
 			<< " " << __FILE__
 			<< " " << __FUNCTION__
-			<< " " << __LINE__
-			<< " physical height=" << *dp_height;
+			<< " line=" << __LINE__
+			<< " physical_height="
+	<< std::setprecision(std::numeric_limits<double>::max_digits10)
+			<< *dp_height;
 		*dp_height = 43.18;
-		std::cout << "->" << *dp_height << std::endl;
+		std::cout
+			<< "->"
+	<< std::setprecision(std::numeric_limits<double>::max_digits10)
+			<< *dp_height
+			<< std::endl;
 	}
 
 	return ret;

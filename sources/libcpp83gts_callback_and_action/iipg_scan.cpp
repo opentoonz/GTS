@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip> // std::setprecision(std::numeric_limits<double>::max_digits10)
 #include <string>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
@@ -37,6 +38,7 @@ int gts_master::iipg_scan_open_setup_unit_get_spec_( void )
 	}
 std::cout
 	<< "Scanner Native Resolution\n" /* ハードウェア自体の解像度 */
+	<< std::setprecision(std::numeric_limits<double>::max_digits10)
 	<< " X=" << this->cl_iip_scan.d_x_native_resolution()
 	<< " Y=" << this->cl_iip_scan.d_y_native_resolution() << "\n"
 	<< "Scanner Physical Size\n" /* 物理的大きさ */
@@ -55,6 +57,7 @@ std::cout
 	);
 std::cout
 	<< "Scanner Physical Size Rotated\n"
+	<< std::setprecision(std::numeric_limits<double>::max_digits10)
 	<< " W=" << d_maxcm_w
 	<< " H=" << d_maxcm_h
 	<< std::endl;

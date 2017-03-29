@@ -1005,7 +1005,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 
 	/* Scan and SaveのEnd/Endless指定がない時はStart...End指定にする */
-	if (!scan_num_continue_type_sw) {
+	if (!scan_num_continue_type_sw && this->load_scan_and_save_sw_) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
 	 	"End" );
 	}

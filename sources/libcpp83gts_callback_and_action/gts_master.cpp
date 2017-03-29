@@ -160,6 +160,7 @@ int gts_master::exec( const char *comm )
 		cl_gts_gui.choice_input_num_form_separator->add(names[ii]);
 	}
 
+#if 0
 	/* gts_install_setup.txtによる初期設定01 : 各ブラウザーのフォルダ */
 	if (!this->cl_memo_install_setup.browser_top_folder.empty()) {
 		std::string dpath(
@@ -236,6 +237,7 @@ int gts_master::exec( const char *comm )
 	  this->cl_memo_install_setup.scan_num_endless_direction
 	 );
 	}
+#endif
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	this->cl_color_trace_thickness.cb_enh_01();
@@ -251,16 +253,30 @@ int gts_master::exec( const char *comm )
 	cl_gts_gui.window_main_view->wait_for_expose();
 	Fl::flush();
 
+	/* scan_area.txtによるscan area位置とサイズを読んで設定 */
+	/*if (OK != this->cl_memo_scan_area.load( comm )) {
+		pri_funct_err_bttvr(
+	 "Error : this->cl_memo_scan_area.load() returns NG" );
+		return NG;
+	}*/
+
+	/* gts_initial_configuration.txtによる初期設定 */
+	{
+	const char *file_name = "gts_initial_configuration.txt";
+	std::string path = gts_file_path(comm, file_name);
+	if (!path.empty()) {/* ファイルあるなら設定する */
+		if (OK != this->cl_memo_config.load( path.c_str() )) {
+			pri_funct_err_bttvr(
+	 "Error : this->cl_memo_config.load() returns NG" );
+			return NG;
+		}
+	}
+	}
+
 	/* desktop.txtによる fltk window位置とサイズを復元 */
 	if (OK != this->cl_memo_desktop.load()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_memo_desktop.load() returns NG" );
-		return NG;
-	}
-	/* scan_area.txtによるscan area位置とサイズを読んで設定 */
-	if (OK != this->cl_memo_scan_area.load( comm )) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_memo_scan_area.load() returns NG" );
 		return NG;
 	}
 

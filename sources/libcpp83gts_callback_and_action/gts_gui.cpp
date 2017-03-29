@@ -413,7 +413,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Action", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Crop", 0,  (Fl_Callback*)gts_gui::cb_Crop, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview", 0x70,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Scan", 0,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Scan", 0xff0d,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Renumber...", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
@@ -5167,13 +5167,16 @@ Fl_Double_Window* gts_gui::make_window() {
   } // Fl_Double_Window* window_main_view
   { window_next_scan = new Fl_Double_Window(545, 100, "Next Scan");
     window_next_scan->user_data((void*)(this));
-    { button_rescan = new Fl_Button(60, 75, 110, 25, "Rescan");
+    { button_rescan = new Fl_Button(60, 75, 110, 25, "Rescan (Space)");
+      button_rescan->shortcut(0x20);
       button_rescan->callback((Fl_Callback*)cb_button_rescan);
     } // Fl_Button* button_rescan
-    { button_next_scan = new Fl_Button(325, 40, 120, 60, "Next");
+    { button_next_scan = new Fl_Button(325, 40, 120, 60, "Next (Enter)");
+      button_next_scan->shortcut(0xff0d);
       button_next_scan->callback((Fl_Callback*)cb_button_next_scan);
     } // Fl_Button* button_next_scan
-    { button_stop_scan = new Fl_Button(455, 75, 90, 25, "Stop");
+    { button_stop_scan = new Fl_Button(455, 75, 90, 25, "Stop (Esc)");
+      button_stop_scan->shortcut(0xff1b);
       button_stop_scan->callback((Fl_Callback*)cb_button_stop_scan);
     } // Fl_Button* button_stop_scan
     { norout_crnt_scan_level = new Fl_Output(0, 0, 545, 40);
