@@ -1,6 +1,8 @@
 #ifndef cb_area_and_rot90_h
 #define cb_area_and_rot90_h
 
+#include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Widget.H>
 #include "iip_opengl_l1edit.h" // E_SELECT_PART
 
 class cb_area_and_rot90 {
@@ -36,13 +38,19 @@ public:
 	/*
 		Area
 	*/
-	void cb_area_x_pos( void );
-	void cb_area_y_pos( void );
-	void cb_area_x_size( void );
-	void cb_area_y_size( void );
-	void cb_area_x_pixel_size( void );
-	void cb_area_y_pixel_size( void );
+	void cb_area_offset_cm_x( void );
+	void cb_area_offset_cm_y( void );
+	void cb_area_size_cm_w( void );
+	void cb_area_size_cm_h( void );
+	void cb_area_size_pixel_w( void );
+	void cb_area_size_pixel_h( void );
 	void cb_area_reso( void );
+
+	void cb_dialog_set_aspect_ratio(
+		Fl_Double_Window* flwin
+		,Fl_Widget* flout
+	);
+	void cb_ok_aspect_ratio(void);
 
 	/*
 		Rot90
@@ -106,6 +114,9 @@ private:
 	void getset_y_size_from_y_pixel_( void );
 
 	const bool check_dpi_or_size_from_pixel_( void );
+
+	void cb_valinp_area_aspect_ratio_w_( void );
+	void cb_valinp_area_aspect_ratio_h_( void );
 };
 
 //--------------------

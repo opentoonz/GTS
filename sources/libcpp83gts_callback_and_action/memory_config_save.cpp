@@ -62,14 +62,15 @@ void memory_config::save_head_( std::ofstream& ofs )
 
 	const char* un = ptbl_get_cp_username();
 	if (un == nullptr) { un = "unknown"; }
-	ofs << "# username  : " << un << "\n\n";
+	ofs << "# username  : " << un << "\n";
 
 	const char* hn = ptbl_get_cp_hostname();
 	if (hn == nullptr) { hn = "unknown"; }
-	ofs << "# hostname  : " << hn << "\n\n";
+	ofs << "# hostname  : " << hn << "\n";
 }
 void memory_config::save_config_( std::ofstream& ofs )
 {
+	ofs << "\n# Config\n";
 	save_stri_( this->str_config_dir_path_
 	,cl_gts_master.cl_config.get_dir_path() ,ofs );
 	save_stri_( this->str_config_open_file_name_
@@ -79,6 +80,7 @@ void memory_config::save_config_( std::ofstream& ofs )
 }
 void memory_config::save_scan_and_save_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_scan_and_save->label() << "\n";
 	this->save_bool_( this->str_scan_filter_trace_sw_
 		, cl_gts_gui.chkbtn_scan_filter_trace_sw->value() ,ofs );
 	this->save_bool_( this->str_scan_filter_erase_dot_noise_sw_
@@ -104,6 +106,7 @@ void memory_config::save_scan_and_save_( std::ofstream& ofs )
 }
 void memory_config::save_trace_files_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_trace_files->label() << "\n";
 	save_stri_( this->str_trace_open_dir_path_
 	   ,cl_gts_gui.filinp_trace_open_dir_path->value() ,ofs );
 	save_stri_( this->str_trace_open_file_head_
@@ -136,35 +139,43 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 }
 void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 {
-	save_stri_( this->str_area_select_
-	   ,cl_gts_gui.choice_area_selecter->text() ,ofs );
-	save_fl64_( this->str_area_x_pos_
-	   ,cl_gts_gui.valinp_area_x_pos->value() ,ofs );
-	save_fl64_( this->str_area_y_pos_
-	   ,cl_gts_gui.valinp_area_y_pos->value() ,ofs );
-	save_stri_( this->str_area_aspect_ratio_select_
-	   ,cl_gts_gui.choice_area_aspect_ratio_selecter->text() ,ofs);
-	save_fl64_( this->str_area_x_size_
-	   ,cl_gts_gui.valinp_area_x_size->value() ,ofs );
-	save_fl64_( this->str_area_y_size_
-	   ,cl_gts_gui.valinp_area_y_size->value() ,ofs );
-	save_fl64_( this->str_area_x_pixel_
-	   ,cl_gts_gui.valinp_area_x_pixel->value() ,ofs );
-	save_fl64_( this->str_area_y_pixel_
-	   ,cl_gts_gui.valinp_area_y_pixel->value() ,ofs );
+	ofs << "\n# " <<  cl_gts_gui.window_area_and_rot90->label() << "\n";
+//	save_stri_( this->str_area_select_
+//	   ,cl_gts_gui.choice_area_selecter->text() ,ofs );
+	save_fl64_( this->str_area_offset_cm_x_
+	   ,cl_gts_gui.valinp_area_offset_cm_x->value() ,ofs );
+	save_fl64_( this->str_area_offset_cm_y_
+	   ,cl_gts_gui.valinp_area_offset_cm_y->value() ,ofs );
+//	save_stri_( this->str_area_aspect_ratio_select_
+//	   ,cl_gts_gui.choice_area_aspect_ratio_selecter->text() ,ofs);
+	save_fl64_( this->str_area_size_cm_w_
+	   ,cl_gts_gui.valinp_area_size_cm_w->value() ,ofs );
+	save_fl64_( this->str_area_size_cm_h_
+	   ,cl_gts_gui.valinp_area_size_cm_h->value() ,ofs );
+	save_fl64_( this->str_area_size_pixel_w_
+	   ,cl_gts_gui.valinp_area_size_pixel_w->value() ,ofs );
+	save_fl64_( this->str_area_size_pixel_h_
+	   ,cl_gts_gui.valinp_area_size_pixel_h->value() ,ofs );
 	save_fl64_( this->str_area_resolution_dpi_
 	   ,cl_gts_gui.valinp_area_reso->value() ,ofs );
-	save_stri_( this->str_rotate_per_90_
+	save_fl64_( this->str_area_aspect_ratio_w_
+	   ,cl_gts_gui.valinp_area_aspect_ratio_w->value() ,ofs );
+	save_fl64_( this->str_area_aspect_ratio_h_
+	   ,cl_gts_gui.valinp_area_aspect_ratio_h->value() ,ofs );
+	save_stri_( this->str_area_aspect_ratio_how_to_fix_
+	   ,cl_gts_gui.radbut_area_aspect_ratio_w->value()?"W":"H" ,ofs );
+	save_stri_( this->str_area_rotate_per_90_
 	   ,cl_gts_gui.choice_rot90->text() ,ofs );
 	save_stri_( this->str_scanner_type_
 	   ,cl_gts_gui.txtout_scanner_type->value() ,ofs );
-	save_fl64_( this->str_scanner_x_max_
-	   ,cl_gts_gui.valout_scanner_width_max->value() ,ofs );
-	save_fl64_( this->str_scanner_y_max_
-	   ,cl_gts_gui.valout_scanner_height_max->value() ,ofs );
+	save_fl64_( this->str_scanner_size_cm_w_
+	   ,cl_gts_gui.valout_scanner_size_cm_w->value() ,ofs );
+	save_fl64_( this->str_scanner_size_cm_h_
+	   ,cl_gts_gui.valout_scanner_size_cm_h->value() ,ofs );
 }
 void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_pixel_type_and_bright->label() << "\n";
 	save_stri_( this->str_pixel_type_
 	   ,cl_gts_gui.choice_pixel_type->text() ,ofs );
 
@@ -188,6 +199,8 @@ void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 void memory_config::save_trace_parameters_( std::ofstream& ofs )
 {
 	unsigned char uchar_red, uchar_gre, uchar_blu;
+
+	ofs << "\n# " <<  cl_gts_gui.window_trace_parameters->label() << "\n";
 
 	/* 01 ------------------------------------------------ */
 	this->save_bool_( this->str_color_trace_01_chk_
@@ -342,6 +355,7 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 }
 void memory_config::save_trace_batch_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_trace_batch->label() << "\n";
 	save_stri_( this->str_trace_batch_dir_
 		,cl_gts_master.cl_trace_batch.get_dir_path() ,ofs );
 
@@ -354,6 +368,7 @@ void memory_config::save_trace_batch_( std::ofstream& ofs )
 }
 void memory_config::save_number_( std::ofstream& ofs )
 {
+	ofs << "\n# " <<  cl_gts_gui.window_number->label() << "\n";
 	save_stri_( this->str_number_action_type_
 	    ,cl_gts_gui.output_number_action_type->value() ,ofs );
 

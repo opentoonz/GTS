@@ -36,38 +36,18 @@ void set_rotate_per_90_( const std::string& str1 )
 					  cl_gts_gui.choice_rot90->value()
 	);
 }
-void set_pixel_type_( const std::string& str1 )
+void set_pixel_type_( const std::string& str )
 {
-	if (isdigit(str1.c_str()[0])) {/* For Legacy Format...Delete sameday */
+	if (isdigit(str.c_str()[0])) {/* For Legacy Format...Delete sameday */
 		 cl_gts_gui.choice_pixel_type->value(
-		  std::stoi(str1) // use C++11,throw exception then error
+		  std::stoi(str) // use C++11,throw exception then error
 		 );
 	}
 	else {
-		const Fl_Menu_Item *crnt =
-			cl_gts_gui.choice_pixel_type->find_item(
-				str1.c_str() );
-		if (crnt == nullptr) { return; }
-
-		cl_gts_gui.choice_pixel_type->value( crnt );
+		cl_gts_master.cb_choice_pixel_type_title( str );
 	}
-	switch (cl_gts_gui.choice_pixel_type->value()) {
-	case 0:
-		cl_gts_gui.group_bw->show();
-		cl_gts_gui.group_grays->hide();
-		cl_gts_gui.group_rgb->hide();
-		break;
-	case 1:
-		cl_gts_gui.group_bw->hide();
-		cl_gts_gui.group_grays->show();
-		cl_gts_gui.group_rgb->hide();
-		break;
-	case 2:
-		cl_gts_gui.group_bw->hide();
-		cl_gts_gui.group_grays->hide();
-		cl_gts_gui.group_rgb->show();
-		break;
-	};
+
+	cl_gts_master.cb_choice_pixel_type_menu();
 }
 
 } // namespace -------------------------------------------------------
@@ -326,11 +306,15 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 			cl_gts_master.cl_area_and_rot90.cb_area_selecter();
 		}
 	}
-	else if ( this->str_area_x_pos_ == ke ) {
-	  cl_gts_gui.valinp_area_x_pos->value( std::stod(va) );
+	else if ((this->str_area_offset_cm_x_		 == ke)
+	||	 (this->str_area_offset_cm_x_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_offset_cm_x->value( std::stod(va) );
 	}
-	else if ( this->str_area_y_pos_ == ke ) {
-	  cl_gts_gui.valinp_area_y_pos->value( std::stod(va) );
+	else if ((this->str_area_offset_cm_y_		 == ke)
+	||	 (this->str_area_offset_cm_y_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_offset_cm_y->value( std::stod(va) );
 	}
 	else if ( this->str_area_aspect_ratio_select_ == ke) {
 		const Fl_Menu_Item *crnt =
@@ -341,22 +325,48 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
 		}
 	}
-	else if ( this->str_area_x_size_ == ke) {
-	  cl_gts_gui.valinp_area_x_size->value( std::stod(va) );
+	else if ((this->str_area_size_cm_w_		== ke)
+	||	 (this->str_area_size_cm_w_legacy2017_  == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_cm_w->value( std::stod(va) );
 	}
-	else if ( this->str_area_y_size_ == ke) {
-	  cl_gts_gui.valinp_area_y_size->value( std::stod(va) );
+	else if ((this->str_area_size_cm_h_		== ke)
+	||	 (this->str_area_size_cm_h_legacy2017_  == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_cm_h->value( std::stod(va) );
 	}
-	else if ( this->str_area_x_pixel_  == ke) {
-	  cl_gts_gui.valinp_area_x_pixel->value( std::stod(va) );
+	else if ((this->str_area_size_pixel_w_		  == ke)
+	||	 (this->str_area_size_pixel_w_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_pixel_w->value( std::stod(va) );
 	}
-	else if ( this->str_area_y_pixel_  == ke) {
-	  cl_gts_gui.valinp_area_y_pixel->value( std::stod(va) );
+	else if ((this->str_area_size_pixel_h_		  == ke)
+	||	 (this->str_area_size_pixel_h_legacy2017_ == ke)
+	) {
+	  cl_gts_gui.valinp_area_size_pixel_h->value( std::stod(va) );
 	}
 	else if ( this->str_area_resolution_dpi_ ==  ke) {
 	  cl_gts_gui.valinp_area_reso->value( std::stod(va) );
 	}
-	else if ( this->str_rotate_per_90_ == ke ) {
+	else if ( this->str_area_aspect_ratio_w_ ==  ke) {
+	  cl_gts_gui.valinp_area_aspect_ratio_w->value( std::stod(va) );
+	}
+	else if ( this->str_area_aspect_ratio_h_ ==  ke) {
+	  cl_gts_gui.valinp_area_aspect_ratio_h->value( std::stod(va) );
+	}
+	else if ( this->str_area_aspect_ratio_how_to_fix_ ==  ke) {
+	  if (va == "W") {
+	   cl_gts_gui.radbut_area_aspect_ratio_w->value(1);
+	   cl_gts_gui.radbut_area_aspect_ratio_h->value(0);
+	  } else
+	  if (va == "H") {
+	   cl_gts_gui.radbut_area_aspect_ratio_w->value(0);
+	   cl_gts_gui.radbut_area_aspect_ratio_h->value(1);
+	  }
+	}
+	else if ( (this->str_area_rotate_per_90_	    == ke)
+	||	  (this->str_area_rotate_per_90_legacy2017_ == ke)
+	) {
 			set_rotate_per_90_( va );
 	}
 
@@ -365,10 +375,10 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	/* スキャナー情報
 			this->str_scanner_type_
 			cl_gts_gui.txtout_scanner_type
-			this->str_scanner_x_max_
-			cl_gts_gui.valout_scanner_width_max
-			this->str_scanner_y_max_
-			cl_gts_gui.valout_scanner_height_max
+			this->str_scanner_size_cm_w_
+			cl_gts_gui.valout_scanner_size_cm_w
+			this->str_scanner_size_cm_h_
+			cl_gts_gui.valout_scanner_size_cm_h
 		はTWAINドライバーから取るべきなので、
 		ファイルからは設定しない
 	*/
@@ -995,7 +1005,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 
 	/* Scan and SaveのEnd/Endless指定がない時はStart...End指定にする */
-	if (!scan_num_continue_type_sw) {
+	if (!scan_num_continue_type_sw && this->load_scan_and_save_sw_) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
 	 	"End" );
 	}

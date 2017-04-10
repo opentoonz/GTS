@@ -76,7 +76,7 @@ static int argument_analyzer( int argc, char *argv[], char *cp_comm, gts_master 
 #ifdef PACKAGE_NAME
 gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
 # else
-gts_master cl_gts_master( "gts" ,"2.3.0" ,"2017-03-21" );
+gts_master cl_gts_master( "gts" ,"2.3.0" ,"2017-03-29" );
 # endif
 
 int main( int argc, char **argv )
@@ -86,7 +86,7 @@ int main( int argc, char **argv )
 
 	/* 初期化設定を設定ファイルから行なう */
 	//setup_gts_( argv[0] );
-	cl_gts_master.cl_memo_install_setup.load( argv[0] );
+	//cl_gts_master.cl_memo_install_setup.load( argv[0] );
 
 	/* 引数による設定や実行 */
 	if (OK != argument_analyzer(

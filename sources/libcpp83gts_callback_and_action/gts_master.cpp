@@ -101,13 +101,11 @@ int gts_master::exec( const char *comm )
 		pri_funct_msg_ttvr( "gts_master::exec()" );
 	}
 
-	/*---------- パラメータ初期設定 ----------*/
+	/*
+		パラメータ初期設定
+	*/
 
-	/* 画像R/W書式(拡張子)の初期設定
-		cl_scan_and_save.ext_save
-		cl_trace_files.ext_open
-		cl_trace_files.ext_save
-	*/ 
+	/* 画像R/W書式(拡張子)の初期設定 */ 
 	this->cl_scan_and_save.ext_save.set_filter("TIFF",".tif");/*0番目 */
 	this->cl_scan_and_save.ext_save.set_filter( "TGA",".tga");/*1番目 */
 	this->cl_trace_files.ext_open.set_filter("TIFF",".tif");/* 0番目 */
@@ -115,42 +113,27 @@ int gts_master::exec( const char *comm )
 	this->cl_trace_files.ext_save.set_filter("TIFF",".tif");/* 0番目 */
 	this->cl_trace_files.ext_save.set_filter( "TGA",".tga");/* 1番目 */
 
-	/*---------- GUI(fltk)生成 ----------*/
+	/*
+		GUI(fltk)生成
+	*/
 
 	/***Fl::add_handler(handle_to_steel_shortcut_event);***/
 	(void)cl_gts_gui.make_window();
 
-	/*---------- GUI初期設定 ----------*/
+	/*
+		GUI(fltk)初期設定
+	*/
 
 	/* color trace enhancement */
 	this->cl_color_trace_enhancement.src_init_histogram_window();
-
-	/* 回転値(システム設定値) */
-	if (!this->cl_memo_install_setup.area_rot90.empty()) {
-		const int idx = cl_gts_gui.choice_rot90->find_index(
-			this->cl_memo_install_setup.area_rot90.c_str()
-		);
-		if (0 <= idx) {
-			cl_gts_gui.choice_rot90->value(idx);
-			this->cl_area_and_rot90.set_previous_choice_rot90(
-						  cl_gts_gui.choice_rot90->value()
-			);
-		}
-	}
 
 	/* DPIの値をユーザー入力しキャンセルした時の値の復元用記憶 */
 	this->cl_area_and_rot90.set_dpi_before_change(
 		cl_gts_gui.valinp_area_reso->value()
 	);
 
-	/* Pixel Type */
-	cl_gts_gui.choice_pixel_type->value(2); // Initial is RGB
-	cl_gts_master.cb_choice_pixel_type();
-
 	/* short cut key設定 */
 	this->cl_memo_short_cut_key.set_shortcut();
-
-	/* fltk設定各種 --- ここまで */
 
 	/* 画像書式種類(拡張子)設定 */
 	for(int ii=0;ii<this->cl_scan_and_save.ext_save.size() ;++ii) {
@@ -169,27 +152,19 @@ int gts_master::exec( const char *comm )
 		);
 	}
 
-	/* 画像番号書式設定 */
-/*	cl_gts_gui.strinp_scan_save_number_format->value(".0000");
-	cl_gts_gui.strinp_trace_open_number_format->value(".0000");
-	cl_gts_gui.strinp_trace_save_number_format->value(".0000");
-*/
-
-	cl_gts_gui.output_scan_save_number_format->value(".0000");
-	cl_gts_gui.output_trace_save_number_format->value(".0000");
-
+	/* Save File Number Formatについての選択リスト設定 */
 	const char** names =
 		ids::path::get_separator_names_for_level_from_files();
-
 	cl_gts_gui.choice_input_num_form_separator->add("Nothing");
 	for (int ii=0; names[ii] != nullptr ;++ii) {
 		cl_gts_gui.choice_input_num_form_separator->add(names[ii]);
 	}
 
-	/* install_setup.txtによるフォルダ設定 */
-	if (!this->cl_memo_install_setup.browser_directory_path.empty()) {
+#if 0
+	/* gts_install_setup.txtによる初期設定01 : 各ブラウザーのフォルダ */
+	if (!this->cl_memo_install_setup.browser_top_folder.empty()) {
 		std::string dpath(
-	     this->cl_memo_install_setup.browser_directory_path
+	     this->cl_memo_install_setup.browser_top_folder
 		);
 		cl_gts_gui.filinp_scan_save_dir_path->value( dpath.c_str());
 		cl_gts_gui.filinp_trace_open_dir_path->value(dpath.c_str());
@@ -198,7 +173,16 @@ int gts_master::exec( const char *comm )
 		cl_gts_master.cl_config.set_dir_path(        dpath.c_str());
 	}
 
-	/* install_setup.txtによる画像書式設定 */
+	/* gts_install_setup.txtによる初期設定02 : 画像番号書式設定 */
+	if (!this->cl_memo_install_setup.save_number_format.empty()) {
+		std::string fmt(
+	     this->cl_memo_install_setup.save_number_format
+		);
+	 cl_gts_gui.output_scan_save_number_format->value(  fmt.c_str() );
+	 cl_gts_gui.output_trace_save_number_format->value( fmt.c_str() );
+	}
+
+	/* gts_install_setup.txtによる初期設定03 : 画像書式 */
 	if (!this->cl_memo_install_setup.image_file_format.empty()) {
 		const std::string fform(
 	     this->cl_memo_install_setup.image_file_format
@@ -221,6 +205,39 @@ int gts_master::exec( const char *comm )
 			cl_gts_gui.choice_trace_save_image_format->redraw();
 		}
 	}
+	/* gts_install_setup.txtによる初期設定04 : DPI */
+	if (!this->cl_memo_install_setup.area_resolution_dpi.empty()) {
+		const double dpi = std::stod(
+			this->cl_memo_install_setup.area_resolution_dpi);
+		cl_gts_gui.valinp_area_reso->value(dpi);
+	}
+
+	/* gts_install_setup.txtによる初期設定05 : 回転値 */
+	if (!this->cl_memo_install_setup.area_rotate_per_90.empty()) {
+		const int idx = cl_gts_gui.choice_rot90->find_index(
+		 this->cl_memo_install_setup.area_rotate_per_90.c_str()
+		);
+		if (0 <= idx) {
+			cl_gts_gui.choice_rot90->value(idx);
+			this->cl_area_and_rot90.set_previous_choice_rot90(
+						  cl_gts_gui.choice_rot90->value()
+			);
+		}
+	}
+	/* gts_install_setup.txtによる初期設定06 : Pixel Type */
+	if (!this->cl_memo_install_setup.pixel_type.empty()) {
+		this->cb_choice_pixel_type_title( 
+			this->cl_memo_install_setup.pixel_type
+		);
+		this->cb_choice_pixel_type_menu();
+	}
+	/* gts_install_setup.txtによる初期設定07 : 連番の連続方法 */
+	if (!this->cl_memo_install_setup.scan_num_endless_direction.empty()) {
+	 this->cl_scan_and_save.cb_choice_and_num_continue_type(
+	  this->cl_memo_install_setup.scan_num_endless_direction
+	 );
+	}
+#endif
 
 	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
 	this->cl_color_trace_thickness.cb_enh_01();
@@ -236,16 +253,30 @@ int gts_master::exec( const char *comm )
 	cl_gts_gui.window_main_view->wait_for_expose();
 	Fl::flush();
 
+	/* scan_area.txtによるscan area位置とサイズを読んで設定 */
+	/*if (OK != this->cl_memo_scan_area.load( comm )) {
+		pri_funct_err_bttvr(
+	 "Error : this->cl_memo_scan_area.load() returns NG" );
+		return NG;
+	}*/
+
+	/* gts_initial_configuration.txtによる初期設定 */
+	{
+	const char *file_name = "gts_initial_configuration.txt";
+	std::string path = gts_file_path(comm, file_name);
+	if (!path.empty()) {/* ファイルあるなら設定する */
+		if (OK != this->cl_memo_config.load( path.c_str() )) {
+			pri_funct_err_bttvr(
+	 "Error : this->cl_memo_config.load() returns NG" );
+			return NG;
+		}
+	}
+	}
+
 	/* desktop.txtによる fltk window位置とサイズを復元 */
 	if (OK != this->cl_memo_desktop.load()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_memo_desktop.load() returns NG" );
-		return NG;
-	}
-	/* scan_area.txtによるscan area位置とサイズを読んで設定 */
-	if (OK != this->cl_memo_scan_area.load( comm )) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_memo_scan_area.load() returns NG" );
 		return NG;
 	}
 

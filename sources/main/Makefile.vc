@@ -61,6 +61,8 @@ DPATH_BINA = ..\..\x86_release
 DPATH_REDIST = "%VCINSTALLDIR%"redist\x86\Microsoft.VC120.CRT
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
 #---action--------------------------------------------------------------
+#	copy _gts-scan_area.txt $(DPATH_BINA)
+#	copy gts_install_setup.txt $(DPATH_BINA)
 all: make_obj_dir $(TARG) inst
 make_obj_dir:
 	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
@@ -75,8 +77,7 @@ $(TARG):
 	del $(OBJS)
 inst:
 	move $(TARG) $(DPATH_BINA)
-	copy _gts-scan_area.txt $(DPATH_BINA)
-	copy gts_install_setup.txt $(DPATH_BINA)
+	copy gts_initial_configuration.txt $(DPATH_BINA)
 	copy $(DPATH_REDIST)\msvcp120.dll $(DPATH_BINA)
 	copy $(DPATH_REDIST)\msvcr120.dll $(DPATH_BINA)
 inst_con:

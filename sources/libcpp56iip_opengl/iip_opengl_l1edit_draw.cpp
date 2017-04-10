@@ -221,27 +221,26 @@ A3
  500dpi 1/8倍以下の縮小で表示しない
  600dpi 1/4倍以下の縮小で表示しない
 */
+/*
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
+*/
 /*
-std::cout << __FILE__ << " " << __LINE__
+std::cout << __FILE__ << " " << __LINE__ << "\n"
 << " px=" << this->_gli_rasterpos_x
 << " py=" << this->_gli_rasterpos_y
-<< std::endl;
-
-std::cout << __FILE__ << " " << __LINE__
-<< " zm=" << this->_d_zoom
-<< std::endl;
-
-std::cout << __FILE__ << " " << __LINE__
+<< " ox=" << this->_gli_skip_pixels
+<< " oy=" << this->_gli_skip_rows
 << " wi=" << this->_glsi_width
 << " he=" << this->_glsi_height
-<< " fmt=" << this->_gle_format
-<< " typ=" << this->_gle_type
+<< " zm=" << this->_d_zoom
+<< " wxh=" << this->_glsi_width * this->_glsi_height
 << std::endl;
-	glRasterPos2d(	(double)(this->_gli_rasterpos_x)
-			,(double)(this->_gli_rasterpos_y) );
 */
+
+	//glWindowPos2d();
+	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
+			(double)(this->_gli_rasterpos_y) - 0.49999 );
 
 	/* 拡大縮小 */
 	glPixelZoom( (GLfloat)this->_d_zoom, (GLfloat)this->_d_zoom );

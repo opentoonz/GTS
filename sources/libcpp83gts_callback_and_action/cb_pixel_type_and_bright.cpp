@@ -5,7 +5,16 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-void gts_master::cb_choice_pixel_type( void )
+void gts_master::cb_choice_pixel_type_title( const std::string& str )
+{
+	const Fl_Menu_Item *crnt = cl_gts_gui.choice_pixel_type->find_item(
+		str.c_str()
+	);
+	if (crnt != nullptr) {
+		cl_gts_gui.choice_pixel_type->value( crnt ); 
+	}
+}
+void gts_master::cb_choice_pixel_type_menu( void )
 {
 	switch (cl_gts_gui.choice_pixel_type->value()) {
 	case 0:

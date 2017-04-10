@@ -116,30 +116,52 @@ public:
 
 	,str_area_select_(
 	    "area_select")
-	,str_area_x_pos_(
-	    "area_x_pos")
-	,str_area_y_pos_(
-	    "area_y_pos")
+	,str_area_offset_cm_x_(
+	    "area_offset_cm_x")
+		,str_area_offset_cm_x_legacy2017_(
+		    "area_x_pos")
+	,str_area_offset_cm_y_(
+	    "area_offset_cm_y")
+		,str_area_offset_cm_y_legacy2017_(
+		    "area_y_pos")
 	,str_area_aspect_ratio_select_(
 	    "area_aspect_ratio_select")
-	,str_area_x_size_(
-	    "area_x_size")
-	,str_area_y_size_(
-	    "area_y_size")
-	,str_area_x_pixel_(
-	    "area_x_pixel")
-	,str_area_y_pixel_(
-	    "area_y_pixel")
+	,str_area_size_cm_w_(
+	    "area_size_cm_w")
+		,str_area_size_cm_w_legacy2017_(
+		    "area_x_size")
+	,str_area_size_cm_h_(
+	    "area_size_cm_h")
+		,str_area_size_cm_h_legacy2017_(
+		    "area_y_size")
+	,str_area_size_pixel_w_(
+	    "area_size_pixel_w")
+		,str_area_size_pixel_w_legacy2017_(
+		    "area_x_pixel")
+	,str_area_size_pixel_h_(
+	    "area_size_pixel_h")
+		,str_area_size_pixel_h_legacy2017_(
+		    "area_y_pixel")
 	,str_area_resolution_dpi_(
 	    "area_resolution_dpi")
-	,str_rotate_per_90_(
-	    "rotate_per_90")
+	,str_area_aspect_ratio_w_(
+	    "area_aspect_ratio_w")
+	,str_area_aspect_ratio_h_(
+	    "area_aspect_ratio_h")
+	,str_area_aspect_ratio_how_to_fix_(
+	    "area_aspect_ratio_how_to_fix")
+	,str_area_rotate_per_90_(
+	    "area_rotate_per_90")
+		,str_area_rotate_per_90_legacy2017_(
+		    "rotate_per_90")
 	,str_scanner_type_(
 	    "scanner_type")
-	,str_scanner_x_max_(
-	    "scanner_x_max")
-	,str_scanner_y_max_(
-	    "scanner_y_max")
+	,str_scanner_size_cm_w_(
+	    //"scanner_x_max")
+	    "scanner_size_cm_w")
+	,str_scanner_size_cm_h_(
+	    //"scanner_y_max")
+	    "scanner_size_cm_h")
 
 	,str_pixel_type_(
 	    "pixel_type")
@@ -365,18 +387,28 @@ private:
 	const char* str_trace_save_image_format_;
 
 	const char* str_area_select_;
-	const char* str_area_x_pos_;
-	const char* str_area_y_pos_;
+	const char* str_area_offset_cm_x_;
+	const char* str_area_offset_cm_x_legacy2017_;
+	const char* str_area_offset_cm_y_;
+	const char* str_area_offset_cm_y_legacy2017_;
 	const char* str_area_aspect_ratio_select_;
-	const char* str_area_x_size_;
-	const char* str_area_y_size_;
-	const char* str_area_x_pixel_;
-	const char* str_area_y_pixel_;
+	const char* str_area_size_cm_w_;
+	const char* str_area_size_cm_w_legacy2017_;
+	const char* str_area_size_cm_h_;
+	const char* str_area_size_cm_h_legacy2017_;
+	const char* str_area_size_pixel_w_;
+	const char* str_area_size_pixel_w_legacy2017_;
+	const char* str_area_size_pixel_h_;
+	const char* str_area_size_pixel_h_legacy2017_;
 	const char* str_area_resolution_dpi_;
-	const char* str_rotate_per_90_;
+	const char* str_area_aspect_ratio_w_;
+	const char* str_area_aspect_ratio_h_;
+	const char* str_area_aspect_ratio_how_to_fix_;
+	const char* str_area_rotate_per_90_;
+	const char* str_area_rotate_per_90_legacy2017_;
 	const char* str_scanner_type_;
-	const char* str_scanner_x_max_;
-	const char* str_scanner_y_max_;
+	const char* str_scanner_size_cm_w_;
+	const char* str_scanner_size_cm_h_;
 
 	const char* str_pixel_type_;
 	const char* str_bw_threshold_;
