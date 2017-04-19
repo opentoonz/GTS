@@ -609,8 +609,13 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 			- cl_gts_gui.valinp_area_offset_cm_y->value()
 			, cl_gts_gui.valinp_area_size_pixel_h->value()
 		);
+		/* std::max()はC++の関数だが、Windowsでは、
+		windows.hのmax()マクロが先にきいてしまいエラーとなる。
+		そのため、std::max<double>()としてマクロ置換を避ける
+		2017-4-19
+		*/
 		cl_gts_gui.valinp_area_reso->value(
-			rint( std::max( x_dpi , y_dpi ) )
+			rint( std::max<double>( x_dpi , y_dpi ) )
 		);
 		this->getset_x_size_from_x_pixel_();
 		this->getset_y_size_from_y_pixel_();
