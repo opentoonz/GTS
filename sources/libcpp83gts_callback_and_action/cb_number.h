@@ -124,7 +124,7 @@ private:
 
 	/* Scan/Traceどちらかから、保存ファイルヘッド名を、
 	Numberウインドウに表示 */
-	const bool cb_number::get_file_head_name_( void );
+	const bool get_file_head_name_( void );
 
 	const std::string get_save_head_( void );
 	const std::string get_type_(void);

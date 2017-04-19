@@ -1,4 +1,5 @@
 #include <iostream> // std::cout
+#include <algorithm> // std::max(-)
 #include <cmath> // rint(-)
 #include <FL/fl_ask.H> // fl_alert()
 #include "ids_path_level_from_files.h"
@@ -609,7 +610,7 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 			, cl_gts_gui.valinp_area_size_pixel_h->value()
 		);
 		cl_gts_gui.valinp_area_reso->value(
-			rint( max( x_dpi , y_dpi ) )
+			rint( std::max( x_dpi , y_dpi ) )
 		);
 		this->getset_x_size_from_x_pixel_();
 		this->getset_y_size_from_y_pixel_();

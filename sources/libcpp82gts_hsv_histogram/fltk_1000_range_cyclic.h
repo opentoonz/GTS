@@ -49,7 +49,7 @@ private:
 	E_MIN_MAX_SELECT_TYPE _e_select_type;
 	long _l_x_drag_start;
 
-	void _draw_term_mark( long l_x, long l_y, char *cp_name );
+	void _draw_term_mark( long l_x, long l_y, const char *cp_name );
 	void _draw_cent_mark( long l_x, long l_y );
 	void _draw_all_mark( void );
 
