@@ -46,6 +46,14 @@ const std::vector<std::string> fltk_native_browse_open_files(
 	,const int filter_current
 );
 
+/*
+フォルダーを選択するためのブラウザーを開く
+*/
+const std::vector<std::string> fltk_native_browse_directory(
+	const std::string& title
+	,const std::string& dpath
+);
+
 } // path
 } // igs
 

@@ -11,8 +11,8 @@
 #include <FL/Fl_Output.H>
 #include "cb_area_and_rot90.h"
 #include <FL/Fl_Group.H>
-#include <FL/Fl_Choice.H>
 #include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Choice.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Value_Output.H>
 #include "cb_pixel_type_and_bright.h"
@@ -51,10 +51,10 @@ private:
   static void cb_Save1(Fl_Menu_*, void*);
   inline void cb_Quit_i(Fl_Menu_*, void*);
   static void cb_Quit(Fl_Menu_*, void*);
-  inline void cb_Crop_i(Fl_Menu_*, void*);
-  static void cb_Crop(Fl_Menu_*, void*);
-  inline void cb_Preview_i(Fl_Menu_*, void*);
-  static void cb_Preview(Fl_Menu_*, void*);
+  inline void cb_Scan_i(Fl_Menu_*, void*);
+  static void cb_Scan(Fl_Menu_*, void*);
+  inline void cb_Scan1_i(Fl_Menu_*, void*);
+  static void cb_Scan1(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_start_scan;
 private:
@@ -217,8 +217,19 @@ public:
 private:
   inline void cb_button_area_and_rot90_i(fltk_button_area_and_rot90*, void*);
   static void cb_button_area_and_rot90(fltk_button_area_and_rot90*, void*);
-  inline void cb_Crop1_i(Fl_Button*, void*);
-  static void cb_Crop1(Fl_Button*, void*);
+public:
+  Fl_Value_Input *valinp_area_reso;
+private:
+  inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
+  static void cb_valinp_area_reso(Fl_Value_Input*, void*);
+public:
+  Fl_Choice *choice_rot90;
+private:
+  inline void cb_choice_rot90_i(Fl_Choice*, void*);
+  static void cb_choice_rot90(Fl_Choice*, void*);
+  static Fl_Menu_Item menu_choice_rot90[];
+  inline void cb_Scan2_i(Fl_Button*, void*);
+  static void cb_Scan2(Fl_Button*, void*);
 public:
   Fl_Choice *choice_area_selecter;
 private:
@@ -269,17 +280,6 @@ private:
   inline void cb_Set2_i(Fl_Button*, void*);
   static void cb_Set2(Fl_Button*, void*);
 public:
-  Fl_Value_Input *valinp_area_reso;
-private:
-  inline void cb_valinp_area_reso_i(Fl_Value_Input*, void*);
-  static void cb_valinp_area_reso(Fl_Value_Input*, void*);
-public:
-  Fl_Choice *choice_rot90;
-private:
-  inline void cb_choice_rot90_i(Fl_Choice*, void*);
-  static void cb_choice_rot90(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_rot90[];
-public:
   Fl_Output *txtout_scanner_type;
   Fl_Value_Output *valout_scanner_size_cm_w;
   Fl_Value_Output *valout_scanner_size_cm_h;
@@ -292,8 +292,6 @@ public:
 private:
   inline void cb_button_pixel_type_and_bright_i(fltk_button_pixel_type_and_bright*, void*);
   static void cb_button_pixel_type_and_bright(fltk_button_pixel_type_and_bright*, void*);
-  inline void cb_Preview1_i(Fl_Button*, void*);
-  static void cb_Preview1(Fl_Button*, void*);
 public:
   Fl_Choice *choice_pixel_type;
 private:
@@ -373,13 +371,13 @@ public:
 private:
   inline void cb_valinp_rgb_gamma_i(Fl_Value_Input*, void*);
   static void cb_valinp_rgb_gamma(Fl_Value_Input*, void*);
+  inline void cb_Scan3_i(Fl_Button*, void*);
+  static void cb_Scan3(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_scan_and_save;
 private:
   inline void cb_window_scan_and_save_i(Fl_Double_Window*, void*);
   static void cb_window_scan_and_save(Fl_Double_Window*, void*);
-  inline void cb_Scan_i(Fl_Button*, void*);
-  static void cb_Scan(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_scan_filter_trace_sw;
 private:
@@ -426,13 +424,13 @@ public:
 private:
   inline void cb_Set3_i(Fl_Button*, void*);
   static void cb_Set3(Fl_Button*, void*);
+  inline void cb_Scan4_i(Fl_Button*, void*);
+  static void cb_Scan4(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_files;
 private:
   inline void cb_window_trace_files_i(Fl_Double_Window*, void*);
   static void cb_window_trace_files(Fl_Double_Window*, void*);
-  inline void cb_Trace1_i(Fl_Button*, void*);
-  static void cb_Trace1(Fl_Button*, void*);
 public:
   Fl_File_Input *filinp_trace_open_dir_path;
 private:
@@ -447,12 +445,6 @@ private:
   static void cb_Rename1(Fl_Button*, void*);
   inline void cb_Renumber1_i(Fl_Button*, void*);
   static void cb_Renumber1(Fl_Button*, void*);
-public:
-  Fl_Value_Output *valout_trace_num_start;
-  Fl_Value_Output *valout_trace_num_end;
-private:
-  inline void cb_Set4_i(Fl_Button*, void*);
-  static void cb_Set4(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_filter_trace_sw;
 private:
@@ -485,6 +477,14 @@ public:
 private:
   inline void cb_choice_trace_save_image_format_i(Fl_Choice*, void*);
   static void cb_choice_trace_save_image_format(Fl_Choice*, void*);
+public:
+  Fl_Value_Output *valout_trace_num_start;
+  Fl_Value_Output *valout_trace_num_end;
+private:
+  inline void cb_Set4_i(Fl_Button*, void*);
+  static void cb_Set4(Fl_Button*, void*);
+  inline void cb_Trace1_i(Fl_Button*, void*);
+  static void cb_Trace1(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_number;
 private:

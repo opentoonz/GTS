@@ -234,17 +234,10 @@ int cb_scan_and_save::next_scan_and_save_( void )
 /* ファイルブラウズ/フォルダーブラウズ */
 void cb_scan_and_save::cb_browse_save_folder( void )
 {
-	/* NativeブラウザーOpenで開く */
-	const std::string filepath = ids::path::fltk_native_browse_save(
+	/* Nativeフォルダーブラウザー開く */
+	const std::string filepath =ids::path::fltk_native_browse_directory(
 		"Set Saving Folder for Scan"
 		,cl_gts_gui.filinp_scan_save_dir_path->value()
-
-	 	,this->get_save_name_(
-		 static_cast<int>(cl_gts_gui.valinp_scan_num_start->value())
-	 	) + "_" /* 保存を聞いてこないよう存在しない名前にする */
-
-		,this->ext_save.get_native_filters()
-		,cl_gts_gui.choice_scan_save_image_format->value()
 	).at(0);
 
 	/* Cancel */
@@ -252,12 +245,7 @@ void cb_scan_and_save::cb_browse_save_folder( void )
 		return;
 	}
 
-	/* Save設定 */
-	std::string dpath ,fname;
-	ids::path::from_fpath_to_dpath_fname(
-		filepath ,dpath ,fname
-	);
-	cl_gts_gui.filinp_scan_save_dir_path->value(dpath.c_str());
+	cl_gts_gui.filinp_scan_save_dir_path->value(filepath.c_str());
 }
 
 //------------------------------------------------------------
