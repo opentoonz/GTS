@@ -1,3 +1,4 @@
+#include <iostream>	//std::cout
 #include <cstdlib>
 #include <algorithm>	// std::sort()
 #include <sstream>
@@ -21,6 +22,7 @@ void fltk_opengl::draw()
 	*/
 	/* reshape(windowサイズの変更か再表示の場合) */
 	if (!(this->valid())) {
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 		/* Fl_Gl_Window widget,
 		The default mode is FL_RGB|FL_DOUBLE|FL_DEPTH. */
 
@@ -35,27 +37,35 @@ void fltk_opengl::draw()
 
 		/* 画像データがあるとき */
 		if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 			cl_gts_master.cl_ogl_view.reshape_opengl(
 				(long)(this->w()) , (long)(this->h())
 			);
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 			cl_gts_master.set_scrollbar();
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 		}
 		/* 画像データがないとき */
 		else {
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 			cl_gts_master.cl_ogl_view.clear_opengl(
 				(long)(this->w()) , (long)(this->h())
 			);
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 		}
 	}
 
 	if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 		/* subエリアのカラートレス処理
 		と(指定にあれば)ドットノイズ除去 */
 		cl_gts_master.color_trace_in_view_area();
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 		/* OpenGL全表示 */
 		cl_gts_master.cl_ogl_view.draw_opengl();
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	}
 }
 

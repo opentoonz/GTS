@@ -140,14 +140,18 @@ void iip_opengl_l1edit::reshape_opengl( long l_xp, long l_yp, long l_xs, long l_
 
 void iip_opengl_l1edit::draw_opengl( void )
 {
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	/* 画像データがないと表示しない */
 	if (NULL == this->get_vp_canvas()) { return; }
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 	/* ここでは画面クリア
 		"glClear(GL_COLOR_BUFFER_BIT);"
 	をしないが、必ず必要なので注意 */
 	this->_draw_image();		/* 画像表示 */
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	this->_draw_crop();		/* 画像枠表示 */
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 	/* ここではOpenGLのハキダシ
 		"glFlush();"
@@ -159,12 +163,8 @@ void iip_opengl_l1edit::draw_opengl( void )
 
 void iip_opengl_l1edit::_draw_image( void )
 {
-	GLvoid	*vp_image;
-
-	vp_image = this->get_vp_canvas();
-
 	/* 画像データがないときは(以下の)なにもしない */
-	if (NULL == vp_image) { return; }
+	if (NULL == this->get_vp_canvas()) { return; }
 
 	if (ON == this->get_i_mv_sw()) {
 		pri_funct_msg_ttvr(
@@ -225,8 +225,8 @@ A3
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
 */
-/*
-std::cout << __FILE__ << " " << __LINE__ << "\n"
+std::cout
+<< __FILE__ << " " << __LINE__
 << " px=" << this->_gli_rasterpos_x
 << " py=" << this->_gli_rasterpos_y
 << " ox=" << this->_gli_skip_pixels
@@ -234,17 +234,17 @@ std::cout << __FILE__ << " " << __LINE__ << "\n"
 << " wi=" << this->_glsi_width
 << " he=" << this->_glsi_height
 << " zm=" << this->_d_zoom
-<< " wxh=" << this->_glsi_width * this->_glsi_height
+//<< " wxh=" << this->_glsi_width * this->_glsi_height
 << std::endl;
-*/
 
 	//glWindowPos2d();
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
 
-	/* 拡大縮小 */
+/*
 	glPixelZoom( (GLfloat)this->_d_zoom, (GLfloat)this->_d_zoom );
 
+	GLvoid	*vp_image = this->get_vp_canvas();
 	if (3L <= this->get_l_channels()) {
 		switch (this->_i_disp_ch) {
 		case CH_RED:
@@ -266,6 +266,22 @@ std::cout << __FILE__ << " " << __LINE__ << "\n"
 		this->_gle_format,
 		this->_gle_type,
 		(const GLvoid *)(vp_image)
+	);
+*/
+
+	if (this->_d_zoom < 1.0) {
+		glPixelZoom( 1.0 ,1.0 );
+	} else
+	{
+		glPixelZoom((GLfloat)this->_d_zoom ,(GLfloat)this->_d_zoom);
+	}
+
+	glDrawPixels(
+		this->_glsi_width
+		, this->_glsi_height
+		, this->_gle_format
+		, this->_gle_type
+		, static_cast<const GLvoid *>( this->get_vp_canvas() )
 	);
 }
 namespace {

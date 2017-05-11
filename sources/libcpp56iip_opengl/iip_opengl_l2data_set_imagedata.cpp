@@ -75,9 +75,11 @@ int iip_opengl_l2data::set_imagedata( iip_canvas *clp_parent )
 		return NG;
          }
 	 /* channel毎のメモリを表示classへ登録する */
+/* 2017-05-09 使わないためコメントアウト　あとで全体refactoringで削除する
 	 this->cl_iip_view.set_ucp_rrggbbaa(
 	  (unsigned char *)(this->cl_iip_chan.get_vp_canvas())
 	 );
+*/
 	}
 
 	/*
