@@ -411,12 +411,6 @@ void cb_trace_files::cb_browse_open_file( void )
 		return;
 	}
 
-	/* チェック：開く対象の番号リスト(ファイルの存在)確認 */
-	if (nums.empty()) {
-		fl_alert("No Numbers with OpenFileName");
-		return;
-	}
-
 	/* Scanの番号であることを表示して示す */
 	cl_gts_master.cl_number.set_type_to_trace();
 
@@ -443,8 +437,14 @@ void cb_trace_files::set_gui_for_open(
 	cl_gts_gui.choice_trace_open_image_format->value(ext_num);
 
 	/* Trace Filesウインドウ Number設定 */
-	cl_gts_gui.valout_trace_num_start->value( nums.front() );
-	cl_gts_gui.valout_trace_num_end->value( nums.back() );
+	if (nums.empty()) {
+		cl_gts_gui.valout_trace_num_start->value( 0 );
+		cl_gts_gui.valout_trace_num_end->value( 0 );
+	}
+	else {
+		cl_gts_gui.valout_trace_num_start->value( nums.front() );
+		cl_gts_gui.valout_trace_num_end->value( nums.back() );
+	}
 
 	/* Trace Filesウインドウ 即表示 */
 	cl_gts_gui.window_trace_files->flush();

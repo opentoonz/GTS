@@ -15,11 +15,13 @@ void gts_master::cb_read_and_trace_and_preview( void )
 	);
 
 	/* ...選択がない */
+#if 0
 	if (this->cl_number.get_crnt_file_num() < 1) {
 		// fl_alert("Select number!");
 /* alertは必要なら呼出元で出す */
 		return;
 	}
+#endif
 	const int crnt_file_num =
 		this->cl_number.get_crnt_file_num();
 

@@ -32,12 +32,12 @@ class gts_gui {open
           MenuItem {} {
             label {Open Image(s)...}
             callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
-            xywh {0 0 30 20} shortcut 0x4006f
+            xywh {0 0 30 20} shortcut 0x4006f divider
           }
           MenuItem {} {
             label {Set Saving Folder for Scan...}
             callback {cl_gts_master.cl_scan_and_save.cb_browse_save_folder();}
-            xywh {0 0 30 20} divider
+            xywh {0 0 30 20} hide divider
           }
           MenuItem {} {
             label {Open Config...}
@@ -100,16 +100,6 @@ cl_gts_master.cb_quit();}
           label Window open
           xywh {10 10 100 20}
         } {
-          MenuItem menite_scan_and_save {
-            label {Scan Save...}
-            callback {if (cl_gts_gui.menite_scan_and_save->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_scan_and_save->show();
-} else {
-    cl_gts_gui.window_scan_and_save->hide();
-}}
-            xywh {10 10 100 20} type Toggle shortcut 0xffbf
-          }
           MenuItem menite_area_and_rot90 {
             label {Area and Rot90...}
             callback {if (cl_gts_gui.menite_area_and_rot90->value()) {
@@ -118,7 +108,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_area_and_rot90->hide();
 }}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc0
+            xywh {5 5 100 20} type Toggle shortcut 0xffbe
           }
           MenuItem menite_pixel_type_and_bright {
             label {Pixel Type and Bright...}
@@ -128,7 +118,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_pixel_type_and_bright->hide();
 }}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc1
+            xywh {5 5 100 20} type Toggle shortcut 0xffbf
           }
           MenuItem menite_number {
             label {Number ...}
@@ -138,7 +128,27 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_number->hide();
 }}
-            xywh {5 5 100 20} type Toggle shortcut 0xffc2 divider
+            xywh {5 5 100 20} type Toggle shortcut 0xffc0 divider
+          }
+          MenuItem menite_scan_and_save {
+            label {Scan Save...}
+            callback {if (cl_gts_gui.menite_scan_and_save->value()) {
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
+    cl_gts_gui.window_scan_and_save->show();
+} else {
+    cl_gts_gui.window_scan_and_save->hide();
+}}
+            xywh {10 10 100 20} type Toggle shortcut 0xffc1
+          }
+          MenuItem menite_trace_files {
+            label {Trace Files...}
+            callback {if (cl_gts_gui.menite_trace_files->value()) {
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
+    cl_gts_gui.window_trace_files->show();
+} else {
+    cl_gts_gui.window_trace_files->hide();
+}}
+            xywh {0 0 30 20} type Toggle shortcut 0xffc2 divider
           }
           MenuItem menite_trace_thickness {
             label {Trace Thickness...}
@@ -197,16 +207,6 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_trace_batch->hide();
 }}
             xywh {0 0 100 20} type Toggle
-          }
-          MenuItem menite_trace_files {
-            label {Trace Files...}
-            callback {if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_files->show();
-} else {
-    cl_gts_gui.window_trace_files->hide();
-}}
-            xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_sane_device {
             label {Select SANE device...}
@@ -1118,14 +1118,14 @@ if (cl_gts_master.cl_number.is_trace()) {
         } {
           Fl_Value_Output valout_trace_num_start {
             label S
-            xywh {15 320 40 25}
+            xywh {16 320 40 25}
           }
           Fl_Value_Output valout_trace_num_end {
             label E
-            xywh {65 320 40 25}
+            xywh {69 320 40 25}
           }
           Fl_Box {} {
-            xywh {105 320 5 25} resizable
+            xywh {109 320 1 25} resizable
           }
           Fl_Button {} {
             label {Set Number}
@@ -1188,8 +1188,16 @@ cl_gts_gui.menite_number->clear();}
           xywh {50 50 66 25} resizable
         }
       }
-      Fl_Output output_number_file_head_name {
+      Fl_Group {} {open
         xywh {0 75 116 25}
+      } {
+        Fl_Box {} {
+          xywh {0 75 50 25}
+        }
+        Fl_Output output_number_file_head_name {
+          label Save
+          xywh {50 75 66 25} resizable
+        }
       }
       Fl_Browser selbro_number_list {
         callback {cl_gts_master.cb_read_and_trace_and_preview();}
