@@ -338,17 +338,17 @@ const std::string cb_scan_and_save::get_save_path( const int number )
 {
 	/* Folder & File名が設定していないと空を返す */
 	if (cl_gts_gui.filinp_scan_save_dir_path->value() == nullptr
-	||  this->get_save_name_(number).empty()) {
+	||  this->get_save_name(number).empty()) {
 		return std::string();
 	}
 
 	std::string filepath;
 	filepath += cl_gts_gui.filinp_scan_save_dir_path->value();
 	filepath += '/';
-	filepath += this->get_save_name_( number );
+	filepath += this->get_save_name( number );
 	return filepath;
 }
-const std::string cb_scan_and_save::get_save_name_( const int number )
+const std::string cb_scan_and_save::get_save_name( const int number )
 {
 	/* 名(head,num_form,ext)が設定していないと空を返す */
 	if (cl_gts_gui.strinp_scan_save_file_head->value() == nullptr

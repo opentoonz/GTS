@@ -28,4 +28,7 @@ void gts_master::cb_scan_and_preview( void )
 
 	/* Crop以外の画像表示をした場合 */
 	this->cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
+
+	/* Trace --> Scan モードに自動切替 */
+	this->cl_scan_and_save.cb_set_number();
 }

@@ -716,3 +716,109 @@ void cb_trace_files::cb_switch_trace_filter_erase_dot_noise( const bool sw )
  cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(0);//OFF
 	}
 }
+//----------------------------------------------------------------------
+void cb_trace_files::cb_browse_save_file( void )
+{
+	/* Crop中は保存できない */
+	if (cl_gts_master.cl_ogl_view.get_crop_disp_sw()) {
+		fl_alert("Finish Cropping, Please Scan.");
+		return;
+	}
+	/* ScanもReadもまだしていない */
+	if (cl_gts_master.cl_iip_ro90.get_clp_parent() == nullptr ) {
+		fl_alert("Please Any Scan or Open.");
+		return;
+	}
+
+	/* parameter */
+	iip_canvas* parent = nullptr;
+	int rot90=0;
+	double dpi = 0;
+	iip_read* read_attr = nullptr;
+
+	/* ファイル読込後 */
+	if ( &(cl_gts_master.cl_iip_read)
+	==     cl_gts_master.cl_iip_ro90.get_clp_parent() ) {
+		parent = &(cl_gts_master.cl_iip_read);
+		rot90 = 0; /* 画像コンバート処理のみで、回転はしない */
+		dpi = cl_gts_master.cl_iip_read.get_d_tif_dpi_x();
+		read_attr = &(cl_gts_master.cl_iip_read);
+	}
+	else
+	/* スキャン後 */
+	if (   cl_gts_master.cl_iip_scan.get_clp_canvas()
+	==     cl_gts_master.cl_iip_ro90.get_clp_parent() ) {
+		parent = cl_gts_master.cl_iip_scan.get_clp_canvas();
+		rot90 = cl_gts_gui.choice_rot90->value();
+		dpi = cl_gts_gui.valinp_area_reso->value();
+	} else {
+		fl_alert("No Image");
+		return;
+	}
+
+	/* parameter */
+	std::string save_dpath;
+	std::string save_fname;
+	std::string save_filter;
+	int save_filter_num = 0;
+
+	/* ファイルトレスモード */
+	if (cl_gts_master.cl_number.is_trace()) {
+		save_dpath = cl_gts_gui.filinp_trace_save_dir_path->value();
+		save_fname = this->get_save_name_( -1 );
+		save_filter = this->ext_save.get_native_filters();
+		save_filter_num = cl_gts_gui.choice_trace_save_image_format->value();
+	} else
+	/* スキャンモード */
+	if (cl_gts_master.cl_number.is_scan()) {
+		save_dpath = cl_gts_gui.filinp_scan_save_dir_path->value();
+		save_fname = cl_gts_master.cl_scan_and_save.get_save_path( -1 );
+		save_filter = cl_gts_master.cl_scan_and_save.ext_save.get_native_filters();
+		save_filter_num = cl_gts_gui.choice_scan_save_image_format->value();
+	} else {
+		fl_alert("Not Scan/Trace");
+		return;
+	}
+
+	/* NativeブラウザーSaveで開く */
+//std::cout << __FILE__ << " " << "save_dpath=" << save_dpath << " save_fname=" << save_fname << std::endl;
+	const std::string fpath_save = ids::path::fltk_native_browse_save(
+		"Save Image"
+		,save_dpath
+		,save_fname
+		,save_filter
+		,save_filter_num
+	).at(0);
+
+	/* Cancel */
+	if (fpath_save.empty()) {
+		return;
+	}
+
+	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
+	if (cl_gts_master.rot_and_trace_and_enoise( parent ,rot90 ) != OK) {
+		return;
+	}
+
+	/* 保存 */
+	if (OK != cl_gts_master.iipg_save(
+		&(cl_gts_master.cl_iip_edot)
+		, const_cast<char *>(fpath_save.c_str())
+		,dpi
+		,rot90
+		,read_attr
+	)) {
+		pri_funct_err_bttvr(
+	 "Error : cl_gts_master.iipg_save(-) returns NG" );
+		return;
+	}
+
+	/* 表示：画像の再表示 */
+	if (cl_gts_master.redraw_image(
+		&(cl_gts_master.cl_iip_edot)
+		, false /* crop sw */
+		, false /* force view scanimage sw */
+	)) {
+		return;
+	}
+}

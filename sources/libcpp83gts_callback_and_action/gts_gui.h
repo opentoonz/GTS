@@ -43,12 +43,14 @@ private:
   static void cb_Open(Fl_Menu_*, void*);
   inline void cb_Set_i(Fl_Menu_*, void*);
   static void cb_Set(Fl_Menu_*, void*);
-  inline void cb_Open1_i(Fl_Menu_*, void*);
-  static void cb_Open1(Fl_Menu_*, void*);
   inline void cb_Save_i(Fl_Menu_*, void*);
   static void cb_Save(Fl_Menu_*, void*);
+  inline void cb_Open1_i(Fl_Menu_*, void*);
+  static void cb_Open1(Fl_Menu_*, void*);
   inline void cb_Save1_i(Fl_Menu_*, void*);
   static void cb_Save1(Fl_Menu_*, void*);
+  inline void cb_Save2_i(Fl_Menu_*, void*);
+  static void cb_Save2(Fl_Menu_*, void*);
   inline void cb_Quit_i(Fl_Menu_*, void*);
   static void cb_Quit(Fl_Menu_*, void*);
   inline void cb_Scan_i(Fl_Menu_*, void*);
@@ -371,8 +373,8 @@ public:
 private:
   inline void cb_valinp_rgb_gamma_i(Fl_Value_Input*, void*);
   static void cb_valinp_rgb_gamma(Fl_Value_Input*, void*);
-  inline void cb_Scan3_i(Fl_Button*, void*);
-  static void cb_Scan3(Fl_Button*, void*);
+  inline void cb_Preview_i(Fl_Button*, void*);
+  static void cb_Preview(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_scan_and_save;
 private:
@@ -424,8 +426,8 @@ public:
 private:
   inline void cb_Set3_i(Fl_Button*, void*);
   static void cb_Set3(Fl_Button*, void*);
-  inline void cb_Scan4_i(Fl_Button*, void*);
-  static void cb_Scan4(Fl_Button*, void*);
+  inline void cb_Scan3_i(Fl_Button*, void*);
+  static void cb_Scan3(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_files;
 private:

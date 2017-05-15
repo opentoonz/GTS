@@ -26,6 +26,9 @@ public:
 
 	const std::string get_save_path( const int number );
 
+	/* numをマイナスにするとファイル名に番号が付かない */
+	const std::string get_save_name( const int number );
+
 	//---------- fltk GUI access ----------
 
 	/* End/Endless表示のChoice含めた切替 */
@@ -50,9 +53,6 @@ private:
 	int next_scan_and_save_( void );
 
 	bool is_exist_save_files_( void );
-
-	/* numをマイナスにするとファイル名に番号が付かない */
-	const std::string get_save_name_( const int number );
 
 	std::string get_save_ext_for_legacy_(const std::string& type);
 };

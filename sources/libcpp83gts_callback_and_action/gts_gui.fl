@@ -32,12 +32,17 @@ class gts_gui {open
           MenuItem {} {
             label {Open Image(s)...}
             callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
-            xywh {0 0 30 20} shortcut 0x4006f divider
+            xywh {0 0 30 20} shortcut 0x4006f
           }
           MenuItem {} {
             label {Set Saving Folder for Scan...}
             callback {cl_gts_master.cl_scan_and_save.cb_browse_save_folder();}
-            xywh {0 0 30 20} hide divider
+            xywh {0 0 30 20} hide
+          }
+          MenuItem {} {
+            label {Save Image As...}
+            callback {cl_gts_master.cl_trace_files.cb_browse_save_file();}
+            xywh {0 0 30 20} shortcut 0x50073 divider
           }
           MenuItem {} {
             label {Open Config...}
@@ -771,7 +776,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           xywh {0 190 95 25} resizable
         }
         Fl_Button {} {
-          label Scan
+          label {Preview Scan}
           callback {cl_gts_master.cb_scan_and_preview();}
           xywh {95 190 100 25}
         }
