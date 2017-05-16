@@ -55,8 +55,8 @@ private:
   static void cb_Quit(Fl_Menu_*, void*);
   inline void cb_Scan_i(Fl_Menu_*, void*);
   static void cb_Scan(Fl_Menu_*, void*);
-  inline void cb_Scan1_i(Fl_Menu_*, void*);
-  static void cb_Scan1(Fl_Menu_*, void*);
+  inline void cb_Preview_i(Fl_Menu_*, void*);
+  static void cb_Preview(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_start_scan;
 private:
@@ -230,8 +230,8 @@ private:
   inline void cb_choice_rot90_i(Fl_Choice*, void*);
   static void cb_choice_rot90(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_rot90[];
-  inline void cb_Scan2_i(Fl_Button*, void*);
-  static void cb_Scan2(Fl_Button*, void*);
+  inline void cb_Scan1_i(Fl_Button*, void*);
+  static void cb_Scan1(Fl_Button*, void*);
 public:
   Fl_Choice *choice_area_selecter;
 private:
@@ -373,8 +373,8 @@ public:
 private:
   inline void cb_valinp_rgb_gamma_i(Fl_Value_Input*, void*);
   static void cb_valinp_rgb_gamma(Fl_Value_Input*, void*);
-  inline void cb_Preview_i(Fl_Button*, void*);
-  static void cb_Preview(Fl_Button*, void*);
+  inline void cb_Preview1_i(Fl_Button*, void*);
+  static void cb_Preview1(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_scan_and_save;
 private:
@@ -426,8 +426,8 @@ public:
 private:
   inline void cb_Set3_i(Fl_Button*, void*);
   static void cb_Set3(Fl_Button*, void*);
-  inline void cb_Scan3_i(Fl_Button*, void*);
-  static void cb_Scan3(Fl_Button*, void*);
+  inline void cb_Scan2_i(Fl_Button*, void*);
+  static void cb_Scan2(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_files;
 private:

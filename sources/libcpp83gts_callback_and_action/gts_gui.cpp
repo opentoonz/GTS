@@ -75,11 +75,11 @@ void gts_gui::cb_Scan(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Scan_i(o,v);
 }
 
-void gts_gui::cb_Scan1_i(Fl_Menu_*, void*) {
+void gts_gui::cb_Preview_i(Fl_Menu_*, void*) {
   cl_gts_master.cb_scan_and_preview();
 }
-void gts_gui::cb_Scan1(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Scan1_i(o,v);
+void gts_gui::cb_Preview(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Preview_i(o,v);
 }
 
 void gts_gui::cb_menite_start_scan_i(Fl_Menu_*, void*) {
@@ -420,7 +420,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {0,0,0,0,0,0,0,0,0},
  {"Action", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan Overall and Crop", 0,  (Fl_Callback*)gts_gui::cb_Scan, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Scan", 0x73,  (Fl_Callback*)gts_gui::cb_Scan1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Preview Scan", 0x70,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan and Save Files", 0xff0d,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace and Save Files...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
@@ -565,11 +565,11 @@ Fl_Menu_Item gts_gui::menu_choice_rot90[] = {
  {0,0,0,0,0,0,0,0,0}
 };
 
-void gts_gui::cb_Scan2_i(Fl_Button*, void*) {
+void gts_gui::cb_Scan1_i(Fl_Button*, void*) {
   cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();
 }
-void gts_gui::cb_Scan2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Scan2_i(o,v);
+void gts_gui::cb_Scan1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Scan1_i(o,v);
 }
 
 void gts_gui::cb_choice_area_selecter_i(Fl_Choice*, void*) {
@@ -781,11 +781,11 @@ void gts_gui::cb_valinp_rgb_gamma(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_rgb_gamma_i(o,v);
 }
 
-void gts_gui::cb_Preview_i(Fl_Button*, void*) {
+void gts_gui::cb_Preview1_i(Fl_Button*, void*) {
   cl_gts_master.cb_scan_and_preview();
 }
-void gts_gui::cb_Preview(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Preview_i(o,v);
+void gts_gui::cb_Preview1(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Preview1_i(o,v);
 }
 
 void gts_gui::cb_window_scan_and_save_i(Fl_Double_Window*, void*) {
@@ -894,11 +894,11 @@ void gts_gui::cb_Set3(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_Set3_i(o,v);
 }
 
-void gts_gui::cb_Scan3_i(Fl_Button*, void*) {
+void gts_gui::cb_Scan2_i(Fl_Button*, void*) {
   cl_gts_master.cl_scan_and_save.cb_start();
 }
-void gts_gui::cb_Scan3(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Scan3_i(o,v);
+void gts_gui::cb_Scan2(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Scan2_i(o,v);
 }
 
 void gts_gui::cb_window_trace_files_i(Fl_Double_Window*, void*) {
@@ -5242,7 +5242,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Button* o = new Fl_Button(45, 95, 150, 25, "Scan Overall and Crop");
-      o->callback((Fl_Callback*)cb_Scan2);
+      o->callback((Fl_Callback*)cb_Scan1);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(0, 125, 200, 165);
       o->labeltype(FL_ENGRAVED_LABEL);
@@ -5561,7 +5561,7 @@ Fl_Double_Window* gts_gui::make_window() {
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { Fl_Button* o = new Fl_Button(95, 190, 100, 25, "Preview Scan");
-        o->callback((Fl_Callback*)cb_Preview);
+        o->callback((Fl_Callback*)cb_Preview1);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
@@ -5689,7 +5689,7 @@ Fl_Double_Window* gts_gui::make_window() {
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { Fl_Button* o = new Fl_Button(55, 300, 140, 25, "Scan and Save Files");
-        o->callback((Fl_Callback*)cb_Scan3);
+        o->callback((Fl_Callback*)cb_Scan2);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
