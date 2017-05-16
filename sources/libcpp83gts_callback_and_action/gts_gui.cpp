@@ -419,10 +419,10 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Quit", 0x40071,  (Fl_Callback*)gts_gui::cb_Quit, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Action", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Scan Overall and Crop", 0,  (Fl_Callback*)gts_gui::cb_Scan, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Scan Crop", 0,  (Fl_Callback*)gts_gui::cb_Scan, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview Scan", 0x70,  (Fl_Callback*)gts_gui::cb_Preview, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Scan and Save Files", 0xff0d,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace and Save Files...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Scan Save", 0xff0d,  (Fl_Callback*)gts_gui::cb_menite_start_scan, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Files...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Renumber...", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
@@ -5241,7 +5241,8 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Choice* choice_rot90
       o->end();
     } // Fl_Group* o
-    { Fl_Button* o = new Fl_Button(45, 95, 150, 25, "Scan Overall and Crop");
+    { Fl_Button* o = new Fl_Button(95, 95, 100, 25, "Scan Crop");
+      o->tooltip("Scan Overall and Crop");
       o->callback((Fl_Callback*)cb_Scan1);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(0, 125, 200, 165);
@@ -5685,10 +5686,11 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(1, 300, 198, 25);
-      { Fl_Box* o = new Fl_Box(1, 300, 54, 25);
+      { Fl_Box* o = new Fl_Box(1, 300, 94, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Button* o = new Fl_Button(55, 300, 140, 25, "Scan and Save Files");
+      { Fl_Button* o = new Fl_Button(95, 300, 100, 25, "Scan Save");
+        o->tooltip("Scan and Save Files");
         o->callback((Fl_Callback*)cb_Scan2);
       } // Fl_Button* o
       o->end();
@@ -5830,10 +5832,11 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(1, 355, 198, 25);
-      { Fl_Box* o = new Fl_Box(1, 355, 39, 25);
+      { Fl_Box* o = new Fl_Box(1, 355, 94, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Button* o = new Fl_Button(40, 355, 155, 25, "Trace and Save Files...");
+      { Fl_Button* o = new Fl_Button(95, 355, 100, 25, "Trace Files...");
+        o->tooltip("Trace and Save Files");
         o->callback((Fl_Callback*)cb_Trace1);
       } // Fl_Button* o
       o->end();

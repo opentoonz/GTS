@@ -71,9 +71,9 @@ cl_gts_master.cb_quit();}
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {Scan Overall and Crop}
+            label {Scan Crop}
             callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
-            xywh {0 0 30 20}
+            tooltip {Scan Overall and Crop} xywh {0 0 30 20}
           }
           MenuItem {} {
             label {Preview Scan}
@@ -81,14 +81,14 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} shortcut 0x70
           }
           MenuItem menite_start_scan {
-            label {Scan and Save Files}
+            label {Scan Save}
             callback {cl_gts_master.cl_scan_and_save.cb_start();}
-            xywh {5 5 100 20} shortcut 0xff0d divider
+            tooltip {Scan and Save Files} xywh {5 5 100 20} shortcut 0xff0d divider
           }
           MenuItem {} {
-            label {Trace and Save Files...}
+            label {Trace Files...}
             callback {cl_gts_master.cl_trace_files.cb_start();}
-            xywh {5 5 100 20} shortcut 0x54
+            tooltip {Trace and Save Files} xywh {5 5 100 20} shortcut 0x54
           }
           MenuItem {} {
             label {Rename...}
@@ -478,9 +478,9 @@ cl_gts_gui.menite_area_and_rot90->clear();}
         }
       }
       Fl_Button {} {
-        label {Scan Overall and Crop}
+        label {Scan Crop}
         callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
-        xywh {45 95 150 25}
+        tooltip {Scan Overall and Crop} xywh {95 95 100 25}
       }
       Fl_Group {} {open
         xywh {0 125 200 165} labeltype ENGRAVED_LABEL align 5
@@ -950,12 +950,12 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
         xywh {1 300 198 25}
       } {
         Fl_Box {} {
-          xywh {1 300 54 25} resizable
+          xywh {1 300 94 25} resizable
         }
         Fl_Button {} {
-          label {Scan and Save Files}
+          label {Scan Save}
           callback {cl_gts_master.cl_scan_and_save.cb_start();}
-          xywh {55 300 140 25}
+          tooltip {Scan and Save Files} xywh {95 300 100 25}
         }
       }
     }
@@ -1144,12 +1144,12 @@ cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
         xywh {1 355 198 25}
       } {
         Fl_Box {} {
-          xywh {1 355 39 25} resizable
+          xywh {1 355 94 25} resizable
         }
         Fl_Button {} {
-          label {Trace and Save Files...}
+          label {Trace Files...}
           callback {cl_gts_master.cl_trace_files.cb_start();}
-          xywh {40 355 155 25}
+          tooltip {Trace and Save Files} xywh {95 355 100 25}
         }
       }
     }
