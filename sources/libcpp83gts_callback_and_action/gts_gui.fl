@@ -55,7 +55,7 @@ class gts_gui {open
             xywh {5 5 100 20} shortcut 0x80073
           }
           MenuItem {} {
-            label {Save As Config...}
+            label {Save Config As...}
             callback {cl_gts_master.cl_config.save_as();}
             xywh {5 5 100 20} shortcut 0x90073 divider
           }

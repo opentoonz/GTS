@@ -415,7 +415,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Save Image As...", 0x50073,  (Fl_Callback*)gts_gui::cb_Save, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Open Config...", 0x8006f,  (Fl_Callback*)gts_gui::cb_Open1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Save Config", 0x80073,  (Fl_Callback*)gts_gui::cb_Save1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Save As Config...", 0x90073,  (Fl_Callback*)gts_gui::cb_Save2, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Save Config As...", 0x90073,  (Fl_Callback*)gts_gui::cb_Save2, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Quit", 0x40071,  (Fl_Callback*)gts_gui::cb_Quit, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Action", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
