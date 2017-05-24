@@ -123,6 +123,7 @@ void iip_opengl_l1edit::_draw_image( void )
 	const int view_h = static_cast<int>(
 		this->_glsi_height * this->_d_zoom);
 
+#if 0
 std::cout << __FILE__ << " " << __LINE__ << std::endl;
 std::cout << "image  "
 << " w=" << this->get_l_width()
@@ -157,30 +158,7 @@ std::cout << "view  "
 << " xs=" << view_w
 << " ys=" << view_h
 << std::endl;
-
-	/* 画像表示のための設定 */
-	if (this->_d_zoom < 1.0) {
-		/* 画像データのスキャンラインバイト数の倍数設定 */
-		glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
-
-		/* 画面から画像がはみ出た時のための画像幅の指定 */
-		glPixelStorei( GL_UNPACK_ROW_LENGTH , view_w );
-	}
-	else {
-		/* 画像データのスキャンラインバイト数の倍数設定 */
-		glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
-
-		/* 画面から画像がはみ出た時のための画像幅の指定 */
-		glPixelStorei( GL_UNPACK_ROW_LENGTH , this->get_l_width() );
-
-		/* 画面から画像がはみ出た時の表示開始の横位置 */
-		glPixelStorei(GL_UNPACK_SKIP_PIXELS,this->_gli_skip_pixels);
-
-		/* 画面から画像がはみ出た時の表示開始の縦位置 */
-		glPixelStorei( GL_UNPACK_SKIP_ROWS , this->_gli_skip_rows );
-	}
-
-std::cout << "1\n";
+#endif
 
 	/* 画面から画像がはみ出た時も考慮した位置
 	1 整数位置でずれる場合ある
@@ -197,15 +175,41 @@ std::cout << "1\n";
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
 
+	/* 画像表示のための設定 */
 	if (this->_d_zoom < 1.0) {
-std::cout << "2\n";
+		/* 画像データのスキャンラインバイト数の倍数設定 */
+		glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
+
+		/* 画面から画像がはみ出た時のための画像幅の指定 */
+		glPixelStorei( GL_UNPACK_ROW_LENGTH , view_w );
+
+		/* 画面から画像がはみ出た時の表示開始の横位置 */
+		glPixelStorei( GL_UNPACK_SKIP_PIXELS ,0 );
+
+		/* 画面から画像がはみ出た時の表示開始の縦位置 */
+		glPixelStorei( GL_UNPACK_SKIP_ROWS ,0 );
+	}
+	else {
+		/* 画像データのスキャンラインバイト数の倍数設定 */
+		glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
+
+		/* 画面から画像がはみ出た時のための画像幅の指定 */
+		glPixelStorei( GL_UNPACK_ROW_LENGTH , this->get_l_width() );
+
+		/* 画面から画像がはみ出た時の表示開始の横位置 */
+		glPixelStorei(GL_UNPACK_SKIP_PIXELS,this->_gli_skip_pixels);
+
+		/* 画面から画像がはみ出た時の表示開始の縦位置 */
+		glPixelStorei( GL_UNPACK_SKIP_ROWS , this->_gli_skip_rows );
+	}
+
+	if (this->_d_zoom < 1.0) {
 		iip_crop_and_downsample	iip_crop_and_down;
 		if (iip_crop_and_down.reserve_max_memory(2920,2200)) {
 			pri_funct_msg_ttvr(
 	  "Error in iip_crop_and_down.reserve_max_memory(1920,1200)" );
 			return;
 		}
-std::cout << "3\n";
 		iip_crop_and_down.set_subpixel_max_div( 2 );
 		if (int ret = iip_crop_and_down.set_mapping(
 			 this->get_vp_canvas()
@@ -225,12 +229,9 @@ std::cout << "3\n";
 		    		,ret);
 			return;
 		}
-std::cout << "4\n";
 		iip_crop_and_down.exec();
-std::cout << "5\n";
 
 		glPixelZoom((GLfloat)1.0 ,(GLfloat)1.0);
-std::cout << "6\n";
 		glDrawPixels(
 			 view_w
 			,view_h
@@ -240,12 +241,9 @@ std::cout << "6\n";
 				iip_crop_and_down.child_out.data()
 			)
 		);
-std::cout << "7\n";
 	}
 	else {
-std::cout << "8\n";
 		glPixelZoom((GLfloat)this->_d_zoom ,(GLfloat)this->_d_zoom);
-std::cout << "9\n";
 		glDrawPixels(
 			this->_glsi_width
 			, this->_glsi_height
@@ -253,7 +251,6 @@ std::cout << "9\n";
 			, this->_gle_type
 			, static_cast<const GLvoid *>(this->get_vp_canvas())
 		);
-std::cout << "10\n";
 	}
 }
 namespace {
