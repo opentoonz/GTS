@@ -1,5 +1,6 @@
 #include <iostream>
-#include <iomanip> // std::setprecision(std::numeric_limits<double>::max_digits10)
+#include <iomanip> // std::setprecision(-)
+#include <limits> // std::numeric_limits<double>::max_digits10
 #include <string>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"

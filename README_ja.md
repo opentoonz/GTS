@@ -105,10 +105,9 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 5. 動作準備
 
- `source/main/gts_install_setup.txt`ファイルの中の`browser_directory_path`行の値を`"/home"`に変更します。
+ `source/main/gts_initial_configuration.txt`ファイルの中の`*_dir*`行の値を`"/home"`に変更します。
  以下のファイル、
- - `sources/main/_gts-scan_area.txt`
- - `sources/main/gts_install_setup.txt`
+ - `sources/main/gts_initial_configuration.txt`
 
  を`~/.GTS`にコピーします。
 

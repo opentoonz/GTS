@@ -37,7 +37,7 @@ fltk_1000_range_cyclic::fltk_1000_range_cyclic(int x,int y,int w,int h,const cha
 
 /*--------------------------------------------------------*/
 
-void fltk_1000_range_cyclic::_draw_term_mark( long l_x, long l_y, char *cp_name )
+void fltk_1000_range_cyclic::_draw_term_mark( long l_x, long l_y, const char *cp_name )
 {
 	/* 選択枠と文字表示 */
 	fl_color(FL_DARK3);
