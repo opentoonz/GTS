@@ -1,6 +1,7 @@
 #include <math.h>
 #include <iostream>
 #include "pri.h"
+#include "../libcpp69iip_scale_by_subpixel/iip_crop_and_downsample.h"
 #include "iip_opengl_l1edit.h"
 
 void iip_opengl_l1edit::init_opengl( void )
@@ -11,19 +12,10 @@ void iip_opengl_l1edit::init_opengl( void )
 
 	/* 画像データがなくても以下の初期化だけはやっちまう */
 
-	if (ON == this->get_i_mv_sw()) {
-		pri_funct_msg_ttvr(
-			"iip_opengl_l1edit::init_opengl()" );
-	}
-	if (ON == this->get_i_pv_sw()) {
-		pri_funct_msg_vr(
-	" GL_FLAT, BG 0.5 0.5 0.5 0.0, GL_PIXEL_MAP_I_TO_R/G/B for BW");
-	}
-
 	/* シェーディングをしない */
 	glShadeModel( GL_FLAT );
 
-	/* 背景(画面クリア)色 */
+	/* 背景(BG)(画面クリア)色 */
 	glClearColor ( 0.5, 0.5, 0.5, 0.0 );
 
 	/* B/W表示することを予定してあらかじめ設定しておく */
@@ -53,41 +45,6 @@ void iip_opengl_l1edit::clear_viewport( void )
 
 void iip_opengl_l1edit::reshape_opengl( long l_xp, long l_yp, long l_xs, long l_ys )
 {
-	long	l_margin;
-	double	d_margin;
-
-	if (ON == this->get_i_mv_sw()) {
-		pri_funct_msg_ttvr(
-			"iip_opengl_l1edit::reshape_opengl()" );
-	}
-
-	if (ON == this->get_i_pv_sw()) {
-		/* 引数が全てゼロのときはOpenGLの再設定をする */
-		if ((0 == l_xp) && (0 == l_yp)
-		&&  (0 == l_xs) && (0 == l_ys)) {
-			pri_funct_msg_vr(
-		 " reset OpenGL Viewport xp %ld yp %ld w %ld h %ld",
-				this->_l_view_x_pos,
-				this->_l_view_y_pos,
-				this->_l_view_x_size,
-				this->_l_view_y_size
-			);
-		} else {
-			pri_funct_msg_vr(
-				" old xp %ld yp %ld w %ld h %ld",
-				this->_l_view_x_pos,
-				this->_l_view_y_pos,
-				this->_l_view_x_size,
-				this->_l_view_y_size
-			);
-			pri_funct_msg_vr(
-				" new xp %ld yp %ld w %ld h %ld",
-				l_xp,l_yp,
-				l_xs,l_ys
-			);
-		}
-	}
-
 	/* 引数が全てゼロのときはOpenGLの再設定をする */
 	if ((0 == l_xp) && (0 == l_yp)
 	&&  (0 == l_xs) && (0 == l_ys)) {
@@ -105,13 +62,12 @@ void iip_opengl_l1edit::reshape_opengl( long l_xp, long l_yp, long l_xs, long l_
 
 	/* 拡大ズーム時のスムーズスクロールのための
 	余白(this->_l_margin_for_zoomup_smooth_scroll)をつける */
-	l_margin = this->_l_margin_for_zoomup_smooth_scroll;
-	d_margin = (double)(this->_l_margin_for_zoomup_smooth_scroll);
+	const int margin = this->_l_margin_for_zoomup_smooth_scroll;
 	glViewport(
-		l_xp - l_margin,
-		l_yp - l_margin,
-		(GLsizei)l_xs + l_margin*2L,
-		(GLsizei)l_ys + l_margin*2L );
+		l_xp - margin,
+		l_yp - margin,
+		(GLsizei)l_xs + margin*2L,
+		(GLsizei)l_ys + margin*2L );
 
 	/* 透視投影変換行列の設定 */
 	glMatrixMode(GL_PROJECTION);
@@ -122,10 +78,10 @@ void iip_opengl_l1edit::reshape_opengl( long l_xp, long l_yp, long l_xs, long l_
 	Pixelの中心がPixelの位置となるよう0.5ずらす
 	*/
 	gluOrtho2D(
-		- 0.5 - d_margin,
-		(GLdouble)(l_xs) - 0.5 + d_margin,
-		- 0.5 - d_margin,
-		(GLdouble)(l_ys) - 0.5 + d_margin );
+		- 0.5 - (double)margin,
+		(GLdouble)(l_xs) - 0.5 + (double)margin,
+		- 0.5 - (double)margin,
+		(GLdouble)(l_ys) - 0.5 + (double)margin );
 
 	/* モデルビュー変換行列の設定(画像、枠線表示のため) */
 	glMatrixMode(GL_MODELVIEW);
@@ -140,18 +96,14 @@ void iip_opengl_l1edit::reshape_opengl( long l_xp, long l_yp, long l_xs, long l_
 
 void iip_opengl_l1edit::draw_opengl( void )
 {
-//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	/* 画像データがないと表示しない */
 	if (NULL == this->get_vp_canvas()) { return; }
-//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 	/* ここでは画面クリア
 		"glClear(GL_COLOR_BUFFER_BIT);"
 	をしないが、必ず必要なので注意 */
 	this->_draw_image();		/* 画像表示 */
-//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	this->_draw_crop();		/* 画像枠表示 */
-//std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 	/* ここではOpenGLのハキダシ
 		"glFlush();"
@@ -166,123 +118,143 @@ void iip_opengl_l1edit::_draw_image( void )
 	/* 画像データがないときは(以下の)なにもしない */
 	if (NULL == this->get_vp_canvas()) { return; }
 
-	if (ON == this->get_i_mv_sw()) {
-		pri_funct_msg_ttvr(
-			"iip_opengl_l1edit::_draw_image()" );
-	}
-	if (ON == this->get_i_pv_sw()) {
-		pri_funct_msg_vr(
-			" image w %ld h %ld ch %ld ref %p",
-			this->get_l_width(), this->get_l_height(),
-			this->get_l_channels(),
-			this->_ucharp_rrggbbaa
-		);
-		pri_funct_msg_vr(
-			" pixel ch %ld fmt %d typ %d",
-			this->_i_disp_ch,
-			this->_gle_format, this->_gle_type
-		);
-		pri_funct_msg_vr(
-			" view   xp %d yp %d w %d h %d",
-			this->_gli_rasterpos_x, this->_gli_rasterpos_y,
-			this->_glsi_width, this->_glsi_height
-		);
-		pri_funct_msg_vr(
-			" skip   xp %d yp %d",
-			this->_gli_skip_pixels, this->_gli_skip_rows
-		);
-		pri_funct_msg_vr("");	/* 空行 */
-	}
+	const int view_w = static_cast<int>(
+		this->_glsi_width * this->_d_zoom);
+	const int view_h = static_cast<int>(
+		this->_glsi_height * this->_d_zoom);
 
-	/* 画像データのスキャンラインバイト数の倍数設定 */
-	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-
-	/* 画面から画像がはみ出た時のための画像幅の指定 */
-	glPixelStorei( GL_UNPACK_ROW_LENGTH, this->get_l_width() );
-
-	/* 画面から画像がはみ出た時の表示開始の横位置 */
-	glPixelStorei( GL_UNPACK_SKIP_PIXELS, this->_gli_skip_pixels );
-
-	/* 画面から画像がはみ出た時の表示開始の縦位置 */
-	glPixelStorei( GL_UNPACK_SKIP_ROWS,   this->_gli_skip_rows );
-
-	/* 画面から画像がはみ出た時も考慮した位置 */
-	/***glRasterPos2i(	this->_gli_rasterpos_x,
-			this->_gli_rasterpos_y );***/
-	/* Pixelの左下を表示開始位置とするため-0.5 */
-/*
-	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.5,
-			(double)(this->_gli_rasterpos_y) - 0.5 );
-下方位置（y値マイナス？）で画像消える現象。特定のマシンのみで起こる。原因不明。0.5を0.49999にして直る。2016-10-4
-*/
-/*
-A3
- 430dpi OK
- 500dpi 1/8倍以下の縮小で表示しない
- 600dpi 1/4倍以下の縮小で表示しない
-*/
-/*
-	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
-			(double)(this->_gli_rasterpos_y) - 0.49999 );
-*/
-std::cout
-<< __FILE__ << " " << __LINE__
-<< " px=" << this->_gli_rasterpos_x
-<< " py=" << this->_gli_rasterpos_y
-<< " ox=" << this->_gli_skip_pixels
-<< " oy=" << this->_gli_skip_rows
-<< " wi=" << this->_glsi_width
-<< " he=" << this->_glsi_height
-<< " zm=" << this->_d_zoom
-//<< " wxh=" << this->_glsi_width * this->_glsi_height
+std::cout << __FILE__ << " " << __LINE__ << std::endl;
+std::cout << "image  "
+<< " w=" << this->get_l_width()
+<< " h=" << this->get_l_height()
+<< " ch=" << this->get_l_channels()
+<< " by=" << this->cl_ch_info.get_l_bytes()
+//<< " ref=" << this->_ucharp_rrggbbaa
+/* this->_ucharp_rrggbbaaは
+this->_i_disp_chがCH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
+もう使われていないのあとでrefactoringすべき2017-05-23 */
+<< " xo=" << this->_gli_skip_pixels
+<< " yo=" << this->_gli_skip_rows
+<< " xs=" << this->_glsi_width
+<< " ys=" << this->_glsi_height
 << std::endl;
 
-	//glWindowPos2d();
+std::cout << "pixel " 
+//<< " ch=" << this->_i_disp_ch,
+/* this->_i_disp_chは
+CH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
+もう使われていないのあとでrefactoringすべき2017-05-23 */
+<< " gle_format=" << this->_gle_format
+<< "=?GL_RGB=" << GL_RGB
+<< " gle_type=" << this->_gle_type
+<< "=?GL_UNSIGNED_BYTE=" << GL_UNSIGNED_BYTE
+<< std::endl;
+
+std::cout << "view  " 
+<< " xp=" << this->_gli_rasterpos_x
+<< " yp=" << this->_gli_rasterpos_y
+<< " zm=" << this->_d_zoom
+<< " xs=" << view_w
+<< " ys=" << view_h
+<< std::endl;
+
+	/* 画像表示のための設定 */
+	if (this->_d_zoom < 1.0) {
+		/* 画像データのスキャンラインバイト数の倍数設定 */
+		glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
+
+		/* 画面から画像がはみ出た時のための画像幅の指定 */
+		glPixelStorei( GL_UNPACK_ROW_LENGTH , view_w );
+	}
+	else {
+		/* 画像データのスキャンラインバイト数の倍数設定 */
+		glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
+
+		/* 画面から画像がはみ出た時のための画像幅の指定 */
+		glPixelStorei( GL_UNPACK_ROW_LENGTH , this->get_l_width() );
+
+		/* 画面から画像がはみ出た時の表示開始の横位置 */
+		glPixelStorei(GL_UNPACK_SKIP_PIXELS,this->_gli_skip_pixels);
+
+		/* 画面から画像がはみ出た時の表示開始の縦位置 */
+		glPixelStorei( GL_UNPACK_SKIP_ROWS , this->_gli_skip_rows );
+	}
+
+std::cout << "1\n";
+
+	/* 画面から画像がはみ出た時も考慮した位置
+	1 整数位置でずれる場合ある
+		glRasterPos2i(	this->_gli_rasterpos_x,
+				this->_gli_rasterpos_y );
+	2 浮動小数点位置にして(Pixelの左下を表示開始位置とするため)-0.5する
+		glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.5,
+				(double)(this->_gli_rasterpos_y) - 0.5 );
+	3 下方位置（y値マイナス？）で画像消える現象。
+	  特定のマシンのみで起こる。
+	  原因不明。
+	  0.5を0.49999にして直る。2016-10-4
+	*/
 	glRasterPos2d(	(double)(this->_gli_rasterpos_x) - 0.49999,
 			(double)(this->_gli_rasterpos_y) - 0.49999 );
 
-/*
-	glPixelZoom( (GLfloat)this->_d_zoom, (GLfloat)this->_d_zoom );
-
-	GLvoid	*vp_image = this->get_vp_canvas();
-	if (3L <= this->get_l_channels()) {
-		switch (this->_i_disp_ch) {
-		case CH_RED:
-		case CH_GRE:
-		case CH_BLU:
-		case CH_ALP:
-			vp_image = this->_ucharp_rrggbbaa +
-			this->get_l_width() *
-			this->get_l_height() *
-			sizeof(unsigned char) *
-			this->_i_disp_ch;
-			break;
-		}
-	}
-
-	glDrawPixels(
-		this->_glsi_width,
-		this->_glsi_height,
-		this->_gle_format,
-		this->_gle_type,
-		(const GLvoid *)(vp_image)
-	);
-*/
-
 	if (this->_d_zoom < 1.0) {
-		glPixelZoom( 1.0 ,1.0 );
-	} else
-	{
-		glPixelZoom((GLfloat)this->_d_zoom ,(GLfloat)this->_d_zoom);
-	}
+std::cout << "2\n";
+		iip_crop_and_downsample	iip_crop_and_down;
+		if (iip_crop_and_down.reserve_max_memory(2920,2200)) {
+			pri_funct_msg_ttvr(
+	  "Error in iip_crop_and_down.reserve_max_memory(1920,1200)" );
+			return;
+		}
+std::cout << "3\n";
+		iip_crop_and_down.set_subpixel_max_div( 2 );
+		if (int ret = iip_crop_and_down.set_mapping(
+			 this->get_vp_canvas()
+			,this->get_l_width()
+			,this->get_l_height()
+			,this->get_l_channels()
+			,this->cl_ch_info.get_l_bytes()
+			,this->_gli_skip_pixels
+			,this->_gli_skip_rows
+			,this->_glsi_width
+			,this->_glsi_height
+			,view_w
+			,view_h
+		)) {
+			pri_funct_msg_ttvr(
+		    "Error in iip_crop_and_down.set_mapping(-) returns "
+		    		,ret);
+			return;
+		}
+std::cout << "4\n";
+		iip_crop_and_down.exec();
+std::cout << "5\n";
 
-	glDrawPixels(
-		this->_glsi_width
-		, this->_glsi_height
-		, this->_gle_format
-		, this->_gle_type
-		, static_cast<const GLvoid *>( this->get_vp_canvas() )
-	);
+		glPixelZoom((GLfloat)1.0 ,(GLfloat)1.0);
+std::cout << "6\n";
+		glDrawPixels(
+			 view_w
+			,view_h
+			,this->_gle_format
+			,this->_gle_type
+			,static_cast<const GLvoid *>(
+				iip_crop_and_down.child_out.data()
+			)
+		);
+std::cout << "7\n";
+	}
+	else {
+std::cout << "8\n";
+		glPixelZoom((GLfloat)this->_d_zoom ,(GLfloat)this->_d_zoom);
+std::cout << "9\n";
+		glDrawPixels(
+			this->_glsi_width
+			, this->_glsi_height
+			, this->_gle_format
+			, this->_gle_type
+			, static_cast<const GLvoid *>(this->get_vp_canvas())
+		);
+std::cout << "10\n";
+	}
 }
 namespace {
  void opengl_line_rectangle_(

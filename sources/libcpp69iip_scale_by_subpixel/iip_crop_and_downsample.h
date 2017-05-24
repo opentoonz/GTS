@@ -17,7 +17,7 @@ public:
 		,xs_(0) ,ys_(0)
 		,x_subpixel_division_(0)
 		,y_subpixel_division_(0)
-		,subpixel_min_div_(4)
+		,subpixel_min_div_(1)
 		,subpixel_max_div_(16) /* 積算の最大値の関係でmax必須 */
 		,parent_data_(nullptr)
 	{
@@ -34,8 +34,11 @@ public:
 		const int max_w
 		,const int max_h
 		,const int max_ch=3
-		,const int max_by=2
+		,const int max_by=1
 	);
+
+	void set_subpixel_min_div( const int subpixel_min_div );
+	void set_subpixel_max_div( const int subpixel_max_div );
 
 	/* 実行毎にCrop元と結果画像のサイズを設定する
 		xs,ysはmax_w_,max_h_値と同じか小さい値
@@ -43,7 +46,7 @@ public:
 		成功ならfalseを返す
 		表示するエリア変更する都度実行
 	*/
-	bool set_mapping(
+	int set_mapping(
 		void *parent_data
 		,const int pa_w , const int pa_h
 		,const int pa_ch ,const int pa_by /* parent_dataの大きさ */
@@ -58,17 +61,16 @@ public:
 	std::vector<char> child_out;
 
 private:
-	int	pa_w_ , pa_h_ , pa_ch_ , pa_by_ /* 親の画像サイズ */
-		, pa_xo_ , pa_yo_ , pa_xs_ , pa_ys_; /* Cropする範囲 */
-	int	max_w_ , max_h_ , max_ch_ , max_by_ /* 子の画像最大サイズ */
-		, xs_ , ys_; /* CropしたあとDownsampleしたいサイズ */
+	int	max_w_ , max_h_ , max_ch_ , max_by_;/* 子の画像最大サイズ */
 
 	/* antialiasのための処理用パラメータ */
-	int	x_subpixel_division_
-		,y_subpixel_division_
-		,subpixel_min_div_
-		,subpixel_max_div_;
-	void *parent_data_;
+	int	x_subpixel_division_ ,y_subpixel_division_
+		,subpixel_min_div_ ,subpixel_max_div_;
+
+	void	*parent_data_;/* メモリ管理は別途行われる。ここは参照のみ */
+	int	pa_w_ , pa_h_ , pa_ch_ , pa_by_ /* 親の画像サイズ */
+		, pa_xo_ , pa_yo_ , pa_xs_ , pa_ys_ /* Cropする範囲 */
+		, xs_ , ys_; /* CropしたあとDownsampleしたいサイズ */
 
 	std::vector<int> array_x_;
 	std::vector<int> array_y_;

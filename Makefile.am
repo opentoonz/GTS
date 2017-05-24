@@ -116,6 +116,7 @@ libgts_la_SOURCES = \
 					sources/libcpp64iip_rot90/iip_rot90_uchar.cpp \
 					sources/libcpp64iip_rot90/iip_rot90_ulong.cpp \
 					sources/libcpp64iip_rot90/iip_rot90_ushrt.cpp \
+					sources/libcpp69iip_scale_by_subpixel/iip_crop_and_downsample.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_calcu_bresenham.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_exec.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_mem.cpp \
