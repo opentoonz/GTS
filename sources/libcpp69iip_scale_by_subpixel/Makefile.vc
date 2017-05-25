@@ -9,6 +9,7 @@ INCS =\
 /I..\libc12pri\
 /I..\libc11portable
 SRCS =\
+iip_crop_and_downsample.cpp\
 iip_scale_by_subpixel_calcu_bresenham.cpp\
 iip_scale_by_subpixel_exec.cpp\
 iip_scale_by_subpixel_mem.cpp\
