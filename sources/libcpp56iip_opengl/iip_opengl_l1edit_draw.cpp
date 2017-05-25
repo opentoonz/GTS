@@ -205,9 +205,10 @@ std::cout << "view  "
 
 	if (this->_d_zoom < 1.0) {
 		iip_crop_and_downsample	iip_crop_and_down;
-		if (iip_crop_and_down.reserve_max_memory(2920,2200)) {
+		if (iip_crop_and_down.reserve_max_memory(2560,1600)) {
+			/* WQXGA 2560x1600 16:10 =ScreenMax想定 */
 			pri_funct_msg_ttvr(
-	  "Error in iip_crop_and_down.reserve_max_memory(1920,1200)" );
+	  "Error in iip_crop_and_down.reserve_max_memory(2560,1600)" );
 			return;
 		}
 		iip_crop_and_down.set_subpixel_max_div( 2 );
