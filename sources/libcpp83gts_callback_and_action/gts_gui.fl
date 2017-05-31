@@ -70,17 +70,17 @@ cl_gts_master.cb_quit();}
           label Action open
           xywh {5 5 100 20}
         } {
-          MenuItem {} {
+          MenuItem menite_scan_crop {
             label {Scan Crop}
             callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
             tooltip {Scan Overall and Crop} xywh {0 0 30 20}
           }
-          MenuItem {} {
+          MenuItem menite_preview_scan {
             label {Preview Scan}
             callback {cl_gts_master.cb_scan_and_preview();}
             xywh {5 5 100 20} shortcut 0x70
           }
-          MenuItem menite_start_scan {
+          MenuItem menite_scan_save {
             label {Scan Save}
             callback {cl_gts_master.cl_scan_and_save.cb_start();}
             tooltip {Scan and Save Files} xywh {5 5 100 20} shortcut 0xff0d divider
@@ -477,7 +477,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
           }
         }
       }
-      Fl_Button {} {
+      Fl_Button button_scan_crop {
         label {Scan Crop}
         callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
         tooltip {Scan Overall and Crop} xywh {95 95 100 25}
@@ -775,7 +775,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         Fl_Box {} {
           xywh {0 190 95 25} resizable
         }
-        Fl_Button {} {
+        Fl_Button button_preview_scan {
           label {Preview Scan}
           callback {cl_gts_master.cb_scan_and_preview();}
           xywh {95 190 100 25}
@@ -952,7 +952,7 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
         Fl_Box {} {
           xywh {1 300 94 25} resizable
         }
-        Fl_Button {} {
+        Fl_Button button_scan_save {
           label {Scan Save}
           callback {cl_gts_master.cl_scan_and_save.cb_start();}
           tooltip {Scan and Save Files} xywh {95 300 100 25}

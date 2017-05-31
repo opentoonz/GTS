@@ -50,7 +50,7 @@ void	  memory_short_cut_key::setup_stop_scan( const char *key ) {
 //--------------------------------------------------------------------
 void memory_short_cut_key::set_shortcut( void ) {
 	if (this->start_scan_code_ != 0) {
-	 cl_gts_gui.menite_start_scan->shortcut(this->start_scan_code_ );
+	 cl_gts_gui.menite_scan_save->shortcut(this->start_scan_code_ );
 	}
 	if (		this->rescan_code_ != 0) {
 	    cl_gts_gui.button_rescan->shortcut(
