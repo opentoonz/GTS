@@ -62,48 +62,47 @@ void iip_opengl_l1edit::_set_position( void )
 		pri_funct_msg_ttvr( "iip_opengl_l1edit::_set_position(-)" );
 	}
 
+	/*
+	 * 表示する範囲
+	 */
 	this->_glsi_width = (GLsizei)this->get_l_width();
 	this->_glsi_height = (GLsizei)this->get_l_height();
 	this->_gli_skip_pixels = (GLint)0;
 	this->_gli_skip_rows = (GLint)0;
 
+	/* OpenGL縮小表示(zoom<1)は処理後画像として等倍表示(zoom=1)する */
+	const double disp_zoom = this->_d_zoom;
+	//const double disp_zoom = (this->_d_zoom < 1.0) ?1.0 :this->_d_zoom;
+
 	/* 左側は表示範囲内 */
 	if (0L <= this->_l_xp) {
 		/* 右側が表示をはみ出す(表示寸) */
-		if (	(double)this->_l_view_x_size < (
-				(double)this->_l_xp +
-				floor(	(double)this->get_l_width() *
-					this->_d_zoom
-				)
+		if (	this->_l_view_x_size < (
+			this->_l_xp + floor(this->get_l_width() * disp_zoom)
 			)
 		) {
-			/* 表示する画像幅(実寸) */
+			/* 表示する画像データ幅(実寸) */
 			/* 端数のpixelも表示する */
-			this->_glsi_width = (GLsizei)ceil(
-				(double)(this->_l_view_x_size-this->_l_xp) /
-				this->_d_zoom
-				);
+			this->_glsi_width = static_cast<GLsizei>(ceil(
+			  (this->_l_view_x_size - this->_l_xp) / disp_zoom
+			));
 		}
 		/* 右側が表示範囲内 */ /* 初期位置で表示 */
 	}
 	/* 左側は表示をはみ出す */
 	else {
-		this->_gli_skip_pixels = (GLint)floor(
-			(double)(-this->_l_xp) / this->_d_zoom
-		);
-		/* 右側が表示をはみ出す
-			(表示寸)(左右両側が表示をはみ出す) */
-		if (	(double)this->_l_view_x_size < (
-				(double)this->_l_xp +
-				floor(	(double)this->get_l_width() *
-					this->_d_zoom
-				)
+		this->_gli_skip_pixels = static_cast<GLint>(floor(
+			(-this->_l_xp) / disp_zoom
+		));
+		/* 右側が表示をはみ出す(表示寸)(左右両側が表示をはみ出す) */
+		if (	this->_l_view_x_size < (
+			this->_l_xp + floor(this->get_l_width() * disp_zoom)
 			)
 		) {
 			/* 左右両側がはみ出すときは1pixel分大きく表示 */
-			this->_glsi_width = (GLsizei)ceil(
-				(double)this->_l_view_x_size / this->_d_zoom
-			);
+			this->_glsi_width = static_cast<GLsizei>(ceil(
+			  this->_l_view_x_size / disp_zoom
+			));
 		}
 		/* 右側が表示範囲内 */
 		else {
@@ -115,40 +114,32 @@ void iip_opengl_l1edit::_set_position( void )
 	/* 下は表示範囲内 */
 	if (0L <= this->_l_yp) {
 		/* 上側が表示をはみ出す(表示寸) */
-		if (	(double)this->_l_view_y_size < (
-				(double)this->_l_yp +
-				floor(	(double)this->get_l_height() *
-					this->_d_zoom
-				)
+		if (	this->_l_view_y_size < (
+			this->_l_yp + floor(this->get_l_height() *disp_zoom)
 			)
 		) {
 			/* 表示する画像高さ(実寸) */
 			/* 端数のpixelも表示する */
-			this->_glsi_height = (GLsizei)ceil(
-				(double)(this->_l_view_y_size-this->_l_yp) /
-				this->_d_zoom
-				);
+			this->_glsi_height = static_cast<GLsizei>(ceil(
+			  (this->_l_view_y_size - this->_l_yp) / disp_zoom
+			));
 		}
 		/* 上側が表示範囲内 */ /* 初期位置で表示 */
 	}
 	/* 下は表示をはみ出す */
 	else {
-		this->_gli_skip_rows = (GLint)floor(
-			(double)(-this->_l_yp) / this->_d_zoom
-		);
-		/* 上側が表示をはみ出す
-			(表示寸)(上下両側が表示をはみ出す) */
-		if (	(double)this->_l_view_y_size < (
-				(double)this->_l_yp +
-				floor(	(double)this->get_l_height() *
-					this->_d_zoom
-				)
+		this->_gli_skip_rows = static_cast<GLint>(floor(
+			(-this->_l_yp) / disp_zoom
+		));
+		/* 上側が表示をはみ出す(表示寸)(上下両側が表示をはみ出す) */
+		if (	this->_l_view_y_size < (
+			this->_l_yp + floor(this->get_l_height() *disp_zoom)
 			)
 		) {
 			/* 上下両側がはみ出すときは1pixel分大きく表示 */
-			this->_glsi_height = (GLsizei)ceil(
-				(double)this->_l_view_y_size / this->_d_zoom
-			);
+			this->_glsi_height = static_cast<GLsizei>(ceil(
+			  this->_l_view_y_size / disp_zoom
+			));
 		}
 		/* 上側が表示範囲内 */
 		else {
@@ -157,7 +148,9 @@ void iip_opengl_l1edit::_set_position( void )
 		}
 	}
 
-	/* 画像の表示開始位置 */
+	/*
+	 * 画像の表示開始位置
+	 */
 	this->_gli_rasterpos_x = this->_l_xp;
 	this->_gli_rasterpos_y = this->_l_yp;
 
@@ -217,28 +210,28 @@ void iip_opengl_l1edit::_set_position( void )
 	/* 左位置 */
 	this->_d_scrollbar_x_min =
 		(double)(-this->_l_xp) /
-		ceil((double)this->get_l_width() * this->_d_zoom);
+		ceil((double)this->get_l_width() * disp_zoom);
 	/******if (this->_d_scrollbar_x_min < 0.0)
 	{   this->_d_scrollbar_x_min = 0.0; }******/
 
 	/* 右位置 */
 	this->_d_scrollbar_x_max =
 		(double)(-this->_l_xp + this->_l_view_x_size) /
-		ceil((double)this->get_l_width() * this->_d_zoom);
+		ceil((double)this->get_l_width() * disp_zoom);
 	/******if (1.0 < this->_d_scrollbar_x_max)
 	{   this->_d_scrollbar_x_max = 1.0; }******/
 
 	/* 下位置 */
 	this->_d_scrollbar_y_min =
 		(double)(-this->_l_yp) /
-		ceil((double)this->get_l_height() * this->_d_zoom);
+		ceil((double)this->get_l_height() * disp_zoom);
 	/******if (this->_d_scrollbar_y_min < 0.0)
 	{   this->_d_scrollbar_y_min = 0.0; }******/
 
 	/* 上位置 */
 	this->_d_scrollbar_y_max =
 		(double)(-this->_l_yp + this->_l_view_y_size) /
-		ceil((double)this->get_l_height() * this->_d_zoom);
+		ceil((double)this->get_l_height() * disp_zoom);
 	/******if (1.0 < this->_d_scrollbar_y_max)
 	{   this->_d_scrollbar_y_max = 1.0; }******/
 

@@ -1,3 +1,4 @@
+#include <FL/fl_ask.H>  // fl_alert(-)
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "gts_gui.h"
@@ -50,6 +51,7 @@ int gts_master::_iipg_rot90( iip_canvas *clp_parent, int i_rotate_per_90 )
 		if (OK != this->cl_iip_ro90.mem_alloc_canvas()) {
 			pri_funct_err_bttvr(
 	"Error : this->cl_iip_ro90.mem_alloc_canvas() returns NG" );
+	fl_alert( "Memory Error!(at rot90) ,Please Restart." );
 			return NG;
 		}
 	}

@@ -1,4 +1,5 @@
 #include <FL/Fl.H>
+#include <FL/fl_ask.H>  // fl_alert(-)
 
 #include "ptbl_returncode.h"
 #include "pri.h"
@@ -32,7 +33,8 @@ int gts_master::_iipg_color_trace_setup( void )
 		/* メモリの取りなおし */
 		if (OK != this->cl_iip_trac.mem_alloc_canvas()) {
 			pri_funct_err_bttvr(
-		 "Error : this->cl_iip_trac.mem_alloc_canvas() returns NG" );
+	"Error : this->cl_iip_trac.mem_alloc_canvas() returns NG" );
+	fl_alert( "Memory Error!(at color trace) ,Please Restart." );
 			return NG;
 		}
 		this->cl_iip_edot.set_clp_parent(&(this->cl_iip_trac));
