@@ -603,10 +603,11 @@ const bool cb_number::get_file_head_name_( void )
 /* Numberウインドウをnumberリストで再構築 */
 void cb_number::reset_by_number_list( const std::vector<int>& nums )
 {
+	this->remove_all(); /* リスト全消去 */
+
 	if (nums.empty()) { return; }
 	if (this->get_file_head_name_() == false) { return; }
 
-	this->remove_all(); /* リスト全消去 */
 	for (int nn : nums) { this->append_without_S(nn); } /* リスト生成 */
 	this->select_all(); /* リスト全選択 */
 

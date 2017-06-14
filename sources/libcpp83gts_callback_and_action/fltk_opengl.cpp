@@ -149,7 +149,7 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 	else {
 	 const int ext_num =
 		cl_gts_master.cl_trace_files.ext_open.num_from_str(ext);
-	 if (!(head.empty()) && 0 <= ext_num && !(nums.empty())) {
+	 if ( !(head.empty()) && 0 <= ext_num ) {
 		/* Scanの番号であることを表示して示す */
 		cl_gts_master.cl_number.set_type_to_trace();
 

@@ -148,6 +148,23 @@ const std::vector<std::string> ids::path::fltk_native_browse_open_files(
 	);
 }
 
+const std::vector<std::string> ids::path::fltk_native_browse_directory(
+	const std::string& title
+	,const std::string& dpath
+)
+{
+	return fltk_native_file_chooser_(
+		title
+		,::Fl_Native_File_Chooser::BROWSE_SAVE_DIRECTORY
+		,dpath
+		,std::string()
+		,::Fl_Native_File_Chooser::NEW_FOLDER
+		|::Fl_Native_File_Chooser::PREVIEW
+		,std::string()
+		,-1
+	);
+}
+
 #if DEBUG_INO
 #include <FL/Fl_Window.H>
 int main(int argc ,const char* argv[])
@@ -163,6 +180,12 @@ int main(int argc ,const char* argv[])
 	*/
 	Fl_Window win(600, 100, "FLTK Window");
 	win.show();
+
+	/* open directory */
+	std::cout << "open_dir=\"" << ids::path::fltk_native_browse_directory(
+		"Open Directory" /* 開く */
+		,argv[1]
+	).at(0) << "\"\n";
 
 	/* open */
 	std::cout << "open=\"" << ids::path::fltk_native_browse_open(
@@ -213,7 +236,7 @@ int main(int argc ,const char* argv[])
 	return 0;
 }
 /*
-:165,167 w! make.bat
+:247,250 w! make.bat
 rem windows make
 cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_INO /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib ids_path_fltk_native_browse.cpp /Fet
 del ids_path_fltk_native_browse.obj

@@ -45,6 +45,9 @@ public:
 
 	void cb_switch_trace_filter_erase_dot_noise( const bool sw );
 
+	/* 1ファイル名前指定保存 */
+	void cb_browse_save_file( void );
+
 private:
 	int read_and_save_crnt_(
 		const int crnt_file_num

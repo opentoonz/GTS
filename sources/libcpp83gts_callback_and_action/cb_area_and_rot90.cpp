@@ -451,7 +451,7 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 
 	/* 画像あれば回転処理し表示する */
 	cl_gts_master.rot_and_trace_and_enoise_and_preview( 
-		cl_gts_master.cl_iip_ro90.get_clp_parent()
+		cl_gts_master.cl_iip_ro90.get_clp_parent() // scan or read
 		, cl_gts_gui.choice_rot90->value()
 		, cl_gts_master.cl_ogl_view.get_crop_disp_sw()
 	);
