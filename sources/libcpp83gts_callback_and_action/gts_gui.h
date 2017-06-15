@@ -22,8 +22,8 @@
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Browser.H>
 #include "cb_trace_parameters.h"
-#include <FL/Fl_Round_Button.H>
 #include <FL/Fl_Scroll.H>
+#include <FL/Fl_Round_Button.H>
 #include "fltk_1000x100_histogram.h"
 #include "fltk_1000_range_cyclic.h"
 #include <FL/Fl_Light_Button.H>
@@ -1000,7 +1000,11 @@ public:
 private:
   inline void cb_button_trace_thickness_i(fltk_button_trace_parameters*, void*);
   static void cb_button_trace_thickness(fltk_button_trace_parameters*, void*);
+  inline void cb_3_i(Fl_Button*, void*);
+  static void cb_3(Fl_Button*, void*);
 public:
+  Fl_Scroll *scroll_trace_thickness;
+  Fl_Group *group_trace_thickness;
   Fl_Check_Button *chkbtn_thickness_01_chk;
 private:
   inline void cb_chkbtn_thickness_01_chk_i(Fl_Check_Button*, void*);

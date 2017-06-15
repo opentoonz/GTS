@@ -176,7 +176,12 @@ int memory_desktop::load( void ) {
 		else if ((this->str_window_trace_thickness_==key)
 		&& (6==ret)) {
 		cl_gts_gui.window_trace_thickness->resize( xx ,yy ,ww
-		,cl_gts_gui.window_trace_thickness->h()  );
+		//,cl_gts_gui.window_trace_thickness->h()
+		,hh
+		);
+		cl_gts_gui.group_trace_thickness->size(
+		cl_gts_gui.window_trace_thickness->w()-15,215
+		);
 			if (di == "show") {
 		cl_gts_gui.menite_trace_thickness->set();
 		cl_gts_gui.window_main_view->show();/* Need for Minimize */
