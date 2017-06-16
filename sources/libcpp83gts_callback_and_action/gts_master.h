@@ -20,6 +20,7 @@
 
 #include "memory_desktop.h"
 #include "memory_config.h"
+#include "cb_image.h"
 #include "cb_config.h"
 #include "cb_area_and_rot90.h"
 #include "cb_scan_and_save.h"
@@ -69,7 +70,9 @@ public:
 	void cb_quit( void );
 
 	void cb_read_and_preview( void );
-	void cb_read_and_trace_and_preview( void );
+
+	void cb_number_read_and_trace_and_preview( void );
+	void cb_read_and_trace_and_preview( const std::string& fpath_open );
 	void cb_rot_trace_enoise_preview( void );
 
 	void cb_scan_and_preview( void );
@@ -122,6 +125,7 @@ public:
 	memory_short_cut_key	cl_memo_short_cut_key;
 	memory_install_setup	cl_memo_install_setup;
 
+	cb_image		cl_image;
 	cb_config		cl_config;
 	cb_area_and_rot90	cl_area_and_rot90;
 	cb_scan_and_save	cl_scan_and_save;

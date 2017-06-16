@@ -102,12 +102,12 @@ int fl_shortcut_up_down_left_right_( int key )
 		switch (key) {
 		case FL_Up:
 			if (fn.selected_prev_frame()) {
-			 cl_gts_master.cb_read_and_trace_and_preview();
+			 cl_gts_master.cb_number_read_and_trace_and_preview();
 			}
 			break;
 		case FL_Down:
 			if (fn.selected_next_frame()) {
-			 cl_gts_master.cb_read_and_trace_and_preview();
+			 cl_gts_master.cb_number_read_and_trace_and_preview();
 			}
 			break;
 		case FL_Left: /* Fl_ScrollBarのFL_Left イベントをCancel */
@@ -159,7 +159,7 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		);
 
 		/* 画像読込表示 */
-		cl_gts_master.cb_read_and_trace_and_preview();
+		cl_gts_master.cb_number_read_and_trace_and_preview();
 	 }
 	}
 	return std::string();

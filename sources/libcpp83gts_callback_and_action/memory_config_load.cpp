@@ -1049,7 +1049,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	cl_gts_gui.opengl_view->flush();
 
 	/* 画像読込表示 */
-	cl_gts_master.cb_read_and_trace_and_preview();
+	cl_gts_master.cb_number_read_and_trace_and_preview();
  }
  catch (const std::ios_base::failure& e) {
 	std::ostringstream ost;

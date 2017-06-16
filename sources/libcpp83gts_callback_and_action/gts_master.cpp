@@ -112,6 +112,10 @@ int gts_master::exec( const char *comm )
 	this->cl_trace_files.ext_open.set_filter( "TGA",".tga");/* 1番目 */
 	this->cl_trace_files.ext_save.set_filter("TIFF",".tif");/* 0番目 */
 	this->cl_trace_files.ext_save.set_filter( "TGA",".tga");/* 1番目 */
+	this->cl_image.ext_open.set_filter("TIFF",".tif");/* 0番目 */
+	this->cl_image.ext_open.set_filter( "TGA",".tga");/* 1番目 */
+	this->cl_image.ext_save.set_filter("TIFF",".tif");/* 0番目 */
+	this->cl_image.ext_save.set_filter( "TGA",".tga");/* 1番目 */
 
 	/*
 		GUI(fltk)生成
@@ -135,7 +139,7 @@ int gts_master::exec( const char *comm )
 	/* short cut key設定 */
 	this->cl_memo_short_cut_key.set_shortcut();
 
-	/* 画像書式種類(拡張子)設定 */
+	/* 画像書式種類(拡張子)をGUIに設定 */
 	for(int ii=0;ii<this->cl_scan_and_save.ext_save.size() ;++ii) {
 	       cl_gts_gui.choice_scan_save_image_format->add(
 			this->cl_scan_and_save.ext_save.str_from_num(ii).c_str()

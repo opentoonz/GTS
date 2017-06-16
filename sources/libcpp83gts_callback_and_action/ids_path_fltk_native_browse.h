@@ -8,6 +8,12 @@ namespace ids {
 namespace path {
 
 /*
+注意
+dpathにsjis(cp932)が混じると初期フォルダー位置を指定できない
+fltkのwidgetの入出力はutf8
+*/
+
+/*
 ファイルを一つ開くためのブラウザーを開きファイルパスを得る
 エラーの場合例外処理を投げる
 Cancelの場合1番目のパスがempty()
@@ -17,7 +23,7 @@ const std::vector<std::string> fltk_native_browse_open(
 	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter
-	,const int filter_current
+	,int& filter_current
 );
 
 /*
@@ -30,7 +36,7 @@ const std::vector<std::string> fltk_native_browse_save(
 	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter
-	,const int filter_current
+	,int& filter_current
 );
 
 /*
@@ -43,7 +49,7 @@ const std::vector<std::string> fltk_native_browse_open_files(
 	,const std::string& dpath
 	,const std::string& preset_file
 	,const std::string& filter_str
-	,const int filter_current
+	,int& filter_current
 );
 
 /*

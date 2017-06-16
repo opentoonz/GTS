@@ -44,12 +44,14 @@ int cb_config::loading_and_set_dpath_fname(
 void cb_config::open( void )
 {
 	/* NativeブラウザーOpenで開く */
+	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config"
 		,this->dir_path_
-		,this->open_file_name_
+		//,this->open_file_name_
+		,""
 		,std::string("Text(Config)\t*")+this->ext_
-		,0
+		,filter_current
 	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
@@ -62,12 +64,13 @@ void cb_config::open( void )
 void cb_config::open_only_trace_parameters( void )
 {
 	/* NativeブラウザーOpenで開く */
+	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config only Trace Parameters"
 		,this->dir_path_
 		,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
-		,0
+		,filter_current
 	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
@@ -88,12 +91,13 @@ void cb_config::open_only_trace_parameters( void )
 void cb_config::open_only_area_and_rot90( void )
 {
 	/* NativeブラウザーOpenで開く */
+	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config only Area and Rot90"
 		,this->dir_path_
 		,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
-		,0
+		,filter_current
 	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
@@ -114,12 +118,13 @@ void cb_config::open_only_area_and_rot90( void )
 void cb_config::open_only_pixel_type_and_bright( void )
 {
 	/* NativeブラウザーOpenで開く */
+	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config only Pixel Type and Bright"
 		,this->dir_path_
 		,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
-		,0
+		,filter_current
 	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
@@ -142,12 +147,13 @@ void cb_config::open_only_pixel_type_and_bright( void )
 void cb_config::save_as( void )
 {
 	/* NativeブラウザーSaveで開く */
+	int filter_current=0;
 	std::string fpath = ids::path::fltk_native_browse_save(
-		"Save As Config"
+		"Save Config As"
 		,this->dir_path_
 		,this->save_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
-		,0
+		,filter_current
 	).at(0);
 	/* Cancel */
 	if (fpath.empty()) {
@@ -180,7 +186,7 @@ void cb_config::save( void )
 {
 	/* まだconfigファイルをOpenもSaveAsもしていない */
 	if ( this->dir_path_.empty() || this->save_file_name_.empty() ) {
-		fl_alert("Use \'Save As Config\'");
+		fl_alert("Use \'Save Config As\'");
 		return;
 	}
 

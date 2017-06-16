@@ -375,6 +375,8 @@ void cb_trace_files::cb_renumber(void)
 void cb_trace_files::cb_browse_open_file( void )
 {
 	/* NativeブラウザーOpenで開く */
+	int filter_current=
+		cl_gts_gui.choice_trace_open_image_format->value();
 	const std::string filepath = ids::path::fltk_native_browse_open(
 		"Open Image(s)"
 		,cl_gts_gui.filinp_trace_open_dir_path->value()
@@ -382,7 +384,7 @@ void cb_trace_files::cb_browse_open_file( void )
 		static_cast<int>(cl_gts_gui.valout_trace_num_start->value())
 		)
 		,this->ext_open.get_native_filters()
-		,cl_gts_gui.choice_trace_open_image_format->value()
+		,filter_current
 	).at(0);
 
 	/* Cancel */
@@ -418,7 +420,7 @@ void cb_trace_files::cb_browse_open_file( void )
 	this->set_gui_for_open( dpath ,head ,num ,ext ,nums );
 
 	/* 画像読込表示 */
-	cl_gts_master.cb_read_and_trace_and_preview();
+	cl_gts_master.cb_number_read_and_trace_and_preview();
 }
 void cb_trace_files::set_gui_for_open(
 	const std::string& dpath
