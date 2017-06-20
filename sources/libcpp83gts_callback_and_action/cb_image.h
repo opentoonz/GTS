@@ -23,11 +23,19 @@ public:
 	   this->open_file_name_ = ss; }
 	void set_save_file_name(const std::string&ss) {
 	   this->save_file_name_ = ss; }
-	void set_open_ext( const int crnt ) {
-		this->ext_open_filter_current_ = crnt;
+	void set_open_image_format( const std::string& ext ) {
+		this->ext_open_filter_current_ =
+		this->ext_open.num_from_str(ext);
+		if (this->ext_open_filter_current_ < 0) {
+		    this->ext_open_filter_current_ = 0;
+		}
 	}
-	void set_save_ext( const int crnt ) {
-		this->ext_save_filter_current_ = crnt;
+	void set_save_image_format( const std::string& ext ) {
+		this->ext_save_filter_current_ =
+		this->ext_save.num_from_str(ext);
+		if (this->ext_save_filter_current_ < 0) {
+		    this->ext_save_filter_current_ = 0;
+		}
 	}
 
 	const std::string get_dir_path(void) {
@@ -36,11 +44,11 @@ public:
 	   return this->open_file_name_;}
 	const std::string get_save_file_name(void) {
 	   return this->save_file_name_;}
-	const std::string get_open_ext(void) { return
+	const std::string get_open_image_format(void) { return
 		this->ext_open.str_from_num(
 		this->ext_open_filter_current_ );
 	}
-	const std::string get_save_ext(void) { return
+	const std::string get_save_image_format(void) { return
 		this->ext_save.str_from_num(
 		this->ext_save_filter_current_ );
 	}

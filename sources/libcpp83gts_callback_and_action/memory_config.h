@@ -29,6 +29,17 @@ public:
 		,str_config_save_file_name_legacy2016_(
 		    "config_save_as_file")
 
+	,str_image_dir_path_(
+	    "image_dir_path")
+	,str_image_open_file_name_(
+	    "image_open_file_name")
+	,str_image_open_image_format_(
+	    "image_open_image_format")
+	,str_image_save_file_name_(
+	    "image_save_file_name")
+	,str_image_save_image_format_(
+	    "image_save_image_format")
+
 	,str_scan_filter_trace_sw_(
 	    "scan_filter_trace_sw")
 		,str_scan_filter_trace_sw_legacy2017_(
@@ -309,6 +320,7 @@ public:
 	    "color_trace_06_tgt_color")
 
 	,load_config_sw_(true)
+	,load_image_sw_(true)
 	,load_scan_and_save_sw_(true)
 	,load_trace_files_sw_(true)
 	,load_crop_area_and_rot90_sw_(true)
@@ -339,6 +351,12 @@ private:
 	const char* str_config_open_file_name_legacy2016_;
 	const char* str_config_save_file_name_;
 	const char* str_config_save_file_name_legacy2016_;
+
+	const char* str_image_dir_path_;
+	const char* str_image_open_file_name_;
+	const char* str_image_open_image_format_;
+	const char* str_image_save_file_name_;
+	const char* str_image_save_image_format_;
 
 	const char* str_scan_filter_trace_sw_;
 	const char* str_scan_filter_trace_sw_legacy2017_;
@@ -488,6 +506,7 @@ private:
 	const char* str_color_trace_06_tgt_color_;
 
 	bool load_config_sw_;
+	bool load_image_sw_;
 	bool load_scan_and_save_sw_;
 	bool load_trace_files_sw_;
 	bool load_crop_area_and_rot90_sw_;
@@ -503,6 +522,7 @@ private:
 	);
 	void save_head_( std::ofstream& ofs );
 	void save_config_( std::ofstream& ofs );
+	void save_image_( std::ofstream& ofs );
 	void save_scan_and_save_( std::ofstream& ofs );
 	void save_trace_files_( std::ofstream& ofs );
 	void save_crop_area_and_rot90_( std::ofstream& ofs );
@@ -518,6 +538,7 @@ private:
 		,bool& scan_num_continue_type_sw
 	);
 	bool load_config_( std::vector< std::string >& words );
+	bool load_image_( std::vector< std::string >& words );
 	bool load_scan_and_save_( std::vector< std::string >& words
 		,bool& scan_num_continue_type_sw );
 	bool load_trace_files_( std::vector< std::string >& words );
