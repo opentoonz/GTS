@@ -17,21 +17,33 @@ public:
 	void open(void);
 	void save_as(void);
 
-	void add_ext_if_not_exist( std::string&fpath );
-
 	void set_dir_path(const std::string&ss) {
 	   this->dir_path_ = ss; }
 	void set_open_file_name(const std::string&ss) {
 	   this->open_file_name_ = ss; }
 	void set_save_file_name(const std::string&ss) {
 	   this->save_file_name_ = ss; }
+	void set_open_ext( const int crnt ) {
+		this->ext_open_filter_current_ = crnt;
+	}
+	void set_save_ext( const int crnt ) {
+		this->ext_save_filter_current_ = crnt;
+	}
 
-	std::string get_dir_path(void) {
+	const std::string get_dir_path(void) {
 	   return this->dir_path_;}
-	std::string get_open_file_name(void) {
+	const std::string get_open_file_name(void) {
 	   return this->open_file_name_;}
-	std::string get_save_file_name(void) {
+	const std::string get_save_file_name(void) {
 	   return this->save_file_name_;}
+	const std::string get_open_ext(void) { return
+		this->ext_open.str_from_num(
+		this->ext_open_filter_current_ );
+	}
+	const std::string get_save_ext(void) { return
+		this->ext_save.str_from_num(
+		this->ext_save_filter_current_ );
+	}
 
 private:
 	std::string	dir_path_
@@ -39,6 +51,8 @@ private:
 			,save_file_name_;/* Open/Save両方で設定する */
 	int ext_open_filter_current_;
 	int ext_save_filter_current_;
+
+	bool ext_save_is_exist_( std::string& fpath );
 };
 
 #endif /* !cb_image_h */

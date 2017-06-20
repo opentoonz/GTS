@@ -13,9 +13,8 @@ void cb_image::open( void )
 	int filter_current = this->ext_open_filter_current_;
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Image"
-		,this->dir_path_.c_str()
-		//,this->open_file_name_.c_str()
-		,""
+		,this->dir_path_
+		,"" /* 開くときは選択が必須のためファイル名は空白表示 */
 		,this->ext_open.get_native_filters()
 		,filter_current
 	).at(0);
@@ -25,12 +24,15 @@ void cb_image::open( void )
 		return;
 	}
 
-	/* fpathからfolderpathとfilenameを記憶しとく */
-	this->ext_open_filter_current_ = filter_current;
+	/* 有効なパスを開いたらその状態を記憶する */
 	ids::path::from_fpath_to_dpath_fname(
 		fpath ,this->dir_path_ ,this->open_file_name_
 	);
+	this->ext_open_filter_current_ = filter_current;
+
+	/* 次の保存時は、ここで開いた名前と拡張子が初期値 */
 	this->save_file_name_ = this->open_file_name_;
+	this->ext_save_filter_current_ = this->ext_open_filter_current_;
 
 	/* 画像読込表示 */
 	cl_gts_master.cb_read_and_trace_and_preview( fpath );
@@ -90,16 +92,17 @@ void cb_image::save_as( void )
 		return;
 	}
 
-	/* 保存名を記憶(開いた名前は変わらない) */
+	/* 有効なパスを開いたらその状態を記憶する */
 	ids::path::from_fpath_to_dpath_fname(
-		fpath
-		,this->dir_path_
-		,this->save_file_name_
+		fpath ,this->dir_path_ ,this->save_file_name_
 	);
 	this->ext_save_filter_current_ = filter_current;
 
-	/* 拡張子がなければ追加 */
-	this->add_ext_if_not_exist( fpath );
+	/* 拡張子がなければError */
+	if (this->ext_save_is_exist_( fpath ) == false) {
+		fl_alert("Need Extension.");
+		return;
+	}
 
 	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
 	if (cl_gts_master.rot_and_trace_and_enoise( parent ,rot90 ) != OK) {
@@ -122,18 +125,19 @@ void cb_image::save_as( void )
 	}
 }
 
-void cb_image::add_ext_if_not_exist( std::string&fpath )
+bool cb_image::ext_save_is_exist_( std::string& fpath )
 {
-	/* fpathから拡張子を得る */
-
-	/* 拡張子が規定の物かどうか調べる */
+	/* 拡張子が規定の物なら、既に有効な拡張子が付いている */
 	for (int ii=0; ii<this->ext_save.size() ;++ii) {
-		this->ext_save.str_from_num()
-	}
+		/* 各拡張子... */
+		std::string ext( this->ext_save.str_from_num(ii) );
 
-	/* 拡張子が規定の物でないときは現在の指定の拡張子を与える、指定が複数の場合はデフォルト拡張子を与える???? */
-	if ((fpath.size() < ext.size())
-	||  (fpath.substr(fpath.size()-ext.size()) != ext)) {
-		fpath += ext;
+		/* パスが各拡張子より長く... */
+		if ((ext.size() <= fpath.size())
+		/* 拡張子が同一である */
+		&&  (ext == fpath.substr(fpath.size()-ext.size()))) {
+			return true;
+		}
 	}
+	return false;
 }

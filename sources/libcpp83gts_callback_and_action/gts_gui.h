@@ -450,14 +450,12 @@ private:
   static void cb_window_trace_files(Fl_Double_Window*, void*);
 public:
   Fl_File_Input *filinp_trace_open_dir_path;
-private:
-  inline void cb_1_i(Fl_Button*, void*);
-  static void cb_1(Fl_Button*, void*);
-public:
   Fl_Input *strinp_trace_open_file_head;
   Fl_Input *strinp_trace_open_number_format;
   Fl_Choice *choice_trace_open_image_format;
 private:
+  inline void cb_1_i(Fl_Button*, void*);
+  static void cb_1(Fl_Button*, void*);
   inline void cb_Rename1_i(Fl_Button*, void*);
   static void cb_Rename1(Fl_Button*, void*);
   inline void cb_Renumber1_i(Fl_Button*, void*);

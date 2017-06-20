@@ -52,8 +52,8 @@ void gts_master::cb_read_and_trace_and_preview(
 	/* 番号に対するファイルパスを得ることはできるか */
 	if (fpath_open.empty()) {
 		pri_funct_err_bttvr(
-	"Error : this->cl_trace_files.get_open_path(%d) returns nullptr."
-			, crnt_file_num
+   "Error : fpath_open(%s) returns nullptr."
+	  , fpath_open.c_str()
 		);
 		return;
 	}

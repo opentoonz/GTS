@@ -19,7 +19,7 @@ void gts_gui::cb_window_main_view(Fl_Double_Window* o, void* v) {
 }
 
 void gts_gui::cb_Open_i(Fl_Menu_*, void*) {
-  cl_gts_master.cl_trace_files.cb_browse_open_file();
+  cl_gts_master.cl_image.open();
 }
 void gts_gui::cb_Open(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Open_i(o,v);
@@ -33,7 +33,7 @@ void gts_gui::cb_Set(Fl_Menu_* o, void* v) {
 }
 
 void gts_gui::cb_Save_i(Fl_Menu_*, void*) {
-  cl_gts_master.cl_trace_files.cb_browse_save_file();
+  cl_gts_master.cl_image.save_as();
 }
 void gts_gui::cb_Save(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Save_i(o,v);
@@ -282,7 +282,7 @@ void gts_gui::cb_All(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_Prev_i(Fl_Menu_*, void*) {
   if (cl_gts_master.cl_number.selected_prev_frame()) {
-    cl_gts_master.cb_read_and_trace_and_preview();
+    cl_gts_master.cb_number_read_and_trace_and_preview();
 };
 }
 void gts_gui::cb_Prev(Fl_Menu_* o, void* v) {
@@ -291,7 +291,7 @@ void gts_gui::cb_Prev(Fl_Menu_* o, void* v) {
 
 void gts_gui::cb_Next_i(Fl_Menu_*, void*) {
   if (cl_gts_master.cl_number.selected_next_frame()) {
-    cl_gts_master.cb_read_and_trace_and_preview();
+    cl_gts_master.cb_number_read_and_trace_and_preview();
 };
 }
 void gts_gui::cb_Next(Fl_Menu_* o, void* v) {
@@ -410,7 +410,7 @@ void gts_gui::cb_menite_help_about(Fl_Menu_* o, void* v) {
 
 Fl_Menu_Item gts_gui::menu_[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Open Image(s)...", 0x4006f,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Open Image...", 0x4006f,  (Fl_Callback*)gts_gui::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Set Saving Folder for Scan...", 0,  (Fl_Callback*)gts_gui::cb_Set, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {"Save Image As...", 0x50073,  (Fl_Callback*)gts_gui::cb_Save, 0, 128, FL_NORMAL_LABEL, 0, 14, 0},
  {"Open Config...", 0x8006f,  (Fl_Callback*)gts_gui::cb_Open1, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
@@ -1056,7 +1056,7 @@ void gts_gui::cb_norinp_number_input(Fl_Input* o, void* v) {
 }
 
 void gts_gui::cb_selbro_number_list_i(Fl_Browser*, void*) {
-  cl_gts_master.cb_read_and_trace_and_preview();
+  cl_gts_master.cb_number_read_and_trace_and_preview();
 }
 void gts_gui::cb_selbro_number_list(Fl_Browser* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_selbro_number_list_i(o,v);
@@ -5714,34 +5714,41 @@ Fl_Double_Window* gts_gui::make_window() {
   } // Fl_Double_Window* window_scan_and_save
   { window_trace_files = new Fl_Double_Window(200, 385, "Trace Files");
     window_trace_files->callback((Fl_Callback*)cb_window_trace_files, (void*)(this));
-    { Fl_Group* o = new Fl_Group(1, 20, 198, 125, "Open");
+    { Fl_Group* o = new Fl_Group(1, 20, 199, 125, "Open");
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Group* o = new Fl_Group(1, 25, 198, 35);
-        { new Fl_Box(1, 25, 49, 35);
-        } // Fl_Box* o
-        { filinp_trace_open_dir_path = new Fl_File_Input(50, 25, 134, 35, "Folder");
-          filinp_trace_open_dir_path->when(FL_WHEN_CHANGED);
-          Fl_Group::current()->resizable(filinp_trace_open_dir_path);
-        } // Fl_File_Input* filinp_trace_open_dir_path
-        { Fl_Button* o = new Fl_Button(184, 35, 15, 25, "...");
+      { Fl_Group* o = new Fl_Group(1, 25, 199, 70);
+        { Fl_Group* o = new Fl_Group(1, 25, 183, 65);
+          { Fl_Group* o = new Fl_Group(1, 25, 183, 35);
+            { new Fl_Box(1, 25, 49, 35);
+            } // Fl_Box* o
+            { filinp_trace_open_dir_path = new Fl_File_Input(50, 25, 134, 35, "Folder");
+              filinp_trace_open_dir_path->when(FL_WHEN_CHANGED);
+              Fl_Group::current()->resizable(filinp_trace_open_dir_path);
+            } // Fl_File_Input* filinp_trace_open_dir_path
+            o->end();
+          } // Fl_Group* o
+          { Fl_Group* o = new Fl_Group(1, 65, 183, 25);
+            { new Fl_Box(1, 65, 49, 25);
+            } // Fl_Box* o
+            { strinp_trace_open_file_head = new Fl_Input(50, 65, 35, 25, "File");
+              strinp_trace_open_file_head->box(FL_BORDER_BOX);
+              strinp_trace_open_file_head->when(FL_WHEN_CHANGED);
+              Fl_Group::current()->resizable(strinp_trace_open_file_head);
+            } // Fl_Input* strinp_trace_open_file_head
+            { strinp_trace_open_number_format = new Fl_Input(85, 65, 45, 25);
+            } // Fl_Input* strinp_trace_open_number_format
+            { choice_trace_open_image_format = new Fl_Choice(130, 65, 54, 25);
+              choice_trace_open_image_format->down_box(FL_BORDER_BOX);
+            } // Fl_Choice* choice_trace_open_image_format
+            o->end();
+          } // Fl_Group* o
+          o->end();
+          Fl_Group::current()->resizable(o);
+        } // Fl_Group* o
+        { Fl_Button* o = new Fl_Button(184, 35, 15, 55, "...");
           o->callback((Fl_Callback*)cb_1);
         } // Fl_Button* o
-        o->end();
-      } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(1, 65, 198, 25);
-        { new Fl_Box(1, 65, 49, 25);
-        } // Fl_Box* o
-        { strinp_trace_open_file_head = new Fl_Input(50, 65, 50, 25, "File");
-          strinp_trace_open_file_head->box(FL_BORDER_BOX);
-          strinp_trace_open_file_head->when(FL_WHEN_CHANGED);
-          Fl_Group::current()->resizable(strinp_trace_open_file_head);
-        } // Fl_Input* strinp_trace_open_file_head
-        { strinp_trace_open_number_format = new Fl_Input(100, 65, 45, 25);
-        } // Fl_Input* strinp_trace_open_number_format
-        { choice_trace_open_image_format = new Fl_Choice(145, 65, 54, 25);
-          choice_trace_open_image_format->down_box(FL_BORDER_BOX);
-        } // Fl_Choice* choice_trace_open_image_format
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(1, 95, 198, 45);

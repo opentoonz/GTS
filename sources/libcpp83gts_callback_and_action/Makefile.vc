@@ -35,6 +35,7 @@ cb_color_trace_src.cpp\
 cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
 cb_config.cpp\
+cb_image.cpp\
 cb_input_number_format.cpp\
 cb_number.cpp\
 cb_pixel_type_and_bright.cpp\

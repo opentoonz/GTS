@@ -48,8 +48,7 @@ void cb_config::open( void )
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config"
 		,this->dir_path_
-		//,this->open_file_name_
-		,""
+		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,filter_current
 	).at(0);
@@ -68,7 +67,7 @@ void cb_config::open_only_trace_parameters( void )
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config only Trace Parameters"
 		,this->dir_path_
-		,this->open_file_name_
+		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,filter_current
 	).at(0);
@@ -95,7 +94,7 @@ void cb_config::open_only_area_and_rot90( void )
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config only Area and Rot90"
 		,this->dir_path_
-		,this->open_file_name_
+		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,filter_current
 	).at(0);
@@ -122,7 +121,7 @@ void cb_config::open_only_pixel_type_and_bright( void )
 	const std::string fpath = ids::path::fltk_native_browse_open(
 		"Open Config only Pixel Type and Bright"
 		,this->dir_path_
-		,this->open_file_name_
+		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,filter_current
 	).at(0);

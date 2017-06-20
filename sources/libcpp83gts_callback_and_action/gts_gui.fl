@@ -30,8 +30,8 @@ class gts_gui {open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {Open Image(s)...}
-            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
+            label {Open Image...}
+            callback {cl_gts_master.cl_image.open();}
             xywh {0 0 30 20} shortcut 0x4006f
           }
           MenuItem {} {
@@ -41,7 +41,7 @@ class gts_gui {open
           }
           MenuItem {} {
             label {Save Image As...}
-            callback {cl_gts_master.cl_trace_files.cb_browse_save_file();}
+            callback {cl_gts_master.cl_image.save_as();}
             xywh {0 0 30 20} shortcut 0x50073 divider
           }
           MenuItem {} {
@@ -967,40 +967,48 @@ cl_gts_gui.menite_trace_files->clear();}
     } {
       Fl_Group {} {
         label Open open
-        xywh {1 20 198 125} box BORDER_BOX align 5
+        xywh {1 20 199 125} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
-          xywh {1 25 198 35}
+          xywh {1 25 199 70}
         } {
-          Fl_Box {} {
-            xywh {1 25 49 35}
-          }
-          Fl_File_Input filinp_trace_open_dir_path {
-            label Folder
-            xywh {50 25 134 35} when 1 resizable
+          Fl_Group {} {open
+            xywh {1 25 183 65} resizable
+          } {
+            Fl_Group {} {open
+              xywh {1 25 183 35}
+            } {
+              Fl_Box {} {
+                xywh {1 25 49 35}
+              }
+              Fl_File_Input filinp_trace_open_dir_path {
+                label Folder
+                xywh {50 25 134 35} when 1 resizable
+              }
+            }
+            Fl_Group {} {open
+              xywh {1 65 183 25}
+            } {
+              Fl_Box {} {
+                xywh {1 65 49 25}
+              }
+              Fl_Input strinp_trace_open_file_head {
+                label File
+                xywh {50 65 35 25} box BORDER_BOX when 1 resizable
+              }
+              Fl_Input strinp_trace_open_number_format {
+                xywh {85 65 45 25}
+              }
+              Fl_Choice choice_trace_open_image_format {open
+                xywh {130 65 54 25} down_box BORDER_BOX
+              } {}
+            }
           }
           Fl_Button {} {
             label {...}
             callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
-            xywh {184 35 15 25}
+            xywh {184 35 15 55}
           }
-        }
-        Fl_Group {} {open
-          xywh {1 65 198 25}
-        } {
-          Fl_Box {} {
-            xywh {1 65 49 25}
-          }
-          Fl_Input strinp_trace_open_file_head {
-            label File
-            xywh {50 65 50 25} box BORDER_BOX when 1 resizable
-          }
-          Fl_Input strinp_trace_open_number_format {
-            xywh {100 65 45 25}
-          }
-          Fl_Choice choice_trace_open_image_format {open
-            xywh {145 65 54 25} down_box BORDER_BOX
-          } {}
         }
         Fl_Group {} {open
           xywh {1 95 198 45}
@@ -1217,7 +1225,7 @@ cl_gts_gui.window_trace_output_color->hide();
 cl_gts_gui.menite_trace_output_color->clear();
 cl_gts_gui.window_trace_input_color->hide();
 cl_gts_gui.menite_trace_input_color->clear();}
-      xywh {50 50 285 785} type Double non_modal visible
+      xywh {50 0 285 785} type Double non_modal visible
     } {
       Fl_Group {} {open
         xywh {0 0 285 780}
