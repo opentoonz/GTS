@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "ptbl_returncode.h"
+#include "ptbl_funct.h"
 #include "pri.h"
 #include "bwrite.h"
 
@@ -29,7 +30,13 @@ int bwrite_open( char *cp_fname, BWRITE *tp_ )
 		return NG;
 	}
 
+#if defined _WIN32
+	char* path = ptbl_charcode_cp932_from_utf8(cp_fname);
+	tp_->_fp = fopen( path ,"wb" );
+	free(path);
+#else
 	tp_->_fp = fopen( cp_fname, "wb" );
+#endif
 	if (NULL == tp_->_fp) {
 		pri_funct_err_bttvr(
 			"Error : fopen(%s,r) returns NULL.", cp_fname );

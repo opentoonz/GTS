@@ -187,7 +187,13 @@ int memory_desktop::_save_by_fname( const char *cp_fname )
 {
 	FILE *fp;
 
+#if defined _WIN32
+	char* path = ptbl_charcode_cp932_from_utf8( cp_fname );
+	fp = fopen( path, "w" );
+	free(path);
+#else
 	fp = fopen( cp_fname, "w" );
+#endif
 	if (NULL == fp) {
 		pri_funct_err_bttvr(
 		"fopen(%s,w) returns NULL.",cp_fname);

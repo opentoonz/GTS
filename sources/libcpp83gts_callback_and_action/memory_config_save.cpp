@@ -400,7 +400,13 @@ void memory_config::save_number_( std::ofstream& ofs )
 int memory_config::save( const std::string& file_path )
 {
  try {
+#if defined _WIN32
+	char* path = ptbl_charcode_cp932_from_utf8(file_path.c_str());
+	std::ofstream ofs(path); /* ファイル開く */
+	free(path);
+#else
 	std::ofstream ofs(file_path); /* ファイル開く */
+#endif
 	ofs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
 	this->save_head_(ofs);
 	this->save_config_(ofs);

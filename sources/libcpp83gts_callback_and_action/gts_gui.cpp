@@ -5714,10 +5714,10 @@ Fl_Double_Window* gts_gui::make_window() {
   } // Fl_Double_Window* window_scan_and_save
   { window_trace_files = new Fl_Double_Window(200, 385, "Trace Files");
     window_trace_files->callback((Fl_Callback*)cb_window_trace_files, (void*)(this));
-    { Fl_Group* o = new Fl_Group(1, 20, 199, 125, "Open");
+    { Fl_Group* o = new Fl_Group(1, 20, 198, 125, "Open");
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Group* o = new Fl_Group(1, 25, 199, 70);
+      { Fl_Group* o = new Fl_Group(1, 25, 198, 70);
         { Fl_Group* o = new Fl_Group(1, 25, 183, 65);
           { Fl_Group* o = new Fl_Group(1, 25, 183, 35);
             { new Fl_Box(1, 25, 49, 35);
@@ -5746,7 +5746,7 @@ Fl_Double_Window* gts_gui::make_window() {
           o->end();
           Fl_Group::current()->resizable(o);
         } // Fl_Group* o
-        { Fl_Button* o = new Fl_Button(184, 35, 15, 55, "...");
+        { Fl_Button* o = new Fl_Button(184, 35, 14, 55, "...");
           o->callback((Fl_Callback*)cb_1);
         } // Fl_Button* o
         o->end();

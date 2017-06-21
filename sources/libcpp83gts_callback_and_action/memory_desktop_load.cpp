@@ -58,7 +58,14 @@ int memory_desktop::load( void ) {
 
 	/* 古いfileパスでファイルあるならそちらを優先-->保存は標準パス */
 	bool old_type_sw = false;
-	std::ifstream ifs( old_path.c_str() );
+
+#if defined _WIN32
+	char* path = ptbl_charcode_cp932_from_utf8( old_path.c_str() );
+	std::ifstream ifs( path );
+	free(path);
+#else
+	std::ifstream ifs( old_path );
+#endif
 	if (!ifs) {
 		/* 古いファイルはない、ので標準ファイル名で探す */
 		ifs.close();

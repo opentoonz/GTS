@@ -967,10 +967,10 @@ cl_gts_gui.menite_trace_files->clear();}
     } {
       Fl_Group {} {
         label Open open
-        xywh {1 20 199 125} box BORDER_BOX align 5
+        xywh {1 20 198 125} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
-          xywh {1 25 199 70}
+          xywh {1 25 198 70}
         } {
           Fl_Group {} {open
             xywh {1 25 183 65} resizable
@@ -1006,8 +1006,8 @@ cl_gts_gui.menite_trace_files->clear();}
           }
           Fl_Button {} {
             label {...}
-            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
-            xywh {184 35 15 55}
+            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();} selected
+            xywh {184 35 14 55}
           }
         }
         Fl_Group {} {open

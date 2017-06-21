@@ -1022,7 +1022,13 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	//---------- read file ----------
   {
+#if defined _WIN32
+	char* path = ptbl_charcode_cp932_from_utf8(file_path.c_str());
+	std::ifstream ifs( path );/* ファイル開く */
+	free(path);
+#else
 	std::ifstream ifs( file_path );/* ファイル開く */
+#endif
 	ifs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
    try {	/* std::getline()はEOFの場合も例外を投げてしまう */
 	this->load_trace_batch_sw_ =  load_trace_batch_sw;

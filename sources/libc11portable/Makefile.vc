@@ -4,8 +4,10 @@ NAME = libc11portable
 OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
 # /wd4996 : Stop warning message by MS-C old function
 # /wd4819 : Stop warning message about Language Code
-INCS = /I.
+INCS =\
+/I.
 SRCS =\
+ptbl_charcode.c\
 ptbl_cpu_is_little_endian.c\
 ptbl_dir_or_file_is_exist.c\
 ptbl_get_cp_hostname.c\
