@@ -1,5 +1,6 @@
-#include <FL/fl_ask.H> // fl_alert()
+#include <cstdlib> /* free() */
 #include <ctype.h> // isdigit()
+#include <FL/fl_ask.H> // fl_alert()
 #include <iostream>
 #include <fstream>
 #include <sstream>

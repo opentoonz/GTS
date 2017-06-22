@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>	/* calloc() */
+#include <stdlib.h>	/* calloc() free() */
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"
 #include "pri.h"

@@ -1,5 +1,5 @@
 #include <string.h>
-#include <stdlib.h> // free
+#include <stdlib.h> /* free() */
 #include <sys/types.h>
 #include <sys/stat.h>
 #if defined _WIN32

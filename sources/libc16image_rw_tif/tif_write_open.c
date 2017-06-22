@@ -1,3 +1,4 @@
+#include <stdlib.h> /* free() */
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"
 #include "pri.h"

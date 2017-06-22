@@ -1,3 +1,4 @@
+#include <cstdlib> /* free() */
 #include <cstdio>	// std::rename(-)
 #include <iostream>	// std::cout
 #include <sstream>	// std::ostringstream
@@ -283,8 +284,9 @@ void cb_trace_files::cb_rename(void)
 #if defined _WIN32
 		char* opepa = ptbl_charcode_cp932_from_utf8(opa.c_str());
 		char* newpa = ptbl_charcode_cp932_from_utf8(npa.c_str());
-		if (strlen(opepa) < 1 || strlen(newpa) < 1) {
-			fl_alert("Error:rename %s %s"
+		if (opepa == nullptr || newpa == nullptr ||
+		strlen(opepa) < 1 || strlen(newpa) < 1) {
+			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
@@ -294,7 +296,6 @@ void cb_trace_files::cb_rename(void)
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif
-	}
 	}
 
 	/* rename成功したら、新しい名前に表示変更 */
@@ -380,8 +381,9 @@ void cb_trace_files::cb_renumber(void)
 #if defined _WIN32
 		char* opepa = ptbl_charcode_cp932_from_utf8(opa.c_str());
 		char* newpa = ptbl_charcode_cp932_from_utf8(npa.c_str());
-		if (strlen(opepa) < 1 || strlen(newpa) < 1) {
-			fl_alert("Error:rename %s %s"
+		if (opepa == nullptr || newpa == nullptr ||
+		strlen(opepa) < 1 || strlen(newpa) < 1) {
+			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}

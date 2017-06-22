@@ -1,8 +1,9 @@
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib> /* free() */
+#include <cstring>
+#include <cerrno>
 #include <string>	// std::stoi() C++11
 #include <fstream>
-#include <cerrno>
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h" // ptbl_getenv(-)

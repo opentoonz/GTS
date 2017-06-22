@@ -1,5 +1,6 @@
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib> /* free() */
+#include <cstring>
 #include <ctime>
 #include <string>
 #include "ptbl_returncode.h"

@@ -1,3 +1,4 @@
+#include <cstdlib> /* free() */
 #include <ctime>
 #include <iostream>
 #include <iomanip>	// std::setw()
