@@ -1,5 +1,4 @@
 #include <string.h>
-#include <stdlib.h> /* free() */
 #include <sys/types.h>
 #include <sys/stat.h>
 #if defined _WIN32
@@ -44,9 +43,7 @@ int ptbl_dir_or_file_is_exist( char *cp_path )
 	}
 
 	/* Windowsはファイルパスの日本語文字コードがcp932 */
-	char* path = ptbl_charcode_cp932_from_utf8(cp_path);
-	i_ret = _stat( path, &t_stat );
-	free(path);
+	i_ret = _stat( ptbl_charcode_cp932_from_utf8(cp_path) , &t_stat );
 
 	if (0 != cc) {
 		cp_path[i_len-1] = cc;

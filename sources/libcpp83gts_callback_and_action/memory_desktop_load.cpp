@@ -1,5 +1,4 @@
 #include <cstdio>
-#include <cstdlib> /* free() */
 #include <cstring>
 #include <cerrno>
 #include <string>	// std::stoi() C++11
@@ -61,9 +60,9 @@ int memory_desktop::load( void ) {
 	bool old_type_sw = false;
 
 #if defined _WIN32
-	char* path = ptbl_charcode_cp932_from_utf8( old_path.c_str() );
-	std::ifstream ifs( path );
-	free(path);
+	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
+			   old_path.c_str()
+	));
 #else
 	std::ifstream ifs( old_path );
 #endif

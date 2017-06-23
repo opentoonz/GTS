@@ -1,4 +1,3 @@
-#include <cstdlib> /* free() */
 #include <ctime>
 #include <iostream>
 #include <iomanip>	// std::setw()
@@ -402,9 +401,9 @@ int memory_config::save( const std::string& file_path )
 {
  try {
 #if defined _WIN32
-	char* path = ptbl_charcode_cp932_from_utf8(file_path.c_str());
-	std::ofstream ofs(path); /* ファイル開く */
-	free(path);
+	std::ofstream ofs( ptbl_charcode_cp932_from_utf8(
+			  file_path.c_str()
+	)); /* ファイル開く */
 #else
 	std::ofstream ofs(file_path); /* ファイル開く */
 #endif

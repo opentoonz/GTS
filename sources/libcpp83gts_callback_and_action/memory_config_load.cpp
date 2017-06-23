@@ -1,4 +1,3 @@
-#include <cstdlib> /* free() */
 #include <ctype.h> // isdigit()
 #include <FL/fl_ask.H> // fl_alert()
 #include <iostream>
@@ -1024,9 +1023,9 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	//---------- read file ----------
   {
 #if defined _WIN32
-	char* path = ptbl_charcode_cp932_from_utf8(file_path.c_str());
-	std::ifstream ifs( path );/* ファイル開く */
-	free(path);
+	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
+			   file_path.c_str()
+	));/* ファイル開く */
 #else
 	std::ifstream ifs( file_path );/* ファイル開く */
 #endif

@@ -43,6 +43,7 @@ char *ptbl_getenv(const char *name);
 
 #if defined _WIN32
 /* Windowsでファイルアクセルするときのパス名の日本語文字コードの変換 */
+/* 戻り値は内部static文字配列なのでスレッドセーフではない */
 char* ptbl_charcode_cp932_from_utf8(const char* utf8);
 #endif   // _WIN32
 

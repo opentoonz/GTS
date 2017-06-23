@@ -1,5 +1,4 @@
 #include <cstdio>
-#include <cstdlib> /* free() */
 #include <cstring>
 #include <ctime>
 #include <string>
@@ -189,11 +188,9 @@ int memory_desktop::_save_by_fname( const char *cp_fname )
 	FILE *fp;
 
 #if defined _WIN32
-	char* path = ptbl_charcode_cp932_from_utf8( cp_fname );
-	fp = fopen( path, "w" );
-	free(path);
+	fp = fopen( ptbl_charcode_cp932_from_utf8( cp_fname ) , "w" );
 #else
-	fp = fopen( cp_fname, "w" );
+	fp = fopen( cp_fname , "w" );
 #endif
 	if (NULL == fp) {
 		pri_funct_err_bttvr(

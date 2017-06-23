@@ -1,4 +1,3 @@
-#include <cstdlib> /* free() */
 #include <cstdio>	// std::rename(-)
 #include <iostream>	// std::cout
 #include <sstream>	// std::ostringstream
@@ -7,6 +6,7 @@
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
+#include "ptbl_path_max.h" // PTBL_PATH_MAX
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
 #include "cb_trace_files.h"
@@ -282,17 +282,15 @@ void cb_trace_files::cb_rename(void)
 		}
 
 #if defined _WIN32
-		char* opepa = ptbl_charcode_cp932_from_utf8(opa.c_str());
+		char opepa[PTBL_PATH_MAX];
+		strcpy( opepa ,ptbl_charcode_cp932_from_utf8(opa.c_str()) );
 		char* newpa = ptbl_charcode_cp932_from_utf8(npa.c_str());
-		if (opepa == nullptr || newpa == nullptr ||
-		strlen(opepa) < 1 || strlen(newpa) < 1) {
+		if ( strlen(opepa) < 1 || strlen(newpa) < 1 ) {
 			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
 		std::rename( opepa ,newpa );
-		free(opepa);
-		free(newpa);
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif
@@ -379,17 +377,15 @@ void cb_trace_files::cb_renumber(void)
 		}
 
 #if defined _WIN32
-		char* opepa = ptbl_charcode_cp932_from_utf8(opa.c_str());
+		char opepa[PTBL_PATH_MAX];
+		strcpy( opepa ,ptbl_charcode_cp932_from_utf8(opa.c_str()) );
 		char* newpa = ptbl_charcode_cp932_from_utf8(npa.c_str());
-		if (opepa == nullptr || newpa == nullptr ||
-		strlen(opepa) < 1 || strlen(newpa) < 1) {
+		if ( strlen(opepa) < 1 || strlen(newpa) < 1 ) {
 			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
 		std::rename( opepa ,newpa );
-		free(opepa);
-		free(newpa);
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif
