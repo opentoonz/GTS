@@ -36,6 +36,10 @@ void cb_image::open( void )
 
 	/* 画像読込表示 */
 	cl_gts_master.cb_read_and_trace_and_preview( fpath );
+
+	/* 画像を開いたときの初期表示を元画像の表示にする */
+	cl_gts_master.cb_change_wview_main();
+	cl_gts_gui.menite_wview_main->setonly();
 }
 
 void cb_image::save_as( void )
@@ -112,7 +116,8 @@ void cb_image::save_as( void )
 
 	/* 保存 */
 	if (OK != cl_gts_master.iipg_save(
-		&(cl_gts_master.cl_iip_edot)
+		//&(cl_gts_master.cl_iip_edot)
+		&(cl_gts_master.cl_iip_ro90)
 		,const_cast<char *>(fpath.c_str())
 		,dpi
 		,rot90

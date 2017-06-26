@@ -397,14 +397,14 @@ void cb_trace_files::cb_renumber(void)
 }
 
 //----------------------------------------------------------------------
-/* ファイルブラウズ/フォルダーブラウズ */
+/* 連番画像ファイルブラウズ */
 void cb_trace_files::cb_browse_open_file( void )
 {
 	/* NativeブラウザーOpenで開く */
 	int filter_current=
 		cl_gts_gui.choice_trace_open_image_format->value();
 	const std::string filepath = ids::path::fltk_native_browse_open(
-		"Open Image(s)"
+		"Open Images"
 		,cl_gts_gui.filinp_trace_open_dir_path->value()
 		,this->get_open_name_from_number_(
 		static_cast<int>(cl_gts_gui.valout_trace_num_start->value())
@@ -428,25 +428,35 @@ void cb_trace_files::cb_browse_open_file( void )
 
 	/* チェック：ファイルヘッド(file head名)が空だとなにもしない */
 	if (head.empty()) {
-		fl_alert("No Head of OpenFileName");
+		fl_alert("No Head in File");
 		return;
 	}
 
 	/* チェック：拡張子が対応した種類でないと何もしない */
 	const int ext_num = this->ext_open.num_from_str( ext );
 	if ( ext_num < 0 ) {
-		fl_alert("Bad Extension\"%s\" of OpenFileName",ext.c_str());
+		fl_alert("Bad Extension\"%s\" in File",ext.c_str());
 		return;
 	}
 
-	/* Scanの番号であることを表示して示す */
+	/* チェック：連番でないならなにもしない */
+	if (num.empty() || number == -1) {
+		fl_alert("No Number in File");
+		return;
+	}
+
+	/* Traceの番号であることを表示して示す */
 	cl_gts_master.cl_number.set_type_to_trace();
 
 	/* ファイルパスから生成した部品を、GUI、その他セット */
 	this->set_gui_for_open( dpath ,head ,num ,ext ,nums );
 
-	/* 画像読込表示 */
+	/* 連番画像読込表示 */
 	cl_gts_master.cb_number_read_and_trace_and_preview();
+
+	/* 画像を開いたときの初期表示を元画像の表示にする */
+	cl_gts_master.cb_change_wview_main();
+	cl_gts_gui.menite_wview_main->setonly();
 }
 void cb_trace_files::set_gui_for_open(
 	const std::string& dpath
@@ -483,6 +493,8 @@ void cb_trace_files::set_gui_for_open(
 	/* Numberウインドウ再構築 */
 	cl_gts_master.cl_number.reset_by_number_list( nums );
 }
+
+/* 保存フォルダーブラウズ */
 void cb_trace_files::cb_browse_save_folder( void )
 {
 	/* Nativeフォルダーブラウザー開く */

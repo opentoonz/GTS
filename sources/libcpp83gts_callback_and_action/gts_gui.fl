@@ -285,7 +285,7 @@ cl_gts_master.cb_quit();}
             xywh {20 20 100 20}
           } {
             MenuItem menite_wview_main {
-              label {Scan Image}
+              label {Source Image}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_main();
 }
@@ -295,7 +295,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc6 value 1
             }
             MenuItem menite_wview_sub {
-              label {Trace Image}
+              label {Target Image}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_sub();
 }
@@ -1006,7 +1006,7 @@ cl_gts_gui.menite_trace_files->clear();}
           }
           Fl_Button {} {
             label {...}
-            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();} selected
+            callback {cl_gts_master.cl_trace_files.cb_browse_open_file();}
             xywh {184 35 14 55}
           }
         }
