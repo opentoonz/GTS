@@ -34,7 +34,6 @@
 #include "cb_color_trace_thickness.h"
 #include "memory_scan_area.h"
 #include "memory_short_cut_key.h"
-#include "memory_install_setup.h"
 
 class gts_master {
 public:
@@ -123,7 +122,6 @@ public:
 	memory_config	cl_memo_config;	/* 各パラメータの再現 */
 	memory_scan_area	cl_memo_scan_area;
 	memory_short_cut_key	cl_memo_short_cut_key;
-	//memory_install_setup	cl_memo_install_setup;
 
 	cb_image		cl_image;
 	cb_config		cl_config;

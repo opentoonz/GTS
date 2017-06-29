@@ -99,9 +99,11 @@ int memory_desktop::load( void ) {
 		if (5 <= ret) { ww = std::stoi(words.at(4)); }
 		if (6 <= ret) { hh = std::stoi(words.at(5)); }
 
-		if ((this->str_config_dir_ == key) && (2 == ret)) {
-			cl_gts_master.cl_config.set_dir_path(
-				di.c_str() );
+		if ((this->str_config_dir_path_ == key) && (2 == ret)) {
+			cl_gts_master.cl_config.set_dir_path( di );
+		}
+		else if ((this->str_image_dir_path_ == key) && (2 == ret)) {
+			cl_gts_master.cl_image.set_dir_path( di );
 		}
 		else if ((this->str_window_main_==key) && (6==ret)) {
 		cl_gts_gui.window_main_view->resize(xx,yy,ww,hh);

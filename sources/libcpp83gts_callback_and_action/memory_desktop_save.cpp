@@ -175,8 +175,12 @@ int memory_desktop::_save_startup_path_by_fp( FILE *fp )
 	int i_ret;
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
-		,this->str_config_dir_
+		,this->str_config_dir_path_
 		,cl_gts_master.cl_config.get_dir_path().c_str()
+	);
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+		,this->str_image_dir_path_
+		,cl_gts_master.cl_image.get_dir_path().c_str()
 	);
 	if (i_ret < 0) { return NG; }
 

@@ -14,8 +14,10 @@ public:
 	,str_hide_(
 	    "hide" )
 
-	,str_config_dir_(
-	    "config_dir" )
+	,str_config_dir_path_(
+	    "config_dir_path" )
+	,str_image_dir_path_(
+	    "image_dir_path" )
 
 	,str_window_main_(
 	    "window_main" )
@@ -70,7 +72,8 @@ private:
 	const char* str_show_;
 	const char* str_hide_;
 
-	const char* str_config_dir_;
+	const char* str_config_dir_path_;
+	const char* str_image_dir_path_;
 
 	const char* str_window_main_;
 	const char* str_window_next_scan_;
