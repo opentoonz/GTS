@@ -31,7 +31,7 @@ libgts_la_CPPFLAGS = \
 				   -std=c++11
 
 libgts_la_SOURCES = \
-					sources/libc11portable/libc11portable/ptbl_charcode.c \
+					sources/libc11portable/ptbl_charcode.c \
 					sources/libc11portable/ptbl_cpu_is_little_endian.c \
 					sources/libc11portable/ptbl_dir_or_file_is_exist.c \
 					sources/libc11portable/ptbl_get_cp_hostname.c \
