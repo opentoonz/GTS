@@ -1889,7 +1889,8 @@ cl_gts_gui.menite_trace_input_color->clear();}
         Fl_Button {} {
           label {->|}
           callback {group_trace_thickness->size(
-window_trace_thickness->w()-15,215
+window_trace_thickness->w()-15
+,group_trace_thickness->h()
 );
 scroll_trace_thickness->redraw();}
           xywh {300 5 25 25}

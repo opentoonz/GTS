@@ -189,7 +189,8 @@ int memory_desktop::load( void ) {
 		,hh
 		);
 		cl_gts_gui.group_trace_thickness->size(
-		cl_gts_gui.window_trace_thickness->w()-15,215
+		 cl_gts_gui.window_trace_thickness->w()-15
+		 ,cl_gts_gui.group_trace_thickness->h()
 		);
 			if (di == "show") {
 		cl_gts_gui.menite_trace_thickness->set();

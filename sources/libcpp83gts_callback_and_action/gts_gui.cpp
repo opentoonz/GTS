@@ -1949,7 +1949,8 @@ void gts_gui::cb_button_trace_thickness(fltk_button_trace_parameters* o, void* v
 
 void gts_gui::cb_3_i(Fl_Button*, void*) {
   group_trace_thickness->size(
-window_trace_thickness->w()-15,215
+window_trace_thickness->w()-15
+,group_trace_thickness->h()
 );
 scroll_trace_thickness->redraw();
 }
