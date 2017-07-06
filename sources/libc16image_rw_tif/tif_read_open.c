@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>	/* calloc() */
-
 #include "ptbl_returncode.h"
+#include "ptbl_funct.h"
 #include "pri.h"
-
 #include "tif.h"
 
 static int _tif_read_head( TIF_IMAGE_RW *tp_read )
@@ -203,7 +202,12 @@ int tif_read_open( char *cp_fname, TIF_IMAGE_RW *tp_read )
 	}
 
 	/* ファイルオープン */
-	tp_read->tp_tiff_head = TIFFOpen( cp_fname, "r" );
+#if defined _WIN32
+	tp_read->tp_tiff_head = TIFFOpen(
+	    ptbl_charcode_cp932_from_utf8(cp_fname) , "r" );
+#else
+	tp_read->tp_tiff_head = TIFFOpen( cp_fname , "r" );
+#endif
 	if (NULL == tp_read->tp_tiff_head) {
 		pri_funct_err_bttvr(
 		"Error : TIFFOpen(%s,) returns NULL\n", cp_fname);

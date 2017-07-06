@@ -1,4 +1,3 @@
-#include <cstdio>	// std::rename(-)
 #include <utility>	// std::swap(-)
 #include <iostream>	// std::cout
 #include <sstream>	// std::ostringstream

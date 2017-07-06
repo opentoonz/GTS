@@ -59,13 +59,14 @@ int number_of_same_( const std::string& fpath )
 void cb_trace_batch::cb_add_or_select( void )
 {
 	/* ユーザーがブラウザーで複数のconfig.txtファイルを選択する */
+	int filter_current=0; /* "TEXT\t*.txt"を示す */
 	std::vector< std::string > vecstr(
 		ids::path::fltk_native_browse_open_files(
 			"Add Config File"
 			,this->dir_path_
 			,""
 			,"TEXT\t*.txt\n"
-			,0 /* "TEXT\t*.txt"を示す */
+			, filter_current
 		)
 	);
 

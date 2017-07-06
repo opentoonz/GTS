@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <ctime>
 #include <string>
 #include "ptbl_returncode.h"
@@ -175,8 +175,12 @@ int memory_desktop::_save_startup_path_by_fp( FILE *fp )
 	int i_ret;
 
 	i_ret = fprintf(fp, "%-24s \"%s\"\n"
-		,this->str_config_dir_
+		,this->str_config_dir_path_
 		,cl_gts_master.cl_config.get_dir_path().c_str()
+	);
+	i_ret = fprintf(fp, "%-24s \"%s\"\n"
+		,this->str_image_dir_path_
+		,cl_gts_master.cl_image.get_dir_path().c_str()
 	);
 	if (i_ret < 0) { return NG; }
 
@@ -187,7 +191,11 @@ int memory_desktop::_save_by_fname( const char *cp_fname )
 {
 	FILE *fp;
 
-	fp = fopen( cp_fname, "w" );
+#if defined _WIN32
+	fp = fopen( ptbl_charcode_cp932_from_utf8( cp_fname ) , "w" );
+#else
+	fp = fopen( cp_fname , "w" );
+#endif
 	if (NULL == fp) {
 		pri_funct_err_bttvr(
 		"fopen(%s,w) returns NULL.",cp_fname);

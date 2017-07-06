@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "ptbl_returncode.h"
+#include "ptbl_funct.h"
 #include "pri.h"
 #include "bread.h"
 
@@ -29,7 +30,11 @@ int bread_open( char *cp_fname, BREAD *tp_ )
 		return NG;
 	}
 
-	tp_->_fp = fopen( cp_fname, "rb" );
+#if defined _WIN32
+	tp_->_fp = fopen( ptbl_charcode_cp932_from_utf8(cp_fname) , "rb" );
+#else
+	tp_->_fp = fopen( cp_fname , "rb" );
+#endif
 	if (NULL == tp_->_fp) {
 		pri_funct_err_bttvr(
 			"Error : fopen(%s,r) returns NULL.", cp_fname );

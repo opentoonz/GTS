@@ -1,5 +1,5 @@
-#include <FL/fl_ask.H> // fl_alert()
 #include <ctype.h> // isdigit()
+#include <FL/fl_ask.H> // fl_alert()
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -82,6 +82,10 @@ void memory_config::load_ifs_(
 		&&	this->load_config_(words)) {
 			continue;
 		}
+		if (	this->load_image_sw_
+		&&	this->load_image_(words)) {
+			continue;
+		}
 		if (	this->load_scan_and_save_sw_
 		&&	this->load_scan_and_save_( words
 		,scan_num_continue_type_sw)) {
@@ -137,6 +141,38 @@ bool memory_config::load_config_( std::vector< std::string >& words )
 	   (this->str_config_save_file_name_ == words.at(0))
 	|| (this->str_config_save_file_name_legacy2016_ == words.at(0))) {
  cl_gts_master.cl_config.set_save_file_name( words.at(1) );
+	}
+	else {
+		return false; // not defined
+	}
+
+	return true;
+}
+
+bool memory_config::load_image_( std::vector< std::string >& words )
+{
+	if (words.size() != 2) {
+		return false;
+	}
+
+	if( this->str_image_dir_path_ == words.at(0) ) {
+ cl_gts_master.cl_image.set_dir_path( words.at(1) );
+	}
+	else if (
+	    this->str_image_open_file_name_ == words.at(0) ) {
+ cl_gts_master.cl_image.set_open_file_name( words.at(1) );
+	}
+	else if (
+	    this->str_image_save_file_name_ == words.at(0) ) {
+ cl_gts_master.cl_image.set_save_file_name( words.at(1) );
+	}
+	else if (
+	    this->str_image_open_image_format_ == words.at(0) ) {
+ cl_gts_master.cl_image.set_open_image_format( words.at(1) );
+	}
+	else if (
+	    this->str_image_save_image_format_ == words.at(0) ) {
+ cl_gts_master.cl_image.set_save_image_format( words.at(1) );
 	}
 	else {
 		return false; // not defined
@@ -906,6 +942,7 @@ bool memory_config::load_trace_parameters_( std::vector< std::string >& words )
 int memory_config::load_only_trace_parameters( const std::string& file_path)
 {
 	this->load_config_sw_ = false;
+	this->load_image_sw_ = false;
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = false;
@@ -917,6 +954,7 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 	const int ret = this->load(file_path , this->load_trace_batch_sw_);
 
 	this->load_config_sw_ = true;
+	this->load_image_sw_ = true;
 	this->load_scan_and_save_sw_ = true;
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
@@ -929,6 +967,7 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 int memory_config::load_only_area_and_rot90( const std::string& file_path)
 {
 	this->load_config_sw_ = false;
+	this->load_image_sw_ = false;
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = true; // True only this.
@@ -940,6 +979,7 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 	const int ret = this->load(file_path , this->load_trace_batch_sw_);
 
 	this->load_config_sw_ = true;
+	this->load_image_sw_ = true;
 	this->load_scan_and_save_sw_ = true;
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
@@ -952,6 +992,7 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 int memory_config::load_only_pixel_type_and_bright( const std::string& file_path)
 {
 	this->load_config_sw_ = false;
+	this->load_image_sw_ = false;
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = false;
@@ -963,6 +1004,7 @@ int memory_config::load_only_pixel_type_and_bright( const std::string& file_path
 	const int ret = this->load(file_path , this->load_trace_batch_sw_);
 
 	this->load_config_sw_ = true;
+	this->load_image_sw_ = true;
 	this->load_scan_and_save_sw_ = true;
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
@@ -980,7 +1022,13 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	//---------- read file ----------
   {
+#if defined _WIN32
+	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
+			   file_path.c_str()
+	));/* ファイル開く */
+#else
 	std::ifstream ifs( file_path );/* ファイル開く */
+#endif
 	ifs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
    try {	/* std::getline()はEOFの場合も例外を投げてしまう */
 	this->load_trace_batch_sw_ =  load_trace_batch_sw;
@@ -1049,7 +1097,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 	cl_gts_gui.opengl_view->flush();
 
 	/* 画像読込表示 */
-	cl_gts_master.cb_read_and_trace_and_preview();
+	cl_gts_master.cb_number_read_and_trace_and_preview();
  }
  catch (const std::ios_base::failure& e) {
 	std::ostringstream ost;

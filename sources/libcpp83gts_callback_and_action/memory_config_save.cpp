@@ -78,6 +78,20 @@ void memory_config::save_config_( std::ofstream& ofs )
 	save_stri_( this->str_config_save_file_name_
 	,cl_gts_master.cl_config.get_save_file_name() ,ofs );
 }
+void memory_config::save_image_( std::ofstream& ofs )
+{
+	ofs << "\n# Image\n";
+	save_stri_( this->str_image_dir_path_
+	,cl_gts_master.cl_image.get_dir_path() ,ofs );
+	save_stri_( this->str_image_open_file_name_
+	,cl_gts_master.cl_image.get_open_file_name() ,ofs );
+	save_stri_( this->str_image_open_image_format_
+	,cl_gts_master.cl_image.get_open_image_format() ,ofs );
+	save_stri_( this->str_image_save_file_name_
+	,cl_gts_master.cl_image.get_save_file_name() ,ofs );
+	save_stri_( this->str_image_save_image_format_
+	,cl_gts_master.cl_image.get_save_image_format() ,ofs );
+}
 void memory_config::save_scan_and_save_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_scan_and_save->label() << "\n";
@@ -386,10 +400,17 @@ void memory_config::save_number_( std::ofstream& ofs )
 int memory_config::save( const std::string& file_path )
 {
  try {
+#if defined _WIN32
+	std::ofstream ofs( ptbl_charcode_cp932_from_utf8(
+			  file_path.c_str()
+	)); /* ファイル開く */
+#else
 	std::ofstream ofs(file_path); /* ファイル開く */
+#endif
 	ofs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
 	this->save_head_(ofs);
 	this->save_config_(ofs);
+	this->save_image_(ofs);
 	this->save_scan_and_save_(ofs);
 	this->save_trace_files_(ofs);
 	this->save_crop_area_and_rot90_(ofs);

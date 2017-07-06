@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
+#include <cerrno>
 #include <string>	// std::stoi() C++11
 #include <fstream>
-#include <cerrno>
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h" // ptbl_getenv(-)
@@ -58,7 +58,14 @@ int memory_desktop::load( void ) {
 
 	/* 古いfileパスでファイルあるならそちらを優先-->保存は標準パス */
 	bool old_type_sw = false;
-	std::ifstream ifs( old_path.c_str() );
+
+#if defined _WIN32
+	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
+			   old_path.c_str()
+	));
+#else
+	std::ifstream ifs( old_path );
+#endif
 	if (!ifs) {
 		/* 古いファイルはない、ので標準ファイル名で探す */
 		ifs.close();
@@ -92,9 +99,11 @@ int memory_desktop::load( void ) {
 		if (5 <= ret) { ww = std::stoi(words.at(4)); }
 		if (6 <= ret) { hh = std::stoi(words.at(5)); }
 
-		if ((this->str_config_dir_ == key) && (2 == ret)) {
-			cl_gts_master.cl_config.set_dir_path(
-				di.c_str() );
+		if ((this->str_config_dir_path_ == key) && (2 == ret)) {
+			cl_gts_master.cl_config.set_dir_path( di );
+		}
+		else if ((this->str_image_dir_path_ == key) && (2 == ret)) {
+			cl_gts_master.cl_image.set_dir_path( di );
 		}
 		else if ((this->str_window_main_==key) && (6==ret)) {
 		cl_gts_gui.window_main_view->resize(xx,yy,ww,hh);
@@ -176,7 +185,13 @@ int memory_desktop::load( void ) {
 		else if ((this->str_window_trace_thickness_==key)
 		&& (6==ret)) {
 		cl_gts_gui.window_trace_thickness->resize( xx ,yy ,ww
-		,cl_gts_gui.window_trace_thickness->h()  );
+		//,cl_gts_gui.window_trace_thickness->h()
+		,hh
+		);
+		cl_gts_gui.group_trace_thickness->size(
+		 cl_gts_gui.window_trace_thickness->w()-15
+		 ,cl_gts_gui.group_trace_thickness->h()
+		);
 			if (di == "show") {
 		cl_gts_gui.menite_trace_thickness->set();
 		cl_gts_gui.window_main_view->show();/* Need for Minimize */

@@ -42,7 +42,8 @@ int ptbl_dir_or_file_is_exist( char *cp_path )
 		cp_path[i_len-1] = '\0';
 	}
 
-	i_ret = _stat( cp_path, &t_stat );
+	/* Windowsはファイルパスの日本語文字コードがcp932 */
+	i_ret = _stat( ptbl_charcode_cp932_from_utf8(cp_path) , &t_stat );
 
 	if (0 != cc) {
 		cp_path[i_len-1] = cc;

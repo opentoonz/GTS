@@ -31,6 +31,7 @@ libgts_la_CPPFLAGS = \
 				   -std=c++11
 
 libgts_la_SOURCES = \
+					sources/libc11portable/ptbl_charcode.c \
 					sources/libc11portable/ptbl_cpu_is_little_endian.c \
 					sources/libc11portable/ptbl_dir_or_file_is_exist.c \
 					sources/libc11portable/ptbl_get_cp_hostname.c \
@@ -149,6 +150,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config.cpp \
+					sources/libcpp83gts_callback_and_action/cb_image.cpp \
 					sources/libcpp83gts_callback_and_action/cb_input_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_number.cpp \
 					sources/libcpp83gts_callback_and_action/cb_pixel_type_and_bright.cpp \
@@ -177,7 +179,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_config_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
-					sources/libcpp83gts_callback_and_action/memory_install_setup.cpp \
 					sources/libcpp83gts_callback_and_action/memory_scan_area.cpp \
 					sources/libcpp83gts_callback_and_action/memory_short_cut_key.cpp
 

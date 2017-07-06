@@ -1,3 +1,4 @@
+#include "FL/fl_ask.H"  // fl_alert(-)
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "gts_gui.h"
@@ -23,6 +24,7 @@ int gts_master::_iipg_view_setup( int i_max_area_sw )
 	if (OK != this->cl_ogl_view.set_imagedata(
 		&(this->cl_iip_ro90), &(this->cl_iip_trac)
 	)) {
+		fl_alert( "Memory Error!(at view_setup)" );
 		pri_funct_err_bttvr(
 	 "Error : this->cl_ogl_view.set_imagedata(-) returns NG" );
 		return NG;

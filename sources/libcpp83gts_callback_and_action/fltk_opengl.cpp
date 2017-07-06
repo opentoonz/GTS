@@ -102,12 +102,12 @@ int fl_shortcut_up_down_left_right_( int key )
 		switch (key) {
 		case FL_Up:
 			if (fn.selected_prev_frame()) {
-			 cl_gts_master.cb_read_and_trace_and_preview();
+			 cl_gts_master.cb_number_read_and_trace_and_preview();
 			}
 			break;
 		case FL_Down:
 			if (fn.selected_next_frame()) {
-			 cl_gts_master.cb_read_and_trace_and_preview();
+			 cl_gts_master.cb_number_read_and_trace_and_preview();
 			}
 			break;
 		case FL_Left: /* Fl_ScrollBarのFL_Left イベントをCancel */
@@ -135,22 +135,35 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		dnd_str ,dpath ,head ,num_form ,number ,ext ,nums
 	);
 
-	/* 拡張子が対応外エラー */
-	if (ext != ".tga" && ext != ".tif" && ext != ".txt") {
-		return "Error : Need Extension .tga/.tif/.txt";
+	/* ファイルヘッド名がない */
+	if ( head.empty() ) {
+		return "Error : Need Head name";
 	}
 
-	/* Config file */
+	/* Configファイル */
 	if (ext == ".txt") {
 		cl_gts_master.cl_config.loading_and_set_dpath_fname(
 			dnd_str );
+		return std::string();
 	}
-	/* Files(tif,tga) */
+
+	/* 以下画像について... */
+
+	/* 画像の拡張子(.tga/.tif)ではない */
+	if ( cl_gts_master.cl_trace_files.ext_open.num_from_str(ext) < 0 ) {
+		/* 拡張子が対応外 */
+		return "Error : Need Extension .tga/.tif/.txt";
+	}
+
+	/* 単体画像ファイル開き表示 */
+	if (nums.empty() || number == -1) {
+		/* 画像読込表示 */
+		cl_gts_master.cb_read_and_trace_and_preview( dnd_str );
+		/* 場所は記憶しない */
+	}
+	/* 連番画像ファイル開き表示 */
 	else {
-	 const int ext_num =
-		cl_gts_master.cl_trace_files.ext_open.num_from_str(ext);
-	 if ( !(head.empty()) && 0 <= ext_num ) {
-		/* Scanの番号であることを表示して示す */
+		/* Traceの番号であることを表示して示す */
 		cl_gts_master.cl_number.set_type_to_trace();
 
 		/* ファイルパスから生成した部品を、GUI、その他セット */
@@ -159,10 +172,14 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 		);
 
 		/* 画像読込表示 */
-		cl_gts_master.cb_read_and_trace_and_preview();
-	 }
+		cl_gts_master.cb_number_read_and_trace_and_preview();
 	}
-	return std::string();
+
+	/* 画像を開いたときの初期表示を元画像の表示にする */
+	cl_gts_master.cb_change_wview_main();
+	cl_gts_gui.menite_wview_main->setonly();
+
+	return std::string(); /* 正常終了 */
 }
 /*------ dnd処理ここまで ------*/
 
