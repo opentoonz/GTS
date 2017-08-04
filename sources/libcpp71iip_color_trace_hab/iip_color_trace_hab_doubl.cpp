@@ -2,7 +2,7 @@
 #include "calcu_rgb_to_hsv.h"
 #include "iip_color_trace_hab.h"
 
-void iip_color_trace_hab::_exec_doubl( long l_width, long l_height, long l_area_xpos, long l_area_ypos, long l_area_xsize, long l_area_ysize, long l_channels, double *doublp_in, calcu_color_trace_hab *clp_calcu_color_trace_hab, double *doublp_out )
+void iip_color_trace_hab::_exec_doubl( long l_width, long l_height, long l_area_xpos, long l_area_ypos, long l_area_xsize, long l_area_ysize, long l_channels, double *doublp_in, calcu_color_trace_base *clp_calcu_color_trace_hab, double *doublp_out )
 {
 	long	l_start, l_scansize;
 	long	xx,yy;

@@ -14,6 +14,7 @@ INCS =\
 /I$(DPATH_FLTK)
 SRCS =\
 calcu_color_trace_hab.cpp\
+calcu_color_trace_sep_hsv.cpp\
 calcu_histogram_hab.cpp\
 iip_color_trace_hab_doubl.cpp\
 iip_color_trace_hab_exec.cpp\

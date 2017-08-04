@@ -4,7 +4,7 @@
 
 #define	US (unsigned short)
 
-void iip_color_trace_hab::_exec_ushrt( long l_width, long l_height, long l_area_xpos, long l_area_ypos, long l_area_xsize, long l_area_ysize, long l_channels, unsigned short *ushrtp_in, double d_in_max_div, calcu_color_trace_hab *clp_calcu_color_trace_hab, unsigned short *ushrtp_out, double d_out_max_mul )
+void iip_color_trace_hab::_exec_ushrt( long l_width, long l_height, long l_area_xpos, long l_area_ypos, long l_area_xsize, long l_area_ysize, long l_channels, unsigned short *ushrtp_in, double d_in_max_div, calcu_color_trace_base *clp_calcu_color_trace_hab, unsigned short *ushrtp_out, double d_out_max_mul )
 {
 	long	l_start, l_scansize;
 	long	xx,yy;

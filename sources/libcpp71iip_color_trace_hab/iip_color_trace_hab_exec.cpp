@@ -10,7 +10,7 @@
 #include "iip_color_trace_hab.h"
 
 /* 親のカンバスも自分のカンバスも必要、また同じ大きさであること */
-void iip_color_trace_hab::exec( calcu_color_trace_hab *clp_calcu_color_trace_hab )
+void iip_color_trace_hab::exec( calcu_color_trace_base *clp_calcu_color_trace_hab )
 {
 	iip_canvas	*clpp;
 	double	d_in_max_div;

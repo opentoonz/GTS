@@ -15,6 +15,7 @@
 #include "iip_read.h"
 #include "iip_opengl_l3event.h"
 #include "calcu_color_trace_hab.h"
+#include "calcu_color_trace_sep_hsv.h"
 #include "iip_color_trace_hab.h"
 #include "iip_erase_dot_noise.h"
 
@@ -141,6 +142,7 @@ public:
 	iip_read	cl_iip_read;	/* 画像読込み */
 	iip_rot90	cl_iip_ro90;	/* 画像の正対 */
 	calcu_color_trace_hab	cl_cal_trac;
+	calcu_color_trace_sep_hsv cl_calc_trace_hsv;/* cl_cal_tracの次期 */
 	iip_color_trace_hab	cl_iip_trac;	/* BL,R,G,Bトレース */
 	iip_erase_dot_noise	cl_iip_edot;
 	iip_opengl_l3event cl_ogl_view;	/* OpenGL表示用unit */

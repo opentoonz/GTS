@@ -1905,7 +1905,7 @@ scroll_trace_thickness->redraw();}
         Fl_Group group_trace_thickness {open
           xywh {0 30 330 215}
         } {
-          Fl_Group {} {
+          Fl_Group {} {open
             xywh {0 40 330 20}
           } {
             Fl_Check_Button chkbtn_thickness_01_chk {
@@ -2569,6 +2569,202 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
         label Cancel
         callback {window_set_aspect_ratio->hide();}
         xywh {85 55 60 25}
+      }
+    }
+    Fl_Window window_trace_hsv {
+      xywh {50 50 390 150} type Double visible
+    } {
+      Fl_Group {} {open
+        xywh {0 0 385 25}
+      } {
+        Fl_Text_Display {} {
+          label R
+          xywh {55 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label G
+          xywh {90 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label B
+          xywh {125 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label {Thickn.}
+          xywh {150 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label Hmin
+          xywh {205 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label Hmax
+          xywh {240 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label {BL Tre.}
+          xywh {280 10 0 0} align 6
+        }
+        Fl_Text_Display {} {
+          label {BL OffS.}
+          xywh {335 10 0 0} align 6
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 30 385 25}
+      } {
+        Fl_Check_Button valinp_trace_r_enable_sw {
+          label R
+          callback {cl_gts_master.cl_trace_hsv.cb_r_enable_sw(o->value());}
+          xywh {25 30 0 25} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Value_Input valinp_trace_r_target_r {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_target_r(o->value());}
+          xywh {45 30 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_r_target_g {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_target_g(o->value());}
+          xywh {80 30 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_r_target_b {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_target_b(o->value());}
+          xywh {115 30 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_r_thickness {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_thickness(o->value());}
+          xywh {150 30 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_r_hmin {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_hmin(o->value());}
+          xywh {205 30 32 25} maximum 360 step 1
+        }
+        Fl_Value_Input valinp_trace_r_hmax {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_hmax(o->value());}
+          xywh {240 30 32 25} maximum 360 step 1
+        }
+        Fl_Value_Input valinp_trace_r_threshold_to_black {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_threshold_to_black(o->value());}
+          xywh {280 30 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_r_threshold_offset {
+          callback {cl_gts_master.cl_trace_hsv.cb_r_threshold_offset(o->value());}
+          xywh {335 30 50 25} step 0.001
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 60 385 25}
+      } {
+        Fl_Check_Button valinp_trace_g_enable_sw {
+          label G
+          callback {cl_gts_master.cl_trace_hsv.cb_g_enable_sw(o->value());}
+          xywh {25 60 0 25} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Value_Input valinp_trace_g_target_r {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_target_r(o->value());}
+          xywh {45 60 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_g_target_g {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_target_g(o->value());}
+          xywh {80 60 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_g_target_b {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_target_b(o->value());}
+          xywh {115 60 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_g_thickness {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_thickness(o->value());}
+          xywh {150 60 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_g_hmin {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_hmin(o->value());}
+          xywh {205 60 32 25} maximum 360 step 1
+        }
+        Fl_Value_Input valinp_trace_g_hmax {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_hmax(o->value());}
+          xywh {240 60 32 25} maximum 360 step 1
+        }
+        Fl_Value_Input valinp_trace_g_threshold_to_black {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_threshold_to_black(o->value());}
+          xywh {280 60 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_g_threshold_offset {
+          callback {cl_gts_master.cl_trace_hsv.cb_g_threshold_offset(o->value());}
+          xywh {335 60 50 25} step 0.001
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 90 385 25}
+      } {
+        Fl_Check_Button valinp_trace_b_enable_sw {
+          label B
+          callback {cl_gts_master.cl_trace_hsv.cb_b_enable_sw(o->value());}
+          xywh {25 90 0 25} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Value_Input valinp_trace_b_target_r {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_target_r(o->value());}
+          xywh {45 90 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_b_target_g {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_target_g(o->value());}
+          xywh {80 90 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_b_target_b {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_target_b(o->value());}
+          xywh {115 90 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_b_thickness {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_thickness(o->value());}
+          xywh {150 90 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_b_hmin {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_hmin(o->value());}
+          xywh {205 90 32 25} maximum 360 step 1
+        }
+        Fl_Value_Input valinp_trace_b_hmax {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_hmax(o->value());}
+          xywh {240 90 32 25} maximum 360 step 1
+        }
+        Fl_Value_Input valinp_trace_b_threshold_to_black {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_threshold_to_black(o->value());}
+          xywh {280 90 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_b_threshold_offset {
+          callback {cl_gts_master.cl_trace_hsv.cb_b_threshold_offset(o->value());}
+          xywh {335 90 50 25} step 0.001
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 120 385 25}
+      } {
+        Fl_Check_Button valinp_trace_bl_enable_sw {
+          label BL
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_enable_sw(o->value());}
+          xywh {25 120 0 25} down_box DOWN_BOX value 1 align 4
+        }
+        Fl_Value_Input valinp_trace_bl_target_r {
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_target_r(o->value());}
+          xywh {45 120 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_bl_target_g {
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_target_g(o->value());}
+          xywh {80 120 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_bl_target_b {
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_target_b(o->value());}
+          xywh {115 120 32 25} maximum 255 step 1 value 255
+        }
+        Fl_Value_Input valinp_trace_bl_thickness {
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_thickness(o->value());}
+          xywh {150 120 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_bl_threshold_to_color {
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_threshold_to_color(o->value());}
+          xywh {280 120 50 25} step 0.001
+        }
+        Fl_Value_Input valinp_trace_bl_threshold_offset {
+          callback {cl_gts_master.cl_trace_hsv.cb_bl_threshold_offset(o->value());}
+          xywh {335 120 50 25} step 0.001
+        }
       }
     }
   }

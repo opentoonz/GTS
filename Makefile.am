@@ -125,6 +125,7 @@ libgts_la_SOURCES = \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_uchar.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_ushrt.cpp \
 					sources/libcpp71iip_color_trace_hab/calcu_color_trace_hab.cpp \
+					sources/libcpp71iip_color_trace_hab/calcu_color_trace_sep_hsv.cpp \
 					sources/libcpp71iip_color_trace_hab/calcu_histogram_hab.cpp \
 					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_doubl.cpp \
 					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_exec.cpp \

@@ -2,6 +2,7 @@
 #define __calcu_color_trace_hab_h__
 
 #include "ptbl_returncode.h"
+#include "calcu_color_trace_sep_hsv.h"
 
 class calcu_col_area_hab {
 public:
@@ -37,7 +38,7 @@ typedef enum {
 	E_COLOR_TRACE_HAB_NOT_SELECT,
 } E_COLOR_TRACE_HAB_COLORS;
 
-class calcu_color_trace_hab {
+class calcu_color_trace_hab : public calcu_color_trace_base {
 public:
 	calcu_color_trace_hab()
 	{

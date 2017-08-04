@@ -134,7 +134,8 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	/* トレース */
 	if ((	this->cl_iip_trac.get_l_channels() == 3L) && trace_sw) {
 		// RGB
-		this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
+	//this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
+	this->cl_iip_trac.exec(&(this->cl_calc_trace_hsv));/* 2値化処理 */
 	}
 	else {	// BW,Grayscale
 		this->cl_iip_trac.copy_image_from_parent(
