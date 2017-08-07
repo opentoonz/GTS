@@ -41,9 +41,14 @@ public:
 	void cb_bl_target_g( void );
 	void cb_bl_target_b( void );
 	void cb_bl_thickness( void );
-	void cb_bl_threshold_to_color( void );
+	void cb_bl_threshold_to_black( void );
 	void cb_bl_threshold_offset( void );
 
+class cb_trace_hsv {
+public:
+	cb_trace_hsv()
+	{}
+	std::vector<cl_range> cla_range;
 private:
 };
 

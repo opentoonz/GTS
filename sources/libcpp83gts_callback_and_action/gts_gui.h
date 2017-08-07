@@ -126,7 +126,10 @@ private:
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
+  static Fl_Menu_Item *menite_trace;
 private:
+  inline void cb_menite_trace_i(Fl_Menu_*, void*);
+  static void cb_menite_trace(Fl_Menu_*, void*);
   inline void cb_In_i(Fl_Menu_*, void*);
   static void cb_In(Fl_Menu_*, void*);
   inline void cb_Out_i(Fl_Menu_*, void*);
@@ -1355,6 +1358,191 @@ private:
   static void cb_OK1(Fl_Button*, void*);
   inline void cb_Cancel1_i(Fl_Button*, void*);
   static void cb_Cancel1(Fl_Button*, void*);
+public:
+  Fl_Double_Window *window_trace;
+private:
+  inline void cb_window_trace_i(Fl_Double_Window*, void*);
+  static void cb_window_trace(Fl_Double_Window*, void*);
+public:
+  Fl_Check_Button *valinp_trace_r_enable_sw;
+private:
+  inline void cb_valinp_trace_r_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_valinp_trace_r_enable_sw(Fl_Check_Button*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_target_r;
+private:
+  inline void cb_valinp_trace_r_target_r_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_target_r(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_target_g;
+private:
+  inline void cb_valinp_trace_r_target_g_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_target_g(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_target_b;
+private:
+  inline void cb_valinp_trace_r_target_b_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_target_b(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_thickness;
+private:
+  inline void cb_valinp_trace_r_thickness_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_thickness(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_hmin;
+private:
+  inline void cb_valinp_trace_r_hmin_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_hmin(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_hmax;
+private:
+  inline void cb_valinp_trace_r_hmax_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_hmax(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_threshold_to_black;
+private:
+  inline void cb_valinp_trace_r_threshold_to_black_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_threshold_to_black(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_r_threshold_offset;
+private:
+  inline void cb_valinp_trace_r_threshold_offset_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_r_threshold_offset(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *valinp_trace_g_enable_sw;
+private:
+  inline void cb_valinp_trace_g_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_valinp_trace_g_enable_sw(Fl_Check_Button*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_target_r;
+private:
+  inline void cb_valinp_trace_g_target_r_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_target_r(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_target_g;
+private:
+  inline void cb_valinp_trace_g_target_g_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_target_g(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_target_b;
+private:
+  inline void cb_valinp_trace_g_target_b_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_target_b(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_thickness;
+private:
+  inline void cb_valinp_trace_g_thickness_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_thickness(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_hmin;
+private:
+  inline void cb_valinp_trace_g_hmin_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_hmin(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_hmax;
+private:
+  inline void cb_valinp_trace_g_hmax_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_hmax(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_threshold_to_black;
+private:
+  inline void cb_valinp_trace_g_threshold_to_black_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_threshold_to_black(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_g_threshold_offset;
+private:
+  inline void cb_valinp_trace_g_threshold_offset_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_g_threshold_offset(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *valinp_trace_b_enable_sw;
+private:
+  inline void cb_valinp_trace_b_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_valinp_trace_b_enable_sw(Fl_Check_Button*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_target_r;
+private:
+  inline void cb_valinp_trace_b_target_r_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_target_r(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_target_g;
+private:
+  inline void cb_valinp_trace_b_target_g_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_target_g(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_target_b;
+private:
+  inline void cb_valinp_trace_b_target_b_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_target_b(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_thickness;
+private:
+  inline void cb_valinp_trace_b_thickness_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_thickness(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_hmin;
+private:
+  inline void cb_valinp_trace_b_hmin_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_hmin(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_hmax;
+private:
+  inline void cb_valinp_trace_b_hmax_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_hmax(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_threshold_to_black;
+private:
+  inline void cb_valinp_trace_b_threshold_to_black_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_threshold_to_black(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_b_threshold_offset;
+private:
+  inline void cb_valinp_trace_b_threshold_offset_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_b_threshold_offset(Fl_Value_Input*, void*);
+public:
+  Fl_Check_Button *valinp_trace_bl_enable_sw;
+private:
+  inline void cb_valinp_trace_bl_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_valinp_trace_bl_enable_sw(Fl_Check_Button*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_target_r;
+private:
+  inline void cb_valinp_trace_bl_target_r_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_target_r(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_target_g;
+private:
+  inline void cb_valinp_trace_bl_target_g_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_target_g(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_target_b;
+private:
+  inline void cb_valinp_trace_bl_target_b_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_target_b(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_thickness;
+private:
+  inline void cb_valinp_trace_bl_thickness_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_thickness(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_hmin;
+private:
+  inline void cb_valinp_trace_bl_hmin_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_hmin(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_hmax;
+private:
+  inline void cb_valinp_trace_bl_hmax_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_hmax(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_threshold_to_black;
+private:
+  inline void cb_valinp_trace_bl_threshold_to_black_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_threshold_to_black(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_trace_bl_threshold_offset;
+private:
+  inline void cb_valinp_trace_bl_threshold_offset_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_bl_threshold_offset(Fl_Value_Input*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

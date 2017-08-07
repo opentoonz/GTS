@@ -24,7 +24,7 @@
 		value min.	0固定
 		value max.	太さを表す
 
-    ○色と黒との分離方法 (T = calcu_sep_hsv::src_threshold_to_black)
+    ○色と黒との分離方法 (T = calcu_sep_hsv::threshold_to_black)
 
 	  0 ----- S ----->1
 	1 +---------------+
@@ -67,17 +67,20 @@
 
 class calcu_sep_hsv {
 public:
-	double	src_hmin , src_hmax;	/* 0...360 拾うべき色相範囲
+	bool	enable_sw;	/* 結果色にする(false=背景色(bg)) */
+
+	double	 target_r	/* 0...1 結果色 */
+		,target_g
+		,target_b;
+
+	double	thickness;		/* 0...1 色/黒線太さ(=彩度最小値) */
+
+	double	hmin , hmax;	/* 0...360 拾うべき色相範囲
 					0より小さいなら色でなく黒扱う */
-	double	src_threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
-	double	src_threshold_offset;/* 0...1 SV面上黒線との
+	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
+	double	threshold_offset;/* 0...1 SV面上黒線との
 				取合い境界線の原点位置のオフセット */
 
-	double	src_thickness;		/* 0...1 色/黒線太さ(=彩度最小値) */
-	double	 tgt_line_color_red	/* 0...1 結果色 */
-		,tgt_line_color_green
-		,tgt_line_color_blue;
-	bool	tgt_line_color_sw;	/* 結果色にする(false=背景色(bg)) */
 };
 
 /*-------------------------------------------------------*/
@@ -86,7 +89,9 @@ class calcu_color_trace_base {
 public:
 	virtual void exec(
 	double hh, double ss, double vv, double *rr, double *gg, double *bb
-	){}
+	){
+		(void)hh; (void)ss; (void)vv; (void)rr; (void)gg; (void)bb;
+	}
 };
 
 class calcu_color_trace_sep_hsv : public calcu_color_trace_base {
@@ -101,10 +106,10 @@ public:
 
 	void setup_default_area_param(void) {
 		this->cla_area_param = {
-	 {300., 60. ,0.1 ,0.8,1.,0.,0. ,true }	/* 赤 */
-	,{ 60.,180. ,0.1 ,0.8,0.,1.,0. ,true }	/* 緑 */
-	,{180.,300. ,0.1 ,0.8,0.,0.,1. ,true }	/* 青 */
-	,{ -1 , -1  ,0.1 ,0.6,0.,0.,0. ,true }	/* 黒(必ず最後にする) */
+ { true ,1.,0.,0. ,0.7 ,300., 60. ,0.8,0.0 }	/* 赤 */
+,{ true ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 }	/* 緑 */
+,{ true ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 }	/* 青 */
+,{ true ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 }	/* 黒(必ず最後にする) */
 		};
 	}
 

@@ -5,17 +5,23 @@ void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *r
 	for (unsigned ii = 0; ii < this->cla_area_param.size(); ++ii) {
 		calcu_sep_hsv& area =  this->cla_area_param.at(ii);
 
-		if (area.src_hmin < 0) {	/* 黒線 */
+		if (area.hmin < 0. || area.hmax < 0.) {	/* 黒線 */
 			/* 太さ外のときはループの外へ */
-			if (area.src_thickness < vv) { continue; }
+			if (area.thickness < vv) { continue; }
 		}
 		else {				/* 色線 */
 			/* 色の範囲外の時は次ループへ */
-			if (hh < area.src_hmin) { continue; }
-			if (area.src_hmax < hh) { continue; }
+			if (area.hmin < area.hmax) {
+				if (hh < area.hmin) { continue; }
+				if (area.hmax < hh) { continue; }
+			}
+			else {
+				if ((area.hmax < hh)
+				&&  (hh < area.hmin)) { continue; }
+			}
 
 			/* 太さ外のときは次ループへ */
-			if (area.src_thickness < (1.-ss)) { continue; }
+			if (area.thickness < (1.-ss)) { continue; }
 
 			/* 黒である(色味がない)ので次ループへ */
 			if (vv <= 0.) { continue; }
@@ -24,7 +30,7 @@ void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *r
 			if (ss <= 0.) { continue; }
 
 			/* 計算のため反転する */
-			const double tt = 1.-area.src_threshold_to_black;
+			const double tt = 1.-area.threshold_to_black;
 
 			/* 黒味範囲のときは次ループへ */
 			if ( (0. < tt)
@@ -32,14 +38,14 @@ void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *r
 		}
 
 		/* 色の範囲内だけど、実行OFFのとき白色(紙の地の色)にする */
-		if (area.tgt_line_color_sw == false) { break; }
+		if (area.enable_sw == false) { break; }
 
 		/* habの指定範囲の色で、トレススイッチONなら、
 		トレス(指定の色に)して、抜ける
 		hab範囲が重複していたら先の指定を優先する */
-		*rr = area.tgt_line_color_red;
-		*gg = area.tgt_line_color_green;
-		*bb = area.tgt_line_color_blue;
+		*rr = area.target_r;
+		*gg = area.target_g;
+		*bb = area.target_b;
 		return;
 	}
 	/* トレスをしない部分は白色(紙の地の色)にする */
