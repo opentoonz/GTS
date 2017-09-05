@@ -67,20 +67,20 @@
 
 class calcu_sep_hsv {
 public:
-	bool	enable_sw;	/* 結果色にする(false=背景色(bg)) */
+	bool	enable_sw;	/* 2値化処理実行 false=他の2値化処理へ */
 
 	double	 target_r	/* 0...1 結果色 */
 		,target_g
 		,target_b;
 
-	double	thickness;		/* 0...1 色/黒線太さ(=彩度最小値) */
+	double	thickness;	/* 0...1 色/黒線太さ(=彩度最小値) */
 
 	double	hmin , hmax;	/* 0...360 拾うべき色相範囲
 					0より小さいなら色でなく黒扱う */
 	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
 	double	threshold_offset;/* 0...1 SV面上黒線との
 				取合い境界線の原点位置のオフセット */
-
+	bool	hsv_viewer_guide_sw;	/* hsv viewerで範囲を表示するsw */
 };
 
 /*-------------------------------------------------------*/
@@ -97,19 +97,22 @@ public:
 class calcu_color_trace_sep_hsv : public calcu_color_trace_base {
 public:
 	calcu_color_trace_sep_hsv()
-	:tgt_bg_red_(1.)
-	,tgt_bg_green_(1.)
-	,tgt_bg_blue_(1.)
+	:target_paper_r_(1.)
+	,target_paper_g_(1.)
+	,target_parer_b_(1.)
 	{}
 
 	std::vector<calcu_sep_hsv> cla_area_param;
 
 	void setup_default_area_param(void) {
 		this->cla_area_param = {
- { true ,1.,0.,0. ,0.7 ,300., 60. ,0.8,0.0 }	/* 赤 */
-,{ true ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 }	/* 緑 */
-,{ true ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 }	/* 青 */
-,{ true ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 }	/* 黒(必ず最後にする) */
+ { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 }	/* 黒 */
+,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.8,0.0 }	/* 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 }	/* 青 */
+,{ false ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 }	/* 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.8,0.0 }	/* 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.8,0.0 }	/* 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.8,0.0 }	/* 黄(or オレンジ) */
 		};
 	}
 
@@ -118,9 +121,9 @@ public:
 	double hh, double ss, double vv, double *rr, double *gg, double *bb
 	);
 private:
-	double	tgt_bg_red_
-		,tgt_bg_green_
-		,tgt_bg_blue_;
+	double	 target_paper_r_
+		,target_paper_g_
+		,target_parer_b_;
 };
 
 #endif /* !calcu_color_trace_sep_hsv_h */

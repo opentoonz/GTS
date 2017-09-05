@@ -54,8 +54,12 @@
 
 void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *rr, double *gg, double *bb )
 {
-	for (unsigned ii = 0; ii < this->cla_area_param.size(); ++ii) {
+	//for (unsigned ii = 0; ii < this->cla_area_param.size(); ++ii) {
+	for (int ii = static_cast<int>(this->cla_area_param.size())-1
+	;0<=ii ;--ii) {
 		calcu_sep_hsv& area =  this->cla_area_param.at(ii);
+
+		if (!area.enable_sw) { continue; }
 
 		if (area.hmin < 0. || area.hmax < 0.) {	/* 黒線 */
 			/* 太さ外のときはループの外へ */
@@ -103,7 +107,7 @@ void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *r
 		return;
 	}
 	/* トレスをしない部分は白色(紙の地の色)にする */
-	*rr = this->tgt_bg_red_;
-	*gg = this->tgt_bg_green_;
-	*bb = this->tgt_bg_blue_;
+	*rr = this->target_paper_r_;
+	*gg = this->target_paper_g_;
+	*bb = this->target_parer_b_;
 }
