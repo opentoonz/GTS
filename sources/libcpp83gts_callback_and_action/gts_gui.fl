@@ -227,6 +227,16 @@ cl_gts_master.cb_quit();}
 }}
             xywh {0 0 30 20} type Toggle
           }
+          MenuItem menite_hsv_viewer {
+            label {HSV Viewer}
+            callback {if (cl_gts_gui.menite_hsv_viewer->value()) {
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
+    cl_gts_gui.window_hsv_viewer->show();
+} else {
+    cl_gts_gui.window_hsv_viewer->hide();
+}}
+            xywh {0 0 30 20} type Toggle
+          }
         }
         Submenu {} {
           label View open
@@ -2582,16 +2592,16 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
       }
     }
     Fl_Window window_trace_color {
-      label Trace
+      label {Trace Color}
       callback {cl_gts_gui.window_trace_color->hide();
 cl_gts_gui.menite_trace_color->clear();}
-      xywh {51 50 520 300} type Double resizable non_modal size_range {200 100 520 300} visible
+      xywh {50 50 540 270} type Double resizable non_modal size_range {200 100 540 270} visible
     } {
       Fl_Scroll {} {open
-        xywh {0 0 530 300}
+        xywh {0 0 540 270}
       } {
         Fl_Group {} {open
-          xywh {0 0 530 300}
+          xywh {0 0 540 270}
         } {
           Fl_Button {} {
             label {Open Config This...}
@@ -2600,50 +2610,14 @@ cl_gts_gui.menite_trace_color->clear();}
             code0 {//\#include "cb_trace_color.h"}
           }
           Fl_Group {} {open
-            xywh {0 66 520 15}
-          } {
-            Fl_Text_Display {} {
-              label R
-              xywh {55 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label G
-              xywh {87 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label B
-              xywh {119 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label {Thickn.}
-              xywh {152 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label Hmin
-              xywh {330 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label Hmax
-              xywh {362 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label {Tresh.}
-              xywh {398 66 0 0} align 6
-            }
-            Fl_Text_Display {} {
-              label Offset
-              xywh {442 66 0 0} align 6
-            }
-          }
-          Fl_Group {} {open
             xywh {0 37 520 25}
           } {
             Fl_Check_Button chkbtn_trace_0_enable_sw {
-              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).enable_sw = o->value();
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
 opengl_view->redraw();}
-              xywh {12 37 17 25} down_box DOWN_BOX value 1 align 4
+              xywh {10 37 17 25} down_box DOWN_BOX value 1 align 4
             }
             Fl_Group group_trace_0 {open
               xywh {29 37 491 25}
@@ -2688,46 +2662,81 @@ opengl_view->redraw();}
                 xywh {119 37 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_0_thickness {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).thickness = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).thickness = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {152 37 43 25} step 0.001 value 0.7
+                xywh {152 37 43 25} maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_0_threshold_to_black {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_to_black = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {398 37 43 25} step 0.001 value 0.8
+                xywh {410 37 43 25} maximum 100 step 0.1 value 80
               }
               Fl_Value_Input valinp_trace_0_threshold_offset {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_offset = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {442 37 43 25} step 0.001
+                xywh {454 37 43 25} maximum 100 step 0.1
               }
               Fl_Check_Button {} {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).hsv_viewer_guide_sw = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();}
-                xywh {490 37 17 25} down_box DOWN_BOX
+                xywh {498 37 17 25} down_box DOWN_BOX
               }
+            }
+          }
+          Fl_Group {} {
+            xywh {0 66 520 15}
+          } {
+            Fl_Text_Display {} {
+              label R
+              xywh {55 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label G
+              xywh {87 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label B
+              xywh {119 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label {Thickn.}
+              xywh {152 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label Hmin
+              xywh {321 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label Hmax
+              xywh {365 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label {Tresh.}
+              xywh {410 66 0 0} align 6
+            }
+            Fl_Text_Display {} {
+              label Offset
+              xywh {454 66 0 0} align 6
             }
           }
           Fl_Group {} {open
             xywh {0 85 520 25}
           } {
             Fl_Check_Button chkbtn_trace_1_enable_sw {
-              label 1
-              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).enable_sw = o->value();
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_1->activate();  }
 else            {group_trace_1->deactivate();}
 opengl_view->redraw();}
-              xywh {12 85 17 25} down_box DOWN_BOX value 1 align 4
+              xywh {10 85 17 25} down_box DOWN_BOX value 1 align 4
             }
             Fl_Group group_trace_1 {open
-              xywh {29 85 491 25}
+              xywh {29 85 490 25}
             } {
               Fl_Box box_trace_1_target {
                 xywh {29 85 25 25} box FLAT_BOX color 17
               }
               Fl_Value_Input valinp_trace_1_target_r {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_r = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_r = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -2739,7 +2748,7 @@ opengl_view->redraw();}
                 xywh {55 85 31 25} maximum 255 step 1 value 255
               }
               Fl_Value_Input valinp_trace_1_target_g {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_g = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_g = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -2751,7 +2760,7 @@ opengl_view->redraw();}
                 xywh {87 85 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_1_target_b {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_b = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_b = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -2763,59 +2772,58 @@ opengl_view->redraw();}
                 xywh {119 85 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_1_thickness {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).thickness = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).thickness = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {152 85 43 25} step 0.001 value 0.7
+                xywh {152 85 43 25} maximum 100 step 0.1 value 70
               }
               Fl_Box box_trace_1_hue {
-                image {color_belt127x3hue.png} xywh {200 90 128 15}
+                image {color_belt_120x5_hue.png} xywh {200 85 120 25}
               }
               Fl_Value_Input valinp_trace_1_hmin {
                 callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hmin = o->value();
 opengl_view->redraw();}
-                xywh {330 85 31 25} maximum 360 step 1 value 300
+                xywh {321 85 43 25} maximum 360 step 0.1 value 300
               }
               Fl_Value_Input valinp_trace_1_hmax {
                 callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hmax = o->value();
 opengl_view->redraw();}
-                xywh {362 85 31 25} maximum 360 step 1 value 60
+                xywh {365 85 43 25} maximum 360 step 0.1 value 60
               }
               Fl_Value_Input valinp_trace_1_threshold_to_black {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_to_black = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {398 85 43 25} step 0.001 value 0.8
+                xywh {410 85 43 25} maximum 100 step 0.1 value 80
               }
               Fl_Value_Input valinp_trace_1_threshold_offset {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_offset = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {442 85 43 25} step 0.001
+                xywh {454 85 43 25} maximum 100 step 0.1
               }
               Fl_Check_Button {} {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();}
-                xywh {490 85 17 25} down_box DOWN_BOX
+                xywh {498 85 17 25} down_box DOWN_BOX
               }
             }
           }
-          Fl_Group {} {open
+          Fl_Group {} {
             xywh {0 115 520 25}
           } {
             Fl_Check_Button chkbtn_trace_2_enable_sw {
-              label 2
-              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).enable_sw = o->value();
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_2->activate();  }
 else            {group_trace_2->deactivate();}
 opengl_view->redraw();}
-              xywh {12 115 17 25} down_box DOWN_BOX value 1 align 4
+              xywh {10 115 17 25} down_box DOWN_BOX value 1 align 4
             }
             Fl_Group group_trace_2 {open
-              xywh {29 115 491 25}
+              xywh {29 115 490 25}
             } {
               Fl_Box box_trace_2_target {
                 xywh {29 115 25 25} box FLAT_BOX color 18
               }
               Fl_Value_Input valinp_trace_2_target_r {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_r = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_r = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -2827,7 +2835,7 @@ opengl_view->redraw();}
                 xywh {55 115 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_2_target_g {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_g = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_g = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -2839,7 +2847,7 @@ opengl_view->redraw();}
                 xywh {87 115 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_2_target_b {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_b = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_b = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -2851,59 +2859,58 @@ opengl_view->redraw();}
                 xywh {119 115 31 25} maximum 255 step 1 value 255
               }
               Fl_Value_Input valinp_trace_2_thickness {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).thickness = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).thickness = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {152 115 43 25} step 0.001 value 0.7
+                xywh {152 115 43 25} maximum 100 step 0.1 value 70
               }
               Fl_Box box_trace_2_hue {
-                image {color_belt127x3hue.png} xywh {200 120 128 15}
+                image {color_belt_120x5_hue.png} xywh {200 115 120 25}
               }
               Fl_Value_Input valinp_trace_2_hmin {
                 callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hmin = o->value();
 opengl_view->redraw();}
-                xywh {330 115 31 25} maximum 360 step 1 value 180
+                xywh {321 115 43 25} maximum 360 step 0.1 value 180
               }
               Fl_Value_Input valinp_trace_2_hmax {
                 callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hmax = o->value();
 opengl_view->redraw();}
-                xywh {362 115 31 25} maximum 360 step 1 value 300
+                xywh {365 115 43 25} maximum 360 step 0.1 value 300
               }
               Fl_Value_Input valinp_trace_2_threshold_to_black {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_to_black = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {398 115 43 25} step 0.001 value 0.8
+                xywh {410 115 43 25} maximum 100 step 0.1 value 80
               }
               Fl_Value_Input valinp_trace_2_threshold_offset {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_offset = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {442 115 43 25} step 0.001
+                xywh {454 115 43 25} maximum 100 step 0.1
               }
               Fl_Check_Button {} {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hsv_viewer_guide_sw = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();}
-                xywh {490 115 17 25} down_box DOWN_BOX
+                xywh {498 115 17 25} down_box DOWN_BOX
               }
             }
           }
-          Fl_Group {} {open
+          Fl_Group {} {
             xywh {0 145 520 25}
           } {
             Fl_Check_Button chkbtn_trace_3_enable_sw {
-              label 3
-              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).enable_sw = o->value();
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_3->activate();  }
 else            {group_trace_3->deactivate();}
 opengl_view->redraw();}
-              xywh {12 145 17 25} down_box DOWN_BOX value 1 align 4
+              xywh {10 145 17 25} down_box DOWN_BOX value 1 align 4
             }
             Fl_Group group_trace_3 {open
-              xywh {29 145 491 25}
+              xywh {29 145 490 25}
             } {
               Fl_Box box_trace_3_target {
                 xywh {29 145 25 25} box FLAT_BOX color 19
               }
               Fl_Value_Input valinp_trace_3_target_r {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_r = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_r = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -2915,7 +2922,7 @@ opengl_view->redraw();}
                 xywh {55 145 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_3_target_g {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_g = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_g = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -2927,7 +2934,7 @@ opengl_view->redraw();}
                 xywh {87 145 31 25} maximum 255 step 1 value 255
               }
               Fl_Value_Input valinp_trace_3_target_b {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_b = o->value()/255.;
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_b = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -2939,51 +2946,333 @@ opengl_view->redraw();}
                 xywh {119 145 31 25} maximum 255 step 1
               }
               Fl_Value_Input valinp_trace_3_thickness {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).thickness = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).thickness = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {152 145 43 25} step 0.001 value 0.7
+                xywh {152 145 43 25} maximum 100 step 0.1 value 70
               }
               Fl_Box box_trace_3_hue {
-                image {color_belt127x3hue.png} xywh {200 150 128 15}
+                image {color_belt_120x5_hue.png} xywh {200 145 120 25}
               }
               Fl_Value_Input valinp_trace_3_hmin {
                 callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hmin = o->value();
 opengl_view->redraw();}
-                xywh {330 145 31 25} maximum 360 step 1 value 60
+                xywh {321 145 43 25} maximum 360 step 0.1 value 60
               }
               Fl_Value_Input valinp_trace_3_hmax {
                 callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hmax = o->value();
 opengl_view->redraw();}
-                xywh {362 145 31 25} maximum 360 step 1 value 180
+                xywh {365 145 43 25} maximum 360 step 0.1 value 180
               }
               Fl_Value_Input valinp_trace_3_threshold_to_black {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_to_black = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {398 145 43 25} step 0.001 value 0.8
+                xywh {410 145 43 25} maximum 100 step 0.1 value 80
               }
               Fl_Value_Input valinp_trace_3_threshold_offset {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_offset = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();}
-                xywh {442 145 43 25} step 0.001
+                xywh {454 145 43 25} maximum 100 step 0.1
               }
               Fl_Check_Button {} {
-                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hsv_viewer_guide_sw = o->value();
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();}
-                xywh {490 145 17 25} down_box DOWN_BOX
+                xywh {498 145 17 25} down_box DOWN_BOX
               }
             }
           }
-          Fl_Group {} {open
-            xywh {1 102 10 180}
+          Fl_Group {} {
+            xywh {0 175 520 25}
+          } {
+            Fl_Check_Button chkbtn_trace_4_enable_sw {
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).enable_sw = (o->value()==1 ?true :false);
+if (o->value()) {group_trace_4->activate();  }
+else            {group_trace_4->deactivate();}
+opengl_view->redraw();}
+              xywh {10 175 17 25} down_box DOWN_BOX align 4
+            }
+            Fl_Group group_trace_4 {open
+              xywh {29 175 490 25} deactivate
+            } {
+              Fl_Box box_trace_4_target {
+                xywh {29 175 25 25} box FLAT_BOX color 20
+              }
+              Fl_Value_Input valinp_trace_4_target_r {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_r = o->value()/o->maximum();
+box_trace_4_target->color(static_cast<Fl_Color>(20));
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+box_trace_4_target->redraw();
+opengl_view->redraw();}
+                xywh {55 175 31 25} maximum 255 step 1
+              }
+              Fl_Value_Input valinp_trace_4_target_g {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_g = o->value()/o->maximum();
+box_trace_4_target->color(static_cast<Fl_Color>(20));
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+box_trace_4_target->redraw();
+opengl_view->redraw();}
+                xywh {87 175 31 25} maximum 255 step 1 value 255
+              }
+              Fl_Value_Input valinp_trace_4_target_b {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_b = o->value()/o->maximum();
+box_trace_4_target->color(static_cast<Fl_Color>(20));
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+box_trace_4_target->redraw();
+opengl_view->redraw();}
+                xywh {119 175 31 25} maximum 255 step 1 value 255
+              }
+              Fl_Value_Input valinp_trace_4_thickness {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).thickness = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {152 175 43 25} maximum 100 step 0.1 value 70
+              }
+              Fl_Box box_trace_4_hue {
+                image {color_belt_120x5_hue.png} xywh {200 175 120 25}
+              }
+              Fl_Value_Input valinp_trace_4_hmin {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hmin = o->value();
+opengl_view->redraw();}
+                xywh {321 175 43 25} maximum 360 step 0.1 value 180
+              }
+              Fl_Value_Input valinp_trace_4_hmax {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hmax = o->value();
+opengl_view->redraw();}
+                xywh {365 175 43 25} maximum 360 step 0.1 value 180
+              }
+              Fl_Value_Input valinp_trace_4_threshold_to_black {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).threshold_to_black = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {410 175 43 25} maximum 100 step 0.1 value 80
+              }
+              Fl_Value_Input valinp_trace_4_threshold_offset {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).threshold_offset = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {454 175 43 25} maximum 100 step 0.1
+              }
+              Fl_Check_Button {} {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+//opengl_hsv_viewer->redraw();}
+                xywh {498 175 17 25} down_box DOWN_BOX
+              }
+            }
+          }
+          Fl_Group {} {
+            xywh {0 205 520 25}
+          } {
+            Fl_Check_Button chkbtn_trace_5_enable_sw {
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).enable_sw = (o->value()==1 ?true :false);
+if (o->value()) {group_trace_5->activate();  }
+else            {group_trace_5->deactivate();}
+opengl_view->redraw();}
+              xywh {10 205 17 25} down_box DOWN_BOX align 4
+            }
+            Fl_Group group_trace_5 {open
+              xywh {29 205 490 25} deactivate
+            } {
+              Fl_Box box_trace_5_target {
+                xywh {29 205 25 25} box FLAT_BOX color 21
+              }
+              Fl_Value_Input valinp_trace_5_target_r {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_r = o->value()/o->maximum();
+box_trace_5_target->color(static_cast<Fl_Color>(21));
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+box_trace_5_target->redraw();
+opengl_view->redraw();}
+                xywh {55 205 31 25} maximum 255 step 1 value 255
+              }
+              Fl_Value_Input valinp_trace_5_target_g {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_g = o->value()/o->maximum();
+box_trace_5_target->color(static_cast<Fl_Color>(21));
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+box_trace_5_target->redraw();
+opengl_view->redraw();}
+                xywh {87 205 31 25} maximum 255 step 1
+              }
+              Fl_Value_Input valinp_trace_5_target_b {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_b = o->value()/o->maximum();
+box_trace_5_target->color(static_cast<Fl_Color>(21));
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+box_trace_5_target->redraw();
+opengl_view->redraw();}
+                xywh {119 205 31 25} maximum 255 step 1 value 255
+              }
+              Fl_Value_Input valinp_trace_5_thickness {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).thickness = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {152 205 43 25} maximum 100 step 0.1 value 70
+              }
+              Fl_Box box_trace_5_hue {
+                image {color_belt_120x5_hue.png} xywh {200 205 120 25}
+              }
+              Fl_Value_Input valinp_trace_5_hmin {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hmin = o->value();
+opengl_view->redraw();}
+                xywh {321 205 43 25} maximum 360 step 0.1 value 300
+              }
+              Fl_Value_Input valinp_trace_5_hmax {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hmax = o->value();
+opengl_view->redraw();}
+                xywh {365 205 43 25} maximum 360 step 0.1 value 300
+              }
+              Fl_Value_Input valinp_trace_5_threshold_to_black {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).threshold_to_black = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {410 205 43 25} maximum 100 step 0.1 value 80
+              }
+              Fl_Value_Input valinp_trace_5_threshold_offset {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).threshold_offset = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {454 205 43 25} maximum 100 step 0.1
+              }
+              Fl_Check_Button {} {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+//opengl_hsv_viewer->redraw();}
+                xywh {498 205 17 25} down_box DOWN_BOX
+              }
+            }
+          }
+          Fl_Group {} {
+            xywh {0 235 520 25}
+          } {
+            Fl_Check_Button chkbtn_trace_6_enable_sw {
+              callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).enable_sw = (o->value()==1 ?true :false);
+if (o->value()) {group_trace_6->activate();  }
+else            {group_trace_6->deactivate();}
+opengl_view->redraw();}
+              xywh {10 235 17 25} down_box DOWN_BOX align 4
+            }
+            Fl_Group group_trace_6 {open
+              xywh {29 235 490 25} deactivate
+            } {
+              Fl_Box box_trace_6_target {
+                xywh {29 235 25 25} box FLAT_BOX color 22
+              }
+              Fl_Value_Input valinp_trace_6_target_r {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_r = o->value()/o->maximum();
+box_trace_3_target->color(static_cast<Fl_Color>(22));
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);
+box_trace_6_target->redraw();
+opengl_view->redraw();}
+                xywh {55 235 31 25} maximum 255 step 1 value 255
+              }
+              Fl_Value_Input valinp_trace_6_target_g {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_g = o->value()/o->maximum();
+box_trace_6_target->color(static_cast<Fl_Color>(22));
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);
+box_trace_6_target->redraw();
+opengl_view->redraw();}
+                xywh {87 235 31 25} maximum 255 step 1 value 255
+              }
+              Fl_Value_Input valinp_trace_6_target_b {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_b = o->value()/o->maximum();
+box_trace_6_target->color(static_cast<Fl_Color>(22));
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);
+box_trace_6_target->redraw();
+opengl_view->redraw();}
+                xywh {119 235 31 25} maximum 255 step 1
+              }
+              Fl_Value_Input valinp_trace_6_thickness {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).thickness = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {152 235 43 25} maximum 100 step 0.1 value 70
+              }
+              Fl_Box box_trace_6_hue {
+                image {color_belt_120x5_hue.png} xywh {200 235 120 25}
+              }
+              Fl_Value_Input valinp_trace_6_hmin {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hmin = o->value();
+opengl_view->redraw();}
+                xywh {321 235 43 25} maximum 360 step 0.1 value 60
+              }
+              Fl_Value_Input valinp_trace_6_hmax {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hmax = o->value();
+opengl_view->redraw();}
+                xywh {365 235 43 25} maximum 360 step 0.1 value 60
+              }
+              Fl_Value_Input valinp_trace_6_threshold_to_black {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).threshold_to_black = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {410 235 43 25} maximum 100 step 0.1 value 80
+              }
+              Fl_Value_Input valinp_trace_6_threshold_offset {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).threshold_offset = o->value()/o->maximum();
+opengl_view->redraw();}
+                xywh {454 235 43 25} maximum 100 step 0.1
+              }
+              Fl_Check_Button {} {
+                callback {cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+//opengl_hsv_viewer->redraw();}
+                xywh {498 235 17 25} down_box DOWN_BOX
+              }
+            }
+          }
+          Fl_Group {} {
+            xywh {520 100 15 145}
           } {
             Fl_Button button_change_1_2 {
-              image {updown.png} xywh {1 102 10 20}
+              image {updown.png} xywh {520 100 15 25}
             }
             Fl_Button button_change_2_3 {
-              image {updown.png} xywh {1 132 10 20}
+              image {updown.png} xywh {520 130 15 25}
+            }
+            Fl_Button button_change_3_4 {
+              image {updown.png} xywh {520 160 15 25}
+            }
+            Fl_Button button_change_4_5 {
+              image {updown.png} xywh {520 190 15 25}
+            }
+            Fl_Button button_change_5_6 {
+              image {updown.png} xywh {520 220 15 25}
             }
           }
         }
+      }
+    }
+    Fl_Window window_hsv_viewer {
+      label {HSV Viewer}
+      callback {cl_gts_gui.window_hsv_viewer->hide();
+cl_gts_gui.menite_hsv_viewer->clear();}
+      xywh {50 50 500 500} type Double resizable non_modal visible
+    } {
+      Fl_Box hsv_viewer {
+        xywh {0 0 500 500} resizable
+        code0 {\#include "fl_gl_hsv_viewer.h"}
+        class fl_gl_hsv_viewer
       }
     }
   }

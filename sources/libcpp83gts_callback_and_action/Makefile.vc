@@ -21,7 +21,8 @@ INCS =\
 /I..\libc12pri\
 /I..\libc11portable\
 /I$(DPATH_TWAIN)\
-/I$(DPATH_FLTK)
+/I$(DPATH_FLTK)\
+/I$(DPATH_GLEW)\include
 SRCS =\
 gts_gui.cpp\
 gts_master.cpp\
@@ -49,6 +50,7 @@ cb_trace_parameters.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\
+fl_gl_hsv_viewer.cpp\
 fltk_event.cpp\
 fltk_opengl.cpp\
 igs_lex_white_space_and_double_quote.cpp\
@@ -70,6 +72,7 @@ TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
 DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-1
+DPATH_GLEW  = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
 DPATH_TWAIN = $(DPATH_3RD_PARTY)\twain\twain-2.3
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib

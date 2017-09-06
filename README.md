@@ -42,6 +42,7 @@ Execute "./gts" in unziped folder.
  third party libraries unarchived in:
  - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
+ - `GTS/thirdparty/glew/glew-2.1.0/`
 
 4. How to build
 
@@ -74,6 +75,7 @@ Execute "./gts" in unziped folder.
  $ sudo apt install autoconf-archive
  $ sudo apt install libtiff5-dev
  $ sudo apt install libfltk1.3-dev
+ $ sudo apt install libglew-dev
  $ sudo apt install libsane-dev
  ```
 

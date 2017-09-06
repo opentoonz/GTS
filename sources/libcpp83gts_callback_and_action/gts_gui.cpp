@@ -250,6 +250,18 @@ void gts_gui::cb_menite_trace_color(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_color_i(o,v);
 }
 
+void gts_gui::cb_menite_hsv_viewer_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_hsv_viewer->value()) {
+    cl_gts_gui.window_main_view->show();/* Need for Minimize */
+    cl_gts_gui.window_hsv_viewer->show();
+} else {
+    cl_gts_gui.window_hsv_viewer->hide();
+};
+}
+void gts_gui::cb_menite_hsv_viewer(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_hsv_viewer_i(o,v);
+}
+
 void gts_gui::cb_In_i(Fl_Menu_*, void*) {
   cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_CEN);
 }
@@ -451,6 +463,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Color...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"HSV Viewer", 0,  (Fl_Callback*)gts_gui::cb_menite_hsv_viewer, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Zoom", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -502,12 +515,13 @@ Fl_Menu_Item* gts_gui::menite_trace_parameters = gts_gui::menu_ + 26;
 Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 27;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 28;
 Fl_Menu_Item* gts_gui::menite_trace_color = gts_gui::menu_ + 29;
-Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 41;
-Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 46;
-Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 47;
-Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 48;
-Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 49;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 62;
+Fl_Menu_Item* gts_gui::menite_hsv_viewer = gts_gui::menu_ + 30;
+Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 42;
+Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 47;
+Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 48;
+Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 49;
+Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 50;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 63;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );
@@ -5187,7 +5201,7 @@ void gts_gui::cb_Open2(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_0_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).enable_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
 opengl_view->redraw();
@@ -5242,7 +5256,7 @@ void gts_gui::cb_valinp_trace_0_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).thickness = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_0_thickness(Fl_Value_Input* o, void* v) {
@@ -5250,7 +5264,7 @@ void gts_gui::cb_valinp_trace_0_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_to_black = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_0_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5258,7 +5272,7 @@ void gts_gui::cb_valinp_trace_0_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_offset = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_0_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5266,7 +5280,7 @@ void gts_gui::cb_valinp_trace_0_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_4_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).hsv_viewer_guide_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_4(Fl_Check_Button* o, void* v) {
@@ -5274,7 +5288,7 @@ void gts_gui::cb_4(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_1_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).enable_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_1->activate();  }
 else            {group_trace_1->deactivate();}
 opengl_view->redraw();
@@ -5284,7 +5298,7 @@ void gts_gui::cb_chkbtn_trace_1_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_r = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_r = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -5299,7 +5313,7 @@ void gts_gui::cb_valinp_trace_1_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_g = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_g = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -5314,7 +5328,7 @@ void gts_gui::cb_valinp_trace_1_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_b = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_b = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -5329,12 +5343,88 @@ void gts_gui::cb_valinp_trace_1_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).thickness = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_thickness(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_1_thickness_i(o,v);
 }
+
+static const unsigned char idata_color_belt_120x5_hue[] =
+{255,2,0,255,10,0,255,19,0,255,31,0,255,43,0,255,56,0,255,72,0,255,86,0,255,
+101,0,255,118,0,255,133,0,255,149,0,255,165,0,255,180,0,255,194,0,255,209,0,255,
+221,0,255,232,0,255,242,0,255,250,0,253,255,0,244,255,0,235,255,0,224,255,0,211,
+255,0,198,255,0,185,255,0,169,255,0,154,255,0,139,255,0,122,255,0,107,255,0,92,
+255,0,76,255,0,62,255,0,48,255,0,35,255,0,24,255,0,14,255,0,5,255,0,0,255,2,0,
+255,10,0,255,20,0,255,31,0,255,43,0,255,57,0,255,71,0,255,85,0,255,102,0,255,
+117,0,255,132,0,255,149,0,255,164,0,255,179,0,255,195,0,255,207,0,255,219,0,255,
+232,0,255,241,0,255,250,0,253,255,0,245,255,0,236,255,0,224,255,0,212,255,0,199,
+255,0,185,255,0,170,255,0,155,255,0,138,255,0,122,255,0,108,255,0,91,255,0,76,
+255,0,63,255,0,48,255,0,35,255,0,24,255,0,13,255,0,6,255,1,0,255,9,0,255,18,0,
+255,29,0,255,42,0,255,54,0,255,68,0,255,83,0,255,99,0,255,114,0,255,131,0,255,
+146,0,255,161,0,255,179,0,255,192,0,255,206,0,255,219,0,255,231,0,255,240,0,255,
+250,0,255,255,0,253,255,0,245,255,0,235,255,0,224,255,0,212,255,0,198,255,0,183,
+255,0,170,255,0,153,255,0,137,255,0,122,255,0,105,255,0,90,255,0,75,255,0,59,
+255,0,46,255,0,34,255,0,22,255,0,12,255,0,4,255,2,0,255,10,0,255,19,0,255,31,0,
+255,43,0,255,56,0,255,72,0,255,86,0,255,101,0,255,118,0,255,133,0,255,149,0,255,
+165,0,255,180,0,255,194,0,255,209,0,255,221,0,255,232,0,255,242,0,255,250,0,253,
+255,0,244,255,0,235,255,0,224,255,0,211,255,0,198,255,0,185,255,0,169,255,0,154,
+255,0,139,255,0,122,255,0,107,255,0,92,255,0,76,255,0,62,255,0,48,255,0,35,255,
+0,24,255,0,14,255,0,5,255,0,0,255,2,0,255,10,0,255,20,0,255,31,0,255,43,0,255,
+57,0,255,71,0,255,85,0,255,102,0,255,117,0,255,132,0,255,149,0,255,164,0,255,
+179,0,255,195,0,255,207,0,255,219,0,255,232,0,255,241,0,255,250,0,253,255,0,245,
+255,0,236,255,0,224,255,0,212,255,0,199,255,0,185,255,0,170,255,0,155,255,0,138,
+255,0,122,255,0,108,255,0,91,255,0,76,255,0,63,255,0,48,255,0,35,255,0,24,255,0,
+13,255,0,6,255,1,0,255,9,0,255,18,0,255,29,0,255,42,0,255,54,0,255,68,0,255,83,
+0,255,99,0,255,114,0,255,131,0,255,146,0,255,161,0,255,179,0,255,192,0,255,
+206,0,255,219,0,255,231,0,255,240,0,255,250,0,255,255,0,253,255,0,245,255,0,235,
+255,0,224,255,0,212,255,0,198,255,0,183,255,0,170,255,0,153,255,0,137,255,0,122,
+255,0,105,255,0,90,255,0,75,255,0,59,255,0,46,255,0,34,255,0,22,255,0,12,255,0,
+4,255,2,0,255,10,0,255,19,0,255,31,0,255,43,0,255,56,0,255,72,0,255,86,0,255,
+101,0,255,118,0,255,133,0,255,149,0,255,165,0,255,180,0,255,194,0,255,209,0,255,
+221,0,255,232,0,255,242,0,255,250,0,253,255,0,244,255,0,235,255,0,224,255,0,211,
+255,0,198,255,0,185,255,0,169,255,0,154,255,0,139,255,0,122,255,0,107,255,0,92,
+255,0,76,255,0,62,255,0,48,255,0,35,255,0,24,255,0,14,255,0,5,255,0,0,255,2,0,
+255,10,0,255,20,0,255,31,0,255,43,0,255,57,0,255,71,0,255,85,0,255,102,0,255,
+117,0,255,132,0,255,149,0,255,164,0,255,179,0,255,195,0,255,207,0,255,219,0,255,
+232,0,255,241,0,255,250,0,253,255,0,245,255,0,236,255,0,224,255,0,212,255,0,199,
+255,0,185,255,0,170,255,0,155,255,0,138,255,0,122,255,0,108,255,0,91,255,0,76,
+255,0,63,255,0,48,255,0,35,255,0,24,255,0,13,255,0,6,255,1,0,255,9,0,255,18,0,
+255,29,0,255,42,0,255,54,0,255,68,0,255,83,0,255,99,0,255,114,0,255,131,0,255,
+146,0,255,161,0,255,179,0,255,192,0,255,206,0,255,219,0,255,231,0,255,240,0,255,
+250,0,255,255,0,253,255,0,245,255,0,235,255,0,224,255,0,212,255,0,198,255,0,183,
+255,0,170,255,0,153,255,0,137,255,0,122,255,0,105,255,0,90,255,0,75,255,0,59,
+255,0,46,255,0,34,255,0,22,255,0,12,255,0,4,255,2,0,255,10,0,255,19,0,255,31,0,
+255,43,0,255,56,0,255,72,0,255,86,0,255,101,0,255,118,0,255,133,0,255,149,0,255,
+165,0,255,180,0,255,194,0,255,209,0,255,221,0,255,232,0,255,242,0,255,250,0,253,
+255,0,244,255,0,235,255,0,224,255,0,211,255,0,198,255,0,185,255,0,169,255,0,154,
+255,0,139,255,0,122,255,0,107,255,0,92,255,0,76,255,0,62,255,0,48,255,0,35,255,
+0,24,255,0,14,255,0,5,255,0,0,255,2,0,255,10,0,255,20,0,255,31,0,255,43,0,255,
+57,0,255,71,0,255,85,0,255,102,0,255,117,0,255,132,0,255,149,0,255,164,0,255,
+179,0,255,195,0,255,207,0,255,219,0,255,232,0,255,241,0,255,250,0,253,255,0,245,
+255,0,236,255,0,224,255,0,212,255,0,199,255,0,185,255,0,170,255,0,155,255,0,138,
+255,0,122,255,0,108,255,0,91,255,0,76,255,0,63,255,0,48,255,0,35,255,0,24,255,0,
+13,255,0,6,255,1,0,255,9,0,255,18,0,255,29,0,255,42,0,255,54,0,255,68,0,255,83,
+0,255,99,0,255,114,0,255,131,0,255,146,0,255,161,0,255,179,0,255,192,0,255,
+206,0,255,219,0,255,231,0,255,240,0,255,250,0,255,255,0,253,255,0,245,255,0,235,
+255,0,224,255,0,212,255,0,198,255,0,183,255,0,170,255,0,153,255,0,137,255,0,122,
+255,0,105,255,0,90,255,0,75,255,0,59,255,0,46,255,0,34,255,0,22,255,0,12,255,0,
+4,255,2,0,255,10,0,255,19,0,255,31,0,255,43,0,255,56,0,255,72,0,255,86,0,255,
+101,0,255,118,0,255,133,0,255,149,0,255,165,0,255,180,0,255,194,0,255,209,0,255,
+221,0,255,232,0,255,242,0,255,250,0,253,255,0,244,255,0,235,255,0,224,255,0,211,
+255,0,198,255,0,185,255,0,169,255,0,154,255,0,139,255,0,122,255,0,107,255,0,92,
+255,0,76,255,0,62,255,0,48,255,0,35,255,0,24,255,0,14,255,0,5,255,0,0,255,2,0,
+255,10,0,255,20,0,255,31,0,255,43,0,255,57,0,255,71,0,255,85,0,255,102,0,255,
+117,0,255,132,0,255,149,0,255,164,0,255,179,0,255,195,0,255,207,0,255,219,0,255,
+232,0,255,241,0,255,250,0,253,255,0,245,255,0,236,255,0,224,255,0,212,255,0,199,
+255,0,185,255,0,170,255,0,155,255,0,138,255,0,122,255,0,108,255,0,91,255,0,76,
+255,0,63,255,0,48,255,0,35,255,0,24,255,0,13,255,0,6,255,1,0,255,9,0,255,18,0,
+255,29,0,255,42,0,255,54,0,255,68,0,255,83,0,255,99,0,255,114,0,255,131,0,255,
+146,0,255,161,0,255,179,0,255,192,0,255,206,0,255,219,0,255,231,0,255,240,0,255,
+250,0,255,255,0,253,255,0,245,255,0,235,255,0,224,255,0,212,255,0,198,255,0,183,
+255,0,170,255,0,153,255,0,137,255,0,122,255,0,105,255,0,90,255,0,75,255,0,59,
+255,0,46,255,0,34,255,0,22,255,0,12,255,0,4};
+static Fl_RGB_Image image_color_belt_120x5_hue(idata_color_belt_120x5_hue, 120, 5, 3, 0);
 
 void gts_gui::cb_valinp_trace_1_hmin_i(Fl_Value_Input* o, void*) {
   cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hmin = o->value();
@@ -5353,7 +5443,7 @@ void gts_gui::cb_valinp_trace_1_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_to_black = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5361,7 +5451,7 @@ void gts_gui::cb_valinp_trace_1_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_offset = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5369,7 +5459,7 @@ void gts_gui::cb_valinp_trace_1_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_5_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_5(Fl_Check_Button* o, void* v) {
@@ -5377,7 +5467,7 @@ void gts_gui::cb_5(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_2_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).enable_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_2->activate();  }
 else            {group_trace_2->deactivate();}
 opengl_view->redraw();
@@ -5387,7 +5477,7 @@ void gts_gui::cb_chkbtn_trace_2_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_r = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_r = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -5402,7 +5492,7 @@ void gts_gui::cb_valinp_trace_2_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_g = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_g = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -5417,7 +5507,7 @@ void gts_gui::cb_valinp_trace_2_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_b = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_b = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -5432,7 +5522,7 @@ void gts_gui::cb_valinp_trace_2_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).thickness = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_thickness(Fl_Value_Input* o, void* v) {
@@ -5456,7 +5546,7 @@ void gts_gui::cb_valinp_trace_2_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_to_black = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5464,7 +5554,7 @@ void gts_gui::cb_valinp_trace_2_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_offset = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5472,7 +5562,7 @@ void gts_gui::cb_valinp_trace_2_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_6_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hsv_viewer_guide_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_6(Fl_Check_Button* o, void* v) {
@@ -5480,7 +5570,7 @@ void gts_gui::cb_6(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_3_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).enable_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_3->activate();  }
 else            {group_trace_3->deactivate();}
 opengl_view->redraw();
@@ -5490,7 +5580,7 @@ void gts_gui::cb_chkbtn_trace_3_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_r = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_r = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -5505,7 +5595,7 @@ void gts_gui::cb_valinp_trace_3_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_g = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_g = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -5520,7 +5610,7 @@ void gts_gui::cb_valinp_trace_3_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_b = o->value()/255.;
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_b = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -5535,7 +5625,7 @@ void gts_gui::cb_valinp_trace_3_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).thickness = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_thickness(Fl_Value_Input* o, void* v) {
@@ -5559,7 +5649,7 @@ void gts_gui::cb_valinp_trace_3_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_to_black = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5567,7 +5657,7 @@ void gts_gui::cb_valinp_trace_3_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_offset = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5575,11 +5665,320 @@ void gts_gui::cb_valinp_trace_3_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_7_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hsv_viewer_guide_sw = o->value();
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_7(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_7_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_trace_4_enable_sw_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).enable_sw = (o->value()==1 ?true :false);
+if (o->value()) {group_trace_4->activate();  }
+else            {group_trace_4->deactivate();}
+opengl_view->redraw();
+}
+void gts_gui::cb_chkbtn_trace_4_enable_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_chkbtn_trace_4_enable_sw_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_target_r_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_r = o->value()/o->maximum();
+box_trace_4_target->color(static_cast<Fl_Color>(20));
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+box_trace_4_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_target_r(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_target_r_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_target_g_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_g = o->value()/o->maximum();
+box_trace_4_target->color(static_cast<Fl_Color>(20));
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+box_trace_4_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_target_g(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_target_g_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_target_b_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_b = o->value()/o->maximum();
+box_trace_4_target->color(static_cast<Fl_Color>(20));
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+box_trace_4_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_target_b(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_target_b_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_thickness_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).thickness = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_thickness(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_thickness_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_hmin_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hmin = o->value();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_hmin(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_hmin_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_hmax_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hmax = o->value();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_hmax(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_hmax_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_threshold_to_black_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).threshold_to_black = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_threshold_to_black(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_threshold_to_black_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_4_threshold_offset_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).threshold_offset = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_4_threshold_offset(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_4_threshold_offset_i(o,v);
+}
+
+void gts_gui::cb_8_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+//opengl_hsv_viewer->redraw();
+}
+void gts_gui::cb_8(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_8_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_trace_5_enable_sw_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).enable_sw = (o->value()==1 ?true :false);
+if (o->value()) {group_trace_5->activate();  }
+else            {group_trace_5->deactivate();}
+opengl_view->redraw();
+}
+void gts_gui::cb_chkbtn_trace_5_enable_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_chkbtn_trace_5_enable_sw_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_target_r_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_r = o->value()/o->maximum();
+box_trace_5_target->color(static_cast<Fl_Color>(21));
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+box_trace_5_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_target_r(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_target_r_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_target_g_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_g = o->value()/o->maximum();
+box_trace_5_target->color(static_cast<Fl_Color>(21));
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+box_trace_5_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_target_g(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_target_g_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_target_b_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_b = o->value()/o->maximum();
+box_trace_5_target->color(static_cast<Fl_Color>(21));
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+box_trace_5_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_target_b(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_target_b_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_thickness_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).thickness = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_thickness(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_thickness_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_hmin_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hmin = o->value();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_hmin(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_hmin_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_hmax_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hmax = o->value();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_hmax(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_hmax_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_threshold_to_black_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).threshold_to_black = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_threshold_to_black(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_threshold_to_black_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_5_threshold_offset_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).threshold_offset = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_5_threshold_offset(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_5_threshold_offset_i(o,v);
+}
+
+void gts_gui::cb_9_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+//opengl_hsv_viewer->redraw();
+}
+void gts_gui::cb_9(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_9_i(o,v);
+}
+
+void gts_gui::cb_chkbtn_trace_6_enable_sw_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).enable_sw = (o->value()==1 ?true :false);
+if (o->value()) {group_trace_6->activate();  }
+else            {group_trace_6->deactivate();}
+opengl_view->redraw();
+}
+void gts_gui::cb_chkbtn_trace_6_enable_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_chkbtn_trace_6_enable_sw_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_target_r_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_r = o->value()/o->maximum();
+box_trace_3_target->color(static_cast<Fl_Color>(22));
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);
+box_trace_6_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_target_r(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_target_r_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_target_g_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_g = o->value()/o->maximum();
+box_trace_6_target->color(static_cast<Fl_Color>(22));
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);
+box_trace_6_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_target_g(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_target_g_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_target_b_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_b = o->value()/o->maximum();
+box_trace_6_target->color(static_cast<Fl_Color>(22));
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);
+box_trace_6_target->redraw();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_target_b(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_target_b_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_thickness_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).thickness = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_thickness(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_thickness_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_hmin_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hmin = o->value();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_hmin(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_hmin_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_hmax_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hmax = o->value();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_hmax(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_hmax_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_threshold_to_black_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).threshold_to_black = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_threshold_to_black(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_threshold_to_black_i(o,v);
+}
+
+void gts_gui::cb_valinp_trace_6_threshold_offset_i(Fl_Value_Input* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).threshold_offset = o->value()/o->maximum();
+opengl_view->redraw();
+}
+void gts_gui::cb_valinp_trace_6_threshold_offset(Fl_Value_Input* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_trace_6_threshold_offset_i(o,v);
+}
+
+void gts_gui::cb_a_i(Fl_Check_Button* o, void*) {
+  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+//opengl_hsv_viewer->redraw();
+}
+void gts_gui::cb_a(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_a_i(o,v);
 }
 
 static const unsigned char idata_updown[] =
@@ -5611,6 +6010,14 @@ static const unsigned char idata_updown[] =
 255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
 255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255};
 static Fl_RGB_Image image_updown(idata_updown, 10, 20, 3, 0);
+
+void gts_gui::cb_window_hsv_viewer_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_hsv_viewer->hide();
+cl_gts_gui.menite_hsv_viewer->clear();
+}
+void gts_gui::cb_window_hsv_viewer(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_hsv_viewer_i(o,v);
+}
 
 Fl_Double_Window* gts_gui::make_window() {
   { window_main_view = new Fl_Double_Window(720, 565, "GTS");
@@ -7711,43 +8118,16 @@ Fl_Double_Window* gts_gui::make_window() {
     window_set_aspect_ratio->set_modal();
     window_set_aspect_ratio->end();
   } // Fl_Double_Window* window_set_aspect_ratio
-  { window_trace_color = new Fl_Double_Window(520, 300, "Trace");
+  { window_trace_color = new Fl_Double_Window(540, 270, "Trace Color");
     window_trace_color->callback((Fl_Callback*)cb_window_trace_color, (void*)(this));
-    { Fl_Scroll* o = new Fl_Scroll(0, 0, 530, 300);
-      { Fl_Group* o = new Fl_Group(0, 0, 530, 300);
+    { Fl_Scroll* o = new Fl_Scroll(0, 0, 540, 270);
+      { Fl_Group* o = new Fl_Group(0, 0, 540, 270);
         { Fl_Button* o = new Fl_Button(5, 5, 130, 25, "Open Config This...");
           o->callback((Fl_Callback*)cb_Open2);
           //#include "cb_trace_color.h"
         } // Fl_Button* o
-        { Fl_Group* o = new Fl_Group(0, 66, 520, 15);
-          { Fl_Text_Display* o = new Fl_Text_Display(55, 66, 0, 0, "R");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(87, 66, 0, 0, "G");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(119, 66, 0, 0, "B");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(152, 66, 0, 0, "Thickn.");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(330, 66, 0, 0, "Hmin");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(362, 66, 0, 0, "Hmax");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(398, 66, 0, 0, "Tresh.");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          { Fl_Text_Display* o = new Fl_Text_Display(442, 66, 0, 0, "Offset");
-            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-          } // Fl_Text_Display* o
-          o->end();
-        } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(0, 37, 520, 25);
-          { chkbtn_trace_0_enable_sw = new Fl_Check_Button(12, 37, 17, 25);
+          { chkbtn_trace_0_enable_sw = new Fl_Check_Button(10, 37, 17, 25);
             chkbtn_trace_0_enable_sw->down_box(FL_DOWN_BOX);
             chkbtn_trace_0_enable_sw->value(1);
             chkbtn_trace_0_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_0_enable_sw);
@@ -7774,20 +8154,23 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_trace_0_target_b->callback((Fl_Callback*)cb_valinp_trace_0_target_b);
             } // Fl_Value_Input* valinp_trace_0_target_b
             { valinp_trace_0_thickness = new Fl_Value_Input(152, 37, 43, 25);
-              valinp_trace_0_thickness->step(0.001);
-              valinp_trace_0_thickness->value(0.7);
+              valinp_trace_0_thickness->maximum(100);
+              valinp_trace_0_thickness->step(0.1);
+              valinp_trace_0_thickness->value(70);
               valinp_trace_0_thickness->callback((Fl_Callback*)cb_valinp_trace_0_thickness);
             } // Fl_Value_Input* valinp_trace_0_thickness
-            { valinp_trace_0_threshold_to_black = new Fl_Value_Input(398, 37, 43, 25);
-              valinp_trace_0_threshold_to_black->step(0.001);
-              valinp_trace_0_threshold_to_black->value(0.8);
+            { valinp_trace_0_threshold_to_black = new Fl_Value_Input(410, 37, 43, 25);
+              valinp_trace_0_threshold_to_black->maximum(100);
+              valinp_trace_0_threshold_to_black->step(0.1);
+              valinp_trace_0_threshold_to_black->value(80);
               valinp_trace_0_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_0_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_0_threshold_to_black
-            { valinp_trace_0_threshold_offset = new Fl_Value_Input(442, 37, 43, 25);
-              valinp_trace_0_threshold_offset->step(0.001);
+            { valinp_trace_0_threshold_offset = new Fl_Value_Input(454, 37, 43, 25);
+              valinp_trace_0_threshold_offset->maximum(100);
+              valinp_trace_0_threshold_offset->step(0.1);
               valinp_trace_0_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_0_threshold_offset);
             } // Fl_Value_Input* valinp_trace_0_threshold_offset
-            { Fl_Check_Button* o = new Fl_Check_Button(490, 37, 17, 25);
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 37, 17, 25);
               o->down_box(FL_DOWN_BOX);
               o->callback((Fl_Callback*)cb_4);
             } // Fl_Check_Button* o
@@ -7795,14 +8178,41 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Group* group_trace_0
           o->end();
         } // Fl_Group* o
+        { Fl_Group* o = new Fl_Group(0, 66, 520, 15);
+          { Fl_Text_Display* o = new Fl_Text_Display(55, 66, 0, 0, "R");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(87, 66, 0, 0, "G");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(119, 66, 0, 0, "B");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(152, 66, 0, 0, "Thickn.");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(321, 66, 0, 0, "Hmin");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(365, 66, 0, 0, "Hmax");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(410, 66, 0, 0, "Tresh.");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          { Fl_Text_Display* o = new Fl_Text_Display(454, 66, 0, 0, "Offset");
+            o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+          } // Fl_Text_Display* o
+          o->end();
+        } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(0, 85, 520, 25);
-          { chkbtn_trace_1_enable_sw = new Fl_Check_Button(12, 85, 17, 25, "1");
+          { chkbtn_trace_1_enable_sw = new Fl_Check_Button(10, 85, 17, 25);
             chkbtn_trace_1_enable_sw->down_box(FL_DOWN_BOX);
             chkbtn_trace_1_enable_sw->value(1);
             chkbtn_trace_1_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_1_enable_sw);
             chkbtn_trace_1_enable_sw->align(Fl_Align(FL_ALIGN_LEFT));
           } // Fl_Check_Button* chkbtn_trace_1_enable_sw
-          { group_trace_1 = new Fl_Group(29, 85, 491, 25);
+          { group_trace_1 = new Fl_Group(29, 85, 490, 25);
             { box_trace_1_target = new Fl_Box(29, 85, 25, 25);
               box_trace_1_target->box(FL_FLAT_BOX);
               box_trace_1_target->color((Fl_Color)17);
@@ -7824,35 +8234,38 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_trace_1_target_b->callback((Fl_Callback*)cb_valinp_trace_1_target_b);
             } // Fl_Value_Input* valinp_trace_1_target_b
             { valinp_trace_1_thickness = new Fl_Value_Input(152, 85, 43, 25);
-              valinp_trace_1_thickness->step(0.001);
-              valinp_trace_1_thickness->value(0.7);
+              valinp_trace_1_thickness->maximum(100);
+              valinp_trace_1_thickness->step(0.1);
+              valinp_trace_1_thickness->value(70);
               valinp_trace_1_thickness->callback((Fl_Callback*)cb_valinp_trace_1_thickness);
             } // Fl_Value_Input* valinp_trace_1_thickness
-            { box_trace_1_hue = new Fl_Box(200, 90, 128, 15);
-              box_trace_1_hue->image(image_color_belt127x3hue);
+            { box_trace_1_hue = new Fl_Box(200, 85, 120, 25);
+              box_trace_1_hue->image(image_color_belt_120x5_hue);
             } // Fl_Box* box_trace_1_hue
-            { valinp_trace_1_hmin = new Fl_Value_Input(330, 85, 31, 25);
+            { valinp_trace_1_hmin = new Fl_Value_Input(321, 85, 43, 25);
               valinp_trace_1_hmin->maximum(360);
-              valinp_trace_1_hmin->step(1);
+              valinp_trace_1_hmin->step(0.1);
               valinp_trace_1_hmin->value(300);
               valinp_trace_1_hmin->callback((Fl_Callback*)cb_valinp_trace_1_hmin);
             } // Fl_Value_Input* valinp_trace_1_hmin
-            { valinp_trace_1_hmax = new Fl_Value_Input(362, 85, 31, 25);
+            { valinp_trace_1_hmax = new Fl_Value_Input(365, 85, 43, 25);
               valinp_trace_1_hmax->maximum(360);
-              valinp_trace_1_hmax->step(1);
+              valinp_trace_1_hmax->step(0.1);
               valinp_trace_1_hmax->value(60);
               valinp_trace_1_hmax->callback((Fl_Callback*)cb_valinp_trace_1_hmax);
             } // Fl_Value_Input* valinp_trace_1_hmax
-            { valinp_trace_1_threshold_to_black = new Fl_Value_Input(398, 85, 43, 25);
-              valinp_trace_1_threshold_to_black->step(0.001);
-              valinp_trace_1_threshold_to_black->value(0.8);
+            { valinp_trace_1_threshold_to_black = new Fl_Value_Input(410, 85, 43, 25);
+              valinp_trace_1_threshold_to_black->maximum(100);
+              valinp_trace_1_threshold_to_black->step(0.1);
+              valinp_trace_1_threshold_to_black->value(80);
               valinp_trace_1_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_1_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_1_threshold_to_black
-            { valinp_trace_1_threshold_offset = new Fl_Value_Input(442, 85, 43, 25);
-              valinp_trace_1_threshold_offset->step(0.001);
+            { valinp_trace_1_threshold_offset = new Fl_Value_Input(454, 85, 43, 25);
+              valinp_trace_1_threshold_offset->maximum(100);
+              valinp_trace_1_threshold_offset->step(0.1);
               valinp_trace_1_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_1_threshold_offset);
             } // Fl_Value_Input* valinp_trace_1_threshold_offset
-            { Fl_Check_Button* o = new Fl_Check_Button(490, 85, 17, 25);
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 85, 17, 25);
               o->down_box(FL_DOWN_BOX);
               o->callback((Fl_Callback*)cb_5);
             } // Fl_Check_Button* o
@@ -7861,13 +8274,13 @@ Fl_Double_Window* gts_gui::make_window() {
           o->end();
         } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(0, 115, 520, 25);
-          { chkbtn_trace_2_enable_sw = new Fl_Check_Button(12, 115, 17, 25, "2");
+          { chkbtn_trace_2_enable_sw = new Fl_Check_Button(10, 115, 17, 25);
             chkbtn_trace_2_enable_sw->down_box(FL_DOWN_BOX);
             chkbtn_trace_2_enable_sw->value(1);
             chkbtn_trace_2_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_2_enable_sw);
             chkbtn_trace_2_enable_sw->align(Fl_Align(FL_ALIGN_LEFT));
           } // Fl_Check_Button* chkbtn_trace_2_enable_sw
-          { group_trace_2 = new Fl_Group(29, 115, 491, 25);
+          { group_trace_2 = new Fl_Group(29, 115, 490, 25);
             { box_trace_2_target = new Fl_Box(29, 115, 25, 25);
               box_trace_2_target->box(FL_FLAT_BOX);
               box_trace_2_target->color((Fl_Color)18);
@@ -7889,35 +8302,38 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_trace_2_target_b->callback((Fl_Callback*)cb_valinp_trace_2_target_b);
             } // Fl_Value_Input* valinp_trace_2_target_b
             { valinp_trace_2_thickness = new Fl_Value_Input(152, 115, 43, 25);
-              valinp_trace_2_thickness->step(0.001);
-              valinp_trace_2_thickness->value(0.7);
+              valinp_trace_2_thickness->maximum(100);
+              valinp_trace_2_thickness->step(0.1);
+              valinp_trace_2_thickness->value(70);
               valinp_trace_2_thickness->callback((Fl_Callback*)cb_valinp_trace_2_thickness);
             } // Fl_Value_Input* valinp_trace_2_thickness
-            { box_trace_2_hue = new Fl_Box(200, 120, 128, 15);
-              box_trace_2_hue->image(image_color_belt127x3hue);
+            { box_trace_2_hue = new Fl_Box(200, 115, 120, 25);
+              box_trace_2_hue->image(image_color_belt_120x5_hue);
             } // Fl_Box* box_trace_2_hue
-            { valinp_trace_2_hmin = new Fl_Value_Input(330, 115, 31, 25);
+            { valinp_trace_2_hmin = new Fl_Value_Input(321, 115, 43, 25);
               valinp_trace_2_hmin->maximum(360);
-              valinp_trace_2_hmin->step(1);
+              valinp_trace_2_hmin->step(0.1);
               valinp_trace_2_hmin->value(180);
               valinp_trace_2_hmin->callback((Fl_Callback*)cb_valinp_trace_2_hmin);
             } // Fl_Value_Input* valinp_trace_2_hmin
-            { valinp_trace_2_hmax = new Fl_Value_Input(362, 115, 31, 25);
+            { valinp_trace_2_hmax = new Fl_Value_Input(365, 115, 43, 25);
               valinp_trace_2_hmax->maximum(360);
-              valinp_trace_2_hmax->step(1);
+              valinp_trace_2_hmax->step(0.1);
               valinp_trace_2_hmax->value(300);
               valinp_trace_2_hmax->callback((Fl_Callback*)cb_valinp_trace_2_hmax);
             } // Fl_Value_Input* valinp_trace_2_hmax
-            { valinp_trace_2_threshold_to_black = new Fl_Value_Input(398, 115, 43, 25);
-              valinp_trace_2_threshold_to_black->step(0.001);
-              valinp_trace_2_threshold_to_black->value(0.8);
+            { valinp_trace_2_threshold_to_black = new Fl_Value_Input(410, 115, 43, 25);
+              valinp_trace_2_threshold_to_black->maximum(100);
+              valinp_trace_2_threshold_to_black->step(0.1);
+              valinp_trace_2_threshold_to_black->value(80);
               valinp_trace_2_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_2_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_2_threshold_to_black
-            { valinp_trace_2_threshold_offset = new Fl_Value_Input(442, 115, 43, 25);
-              valinp_trace_2_threshold_offset->step(0.001);
+            { valinp_trace_2_threshold_offset = new Fl_Value_Input(454, 115, 43, 25);
+              valinp_trace_2_threshold_offset->maximum(100);
+              valinp_trace_2_threshold_offset->step(0.1);
               valinp_trace_2_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_2_threshold_offset);
             } // Fl_Value_Input* valinp_trace_2_threshold_offset
-            { Fl_Check_Button* o = new Fl_Check_Button(490, 115, 17, 25);
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 115, 17, 25);
               o->down_box(FL_DOWN_BOX);
               o->callback((Fl_Callback*)cb_6);
             } // Fl_Check_Button* o
@@ -7926,13 +8342,13 @@ Fl_Double_Window* gts_gui::make_window() {
           o->end();
         } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(0, 145, 520, 25);
-          { chkbtn_trace_3_enable_sw = new Fl_Check_Button(12, 145, 17, 25, "3");
+          { chkbtn_trace_3_enable_sw = new Fl_Check_Button(10, 145, 17, 25);
             chkbtn_trace_3_enable_sw->down_box(FL_DOWN_BOX);
             chkbtn_trace_3_enable_sw->value(1);
             chkbtn_trace_3_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_3_enable_sw);
             chkbtn_trace_3_enable_sw->align(Fl_Align(FL_ALIGN_LEFT));
           } // Fl_Check_Button* chkbtn_trace_3_enable_sw
-          { group_trace_3 = new Fl_Group(29, 145, 491, 25);
+          { group_trace_3 = new Fl_Group(29, 145, 490, 25);
             { box_trace_3_target = new Fl_Box(29, 145, 25, 25);
               box_trace_3_target->box(FL_FLAT_BOX);
               box_trace_3_target->color((Fl_Color)19);
@@ -7954,35 +8370,38 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_trace_3_target_b->callback((Fl_Callback*)cb_valinp_trace_3_target_b);
             } // Fl_Value_Input* valinp_trace_3_target_b
             { valinp_trace_3_thickness = new Fl_Value_Input(152, 145, 43, 25);
-              valinp_trace_3_thickness->step(0.001);
-              valinp_trace_3_thickness->value(0.7);
+              valinp_trace_3_thickness->maximum(100);
+              valinp_trace_3_thickness->step(0.1);
+              valinp_trace_3_thickness->value(70);
               valinp_trace_3_thickness->callback((Fl_Callback*)cb_valinp_trace_3_thickness);
             } // Fl_Value_Input* valinp_trace_3_thickness
-            { box_trace_3_hue = new Fl_Box(200, 150, 128, 15);
-              box_trace_3_hue->image(image_color_belt127x3hue);
+            { box_trace_3_hue = new Fl_Box(200, 145, 120, 25);
+              box_trace_3_hue->image(image_color_belt_120x5_hue);
             } // Fl_Box* box_trace_3_hue
-            { valinp_trace_3_hmin = new Fl_Value_Input(330, 145, 31, 25);
+            { valinp_trace_3_hmin = new Fl_Value_Input(321, 145, 43, 25);
               valinp_trace_3_hmin->maximum(360);
-              valinp_trace_3_hmin->step(1);
+              valinp_trace_3_hmin->step(0.1);
               valinp_trace_3_hmin->value(60);
               valinp_trace_3_hmin->callback((Fl_Callback*)cb_valinp_trace_3_hmin);
             } // Fl_Value_Input* valinp_trace_3_hmin
-            { valinp_trace_3_hmax = new Fl_Value_Input(362, 145, 31, 25);
+            { valinp_trace_3_hmax = new Fl_Value_Input(365, 145, 43, 25);
               valinp_trace_3_hmax->maximum(360);
-              valinp_trace_3_hmax->step(1);
+              valinp_trace_3_hmax->step(0.1);
               valinp_trace_3_hmax->value(180);
               valinp_trace_3_hmax->callback((Fl_Callback*)cb_valinp_trace_3_hmax);
             } // Fl_Value_Input* valinp_trace_3_hmax
-            { valinp_trace_3_threshold_to_black = new Fl_Value_Input(398, 145, 43, 25);
-              valinp_trace_3_threshold_to_black->step(0.001);
-              valinp_trace_3_threshold_to_black->value(0.8);
+            { valinp_trace_3_threshold_to_black = new Fl_Value_Input(410, 145, 43, 25);
+              valinp_trace_3_threshold_to_black->maximum(100);
+              valinp_trace_3_threshold_to_black->step(0.1);
+              valinp_trace_3_threshold_to_black->value(80);
               valinp_trace_3_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_3_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_3_threshold_to_black
-            { valinp_trace_3_threshold_offset = new Fl_Value_Input(442, 145, 43, 25);
-              valinp_trace_3_threshold_offset->step(0.001);
+            { valinp_trace_3_threshold_offset = new Fl_Value_Input(454, 145, 43, 25);
+              valinp_trace_3_threshold_offset->maximum(100);
+              valinp_trace_3_threshold_offset->step(0.1);
               valinp_trace_3_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_3_threshold_offset);
             } // Fl_Value_Input* valinp_trace_3_threshold_offset
-            { Fl_Check_Button* o = new Fl_Check_Button(490, 145, 17, 25);
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 145, 17, 25);
               o->down_box(FL_DOWN_BOX);
               o->callback((Fl_Callback*)cb_7);
             } // Fl_Check_Button* o
@@ -7990,13 +8409,229 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Group* group_trace_3
           o->end();
         } // Fl_Group* o
-        { Fl_Group* o = new Fl_Group(1, 102, 10, 180);
-          { button_change_1_2 = new Fl_Button(1, 102, 10, 20);
+        { Fl_Group* o = new Fl_Group(0, 175, 520, 25);
+          { chkbtn_trace_4_enable_sw = new Fl_Check_Button(10, 175, 17, 25);
+            chkbtn_trace_4_enable_sw->down_box(FL_DOWN_BOX);
+            chkbtn_trace_4_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_4_enable_sw);
+            chkbtn_trace_4_enable_sw->align(Fl_Align(FL_ALIGN_LEFT));
+          } // Fl_Check_Button* chkbtn_trace_4_enable_sw
+          { group_trace_4 = new Fl_Group(29, 175, 490, 25);
+            group_trace_4->deactivate();
+            { box_trace_4_target = new Fl_Box(29, 175, 25, 25);
+              box_trace_4_target->box(FL_FLAT_BOX);
+              box_trace_4_target->color((Fl_Color)20);
+            } // Fl_Box* box_trace_4_target
+            { valinp_trace_4_target_r = new Fl_Value_Input(55, 175, 31, 25);
+              valinp_trace_4_target_r->maximum(255);
+              valinp_trace_4_target_r->step(1);
+              valinp_trace_4_target_r->callback((Fl_Callback*)cb_valinp_trace_4_target_r);
+            } // Fl_Value_Input* valinp_trace_4_target_r
+            { valinp_trace_4_target_g = new Fl_Value_Input(87, 175, 31, 25);
+              valinp_trace_4_target_g->maximum(255);
+              valinp_trace_4_target_g->step(1);
+              valinp_trace_4_target_g->value(255);
+              valinp_trace_4_target_g->callback((Fl_Callback*)cb_valinp_trace_4_target_g);
+            } // Fl_Value_Input* valinp_trace_4_target_g
+            { valinp_trace_4_target_b = new Fl_Value_Input(119, 175, 31, 25);
+              valinp_trace_4_target_b->maximum(255);
+              valinp_trace_4_target_b->step(1);
+              valinp_trace_4_target_b->value(255);
+              valinp_trace_4_target_b->callback((Fl_Callback*)cb_valinp_trace_4_target_b);
+            } // Fl_Value_Input* valinp_trace_4_target_b
+            { valinp_trace_4_thickness = new Fl_Value_Input(152, 175, 43, 25);
+              valinp_trace_4_thickness->maximum(100);
+              valinp_trace_4_thickness->step(0.1);
+              valinp_trace_4_thickness->value(70);
+              valinp_trace_4_thickness->callback((Fl_Callback*)cb_valinp_trace_4_thickness);
+            } // Fl_Value_Input* valinp_trace_4_thickness
+            { box_trace_4_hue = new Fl_Box(200, 175, 120, 25);
+              box_trace_4_hue->image(image_color_belt_120x5_hue);
+            } // Fl_Box* box_trace_4_hue
+            { valinp_trace_4_hmin = new Fl_Value_Input(321, 175, 43, 25);
+              valinp_trace_4_hmin->maximum(360);
+              valinp_trace_4_hmin->step(0.1);
+              valinp_trace_4_hmin->value(180);
+              valinp_trace_4_hmin->callback((Fl_Callback*)cb_valinp_trace_4_hmin);
+            } // Fl_Value_Input* valinp_trace_4_hmin
+            { valinp_trace_4_hmax = new Fl_Value_Input(365, 175, 43, 25);
+              valinp_trace_4_hmax->maximum(360);
+              valinp_trace_4_hmax->step(0.1);
+              valinp_trace_4_hmax->value(180);
+              valinp_trace_4_hmax->callback((Fl_Callback*)cb_valinp_trace_4_hmax);
+            } // Fl_Value_Input* valinp_trace_4_hmax
+            { valinp_trace_4_threshold_to_black = new Fl_Value_Input(410, 175, 43, 25);
+              valinp_trace_4_threshold_to_black->maximum(100);
+              valinp_trace_4_threshold_to_black->step(0.1);
+              valinp_trace_4_threshold_to_black->value(80);
+              valinp_trace_4_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_4_threshold_to_black);
+            } // Fl_Value_Input* valinp_trace_4_threshold_to_black
+            { valinp_trace_4_threshold_offset = new Fl_Value_Input(454, 175, 43, 25);
+              valinp_trace_4_threshold_offset->maximum(100);
+              valinp_trace_4_threshold_offset->step(0.1);
+              valinp_trace_4_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_4_threshold_offset);
+            } // Fl_Value_Input* valinp_trace_4_threshold_offset
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 175, 17, 25);
+              o->down_box(FL_DOWN_BOX);
+              o->callback((Fl_Callback*)cb_8);
+            } // Fl_Check_Button* o
+            group_trace_4->end();
+          } // Fl_Group* group_trace_4
+          o->end();
+        } // Fl_Group* o
+        { Fl_Group* o = new Fl_Group(0, 205, 520, 25);
+          { chkbtn_trace_5_enable_sw = new Fl_Check_Button(10, 205, 17, 25);
+            chkbtn_trace_5_enable_sw->down_box(FL_DOWN_BOX);
+            chkbtn_trace_5_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_5_enable_sw);
+            chkbtn_trace_5_enable_sw->align(Fl_Align(FL_ALIGN_LEFT));
+          } // Fl_Check_Button* chkbtn_trace_5_enable_sw
+          { group_trace_5 = new Fl_Group(29, 205, 490, 25);
+            group_trace_5->deactivate();
+            { box_trace_5_target = new Fl_Box(29, 205, 25, 25);
+              box_trace_5_target->box(FL_FLAT_BOX);
+              box_trace_5_target->color((Fl_Color)21);
+            } // Fl_Box* box_trace_5_target
+            { valinp_trace_5_target_r = new Fl_Value_Input(55, 205, 31, 25);
+              valinp_trace_5_target_r->maximum(255);
+              valinp_trace_5_target_r->step(1);
+              valinp_trace_5_target_r->value(255);
+              valinp_trace_5_target_r->callback((Fl_Callback*)cb_valinp_trace_5_target_r);
+            } // Fl_Value_Input* valinp_trace_5_target_r
+            { valinp_trace_5_target_g = new Fl_Value_Input(87, 205, 31, 25);
+              valinp_trace_5_target_g->maximum(255);
+              valinp_trace_5_target_g->step(1);
+              valinp_trace_5_target_g->callback((Fl_Callback*)cb_valinp_trace_5_target_g);
+            } // Fl_Value_Input* valinp_trace_5_target_g
+            { valinp_trace_5_target_b = new Fl_Value_Input(119, 205, 31, 25);
+              valinp_trace_5_target_b->maximum(255);
+              valinp_trace_5_target_b->step(1);
+              valinp_trace_5_target_b->value(255);
+              valinp_trace_5_target_b->callback((Fl_Callback*)cb_valinp_trace_5_target_b);
+            } // Fl_Value_Input* valinp_trace_5_target_b
+            { valinp_trace_5_thickness = new Fl_Value_Input(152, 205, 43, 25);
+              valinp_trace_5_thickness->maximum(100);
+              valinp_trace_5_thickness->step(0.1);
+              valinp_trace_5_thickness->value(70);
+              valinp_trace_5_thickness->callback((Fl_Callback*)cb_valinp_trace_5_thickness);
+            } // Fl_Value_Input* valinp_trace_5_thickness
+            { box_trace_5_hue = new Fl_Box(200, 205, 120, 25);
+              box_trace_5_hue->image(image_color_belt_120x5_hue);
+            } // Fl_Box* box_trace_5_hue
+            { valinp_trace_5_hmin = new Fl_Value_Input(321, 205, 43, 25);
+              valinp_trace_5_hmin->maximum(360);
+              valinp_trace_5_hmin->step(0.1);
+              valinp_trace_5_hmin->value(300);
+              valinp_trace_5_hmin->callback((Fl_Callback*)cb_valinp_trace_5_hmin);
+            } // Fl_Value_Input* valinp_trace_5_hmin
+            { valinp_trace_5_hmax = new Fl_Value_Input(365, 205, 43, 25);
+              valinp_trace_5_hmax->maximum(360);
+              valinp_trace_5_hmax->step(0.1);
+              valinp_trace_5_hmax->value(300);
+              valinp_trace_5_hmax->callback((Fl_Callback*)cb_valinp_trace_5_hmax);
+            } // Fl_Value_Input* valinp_trace_5_hmax
+            { valinp_trace_5_threshold_to_black = new Fl_Value_Input(410, 205, 43, 25);
+              valinp_trace_5_threshold_to_black->maximum(100);
+              valinp_trace_5_threshold_to_black->step(0.1);
+              valinp_trace_5_threshold_to_black->value(80);
+              valinp_trace_5_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_5_threshold_to_black);
+            } // Fl_Value_Input* valinp_trace_5_threshold_to_black
+            { valinp_trace_5_threshold_offset = new Fl_Value_Input(454, 205, 43, 25);
+              valinp_trace_5_threshold_offset->maximum(100);
+              valinp_trace_5_threshold_offset->step(0.1);
+              valinp_trace_5_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_5_threshold_offset);
+            } // Fl_Value_Input* valinp_trace_5_threshold_offset
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 205, 17, 25);
+              o->down_box(FL_DOWN_BOX);
+              o->callback((Fl_Callback*)cb_9);
+            } // Fl_Check_Button* o
+            group_trace_5->end();
+          } // Fl_Group* group_trace_5
+          o->end();
+        } // Fl_Group* o
+        { Fl_Group* o = new Fl_Group(0, 235, 520, 25);
+          { chkbtn_trace_6_enable_sw = new Fl_Check_Button(10, 235, 17, 25);
+            chkbtn_trace_6_enable_sw->down_box(FL_DOWN_BOX);
+            chkbtn_trace_6_enable_sw->callback((Fl_Callback*)cb_chkbtn_trace_6_enable_sw);
+            chkbtn_trace_6_enable_sw->align(Fl_Align(FL_ALIGN_LEFT));
+          } // Fl_Check_Button* chkbtn_trace_6_enable_sw
+          { group_trace_6 = new Fl_Group(29, 235, 490, 25);
+            group_trace_6->deactivate();
+            { box_trace_6_target = new Fl_Box(29, 235, 25, 25);
+              box_trace_6_target->box(FL_FLAT_BOX);
+              box_trace_6_target->color((Fl_Color)22);
+            } // Fl_Box* box_trace_6_target
+            { valinp_trace_6_target_r = new Fl_Value_Input(55, 235, 31, 25);
+              valinp_trace_6_target_r->maximum(255);
+              valinp_trace_6_target_r->step(1);
+              valinp_trace_6_target_r->value(255);
+              valinp_trace_6_target_r->callback((Fl_Callback*)cb_valinp_trace_6_target_r);
+            } // Fl_Value_Input* valinp_trace_6_target_r
+            { valinp_trace_6_target_g = new Fl_Value_Input(87, 235, 31, 25);
+              valinp_trace_6_target_g->maximum(255);
+              valinp_trace_6_target_g->step(1);
+              valinp_trace_6_target_g->value(255);
+              valinp_trace_6_target_g->callback((Fl_Callback*)cb_valinp_trace_6_target_g);
+            } // Fl_Value_Input* valinp_trace_6_target_g
+            { valinp_trace_6_target_b = new Fl_Value_Input(119, 235, 31, 25);
+              valinp_trace_6_target_b->maximum(255);
+              valinp_trace_6_target_b->step(1);
+              valinp_trace_6_target_b->callback((Fl_Callback*)cb_valinp_trace_6_target_b);
+            } // Fl_Value_Input* valinp_trace_6_target_b
+            { valinp_trace_6_thickness = new Fl_Value_Input(152, 235, 43, 25);
+              valinp_trace_6_thickness->maximum(100);
+              valinp_trace_6_thickness->step(0.1);
+              valinp_trace_6_thickness->value(70);
+              valinp_trace_6_thickness->callback((Fl_Callback*)cb_valinp_trace_6_thickness);
+            } // Fl_Value_Input* valinp_trace_6_thickness
+            { box_trace_6_hue = new Fl_Box(200, 235, 120, 25);
+              box_trace_6_hue->image(image_color_belt_120x5_hue);
+            } // Fl_Box* box_trace_6_hue
+            { valinp_trace_6_hmin = new Fl_Value_Input(321, 235, 43, 25);
+              valinp_trace_6_hmin->maximum(360);
+              valinp_trace_6_hmin->step(0.1);
+              valinp_trace_6_hmin->value(60);
+              valinp_trace_6_hmin->callback((Fl_Callback*)cb_valinp_trace_6_hmin);
+            } // Fl_Value_Input* valinp_trace_6_hmin
+            { valinp_trace_6_hmax = new Fl_Value_Input(365, 235, 43, 25);
+              valinp_trace_6_hmax->maximum(360);
+              valinp_trace_6_hmax->step(0.1);
+              valinp_trace_6_hmax->value(60);
+              valinp_trace_6_hmax->callback((Fl_Callback*)cb_valinp_trace_6_hmax);
+            } // Fl_Value_Input* valinp_trace_6_hmax
+            { valinp_trace_6_threshold_to_black = new Fl_Value_Input(410, 235, 43, 25);
+              valinp_trace_6_threshold_to_black->maximum(100);
+              valinp_trace_6_threshold_to_black->step(0.1);
+              valinp_trace_6_threshold_to_black->value(80);
+              valinp_trace_6_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_6_threshold_to_black);
+            } // Fl_Value_Input* valinp_trace_6_threshold_to_black
+            { valinp_trace_6_threshold_offset = new Fl_Value_Input(454, 235, 43, 25);
+              valinp_trace_6_threshold_offset->maximum(100);
+              valinp_trace_6_threshold_offset->step(0.1);
+              valinp_trace_6_threshold_offset->callback((Fl_Callback*)cb_valinp_trace_6_threshold_offset);
+            } // Fl_Value_Input* valinp_trace_6_threshold_offset
+            { Fl_Check_Button* o = new Fl_Check_Button(498, 235, 17, 25);
+              o->down_box(FL_DOWN_BOX);
+              o->callback((Fl_Callback*)cb_a);
+            } // Fl_Check_Button* o
+            group_trace_6->end();
+          } // Fl_Group* group_trace_6
+          o->end();
+        } // Fl_Group* o
+        { Fl_Group* o = new Fl_Group(520, 100, 15, 145);
+          { button_change_1_2 = new Fl_Button(520, 100, 15, 25);
             button_change_1_2->image(image_updown);
           } // Fl_Button* button_change_1_2
-          { button_change_2_3 = new Fl_Button(1, 132, 10, 20);
+          { button_change_2_3 = new Fl_Button(520, 130, 15, 25);
             button_change_2_3->image(image_updown);
           } // Fl_Button* button_change_2_3
+          { button_change_3_4 = new Fl_Button(520, 160, 15, 25);
+            button_change_3_4->image(image_updown);
+          } // Fl_Button* button_change_3_4
+          { button_change_4_5 = new Fl_Button(520, 190, 15, 25);
+            button_change_4_5->image(image_updown);
+          } // Fl_Button* button_change_4_5
+          { button_change_5_6 = new Fl_Button(520, 220, 15, 25);
+            button_change_5_6->image(image_updown);
+          } // Fl_Button* button_change_5_6
           o->end();
         } // Fl_Group* o
         o->end();
@@ -8004,10 +8639,27 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Scroll* o
     window_trace_color->set_non_modal();
-    window_trace_color->size_range(200, 100, 520, 300);
+    window_trace_color->size_range(200, 100, 540, 270);
     window_trace_color->end();
     window_trace_color->resizable(window_trace_color);
   } // Fl_Double_Window* window_trace_color
-  return window_trace_color;
+  { window_hsv_viewer = new Fl_Double_Window(500, 500, "HSV Viewer");
+    window_hsv_viewer->callback((Fl_Callback*)cb_window_hsv_viewer, (void*)(this));
+    { hsv_viewer = new fl_gl_hsv_viewer(0, 0, 500, 500);
+      hsv_viewer->box(FL_NO_BOX);
+      hsv_viewer->color(FL_BACKGROUND_COLOR);
+      hsv_viewer->selection_color(FL_BACKGROUND_COLOR);
+      hsv_viewer->labeltype(FL_NORMAL_LABEL);
+      hsv_viewer->labelfont(0);
+      hsv_viewer->labelsize(14);
+      hsv_viewer->labelcolor(FL_FOREGROUND_COLOR);
+      hsv_viewer->align(Fl_Align(FL_ALIGN_CENTER));
+      hsv_viewer->when(FL_WHEN_RELEASE);
+      Fl_Group::current()->resizable(hsv_viewer);
+    } // fl_gl_hsv_viewer* hsv_viewer
+    window_hsv_viewer->set_non_modal();
+    window_hsv_viewer->end();
+  } // Fl_Double_Window* window_hsv_viewer
+  return window_hsv_viewer;
 }
 gts_gui cl_gts_gui; 

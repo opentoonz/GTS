@@ -37,6 +37,8 @@
 !/thirdparty/fltk/fltk-1.3.4-1/
 /thirdparty/libtiff/*
 !/thirdparty/libtiff/tiff-4.0.3/
+/thirdparty/glew/*
+!/thirdparty/glew/glew-2.1.0/
 
 # Autotools
 /Makefile

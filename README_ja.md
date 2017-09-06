@@ -49,6 +49,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  ソースコードを以下の場所にフォルダー構成そのままに置きます。
  - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
+ - `GTS/thirdparty/glew/glew-2.1.0/`
 
 4. ビルドする
 
@@ -86,6 +87,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  $ sudo apt install autoconf-archive
  $ sudo apt install libtiff5-dev
  $ sudo apt install libfltk1.3-dev
+ $ sudo apt install libglew-dev
  $ sudo apt install libsane-dev
  ```
 

@@ -1,0 +1,16 @@
+2017/08/28 14:42:18 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\masafumi_inoue\Documents\dwango_work\p15gts_and_OT\git\github.com\masafumi-inoue\GTS\tests\thirdparty\glew\glew-2.1.0\build\vc12\glew_static.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /I..\..\include /Zi /nologo /W3 /WX- /O2 /Ob1 /Oy- /D WIN32 /D NDEBUG /D _LIB /D WIN32_LEAN_AND_MEAN /D GLEW_STATIC /D _MBCS /GF /Gm- /EHsc /MD /GS- /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"tmp\glew_static\Release\Win32\\" /Fd"tmp\glew_static\Release\Win32\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\src\glew.c
+         glew.c
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D NDEBUG /D GLEW_STATIC /l"0x0409" /nologo /fo"tmp\glew_static\Release\Win32\glew.res" ..\glew.rc 
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"..\..\lib\Release\Win32\glew32s.lib" /NOLOGO /MACHINE:X86 tmp\glew_static\Release\Win32\glew.res
+         tmp\glew_static\Release\Win32\glew.obj
+         glew_static.vcxproj -> C:\Users\masafumi_inoue\Documents\dwango_work\p15gts_and_OT\git\github.com\masafumi-inoue\GTS\tests\thirdparty\glew\glew-2.1.0\build\vc12\..\..\lib\Release\Win32\glew32s.lib
+     1>プロジェクト "C:\Users\masafumi_inoue\Documents\dwango_work\p15gts_and_OT\git\github.com\masafumi-inoue\GTS\tests\thirdparty\glew\glew-2.1.0\build\vc12\glew_static.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:03.37

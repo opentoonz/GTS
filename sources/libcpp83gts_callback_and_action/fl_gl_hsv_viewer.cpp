@@ -7,22 +7,23 @@
 #include <algorithm>
 #include <cmath>	/* sin(-) cos(-) */
 #include <random>	/* mt19937 */
+#include <chrono>
 
 #define GLEW_STATIC	/* use glew32s.lib */
 #include <GL/glew.h>
 
-#include <FL/Fl.H>
-#include <FL/Fl_Gl_Window.H>
+//#include <FL/Fl.H>
+//#include <FL/Fl_Gl_Window.H>
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include <FL/gl.h>
 #include <FL/glu.h>	/* gluPerspective(-) , gluLookAt(-) */
 #include <FL/glut.h>	/* glutWireTeapot(-) glutWireCone(-) */
 			/* glutExtensionSupported(-) --> link error */
-#include "../../sources/libcpp38calcu_rgb_to_hsv/calcu_rgb_to_hsv.h"
-#include "../../sources/libcpp38calcu_rgb_to_hsv/to_hsv.cpp"
+#include "calcu_rgb_to_hsv.h"
+#include "fl_gl_hsv_viewer.h"
 
-#include <chrono>
 
+/*---------- 時間計測 ----------*/
 namespace gts {
 class stop_watch {
 public:
@@ -42,7 +43,7 @@ private:
 };
 } // gts
 
-//--------------------
+/*---------- 単位変換 ----------*/
 
 namespace gts {
 double rad_from_deg( const double deg )
@@ -51,57 +52,17 @@ double rad_from_deg( const double deg )
 }
 } // gts
 
-//--------------------
+/*---------- opengl_camera_eye関数 ----------*/
 
-namespace gts {
-class opengl_camera_eye {
-public:
-	opengl_camera_eye()
+gts::opengl_camera_eye::opengl_camera_eye()
 	:eye_x_(0.) ,eye_y_(0.) ,eye_z_(10.)
 	,cen_x_(0.) ,cen_y_(0.) ,cen_z_(0.)
 	,upp_x_(0.) ,upp_y_(1.) ,upp_z_(10.)
 	,fovy_(30.) ,znear_(9.) ,zfar_(-11.)
-	{
-		assert (0. < this->fovy_); /* ゼロ以下は致命的エラー */
-		this->reset_eye();
-	}
-
-	double get_eye_x() const { return this->eye_x_; }
-	double get_eye_y() const { return this->eye_y_; }
-	double get_eye_z() const { return this->eye_z_; }
-	double get_cen_x() const { return this->cen_x_; }
-	double get_cen_y() const { return this->cen_y_; }
-	double get_cen_z() const { return this->cen_z_; }
-	double get_upp_x() const { return this->upp_x_; }
-	double get_upp_y() const { return this->upp_y_; }
-	double get_upp_z() const { return this->upp_z_; }
-	double get_fovy()  const { return this->fovy_; }
-	double get_znear() const { return this->znear_; }
-	double get_zfar()  const { return this->zfar_; }
-
-	/* defaultに戻す */
-	void reset_eye(void);
-
-	/* cen中心に回転 */
-	void rotate( const double degree_x ,const double degree_y );
-
-	/* カメラの上下左右移動 */
-	void updownleftright( const double move_x ,const double move_y );
-
-	/* カメラの前後移動 */
-	void frontback( const double track_scale);
-
-	/* cen中心に拡大縮小 */
-	void scale_self( const double scale );
-private:
-	void set_full_range_about_near_far_(void);
-
-	double	 eye_x_ ,eye_y_ ,eye_z_
-		,cen_x_ ,cen_y_ ,cen_z_
-		,upp_x_ ,upp_y_ ,upp_z_
-		,fovy_  ,znear_ ,zfar_;
-};
-} // gts
+{
+	assert (0. < this->fovy_); /* ゼロ以下は致命的エラー */
+	this->reset_eye();
+}
 
 void gts::opengl_camera_eye::set_full_range_about_near_far_(void)
 {
@@ -364,7 +325,7 @@ void gts::opengl_camera_eye::scale_self( const double scale )
 	this->set_full_range_about_near_far_();
 }
 
-//--------------------
+/*---------- OpenGLの情報表示 ----------*/
 
 namespace gts {
 void pr_opengl_info(void)
@@ -395,46 +356,7 @@ void pr_opengl_info(void)
 }
 } // gts
 
-//--------------------
-
-namespace gts {
-class opengl_vbo {
-public:
-	opengl_vbo();
-	~opengl_vbo();
-
-	/* vboメモリで浮動小数の型 vbo_type_と合わせること*/
-	//using vbo_float = GLdouble;
-	using vbo_float = GLfloat;
-
-	/* 処理開始と終了、あるいは
-	pixel_size数の変更のときは一旦close()してから再度open_or_reopen()する */
-	bool open_or_reopen( unsigned pixel_size ); /* false=OK , true=Error */
-	void close(void);
-
-	/* 始めの値のセット、あるいは
-	数が同じで値のみ変更 */
-	vbo_float* start_vertex( void );
-	/* 注:start_vertex()からend_vertex()までvertex bufferがbind状態 */
-	void end_vertex( void );
-
-	GLubyte* start_color( void );
-	/* 注:start_color()からend_color()までcolor bufferがbind状態 */
-	void end_color( void );
-
-	/* 描画実行 */
-	void draw(void);
-
-	GLuint get_pixel_size(void) { return this->pixel_size_; }
-	void pr_vbo_info(void);
-private:
-	GLuint id_vbo_[2];
-	GLuint pixel_size_;
-	const GLenum vbo_type_;// use glVertexPointer(,vbo_type,,)
-
-	void clear_id_vbo_(void);
-};
-} // gts
+/*---------- opengl_vbo関数 ----------*/
 
 void gts::opengl_vbo::clear_id_vbo_(void)
 {
@@ -624,45 +546,7 @@ void gts::opengl_vbo::pr_vbo_info(void)
 		+this->get_pixel_size()*sizeof(GLubyte)*3 << "bytes\n";
 }
 
-//--------------------
-
-class fl_gl_hsv_viewer : public Fl_Gl_Window {
-public:
-	fl_gl_hsv_viewer(int x ,int y ,int w ,int h ,const char*l=0);
-
-	gts::opengl_camera_eye eye;
-	gts::opengl_vbo        vbo;
-private:
-	void draw();
-	void draw_object_();
-
-	int handle(int event);
-	void handle_push_( const int mx ,const int my );
-
-	void handle_rotate_( const int mx ,const int my );
-	void handle_updownleftright_( const int mx ,const int my );
-	void handle_frontback_( const int mx , const int my );
-	void set_mouse_when_push_( const int mx , const int my );
-	void handle_scale_( const int mx ,const int my );
-
-	void handle_keyboard_( const int key , const char* text );
-	void reset_vbo( const int pixel_size );
-
-	/* 表示の状態 */	
-	bool depth_sw_;		/* デプス(Z)バッファーのON/OFF	*/
-	bool fog_sw_;		/* フォグ処理のON/OFF		*/
-	float bg_rgba_[4];	/* 背景色			*/
-
-	/* カメラ変更のための変数 */
-	int	mouse_x_when_push_
-		,mouse_y_when_push_;
-
-	/* ダミーの入力画像 */
-	void dummy_create_rgb_image_(const int pixel_size);
-	const int dummy_w_;
-	const int dummy_h_;
-	std::vector<GLubyte>  dummy_rgb_image_;
-};
+/*---------- fl_gl_hsv_viewer関数 ----------*/
 
 namespace {
 
@@ -1056,6 +940,7 @@ int fl_gl_hsv_viewer::handle(int event)
 
 //--------------------
 #if defined DEBUG_FL_GL_HSV_SPACE_WINDOW
+#include "to_hsv.cpp"
 int main(void) {
 	Fl_Window win(1000, 500, "OpenGL");
 	fl_gl_hsv_viewer ogl(0, 0, win.w(), win.h());
@@ -1067,7 +952,7 @@ int main(void) {
 #endif /* !DEBUG_FL_GL_HSV_SPACE_WINDOW */
 /*
 rem
-rem :773,774 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\thirdparty\fltk\fltk-1.3.4-1 /I..\thirdparty\glew\glew-2.1.0\include ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib t28.cpp /Fea
-del t28.obj
+rem :956,957 w! make.bat
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\sources\libcpp38calcu_rgb_to_hsv /I..\thirdparty\glew\glew-2.1.0\include /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_viewer.cpp /Fea
+del fl_gl_hsv_viewer.obj
 */
