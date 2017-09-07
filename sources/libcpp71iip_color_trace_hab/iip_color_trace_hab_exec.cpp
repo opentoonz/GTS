@@ -46,53 +46,53 @@ void iip_color_trace_hab::exec( calcu_color_trace_base *clp_calcu_color_trace_ha
 	assert(E_CH_NUM_BITBW != this->cl_ch_info.get_e_ch_num_type());
 
 	/* 処理エリアの確認、実際の画像をはみだしたらだめ */
-	assert( 0L <= this->_l_area_xpos );
-	assert( 0L <= this->_l_area_ypos );
+	assert( 0L <= this->area_xpos_ );
+	assert( 0L <= this->area_ypos_ );
 
 	/* 2011-11-14 Assertion failed! here!!! */
-	/******assert( (this->_l_area_xpos + this->_l_area_xsize)
+	/******assert( (this->area_xpos_ + this->area_xsize_)
 		<= this->get_l_width() );******/
 	/* 2011-11-14 tempolaly debug */
 	if (	
 		this->get_l_width() <
-		(this->_l_area_xpos + this->_l_area_xsize)
+		(this->area_xpos_ + this->area_xsize_)
 	) {
 		// log
 std::string str;
-str += "this->_l_area_xpos<";
-{ std::ostringstream ost; ost<<this->_l_area_xpos; str+=ost.str(); }
-str += "> + this->_l_area_xsize<";
-{ std::ostringstream ost; ost<<this->_l_area_xsize; str+=ost.str(); }
+str += "this->area_xpos_<";
+{ std::ostringstream ost; ost<<this->area_xpos_; str+=ost.str(); }
+str += "> + this->area_xsize_<";
+{ std::ostringstream ost; ost<<this->area_xsize_; str+=ost.str(); }
 str += "> <= this->get_l_width()<";
 { std::ostringstream ost; ost<<this->get_l_width(); str+=ost.str(); }
 str += ">";
 std::cerr << str << std::endl;
 
-		this->_l_area_xsize =
-			this->get_l_width() - this->_l_area_xpos;
+		this->area_xsize_ =
+			this->get_l_width() - this->area_xpos_;
 	}
 
 	/* 2011-11-04 Assertion failed! here!!! */
-	/******assert(	(this->_l_area_ypos + this->_l_area_ysize)
+	/******assert(	(this->area_ypos_ + this->area_ysize_)
 		<= this->get_l_height() );******/
 	/* 2011-11-04 tempolaly debug */
 	if (	
 		this->get_l_height() <
-		(this->_l_area_ypos + this->_l_area_ysize)
+		(this->area_ypos_ + this->area_ysize_)
 	) {
 		// log
 std::string str;
-str += "this->_l_area_ypos<";
-{ std::ostringstream ost; ost<<this->_l_area_ypos; str+=ost.str(); }
-str += "> + this->_l_area_ysize<";
-{ std::ostringstream ost; ost<<this->_l_area_ysize; str+=ost.str(); }
+str += "this->area_ypos_<";
+{ std::ostringstream ost; ost<<this->area_ypos_; str+=ost.str(); }
+str += "> + this->area_ysize_<";
+{ std::ostringstream ost; ost<<this->area_ysize_; str+=ost.str(); }
 str += "> <= this->get_l_height()<";
 { std::ostringstream ost; ost<<this->get_l_height(); str+=ost.str(); }
 str += ">";
 std::cerr << str << std::endl;
 
-		this->_l_area_ysize =
-			this->get_l_height() - this->_l_area_ypos;
+		this->area_ysize_ =
+			this->get_l_height() - this->area_ypos_;
 	}
 
 	/*
@@ -127,19 +127,19 @@ std::cerr << str << std::endl;
 		);
 		pri_funct_msg_ttvr(
 			" area x %ld y %ld",
-			this->_l_area_xpos,
-			this->_l_area_ypos
+			this->area_xpos_,
+			this->area_ypos_
 		);
 		pri_funct_msg_ttvr(
 			" area w %ld h %ld",
-			this->_l_area_xsize,
-			this->_l_area_ysize
+			this->area_xsize_,
+			this->area_ysize_
 		);
 	}
 
 	/* カウントダウン表示始め */
 	if (ON == this->get_i_cv_sw()) {
-		pri_funct_cv_start( this->_l_area_ysize );
+		pri_funct_cv_start( this->area_ysize_ );
 	}
 
 	switch (this->cl_ch_info.get_e_ch_num_type()) {
@@ -147,10 +147,10 @@ std::cerr << str << std::endl;
 		this->_exec_uchar(
 			this->get_l_width(),
 			this->get_l_height(),
-			this->_l_area_xpos,
-			this->_l_area_ypos,
-			this->_l_area_xsize,
-			this->_l_area_ysize,
+			this->area_xpos_,
+			this->area_ypos_,
+			this->area_xsize_,
+			this->area_ysize_,
 			this->get_l_channels(),
 			(unsigned char *)clpp->get_vp_canvas(),
 			d_in_max_div,
@@ -163,10 +163,10 @@ std::cerr << str << std::endl;
 		this->_exec_ushrt(
 			this->get_l_width(),
 			this->get_l_height(),
-			this->_l_area_xpos,
-			this->_l_area_ypos,
-			this->_l_area_xsize,
-			this->_l_area_ysize,
+			this->area_xpos_,
+			this->area_ypos_,
+			this->area_xsize_,
+			this->area_ysize_,
 			this->get_l_channels(),
 			(unsigned short *)clpp->get_vp_canvas(),
 			d_in_max_div,
@@ -179,10 +179,10 @@ std::cerr << str << std::endl;
 		this->_exec_ulong(
 			this->get_l_width(),
 			this->get_l_height(),
-			this->_l_area_xpos,
-			this->_l_area_ypos,
-			this->_l_area_xsize,
-			this->_l_area_ysize,
+			this->area_xpos_,
+			this->area_ypos_,
+			this->area_xsize_,
+			this->area_ysize_,
 			this->get_l_channels(),
 			(unsigned long *)clpp->get_vp_canvas(),
 			d_in_max_div,
@@ -195,10 +195,10 @@ std::cerr << str << std::endl;
 		this->_exec_doubl(
 			this->get_l_width(),
 			this->get_l_height(),
-			this->_l_area_xpos,
-			this->_l_area_ypos,
-			this->_l_area_xsize,
-			this->_l_area_ysize,
+			this->area_xpos_,
+			this->area_ypos_,
+			this->area_xsize_,
+			this->area_ysize_,
 			this->get_l_channels(),
 			(double *)clpp->get_vp_canvas(),
 			clp_calcu_color_trace_hab,

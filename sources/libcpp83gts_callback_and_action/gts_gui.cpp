@@ -5201,7 +5201,7 @@ void gts_gui::cb_Open2(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_0_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
 opengl_view->redraw();
@@ -5211,7 +5211,7 @@ void gts_gui::cb_chkbtn_trace_0_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).target_r = o->value()/255.;
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).target_r = o->value()/255.;
 box_trace_0_target->color(static_cast<Fl_Color>(16));
 Fl::set_color(static_cast<Fl_Color>(16)
 	,static_cast<unsigned char>(valinp_trace_0_target_r->value())
@@ -5226,7 +5226,7 @@ void gts_gui::cb_valinp_trace_0_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).target_g = o->value()/255.;
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).target_g = o->value()/255.;
 box_trace_0_target->color(static_cast<Fl_Color>(16));
 Fl::set_color(static_cast<Fl_Color>(16)
 	,static_cast<unsigned char>(valinp_trace_0_target_r->value())
@@ -5241,7 +5241,7 @@ void gts_gui::cb_valinp_trace_0_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).target_b = o->value()/255.;
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).target_b = o->value()/255.;
 box_trace_0_target->color(static_cast<Fl_Color>(16));
 Fl::set_color(static_cast<Fl_Color>(16)
 	,static_cast<unsigned char>(valinp_trace_0_target_r->value())
@@ -5256,7 +5256,7 @@ void gts_gui::cb_valinp_trace_0_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_0_thickness(Fl_Value_Input* o, void* v) {
@@ -5264,7 +5264,7 @@ void gts_gui::cb_valinp_trace_0_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_0_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5272,7 +5272,7 @@ void gts_gui::cb_valinp_trace_0_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_0_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_0_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5280,7 +5280,7 @@ void gts_gui::cb_valinp_trace_0_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_4_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(0).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_4(Fl_Check_Button* o, void* v) {
@@ -5288,7 +5288,7 @@ void gts_gui::cb_4(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_1_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_1->activate();  }
 else            {group_trace_1->deactivate();}
 opengl_view->redraw();
@@ -5298,7 +5298,7 @@ void gts_gui::cb_chkbtn_trace_1_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_r = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).target_r = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -5313,7 +5313,7 @@ void gts_gui::cb_valinp_trace_1_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_g = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).target_g = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -5328,7 +5328,7 @@ void gts_gui::cb_valinp_trace_1_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).target_b = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).target_b = o->value()/o->maximum();
 box_trace_1_target->color(static_cast<Fl_Color>(17));
 Fl::set_color(static_cast<Fl_Color>(17)
 	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
@@ -5343,7 +5343,7 @@ void gts_gui::cb_valinp_trace_1_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_thickness(Fl_Value_Input* o, void* v) {
@@ -5427,7 +5427,7 @@ static const unsigned char idata_color_belt_120x5_hue[] =
 static Fl_RGB_Image image_color_belt_120x5_hue(idata_color_belt_120x5_hue, 120, 5, 3, 0);
 
 void gts_gui::cb_valinp_trace_1_hmin_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hmin = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hmin = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_hmin(Fl_Value_Input* o, void* v) {
@@ -5435,7 +5435,7 @@ void gts_gui::cb_valinp_trace_1_hmin(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_hmax_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hmax = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hmax = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_hmax(Fl_Value_Input* o, void* v) {
@@ -5443,7 +5443,7 @@ void gts_gui::cb_valinp_trace_1_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5451,7 +5451,7 @@ void gts_gui::cb_valinp_trace_1_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_1_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_1_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5459,7 +5459,7 @@ void gts_gui::cb_valinp_trace_1_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_5_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_5(Fl_Check_Button* o, void* v) {
@@ -5467,7 +5467,7 @@ void gts_gui::cb_5(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_2_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_2->activate();  }
 else            {group_trace_2->deactivate();}
 opengl_view->redraw();
@@ -5477,7 +5477,7 @@ void gts_gui::cb_chkbtn_trace_2_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_r = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).target_r = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -5492,7 +5492,7 @@ void gts_gui::cb_valinp_trace_2_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_g = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).target_g = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -5507,7 +5507,7 @@ void gts_gui::cb_valinp_trace_2_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).target_b = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).target_b = o->value()/o->maximum();
 box_trace_2_target->color(static_cast<Fl_Color>(18));
 Fl::set_color(static_cast<Fl_Color>(18)
 	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
@@ -5522,7 +5522,7 @@ void gts_gui::cb_valinp_trace_2_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_thickness(Fl_Value_Input* o, void* v) {
@@ -5530,7 +5530,7 @@ void gts_gui::cb_valinp_trace_2_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_hmin_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hmin = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hmin = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_hmin(Fl_Value_Input* o, void* v) {
@@ -5538,7 +5538,7 @@ void gts_gui::cb_valinp_trace_2_hmin(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_hmax_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hmax = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hmax = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_hmax(Fl_Value_Input* o, void* v) {
@@ -5546,7 +5546,7 @@ void gts_gui::cb_valinp_trace_2_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5554,7 +5554,7 @@ void gts_gui::cb_valinp_trace_2_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_2_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_2_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5562,7 +5562,7 @@ void gts_gui::cb_valinp_trace_2_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_6_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(2).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_6(Fl_Check_Button* o, void* v) {
@@ -5570,7 +5570,7 @@ void gts_gui::cb_6(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_3_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_3->activate();  }
 else            {group_trace_3->deactivate();}
 opengl_view->redraw();
@@ -5580,7 +5580,7 @@ void gts_gui::cb_chkbtn_trace_3_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_r = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).target_r = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -5595,7 +5595,7 @@ void gts_gui::cb_valinp_trace_3_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_g = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).target_g = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -5610,7 +5610,7 @@ void gts_gui::cb_valinp_trace_3_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).target_b = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).target_b = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(19));
 Fl::set_color(static_cast<Fl_Color>(19)
 	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
@@ -5625,7 +5625,7 @@ void gts_gui::cb_valinp_trace_3_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_thickness(Fl_Value_Input* o, void* v) {
@@ -5633,7 +5633,7 @@ void gts_gui::cb_valinp_trace_3_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_hmin_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hmin = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hmin = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_hmin(Fl_Value_Input* o, void* v) {
@@ -5641,7 +5641,7 @@ void gts_gui::cb_valinp_trace_3_hmin(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_hmax_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hmax = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hmax = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_hmax(Fl_Value_Input* o, void* v) {
@@ -5649,7 +5649,7 @@ void gts_gui::cb_valinp_trace_3_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5657,7 +5657,7 @@ void gts_gui::cb_valinp_trace_3_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_3_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_3_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5665,7 +5665,7 @@ void gts_gui::cb_valinp_trace_3_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_7_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(3).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_7(Fl_Check_Button* o, void* v) {
@@ -5673,7 +5673,7 @@ void gts_gui::cb_7(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_4_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_4->activate();  }
 else            {group_trace_4->deactivate();}
 opengl_view->redraw();
@@ -5683,7 +5683,7 @@ void gts_gui::cb_chkbtn_trace_4_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_r = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).target_r = o->value()/o->maximum();
 box_trace_4_target->color(static_cast<Fl_Color>(20));
 Fl::set_color(static_cast<Fl_Color>(20)
 	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
@@ -5698,7 +5698,7 @@ void gts_gui::cb_valinp_trace_4_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_g = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).target_g = o->value()/o->maximum();
 box_trace_4_target->color(static_cast<Fl_Color>(20));
 Fl::set_color(static_cast<Fl_Color>(20)
 	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
@@ -5713,7 +5713,7 @@ void gts_gui::cb_valinp_trace_4_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).target_b = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).target_b = o->value()/o->maximum();
 box_trace_4_target->color(static_cast<Fl_Color>(20));
 Fl::set_color(static_cast<Fl_Color>(20)
 	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
@@ -5728,7 +5728,7 @@ void gts_gui::cb_valinp_trace_4_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_4_thickness(Fl_Value_Input* o, void* v) {
@@ -5736,7 +5736,7 @@ void gts_gui::cb_valinp_trace_4_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_hmin_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hmin = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hmin = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_4_hmin(Fl_Value_Input* o, void* v) {
@@ -5744,7 +5744,7 @@ void gts_gui::cb_valinp_trace_4_hmin(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_hmax_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hmax = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hmax = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_4_hmax(Fl_Value_Input* o, void* v) {
@@ -5752,7 +5752,7 @@ void gts_gui::cb_valinp_trace_4_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_4_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5760,7 +5760,7 @@ void gts_gui::cb_valinp_trace_4_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_4_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_4_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5768,7 +5768,7 @@ void gts_gui::cb_valinp_trace_4_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_8_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(4).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_8(Fl_Check_Button* o, void* v) {
@@ -5776,7 +5776,7 @@ void gts_gui::cb_8(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_5_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_5->activate();  }
 else            {group_trace_5->deactivate();}
 opengl_view->redraw();
@@ -5786,7 +5786,7 @@ void gts_gui::cb_chkbtn_trace_5_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_r = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).target_r = o->value()/o->maximum();
 box_trace_5_target->color(static_cast<Fl_Color>(21));
 Fl::set_color(static_cast<Fl_Color>(21)
 	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
@@ -5801,7 +5801,7 @@ void gts_gui::cb_valinp_trace_5_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_g = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).target_g = o->value()/o->maximum();
 box_trace_5_target->color(static_cast<Fl_Color>(21));
 Fl::set_color(static_cast<Fl_Color>(21)
 	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
@@ -5816,7 +5816,7 @@ void gts_gui::cb_valinp_trace_5_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).target_b = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).target_b = o->value()/o->maximum();
 box_trace_5_target->color(static_cast<Fl_Color>(21));
 Fl::set_color(static_cast<Fl_Color>(21)
 	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
@@ -5831,7 +5831,7 @@ void gts_gui::cb_valinp_trace_5_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_5_thickness(Fl_Value_Input* o, void* v) {
@@ -5839,7 +5839,7 @@ void gts_gui::cb_valinp_trace_5_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_hmin_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hmin = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hmin = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_5_hmin(Fl_Value_Input* o, void* v) {
@@ -5847,7 +5847,7 @@ void gts_gui::cb_valinp_trace_5_hmin(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_hmax_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hmax = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hmax = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_5_hmax(Fl_Value_Input* o, void* v) {
@@ -5855,7 +5855,7 @@ void gts_gui::cb_valinp_trace_5_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_5_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5863,7 +5863,7 @@ void gts_gui::cb_valinp_trace_5_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_5_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_5_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5871,7 +5871,7 @@ void gts_gui::cb_valinp_trace_5_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_9_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(5).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_9(Fl_Check_Button* o, void* v) {
@@ -5879,7 +5879,7 @@ void gts_gui::cb_9(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_chkbtn_trace_6_enable_sw_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).enable_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).enable_sw = (o->value()==1 ?true :false);
 if (o->value()) {group_trace_6->activate();  }
 else            {group_trace_6->deactivate();}
 opengl_view->redraw();
@@ -5889,7 +5889,7 @@ void gts_gui::cb_chkbtn_trace_6_enable_sw(Fl_Check_Button* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_target_r_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_r = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).target_r = o->value()/o->maximum();
 box_trace_3_target->color(static_cast<Fl_Color>(22));
 Fl::set_color(static_cast<Fl_Color>(22)
 	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
@@ -5904,7 +5904,7 @@ void gts_gui::cb_valinp_trace_6_target_r(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_target_g_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_g = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).target_g = o->value()/o->maximum();
 box_trace_6_target->color(static_cast<Fl_Color>(22));
 Fl::set_color(static_cast<Fl_Color>(22)
 	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
@@ -5919,7 +5919,7 @@ void gts_gui::cb_valinp_trace_6_target_g(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_target_b_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).target_b = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).target_b = o->value()/o->maximum();
 box_trace_6_target->color(static_cast<Fl_Color>(22));
 Fl::set_color(static_cast<Fl_Color>(22)
 	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
@@ -5934,7 +5934,7 @@ void gts_gui::cb_valinp_trace_6_target_b(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_thickness_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).thickness = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).thickness = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_6_thickness(Fl_Value_Input* o, void* v) {
@@ -5942,7 +5942,7 @@ void gts_gui::cb_valinp_trace_6_thickness(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_hmin_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hmin = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hmin = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_6_hmin(Fl_Value_Input* o, void* v) {
@@ -5950,7 +5950,7 @@ void gts_gui::cb_valinp_trace_6_hmin(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_hmax_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hmax = o->value();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hmax = o->value();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_6_hmax(Fl_Value_Input* o, void* v) {
@@ -5958,7 +5958,7 @@ void gts_gui::cb_valinp_trace_6_hmax(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_threshold_to_black_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).threshold_to_black = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_to_black = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_6_threshold_to_black(Fl_Value_Input* o, void* v) {
@@ -5966,7 +5966,7 @@ void gts_gui::cb_valinp_trace_6_threshold_to_black(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_valinp_trace_6_threshold_offset_i(Fl_Value_Input* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).threshold_offset = o->value()/o->maximum();
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_offset = o->value()/o->maximum();
 opengl_view->redraw();
 }
 void gts_gui::cb_valinp_trace_6_threshold_offset(Fl_Value_Input* o, void* v) {
@@ -5974,7 +5974,7 @@ void gts_gui::cb_valinp_trace_6_threshold_offset(Fl_Value_Input* o, void* v) {
 }
 
 void gts_gui::cb_a_i(Fl_Check_Button* o, void*) {
-  cl_gts_master.cl_calc_trace_hsv.cla_area_param.at(6).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
+  cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
 //opengl_hsv_viewer->redraw();
 }
 void gts_gui::cb_a(Fl_Check_Button* o, void* v) {

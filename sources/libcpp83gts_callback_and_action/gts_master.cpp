@@ -118,7 +118,7 @@ int gts_master::exec( const char *comm )
 	this->cl_image.ext_save.set_filter( "TGA",".tga");/* 1番目 */
 
 	/* 2値化のための初期設定 --> あとでrefactoring必要 */
-	this->cl_calc_trace_hsv.setup_default_area_param();
+	this->cl_calcu_sep_hsv.setup_default_area_param();
 
 	/*
 		GUI(fltk)生成

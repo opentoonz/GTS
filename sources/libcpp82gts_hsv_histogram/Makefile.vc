@@ -1,10 +1,10 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = libcpp82gts_hsv_histogram
-OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
-# /wd4996 : Stop warning message by MS-C old function
+OPTS = /W3 /MD /EHa /O2 /DWIN32 /wd4819 /wd4996
 # /DWIN32 : for Use fltk in Windows
 # /wd4819 : Stop warning message about Language Code
+# /wd4996 : Stop warning message by MS-C old function
 INCS =\
 /I.\
 /I..\libcpp83gts_callback_and_action\

@@ -1,11 +1,15 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = libcpp71iip_color_trace_hab
-OPTS = /W4 /MD /EHa /O2 /DWIN32 /wd4819
+OPTS = /W4 /MD /EHa /O2 /DWIN32 /wd4819 /wd4996
 # /DWIN32 : for Use fltk in Windows
 # /wd4819 : Stop warning message about Language Code
+# /wd4996 : Stop warning message by MS-C old function
 INCS =\
 /I.\
+/I..\libcpp83gts_callback_and_action\
+/I..\libcpp82gts_hsv_histogram\
+/I..\libcpp56iip_opengl\
 /I..\libcpp51iip_canvas\
 /I..\libcpp38calcu_rgb_to_hsv\
 /I..\libcpp31calcu_precision\
@@ -20,7 +24,8 @@ iip_color_trace_hab_doubl.cpp\
 iip_color_trace_hab_exec.cpp\
 iip_color_trace_hab_uchar.cpp\
 iip_color_trace_hab_ulong.cpp\
-iip_color_trace_hab_ushrt.cpp
+iip_color_trace_hab_ushrt.cpp\
+iip_color_trace_sep_hsv.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty

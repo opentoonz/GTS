@@ -35,11 +35,11 @@ void iip_erase_dot_noise::exec( void )
 	assert(E_CH_NUM_BITBW != this->cl_ch_info.get_e_ch_num_type());
 
 	/* 処理エリアの確認、実際の画像をはみだしたらだめ */
-	assert( 0L <= this->_l_area_xpos );
-	assert( 0L <= this->_l_area_ypos );
-	assert( (this->_l_area_xpos + this->_l_area_xsize)
+	assert( 0L <= this->area_xpos_ );
+	assert( 0L <= this->area_ypos_ );
+	assert( (this->area_xpos_ + this->area_xsize_)
 		<= this->get_l_width() );
-	assert(	(this->_l_area_ypos + this->_l_area_ysize)
+	assert(	(this->area_ypos_ + this->area_ysize_)
 		<= this->get_l_height() );
 
 	/*
@@ -67,19 +67,19 @@ void iip_erase_dot_noise::exec( void )
 		);
 		pri_funct_msg_ttvr(
 			" area x %ld y %ld",
-			this->_l_area_xpos,
-			this->_l_area_ypos
+			this->area_xpos_,
+			this->area_ypos_
 		);
 		pri_funct_msg_ttvr(
 			" area w %ld h %ld",
-			this->_l_area_xsize,
-			this->_l_area_ysize
+			this->area_xsize_,
+			this->area_ysize_
 		);
 	}
 
 	/* カウントダウン表示始め */
 	if (ON == this->get_i_cv_sw()) {
-		pri_funct_cv_start( this->_l_area_ysize );
+		pri_funct_cv_start( this->area_ysize_ );
 	}
 
 	switch (this->cl_ch_info.get_e_ch_num_type()) {
@@ -87,10 +87,10 @@ void iip_erase_dot_noise::exec( void )
 		this->_exec_uchar(
 			this->get_l_width(),
 			this->get_l_height(),
-			this->_l_area_xpos,
-			this->_l_area_ypos,
-			this->_l_area_xsize,
-			this->_l_area_ysize,
+			this->area_xpos_,
+			this->area_ypos_,
+			this->area_xsize_,
+			this->area_ysize_,
 			this->get_l_channels(),
 			(unsigned char *)clpp->get_vp_canvas(),
 			(unsigned char *)this->get_vp_canvas()

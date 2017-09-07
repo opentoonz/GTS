@@ -595,7 +595,7 @@ fl_gl_hsv_viewer::fl_gl_hsv_viewer(int x ,int y ,int w ,int h ,const char*l)
 	this->bg_rgba_[3] = 1.f;
 
 	/* dummy_rgb_image_ に8bitサンプリングでランダムなrgb画像を生成 */
-	this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ );
+//	this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ );
 }
 
 void fl_gl_hsv_viewer::dummy_create_rgb_image_(
@@ -640,28 +640,21 @@ void fl_gl_hsv_viewer::draw_object_()
 	vbo.draw();
 }
 
-namespace {
-void rgb_to_xyz(
-	const double r , const double g , const double b
-	, gts::opengl_vbo::vbo_float* vtx
+void fl_gl_hsv_viewer::hsv_to_xyz(
+	const double h , const double s , const double v
+	, gts::opengl_vbo::vbo_float* xyz
 )
 {
-	/* rgb --> hsv */
-	double h=0. ,s=0. ,v=0.;
-	calcu_rgb_to_hsv rgb2hsv;
-	rgb2hsv.to_hsv( r ,g ,b ,&h ,&s ,&v );
-
 	/* hsv --> xyz */
 	double x = cos( gts::rad_from_deg(h) ) * s * v;
 	double y = sin( gts::rad_from_deg(h) ) * s * v;
 	double z = 1. - v;
-	vtx[0] = static_cast<gts::opengl_vbo::vbo_float>(x);
-	vtx[1] = static_cast<gts::opengl_vbo::vbo_float>(y);
-	vtx[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
+	xyz[0] = static_cast<gts::opengl_vbo::vbo_float>(x);
+	xyz[1] = static_cast<gts::opengl_vbo::vbo_float>(y);
+	xyz[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
 }
-} // namespace
 
-void fl_gl_hsv_viewer::reset_vbo( const int pixel_size )
+void fl_gl_hsv_viewer::dummy_reset_vbo( const int pixel_size )
 {
 /*
 	この処理が必要な場所で同等の処理を行うよう変更する
@@ -677,31 +670,35 @@ void fl_gl_hsv_viewer::reset_vbo( const int pixel_size )
 	this->dummy_create_rgb_image_( pixel_size );
 
 	/* vbo colorデータ書き込み */
-	GLubyte* col = this->vbo.start_color();
-	if (col == nullptr) { /* open出来ていればここはこないはず */
+	GLubyte* rgb = this->vbo.start_color();
+	if (rgb == nullptr) { /* open出来ていればここはこないはず */
 	 assert(!"Error:vbo.start_color() return null");
 	}
 	unsigned char* da = this->dummy_rgb_image_.data();
 	unsigned sz = this->dummy_rgb_image_.size();
-	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,col+=3) {
-		col[0] = da[0];
-		col[1] = da[1];
-		col[2] = da[2];
+	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,rgb+=3) {
+		rgb[0] = da[0];
+		rgb[1] = da[1];
+		rgb[2] = da[2];
 	}
 	this->vbo.end_color();
 
 	/* dummy vbo vertexデータ書き込み */
 	gts::stop_watch stwa; stwa.start();
-	gts::opengl_vbo::vbo_float* vtx= this->vbo.start_vertex();
-	if (vtx == nullptr) { /* open出来ていればここはこないはず */
+	gts::opengl_vbo::vbo_float* xyz= this->vbo.start_vertex();
+	if (xyz == nullptr) { /* open出来ていればここはこないはず */
 	 assert(!"Error:vbo.start_vertex() return null");
 	}
 	da = this->dummy_rgb_image_.data();
 	sz = this->dummy_rgb_image_.size();
-	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,vtx+=3) {
-		rgb_to_xyz(
-		 da[0]/255. ,da[1]/255. ,da[2]/255. ,vtx
-		);
+	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,xyz+=3) {
+		/* rgb --> hsv */
+		double h=0. ,s=0. ,v=0.;
+		calcu_rgb_to_hsv rgb2hsv;
+		rgb2hsv.to_hsv(
+			da[0]/255. ,da[1]/255. ,da[2]/255. ,&h ,&s ,&v );
+
+		this->hsv_to_xyz( h ,s ,v ,xyz );
 	}
 	this->vbo.end_vertex();
  std::cout << "from_rgb_to_xyz time=" << stwa.stop_ms().count() << "milisec\n";
@@ -754,7 +751,7 @@ void fl_gl_hsv_viewer::draw()
 
 std::cout << "fl_gl_hsv_viewer w=" << this->w() << " h=" << this->h() << std::endl;
 		/* ピクセル値あるいはサイズの変更 */
-		this->reset_vbo( this->w() * this->h() );
+		//this->dummy_reset_vbo( this->w() * this->h() );
 
 		/* 表示範囲の再設定 */
 		glViewport( 0 ,0 ,this->w(), this->h());

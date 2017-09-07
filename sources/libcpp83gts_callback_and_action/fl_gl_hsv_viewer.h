@@ -91,6 +91,10 @@ public:
 
 	gts::opengl_camera_eye eye;
 	gts::opengl_vbo        vbo;
+	void hsv_to_xyz(
+		const double h , const double s , const double v
+		, gts::opengl_vbo::vbo_float* xyz
+	);
 private:
 	void draw();
 	void draw_object_();
@@ -105,7 +109,6 @@ private:
 	void handle_scale_( const int mx ,const int my );
 
 	void handle_keyboard_( const int key , const char* text );
-	void reset_vbo( const int pixel_size );
 
 	/* 表示の状態 */	
 	bool depth_sw_;		/* デプス(Z)バッファーのON/OFF	*/
@@ -117,6 +120,7 @@ private:
 		,mouse_y_when_push_;
 
 	/* ダミーの入力画像 */
+	void dummy_reset_vbo( const int pixel_size );
 	void dummy_create_rgb_image_(const int pixel_size);
 	const int dummy_w_;
 	const int dummy_h_;

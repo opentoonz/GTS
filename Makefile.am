@@ -132,6 +132,7 @@ libgts_la_SOURCES = \
 					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_uchar.cpp \
 					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_ulong.cpp \
 					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_ushrt.cpp \
+					sources/libcpp71iip_color_trace_hab/iip_color_trace_sep_hsv.cpp \
 					sources/libcpp72iip_erase_dot_noise/calcu_erase_dot_noise.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_exec.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_uchar.cpp \
@@ -165,6 +166,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_hsv_viewer.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_event.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_opengl.cpp \
 					sources/libcpp83gts_callback_and_action/igs_lex_white_space_and_double_quote.cpp \
