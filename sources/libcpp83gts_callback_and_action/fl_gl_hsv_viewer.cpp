@@ -370,6 +370,7 @@ gts::opengl_vbo::opengl_vbo()
 	/* vboメモリで浮動小数の型 vbo_floatと合わせること*/
 	//,vbo_type_(GL_DOUBLE)
 	,vbo_type_(GL_FLOAT)
+	,hsv_view_start_sw_(false)
 {
 	this->clear_id_vbo_();
 }
@@ -538,12 +539,26 @@ void gts::opengl_vbo::draw(void)
 void gts::opengl_vbo::pr_vbo_info(void)
 {
 	std::cout << "vertex buffer="
-		<< this->get_pixel_size()*sizeof(vbo_float)*3 << "bytes\n";
+		<< this->pixel_size_ * sizeof(vbo_float) * 3 << "bytes\n";
 	std::cout << " color buffer="
-		<< this->get_pixel_size()*sizeof(GLubyte)*3 << "bytes\n";
+		<< this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
 	std::cout << "        total="
-		<< this->get_pixel_size()*sizeof(vbo_float)*3
-		+this->get_pixel_size()*sizeof(GLubyte)*3 << "bytes\n";
+		<< this->pixel_size_ * sizeof(vbo_float) * 3
+		 + this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
+}
+
+void gts::opengl_vbo::hsv_to_xyz(
+	const double h , const double s , const double v
+	, gts::opengl_vbo::vbo_float* xyz
+)
+{
+	/* hsv --> xyz */
+	double x = cos( gts::rad_from_deg(h) ) * s * v;
+	double y = sin( gts::rad_from_deg(h) ) * s * v;
+	double z = 1. - v;
+	xyz[0] = static_cast<gts::opengl_vbo::vbo_float>(x);
+	xyz[1] = static_cast<gts::opengl_vbo::vbo_float>(y);
+	xyz[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
 }
 
 /*---------- fl_gl_hsv_viewer関数 ----------*/
@@ -640,20 +655,6 @@ void fl_gl_hsv_viewer::draw_object_()
 	vbo.draw();
 }
 
-void fl_gl_hsv_viewer::hsv_to_xyz(
-	const double h , const double s , const double v
-	, gts::opengl_vbo::vbo_float* xyz
-)
-{
-	/* hsv --> xyz */
-	double x = cos( gts::rad_from_deg(h) ) * s * v;
-	double y = sin( gts::rad_from_deg(h) ) * s * v;
-	double z = 1. - v;
-	xyz[0] = static_cast<gts::opengl_vbo::vbo_float>(x);
-	xyz[1] = static_cast<gts::opengl_vbo::vbo_float>(y);
-	xyz[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
-}
-
 void fl_gl_hsv_viewer::dummy_reset_vbo( const int pixel_size )
 {
 /*
@@ -698,7 +699,7 @@ void fl_gl_hsv_viewer::dummy_reset_vbo( const int pixel_size )
 		rgb2hsv.to_hsv(
 			da[0]/255. ,da[1]/255. ,da[2]/255. ,&h ,&s ,&v );
 
-		this->hsv_to_xyz( h ,s ,v ,xyz );
+		this->vbo.hsv_to_xyz( h ,s ,v ,xyz );
 	}
 	this->vbo.end_vertex();
  std::cout << "from_rgb_to_xyz time=" << stwa.stop_ms().count() << "milisec\n";
@@ -747,15 +748,17 @@ void fl_gl_hsv_viewer::draw()
 			if (this->fog_sw_) {
 				glFogfv( GL_FOG_COLOR , this->bg_rgba_ );
 			}
+			/* HSV ViewウインドウのOpenGLが初期化された */
+			this->vbo.set_hsv_view_start_sw(true);
 		}
 
-std::cout << "fl_gl_hsv_viewer w=" << this->w() << " h=" << this->h() << std::endl;
 		/* ピクセル値あるいはサイズの変更 */
 		//this->dummy_reset_vbo( this->w() * this->h() );
-
-		/* 表示範囲の再設定 */
-		glViewport( 0 ,0 ,this->w(), this->h());
 	}
+
+	/* 表示範囲の再設定 */
+	glViewport( 0 ,0 ,this->w(), this->h());
+
 	/* 射影行列の設定 */
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();

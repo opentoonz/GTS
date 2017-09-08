@@ -217,7 +217,7 @@ cl_gts_master.cb_quit();}
             label {Select SANE device...}
             xywh {0 0 100 20} hide
           }
-          MenuItem menite_trace_vlaues {
+          MenuItem menite_trace_values {
             label {Trace Values...}
             callback {if (cl_gts_gui.menite_trace_values->value()) {
     cl_gts_gui.window_main_view->show();/* Need for Minimize */

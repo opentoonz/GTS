@@ -127,15 +127,15 @@ private:
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
-  static Fl_Menu_Item *menite_trace_color;
+  static Fl_Menu_Item *menite_trace_values;
 private:
-  inline void cb_menite_trace_color_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_color(Fl_Menu_*, void*);
+  inline void cb_menite_trace_values_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_values(Fl_Menu_*, void*);
 public:
-  static Fl_Menu_Item *menite_hsv_viewer;
+  static Fl_Menu_Item *menite_trace_hsv_view;
 private:
-  inline void cb_menite_hsv_viewer_i(Fl_Menu_*, void*);
-  static void cb_menite_hsv_viewer(Fl_Menu_*, void*);
+  inline void cb_menite_trace_hsv_view_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_hsv_view(Fl_Menu_*, void*);
   inline void cb_In_i(Fl_Menu_*, void*);
   static void cb_In(Fl_Menu_*, void*);
   inline void cb_Out_i(Fl_Menu_*, void*);
@@ -1365,10 +1365,10 @@ private:
   inline void cb_Cancel1_i(Fl_Button*, void*);
   static void cb_Cancel1(Fl_Button*, void*);
 public:
-  Fl_Double_Window *window_trace_color;
+  Fl_Double_Window *window_trace_values;
 private:
-  inline void cb_window_trace_color_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_color(Fl_Double_Window*, void*);
+  inline void cb_window_trace_values_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_values(Fl_Double_Window*, void*);
   inline void cb_Open2_i(Fl_Button*, void*);
   static void cb_Open2(Fl_Button*, void*);
 public:
@@ -1716,10 +1716,10 @@ public:
   Fl_Button *button_change_3_4;
   Fl_Button *button_change_4_5;
   Fl_Button *button_change_5_6;
-  Fl_Double_Window *window_hsv_viewer;
+  Fl_Double_Window *window_trace_hsv_view;
 private:
-  inline void cb_window_hsv_viewer_i(Fl_Double_Window*, void*);
-  static void cb_window_hsv_viewer(Fl_Double_Window*, void*);
+  inline void cb_window_trace_hsv_view_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_hsv_view(Fl_Double_Window*, void*);
 public:
   fl_gl_hsv_viewer *hsv_viewer;
 };

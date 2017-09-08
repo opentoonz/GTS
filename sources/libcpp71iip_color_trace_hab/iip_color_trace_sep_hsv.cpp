@@ -30,9 +30,8 @@ void iip_color_trace_sep_hsv_exec_(
 	, TOUT* image_out_top
 )
 {
-std::cout << __FILE__ << " " << __LINE__
-<< " xsize=" << area_xsize
-<< " ysize=" << area_ysize << std::endl;
+  if ( cl_gts_gui.hsv_viewer->vbo.get_hsv_view_start_sw() ) {
+std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Start" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
 
 	/* vbo初期化 */
 	if ( cl_gts_gui.hsv_viewer->vbo.open_or_reopen(
@@ -41,18 +40,16 @@ std::cout << __FILE__ << " " << __LINE__
 std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 		return; // by Error
 	}
-std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 	/* 初期パラメータ設定 */
 	calcu_rgb_to_hsv rgb2hsv;
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;
 
-std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	/* windows.hのmax()マクロが先にきいてしまいエラーとなる */
 	const auto max_val_inn = (std::numeric_limits<TINN>::max)();
 	const auto max_val_out = (std::numeric_limits<TOUT>::max)();
-std::cout << __FILE__ << " " << __LINE__ << std::endl;
+	const double max_val_out_f = max_val_out + 0.999999;
 
 	/* Colorデータ書き込み */
 	{
@@ -60,13 +57,11 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	  if (rgb == nullptr) { /* open出来ていればここはこないはず */
 		assert(!"Error:vbo.start_color() return null");
 	  }
-std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 	  TINN *image_inn = image_inn_top + start_pos;
 	  const int shift_bit = std::numeric_limits<TINN>::digits - 8;
 	  for (int yy = 0; yy < area_ysize ; ++yy
 	  ,image_inn += scan_size) {
-std::cout << __FILE__ << " " << __LINE__ << " yy=" << yy << std::endl;
 
 	    TINN* inn_x = image_inn;
 	    for (int xx = 0; xx < area_xsize ;++xx
@@ -91,7 +86,6 @@ std::cout << __FILE__ << " " << __LINE__ << " yy=" << yy << std::endl;
 	  TOUT *image_out = image_out_top + start_pos;
 	  for (int yy = 0; yy < area_ysize ; ++yy
 	  ,image_inn += scan_size ,image_out += scan_size) {
-std::cout << __FILE__ << " " << __LINE__ << " yy=" << yy << std::endl;
 
 	    TINN* inn_x = image_inn;
 	    TOUT* out_x = image_out;
@@ -105,20 +99,62 @@ std::cout << __FILE__ << " " << __LINE__ << " yy=" << yy << std::endl;
 			&hh, &ss, &vv );
 
 		/* hsvからxyz座標値を生成 */
-		cl_gts_gui.hsv_viewer->hsv_to_xyz( hh ,ss ,vv ,xyz );
+		cl_gts_gui.hsv_viewer->vbo.hsv_to_xyz( hh ,ss ,vv ,xyz );
 
 		/* 2値化 */
 		double	rr=0., gg=0., bb=0.;
 		calcu_sep_hsv.exec( hh,  ss,  vv, &rr, &gg, &bb );
 
 		/* 出力 */
-		out_x[CH_RED] = static_cast<TOUT>(rr * max_val_out);
-		out_x[CH_GRE] = static_cast<TOUT>(gg * max_val_out);
-		out_x[CH_BLU] = static_cast<TOUT>(bb * max_val_out);
+		out_x[CH_RED] = static_cast<TOUT>(rr * max_val_out_f);
+		out_x[CH_GRE] = static_cast<TOUT>(gg * max_val_out_f);
+		out_x[CH_BLU] = static_cast<TOUT>(bb * max_val_out_f);
 	    }
 	  }
 	  cl_gts_gui.hsv_viewer->vbo.end_vertex();
 	}
+  }
+  else {
+	/* 初期パラメータ設定 */
+	calcu_rgb_to_hsv rgb2hsv;
+	const int scan_size = width * channels;
+	const int start_pos = area_ypos * scan_size + area_xpos * channels;
+
+	/* windows.hのmax()マクロが先にきいてしまいエラーとなる */
+	const auto max_val_inn = (std::numeric_limits<TINN>::max)();
+	const auto max_val_out = (std::numeric_limits<TOUT>::max)();
+	const double max_val_out_f = max_val_out + 0.999999;
+
+	/* 2値化out & Vertexデータ書き込み */
+	{
+	  TINN *image_inn = image_inn_top + start_pos;
+	  TOUT *image_out = image_out_top + start_pos;
+	  for (int yy = 0; yy < area_ysize ; ++yy
+	  ,image_inn += scan_size ,image_out += scan_size) {
+
+	    TINN* inn_x = image_inn;
+	    TOUT* out_x = image_out;
+	    for (int xx = 0; xx < area_xsize ;++xx
+	    ,inn_x += channels ,out_x += channels ) {
+		double	hh=0., ss=0., vv=0.;
+		rgb2hsv.to_hsv(
+			static_cast<double>(inn_x[CH_RED])/max_val_inn,
+			static_cast<double>(inn_x[CH_GRE])/max_val_inn,
+			static_cast<double>(inn_x[CH_BLU])/max_val_inn,
+			&hh, &ss, &vv );
+
+		/* 2値化 */
+		double	rr=0., gg=0., bb=0.;
+		calcu_sep_hsv.exec( hh,  ss,  vv, &rr, &gg, &bb );
+
+		/* 出力 */
+		out_x[CH_RED] = static_cast<TOUT>(rr * max_val_out_f);
+		out_x[CH_GRE] = static_cast<TOUT>(gg * max_val_out_f);
+		out_x[CH_BLU] = static_cast<TOUT>(bb * max_val_out_f);
+	    }
+	  }
+	}
+  }
 }
 
 //--------------------------------------------------

@@ -59,8 +59,7 @@ public:
 	bool open_or_reopen( unsigned pixel_size );/* false=OK,true=Error */
 	void close(void);
 
-	/* 始めの値のセット、あるいは
-	数が同じで値のみ変更 */
+	/* 始めの値のセット、あるいは 数が同じで値のみ変更 */
 	vbo_float* start_vertex( void );
 	/* 注:start_vertex()からend_vertex()までvertex bufferがbind状態 */
 	void end_vertex( void );
@@ -72,12 +71,22 @@ public:
 	/* 描画実行 */
 	void draw(void);
 
-	GLuint get_pixel_size(void) { return this->pixel_size_; }
+	/* hsv --> xyz変換 */
+	void hsv_to_xyz(
+		const double h , const double s , const double v
+		, gts::opengl_vbo::vbo_float* xyz
+	);
+
+	void set_hsv_view_start_sw(bool sw) { this->hsv_view_start_sw_=sw; }
+	bool get_hsv_view_start_sw(void) { return this->hsv_view_start_sw_;}
+
+	/* for debug */
 	void pr_vbo_info(void);
 private:
 	GLuint id_vbo_[2];
 	GLuint pixel_size_;
 	const GLenum vbo_type_;// use glVertexPointer(,vbo_type,,)
+	bool hsv_view_start_sw_;
 
 	void clear_id_vbo_(void);
 }; // class opengl_vbo
@@ -91,10 +100,6 @@ public:
 
 	gts::opengl_camera_eye eye;
 	gts::opengl_vbo        vbo;
-	void hsv_to_xyz(
-		const double h , const double s , const double v
-		, gts::opengl_vbo::vbo_float* xyz
-	);
 private:
 	void draw();
 	void draw_object_();

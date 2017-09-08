@@ -238,28 +238,28 @@ void gts_gui::cb_menite_trace_batch(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_batch_i(o,v);
 }
 
-void gts_gui::cb_menite_trace_color_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_trace_color->value()) {
+void gts_gui::cb_menite_trace_values_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_values->value()) {
     cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_color->show();
+    cl_gts_gui.window_trace_values->show();
 } else {
-    cl_gts_gui.window_trace_color->hide();
+    cl_gts_gui.window_trace_values->hide();
 };
 }
-void gts_gui::cb_menite_trace_color(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_color_i(o,v);
+void gts_gui::cb_menite_trace_values(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_values_i(o,v);
 }
 
-void gts_gui::cb_menite_hsv_viewer_i(Fl_Menu_*, void*) {
-  if (cl_gts_gui.menite_hsv_viewer->value()) {
+void gts_gui::cb_menite_trace_hsv_view_i(Fl_Menu_*, void*) {
+  if (cl_gts_gui.menite_trace_hsv_view->value()) {
     cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_hsv_viewer->show();
+    cl_gts_gui.window_trace_hsv_view->show();
 } else {
-    cl_gts_gui.window_hsv_viewer->hide();
+    cl_gts_gui.window_trace_hsv_view->hide();
 };
 }
-void gts_gui::cb_menite_hsv_viewer(Fl_Menu_* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_menite_hsv_viewer_i(o,v);
+void gts_gui::cb_menite_trace_hsv_view(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_menite_trace_hsv_view_i(o,v);
 }
 
 void gts_gui::cb_In_i(Fl_Menu_*, void*) {
@@ -462,8 +462,8 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Color...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"HSV Viewer", 0,  (Fl_Callback*)gts_gui::cb_menite_hsv_viewer, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Values...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_values, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace HSV View", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_hsv_view, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {"Zoom", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
@@ -514,8 +514,8 @@ Fl_Menu_Item* gts_gui::menite_trace_output_color = gts_gui::menu_ + 25;
 Fl_Menu_Item* gts_gui::menite_trace_parameters = gts_gui::menu_ + 26;
 Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 27;
 Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 28;
-Fl_Menu_Item* gts_gui::menite_trace_color = gts_gui::menu_ + 29;
-Fl_Menu_Item* gts_gui::menite_hsv_viewer = gts_gui::menu_ + 30;
+Fl_Menu_Item* gts_gui::menite_trace_values = gts_gui::menu_ + 29;
+Fl_Menu_Item* gts_gui::menite_trace_hsv_view = gts_gui::menu_ + 30;
 Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 42;
 Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 47;
 Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 48;
@@ -5185,12 +5185,12 @@ void gts_gui::cb_Cancel1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Cancel1_i(o,v);
 }
 
-void gts_gui::cb_window_trace_color_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_trace_color->hide();
-cl_gts_gui.menite_trace_color->clear();
+void gts_gui::cb_window_trace_values_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_values->hide();
+cl_gts_gui.menite_trace_values->clear();
 }
-void gts_gui::cb_window_trace_color(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_trace_color_i(o,v);
+void gts_gui::cb_window_trace_values(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_values_i(o,v);
 }
 
 void gts_gui::cb_Open2_i(Fl_Button*, void*) {
@@ -6011,12 +6011,12 @@ static const unsigned char idata_updown[] =
 255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255};
 static Fl_RGB_Image image_updown(idata_updown, 10, 20, 3, 0);
 
-void gts_gui::cb_window_hsv_viewer_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_hsv_viewer->hide();
-cl_gts_gui.menite_hsv_viewer->clear();
+void gts_gui::cb_window_trace_hsv_view_i(Fl_Double_Window*, void*) {
+  cl_gts_gui.window_trace_hsv_view->hide();
+cl_gts_gui.menite_trace_hsv_view->clear();
 }
-void gts_gui::cb_window_hsv_viewer(Fl_Double_Window* o, void* v) {
-  ((gts_gui*)(o->user_data()))->cb_window_hsv_viewer_i(o,v);
+void gts_gui::cb_window_trace_hsv_view(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_trace_hsv_view_i(o,v);
 }
 
 Fl_Double_Window* gts_gui::make_window() {
@@ -8118,8 +8118,8 @@ Fl_Double_Window* gts_gui::make_window() {
     window_set_aspect_ratio->set_modal();
     window_set_aspect_ratio->end();
   } // Fl_Double_Window* window_set_aspect_ratio
-  { window_trace_color = new Fl_Double_Window(540, 270, "Trace Color");
-    window_trace_color->callback((Fl_Callback*)cb_window_trace_color, (void*)(this));
+  { window_trace_values = new Fl_Double_Window(540, 270, "Trace Values");
+    window_trace_values->callback((Fl_Callback*)cb_window_trace_values, (void*)(this));
     { Fl_Scroll* o = new Fl_Scroll(0, 0, 540, 270);
       { Fl_Group* o = new Fl_Group(0, 0, 540, 270);
         { Fl_Button* o = new Fl_Button(5, 5, 130, 25, "Open Config This...");
@@ -8638,13 +8638,13 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       o->end();
     } // Fl_Scroll* o
-    window_trace_color->set_non_modal();
-    window_trace_color->size_range(200, 100, 540, 270);
-    window_trace_color->end();
-    window_trace_color->resizable(window_trace_color);
-  } // Fl_Double_Window* window_trace_color
-  { window_hsv_viewer = new Fl_Double_Window(500, 500, "HSV Viewer");
-    window_hsv_viewer->callback((Fl_Callback*)cb_window_hsv_viewer, (void*)(this));
+    window_trace_values->set_non_modal();
+    window_trace_values->size_range(200, 100, 540, 270);
+    window_trace_values->end();
+    window_trace_values->resizable(window_trace_values);
+  } // Fl_Double_Window* window_trace_values
+  { window_trace_hsv_view = new Fl_Double_Window(500, 500, "Trace HSV View");
+    window_trace_hsv_view->callback((Fl_Callback*)cb_window_trace_hsv_view, (void*)(this));
     { hsv_viewer = new fl_gl_hsv_viewer(0, 0, 500, 500);
       hsv_viewer->box(FL_NO_BOX);
       hsv_viewer->color(FL_BACKGROUND_COLOR);
@@ -8657,9 +8657,9 @@ Fl_Double_Window* gts_gui::make_window() {
       hsv_viewer->when(FL_WHEN_RELEASE);
       Fl_Group::current()->resizable(hsv_viewer);
     } // fl_gl_hsv_viewer* hsv_viewer
-    window_hsv_viewer->set_non_modal();
-    window_hsv_viewer->end();
-  } // Fl_Double_Window* window_hsv_viewer
-  return window_hsv_viewer;
+    window_trace_hsv_view->set_non_modal();
+    window_trace_hsv_view->end();
+  } // Fl_Double_Window* window_trace_hsv_view
+  return window_trace_hsv_view;
 }
 gts_gui cl_gts_gui; 
