@@ -87,10 +87,11 @@ public:
 /* いままでのクラスと共存させるための一時的措置 --> 要refactering */
 class calcu_color_trace_base {
 public:
-	virtual void exec(
+	virtual bool exec(
 	double hh, double ss, double vv, double *rr, double *gg, double *bb
 	){
 		(void)hh; (void)ss; (void)vv; (void)rr; (void)gg; (void)bb;
+		return false;
 	}
 };
 
@@ -106,18 +107,18 @@ public:
 
 	void setup_default_area_param(void) {
 		this->cla_area_param = {
- { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 }	/* 黒 */
-,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.8,0.0 }	/* 赤 */
-,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 }	/* 青 */
-,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 }	/* 緑 */
-,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.8,0.0 }	/* 水 */
-,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.8,0.0 }	/* 紫 */
-,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.8,0.0 }	/* 黄(or オレンジ) */
+ { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 ,true } /* 黒 */
+,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.8,0.0 ,true } /* 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 ,true } /* 青 */
+,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 ,true } /* 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.8,0.0 ,false } /* 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.8,0.0 ,false } /* 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.8,0.0 ,false } /* 黄(or オレンジ) */
 		};
 	}
 
 	/* hh = 0...360 , ss,vv,rr,gg,bb = 0...1 */
-	void exec(
+	bool exec(
 	double hh, double ss, double vv, double *rr, double *gg, double *bb
 	);
 private:

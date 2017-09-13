@@ -1,4 +1,9 @@
 #include <vector>
+
+//#define GLEW_STATIC	/* glew32s.libを使う場合必要 */
+//#include <GL/glew.h>	/* gl.hより前に必要 */
+#include <FL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
+
 #include <FL/Fl.H>
 #include <FL/Fl_Gl_Window.H>
 

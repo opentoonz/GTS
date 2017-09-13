@@ -1720,7 +1720,14 @@ public:
 private:
   inline void cb_window_trace_hsv_view_i(Fl_Double_Window*, void*);
   static void cb_window_trace_hsv_view(Fl_Double_Window*, void*);
+  static Fl_Menu_Item menu_3[];
 public:
+  static Fl_Menu_Item *menite_hsv_dot_normal;
+  static Fl_Menu_Item *menite_hsv_dot_selected;
+  static Fl_Menu_Item *menite_hsv_dot_white;
+  static Fl_Menu_Item *menite_hsv_dot_black;
+  static Fl_Menu_Item *menite_hsv_hue_partition;
+  static Fl_Menu_Item *menite_hsv_black_partition;
   fl_gl_hsv_viewer *hsv_viewer;
 };
 extern gts_gui cl_gts_gui; 

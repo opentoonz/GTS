@@ -167,7 +167,7 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_trace_input_color->hide();
     cl_gts_gui.menite_trace_input_color->clear();
 }}
-            xywh {0 0 30 20} type Toggle shortcut 0xffc3
+            xywh {0 0 30 20} type Toggle shortcut 0xffc3 hide
           }
           MenuItem menite_trace_input_color {
             label {Trace Source Color(HSV Min Max)...}
@@ -177,7 +177,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_trace_input_color->hide();
 }}
-            xywh {0 0 30 20} type Toggle shortcut 0xffc4
+            xywh {0 0 30 20} type Toggle shortcut 0xffc4 hide
           }
           MenuItem menite_trace_output_color {
             label {Trace Target Color(RGB)...}
@@ -187,7 +187,7 @@ cl_gts_master.cb_quit();}
 } else {
     cl_gts_gui.window_trace_output_color->hide();
 }}
-            xywh {0 0 30 20} type Toggle shortcut 0xffc5
+            xywh {0 0 30 20} type Toggle shortcut 0xffc5 hide
           }
           MenuItem menite_trace_parameters {
             label {Trace Parameters...}
@@ -201,7 +201,7 @@ cl_gts_master.cb_quit();}
     cl_gts_gui.window_trace_input_color->hide();
     cl_gts_gui.menite_trace_input_color->clear();
 }}
-            xywh {0 0 100 20} type Toggle
+            xywh {0 0 100 20} type Toggle hide
           }
           MenuItem menite_trace_batch {
             label {Trace Batch...}
@@ -2609,7 +2609,7 @@ cl_gts_gui.menite_trace_values->clear();}
             xywh {5 5 130 25}
             code0 {//\#include "cb_trace_color.h"}
           }
-          Fl_Group {} {open
+          Fl_Group {} {
             xywh {0 37 520 25}
           } {
             Fl_Check_Button chkbtn_trace_0_enable_sw {
@@ -2801,7 +2801,7 @@ opengl_view->redraw();}
               }
               Fl_Check_Button {} {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
-//opengl_hsv_viewer->redraw();}
+opengl_view->redraw();}
                 xywh {498 85 17 25} down_box DOWN_BOX
               }
             }
@@ -3269,12 +3269,85 @@ opengl_view->redraw();}
 cl_gts_gui.menite_trace_hsv_view->clear();}
       xywh {50 50 500 500} type Double resizable non_modal visible
     } {
+      Fl_Menu_Bar {} {open
+        xywh {0 0 500 25}
+      } {
+        Submenu {} {
+          label View open
+          xywh {0 0 62 20}
+        } {
+          Submenu {} {
+            label {In/Out Color} open
+            xywh {0 0 62 20}
+          } {
+            MenuItem menite_hsv_dot_normal {
+              label Normal
+              xywh {0 0 30 20} type Radio value 1
+            }
+            MenuItem menite_hsv_dot_selected {
+              label {Selected Trace}
+              xywh {0 0 30 20} type Radio
+            }
+            MenuItem menite_hsv_dot_white {
+              label White
+              xywh {0 0 30 20} type Radio
+            }
+            MenuItem menite_hsv_dot_black {
+              label Black
+              xywh {0 0 30 20} type Radio
+            }
+          }
+          MenuItem menite_hsv_hue_partition {
+            label {Hue Partition}
+            xywh {0 0 30 20} type Toggle
+          }
+          MenuItem menite_hsv_black_partition {
+            label {Black Partition}
+            xywh {0 0 30 20} type Toggle
+          }
+        }
+      }
       Fl_Box hsv_viewer {
-        xywh {0 0 500 500} resizable
+        xywh {0 25 500 475} resizable
         code0 {\#include "fl_gl_hsv_viewer.h"}
         class fl_gl_hsv_viewer
       }
     }
+    code {Fl::set_color(static_cast<Fl_Color>(16)
+	,static_cast<unsigned char>(valinp_trace_0_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_0_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_0_target_b->value())
+);
+Fl::set_color(static_cast<Fl_Color>(17)
+	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_1_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_1_target_b->value())
+);
+Fl::set_color(static_cast<Fl_Color>(18)
+	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_2_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_2_target_b->value())
+);
+Fl::set_color(static_cast<Fl_Color>(19)
+	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_3_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_3_target_b->value())
+);
+Fl::set_color(static_cast<Fl_Color>(20)
+	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+);
+Fl::set_color(static_cast<Fl_Color>(21)
+	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+);
+Fl::set_color(static_cast<Fl_Color>(22)
+	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+);} {}
   }
 } 
 

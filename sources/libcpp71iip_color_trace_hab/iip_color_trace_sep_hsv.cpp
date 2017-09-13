@@ -49,6 +49,7 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	/* windows.hのmax()マクロが先にきいてしまいエラーとなる */
 	const auto max_val_inn = (std::numeric_limits<TINN>::max)();
 	const auto max_val_out = (std::numeric_limits<TOUT>::max)();
+	const auto max_glub_out = (std::numeric_limits<GLubyte>::max)();
 	const double max_val_out_f = max_val_out + 0.999999;
 
 	/* Colorデータ書き込み */
@@ -66,9 +67,25 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	    TINN* inn_x = image_inn;
 	    for (int xx = 0; xx < area_xsize ;++xx
 	    ,inn_x += channels ,rgb+=3) {
-	    	rgb[0] = inn_x[0] >> shift_bit;
-	    	rgb[1] = inn_x[1] >> shift_bit;
-	    	rgb[2] = inn_x[2] >> shift_bit;
+	    	rgb[CH_RED] = inn_x[CH_RED] >> shift_bit;
+	    	rgb[CH_GRE] = inn_x[CH_GRE] >> shift_bit;
+	    	rgb[CH_BLU] = inn_x[CH_BLU] >> shift_bit;
+
+		/* 2値化しない場合白点で表示する処理
+		--> 重いかも?????????????????!!!!!!!!!!!!!!! */
+		double	hh=0., ss=0., vv=0.;
+		rgb2hsv.to_hsv(
+			static_cast<double>(inn_x[CH_RED])/max_val_inn,
+			static_cast<double>(inn_x[CH_GRE])/max_val_inn,
+			static_cast<double>(inn_x[CH_BLU])/max_val_inn,
+			&hh, &ss, &vv );
+		/* 2値化するかどうか判断 */
+		double	rr=0., gg=0., bb=0.;
+		if (!calcu_sep_hsv.exec( hh, ss, vv, &rr, &gg, &bb )) {
+	    		rgb[CH_RED] = max_glub_out;
+	    		rgb[CH_GRE] = max_glub_out;
+	    		rgb[CH_BLU] = max_glub_out;
+		}
 	    }
 	  }
 	  cl_gts_gui.hsv_viewer->vbo.end_color();
@@ -81,6 +98,7 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	  if (xyz == nullptr) { /* open出来ていればここはこないはず */
 		assert(!"Error:vbo.start_vertex() return null");
 	  }
+	  //GLubyte* rgb = cl_gts_gui.hsv_viewer->vbo.start_color();
 
 	  TINN *image_inn = image_inn_top + start_pos;
 	  TOUT *image_out = image_out_top + start_pos;
@@ -90,7 +108,7 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	    TINN* inn_x = image_inn;
 	    TOUT* out_x = image_out;
 	    for (int xx = 0; xx < area_xsize ;++xx
-	    ,inn_x += channels ,out_x += channels ,xyz += 3) {
+	    ,inn_x+=channels ,out_x+=channels ,xyz+=3/* ,rgb+=3*/) {
 		double	hh=0., ss=0., vv=0.;
 		rgb2hsv.to_hsv(
 			static_cast<double>(inn_x[CH_RED])/max_val_inn,
@@ -111,8 +129,10 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 		out_x[CH_BLU] = static_cast<TOUT>(bb * max_val_out_f);
 	    }
 	  }
+	  //cl_gts_gui.hsv_viewer->vbo.end_color();
 	  cl_gts_gui.hsv_viewer->vbo.end_vertex();
 	}
+	cl_gts_gui.hsv_viewer->redraw();
   }
   else {
 	/* 初期パラメータ設定 */

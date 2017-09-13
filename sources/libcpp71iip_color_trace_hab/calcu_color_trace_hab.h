@@ -49,7 +49,7 @@ public:
 
 	calcu_col_area_hab cla_area_param[E_COLOR_TRACE_HAB_NOT_SELECT];
 
-	void exec( double d_hh, double d_aa, double d_bb, double *dp_red, double *dp_gre, double *dp_blu );
+	bool exec( double d_hh, double d_aa, double d_bb, double *dp_red, double *dp_gre, double *dp_blu );
 private:
 	double	_d_bg_red,
 		_d_bg_gre,

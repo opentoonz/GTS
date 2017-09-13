@@ -52,7 +52,7 @@
 	(1 - V) / (S * V)  <=  (1 - T) / T
 */
 
-void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *rr, double *gg, double *bb )
+bool calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *rr, double *gg, double *bb )
 {
 	//for (unsigned ii = 0; ii < this->cla_area_param.size(); ++ii) {
 	for (int ii = static_cast<int>(this->cla_area_param.size())-1
@@ -104,10 +104,11 @@ void calcu_color_trace_sep_hsv::exec( double hh, double ss, double vv, double *r
 		*rr = area.target_r;
 		*gg = area.target_g;
 		*bb = area.target_b;
-		return;
+		return true;
 	}
 	/* トレスをしない部分は白色(紙の地の色)にする */
 	*rr = this->target_paper_r_;
 	*gg = this->target_paper_g_;
 	*bb = this->target_parer_b_;
+	return false;
 }

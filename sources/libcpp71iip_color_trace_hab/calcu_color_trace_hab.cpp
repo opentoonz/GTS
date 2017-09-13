@@ -1,6 +1,6 @@
 #include "calcu_color_trace_hab.h"
 
-void calcu_color_trace_hab::exec( double d_hh, double d_aa, double d_bb, double *dp_red, double *dp_gre, double *dp_blu )
+bool calcu_color_trace_hab::exec( double d_hh, double d_aa, double d_bb, double *dp_red, double *dp_gre, double *dp_blu )
 {
 	int tt;
 	calcu_col_area_hab *clp_hab;
@@ -36,10 +36,11 @@ void calcu_color_trace_hab::exec( double d_hh, double d_aa, double d_bb, double 
 		*dp_red = clp_hab->d_red;
 		*dp_gre = clp_hab->d_gre;
 		*dp_blu = clp_hab->d_blu;
-		return;
+		return true;
 	}
 	/* トレスをしない部分は白色(紙の地の色)にする */
 	*dp_red = this->_d_bg_red;
 	*dp_gre = this->_d_bg_gre;
 	*dp_blu = this->_d_bg_blu;
+	return false;
 }

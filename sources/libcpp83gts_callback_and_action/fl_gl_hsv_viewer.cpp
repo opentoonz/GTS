@@ -10,17 +10,19 @@
 #include <chrono>
 
 #define GLEW_STATIC	/* use glew32s.lib */
-#include <GL/glew.h>
+#include <GL/glew.h>	/* gl.hより前に必要 */
 
 //#include <FL/Fl.H>
 //#include <FL/Fl_Gl_Window.H>
 #include "FL/fl_ask.H"  // fl_alert(-)
-#include <FL/gl.h>
+//#include <FL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
 #include <FL/glu.h>	/* gluPerspective(-) , gluLookAt(-) */
 #include <FL/glut.h>	/* glutWireTeapot(-) glutWireCone(-) */
 			/* glutExtensionSupported(-) --> link error */
 #include "calcu_rgb_to_hsv.h"
+#include "calcu_color_trace_sep_hsv.h"
 #include "fl_gl_hsv_viewer.h"
+#include "gts_master.h"
 
 
 /*---------- 時間計測 ----------*/
@@ -610,7 +612,7 @@ fl_gl_hsv_viewer::fl_gl_hsv_viewer(int x ,int y ,int w ,int h ,const char*l)
 	this->bg_rgba_[3] = 1.f;
 
 	/* dummy_rgb_image_ に8bitサンプリングでランダムなrgb画像を生成 */
-//	this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ );
+//	this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ / 2);
 }
 
 void fl_gl_hsv_viewer::dummy_create_rgb_image_(
@@ -638,6 +640,246 @@ void fl_gl_hsv_viewer::dummy_create_rgb_image_(
 		<< this->dummy_rgb_image_.size() << "bytes\n";
 }
 
+namespace {
+void get_hsv_cross_point_(
+	const double hue , const double ss , const double tt
+	,double& xout , double& yout
+	,double& xinn , double& yinn , double& zinn
+)
+{
+	xout = cos( gts::rad_from_deg(hue) );
+	yout = sin( gts::rad_from_deg(hue) );
+	xinn = ss * tt * xout / (ss * (1. - tt) + tt);
+	yinn = ss * tt * yout / (ss * (1. - tt) + tt);
+	zinn = (1. - tt) / (tt * xout) * xinn;
+}
+
+void draw_hsv_(
+	double thickness
+	,double hmin
+	,double hmax
+	,double threshold_to_black
+	,double target_r
+	,double target_g
+	,double target_b
+)
+{
+	const auto ss = 1. - thickness;
+	const auto tt = 1. - threshold_to_black;
+/*
+	HSV View
+	Color Area
+	Guide Partition
+
+	Black
+	+
+	|\
+	|  \
+	|    \ 8
+	|    7 +
+	|   6 /  \
+	|    +     \
+	| 5 /  \     \
+	|  +     \     \
+	|  |        \    \
+	|   |         \    \
+	|   |           \    \
+	+---+------------------+
+	    4             3  2  1
+	White   --> S -->      Color
+
+	1 2 7 8	--> Hue Start or End Color 白/黒
+	2 3 6 7	--> その位置でのHue色
+	3 4 5 6	--> Target色
+*/
+
+	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
+	glCullFace(GL_BACK);	/* 後面を破棄 */
+
+	/* hmin */
+	{
+	double	 x1 = 0. ,y1 = 0. ,z1 = 0.
+		,x5 = 0. ,y5 = 0. ,z5 = 0.;
+	get_hsv_cross_point_( hmin ,ss,tt ,x1,y1 ,x5,y5,z5 );
+	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.
+		,x8 = x1*tt ,y8 = y1*tt ,z8 = threshold_to_black;
+	double	 x3 = x4+(x1-x4)*2./3.
+		,y3 = y4+(y1-y4)*2./3.
+		,z3 = z4+(z1-z4)*2./3.
+		,x6 = x5+(x8-x5)*2./3.
+		,y6 = y5+(y8-y5)*2./3.
+		,z6 = z5+(z8-z5)*2./3. ;
+	double	 x2 = x3+(x1-x3)*2./3.
+		,y2 = y3+(y1-y3)*2./3.
+		,z2 = z3+(z1-z3)*2./3.
+		,x7 = x6+(x8-x6)*2./3.
+		,y7 = y6+(y8-y6)*2./3.
+		,z7 = z6+(z8-z6)*2./3. ;
+		/*
+	double	v7[3];
+	//	v7[0] = x7; v7[1] = y7; v7[2] = z7;
+		v7[0] = v6[0]+(v8[0]-v6[0])*2./3.
+		v7[1] = v6[1]+(v8[1]-v6[1])*2./3.
+		v7[2] = v6[2]+(v8[2]-v6[2])*2./3.
+		*/
+
+	/* 外側 Hue開始色 */
+	glColor3d(1.,1.,1.);
+
+	/* 外側 Hue開始表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x1,y1,z1);
+	glVertex3d(x2,y2,z2);
+	glVertex3d(x7,y7,z7);
+	glVertex3d(x8,y8,z8);
+	glEnd();
+
+	/* 中側 Hue色 */
+	calcu_rgb_to_hsv cl_hsv;
+	double r=0.,g=0.,b=0.;
+	cl_hsv.from_hsv( hmin,1.,1. ,&r,&g,&b );
+	glColor3d(r,g,b);
+
+	/* 中側 Hue色表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x2,y2,z2);
+	glVertex3d(x3,y3,z3);
+	glVertex3d(x6,y6,z6);
+	glVertex3d(x7,y7,z7);
+	//glVertex3dv(v7);
+	glEnd();
+
+	/* 内側 Target色 */
+	glColor3d(target_r,target_g,target_b);
+
+	/* 内側 Target色表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x3,y3,z3);
+	glVertex3d(x4,y4,z4);
+	glVertex3d(x5,y5,z5);
+	glVertex3d(x6,y6,z6);
+	glEnd();
+	}
+
+	/* hmax */
+	{
+	double	 x1 = 0. ,y1 = 0. ,z1 = 0.
+		,x5 = 0. ,y5 = 0. ,z5 = 0.;
+	get_hsv_cross_point_( hmax ,ss,tt ,x1,y1 ,x5,y5,z5 );
+	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.
+		,x8 = x1*tt ,y8 = y1*tt ,z8 = threshold_to_black;
+	double	 x3 = x4+(x1-x4)*2./3.
+		,y3 = y4+(y1-y4)*2./3.
+		,z3 = z4+(z1-z4)*2./3.
+		,x6 = x5+(x8-x5)*2./3.
+		,y6 = y5+(y8-y5)*2./3.
+		,z6 = z5+(z8-z5)*2./3. ;
+	double	 x2 = x3+(x1-x3)*2./3.
+		,y2 = y3+(y1-y3)*2./3.
+		,z2 = z3+(z1-z3)*2./3.
+		,x7 = x6+(x8-x6)*2./3.
+		,y7 = y6+(y8-y6)*2./3.
+		,z7 = z6+(z8-z6)*2./3. ;
+		/*
+	double	v7[3];
+	//	v7[0] = x7; v7[1] = y7; v7[2] = z7;
+		v7[0] = v6[0]+(v8[0]-v6[0])*2./3.
+		v7[1] = v6[1]+(v8[1]-v6[1])*2./3.
+		v7[2] = v6[2]+(v8[2]-v6[2])*2./3.
+		*/
+
+	/* 外側 Hue開始色 */
+	glColor3d(0.,0.,0.);
+
+	/* 外側 Hue開始表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x1,y1,z1);
+	glVertex3d(x8,y8,z8);
+	glVertex3d(x7,y7,z7);
+	glVertex3d(x2,y2,z2);
+	glEnd();
+
+	/* 中側 Hue色 */
+	calcu_rgb_to_hsv cl_hsv;
+	double r=0.,g=0.,b=0.;
+	cl_hsv.from_hsv( hmax,1.,1. ,&r,&g,&b );
+	glColor3d(r,g,b);
+
+	/* 中側 Hue色表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x2,y2,z2);
+	glVertex3d(x7,y7,z7);
+	glVertex3d(x6,y6,z6);
+	glVertex3d(x3,y3,z3);
+	//glVertex3dv(v7);
+	glEnd();
+
+	/* 内側 Target色 */
+	glColor3d(target_r,target_g,target_b);
+
+	/* 内側 Target色表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x3,y3,z3);
+	glVertex3d(x6,y6,z6);
+	glVertex3d(x5,y5,z5);
+	glVertex3d(x4,y4,z4);
+	glEnd();
+	}
+
+	/* thichness */
+	/* threshold_to_black */
+}
+
+void draw_sep_hsv_()
+{
+#if 0
+class calcu_sep_hsv {
+public:
+	bool	enable_sw;	/* 2値化処理実行 false=他の2値化処理へ */
+
+	double	 target_r	/* 0...1 結果色 */
+		,target_g
+		,target_b;
+
+	double	thickness;	/* 0...1 色/黒線太さ(=彩度最小値) */
+
+	double	hmin , hmax;	/* 0...360 拾うべき色相範囲
+					0より小さいなら色でなく黒扱う */
+	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
+	double	threshold_offset;/* 0...1 SV面上黒線との
+				取合い境界線の原点位置のオフセット */
+	bool	hsv_viewer_guide_sw;	/* hsv viewerで範囲を表示するsw */
+};
+	std::vector<calcu_sep_hsv> cla_area_param; // dummy
+	cla_area_param = {
+ { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 ,false}	/* 黒 */
+,{ true  ,1.,0.,0. ,0.5 ,300., 60. ,0.5,0.0 ,true}	/* 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 ,false}	/* 青 */
+,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 ,false}	/* 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.8,0.0 ,false}	/* 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.8,0.0 ,false}	/* 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.8,0.0 ,false}	/* 黄(or オレンジ) */
+	};
+#endif
+
+	for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
+		if (area.enable_sw && area.hsv_viewer_guide_sw
+		&& 0. <= area.hmin && 0. <= area.hmax
+		) {
+			draw_hsv_(
+				area.thickness
+				,area.hmin
+				,area.hmax
+				,area.threshold_to_black
+				,area.target_r
+				,area.target_g
+				,area.target_b
+			);
+		}
+	}
+}
+} // namespace
+
 void fl_gl_hsv_viewer::draw_object_()
 {
 	/* エリアガイド表示 */
@@ -651,7 +893,10 @@ void fl_gl_hsv_viewer::draw_object_()
 		glVertex3d(0. , 0. , 1.0);
 	glEnd();
 
-	/* hsv 3d表示 */
+	/* 区切ガイド */
+	draw_sep_hsv_();
+
+	/* ポイント表示 */
 	vbo.draw();
 }
 
@@ -668,7 +913,7 @@ void fl_gl_hsv_viewer::dummy_reset_vbo( const int pixel_size )
 	this->vbo.pr_vbo_info();
 
 	/* ダミーの画像サイズも変更しランダムし直し */
-	this->dummy_create_rgb_image_( pixel_size );
+	this->dummy_create_rgb_image_( pixel_size / 2 );
 
 	/* vbo colorデータ書き込み */
 	GLubyte* rgb = this->vbo.start_color();
@@ -753,7 +998,7 @@ void fl_gl_hsv_viewer::draw()
 		}
 
 		/* ピクセル値あるいはサイズの変更 */
-		//this->dummy_reset_vbo( this->w() * this->h() );
+		//this->dummy_reset_vbo( this->w() * this->h() / 2 );
 	}
 
 	/* 表示範囲の再設定 */
@@ -953,6 +1198,6 @@ int main(void) {
 /*
 rem
 rem :956,957 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\sources\libcpp38calcu_rgb_to_hsv /I..\thirdparty\glew\glew-2.1.0\include /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_viewer.cpp /Fea
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\sources\libcpp71iip_color_trace_hab /I..\thirdparty\glew\glew-2.1.0\include /I..\..\thirdparty\fltk\fltk-1.3.4-1 ../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_viewer.cpp /Fea
 del fl_gl_hsv_viewer.obj
 */

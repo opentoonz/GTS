@@ -456,10 +456,10 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Number ...", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan Save...", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_scan_and_save, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Files...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 130, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Thickness...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_thickness, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Source Color(HSV Min Max)...", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_input_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Target Color(RGB)...", 0xffc5,  (Fl_Callback*)gts_gui::cb_menite_trace_output_color, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Thickness...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_thickness, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Source Color(HSV Min Max)...", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_input_color, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Target Color(RGB)...", 0xffc5,  (Fl_Callback*)gts_gui::cb_menite_trace_output_color, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Parameters...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_parameters, 0, 18, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
  {"Select SANE device...", 0,  0, 0, 16, FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Values...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_values, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
@@ -5460,7 +5460,7 @@ void gts_gui::cb_valinp_trace_1_threshold_offset(Fl_Value_Input* o, void* v) {
 
 void gts_gui::cb_5_i(Fl_Check_Button* o, void*) {
   cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hsv_viewer_guide_sw = (o->value()==1 ?true :false);
-//opengl_hsv_viewer->redraw();
+opengl_view->redraw();
 }
 void gts_gui::cb_5(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_5_i(o,v);
@@ -6018,6 +6018,26 @@ cl_gts_gui.menite_trace_hsv_view->clear();
 void gts_gui::cb_window_trace_hsv_view(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_trace_hsv_view_i(o,v);
 }
+
+Fl_Menu_Item gts_gui::menu_3[] = {
+ {"View", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
+ {"In/Out Color", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Normal", 0,  0, 0, 12, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Selected Trace", 0,  0, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
+ {"White", 0,  0, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Black", 0,  0, 0, 8, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0},
+ {"Hue Partition", 0,  0, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Black Partition", 0,  0, 0, 2, FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0},
+ {0,0,0,0,0,0,0,0,0}
+};
+Fl_Menu_Item* gts_gui::menite_hsv_dot_normal = gts_gui::menu_3 + 2;
+Fl_Menu_Item* gts_gui::menite_hsv_dot_selected = gts_gui::menu_3 + 3;
+Fl_Menu_Item* gts_gui::menite_hsv_dot_white = gts_gui::menu_3 + 4;
+Fl_Menu_Item* gts_gui::menite_hsv_dot_black = gts_gui::menu_3 + 5;
+Fl_Menu_Item* gts_gui::menite_hsv_hue_partition = gts_gui::menu_3 + 7;
+Fl_Menu_Item* gts_gui::menite_hsv_black_partition = gts_gui::menu_3 + 8;
 
 Fl_Double_Window* gts_gui::make_window() {
   { window_main_view = new Fl_Double_Window(720, 565, "GTS");
@@ -8645,7 +8665,10 @@ Fl_Double_Window* gts_gui::make_window() {
   } // Fl_Double_Window* window_trace_values
   { window_trace_hsv_view = new Fl_Double_Window(500, 500, "Trace HSV View");
     window_trace_hsv_view->callback((Fl_Callback*)cb_window_trace_hsv_view, (void*)(this));
-    { hsv_viewer = new fl_gl_hsv_viewer(0, 0, 500, 500);
+    { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 500, 25);
+      o->menu(menu_3);
+    } // Fl_Menu_Bar* o
+    { hsv_viewer = new fl_gl_hsv_viewer(0, 25, 500, 475);
       hsv_viewer->box(FL_NO_BOX);
       hsv_viewer->color(FL_BACKGROUND_COLOR);
       hsv_viewer->selection_color(FL_BACKGROUND_COLOR);
@@ -8660,6 +8683,41 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_hsv_view->set_non_modal();
     window_trace_hsv_view->end();
   } // Fl_Double_Window* window_trace_hsv_view
+  Fl::set_color(static_cast<Fl_Color>(16)
+  	,static_cast<unsigned char>(valinp_trace_0_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_0_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_0_target_b->value())
+  );
+  Fl::set_color(static_cast<Fl_Color>(17)
+  	,static_cast<unsigned char>(valinp_trace_1_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_1_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_1_target_b->value())
+  );
+  Fl::set_color(static_cast<Fl_Color>(18)
+  	,static_cast<unsigned char>(valinp_trace_2_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_2_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_2_target_b->value())
+  );
+  Fl::set_color(static_cast<Fl_Color>(19)
+  	,static_cast<unsigned char>(valinp_trace_3_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_3_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_3_target_b->value())
+  );
+  Fl::set_color(static_cast<Fl_Color>(20)
+  	,static_cast<unsigned char>(valinp_trace_4_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_4_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_4_target_b->value())
+  );
+  Fl::set_color(static_cast<Fl_Color>(21)
+  	,static_cast<unsigned char>(valinp_trace_5_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_5_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_5_target_b->value())
+  );
+  Fl::set_color(static_cast<Fl_Color>(22)
+  	,static_cast<unsigned char>(valinp_trace_6_target_r->value())
+  	,static_cast<unsigned char>(valinp_trace_6_target_g->value())
+  	,static_cast<unsigned char>(valinp_trace_6_target_b->value())
+  );
   return window_trace_hsv_view;
 }
 gts_gui cl_gts_gui; 
