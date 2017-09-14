@@ -70,11 +70,11 @@ void gts_master::cb_read_and_trace_and_preview(
 		cl_gts_master.cl_ogl_view.no_view_canvas();
 		/* 画面クリア設定 */
 		cl_gts_master.cl_ogl_view.clear_opengl(
-			cl_gts_gui.opengl_view->w(),
-			cl_gts_gui.opengl_view->h()
+			cl_gts_gui.image_view->w(),
+			cl_gts_gui.image_view->h()
 		);
 		/* 画面クリア */
-		cl_gts_gui.opengl_view->flush();
+		cl_gts_gui.image_view->flush();
 
 		return;
 	}
@@ -191,7 +191,7 @@ int gts_master::redraw_image(
 	} /* それ以外の場合は現在の表示モードを維持する */
 
 	/* 表示 */
-	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
+	cl_gts_gui.image_view->redraw(); /* 画像再表示 */
 
 	/* color trace histogram表示設定 */
 	if (3L <= parent->get_l_channels()) {

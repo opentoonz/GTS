@@ -41,14 +41,14 @@ int gts_master::_iipg_view_setup( int i_max_area_sw )
 	if (ON == i_sw) {
 		/* Viewport, orth2d, 画像データとのパラメータ計算 */
 		this->cl_ogl_view.reshape_opengl(
-			cl_gts_gui.opengl_view->w(),
-			cl_gts_gui.opengl_view->h()
+			cl_gts_gui.image_view->w(),
+			cl_gts_gui.image_view->h()
 		);
 
 		/* OpenGL表示エリアの設定、フルサイズ表示の設定 */
 		this->cl_ogl_view.init_viewparam(
-			cl_gts_gui.opengl_view->w(),
-			cl_gts_gui.opengl_view->h()
+			cl_gts_gui.image_view->w(),
+			cl_gts_gui.image_view->h()
 		);
 
 		/* スクロールバー */

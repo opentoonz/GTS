@@ -166,9 +166,9 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \
-					sources/libcpp83gts_callback_and_action/fl_gl_hsv_viewer.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_hsv_view.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_image_view.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_event.cpp \
-					sources/libcpp83gts_callback_and_action/fltk_opengl.cpp \
 					sources/libcpp83gts_callback_and_action/igs_lex_white_space_and_double_quote.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_extensions.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_fltk_native_browse.cpp \

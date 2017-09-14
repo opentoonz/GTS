@@ -50,9 +50,9 @@ cb_trace_parameters.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\
-fl_gl_hsv_viewer.cpp\
+fl_gl_hsv_view.cpp\
+fl_gl_image_view.cpp\
 fltk_event.cpp\
-fltk_opengl.cpp\
 igs_lex_white_space_and_double_quote.cpp\
 ids_path_extensions.cpp\
 ids_path_fltk_native_browse.cpp\

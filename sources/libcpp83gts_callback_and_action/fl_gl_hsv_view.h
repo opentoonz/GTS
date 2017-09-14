@@ -1,3 +1,6 @@
+#ifndef fl_gl_hsv_view_h
+#define fl_gl_hsv_view_h
+
 #include <vector>
 
 //#define GLEW_STATIC	/* glew32s.libを使う場合必要 */
@@ -99,9 +102,9 @@ private:
 
 //--------------------
 
-class fl_gl_hsv_viewer : public Fl_Gl_Window {
+class fl_gl_hsv_view : public Fl_Gl_Window {
 public:
-	fl_gl_hsv_viewer(int x ,int y ,int w ,int h ,const char*l=0);
+	fl_gl_hsv_view(int x ,int y ,int w ,int h ,const char*l=0);
 
 	gts::opengl_camera_eye eye;
 	gts::opengl_vbo        vbo;
@@ -136,3 +139,5 @@ private:
 	const int dummy_h_;
 	std::vector<GLubyte>  dummy_rgb_image_;
 };
+
+#endif /* !fl_gl_hsv_view_h */

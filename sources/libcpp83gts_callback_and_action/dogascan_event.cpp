@@ -3,8 +3,6 @@
 #include <ctype.h>
 
 #include "pri.h"
-#include "fltk_opengl.h"
-
 #include "gts_master.h"
 #include "gts_gui.h"
 
@@ -14,7 +12,7 @@ void gts_master::_all_view( void )
 {
 	this->cl_ogl_view.all_view();
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 
@@ -22,28 +20,28 @@ void gts_master::_zoom_up_twice_at_cen( void )
 {
 	this->cl_ogl_view.zoom_twice_at_center();
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_down_half_at_cen( void )
 {
 	this->cl_ogl_view.zoom_half_at_center();
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_up_step_at_cen( void )
 {
 	this->cl_ogl_view.zoom_up_at_center();
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_down_step_at_cen( void )
 {
 	this->cl_ogl_view.zoom_down_at_center();
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 
@@ -52,7 +50,7 @@ void gts_master::__zoom_num( long l_zoom )
 	this->cl_ogl_view.zoom_num( l_zoom );
 
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_d16( void ) { this->__zoom_num(-16L);}
@@ -72,7 +70,7 @@ void gts_master::_zoom_up_twice_at_pos( void )
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_down_half_at_pos( void )
@@ -82,7 +80,7 @@ void gts_master::_zoom_down_half_at_pos( void )
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_up_step_at_pos( void )
@@ -92,7 +90,7 @@ void gts_master::_zoom_up_step_at_pos( void )
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_zoom_down_step_at_pos( void )
@@ -102,7 +100,7 @@ void gts_master::_zoom_down_step_at_pos( void )
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	);
 	this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 
@@ -110,81 +108,81 @@ void gts_master::_scroll_center( void )
 {
 	this->cl_ogl_view.scroll_center();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_left_side( void )
 {	      this->cl_ogl_view.fit_to_left_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_right_side( void )
 {	      this->cl_ogl_view.fit_to_right_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_up_side( void )
 {	      this->cl_ogl_view.fit_to_up_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_down_side( void )
 {	      this->cl_ogl_view.fit_to_down_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 
 void gts_master::_scroll_left_step( void )
 {	      this->cl_ogl_view.scroll_left();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_right_step( void )
 {	      this->cl_ogl_view.scroll_right();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_up_step( void )
 {	      this->cl_ogl_view.scroll_up();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_down_step( void )
 {	      this->cl_ogl_view.scroll_down();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_leftside_step( void )
 {	      this->cl_ogl_view.scroll_to_left_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_rightside_step( void )
 {	      this->cl_ogl_view.scroll_to_right_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_upside_step( void )
 {	      this->cl_ogl_view.scroll_to_up_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_downside_step( void )
 {	      this->cl_ogl_view.scroll_to_down_side();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 
 void gts_master::_scroll_block( void )
 {
 	this->cl_ogl_view.move_pixel();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_smooth( void )
 {
 	this->cl_ogl_view.move_smooth();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_scroll_x_absolute( void )
@@ -194,7 +192,7 @@ void gts_master::_scroll_x_absolute( void )
 		this->cl_fltk_event.get_l_scrollbar_x_min(),
 		this->cl_fltk_event.get_l_scrollbar_x_max()
 	);
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 }
 void gts_master::_scroll_y_absolute( void )
 {
@@ -203,7 +201,7 @@ void gts_master::_scroll_y_absolute( void )
 		this->cl_fltk_event.get_l_scrollbar_y_min(),
 		this->cl_fltk_event.get_l_scrollbar_y_max()
 	);
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 }
 
 void gts_master::_move_hover( void )
@@ -212,7 +210,7 @@ void gts_master::_move_hover( void )
 		cl_gts_master.cl_fltk_event.cl_mouse_state.x()
 		, cl_gts_master.cl_fltk_event.cl_mouse_state.y()
 	)) {
-		cl_gts_gui.opengl_view->redraw();
+		cl_gts_gui.image_view->redraw();
 	}
 }
 void gts_master::_move_start( void )
@@ -286,7 +284,7 @@ void gts_master::_move_drag( void )
 	);
 
 	/* 画像再表示 */
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 
 	/* scroll bar設定 */
 	this->set_scrollbar();
@@ -317,7 +315,7 @@ void gts_master::_move_stop( void )
 void gts_master::__set_channel( int i_src, int i_tgt )
 {
 	this->cl_ogl_view.set_channel( i_src, i_tgt );
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 }
 void gts_master::_channel_rgb_to_rgb( void )
 {	  this->__set_channel(CH_RGB,CH_RGB);}
@@ -340,54 +338,54 @@ void gts_master::_wview_main( void )
 {
 	this->cl_ogl_view.wview_main();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_sub( void )
 {
 	this->cl_ogl_view.wview_sub();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_lr_parallel( void )
 {
 	this->cl_ogl_view.wview_lr_parallel();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_ud_parallel( void )
 {
 	this->cl_ogl_view.wview_ud_parallel();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_lr_onion( void )
 {
 	this->cl_ogl_view.wview_lr_onion();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 void gts_master::_wview_ud_onion( void )
 {
 	this->cl_ogl_view.wview_ud_onion();
 	//this->print_window_headline();
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 	this->set_scrollbar();
 }
 
 void gts_master::_crop_on( void )
 {
 	this->cl_ogl_view.set_crop_disp_sw(ON);
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 }
 void gts_master::_crop_off( void )
 {
 	this->cl_ogl_view.set_crop_disp_sw(OFF);
-	cl_gts_gui.opengl_view->redraw();
+	cl_gts_gui.image_view->redraw();
 }
 
 void gts_master::_escape( void )
@@ -398,7 +396,7 @@ void gts_master::_escape( void )
 	) {
 		this->cl_ogl_view.escape_motion();
 		this->cl_fltk_event.cl_mouse_state.escape_clicked();
-		cl_gts_gui.opengl_view->redraw();
+		cl_gts_gui.image_view->redraw();
 	}
 }
 void gts_master::_quit( void )

@@ -80,7 +80,7 @@ public:
 	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
 	double	threshold_offset;/* 0...1 SV面上黒線との
 				取合い境界線の原点位置のオフセット */
-	bool	hsv_viewer_guide_sw;	/* hsv viewerで範囲を表示するsw */
+	bool	hsv_view_guide_sw;	/* hsv viewerで範囲を表示するsw */
 };
 
 /*-------------------------------------------------------*/

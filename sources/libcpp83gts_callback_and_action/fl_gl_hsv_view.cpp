@@ -21,8 +21,9 @@
 			/* glutExtensionSupported(-) --> link error */
 #include "calcu_rgb_to_hsv.h"
 #include "calcu_color_trace_sep_hsv.h"
-#include "fl_gl_hsv_viewer.h"
+#include "fl_gl_hsv_view.h"
 #include "gts_master.h"
+#include "gts_gui.h"
 
 
 /*---------- 時間計測 ----------*/
@@ -563,7 +564,7 @@ void gts::opengl_vbo::hsv_to_xyz(
 	xyz[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
 }
 
-/*---------- fl_gl_hsv_viewer関数 ----------*/
+/*---------- fl_gl_hsv_view関数 ----------*/
 
 namespace {
 
@@ -593,7 +594,7 @@ void init_glew_(void)
 
 } // namespace
 
-fl_gl_hsv_viewer::fl_gl_hsv_viewer(int x ,int y ,int w ,int h ,const char*l)
+fl_gl_hsv_view::fl_gl_hsv_view(int x ,int y ,int w ,int h ,const char*l)
 	: Fl_Gl_Window(x,y,w,h,l)
 	,depth_sw_(true)
 	,fog_sw_(true)
@@ -615,7 +616,7 @@ fl_gl_hsv_viewer::fl_gl_hsv_viewer(int x ,int y ,int w ,int h ,const char*l)
 //	this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ / 2);
 }
 
-void fl_gl_hsv_viewer::dummy_create_rgb_image_(
+void fl_gl_hsv_view::dummy_create_rgb_image_(
 	const int pixel_size
 )
 {
@@ -654,7 +655,7 @@ void get_hsv_cross_point_(
 	zinn = (1. - tt) / (tt * xout) * xinn;
 }
 
-void draw_hsv_(
+void draw_partition_(
 	double thickness
 	,double hmin
 	,double hmax
@@ -848,7 +849,7 @@ public:
 	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
 	double	threshold_offset;/* 0...1 SV面上黒線との
 				取合い境界線の原点位置のオフセット */
-	bool	hsv_viewer_guide_sw;	/* hsv viewerで範囲を表示するsw */
+	bool	hsv_view_guide_sw;	/* hsv viewerで範囲を表示するsw */
 };
 	std::vector<calcu_sep_hsv> cla_area_param; // dummy
 	cla_area_param = {
@@ -862,11 +863,12 @@ public:
 	};
 #endif
 
-	for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
-		if (area.enable_sw && area.hsv_viewer_guide_sw
+	if (cl_gts_gui.menite_hsv_hue_partition->value() != 0) {
+	 for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
+		if (area.enable_sw && area.hsv_view_guide_sw
 		&& 0. <= area.hmin && 0. <= area.hmax
 		) {
-			draw_hsv_(
+			draw_partition_(
 				area.thickness
 				,area.hmin
 				,area.hmax
@@ -876,11 +878,12 @@ public:
 				,area.target_b
 			);
 		}
+	 }
 	}
 }
 } // namespace
 
-void fl_gl_hsv_viewer::draw_object_()
+void fl_gl_hsv_view::draw_object_()
 {
 	/* エリアガイド表示 */
 	glColor3d(1.0, 1.0, 1.0);
@@ -900,11 +903,11 @@ void fl_gl_hsv_viewer::draw_object_()
 	vbo.draw();
 }
 
-void fl_gl_hsv_viewer::dummy_reset_vbo( const int pixel_size )
+void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 {
 /*
 	この処理が必要な場所で同等の処理を行うよう変更する
-	fl_gl_hsv_viewer::vboを使いデータサイズと内容の設定
+	fl_gl_hsv_view::vboを使いデータサイズと内容の設定
 */
 	/* vbo初期化 */
 	if (this->vbo.open_or_reopen( pixel_size )) {
@@ -949,7 +952,7 @@ void fl_gl_hsv_viewer::dummy_reset_vbo( const int pixel_size )
 	this->vbo.end_vertex();
  std::cout << "from_rgb_to_xyz time=" << stwa.stop_ms().count() << "milisec\n";
 }
-void fl_gl_hsv_viewer::draw()
+void fl_gl_hsv_view::draw()
 {
 	if (!valid()) {
 		/* FLTKがこのウィンドウの新しいコンテキストを作成するとき、
@@ -1062,12 +1065,12 @@ void fl_gl_hsv_viewer::draw()
 	if (this->depth_sw_) { glDisable( GL_DEPTH_TEST ); }
 }
 
-void fl_gl_hsv_viewer::handle_push_( const int mx ,const int my )
+void fl_gl_hsv_view::handle_push_( const int mx ,const int my )
 {
 	this->mouse_x_when_push_ = mx;
 	this->mouse_y_when_push_ = my;
 }
-void fl_gl_hsv_viewer::handle_rotate_( const int mx ,const int my )
+void fl_gl_hsv_view::handle_rotate_( const int mx ,const int my )
 {
 	this->eye.rotate(
 		static_cast<double>(mx - this->mouse_x_when_push_)
@@ -1078,7 +1081,7 @@ void fl_gl_hsv_viewer::handle_rotate_( const int mx ,const int my )
 
 	this->redraw();
 }
-void fl_gl_hsv_viewer::handle_updownleftright_( const int mx ,const int my )
+void fl_gl_hsv_view::handle_updownleftright_( const int mx ,const int my )
 {
 	this->eye.updownleftright(
 		static_cast<double>(mx - this->mouse_x_when_push_) * 0.001
@@ -1089,7 +1092,7 @@ void fl_gl_hsv_viewer::handle_updownleftright_( const int mx ,const int my )
 
 	this->redraw();
 }
-void fl_gl_hsv_viewer::handle_frontback_( const int mx , const int my )
+void fl_gl_hsv_view::handle_frontback_( const int mx , const int my )
 {
 	this->eye.frontback(
 		static_cast<double>(mx - this->mouse_x_when_push_) * 0.001
@@ -1099,12 +1102,12 @@ void fl_gl_hsv_viewer::handle_frontback_( const int mx , const int my )
 
 	this->redraw();
 }
-void fl_gl_hsv_viewer::set_mouse_when_push_( const int mx , const int my )
+void fl_gl_hsv_view::set_mouse_when_push_( const int mx , const int my )
 {
 	this->mouse_x_when_push_ = mx;
 	this->mouse_y_when_push_ = my;
 }
-void fl_gl_hsv_viewer::handle_scale_( const int mx ,const int my )
+void fl_gl_hsv_view::handle_scale_( const int mx ,const int my )
 {
 	this->eye.scale_self(
 	  static_cast<double>(mx - this->mouse_x_when_push_) * 0.1 + 1.0
@@ -1115,7 +1118,7 @@ void fl_gl_hsv_viewer::handle_scale_( const int mx ,const int my )
 	this->redraw();
 }
 
-void fl_gl_hsv_viewer::handle_keyboard_( const int key , const char* text )
+void fl_gl_hsv_view::handle_keyboard_( const int key , const char* text )
 {
 	if (text != nullptr) {
 	 switch (text[0]) {
@@ -1136,7 +1139,7 @@ void fl_gl_hsv_viewer::handle_keyboard_( const int key , const char* text )
 	 }
 	}
 }
-int fl_gl_hsv_viewer::handle(int event)
+int fl_gl_hsv_view::handle(int event)
 {
 	switch(event) {
 	case FL_PUSH:	// mouse down event
@@ -1188,7 +1191,7 @@ int fl_gl_hsv_viewer::handle(int event)
 #include "to_hsv.cpp"
 int main(void) {
 	Fl_Window win(1000, 500, "OpenGL");
-	fl_gl_hsv_viewer ogl(0, 0, win.w(), win.h());
+	fl_gl_hsv_view ogl(0, 0, win.w(), win.h());
 	win.end();
 	win.resizable(ogl);
 	win.show();
@@ -1198,6 +1201,6 @@ int main(void) {
 /*
 rem
 rem :956,957 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\sources\libcpp71iip_color_trace_hab /I..\thirdparty\glew\glew-2.1.0\include /I..\..\thirdparty\fltk\fltk-1.3.4-1 ../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_viewer.cpp /Fea
-del fl_gl_hsv_viewer.obj
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\sources\libcpp71iip_color_trace_hab /I..\thirdparty\glew\glew-2.1.0\include /I..\..\thirdparty\fltk\fltk-1.3.4-1 ../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
+del fl_gl_hsv_view.obj
 */

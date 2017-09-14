@@ -4,17 +4,15 @@
 #include <sstream>
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include "pri.h"
-#include "fltk_opengl.h"
+#include "fl_gl_image_view.h"
 #include "ids_path_level_from_files.h"
 #include "cb_scan_and_save.h"
 #include "cb_trace_files.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 
-void fltk_opengl::draw()
+void fl_gl_image_view::draw()
 {
-	static bool only_one_time_sw = true;
-
 	/* char Fl_Gl_Window::valid() const;
 	FLTKがこのウィンドウの新しいコンテキストを作成するとき、
 	またはウィンドウのサイズが変更されたときにoffになり、
@@ -26,10 +24,12 @@ void fltk_opengl::draw()
 		The default mode is FL_RGB|FL_DOUBLE|FL_DEPTH. */
 
 		/* OpenGL初期化(アプリの生成後一回のみ実行) */
+		static bool only_one_time_sw = true;
 		if (only_one_time_sw) {
 			cl_gts_master.cl_ogl_view.init_opengl();
 			only_one_time_sw = false;
 		}
+	}
 
 		/* viewport()とortho()を平行投影に設定する */
 		//this->ortho();
@@ -47,7 +47,6 @@ void fltk_opengl::draw()
 				(long)(this->w()) , (long)(this->h())
 			);
 		}
-	}
 
 	if (cl_gts_master.cl_ogl_view.is_main_canvas()) {
 
@@ -55,8 +54,11 @@ void fltk_opengl::draw()
 		と(指定にあれば)ドットノイズ除去 */
 		cl_gts_master.color_trace_in_view_area();
 
-		/* OpenGL全表示 */
+		/* image view全表示 */
 		cl_gts_master.cl_ogl_view.draw_opengl();
+
+		/* hsv view再表示 */
+		cl_gts_gui.hsv_view->redraw();
 	}
 }
 
@@ -92,7 +94,7 @@ int fl_shortcut_up_down_left_right_( int key )
 		);
 
 		/* 画像再表示 */
-		cl_gts_gui.opengl_view->redraw();
+		cl_gts_gui.image_view->redraw();
 
 		return 1;
 	}
@@ -185,7 +187,7 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 
 } // namespace
 
-int fltk_opengl::handle( int event )
+int fl_gl_image_view::handle( int event )
 {
 	mouse_state& ms = cl_gts_master.cl_fltk_event.cl_mouse_state;
 
@@ -261,7 +263,7 @@ int fltk_opengl::handle( int event )
 		);
 
 		/* ...再描画する */
-		cl_gts_gui.opengl_view->flush();
+		cl_gts_gui.image_view->flush();
 
 		return 1;
 
@@ -280,7 +282,7 @@ int fltk_opengl::handle( int event )
 		cl_gts_master.action( E_ACT_MOVE_STOP );
 
 		/* ...再描画する */
-		cl_gts_gui.opengl_view->flush();
+		cl_gts_gui.image_view->flush();
 
 		/* マウスボタンの状態と位置を記憶 */
 		ms.memory_release_event(

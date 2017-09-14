@@ -1090,11 +1090,11 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	/* 画面クリア設定 */
 	cl_gts_master.cl_ogl_view.clear_opengl(
-		cl_gts_gui.opengl_view->w(),
-		cl_gts_gui.opengl_view->h()
+		cl_gts_gui.image_view->w(),
+		cl_gts_gui.image_view->h()
 	);
 	/* 画面クリア */
-	cl_gts_gui.opengl_view->flush();
+	cl_gts_gui.image_view->flush();
 
 	/* 画像読込表示 */
 	cl_gts_master.cb_number_read_and_trace_and_preview();

@@ -5,7 +5,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Menu_Bar.H>
-#include "fltk_opengl.h"
+#include "fl_gl_image_view.h"
 #include <FL/Fl_Scrollbar.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Output.H>
@@ -30,7 +30,7 @@
 #include "fltk_1000x10_color_belt.h"
 #include "fltk_1000_range_minmax.h"
 #include <FL/Fl_Counter.H>
-#include "fl_gl_hsv_viewer.h"
+#include "fl_gl_hsv_view.h"
 
 class gts_gui {
 public:
@@ -195,7 +195,7 @@ private:
   inline void cb_menite_help_about_i(Fl_Menu_*, void*);
   static void cb_menite_help_about(Fl_Menu_*, void*);
 public:
-  fltk_opengl *opengl_view;
+  fl_gl_image_view *image_view;
   Fl_Scrollbar *scrbar_view_x;
 private:
   inline void cb_scrbar_view_x_i(Fl_Scrollbar*, void*);
@@ -1723,12 +1723,41 @@ private:
   static Fl_Menu_Item menu_3[];
 public:
   static Fl_Menu_Item *menite_hsv_dot_normal;
-  static Fl_Menu_Item *menite_hsv_dot_selected;
+private:
+  inline void cb_menite_hsv_dot_normal_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_dot_normal(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_hsv_dot_trace_area;
+private:
+  inline void cb_menite_hsv_dot_trace_area_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_dot_trace_area(Fl_Menu_*, void*);
+public:
   static Fl_Menu_Item *menite_hsv_dot_white;
+private:
+  inline void cb_menite_hsv_dot_white_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_dot_white(Fl_Menu_*, void*);
+public:
   static Fl_Menu_Item *menite_hsv_dot_black;
+private:
+  inline void cb_menite_hsv_dot_black_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_dot_black(Fl_Menu_*, void*);
+public:
   static Fl_Menu_Item *menite_hsv_hue_partition;
+private:
+  inline void cb_menite_hsv_hue_partition_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_hue_partition(Fl_Menu_*, void*);
+public:
   static Fl_Menu_Item *menite_hsv_black_partition;
-  fl_gl_hsv_viewer *hsv_viewer;
+private:
+  inline void cb_menite_hsv_black_partition_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_black_partition(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_hsv_random_position;
+private:
+  inline void cb_menite_hsv_random_position_i(Fl_Menu_*, void*);
+  static void cb_menite_hsv_random_position(Fl_Menu_*, void*);
+public:
+  fl_gl_hsv_view *hsv_view;
 };
 extern gts_gui cl_gts_gui; 
 #endif
