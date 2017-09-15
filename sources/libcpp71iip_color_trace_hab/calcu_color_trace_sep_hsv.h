@@ -2,13 +2,13 @@
 #define calcu_color_trace_sep_hsv_h
 
 /*
-  HSV色立体から各色区域分けをして目的の色を得る
+HSV色立体から各色区域分けをして目的の色を得る
 
-    ○Hue
+○Hue
 	R - Y - G - C - B - M - R
 	赤  黄  緑  水  青  紫  赤
 
-    ○min,max的考えから、各色区域分け方法
+○min,max的考えから、各色区域分け方法(いままで)
 	色
 		hue min. max.	0...360 各区域の色相の範囲
 		saturation min.	太さを表す
@@ -24,47 +24,86 @@
 		value min.	0固定
 		value max.	太さを表す
 
-    ○色と黒との分離方法 (T = calcu_sep_hsv::threshold_to_black)
+○色と黒を区切る方法(これから)
 
-	  0 ----- S ----->1
-	1 +---------------+
-	^ |             /
-	| |           /
-	| |         /
-	V |       /  T
-	| |     /
-	| |   /
-	  | /
-	0 +
-
+ 1 HSV立体のSV断面
 	S=0,V=0からS=1,V=1への直線上をたどるパラメータをTとする
+		T=calcu_sep_hsv::threshold_to_black
 	Tの位置からS=0,V=1位置へ直線を引き、この直線で上下に分けることで、
 	色領域か黒領域か判断を行う
-		Tについて
-			T=0	色味なし
-			T=1	全て色味
-			上記値を反転してパラメーターとして使う
-		Pixel位置
-			p=( S * T , V )	※ "S * T"で正方座標に変換
-		判断位置
-			t=( T     , T )
-		上下反転して左上を原点にする
-			p=( S*T , 1-V )
-			t=( T   , 1-T )
-		比で位置を判断
-			1<=V	--> 白〜色 --> 色
-			1<=T	--> 色
-			pd= (1-V) / S*T
-			td= (1-T) / T    
-			pd < td	--> 上側 --> 色
-			td < pd	--> 下側 --> 黒
-		計算式考察 --> マイナスが入るとだめか?!
-			(1-T) / T     <  (1-V) / S*T
-			(1-T) * S * T <  (1-V) * T
+		T=0	色味なし
+		T=1	全て色味
+
+	0 |---- S --->| 1
+      1 - +-----------+
+	^ |          /  1
+	| |        /
+	V |  P   +
+	| |    /   T
+	| |  /
+      0 - +
+	     0
+		※ T 色味と黒味を切断するための位置
+		※ P 各ピクセル
+
+ 2 左下原点のまま、直行座標系における位置
+
+	T位置	( T      , T )
+	P位置	( S * V  , V )
+
+ 3 左上原点座標系に(上下反転)したときの位置
+
+	0 |---- S --->| 1
+      0 - +-----------+
+	| | \        /  1
+	| |    \   /
+	V |  P   +
+	| |    /   T
+	v |  /
+      1 - +
+	     0
+
+	T位置	( T      , 1 - T )
+	P位置	( S * V  , 1 - V )
+
+ 4 左上原点座標系にて、原点とTを結ぶ直線とP位置との関係で、
+   色味か黒味かを判断する。
+   そのため、T比とP比の比較で位置関係を見る
+
+	T比	(1 - T) / T
+	P比	(1 - V) / (S * V)
+
+	T比 <  P比	黒味側である
+	T比 => P比	色味側である
+
+	よって、黒味側であるかの判断は
+	(1 - T) / T   <   (1 - V) / (S * V) 
 */
 
 #include <vector>
 
+class calcu_sep_black_and_color {
+public:
+	calcu_sep_black_and_color(const double s ,const double v)
+		:one_minus_v_div_s_v_(0.)
+	{
+		if (s != 0. && v != 0.) {
+		 this->one_minus_v_div_s_v_ = (1. - v) / (s * v);
+		}
+	}
+	inline bool is_black_side(const double tt) {
+		if ( tt == 0.) { /* threshold_to_blackが0なら全て色部分 */
+			return false;
+		}
+		if ( ((1. - tt) / tt) < one_minus_v_div_s_v_ ) {
+			return true;
+		}
+		return false;
+	}
+private:
+	double one_minus_v_div_s_v_;
+};
+/*-------------------------------------------------------*/
 class calcu_sep_hsv {
 public:
 	bool	enable_sw;	/* 2値化処理実行 false=他の2値化処理へ */
@@ -82,13 +121,13 @@ public:
 				取合い境界線の原点位置のオフセット */
 	bool	hsv_view_guide_sw;	/* hsv viewerで範囲を表示するsw */
 };
-
 /*-------------------------------------------------------*/
 /* いままでのクラスと共存させるための一時的措置 --> 要refactering */
 class calcu_color_trace_base {
 public:
 	virtual bool exec(
-	double hh, double ss, double vv, double *rr, double *gg, double *bb
+		const double hh, const double ss, const double vv
+		, double *rr, double *gg, double *bb
 	){
 		(void)hh; (void)ss; (void)vv; (void)rr; (void)gg; (void)bb;
 		return false;
@@ -107,19 +146,20 @@ public:
 
 	void setup_default_area_param(void) {
 		this->cla_area_param = {
- { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 ,true } /* 黒 */
-,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.8,0.0 ,true } /* 赤 */
-,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 ,true } /* 青 */
-,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 ,true } /* 緑 */
-,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.8,0.0 ,false } /* 水 */
-,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.8,0.0 ,false } /* 紫 */
-,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.8,0.0 ,false } /* 黄(or オレンジ) */
+ { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.5,0.0 ,true } /* 黒 */
+,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.5,0.0 ,true } /* 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.5,0.0 ,true } /* 青 */
+,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.5,0.0 ,true } /* 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.5,0.0 ,false } /* 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.5,0.0 ,false } /* 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.5,0.0 ,false } /* 黄(or オレンジ) */
 		};
 	}
 
 	/* hh = 0...360 , ss,vv,rr,gg,bb = 0...1 */
 	bool exec(
-	double hh, double ss, double vv, double *rr, double *gg, double *bb
+		const double hh, const double ss, const double vv
+		, double *rr, double *gg, double *bb
 	);
 private:
 	double	 target_paper_r_

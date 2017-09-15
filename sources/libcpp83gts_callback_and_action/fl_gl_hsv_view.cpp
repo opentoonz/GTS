@@ -652,10 +652,14 @@ void get_hsv_cross_point_(
 	yout = sin( gts::rad_from_deg(hue) );
 	xinn = ss * tt * xout / (ss * (1. - tt) + tt);
 	yinn = ss * tt * yout / (ss * (1. - tt) + tt);
-	zinn = (1. - tt) / (tt * xout) * xinn;
+	if (tt == 0.) {
+	 zinn = 1.;
+	} else {
+	 zinn = (1. - tt) / (tt * xout) * xinn;
+	}
 }
 
-void draw_partition_(
+void draw_color_partition_(
 	double thickness
 	,double hmin
 	,double hmax
@@ -666,7 +670,7 @@ void draw_partition_(
 )
 {
 	const auto ss = 1. - thickness;
-	const auto tt = 1. - threshold_to_black;
+	const auto tt = threshold_to_black;
 /*
 	HSV View
 	Color Area
@@ -703,7 +707,7 @@ void draw_partition_(
 		,x5 = 0. ,y5 = 0. ,z5 = 0.;
 	get_hsv_cross_point_( hmin ,ss,tt ,x1,y1 ,x5,y5,z5 );
 	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.
-		,x8 = x1*tt ,y8 = y1*tt ,z8 = threshold_to_black;
+		,x8 = x1*tt ,y8 = y1*tt ,z8 = 1. - threshold_to_black;
 	double	 x3 = x4+(x1-x4)*2./3.
 		,y3 = y4+(y1-y4)*2./3.
 		,z3 = z4+(z1-z4)*2./3.
@@ -768,7 +772,7 @@ void draw_partition_(
 		,x5 = 0. ,y5 = 0. ,z5 = 0.;
 	get_hsv_cross_point_( hmax ,ss,tt ,x1,y1 ,x5,y5,z5 );
 	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.
-		,x8 = x1*tt ,y8 = y1*tt ,z8 = threshold_to_black;
+		,x8 = x1*tt ,y8 = y1*tt ,z8 = 1. - threshold_to_black;
 	double	 x3 = x4+(x1-x4)*2./3.
 		,y3 = y4+(y1-y4)*2./3.
 		,z3 = z4+(z1-z4)*2./3.
@@ -831,6 +835,32 @@ void draw_partition_(
 	/* threshold_to_black */
 }
 
+double get_radius_(const double thickness ,const double T)
+{
+	if (thickness <= T) {
+		return thickness;
+	}
+	return T * (1. - thickness) / (1. - T);
+}
+
+void draw_black_partition_(
+	double thickness
+	,double threshold_to_black
+)
+{
+	const double zz = 1. - thickness;
+	const double len = get_radius_(thickness ,threshold_to_black);
+	glColor3d(1.,1.,1.);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3d( 0. ,0. ,zz );
+	for (int ii=0; ii<=360; ++ii) {
+		const double rad = gts::rad_from_deg(
+					static_cast<double>(ii) );
+		glVertex3d( len*cos(rad) ,len*sin(rad) ,zz );
+	}
+	glEnd();
+}
+
 void draw_sep_hsv_()
 {
 #if 0
@@ -863,12 +893,20 @@ public:
 	};
 #endif
 
-	if (cl_gts_gui.menite_hsv_hue_partition->value() != 0) {
-	 for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
-		if (area.enable_sw && area.hsv_view_guide_sw
-		&& 0. <= area.hmin && 0. <= area.hmax
-		) {
-			draw_partition_(
+	if ((cl_gts_gui.menite_hsv_hue_partition->value() != 0)
+	||  (cl_gts_gui.menite_hsv_black_partition->value() != 0)) {
+	  for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
+	    if (area.enable_sw && area.hsv_view_guide_sw) {
+	      if ( area.hmin < 0. || area.hmax < 0.) {
+		if (cl_gts_gui.menite_hsv_black_partition->value() != 0) {
+			draw_black_partition_(
+				area.thickness
+				,area.threshold_to_black
+			);
+		}
+	      } else {
+		if (cl_gts_gui.menite_hsv_hue_partition->value() != 0) {
+			draw_color_partition_(
 				area.thickness
 				,area.hmin
 				,area.hmax
@@ -878,7 +916,9 @@ public:
 				,area.target_b
 			);
 		}
-	 }
+	      }
+	    }
+	  }
 	}
 }
 } // namespace

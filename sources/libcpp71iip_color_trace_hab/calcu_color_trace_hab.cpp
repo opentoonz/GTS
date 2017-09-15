@@ -1,6 +1,9 @@
 #include "calcu_color_trace_hab.h"
 
-bool calcu_color_trace_hab::exec( double d_hh, double d_aa, double d_bb, double *dp_red, double *dp_gre, double *dp_blu )
+bool calcu_color_trace_hab::exec(
+	const double d_hh, const double d_aa, const double d_bb
+	, double *dp_red, double *dp_gre, double *dp_blu
+)
 {
 	int tt;
 	calcu_col_area_hab *clp_hab;

@@ -2609,7 +2609,7 @@ cl_gts_gui.menite_trace_values->clear();}
             xywh {5 5 130 25}
             code0 {//\#include "cb_trace_color.h"}
           }
-          Fl_Group {} {
+          Fl_Group {} {open
             xywh {0 37 520 25}
           } {
             Fl_Check_Button chkbtn_trace_0_enable_sw {
@@ -2669,7 +2669,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_0_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 37 43 25} maximum 100 step 0.1 value 80
+                xywh {410 37 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_0_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_offset = o->value()/o->maximum();
@@ -2719,7 +2719,7 @@ image_view->redraw();}
               xywh {454 66 0 0} align 6
             }
           }
-          Fl_Group {} {open
+          Fl_Group {} {
             xywh {0 85 520 25}
           } {
             Fl_Check_Button chkbtn_trace_1_enable_sw {
@@ -2792,7 +2792,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_1_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 85 43 25} maximum 100 step 0.1 value 80
+                xywh {410 85 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_1_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_offset = o->value()/o->maximum();
@@ -2879,7 +2879,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_2_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 115 43 25} maximum 100 step 0.1 value 80
+                xywh {410 115 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_2_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_offset = o->value()/o->maximum();
@@ -2966,7 +2966,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_3_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 145 43 25} maximum 100 step 0.1 value 80
+                xywh {410 145 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_3_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_offset = o->value()/o->maximum();
@@ -3053,7 +3053,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_4_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 175 43 25} maximum 100 step 0.1 value 80
+                xywh {410 175 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_4_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_offset = o->value()/o->maximum();
@@ -3140,7 +3140,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_5_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 205 43 25} maximum 100 step 0.1 value 80
+                xywh {410 205 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_5_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_offset = o->value()/o->maximum();
@@ -3227,7 +3227,7 @@ image_view->redraw();}
               Fl_Value_Input valinp_trace_6_threshold_to_black {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_to_black = o->value()/o->maximum();
 image_view->redraw();}
-                xywh {410 235 43 25} maximum 100 step 0.1 value 80
+                xywh {410 235 43 25} maximum 100 step 0.1 value 50
               }
               Fl_Value_Input valinp_trace_6_threshold_offset {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_offset = o->value()/o->maximum();

@@ -8233,7 +8233,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_0_threshold_to_black = new Fl_Value_Input(410, 37, 43, 25);
               valinp_trace_0_threshold_to_black->maximum(100);
               valinp_trace_0_threshold_to_black->step(0.1);
-              valinp_trace_0_threshold_to_black->value(80);
+              valinp_trace_0_threshold_to_black->value(50);
               valinp_trace_0_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_0_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_0_threshold_to_black
             { valinp_trace_0_threshold_offset = new Fl_Value_Input(454, 37, 43, 25);
@@ -8328,7 +8328,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_1_threshold_to_black = new Fl_Value_Input(410, 85, 43, 25);
               valinp_trace_1_threshold_to_black->maximum(100);
               valinp_trace_1_threshold_to_black->step(0.1);
-              valinp_trace_1_threshold_to_black->value(80);
+              valinp_trace_1_threshold_to_black->value(50);
               valinp_trace_1_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_1_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_1_threshold_to_black
             { valinp_trace_1_threshold_offset = new Fl_Value_Input(454, 85, 43, 25);
@@ -8396,7 +8396,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_2_threshold_to_black = new Fl_Value_Input(410, 115, 43, 25);
               valinp_trace_2_threshold_to_black->maximum(100);
               valinp_trace_2_threshold_to_black->step(0.1);
-              valinp_trace_2_threshold_to_black->value(80);
+              valinp_trace_2_threshold_to_black->value(50);
               valinp_trace_2_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_2_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_2_threshold_to_black
             { valinp_trace_2_threshold_offset = new Fl_Value_Input(454, 115, 43, 25);
@@ -8464,7 +8464,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_3_threshold_to_black = new Fl_Value_Input(410, 145, 43, 25);
               valinp_trace_3_threshold_to_black->maximum(100);
               valinp_trace_3_threshold_to_black->step(0.1);
-              valinp_trace_3_threshold_to_black->value(80);
+              valinp_trace_3_threshold_to_black->value(50);
               valinp_trace_3_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_3_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_3_threshold_to_black
             { valinp_trace_3_threshold_offset = new Fl_Value_Input(454, 145, 43, 25);
@@ -8533,7 +8533,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_4_threshold_to_black = new Fl_Value_Input(410, 175, 43, 25);
               valinp_trace_4_threshold_to_black->maximum(100);
               valinp_trace_4_threshold_to_black->step(0.1);
-              valinp_trace_4_threshold_to_black->value(80);
+              valinp_trace_4_threshold_to_black->value(50);
               valinp_trace_4_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_4_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_4_threshold_to_black
             { valinp_trace_4_threshold_offset = new Fl_Value_Input(454, 175, 43, 25);
@@ -8602,7 +8602,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_5_threshold_to_black = new Fl_Value_Input(410, 205, 43, 25);
               valinp_trace_5_threshold_to_black->maximum(100);
               valinp_trace_5_threshold_to_black->step(0.1);
-              valinp_trace_5_threshold_to_black->value(80);
+              valinp_trace_5_threshold_to_black->value(50);
               valinp_trace_5_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_5_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_5_threshold_to_black
             { valinp_trace_5_threshold_offset = new Fl_Value_Input(454, 205, 43, 25);
@@ -8671,7 +8671,7 @@ Fl_Double_Window* gts_gui::make_window() {
             { valinp_trace_6_threshold_to_black = new Fl_Value_Input(410, 235, 43, 25);
               valinp_trace_6_threshold_to_black->maximum(100);
               valinp_trace_6_threshold_to_black->step(0.1);
-              valinp_trace_6_threshold_to_black->value(80);
+              valinp_trace_6_threshold_to_black->value(50);
               valinp_trace_6_threshold_to_black->callback((Fl_Callback*)cb_valinp_trace_6_threshold_to_black);
             } // Fl_Value_Input* valinp_trace_6_threshold_to_black
             { valinp_trace_6_threshold_offset = new Fl_Value_Input(454, 235, 43, 25);
