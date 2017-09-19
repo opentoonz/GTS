@@ -2,7 +2,7 @@
 #include <iomanip> // std;;setw()
 #include <sstream> // std::ostringstream
 #include "ids_path_level_from_files.h"
-#include "cb_input_number_format.h"
+#include "cb_set_number_format.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -28,14 +28,14 @@ void set_sample_(void)
 
 }//namespace
 
-void cb_input_number_format::cb_dialog_input_number_format(
+void cb_set_number_format::cb_dialog_set_number_format(
 	Fl_Double_Window* flwin
 	,Fl_Output* flout
 )
 {
 	/* window開く */
-	cl_gts_gui.window_input_number_format->show();
-	cl_gts_gui.window_input_number_format->position(
+	cl_gts_gui.window_set_number_format->show();
+	cl_gts_gui.window_set_number_format->position(
 		 flwin->x() +flout->x() -10
 		,flwin->y() +flout->y() -160
 	);
@@ -83,20 +83,20 @@ void cb_input_number_format::cb_dialog_input_number_format(
 	set_sample_();
 }
 
-void cb_input_number_format::cb_separator(void)
+void cb_set_number_format::cb_separator(void)
 {
 	set_sample_();
 }
 
-void cb_input_number_format::cb_digits(void)
+void cb_set_number_format::cb_digits(void)
 {
 	set_sample_();
 }
 
-void cb_input_number_format::cb_ok(void)
+void cb_set_number_format::cb_ok(void)
 {
 	this->o_->value( cl_gts_gui.output_input_num_form_sample->value() );
-	cl_gts_gui.window_input_number_format->hide();
+	cl_gts_gui.window_set_number_format->hide();
 
 	cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 	cl_gts_master.cl_trace_files.cb_check_existing_saved_file();

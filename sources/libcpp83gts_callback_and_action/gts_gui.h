@@ -127,10 +127,10 @@ private:
   static void cb_menite_trace_batch(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_sane_device;
-  static Fl_Menu_Item *menite_trace_values;
+  static Fl_Menu_Item *menite_trace_params;
 private:
-  inline void cb_menite_trace_values_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_values(Fl_Menu_*, void*);
+  inline void cb_menite_trace_params_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_params(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_trace_hsv_view;
 private:
@@ -1332,10 +1332,10 @@ private:
   inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
   static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
 public:
-  Fl_Double_Window *window_input_number_format;
+  Fl_Double_Window *window_set_number_format;
 private:
-  inline void cb_window_input_number_format_i(Fl_Double_Window*, void*);
-  static void cb_window_input_number_format(Fl_Double_Window*, void*);
+  inline void cb_window_set_number_format_i(Fl_Double_Window*, void*);
+  static void cb_window_set_number_format(Fl_Double_Window*, void*);
 public:
   Fl_Choice *choice_input_num_form_separator;
 private:
@@ -1365,10 +1365,10 @@ private:
   inline void cb_Cancel1_i(Fl_Button*, void*);
   static void cb_Cancel1(Fl_Button*, void*);
 public:
-  Fl_Double_Window *window_trace_values;
+  Fl_Double_Window *window_trace_params;
 private:
-  inline void cb_window_trace_values_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_values(Fl_Double_Window*, void*);
+  inline void cb_window_trace_params_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_params(Fl_Double_Window*, void*);
   inline void cb_Open2_i(Fl_Button*, void*);
   static void cb_Open2(Fl_Button*, void*);
 public:
@@ -1378,6 +1378,11 @@ private:
   static void cb_chkbtn_trace_0_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_0;
+  Fl_Button *but_trace_0_target;
+private:
+  inline void cb_but_trace_0_target_i(Fl_Button*, void*);
+  static void cb_but_trace_0_target(Fl_Button*, void*);
+public:
   Fl_Box *box_trace_0_target;
   Fl_Value_Input *valinp_trace_0_target_r;
 private:
@@ -1417,6 +1422,11 @@ private:
   static void cb_chkbtn_trace_1_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_1;
+  Fl_Button *but_trace_1_target;
+private:
+  inline void cb_but_trace_1_target_i(Fl_Button*, void*);
+  static void cb_but_trace_1_target(Fl_Button*, void*);
+public:
   Fl_Box *box_trace_1_target;
   Fl_Value_Input *valinp_trace_1_target_r;
 private:
@@ -1758,6 +1768,40 @@ private:
   static void cb_menite_hsv_random_position(Fl_Menu_*, void*);
 public:
   fl_gl_hsv_view *hsv_view;
+  Fl_Double_Window *window_set_color;
+  Fl_Value_Input *valinp_set_color_red;
+private:
+  inline void cb_valinp_set_color_red_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_red(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_set_color_gre;
+private:
+  inline void cb_valinp_set_color_gre_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_gre(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_set_color_blu;
+private:
+  inline void cb_valinp_set_color_blu_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_blu(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_set_color_red;
+private:
+  inline void cb_scrbar_set_color_red_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_set_color_red(Fl_Scrollbar*, void*);
+public:
+  Fl_Scrollbar *scrbar_set_color_gre;
+private:
+  inline void cb_scrbar_set_color_gre_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_set_color_gre(Fl_Scrollbar*, void*);
+public:
+  Fl_Scrollbar *scrbar_set_color_blu;
+private:
+  inline void cb_scrbar_set_color_blu_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_set_color_blu(Fl_Scrollbar*, void*);
+  inline void cb_OK2_i(Fl_Button*, void*);
+  static void cb_OK2(Fl_Button*, void*);
+  inline void cb_Cancel2_i(Fl_Button*, void*);
+  static void cb_Cancel2(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

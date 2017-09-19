@@ -153,16 +153,17 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config.cpp \
 					sources/libcpp83gts_callback_and_action/cb_image.cpp \
-					sources/libcpp83gts_callback_and_action/cb_input_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_number.cpp \
 					sources/libcpp83gts_callback_and_action/cb_pixel_type_and_bright.cpp \
 					sources/libcpp83gts_callback_and_action/cb_quit.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
+					sources/libcpp83gts_callback_and_action/cb_set_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_parameters.cpp \
+					sources/libcpp83gts_callback_and_action/cb_trace_params.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \

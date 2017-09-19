@@ -26,14 +26,15 @@
 #include "cb_config.h"
 #include "cb_area_and_rot90.h"
 #include "cb_scan_and_save.h"
-#include "cb_trace_files.h"
 #include "cb_number.h"
-#include "cb_trace_batch.h"
-#include "cb_input_number_format.h"
 #include "cb_color_trace_edit_color.h"
 #include "cb_color_trace_edit_hsv_minmax.h"
 #include "cb_color_trace_enhancement.h"
 #include "cb_color_trace_thickness.h"
+#include "cb_set_number_format.h"
+#include "cb_trace_batch.h"
+#include "cb_trace_files.h"
+#include "cb_trace_params.h"
 #include "memory_scan_area.h"
 #include "memory_short_cut_key.h"
 
@@ -132,12 +133,14 @@ public:
 	cb_trace_files		cl_trace_files;
 	cb_number		cl_number;
 	cb_trace_batch		cl_trace_batch;
-	cb_input_number_format	cl_input_number_format;
+	cb_set_number_format	cl_set_number_format;
 
 	cb_color_trace_edit_color	cl_color_trace_edit_color;
 	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;
 	cb_color_trace_enhancement	cl_color_trace_enhancement;
 	cb_color_trace_thickness	cl_color_trace_thickness;
+
+	cb_trace_params		cl_trace_params;
 
 	iip_scan	cl_iip_scan;	/* 画像読み込み */
 	iip_read	cl_iip_read;	/* 画像読込み */
