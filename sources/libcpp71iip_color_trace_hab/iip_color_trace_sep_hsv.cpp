@@ -32,6 +32,7 @@ void iip_color_trace_sep_hsv_exec_(
 )
 {
   if ( cl_gts_gui.hsv_view->vbo.get_hsv_view_start_sw() ) {
+  /*--- hsv viewウインドウのOpenGL初期化済 --> image view及びhsv view ---*/
 std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Start" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
 
 	/* vbo初期化 */
@@ -61,29 +62,29 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 		assert(!"Error:vbo.start_color() return null");
 	  }
 
- if (cl_gts_gui.menite_hsv_dot_white->value() != 0) {
-	  for (int ii = 0; ii < area_ysize * area_xsize; ++ii ,rgb+=3) {
+	  if (cl_gts_gui.menite_hsv_dot_white->value() != 0) {
+	    for (int ii = 0; ii < area_ysize * area_xsize; ++ii ,rgb+=3) {
 		rgb[CH_RED] = max_glub_out;
 		rgb[CH_GRE] = max_glub_out;
 		rgb[CH_BLU] = max_glub_out;
+	    }
 	  }
- }
- else
- if (cl_gts_gui.menite_hsv_dot_black->value() != 0) {
-	  for (int ii = 0; ii < area_ysize * area_xsize; ++ii ,rgb+=3) {
+	  else
+	  if (cl_gts_gui.menite_hsv_dot_black->value() != 0) {
+	    for (int ii = 0; ii < area_ysize * area_xsize; ++ii ,rgb+=3) {
 		rgb[CH_RED] = 0;
 		rgb[CH_GRE] = 0;
 		rgb[CH_BLU] = 0;
+	    }
 	  }
- }
- else {
-	  TINN *image_inn = image_inn_top + start_pos;
-	  for (int yy = 0; yy < area_ysize ; ++yy
-	  ,image_inn += scan_size) {
+	  else {
+	    TINN *image_inn = image_inn_top + start_pos;
+	    for (int yy = 0; yy < area_ysize ; ++yy
+	    ,image_inn += scan_size) {
 
-	    TINN* inn_x = image_inn;
-	    for (int xx = 0; xx < area_xsize ;++xx
-	    ,inn_x += channels ,rgb+=3) {
+	      TINN* inn_x = image_inn;
+	      for (int xx = 0; xx < area_xsize ;++xx
+	      ,inn_x += channels ,rgb+=3) {
 	    	rgb[CH_RED] = inn_x[CH_RED] >> shift_bit;
 	    	rgb[CH_GRE] = inn_x[CH_GRE] >> shift_bit;
 	    	rgb[CH_BLU] = inn_x[CH_BLU] >> shift_bit;
@@ -97,16 +98,16 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 		,&hh, &ss, &vv );
 		/* 2値化するかどうか判断 */
 		if (cl_gts_gui.menite_hsv_dot_trace_area->value() != 0) {
-		 double	rr=0., gg=0., bb=0.;
-		 if (!calcu_sep_hsv.exec( hh, ss, vv, &rr, &gg, &bb )) {
+		  double	rr=0., gg=0., bb=0.;
+		  if (!calcu_sep_hsv.exec( hh, ss, vv, &rr, &gg, &bb )) {
 	    		rgb[CH_RED] = max_glub_out;
 	    		rgb[CH_GRE] = max_glub_out;
 	    		rgb[CH_BLU] = max_glub_out;
-		 }
+		  }
 		}
+	      }
 	    }
-	  }
- }
+ 	  }
 	  cl_gts_gui.hsv_view->vbo.end_color();
 	}
 	
@@ -177,6 +178,8 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	//cl_gts_gui.hsv_view->redraw();
   }
   else {
+  /*--- hsv viewウインドウのOpenGL初期化してないのでimage viewのみ ---*/
+std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Off" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
 	/* 初期パラメータ設定 */
 	calcu_rgb_to_hsv rgb2hsv;
 	const int scan_size = width * channels;

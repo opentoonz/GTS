@@ -45,13 +45,11 @@ void from_tbl_to_button_(void)
 {
 	cl_gts_gui.but_trace_0_target->color(static_cast<Fl_Color>(16));
 	cl_gts_gui.but_trace_1_target->color(static_cast<Fl_Color>(17));
-	/*
 	cl_gts_gui.but_trace_2_target->color(static_cast<Fl_Color>(18));
 	cl_gts_gui.but_trace_3_target->color(static_cast<Fl_Color>(19));
 	cl_gts_gui.but_trace_4_target->color(static_cast<Fl_Color>(20));
 	cl_gts_gui.but_trace_5_target->color(static_cast<Fl_Color>(21));
 	cl_gts_gui.but_trace_6_target->color(static_cast<Fl_Color>(22));
-	*/
 }
 
 void tgt_to_tbl_( const int number , const calcu_sep_hsv& pa )
@@ -135,10 +133,10 @@ void cb_trace_params::cb_change_color(void)
 		from_editor_to_tgt_( 0);
 		      from_tgt_to_tbl0_();
 		cl_gts_gui.but_trace_0_target->redraw(); break;
-	case 1: from_editor_to_tgt_( 1);
+	case 1:
+		from_editor_to_tgt_( 1);
 		      from_tgt_to_tbl1_();
 		cl_gts_gui.but_trace_1_target->redraw(); break;
-		    /*
 	case 2:
 		from_editor_to_tgt_( 2);
 		      from_tgt_to_tbl2_();
@@ -159,15 +157,12 @@ void cb_trace_params::cb_change_color(void)
 		from_editor_to_tgt_( 6);
 		      from_tgt_to_tbl6_();
 		cl_gts_gui.but_trace_6_target->redraw(); break;
-		*/
 	}
 	cl_gts_gui.image_view->redraw();
 }
 
 void cb_trace_params::cb_cancel(void)
 {
-std::cout << "r=" << (int)this->r_ << " g=" << (int)this->g_ << " b=" << (int)this->b_ << std::endl;
-
 	/* rgb値を表示用カラーテーブルに戻す */
 	Fl::set_color(static_cast<Fl_Color>( this->number_ + 16 )
 		,this->r_ ,this->g_ ,this->b_
@@ -177,13 +172,11 @@ std::cout << "r=" << (int)this->r_ << " g=" << (int)this->g_ << " b=" << (int)th
 	switch (this->number_) {
 	case 0: cl_gts_gui.but_trace_0_target->redraw(); break;
 	case 1: cl_gts_gui.but_trace_1_target->redraw(); break;
-	/*
 	case 2: cl_gts_gui.but_trace_2_target->redraw(); break;
 	case 3: cl_gts_gui.but_trace_3_target->redraw(); break;
 	case 4: cl_gts_gui.but_trace_4_target->redraw(); break;
 	case 5: cl_gts_gui.but_trace_5_target->redraw(); break;
 	case 6: cl_gts_gui.but_trace_6_target->redraw(); break;
-	*/
 	}
 
 	/* rgb値をtgt変数に戻す */

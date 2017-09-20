@@ -764,6 +764,15 @@ void draw_color_partition_(
 	glVertex3d(x5,y5,z5);
 	glVertex3d(x6,y6,z6);
 	glEnd();
+
+	/* 裏でも存在を示すためのワイヤーフレーム表示 */
+	glBegin(GL_LINE_LOOP);
+	glVertex3d(x1,y1,z1);
+	glVertex3d(x4,y4,z4);
+	glVertex3d(x5,y5,z5);
+	glVertex3d(x8,y8,z8);
+	glEnd();
+
 	}
 
 	/* hmax */
@@ -829,6 +838,15 @@ void draw_color_partition_(
 	glVertex3d(x5,y5,z5);
 	glVertex3d(x4,y4,z4);
 	glEnd();
+
+	/* 裏でも存在を示すためのワイヤーフレーム表示 */
+	glBegin(GL_LINE_LOOP);
+	glVertex3d(x1,y1,z1);
+	glVertex3d(x4,y4,z4);
+	glVertex3d(x5,y5,z5);
+	glVertex3d(x8,y8,z8);
+	glEnd();
+
 	}
 
 	/* thichness */
@@ -1176,6 +1194,14 @@ void fl_gl_hsv_view::handle_keyboard_( const int key , const char* text )
 		else			{ this->fog_sw_ = true; }
 		this->redraw();
 		break;
+	 case 'z':
+		this->set_mouse_when_push_( 0 , 0 );
+		this->handle_scale_( -1 ,-1 );
+	 	break;
+	 case 'x':
+		this->set_mouse_when_push_( 0 , 0 );
+		this->handle_scale_( 1 ,1 );
+	 	break;
 	 }
 	}
 }
@@ -1187,10 +1213,12 @@ int fl_gl_hsv_view::handle(int event)
 		return 1;
 	case FL_DRAG:	// mouse moved while down event
 		if (Fl::event_state() & FL_SHIFT) {
-		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
+/* Bug有りのため動作停止中 2017-9-20 */
+//		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
 		}
 		else if (Fl::event_state() & FL_CTRL) {
-		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
+/* Bug有りのため動作停止中 2017-9-20 */
+//		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
 		}
 		else {
 		this->handle_rotate_( Fl::event_x(),Fl::event_y() );

@@ -319,6 +319,18 @@ public:
 	,str_color_trace_06_tgt_color_(
 	    "color_trace_06_tgt_color")
 
+/*
+chkbtn_trace_0_enable_sw
+group_trace_0
+but_trace_0_target
+valinp_trace_0_thickness
+roller_trace_0_thickness
+valinp_trace_1_hmin
+valinp_trace_1_hmax
+valinp_trace_0_threshold_to_black
+valinp_trace_0_threshold_offset
+chebut_trace_0_thickness
+*/
 	,load_config_sw_(true)
 	,load_image_sw_(true)
 	,load_scan_and_save_sw_(true)
