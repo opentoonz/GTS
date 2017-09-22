@@ -264,20 +264,6 @@ void gts::opengl_camera_eye::updownleftright( const double move_x ,const double 
 	this->cen_x_ += vx1 * move_y;
 	this->cen_y_ += vy1 * move_y;
 	this->cen_z_ += vz1 * move_y;
-/*
-std::cout << "vx3=" << vx3 << std::endl;
-std::cout << "vy3=" << vy3 << std::endl;
-std::cout << "vz3=" << vz3 << std::endl;
-std::cout << "cen_x=" << this->cen_x_ << std::endl;
-std::cout << "cen_y=" << this->cen_y_ << std::endl;
-std::cout << "cen_z=" << this->cen_z_ << std::endl;
-std::cout << "eye_x=" << this->eye_x_ << std::endl;
-std::cout << "eye_y=" << this->eye_y_ << std::endl;
-std::cout << "eye_z=" << this->eye_z_ << std::endl;
-std::cout << "upp_x=" << this->upp_x_ << std::endl;
-std::cout << "upp_y=" << this->upp_y_ << std::endl;
-std::cout << "upp_z=" << this->upp_z_ << std::endl << std::endl;
-*/
 }
 
 void gts::opengl_camera_eye::frontback( const double track_scale)
@@ -641,22 +627,110 @@ void fl_gl_hsv_view::dummy_create_rgb_image_(
 		<< this->dummy_rgb_image_.size() << "bytes\n";
 }
 
+/*
+	0  -------x----->  X
+	0  -------S----->  1
+    0 1 t------S-----------i   1
+        | \   /          /
+        |  \  /        /
+    | ^ |    o       /
+    | | |   /  \   /
+    z V |  /     T   T
+    | | |  /   /
+    v | | /  /
+        |/ /
+        |/
+    1 0 s   0
+
+	上記平面をxz平面としたとき
+		i = ( 1 , 0 )
+	Sを通る２点の座標値
+		S = ( S*X , 0 ) // ( x1 , z1 )
+		s = ( 0   , 1 ) // ( x2 , z2 )
+	Tを通る２点の座標値
+		T = ( T*X , (1-T) + (1-Offset) ) // ( x1 , z1 )
+		t = ( 0   ,       + (1-Offset) ) // ( x2 , z2 )
+	1-T      = omT 
+	1-Offset = omO とすると
+		T = ( T*X , omT+omO ) // ( x1 , z1 )
+		t = ( 0   ,    +omO ) // ( x2 , z2 )
+	直線の方程式
+		z - z1 = (z2 - z1) / (x2 - x1) * (x - x1)
+	よりS-s直線は
+		z -  0 = ( 1 -  0) / ( 0 - S*X) * (x -  S*X)
+		z = 1 / (-S*X) * (x - S*X)
+		z = -1 / (S*X) * x - (-1) / (S*X) * S*X
+		z = -x/(S*X) + 1 .............................(1)
+	T-t直線は
+		z - (omT+omO) = (omO-(omT+omO)) / (0-(T*X)) * (x-(T*X))
+		z - (omT+omO) = (omO-omT-omO)   / (0-(T*X)) * (x-(T*X))
+		z - (omT+omO) = (-omT) / (-(T*X)) * (x-(T*X))
+		z = omT/(T*X)*(x-(T*X)) + (omT+omO)
+		z = omT/(T*X)*x - omT/(T*X)*(T*X) + (omT+omO)
+		z = x*omT/(T*X) - omT + omT + omO
+		z = x*omT/(T*X) + omO .........................(2)
+  ○交点oを求める
+	S-s直線(1)とT-t直線(2)より
+		x*omT/(T*X) + omO      = -x/(S*X) + 1
+		x*omT/(T*X) + x/(S*X)  = 1-omO
+		x(omT/(T*X) + 1/(S*X)) = 1-omO
+		x = (1-omO) / (omT/(T*X) + 1/(S*X))
+		x = (1-omO)*S*T*X / (omT*S + T)
+		x = (1-(1-Offset))*S*T*X / ((1-T)*S + T)
+		x = Offset*S*T*X / ((1-T)*S + T) ..............(3)
+	(3)を(2)に代入して
+		z = x*omT/(T*X) + omO
+		z = x*(1-T)/(T*X) + (1-Offset) ................(4)
+
+  ○交点Tを求める
+	Tを通る２点の座標値
+		s = ( 0 , 1 )	// ( x1 , z1 )
+		i = ( X , 0 )	// ( x2 , z2 )
+	よりs-i直線
+		z - 1 = ( 0 - 1 ) / ( X - 0 ) * (x - 0)
+		z - 1 = (-1) / X * x
+		z = -x/X + 1 ----------------------------------(5)
+	T-t直線(2)より
+		x*omT/(T*X) + omO   = -x/X + 1
+		x*omT/(T*X) + x/X   = 1 - omO
+		x*(omT/(T*X) + 1/X) = 1 - omO
+		x = (1-omO) / (omT/(T*X) + 1/X)
+		x = (1-(1-Offset)) / ((1-T)/(T*X) + 1/X)
+		x = Offset / ((1-T)/(T*X) + 1/X)
+		x = Offset*T*X / ((1-T) + T)
+		x = Offset*T*X --------------------------------(6)
+	(6)を(2)に代入して
+		z = Offset*T*X*omT/(T*X) + omO
+		z = Offset*omT + omO
+		z = Offset*(1-T) + (1-Offset)
+		z = Offset - Offset*T + 1 - Offset
+		z = - Offset*T + 1
+		z = 1 - Offset*T ------------------------------(7)
+*/
 namespace {
-void get_hsv_cross_point_(
-	const double hue , const double ss , const double tt
-	,double& xout , double& yout
-	,double& xinn , double& yinn , double& zinn
+void xyzout_to_xyzin_(
+	const double xout , const double yout
+	,const double ss , const double tt ,const double offset
+	,double& xin , double& yin , double& zin
 )
 {
-	xout = cos( gts::rad_from_deg(hue) );
-	yout = sin( gts::rad_from_deg(hue) );
-	xinn = ss * tt * xout / (ss * (1. - tt) + tt);
-	yinn = ss * tt * yout / (ss * (1. - tt) + tt);
+	xin = offset * ss * tt * xout / ((1.-tt) * ss + tt);
+	yin = offset * ss * tt * yout / ((1.-tt) * ss + tt);
 	if (tt == 0.) {
-	 zinn = 1.;
+	 zin = 1.;
 	} else {
-	 zinn = (1. - tt) / (tt * xout) * xinn;
+	 zin = xin * (1. - tt) / (tt * xout) + (1. - offset);
 	}
+}
+void xyzout_to_xyzmid_(
+	const double xout , const double yout
+	,const double tt ,const double offset
+	,double& xin , double& yin , double& zin
+)
+{
+	xin = offset * tt * xout;
+	yin = offset * tt * yout;
+	zin = 1. - offset * tt;
 }
 
 void draw_color_partition_(
@@ -664,6 +738,7 @@ void draw_color_partition_(
 	,double hmin
 	,double hmax
 	,double threshold_to_black
+	,double threshold_offset
 	,double target_r
 	,double target_g
 	,double target_b
@@ -671,27 +746,28 @@ void draw_color_partition_(
 {
 	const auto ss = 1. - thickness;
 	const auto tt = threshold_to_black;
+	const auto offset = threshold_offset;
 /*
 	HSV View
 	Color Area
 	Guide Partition
 
-	Black
-	+
-	|\
-	|  \
-	|    \ 8
-	|    7 +
-	|   6 /  \
-	|    +     \
-	| 5 /  \     \
-	|  +     \     \
-	|  |        \    \
-	|   |         \    \
-	|   |           \    \
-	+---+------------------+
-	    4             3  2  1
 	White   --> S -->      Color
+	    4             3  2  1
+	+---+------------------+
+	|   |           \    \
+	|   |         \    \
+	|  |        \    \
+	|  +     \     \
+	| 5 /  \     \
+	|    +     \
+	|   6 /  \
+	|    7 +
+	|    \ 8
+	|  \
+	|\
+	+
+	Black
 
 	1 2 7 8	--> Hue Start or End Color 白/黒
 	2 3 6 7	--> その位置でのHue色
@@ -703,11 +779,14 @@ void draw_color_partition_(
 
 	/* hmin */
 	{
-	double	 x1 = 0. ,y1 = 0. ,z1 = 0.
-		,x5 = 0. ,y5 = 0. ,z5 = 0.;
-	get_hsv_cross_point_( hmin ,ss,tt ,x1,y1 ,x5,y5,z5 );
-	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.
-		,x8 = x1*tt ,y8 = y1*tt ,z8 = 1. - threshold_to_black;
+	double	 x1 = cos( gts::rad_from_deg(hmin) )
+		,y1 = sin( gts::rad_from_deg(hmin) )
+		,z1 = 0.;
+	double	x5 = 0. ,y5 = 0. ,z5 = 0.;
+	xyzout_to_xyzin_( x1,y1 ,ss,tt,offset,x5,y5,z5 );
+	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.;
+	double	x8 = 0. ,y8 = 0. ,z8 = 0.;
+	xyzout_to_xyzmid_( x1,y1 ,tt,offset ,x8,y8,z8 );
 	double	 x3 = x4+(x1-x4)*2./3.
 		,y3 = y4+(y1-y4)*2./3.
 		,z3 = z4+(z1-z4)*2./3.
@@ -720,16 +799,9 @@ void draw_color_partition_(
 		,x7 = x6+(x8-x6)*2./3.
 		,y7 = y6+(y8-y6)*2./3.
 		,z7 = z6+(z8-z6)*2./3. ;
-		/*
-	double	v7[3];
-	//	v7[0] = x7; v7[1] = y7; v7[2] = z7;
-		v7[0] = v6[0]+(v8[0]-v6[0])*2./3.
-		v7[1] = v6[1]+(v8[1]-v6[1])*2./3.
-		v7[2] = v6[2]+(v8[2]-v6[2])*2./3.
-		*/
 
 	/* 外側 Hue開始色 */
-	glColor3d(1.,1.,1.);
+	glColor3d(0.666666,0.666666,0.666666);
 
 	/* 外側 Hue開始表示 */
 	glBegin(GL_QUADS);
@@ -777,11 +849,14 @@ void draw_color_partition_(
 
 	/* hmax */
 	{
-	double	 x1 = 0. ,y1 = 0. ,z1 = 0.
-		,x5 = 0. ,y5 = 0. ,z5 = 0.;
-	get_hsv_cross_point_( hmax ,ss,tt ,x1,y1 ,x5,y5,z5 );
-	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.
-		,x8 = x1*tt ,y8 = y1*tt ,z8 = 1. - threshold_to_black;
+	double	 x1 = cos( gts::rad_from_deg(hmax) )
+		,y1 = sin( gts::rad_from_deg(hmax) )
+		,z1 = 0.;
+	double	x5 = 0. ,y5 = 0. ,z5 = 0.;
+	xyzout_to_xyzin_( x1,y1 ,ss,tt,offset,x5,y5,z5 );
+	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.;
+	double	x8 = 0. ,y8 = 0. ,z8 = 0.;
+	xyzout_to_xyzmid_( x1,y1 ,tt,offset ,x8,y8,z8 );
 	double	 x3 = x4+(x1-x4)*2./3.
 		,y3 = y4+(y1-y4)*2./3.
 		,z3 = z4+(z1-z4)*2./3.
@@ -794,18 +869,11 @@ void draw_color_partition_(
 		,x7 = x6+(x8-x6)*2./3.
 		,y7 = y6+(y8-y6)*2./3.
 		,z7 = z6+(z8-z6)*2./3. ;
-		/*
-	double	v7[3];
-	//	v7[0] = x7; v7[1] = y7; v7[2] = z7;
-		v7[0] = v6[0]+(v8[0]-v6[0])*2./3.
-		v7[1] = v6[1]+(v8[1]-v6[1])*2./3.
-		v7[2] = v6[2]+(v8[2]-v6[2])*2./3.
-		*/
 
-	/* 外側 Hue開始色 */
-	glColor3d(0.,0.,0.);
+	/* 外側 Hueエンド色 */
+	glColor3d(0.333333,0.333333,0.333333);
 
-	/* 外側 Hue開始表示 */
+	/* 外側 Hueエンド表示 */
 	glBegin(GL_QUADS);
 	glVertex3d(x1,y1,z1);
 	glVertex3d(x8,y8,z8);
@@ -853,21 +921,47 @@ void draw_color_partition_(
 	/* threshold_to_black */
 }
 
-double get_radius_(const double thickness ,const double T)
+double get_radius_(const double thickness ,const double tt ,const double offset)
 {
-	if (thickness <= T) {
+	const double z = 1. - thickness;	/* 太さ値によるz位置 */
+	const double z2 = 1. - offset * tt;	/* 外接点のz位置 */
+
+	/* t-o直線部分 */
+	if (z2 <= z) {
 		return thickness;
 	}
-	return T * (1. - thickness) / (1. - T);
+	/* T-t直線部分
+		z = x*omT/(T*X) + omO .........................(2)
+
+		z - omO = x*omT/(T*X)
+		x*omT/(T*X) = z - omO
+		x*omT/(T*X) = (z - omO)
+		x = (z-(1-Offset)) * (T*X) / (1-T)
+	xがゼロになるz値は
+		0 = (z-(1-Offset)) * (T*X) / (1-T)
+		0 = z * (T*X) / (1-T) - (1-Offset) * (T*X) / (1-T)
+		z * (T*X) / (1-T) = (1-Offset) * (T*X) / (1-T)
+		z = (1-Offset) * (T*X) / (1-T) / (T*X) * (1-T) 
+		z = 1-Offset
+	*/
+	if (z < (1. - offset)) {
+		return 0.;
+	}
+
+	return (z - (1. - offset)) * tt * 1. / (1. - tt);
 }
 
 void draw_black_partition_(
 	double thickness
 	,double threshold_to_black
+	,double threshold_offset
 )
 {
+	const double len = get_radius_(
+		thickness ,threshold_to_black ,threshold_offset
+	);
 	const double zz = 1. - thickness;
-	const double len = get_radius_(thickness ,threshold_to_black);
+
 	glColor3d(1.,1.,1.);
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3d( 0. ,0. ,zz );
@@ -881,36 +975,6 @@ void draw_black_partition_(
 
 void draw_sep_hsv_()
 {
-#if 0
-class calcu_sep_hsv {
-public:
-	bool	enable_sw;	/* 2値化処理実行 false=他の2値化処理へ */
-
-	double	 target_r	/* 0...1 結果色 */
-		,target_g
-		,target_b;
-
-	double	thickness;	/* 0...1 色/黒線太さ(=彩度最小値) */
-
-	double	hmin , hmax;	/* 0...360 拾うべき色相範囲
-					0より小さいなら色でなく黒扱う */
-	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
-	double	threshold_offset;/* 0...1 SV面上黒線との
-				取合い境界線の原点位置のオフセット */
-	bool	hsv_view_guide_sw;	/* hsv viewerで範囲を表示するsw */
-};
-	std::vector<calcu_sep_hsv> cla_area_param; // dummy
-	cla_area_param = {
- { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.8,0.0 ,false}	/* 黒 */
-,{ true  ,1.,0.,0. ,0.5 ,300., 60. ,0.5,0.0 ,true}	/* 赤 */
-,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.8,0.0 ,false}	/* 青 */
-,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.8,0.0 ,false}	/* 緑 */
-,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.8,0.0 ,false}	/* 水 */
-,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.8,0.0 ,false}	/* 紫 */
-,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.8,0.0 ,false}	/* 黄(or オレンジ) */
-	};
-#endif
-
 	if ((cl_gts_gui.menite_hsv_hue_partition->value() != 0)
 	||  (cl_gts_gui.menite_hsv_black_partition->value() != 0)) {
 	  for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
@@ -920,6 +984,7 @@ public:
 			draw_black_partition_(
 				area.thickness
 				,area.threshold_to_black
+				,area.threshold_offset
 			);
 		}
 	      } else {
@@ -929,6 +994,7 @@ public:
 				,area.hmin
 				,area.hmax
 				,area.threshold_to_black
+				,area.threshold_offset
 				,area.target_r
 				,area.target_g
 				,area.target_b

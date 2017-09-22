@@ -8,23 +8,25 @@ HSV色立体から各色区域分けをして目的の色を得る
 	R - Y - G - C - B - M - R
 	赤  黄  緑  水  青  紫  赤
 
-○min,max的考えから、各色区域分け方法(いままで)
+○min,max的考えから、各色区域分け
 	色
-		hue min. max.	0...360 各区域の色相の範囲
+		hue min.	0...360 色相のサイクリック範囲の最小値
+		hue max.	0...360 色相のサイクリック範囲の最大値
 		saturation min.	太さを表す
 		saturation max.	1固定
-		value min.	使わない
+		value min.	調整値(0.5等)
 		value max.	1固定
-		smin,smax,vmin,vmaxで計算利用
 
 	黒(色とは範囲計算方法は違う)
-		hue min. max.	0より小(-1)は黒を扱うことを示す。
-		saturation min.	使わない(色味の残りで取る)
-		saturation max.	使わない(色味の残りで取る)
+		hue min.	0
+		hue max.	360
+		saturation min.	0固定
+		saturation max.	調整値(0.3等)
 		value min.	0固定
 		value max.	太さを表す
 
-○色と黒を区切る方法(これから)
+○色と黒を区切るのを、"色value min."黒saturation max." から ななめ切断
+  にする方法
 
  1 HSV立体のSV断面
 	S=0,V=0からS=1,V=1への直線上をたどるパラメータをTとする
@@ -78,6 +80,15 @@ HSV色立体から各色区域分けをして目的の色を得る
 
 	よって、黒味側であるかの判断は
 	(1 - T) / T   <   (1 - V) / (S * V) 
+
+
+	T直線を上下に移動する変数をOffsetとすると
+	Point位置を逆にOffset掛ける
+	T比	(1 - T) / T
+	P比	(1 - V - Offset) / (S * V)
+
+	Pが黒味側であるかの判断は
+	(1 - T) / T   <   (1 - V - Offset) / (S * V) 
 */
 
 #include <vector>
@@ -85,23 +96,29 @@ HSV色立体から各色区域分けをして目的の色を得る
 class calcu_sep_black_and_color {
 public:
 	calcu_sep_black_and_color(const double s ,const double v)
-		:one_minus_v_div_s_v_(0.)
+		:one_minus_v_(0.)
+		,s_mul_v_(0.)
 	{
-		if (s != 0. && v != 0.) {
-		 this->one_minus_v_div_s_v_ = (1. - v) / (s * v);
-		}
+		this->one_minus_v_ = (1. - v);
+		this->s_mul_v_ = (s * v);
 	}
-	inline bool is_black_side(const double tt) {
+	inline bool is_black_side(const double tt ,const double offset) {
 		if ( tt == 0.) { /* threshold_to_blackが0なら全て色部分 */
 			return false;
 		}
-		if ( ((1. - tt) / tt) < one_minus_v_div_s_v_ ) {
+		if (this->s_mul_v_ == 0.) {/* 色味か明度がゼロなら黒部分 */
 			return true;
 		}
-		return false;
+		//if ( ((1. - tt) / tt) < one_minus_v_div_s_v_ ) {
+		//if ((1. - v - offset) < 0.) { return false; }
+		if ( ((1. - tt) / tt) <
+		(this->one_minus_v_ - (1. - offset)) / this->s_mul_v_ ) {
+			return true;	/* 斜め切断して黒味側 */
+		}
+		return false; /* 上以外は色側 */
 	}
 private:
-	double one_minus_v_div_s_v_;
+	double one_minus_v_ ,s_mul_v_;
 };
 /*-------------------------------------------------------*/
 class calcu_sep_hsv {
@@ -146,20 +163,20 @@ public:
 
 	void setup_default_area_param(void) {
 		this->cla_area_param = {
- { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.5,0.0 ,true } /* 黒 */
-,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.5,0.0 ,true } /* 赤 */
-,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.5,0.0 ,true } /* 青 */
-,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.5,0.0 ,true } /* 緑 */
-,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.5,0.0 ,false } /* 水 */
-,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.5,0.0 ,false } /* 紫 */
-,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.5,0.0 ,false } /* 黄(or オレンジ) */
+ { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.5,1.0 ,true  } /* 黒 */
+,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.5,1.0 ,true  } /* 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.5,1.0 ,true  } /* 青 */
+,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.5,1.0 ,true  } /* 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.5,1.0 ,false } /* 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.5,1.0 ,false } /* 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.5,1.0 ,false } /* 黄(or オレンジ) */
 		};
 	}
 
 	/* hh = 0...360 , ss,vv,rr,gg,bb = 0...1 */
 	bool exec(
 		const double hh, const double ss, const double vv
-		, double *rr, double *gg, double *bb
+		, double* rr, double* gg, double* bb
 	);
 private:
 	double	 target_paper_r_

@@ -23,7 +23,9 @@ bool calcu_color_trace_sep_hsv::exec(
 			/* 色味範囲のときは次ループへ */
 			if ((0. < vv) && (0. < ss)
 			&& (sep_b_and_c.is_black_side(
-			area.threshold_to_black) == false)) {
+			area.threshold_to_black
+			,area.threshold_offset
+			) == false)) {
 				continue;
 			}
 			/* vvがゼロあるいは、ssがゼロのときは黒線 */
@@ -52,7 +54,9 @@ bool calcu_color_trace_sep_hsv::exec(
 
 			/* 黒味範囲のときは次ループへ */
 			if (sep_b_and_c.is_black_side(
-			area.threshold_to_black)) {
+			area.threshold_to_black
+			,area.threshold_offset
+			)) {
 				continue;
 			}
 		}
