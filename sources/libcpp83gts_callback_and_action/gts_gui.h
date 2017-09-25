@@ -1379,10 +1379,10 @@ private:
   static void cb_chkbtn_trace_0_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_0;
-  Fl_Button *but_trace_0_target;
+  Fl_Button *but_trace_0_target_rgb;
 private:
-  inline void cb_but_trace_0_target_i(Fl_Button*, void*);
-  static void cb_but_trace_0_target(Fl_Button*, void*);
+  inline void cb_but_trace_0_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_0_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_0_thickness;
 private:
@@ -1394,20 +1394,20 @@ private:
   inline void cb_roller_trace_0_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_0_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_0_threshold_to_black;
+  Fl_Value_Input *valinp_trace_0_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_0_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_0_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_0_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_0_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_0_threshold_offset;
+  Fl_Value_Input *valinp_trace_0_threshold_intercept;
 private:
-  inline void cb_valinp_trace_0_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_0_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_0_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_0_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_0_thickness;
+  Fl_Check_Button *chebut_trace_0_display_partition_sw;
 private:
-  inline void cb_chebut_trace_0_thickness_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_0_thickness(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_0_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_0_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_1_enable_sw;
 private:
@@ -1415,10 +1415,10 @@ private:
   static void cb_chkbtn_trace_1_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_1;
-  Fl_Button *but_trace_1_target;
+  Fl_Button *but_trace_1_target_rgb;
 private:
-  inline void cb_but_trace_1_target_i(Fl_Button*, void*);
-  static void cb_but_trace_1_target(Fl_Button*, void*);
+  inline void cb_but_trace_1_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_1_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_1_thickness;
 private:
@@ -1430,30 +1430,30 @@ private:
   inline void cb_roller_trace_1_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_1_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_1_hmin;
+  Fl_Value_Input *valinp_trace_1_hue_min;
 private:
-  inline void cb_valinp_trace_1_hmin_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_1_hmin(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_1_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_1_hue_min(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_1_hmax;
+  Fl_Value_Input *valinp_trace_1_hue_max;
 private:
-  inline void cb_valinp_trace_1_hmax_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_1_hmax(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_1_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_1_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_1_threshold_to_black;
+  Fl_Value_Input *valinp_trace_1_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_1_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_1_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_1_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_1_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_1_threshold_offset;
+  Fl_Value_Input *valinp_trace_1_threshold_intercept;
 private:
-  inline void cb_valinp_trace_1_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_1_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_1_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_1_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_1_partition_sw;
+  Fl_Check_Button *chebut_trace_1_display_partition_sw;
 private:
-  inline void cb_chebut_trace_1_partition_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_1_partition_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_1_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_1_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_2_enable_sw;
 private:
@@ -1461,10 +1461,10 @@ private:
   static void cb_chkbtn_trace_2_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_2;
-  Fl_Button *but_trace_2_target;
+  Fl_Button *but_trace_2_target_rgb;
 private:
-  inline void cb_but_trace_2_target_i(Fl_Button*, void*);
-  static void cb_but_trace_2_target(Fl_Button*, void*);
+  inline void cb_but_trace_2_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_2_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_2_thickness;
 private:
@@ -1476,30 +1476,30 @@ private:
   inline void cb_roller_trace_2_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_2_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_2_hmin;
+  Fl_Value_Input *valinp_trace_2_hue_min;
 private:
-  inline void cb_valinp_trace_2_hmin_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_2_hmin(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_2_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_2_hue_min(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_2_hmax;
+  Fl_Value_Input *valinp_trace_2_hue_max;
 private:
-  inline void cb_valinp_trace_2_hmax_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_2_hmax(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_2_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_2_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_2_threshold_to_black;
+  Fl_Value_Input *valinp_trace_2_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_2_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_2_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_2_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_2_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_2_threshold_offset;
+  Fl_Value_Input *valinp_trace_2_threshold_intercept;
 private:
-  inline void cb_valinp_trace_2_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_2_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_2_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_2_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_2_partition_sw;
+  Fl_Check_Button *chebut_trace_2_display_partition_sw;
 private:
-  inline void cb_chebut_trace_2_partition_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_2_partition_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_2_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_2_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_3_enable_sw;
 private:
@@ -1507,10 +1507,10 @@ private:
   static void cb_chkbtn_trace_3_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_3;
-  Fl_Button *but_trace_3_target;
+  Fl_Button *but_trace_3_target_rgb;
 private:
-  inline void cb_but_trace_3_target_i(Fl_Button*, void*);
-  static void cb_but_trace_3_target(Fl_Button*, void*);
+  inline void cb_but_trace_3_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_3_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_3_thickness;
 private:
@@ -1522,30 +1522,30 @@ private:
   inline void cb_roller_trace_3_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_3_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_3_hmin;
+  Fl_Value_Input *valinp_trace_3_hue_min;
 private:
-  inline void cb_valinp_trace_3_hmin_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_3_hmin(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_3_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_3_hue_min(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_3_hmax;
+  Fl_Value_Input *valinp_trace_3_hue_max;
 private:
-  inline void cb_valinp_trace_3_hmax_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_3_hmax(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_3_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_3_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_3_threshold_to_black;
+  Fl_Value_Input *valinp_trace_3_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_3_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_3_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_3_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_3_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_3_threshold_offset;
+  Fl_Value_Input *valinp_trace_3_threshold_intercept;
 private:
-  inline void cb_valinp_trace_3_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_3_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_3_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_3_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_3_partition_sw;
+  Fl_Check_Button *chebut_trace_3_display_partition_sw;
 private:
-  inline void cb_chebut_trace_3_partition_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_3_partition_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_3_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_3_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_4_enable_sw;
 private:
@@ -1553,10 +1553,10 @@ private:
   static void cb_chkbtn_trace_4_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_4;
-  Fl_Button *but_trace_4_target;
+  Fl_Button *but_trace_4_target_rgb;
 private:
-  inline void cb_but_trace_4_target_i(Fl_Button*, void*);
-  static void cb_but_trace_4_target(Fl_Button*, void*);
+  inline void cb_but_trace_4_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_4_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_4_thickness;
 private:
@@ -1568,30 +1568,30 @@ private:
   inline void cb_roller_trace_4_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_4_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_4_hmin;
+  Fl_Value_Input *valinp_trace_4_hue_min;
 private:
-  inline void cb_valinp_trace_4_hmin_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_4_hmin(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_4_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_4_hue_min(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_4_hmax;
+  Fl_Value_Input *valinp_trace_4_hue_max;
 private:
-  inline void cb_valinp_trace_4_hmax_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_4_hmax(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_4_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_4_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_4_threshold_to_black;
+  Fl_Value_Input *valinp_trace_4_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_4_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_4_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_4_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_4_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_4_threshold_offset;
+  Fl_Value_Input *valinp_trace_4_threshold_intercept;
 private:
-  inline void cb_valinp_trace_4_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_4_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_4_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_4_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_4_partition_sw;
+  Fl_Check_Button *chebut_trace_4_display_partition_sw;
 private:
-  inline void cb_chebut_trace_4_partition_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_4_partition_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_4_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_4_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_5_enable_sw;
 private:
@@ -1599,10 +1599,10 @@ private:
   static void cb_chkbtn_trace_5_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_5;
-  Fl_Button *but_trace_5_target;
+  Fl_Button *but_trace_5_target_rgb;
 private:
-  inline void cb_but_trace_5_target_i(Fl_Button*, void*);
-  static void cb_but_trace_5_target(Fl_Button*, void*);
+  inline void cb_but_trace_5_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_5_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_5_thickness;
 private:
@@ -1614,30 +1614,30 @@ private:
   inline void cb_roller_trace_5_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_5_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_5_hmin;
+  Fl_Value_Input *valinp_trace_5_hue_min;
 private:
-  inline void cb_valinp_trace_5_hmin_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_5_hmin(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_5_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_5_hue_min(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_5_hmax;
+  Fl_Value_Input *valinp_trace_5_hue_max;
 private:
-  inline void cb_valinp_trace_5_hmax_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_5_hmax(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_5_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_5_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_5_threshold_to_black;
+  Fl_Value_Input *valinp_trace_5_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_5_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_5_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_5_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_5_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_5_threshold_offset;
+  Fl_Value_Input *valinp_trace_5_threshold_intercept;
 private:
-  inline void cb_valinp_trace_5_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_5_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_5_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_5_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_5_partition_sw;
+  Fl_Check_Button *chebut_trace_5_display_partition_sw;
 private:
-  inline void cb_chebut_trace_5_partition_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_5_partition_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_5_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_5_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_6_enable_sw;
 private:
@@ -1645,10 +1645,10 @@ private:
   static void cb_chkbtn_trace_6_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_6;
-  Fl_Button *but_trace_6_target;
+  Fl_Button *but_trace_6_target_rgb;
 private:
-  inline void cb_but_trace_6_target_i(Fl_Button*, void*);
-  static void cb_but_trace_6_target(Fl_Button*, void*);
+  inline void cb_but_trace_6_target_rgb_i(Fl_Button*, void*);
+  static void cb_but_trace_6_target_rgb(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_6_thickness;
 private:
@@ -1660,30 +1660,30 @@ private:
   inline void cb_roller_trace_6_thickness_i(Fl_Roller*, void*);
   static void cb_roller_trace_6_thickness(Fl_Roller*, void*);
 public:
-  Fl_Value_Input *valinp_trace_6_hmin;
+  Fl_Value_Input *valinp_trace_6_hue_min;
 private:
-  inline void cb_valinp_trace_6_hmin_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_6_hmin(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_6_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_6_hue_min(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_6_hmax;
+  Fl_Value_Input *valinp_trace_6_hue_max;
 private:
-  inline void cb_valinp_trace_6_hmax_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_6_hmax(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_6_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_6_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_6_threshold_to_black;
+  Fl_Value_Input *valinp_trace_6_threshold_slope_deg;
 private:
-  inline void cb_valinp_trace_6_threshold_to_black_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_6_threshold_to_black(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_6_threshold_slope_deg_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_6_threshold_slope_deg(Fl_Value_Input*, void*);
 public:
-  Fl_Value_Input *valinp_trace_6_threshold_offset;
+  Fl_Value_Input *valinp_trace_6_threshold_intercept;
 private:
-  inline void cb_valinp_trace_6_threshold_offset_i(Fl_Value_Input*, void*);
-  static void cb_valinp_trace_6_threshold_offset(Fl_Value_Input*, void*);
+  inline void cb_valinp_trace_6_threshold_intercept_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_6_threshold_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_6_partition_sw;
+  Fl_Check_Button *chebut_trace_6_display_partition_sw;
 private:
-  inline void cb_chebut_trace_6_partition_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_6_partition_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_6_display_partition_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_6_display_partition_sw(Fl_Check_Button*, void*);
 public:
   Fl_Button *button_change_1_2;
   Fl_Button *button_change_2_3;

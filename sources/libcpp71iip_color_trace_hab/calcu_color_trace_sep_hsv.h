@@ -30,7 +30,7 @@ HSV色立体から各色区域分けをして目的の色を得る
 
  1 HSV立体のSV断面
 	S=0,V=0からS=1,V=1への直線上をたどるパラメータをTとする
-		T=calcu_sep_hsv::threshold_to_black
+		T=calcu_sep_hsv::threshold_slope_deg
 	Tの位置からS=0,V=1位置へ直線を引き、この直線で上下に分けることで、
 	色領域か黒領域か判断を行う
 		T=0	色味なし
@@ -102,16 +102,16 @@ public:
 		this->one_minus_v_ = (1. - v);
 		this->s_mul_v_ = (s * v);
 	}
-	inline bool is_black_side(const double tt ,const double offset) {
-		if ( tt == 0.) { /* threshold_to_blackが0なら全て色部分 */
+	inline bool is_black_side(
+		const double threshold_slope_line ,const double offset
+	) {
+		if ( threshold_slope_line == 0.) { /* threshold_slope_degが0なら全て色部分 */
 			return false;
 		}
 		if (this->s_mul_v_ == 0.) {/* 色味か明度がゼロなら黒部分 */
 			return true;
 		}
-		//if ( ((1. - tt) / tt) < one_minus_v_div_s_v_ ) {
-		//if ((1. - v - offset) < 0.) { return false; }
-		if ( ((1. - tt) / tt) <
+		if ( ((1. - threshold_slope_line) / threshold_slope_line) <
 		(this->one_minus_v_ - (1. - offset)) / this->s_mul_v_ ) {
 			return true;	/* 斜め切断して黒味側 */
 		}
@@ -131,10 +131,10 @@ public:
 
 	double	thickness;	/* 0...1 色/黒線太さ(=彩度最小値) */
 
-	double	hmin , hmax;	/* 0...360 拾うべき色相範囲
+	double	hue_min , hue_max;	/* 0...360 拾うべき色相範囲
 					0より小さいなら色でなく黒扱う */
-	double	threshold_to_black;/* 0...1 SV面上黒線との取合い境界 */
-	double	threshold_offset;/* 0...1 SV面上黒線との
+	double	threshold_slope_deg;/* 0...1 SV面上黒線との取合い境界 */
+	double	threshold_intercept;/* 0...1 SV面上黒線との
 				取合い境界線の原点位置のオフセット */
 	bool	hsv_view_guide_sw;	/* hsv viewerで範囲を表示するsw */
 };
@@ -163,13 +163,13 @@ public:
 
 	void setup_default_area_param(void) {
 		this->cla_area_param = {
- { true  ,0.,0.,0. ,0.7 , -1 , -1  ,0.5,1.0 ,true  } /* 黒 */
-,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,0.5,1.0 ,true  } /* 赤 */
-,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,0.5,1.0 ,true  } /* 青 */
-,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,0.5,1.0 ,true  } /* 緑 */
-,{ false ,0.,1.,1. ,0.7 ,120.,240. ,0.5,1.0 ,false } /* 水 */
-,{ false ,1.,0.,1. ,0.7 ,240.,360. ,0.5,1.0 ,false } /* 紫 */
-,{ false ,1.,1.,0. ,0.7   ,0.,120. ,0.5,1.0 ,false } /* 黄(or オレンジ) */
+ { true  ,0.,0.,0. ,0.7 , -1 , -1  ,45.,1. ,true  } /* 黒 */
+,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,45.,1. ,true  } /* 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,45.,1. ,true  } /* 青 */
+,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,45.,1. ,true  } /* 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,45.,1. ,false } /* 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,45.,1. ,false } /* 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,45.,1. ,false } /* 黄(or オレンジ) */
 		};
 	}
 

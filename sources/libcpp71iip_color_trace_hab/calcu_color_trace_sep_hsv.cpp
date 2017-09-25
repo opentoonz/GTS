@@ -1,4 +1,5 @@
 #include "calcu_color_trace_sep_hsv.h"
+#include "fl_gl_hsv_view.h"
 
 bool calcu_color_trace_sep_hsv::exec(
 	const double hh, const double ss, const double vv
@@ -16,15 +17,15 @@ bool calcu_color_trace_sep_hsv::exec(
 		if (area.enable_sw == false) { continue; }
 
 		/* 黒線 */
-		if (area.hmin < 0. || area.hmax < 0.) {
+		if (area.hue_min < 0. || area.hue_max < 0.) {
 			/* 太さ外のときは次ループへ */
 			if (area.thickness < vv) { continue; }
 
 			/* 色味範囲のときは次ループへ */
 			if ((0. < vv) && (0. < ss)
 			&& (sep_b_and_c.is_black_side(
-			area.threshold_to_black
-			,area.threshold_offset
+	gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
+			,area.threshold_intercept
 			) == false)) {
 				continue;
 			}
@@ -34,13 +35,13 @@ bool calcu_color_trace_sep_hsv::exec(
 		/* 色線 */
 		else {
 			/* 色相の範囲外の時は次ループへ */
-			if (area.hmin < area.hmax) {
-				if (hh < area.hmin) { continue; }
-				if (area.hmax < hh) { continue; }
+			if (area.hue_min < area.hue_max) {
+				if (hh < area.hue_min) { continue; }
+				if (area.hue_max < hh) { continue; }
 			}
 			else {
-				if ((area.hmax < hh)
-				&&  (hh < area.hmin)) { continue; }
+				if ((area.hue_max < hh)
+				&&  (hh < area.hue_min)) { continue; }
 			}
 
 			/* 太さ外のときは次ループへ */
@@ -54,8 +55,8 @@ bool calcu_color_trace_sep_hsv::exec(
 
 			/* 黒味範囲のときは次ループへ */
 			if (sep_b_and_c.is_black_side(
-			area.threshold_to_black
-			,area.threshold_offset
+	gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
+			,area.threshold_intercept
 			)) {
 				continue;
 			}

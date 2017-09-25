@@ -49,10 +49,20 @@ private:
 /*---------- 単位変換 ----------*/
 
 namespace gts {
+
 double rad_from_deg( const double deg )
 {
 	return 3.14159265358979323846264338327950288 * deg / 180.0;
 }
+double liner_from_rad( const double rad )
+{
+	const double si = sin(rad);
+	const double co = cos(rad);
+	const double x = si / (si+co);
+	const double z = 1. - co / (si+co);
+	return sqrt( x * x + z * z ) / sqrt(2.);
+}
+
 } // gts
 
 /*---------- opengl_camera_eye関数 ----------*/
@@ -733,20 +743,85 @@ void xyzout_to_xyzmid_(
 	zin = 1. - offset * tt;
 }
 
-void draw_color_partition_(
-	double thickness
-	,double hmin
-	,double hmax
-	,double threshold_to_black
-	,double threshold_offset
-	,double target_r
-	,double target_g
-	,double target_b
+void draw_one_partition_(
+	const double x1 ,const double y1 ,const double z1
+	,const double x4 ,const double y4 ,const double z4
+	,const double x5 ,const double y5 ,const double z5
+	,const double x8 ,const double y8 ,const double z8
+	,const double hue_r ,const double hue_g ,const double hue_b
+	,const double tgt_r ,const double tgt_g ,const double tgt_b
+	,const double s_e_r ,const double s_e_g ,const double s_e_b
 )
 {
-	const auto ss = 1. - thickness;
-	const auto tt = threshold_to_black;
-	const auto offset = threshold_offset;
+	double	 x3 = x4+(x1-x4)*2./3.
+		,y3 = y4+(y1-y4)*2./3.
+		,z3 = z4+(z1-z4)*2./3.
+		,x6 = x5+(x8-x5)*2./3.
+		,y6 = y5+(y8-y5)*2./3.
+		,z6 = z5+(z8-z5)*2./3. ;
+	double	 x2 = x3+(x1-x3)*2./3.
+		,y2 = y3+(y1-y3)*2./3.
+		,z2 = z3+(z1-z3)*2./3.
+		,x7 = x6+(x8-x6)*2./3.
+		,y7 = y6+(y8-y6)*2./3.
+		,z7 = z6+(z8-z6)*2./3. ;
+
+	/* 外側 現位置のHue色 */
+	glColor3d( hue_r ,hue_g ,hue_b );
+
+	/* 外側 Hue開始表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x1,y1,z1);
+	glVertex3d(x2,y2,z2);
+	glVertex3d(x7,y7,z7);
+	glVertex3d(x8,y8,z8);
+	glEnd();
+
+	/* 中側 Target色 */
+	glColor3d( tgt_r ,tgt_g ,tgt_b );
+
+	/* 中側 Hue色表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x2,y2,z2);
+	glVertex3d(x3,y3,z3);
+	glVertex3d(x6,y6,z6);
+	glVertex3d(x7,y7,z7);
+	glEnd();
+
+	/* 内側 Hue開始/終了色 & 色点用背景色 */
+	glColor3d( s_e_r ,s_e_g ,s_e_b );
+
+	/* 内側 Target色表示 */
+	glBegin(GL_QUADS);
+	glVertex3d(x3,y3,z3);
+	glVertex3d(x4,y4,z4);
+	glVertex3d(x5,y5,z5);
+	glVertex3d(x6,y6,z6);
+	glEnd();
+
+	/* 現位置のHue色 */
+	glColor3d( hue_r ,hue_g ,hue_b );
+
+	/* 裏でも存在を示すためのワイヤーフレーム表示 */
+	glBegin(GL_LINE_LOOP);
+	glVertex3d(x1,y1,z1);
+	glVertex3d(x4,y4,z4);
+	glVertex3d(x5,y5,z5);
+	glVertex3d(x8,y8,z8);
+	glEnd();
+}
+
+void draw_color_partition_(
+	const double thickness
+	,const double hue_min
+	,const double hue_max
+	,const double thre_slope_line
+	,const double thre_intercept
+	,const double target_r
+	,const double target_g
+	,const double target_b
+)
+{
 /*
 	HSV View
 	Color Area
@@ -774,151 +849,114 @@ void draw_color_partition_(
 	3 4 5 6	--> Target色
 */
 
+	/*---------- hue_min ----------*/
 	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
 	glCullFace(GL_BACK);	/* 後面を破棄 */
 
-	/* hmin */
 	{
-	double	 x1 = cos( gts::rad_from_deg(hmin) )
-		,y1 = sin( gts::rad_from_deg(hmin) )
-		,z1 = 0.;
-	double	x5 = 0. ,y5 = 0. ,z5 = 0.;
-	xyzout_to_xyzin_( x1,y1 ,ss,tt,offset,x5,y5,z5 );
-	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.;
-	double	x8 = 0. ,y8 = 0. ,z8 = 0.;
-	xyzout_to_xyzmid_( x1,y1 ,tt,offset ,x8,y8,z8 );
-	double	 x3 = x4+(x1-x4)*2./3.
-		,y3 = y4+(y1-y4)*2./3.
-		,z3 = z4+(z1-z4)*2./3.
-		,x6 = x5+(x8-x5)*2./3.
-		,y6 = y5+(y8-y5)*2./3.
-		,z6 = z5+(z8-z5)*2./3. ;
-	double	 x2 = x3+(x1-x3)*2./3.
-		,y2 = y3+(y1-y3)*2./3.
-		,z2 = z3+(z1-z3)*2./3.
-		,x7 = x6+(x8-x6)*2./3.
-		,y7 = y6+(y8-y6)*2./3.
-		,z7 = z6+(z8-z6)*2./3. ;
+	const auto tt = 1. - thickness;
+	const double	x1 = cos( gts::rad_from_deg(hue_min) )
+			,y1 = sin( gts::rad_from_deg(hue_min) )
+			,z1 = 0.;
+	double		x5 = 0. ,y5 = 0. ,z5 = 0.;
+	xyzout_to_xyzin_( x1,y1 ,tt,thre_slope_line,thre_intercept ,x5,y5,z5 );
+	const double	x4 = x1*tt ,y4 = y1*tt ,z4 = 0.;
+	double		x8 = 0. ,y8 = 0. ,z8 = 0.;
+	xyzout_to_xyzmid_( x1,y1 ,thre_slope_line,thre_intercept ,x8,y8,z8 );
 
-	/* 外側 Hue開始色 */
-	glColor3d(0.666666,0.666666,0.666666);
-
-	/* 外側 Hue開始表示 */
-	glBegin(GL_QUADS);
-	glVertex3d(x1,y1,z1);
-	glVertex3d(x2,y2,z2);
-	glVertex3d(x7,y7,z7);
-	glVertex3d(x8,y8,z8);
-	glEnd();
-
-	/* 中側 Hue色 */
+	/* 現位置Hue色 */
 	calcu_rgb_to_hsv cl_hsv;
 	double r=0.,g=0.,b=0.;
-	cl_hsv.from_hsv( hmin,1.,1. ,&r,&g,&b );
-	glColor3d(r,g,b);
+	cl_hsv.from_hsv( hue_min,1.,1. ,&r,&g,&b );
 
-	/* 中側 Hue色表示 */
-	glBegin(GL_QUADS);
-	glVertex3d(x2,y2,z2);
-	glVertex3d(x3,y3,z3);
-	glVertex3d(x6,y6,z6);
-	glVertex3d(x7,y7,z7);
-	//glVertex3dv(v7);
+	draw_one_partition_(
+		x1,y1,z1 ,x4,y4,z4 ,x5,y5,z5 ,x8,y8,z8
+		,r,g,b
+		,target_r ,target_g ,target_b
+		,0.666666 ,0.666666 ,0.666666
+	);
+
+	/* 色点用背景色 */
+	const double hdiff = (hue_min <= hue_max)? hue_max-hue_min: hue_max+360.-hue_min;
+	glColor3d( 0.5 ,0.5 ,0.5 );
+	glBegin(GL_QUAD_STRIP);
+	for (double ii=0.; ii<=hdiff; ii+=1.) {
+		const double rad = gts::rad_from_deg( ii );
+		double x1=0. ,y1=0.;
+		double x2=0. ,y2=0.;
+		rotate2d( x4,y4, rad , x1,y1 );
+		rotate2d( x5,y5, rad , x2,y2 );
+		glVertex3d( x2,y2,z5 );
+		glVertex3d( x1,y1,z4 );
+	}
+	glEnd();
+	glBegin(GL_QUAD_STRIP);
+	for (double ii=0.; ii<=hdiff; ii+=1.) {
+		const double rad = gts::rad_from_deg( ii );
+		double x1=0. ,y1=0.;
+		double x2=0. ,y2=0.;
+		rotate2d( x5,y5, rad , x1,y1 );
+		rotate2d( x8,y8, rad , x2,y2 );
+		glVertex3d( x2,y2,z8 );
+		glVertex3d( x1,y1,z5 );
+	}
 	glEnd();
 
-	/* 内側 Target色 */
-	glColor3d(target_r,target_g,target_b);
-
-	/* 内側 Target色表示 */
-	glBegin(GL_QUADS);
-	glVertex3d(x3,y3,z3);
-	glVertex3d(x4,y4,z4);
-	glVertex3d(x5,y5,z5);
-	glVertex3d(x6,y6,z6);
+	/* 回転部分ワイヤーフレーム */
+	glColor3d( target_r ,target_g ,target_b );
+	glBegin(GL_LINE_STRIP);
+	for (double ii=0.; ii<=hdiff; ii+=1.) {
+		const double rad = gts::rad_from_deg( ii );
+		double x1=0. ,y1=0.;
+		rotate2d( x4,y4, rad , x1,y1 );
+		glVertex3d( x1,y1,z4 );
+	}
 	glEnd();
-
-	/* 裏でも存在を示すためのワイヤーフレーム表示 */
-	glBegin(GL_LINE_LOOP);
-	glVertex3d(x1,y1,z1);
-	glVertex3d(x4,y4,z4);
-	glVertex3d(x5,y5,z5);
-	glVertex3d(x8,y8,z8);
+	glBegin(GL_LINE_STRIP);
+	for (double ii=0.; ii<=hdiff; ii+=1.) {
+		const double rad = gts::rad_from_deg( ii );
+		double x1=0. ,y1=0.;
+		rotate2d( x5,y5, rad , x1,y1 );
+		glVertex3d( x1,y1,z5 );
+	}
 	glEnd();
-
+	glBegin(GL_LINE_STRIP);
+	for (double ii=0.; ii<=hdiff; ii+=1.) {
+		const double rad = gts::rad_from_deg( ii );
+		double x1=0. ,y1=0.;
+		rotate2d( x8,y8, rad , x1,y1 );
+		glVertex3d( x1,y1,z8 );
+	}
+	glEnd();
 	}
 
-	/* hmax */
+	/*---------- hue_max ----------*/
+	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
+	glCullFace(GL_FRONT);	/* 表面を破棄 */
+
 	{
-	double	 x1 = cos( gts::rad_from_deg(hmax) )
-		,y1 = sin( gts::rad_from_deg(hmax) )
-		,z1 = 0.;
-	double	x5 = 0. ,y5 = 0. ,z5 = 0.;
-	xyzout_to_xyzin_( x1,y1 ,ss,tt,offset,x5,y5,z5 );
-	double	 x4 = x1*ss ,y4 = y1*ss ,z4 = 0.;
-	double	x8 = 0. ,y8 = 0. ,z8 = 0.;
-	xyzout_to_xyzmid_( x1,y1 ,tt,offset ,x8,y8,z8 );
-	double	 x3 = x4+(x1-x4)*2./3.
-		,y3 = y4+(y1-y4)*2./3.
-		,z3 = z4+(z1-z4)*2./3.
-		,x6 = x5+(x8-x5)*2./3.
-		,y6 = y5+(y8-y5)*2./3.
-		,z6 = z5+(z8-z5)*2./3. ;
-	double	 x2 = x3+(x1-x3)*2./3.
-		,y2 = y3+(y1-y3)*2./3.
-		,z2 = z3+(z1-z3)*2./3.
-		,x7 = x6+(x8-x6)*2./3.
-		,y7 = y6+(y8-y6)*2./3.
-		,z7 = z6+(z8-z6)*2./3. ;
+	const auto tt = 1. - thickness;
+	const double	x1 = cos( gts::rad_from_deg(hue_max) )
+			,y1 = sin( gts::rad_from_deg(hue_max) )
+			,z1 = 0.;
+	double		x5 = 0. ,y5 = 0. ,z5 = 0.;
+	xyzout_to_xyzin_( x1,y1 ,tt,thre_slope_line,thre_intercept,x5,y5,z5 );
+	const double	x4 = x1*tt ,y4 = y1*tt ,z4 = 0.;
+	double		x8 = 0. ,y8 = 0. ,z8 = 0.;
+	xyzout_to_xyzmid_( x1,y1 ,thre_slope_line,thre_intercept ,x8,y8,z8 );
 
-	/* 外側 Hueエンド色 */
-	glColor3d(0.333333,0.333333,0.333333);
-
-	/* 外側 Hueエンド表示 */
-	glBegin(GL_QUADS);
-	glVertex3d(x1,y1,z1);
-	glVertex3d(x8,y8,z8);
-	glVertex3d(x7,y7,z7);
-	glVertex3d(x2,y2,z2);
-	glEnd();
-
-	/* 中側 Hue色 */
+	/* 外側 現位置Hue色 */
 	calcu_rgb_to_hsv cl_hsv;
 	double r=0.,g=0.,b=0.;
-	cl_hsv.from_hsv( hmax,1.,1. ,&r,&g,&b );
-	glColor3d(r,g,b);
+	cl_hsv.from_hsv( hue_max,1.,1. ,&r,&g,&b );
 
-	/* 中側 Hue色表示 */
-	glBegin(GL_QUADS);
-	glVertex3d(x2,y2,z2);
-	glVertex3d(x7,y7,z7);
-	glVertex3d(x6,y6,z6);
-	glVertex3d(x3,y3,z3);
-	//glVertex3dv(v7);
-	glEnd();
-
-	/* 内側 Target色 */
-	glColor3d(target_r,target_g,target_b);
-
-	/* 内側 Target色表示 */
-	glBegin(GL_QUADS);
-	glVertex3d(x3,y3,z3);
-	glVertex3d(x6,y6,z6);
-	glVertex3d(x5,y5,z5);
-	glVertex3d(x4,y4,z4);
-	glEnd();
-
-	/* 裏でも存在を示すためのワイヤーフレーム表示 */
-	glBegin(GL_LINE_LOOP);
-	glVertex3d(x1,y1,z1);
-	glVertex3d(x4,y4,z4);
-	glVertex3d(x5,y5,z5);
-	glVertex3d(x8,y8,z8);
-	glEnd();
-
+	draw_one_partition_(
+		x1,y1,z1 ,x4,y4,z4 ,x5,y5,z5 ,x8,y8,z8
+		,r,g,b
+		,target_r ,target_g ,target_b
+		,0.333333 ,0.333333 ,0.333333
+	);
 	}
-
-	/* thichness */
-	/* threshold_to_black */
 }
 
 double get_radius_(const double thickness ,const double tt ,const double offset)
@@ -953,16 +991,20 @@ double get_radius_(const double thickness ,const double tt ,const double offset)
 
 void draw_black_partition_(
 	double thickness
-	,double threshold_to_black
-	,double threshold_offset
+	,double threshold_slope_line
+	,double threshold_intercept
 )
 {
 	const double len = get_radius_(
-		thickness ,threshold_to_black ,threshold_offset
+		thickness ,threshold_slope_line ,threshold_intercept
 	);
 	const double zz = 1. - thickness;
 
+	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
+	glCullFace(GL_BACK);	/* 後面を破棄 */
+
 	glColor3d(1.,1.,1.);
+
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3d( 0. ,0. ,zz );
 	for (int ii=0; ii<=360; ++ii) {
@@ -979,22 +1021,22 @@ void draw_sep_hsv_()
 	||  (cl_gts_gui.menite_hsv_black_partition->value() != 0)) {
 	  for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
 	    if (area.enable_sw && area.hsv_view_guide_sw) {
-	      if ( area.hmin < 0. || area.hmax < 0.) {
+	      if ( area.hue_min < 0. || area.hue_max < 0.) {
 		if (cl_gts_gui.menite_hsv_black_partition->value() != 0) {
 			draw_black_partition_(
 				area.thickness
-				,area.threshold_to_black
-				,area.threshold_offset
+	,gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
+				,area.threshold_intercept
 			);
 		}
 	      } else {
 		if (cl_gts_gui.menite_hsv_hue_partition->value() != 0) {
 			draw_color_partition_(
 				area.thickness
-				,area.hmin
-				,area.hmax
-				,area.threshold_to_black
-				,area.threshold_offset
+				,area.hue_min
+				,area.hue_max
+	,gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
+				,area.threshold_intercept
 				,area.target_r
 				,area.target_g
 				,area.target_b

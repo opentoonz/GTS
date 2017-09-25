@@ -2622,7 +2622,7 @@ image_view->redraw();}
             Fl_Group group_trace_0 {open
               xywh {30 40 380 25}
             } {
-              Fl_Button but_trace_0_target {
+              Fl_Button but_trace_0_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,0
 );}
@@ -2640,17 +2640,17 @@ valinp_trace_0_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 40 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_0_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_0_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 40 44 25} maximum 100 step 0.1 value 50
+                xywh {295 40 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_0_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_0_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 40 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_0_thickness {
+              Fl_Check_Button chebut_trace_0_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 40 17 25} down_box DOWN_BOX value 1
@@ -2673,11 +2673,11 @@ hsv_view->redraw();}
               xywh {245 67 0 0} align 6
             }
             Fl_Text_Display {} {
-              label {Thres.}
+              label Slope
               xywh {295 67 0 0} align 6
             }
             Fl_Text_Display {} {
-              label Offset
+              label Intercept
               xywh {340 67 0 0} align 6
             }
           }
@@ -2694,7 +2694,7 @@ image_view->redraw();}
             Fl_Group group_trace_1 {open
               xywh {30 85 380 25}
             } {
-              Fl_Button but_trace_1_target {
+              Fl_Button but_trace_1_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,1
 );}
@@ -2712,27 +2712,27 @@ valinp_trace_1_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 85 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_1_hmin {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hmin = o->value();
+              Fl_Value_Input valinp_trace_1_hue_min {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hue_min = o->value();
 image_view->redraw();}
                 xywh {200 85 44 25} maximum 360 step 0.1 value 300
               }
-              Fl_Value_Input valinp_trace_1_hmax {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hmax = o->value();
+              Fl_Value_Input valinp_trace_1_hue_max {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hue_max = o->value();
 image_view->redraw();}
                 xywh {245 85 44 25} maximum 360 step 0.1 value 60
               }
-              Fl_Value_Input valinp_trace_1_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_1_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 85 44 25} maximum 100 step 0.1 value 50
+                xywh {295 85 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_1_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_1_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 85 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_1_partition_sw {
+              Fl_Check_Button chebut_trace_1_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 85 17 25} down_box DOWN_BOX value 1
@@ -2752,7 +2752,7 @@ image_view->redraw();}
             Fl_Group group_trace_2 {open
               xywh {30 115 380 25}
             } {
-              Fl_Button but_trace_2_target {
+              Fl_Button but_trace_2_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,2
 );}
@@ -2770,27 +2770,27 @@ valinp_trace_2_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 115 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_2_hmin {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hmin = o->value();
+              Fl_Value_Input valinp_trace_2_hue_min {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hue_min = o->value();
 image_view->redraw();}
                 xywh {200 115 44 25} maximum 360 step 0.1 value 180
               }
-              Fl_Value_Input valinp_trace_2_hmax {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hmax = o->value();
+              Fl_Value_Input valinp_trace_2_hue_max {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hue_max = o->value();
 image_view->redraw();}
                 xywh {245 115 44 25} maximum 360 step 0.1 value 300
               }
-              Fl_Value_Input valinp_trace_2_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_2_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 115 44 25} maximum 100 step 0.1 value 50
+                xywh {295 115 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_2_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_2_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 115 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_2_partition_sw {
+              Fl_Check_Button chebut_trace_2_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 115 17 25} down_box DOWN_BOX value 1
@@ -2810,7 +2810,7 @@ image_view->redraw();}
             Fl_Group group_trace_3 {open
               xywh {30 145 380 25}
             } {
-              Fl_Button but_trace_3_target {
+              Fl_Button but_trace_3_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,3
 );}
@@ -2828,27 +2828,27 @@ valinp_trace_3_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 145 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_3_hmin {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hmin = o->value();
+              Fl_Value_Input valinp_trace_3_hue_min {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hue_min = o->value();
 image_view->redraw();}
                 xywh {200 145 44 25} maximum 360 step 0.1 value 60
               }
-              Fl_Value_Input valinp_trace_3_hmax {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hmax = o->value();
+              Fl_Value_Input valinp_trace_3_hue_max {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hue_max = o->value();
 image_view->redraw();}
                 xywh {245 145 44 25} maximum 360 step 0.1 value 180
               }
-              Fl_Value_Input valinp_trace_3_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_3_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 145 44 25} maximum 100 step 0.1 value 50
+                xywh {295 145 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_3_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_3_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 145 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_3_partition_sw {
+              Fl_Check_Button chebut_trace_3_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 145 17 25} down_box DOWN_BOX value 1
@@ -2868,7 +2868,7 @@ image_view->redraw();}
             Fl_Group group_trace_4 {open
               xywh {30 175 380 25} deactivate
             } {
-              Fl_Button but_trace_4_target {
+              Fl_Button but_trace_4_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,4
 );}
@@ -2886,27 +2886,27 @@ valinp_trace_4_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 175 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_4_hmin {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hmin = o->value();
+              Fl_Value_Input valinp_trace_4_hue_min {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hue_min = o->value();
 image_view->redraw();}
                 xywh {200 175 44 25} maximum 360 step 0.1 value 180
               }
-              Fl_Value_Input valinp_trace_4_hmax {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hmax = o->value();
+              Fl_Value_Input valinp_trace_4_hue_max {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hue_max = o->value();
 image_view->redraw();}
                 xywh {245 175 44 25} maximum 360 step 0.1 value 180
               }
-              Fl_Value_Input valinp_trace_4_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_4_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 175 44 25} maximum 100 step 0.1 value 50
+                xywh {295 175 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_4_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_4_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 175 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_4_partition_sw {
+              Fl_Check_Button chebut_trace_4_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 175 17 25} down_box DOWN_BOX
@@ -2926,7 +2926,7 @@ image_view->redraw();}
             Fl_Group group_trace_5 {open
               xywh {30 205 380 25} deactivate
             } {
-              Fl_Button but_trace_5_target {
+              Fl_Button but_trace_5_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,5
 );}
@@ -2944,27 +2944,27 @@ valinp_trace_5_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 205 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_5_hmin {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hmin = o->value();
+              Fl_Value_Input valinp_trace_5_hue_min {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hue_min = o->value();
 image_view->redraw();}
                 xywh {200 205 44 25} maximum 360 step 0.1 value 300
               }
-              Fl_Value_Input valinp_trace_5_hmax {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hmax = o->value();
+              Fl_Value_Input valinp_trace_5_hue_max {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hue_max = o->value();
 image_view->redraw();}
                 xywh {245 205 44 25} maximum 360 step 0.1 value 300
               }
-              Fl_Value_Input valinp_trace_5_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_5_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 205 44 25} maximum 100 step 0.1 value 50
+                xywh {295 205 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_5_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_5_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 205 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_5_partition_sw {
+              Fl_Check_Button chebut_trace_5_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 205 17 25} down_box DOWN_BOX
@@ -2984,7 +2984,7 @@ image_view->redraw();}
             Fl_Group group_trace_6 {open
               xywh {30 235 380 25} deactivate
             } {
-              Fl_Button but_trace_6_target {
+              Fl_Button but_trace_6_target_rgb {
                 callback {cl_gts_master.cl_trace_params.cb_open_color_editor(
 	window_trace_params ,o ,6
 );}
@@ -3002,27 +3002,27 @@ valinp_trace_6_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 235 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
-              Fl_Value_Input valinp_trace_6_hmin {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hmin = o->value();
+              Fl_Value_Input valinp_trace_6_hue_min {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hue_min = o->value();
 image_view->redraw();}
                 xywh {200 235 44 25} maximum 360 step 0.1 value 60
               }
-              Fl_Value_Input valinp_trace_6_hmax {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hmax = o->value();
+              Fl_Value_Input valinp_trace_6_hue_max {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hue_max = o->value();
 image_view->redraw();}
                 xywh {245 235 44 25} maximum 360 step 0.1 value 60
               }
-              Fl_Value_Input valinp_trace_6_threshold_to_black {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_to_black = o->value()/o->maximum();
+              Fl_Value_Input valinp_trace_6_threshold_slope_deg {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_slope_deg = o->value();
 image_view->redraw();}
-                xywh {295 235 44 25} maximum 100 step 0.1 value 50
+                xywh {295 235 44 25} maximum 90 step 0.1 value 45
               }
-              Fl_Value_Input valinp_trace_6_threshold_offset {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_offset = o->value()/100.;
+              Fl_Value_Input valinp_trace_6_threshold_intercept {
+                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).threshold_intercept = o->value()/o->maximum();
 image_view->redraw();}
                 xywh {340 235 44 25} maximum 100 step 0.1 value 100
               }
-              Fl_Check_Button chebut_trace_6_partition_sw {
+              Fl_Check_Button chebut_trace_6_display_partition_sw {
                 callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hsv_view_guide_sw = (o->value()==1 ?true :false);
 hsv_view->redraw();}
                 xywh {390 235 17 25} down_box DOWN_BOX
@@ -3030,7 +3030,7 @@ hsv_view->redraw();}
             }
           }
           Fl_Group {} {open
-            xywh {415 100 15 145}
+            xywh {415 100 15 145} deactivate
           } {
             Fl_Button button_change_1_2 {
               image {updown.png} xywh {415 100 15 25}

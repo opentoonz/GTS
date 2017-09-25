@@ -11,6 +11,10 @@
 #include <FL/Fl_Gl_Window.H>
 
 namespace gts {
+
+double rad_from_deg( const double deg );
+double liner_from_rad( const double rad );
+
 class opengl_camera_eye {
 public:
 	opengl_camera_eye();

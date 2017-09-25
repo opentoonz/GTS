@@ -320,16 +320,28 @@ public:
 	    "color_trace_06_tgt_color")
 
 /*
+	,str_trace_0_enable_sw_(
+	    "trace_0_enable_sw")
+	,str_trace_0_target_rgb(
+	    "trace_0_target_rgb")
+	,str_trace_0_thickness(
+	    "trace_0_thickness")
+	,str_trace_0_hue_min(
+	    "trace_0_hue_min")
+	,str_trace_0_hue_max(
+	    "trace_0_hue_max")
+*/
+/*
 chkbtn_trace_0_enable_sw
 group_trace_0
-but_trace_0_target
+but_trace_0_target_rgb
 valinp_trace_0_thickness
 roller_trace_0_thickness
-valinp_trace_1_hmin
-valinp_trace_1_hmax
-valinp_trace_0_threshold_to_black
-valinp_trace_0_threshold_offset
-chebut_trace_0_thickness
+valinp_trace_1_hue_min
+valinp_trace_1_hue_max
+valinp_trace_0_threshold_slope_deg
+valinp_trace_0_threshold_intercept
+chebut_trace_0_display_partition_sw
 */
 	,load_config_sw_(true)
 	,load_image_sw_(true)
