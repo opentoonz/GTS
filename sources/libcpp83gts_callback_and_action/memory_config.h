@@ -319,30 +319,29 @@ public:
 	,str_color_trace_06_tgt_color_(
 	    "color_trace_06_tgt_color")
 
-/*
-	,str_trace_0_enable_sw_(
-	    "trace_0_enable_sw")
-	,str_trace_0_target_rgb(
-	    "trace_0_target_rgb")
-	,str_trace_0_thickness(
-	    "trace_0_thickness")
-	,str_trace_0_hue_min(
-	    "trace_0_hue_min")
-	,str_trace_0_hue_max(
-	    "trace_0_hue_max")
-*/
-/*
-chkbtn_trace_0_enable_sw
-group_trace_0
-but_trace_0_target_rgb
-valinp_trace_0_thickness
-roller_trace_0_thickness
-valinp_trace_1_hue_min
-valinp_trace_1_hue_max
-valinp_trace_0_threshold_slope_deg
-valinp_trace_0_threshold_intercept
-chebut_trace_0_display_partition_sw
-*/
+	,str_trace_display_main_sw_(
+	    "trace_display_main_sw")
+	,str_trace_params_title_(
+	    "trace_params")
+	/*   1234567890123456789012345678 */
+	/*                6 */
+		 ,str_trace_enable_sw_(
+			   "enable_sw")
+		 ,str_trace_target_rgb_(
+			   "target_rgb")
+		 ,str_trace_thickness_(
+			   "thickness")
+		 ,str_trace_hue_min_(
+			   "hue_min")
+		 ,str_trace_hue_max_(
+			   "hue_max")
+		 ,str_trace_slope_deg_(
+			   "slope_deg")
+		 ,str_trace_intercept_(
+			   "intercept")
+		 ,str_trace_display_sw_(
+			   "display_sw")
+
 	,load_config_sw_(true)
 	,load_image_sw_(true)
 	,load_scan_and_save_sw_(true)
@@ -350,6 +349,7 @@ chebut_trace_0_display_partition_sw
 	,load_crop_area_and_rot90_sw_(true)
 	,load_pixel_type_and_bright_sw_(true)
 	,load_trace_parameters_sw_(true)
+	,load_trace_params_sw_(true)
 	,load_trace_batch_sw_(true)
 	,load_number_sw_(true)
 	{
@@ -361,6 +361,7 @@ chebut_trace_0_display_partition_sw
 	int load_only_trace_parameters( const std::string& file_path );
 	int load_only_area_and_rot90( const std::string& file_path);
 	int load_only_pixel_type_and_bright( const std::string& file_path);
+	int load_only_trace_params( const std::string& file_path );
 
 private:
 	const char* str_on_;
@@ -529,6 +530,17 @@ private:
 	const char* str_color_trace_06_tgt_rgb_;
 	const char* str_color_trace_06_tgt_color_;
 
+	const char* str_trace_display_main_sw_;
+	const char* str_trace_params_title_;
+	const char* str_trace_enable_sw_;
+	const char* str_trace_target_rgb_;
+	const char* str_trace_thickness_;
+	const char* str_trace_hue_min_;
+	const char* str_trace_hue_max_;
+	const char* str_trace_slope_deg_;
+	const char* str_trace_intercept_;
+	const char* str_trace_display_sw_;
+
 	bool load_config_sw_;
 	bool load_image_sw_;
 	bool load_scan_and_save_sw_;
@@ -536,13 +548,14 @@ private:
 	bool load_crop_area_and_rot90_sw_;
 	bool load_pixel_type_and_bright_sw_;
 	bool load_trace_parameters_sw_;
+	bool load_trace_params_sw_;
 	bool load_trace_batch_sw_;
 	bool load_number_sw_;
 
 	//-------------------------------------
 
 	void save_bool_(
-		const std::string& key ,const char sw ,std::ofstream& ofs
+		const std::string& key ,const int sw ,std::ofstream& ofs
 	);
 	void save_head_( std::ofstream& ofs );
 	void save_config_( std::ofstream& ofs );
@@ -552,6 +565,7 @@ private:
 	void save_crop_area_and_rot90_( std::ofstream& ofs );
 	void save_pixel_type_and_bright_( std::ofstream& ofs );
 	void save_trace_parameters_( std::ofstream& ofs );
+	void save_trace_params_( std::ofstream& ofs );
 	void save_trace_batch_( std::ofstream& ofs );
 	void save_number_( std::ofstream& ofs );
 
@@ -569,6 +583,7 @@ private:
 	bool load_crop_area_and_rot90_( std::vector< std::string >& words );
 	bool load_pixel_type_and_bright_(std::vector< std::string >& words);
 	bool load_trace_parameters_( std::vector< std::string >& words );
+	bool load_trace_params_( std::vector< std::string >& words );
 	bool load_trace_batch_( std::vector< std::string >& words );
 	bool load_number_( std::vector< std::string >& words );
 };

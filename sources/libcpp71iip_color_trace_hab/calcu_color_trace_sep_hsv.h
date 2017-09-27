@@ -30,7 +30,7 @@ HSV色立体から各色区域分けをして目的の色を得る
 
  1 HSV立体のSV断面
 	S=0,V=0からS=1,V=1への直線上をたどるパラメータをTとする
-		T=calcu_sep_hsv::threshold_slope_deg
+		T=calcu_sep_hsv::slope_deg
 	Tの位置からS=0,V=1位置へ直線を引き、この直線で上下に分けることで、
 	色領域か黒領域か判断を行う
 		T=0	色味なし
@@ -103,15 +103,15 @@ public:
 		this->s_mul_v_ = (s * v);
 	}
 	inline bool is_black_side(
-		const double threshold_slope_line ,const double offset
+		const double slope_line ,const double offset
 	) {
-		if ( threshold_slope_line == 0.) { /* threshold_slope_degが0なら全て色部分 */
+		if ( slope_line == 0.) { /* slope_degが0なら全て色部分 */
 			return false;
 		}
 		if (this->s_mul_v_ == 0.) {/* 色味か明度がゼロなら黒部分 */
 			return true;
 		}
-		if ( ((1. - threshold_slope_line) / threshold_slope_line) <
+		if ( ((1. - slope_line) / slope_line) <
 		(this->one_minus_v_ - (1. - offset)) / this->s_mul_v_ ) {
 			return true;	/* 斜め切断して黒味側 */
 		}
@@ -123,20 +123,20 @@ private:
 /*-------------------------------------------------------*/
 class calcu_sep_hsv {
 public:
-	bool	enable_sw;	/* 2値化処理実行 false=他の2値化処理へ */
+	bool	enable_sw;	/* 2値化処理実行sw(false=他の2値化処理へ) */
 
 	double	 target_r	/* 0...1 結果色 */
 		,target_g
 		,target_b;
 
-	double	thickness;	/* 0...1 色/黒線太さ(=彩度最小値) */
+	double	thickness;	/* 0...1 色/黒線太さ */
 
-	double	hue_min , hue_max;	/* 0...360 拾うべき色相範囲
-					0より小さいなら色でなく黒扱う */
-	double	threshold_slope_deg;/* 0...1 SV面上黒線との取合い境界 */
-	double	threshold_intercept;/* 0...1 SV面上黒線との
-				取合い境界線の原点位置のオフセット */
-	bool	hsv_view_guide_sw;	/* hsv viewerで範囲を表示するsw */
+	double	hue_min
+		,hue_max;	/* 0...360 拾うべき色相範囲
+				   Minusの場合は黒扱う */
+	double	slope_deg;	/* 0...90 黒-色の境界傾き */
+	double	intercept;	/* 0... 1 黒-色の境界切片 */
+	bool	display_sw;	/* 黒-色の境界を表示するsw */
 };
 /*-------------------------------------------------------*/
 /* いままでのクラスと共存させるための一時的措置 --> 要refactering */
@@ -157,21 +157,19 @@ public:
 	:target_paper_r_(1.)
 	,target_paper_g_(1.)
 	,target_parer_b_(1.)
+	,cla_area_param(
+{{ true  ,0.,0.,0. ,0.7 , -1 , -1  ,45.,1. ,true  } /* 0 黒 */
+,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,45.,1. ,true  } /* 1 赤 */
+,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,45.,1. ,true  } /* 2 青 */
+,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,45.,1. ,true  } /* 3 緑 */
+,{ false ,0.,1.,1. ,0.7 ,120.,240. ,45.,1. ,false } /* 4 水 */
+,{ false ,1.,0.,1. ,0.7 ,240.,360. ,45.,1. ,false } /* 5 紫 */
+,{ false ,1.,1.,0. ,0.7   ,0.,120. ,45.,1. ,false } /* 6 黄(or オレンジ) */
+}
+	)
 	{}
 
 	std::vector<calcu_sep_hsv> cla_area_param;
-
-	void setup_default_area_param(void) {
-		this->cla_area_param = {
- { true  ,0.,0.,0. ,0.7 , -1 , -1  ,45.,1. ,true  } /* 黒 */
-,{ true  ,1.,0.,0. ,0.7 ,300., 60. ,45.,1. ,true  } /* 赤 */
-,{ true  ,0.,0.,1. ,0.7 ,180.,300. ,45.,1. ,true  } /* 青 */
-,{ true  ,0.,1.,0. ,0.7 , 60.,180. ,45.,1. ,true  } /* 緑 */
-,{ false ,0.,1.,1. ,0.7 ,120.,240. ,45.,1. ,false } /* 水 */
-,{ false ,1.,0.,1. ,0.7 ,240.,360. ,45.,1. ,false } /* 紫 */
-,{ false ,1.,1.,0. ,0.7   ,0.,120. ,45.,1. ,false } /* 黄(or オレンジ) */
-		};
-	}
 
 	/* hh = 0...360 , ss,vv,rr,gg,bb = 0...1 */
 	bool exec(

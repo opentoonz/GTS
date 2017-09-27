@@ -33,7 +33,7 @@ void iip_color_trace_sep_hsv_exec_(
 {
   if ( cl_gts_gui.hsv_view->vbo.get_hsv_view_start_sw() ) {
   /*--- hsv viewウインドウのOpenGL初期化済 --> image view及びhsv view ---*/
-std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Start" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
+//std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Start" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
 
 	/* vbo初期化 */
 	if ( cl_gts_gui.hsv_view->vbo.open_or_reopen(
@@ -179,7 +179,7 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
   }
   else {
   /*--- hsv viewウインドウのOpenGL初期化してないのでimage viewのみ ---*/
-std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Off" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
+//std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Off" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
 	/* 初期パラメータ設定 */
 	calcu_rgb_to_hsv rgb2hsv;
 	const int scan_size = width * channels;

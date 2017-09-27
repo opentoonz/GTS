@@ -17,14 +17,14 @@ void save_stri_(
 	const std::string& key ,const std::string& val ,std::ofstream& ofs
 )
 {
-	ofs << std::setw(28) << std::left  << key
+	ofs << std::setw(32) << std::left  << key
 	    << ' ' << '\"'  << std::right << val << '\"' << '\n';
 }
 void save_fl64_(
 	const std::string& key ,const double val ,std::ofstream& ofs
 )
 {
-	ofs << std::setw(28) << std::left << key
+	ofs << std::setw(32) << std::left << key
 	    << ' ' << std::right << std::setprecision(16) << val<< '\n';
 	/*	double(=倍精度浮動小数点数)の精度は
 		53bit約16桁(=53log10(2)=15.954589...) */
@@ -34,15 +34,15 @@ void save_3int_(
 	,std::ofstream& ofs
 )
 {
-	ofs << std::setw(28) << std::left << key
+	ofs << std::setw(32) << std::left << key
 	    << ' ' << rr << ' ' << gg << ' ' << bb << '\n';
 }
 
 } // namespace
 
-void memory_config::save_bool_( const std::string& key ,const char sw ,std::ofstream& ofs )
+void memory_config::save_bool_( const std::string& key ,const int sw ,std::ofstream& ofs )
 {
-	ofs	<< std::setw(28) << std::left << key
+	ofs	<< std::setw(32) << std::left << key
 		<< ' ' << std::right
 		<< (sw==1 ?this->str_on_:this->str_off_) << '\n';
 }
@@ -140,7 +140,7 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 	  , cl_gts_gui.chkbtn_trace_filter_trace_sw->value() ,ofs );
 */
 	this->save_bool_( this->str_trace_filter_erase_dot_noise_sw_
-		, cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
+	  , cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
 
 	save_stri_( this->str_trace_save_dir_path_
 	   ,cl_gts_gui.filinp_trace_save_dir_path->value() ,ofs );
@@ -367,6 +367,76 @@ void memory_config::save_trace_parameters_( std::ofstream& ofs )
 		, ofs
 	);
 }
+void memory_config::save_trace_params_( std::ofstream& ofs )
+{
+	ofs << "\n# " <<  cl_gts_gui.window_trace_params->label() << "\n";
+
+	this->save_bool_( this->str_trace_display_main_sw_
+	  , cl_gts_gui.chebut_trace_display_main_sw->value(),ofs);
+
+	std::vector<cb_trace_params::widget_set>& wset(
+		cl_gts_master.cl_trace_params.widget_sets
+	);
+	for (unsigned ii=0 ; ii < wset.size() ; ++ii) {
+		auto& trace_set = wset.at(ii);
+		std::string ti( this->str_trace_params_title_ );
+		ti += " ";
+		ti += std::to_string(ii);
+		ti += " ";
+
+		this->save_bool_(
+			ti+this->str_trace_enable_sw_
+			,trace_set.chebut_enable_sw->value()
+			,ofs
+		);
+
+		unsigned char r=0, g=0, b=0;
+		cl_gts_master.cl_trace_params.get_target_rgb( ii ,r ,g ,b );
+		save_3int_(
+			ti+this->str_trace_target_rgb_
+			,static_cast<int>(r)
+			,static_cast<int>(g)
+			,static_cast<int>(b)
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_thickness_
+			,trace_set.valinp_thickness->value()
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_hue_min_
+			,trace_set.valinp_hue_min->value()
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_hue_max_
+			,trace_set.valinp_hue_max->value()
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_slope_deg_
+			,trace_set.valinp_slope_deg->value()
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_intercept_
+			,trace_set.valinp_intercept->value()
+			,ofs
+		);
+
+		this->save_bool_(
+			ti+this->str_trace_display_sw_
+			,trace_set.chebut_display_sw->value()
+			,ofs
+		);
+	}
+}
 void memory_config::save_trace_batch_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_trace_batch->label() << "\n";
@@ -415,7 +485,8 @@ int memory_config::save( const std::string& file_path )
 	this->save_trace_files_(ofs);
 	this->save_crop_area_and_rot90_(ofs);
 	this->save_pixel_type_and_bright_(ofs);
-	this->save_trace_parameters_(ofs);
+	//this->save_trace_parameters_(ofs);
+	this->save_trace_params_(ofs);
 	this->save_trace_batch_(ofs);
 	this->save_number_(ofs);
 	ofs.close(); /* ファイル閉じる */

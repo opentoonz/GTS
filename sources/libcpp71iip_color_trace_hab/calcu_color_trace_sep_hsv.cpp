@@ -24,8 +24,8 @@ bool calcu_color_trace_sep_hsv::exec(
 			/* 色味範囲のときは次ループへ */
 			if ((0. < vv) && (0. < ss)
 			&& (sep_b_and_c.is_black_side(
-	gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
-			,area.threshold_intercept
+	gts::liner_from_rad(gts::rad_from_deg(area.slope_deg))
+			,area.intercept
 			) == false)) {
 				continue;
 			}
@@ -55,8 +55,8 @@ bool calcu_color_trace_sep_hsv::exec(
 
 			/* 黒味範囲のときは次ループへ */
 			if (sep_b_and_c.is_black_side(
-	gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
-			,area.threshold_intercept
+	gts::liner_from_rad(gts::rad_from_deg(area.slope_deg))
+			,area.intercept
 			)) {
 				continue;
 			}

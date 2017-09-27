@@ -991,12 +991,12 @@ double get_radius_(const double thickness ,const double tt ,const double offset)
 
 void draw_black_partition_(
 	double thickness
-	,double threshold_slope_line
-	,double threshold_intercept
+	,double slope_line
+	,double intercept
 )
 {
 	const double len = get_radius_(
-		thickness ,threshold_slope_line ,threshold_intercept
+		thickness ,slope_line ,intercept
 	);
 	const double zz = 1. - thickness;
 
@@ -1020,13 +1020,13 @@ void draw_sep_hsv_()
 	if ((cl_gts_gui.menite_hsv_hue_partition->value() != 0)
 	||  (cl_gts_gui.menite_hsv_black_partition->value() != 0)) {
 	  for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
-	    if (area.enable_sw && area.hsv_view_guide_sw) {
+	    if (area.enable_sw && area.display_sw) {
 	      if ( area.hue_min < 0. || area.hue_max < 0.) {
 		if (cl_gts_gui.menite_hsv_black_partition->value() != 0) {
 			draw_black_partition_(
 				area.thickness
-	,gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
-				,area.threshold_intercept
+	,gts::liner_from_rad(gts::rad_from_deg(area.slope_deg))
+				,area.intercept
 			);
 		}
 	      } else {
@@ -1035,8 +1035,8 @@ void draw_sep_hsv_()
 				area.thickness
 				,area.hue_min
 				,area.hue_max
-	,gts::liner_from_rad(gts::rad_from_deg(area.threshold_slope_deg))
-				,area.threshold_intercept
+	,gts::liner_from_rad(gts::rad_from_deg(area.slope_deg))
+				,area.intercept
 				,area.target_r
 				,area.target_g
 				,area.target_b
@@ -1053,7 +1053,7 @@ void fl_gl_hsv_view::draw_object_()
 {
 	/* エリアガイド表示 */
 	glColor3d(1.0, 1.0, 1.0);
-	glutWireCone(1.0 ,1.0 ,36 ,10);
+	glutWireCone(1.0 ,1.0 ,36 ,2);
 
 	/* 中心軸ガイド表示 */
 	glColor3d(1.0, 1.0, 1.0); // Draw red 

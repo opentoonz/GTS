@@ -117,9 +117,6 @@ int gts_master::exec( const char *comm )
 	this->cl_image.ext_save.set_filter("TIFF",".tif");/* 0番目 */
 	this->cl_image.ext_save.set_filter( "TGA",".tga");/* 1番目 */
 
-	/* 2値化のための初期設定 --> あとでrefactoring必要 */
-	this->cl_calcu_sep_hsv.setup_default_area_param();
-
 	/*
 		GUI(fltk)生成
 	*/
@@ -148,15 +145,18 @@ int gts_master::exec( const char *comm )
 			this->cl_scan_and_save.ext_save.str_from_num(ii).c_str()
 		);
 	}
+	       cl_gts_gui.choice_scan_save_image_format->value(0);
 	for(int ii=0;ii<this->cl_trace_files.ext_open.size() ;++ii) {
 	       cl_gts_gui.choice_trace_open_image_format->add(
 			this->cl_trace_files.ext_open.str_from_num(ii).c_str()
 		);
+	       cl_gts_gui.choice_trace_open_image_format->value(0);
 	}
 	for(int ii=0;ii<this->cl_trace_files.ext_save.size() ;++ii) {
 	       cl_gts_gui.choice_trace_save_image_format->add(
 			this->cl_trace_files.ext_save.str_from_num(ii).c_str()
 		);
+	       cl_gts_gui.choice_trace_save_image_format->value(0);
 	}
 
 	/* Save File Number Formatについての選択リスト設定 */
@@ -259,6 +259,10 @@ int gts_master::exec( const char *comm )
 	cl_gts_gui.window_main_view->show();
 	cl_gts_gui.window_main_view->wait_for_expose();
 	Fl::flush();
+
+	/* trace paramsのguiを配列で利用するための変数初期設定 */
+	this->cl_trace_params.init_widget_set();
+	this->cl_trace_params.init_color(); /* init_widget_set()後使用 */
 
 	/* scan_area.txtによるscan area位置とサイズを読んで設定 */
 	/*if (OK != this->cl_memo_scan_area.load( comm )) {

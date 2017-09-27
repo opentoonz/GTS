@@ -115,6 +115,10 @@ void memory_config::load_ifs_(
 		&&	this->load_trace_parameters_(words)) {
 			continue;
 		}
+		if (	this->load_trace_params_sw_
+		&&	this->load_trace_params_(words)) {
+			continue;
+		}
 		/* pri_funct_err_bttvr(
 			"Warning : ignore '%s' at line %d"
 			,str.c_str() ,ii ); */
@@ -938,6 +942,85 @@ bool memory_config::load_trace_parameters_( std::vector< std::string >& words )
 	}
 	return true;
 }
+bool memory_config::load_trace_params_( std::vector< std::string >& words )
+{
+	if (words.size() == 2) {
+	 if (words.at(0) == this->str_trace_display_main_sw_) {
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		cl_gts_gui.chebut_trace_display_main_sw->value( sw_num );
+	 } else {
+		return false; // not defined
+	 }
+	} else if ((words.size() == 4) || (words.size() == 6)) {
+	 if (words.at(0) == this->str_trace_params_title_) {
+	  const int num = std::stoi(words.at(1));
+	  std::vector<cb_trace_params::widget_set>& vwset(
+		cl_gts_master.cl_trace_params.widget_sets
+	  );
+	  if (num < 0 || static_cast<int>(vwset.size()) <= num) {
+		return false; // bad number
+	  }
+
+	  cb_trace_params::widget_set& wset( vwset.at(num) );
+	  calcu_sep_hsv& vset(
+	  	cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(num)
+	  );
+
+	  if        (words.at(2) == this->str_trace_enable_sw_) {
+		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+		vset.enable_sw = ((sw_num==1) ?true :false);
+	  } else if (words.at(2) == this->str_trace_target_rgb_) {
+		if (words.size() != 6) {
+			return false; // bad word's count
+		}
+		const uchar r = static_cast<uchar>(std::stoi(words.at(3)));
+		const uchar g = static_cast<uchar>(std::stoi(words.at(4)));
+		const uchar b = static_cast<uchar>(std::stoi(words.at(5)));
+		cl_gts_master.cl_trace_params.set_target_rgb( num ,r,g,b );
+		wset.button_target_rgb->redraw();
+		const double mx = (std::numeric_limits<uchar>::max)();
+		vset.target_r = static_cast<double>(r) / mx;
+		vset.target_g = static_cast<double>(g) / mx;
+		vset.target_b = static_cast<double>(b) / mx;
+	  } else if (words.at(2) == this->str_trace_thickness_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_thickness->value(va);
+		wset.roller_thickness->value(va);
+		vset.thickness = va / wset.valinp_thickness->maximum();
+	  } else if (words.at(2) == this->str_trace_hue_min_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_hue_min->value(va);
+		vset.hue_min = va;
+	  } else if (words.at(2) == this->str_trace_hue_max_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_hue_max->value(va);
+		vset.hue_max = va;
+	  } else if (words.at(2) == this->str_trace_slope_deg_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_slope_deg->value(va);
+		vset.slope_deg = va;
+	  } else if (words.at(2) == this->str_trace_intercept_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_intercept->value(va);
+		vset.intercept = va / wset.valinp_intercept->maximum();
+	  } else if (words.at(2) == this->str_trace_display_sw_) {
+		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
+		wset.chebut_display_sw->value(sw_num);
+		vset.display_sw = ((sw_num==1) ?true :false);
+	  } else {
+		return false; // not defined
+	  }
+	 } else {
+		return false; // not defined
+	 }
+	} else {
+		return false; // not defined
+	}
+	return true;
+}
 
 int memory_config::load_only_trace_parameters( const std::string& file_path)
 {
@@ -947,7 +1030,8 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = false;
 	this->load_pixel_type_and_bright_sw_ = false;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;	// <---------
+	this->load_trace_params_sw_ = false;
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
 
@@ -959,7 +1043,8 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
 	this->load_pixel_type_and_bright_sw_ = true;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
 	this->load_trace_batch_sw_ = true;
 	this->load_number_sw_ = true;
 	return ret;
@@ -970,9 +1055,10 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 	this->load_image_sw_ = false;
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
-	this->load_crop_area_and_rot90_sw_ = true; // True only this.
+	this->load_crop_area_and_rot90_sw_ = true; // <---------
 	this->load_pixel_type_and_bright_sw_ = false;
 	this->load_trace_parameters_sw_ = false;
+	this->load_trace_params_sw_ = false;
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
 
@@ -984,7 +1070,8 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
 	this->load_pixel_type_and_bright_sw_ = true;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
 	this->load_trace_batch_sw_ = true;
 	this->load_number_sw_ = true;
 	return ret;
@@ -996,8 +1083,9 @@ int memory_config::load_only_pixel_type_and_bright( const std::string& file_path
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = false;
-	this->load_pixel_type_and_bright_sw_ = true; // True only this.
+	this->load_pixel_type_and_bright_sw_ = true; // <----------
 	this->load_trace_parameters_sw_ = false;
+	this->load_trace_params_sw_ = false;
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
 
@@ -1009,7 +1097,35 @@ int memory_config::load_only_pixel_type_and_bright( const std::string& file_path
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
 	this->load_pixel_type_and_bright_sw_ = true;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
+	this->load_trace_batch_sw_ = true;
+	this->load_number_sw_ = true;
+	return ret;
+}
+int memory_config::load_only_trace_params( const std::string& file_path)
+{
+	this->load_config_sw_ = false;
+	this->load_image_sw_ = false;
+	this->load_scan_and_save_sw_ = false;
+	this->load_trace_files_sw_ = false;
+	this->load_crop_area_and_rot90_sw_ = false;
+	this->load_pixel_type_and_bright_sw_ = false;
+	this->load_trace_parameters_sw_ = false;
+	this->load_trace_params_sw_ = true;	// <---------
+	this->load_trace_batch_sw_ = false;
+	this->load_number_sw_ = false;
+
+	const int ret = this->load(file_path , this->load_trace_batch_sw_);
+
+	this->load_config_sw_ = true;
+	this->load_image_sw_ = true;
+	this->load_scan_and_save_sw_ = true;
+	this->load_trace_files_sw_ = true;
+	this->load_crop_area_and_rot90_sw_ = true;
+	this->load_pixel_type_and_bright_sw_ = true;
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
 	this->load_trace_batch_sw_ = true;
 	this->load_number_sw_ = true;
 	return ret;
