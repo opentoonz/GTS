@@ -1374,6 +1374,10 @@ private:
   static void cb_Open2(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_display_main_sw;
+private:
+  inline void cb_chebut_trace_display_main_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_display_main_sw(Fl_Check_Button*, void*);
+public:
   Fl_Check_Button *chebut_trace_0_enable_sw;
 private:
   inline void cb_chebut_trace_0_enable_sw_i(Fl_Check_Button*, void*);
@@ -1718,16 +1722,6 @@ public:
 private:
   inline void cb_menite_hsv_dot_black_i(Fl_Menu_*, void*);
   static void cb_menite_hsv_dot_black(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_hsv_hue_partition;
-private:
-  inline void cb_menite_hsv_hue_partition_i(Fl_Menu_*, void*);
-  static void cb_menite_hsv_hue_partition(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_hsv_black_partition;
-private:
-  inline void cb_menite_hsv_black_partition_i(Fl_Menu_*, void*);
-  static void cb_menite_hsv_black_partition(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_hsv_random_position;
 private:

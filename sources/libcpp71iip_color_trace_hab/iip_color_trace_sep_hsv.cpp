@@ -97,7 +97,8 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 		,static_cast<double>(inn_x[CH_BLU] >> shift_bit)/max_val_inn
 		,&hh, &ss, &vv );
 		/* 2値化するかどうか判断 */
-		if (cl_gts_gui.menite_hsv_dot_trace_area->value() != 0) {
+		//if (cl_gts_gui.menite_hsv_dot_trace_area->value() != 0) {
+		if (cl_gts_gui.chebut_trace_display_main_sw->value() != 0) {
 		  double	rr=0., gg=0., bb=0.;
 		  if (!calcu_sep_hsv.exec( hh, ss, vv, &rr, &gg, &bb )) {
 	    		rgb[CH_RED] = max_glub_out;

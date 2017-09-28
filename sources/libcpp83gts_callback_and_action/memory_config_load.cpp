@@ -962,16 +962,12 @@ bool memory_config::load_trace_params_( std::vector< std::string >& words )
 	  }
 
 	  cb_trace_params::widget_set& wset( vwset.at(num) );
-	  calcu_sep_hsv& vset(
-	  	cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(num)
-	  );
 
 	  if        (words.at(2) == this->str_trace_enable_sw_) {
 		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
 		wset.chebut_enable_sw->value(sw_num);
 		if (sw_num == 1){ wset.group_trace->activate(); }
 		else		{ wset.group_trace->deactivate(); }
-		vset.enable_sw = ((sw_num==1) ?true :false);
 	  } else if (words.at(2) == this->str_trace_target_rgb_) {
 		if (words.size() != 6) {
 			return false; // bad word's count
@@ -981,35 +977,25 @@ bool memory_config::load_trace_params_( std::vector< std::string >& words )
 		const uchar b = static_cast<uchar>(std::stoi(words.at(5)));
 		cl_gts_master.cl_trace_params.set_target_rgb( num ,r,g,b );
 		wset.button_target_rgb->redraw();
-		const double mx = (std::numeric_limits<uchar>::max)();
-		vset.target_r = static_cast<double>(r) / mx;
-		vset.target_g = static_cast<double>(g) / mx;
-		vset.target_b = static_cast<double>(b) / mx;
 	  } else if (words.at(2) == this->str_trace_thickness_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_thickness->value(va);
 		wset.roller_thickness->value(va);
-		vset.thickness = va / wset.valinp_thickness->maximum();
 	  } else if (words.at(2) == this->str_trace_hue_min_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_hue_min->value(va);
-		vset.hue_min = va;
 	  } else if (words.at(2) == this->str_trace_hue_max_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_hue_max->value(va);
-		vset.hue_max = va;
 	  } else if (words.at(2) == this->str_trace_slope_deg_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_slope_deg->value(va);
-		vset.slope_deg = va;
 	  } else if (words.at(2) == this->str_trace_intercept_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_intercept->value(va);
-		vset.intercept = va / wset.valinp_intercept->maximum();
 	  } else if (words.at(2) == this->str_trace_display_sw_) {
 		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
 		wset.chebut_display_sw->value(sw_num);
-		vset.display_sw = ((sw_num==1) ?true :false);
 	  } else {
 		return false; // not defined
 	  }

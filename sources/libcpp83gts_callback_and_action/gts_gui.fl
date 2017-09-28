@@ -2611,14 +2611,14 @@ cl_gts_gui.menite_trace_params->clear();}
           }
           Fl_Check_Button chebut_trace_display_main_sw {
             label {Guide Display}
+            callback {image_view->redraw();}
             xywh {390 10 17 25} down_box DOWN_BOX align 4
           }
           Fl_Group {} {open
             xywh {0 40 410 25}
           } {
             Fl_Check_Button chebut_trace_0_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_0->activate();  }
+              callback {if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
 image_view->redraw();}
               xywh {10 40 17 25} down_box DOWN_BOX value 1 align 4
@@ -2633,14 +2633,12 @@ image_view->redraw();}
                 xywh {30 40 25 25} color 16
               }
               Fl_Value_Input valinp_trace_0_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).thickness = o->value()/o->maximum();
-roller_trace_0_thickness->value(o->value());
+                callback {roller_trace_0_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 40 44 25} box BORDER_BOX maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_0_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).thickness = o->value()/o->maximum();
-valinp_trace_0_thickness->value(o->value());
+                callback {valinp_trace_0_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 40 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
@@ -2651,18 +2649,15 @@ image_view->redraw();}
                 xywh {245 40 44 25} maximum 360 step 0.1 value -1 hide
               }
               Fl_Value_Input valinp_trace_0_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 40 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_0_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 40 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_0_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(0).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 40 17 25} down_box DOWN_BOX
               }
             }
@@ -2695,8 +2690,7 @@ hsv_view->redraw();}
             xywh {0 85 410 25}
           } {
             Fl_Check_Button chebut_trace_1_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_1->activate();  }
+              callback {if (o->value()) {group_trace_1->activate();  }
 else            {group_trace_1->deactivate();}
 image_view->redraw();}
               xywh {10 85 17 25} down_box DOWN_BOX value 1 align 4
@@ -2711,40 +2705,33 @@ image_view->redraw();}
                 xywh {30 85 25 25} color 17
               }
               Fl_Value_Input valinp_trace_1_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).thickness = o->value()/o->maximum();
-roller_trace_1_thickness->value(o->value());
+                callback {roller_trace_1_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 85 44 25} maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_1_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).thickness = o->value()/o->maximum();
-valinp_trace_1_thickness->value(o->value());
+                callback {valinp_trace_1_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 85 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_1_hue_min {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hue_min = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {200 85 44 25} maximum 360 step 0.1 value 300
               }
               Fl_Value_Input valinp_trace_1_hue_max {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).hue_max = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {245 85 44 25} maximum 360 step 0.1 value 60
               }
               Fl_Value_Input valinp_trace_1_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 85 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_1_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 85 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_1_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(1).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 85 17 25} down_box DOWN_BOX
               }
             }
@@ -2753,8 +2740,7 @@ hsv_view->redraw();}
             xywh {0 115 410 25}
           } {
             Fl_Check_Button chebut_trace_2_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_2->activate();  }
+              callback {if (o->value()) {group_trace_2->activate();  }
 else            {group_trace_2->deactivate();}
 image_view->redraw();}
               xywh {10 115 17 25} down_box DOWN_BOX value 1 align 4
@@ -2769,40 +2755,33 @@ image_view->redraw();}
                 xywh {30 115 25 25} color 18
               }
               Fl_Value_Input valinp_trace_2_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).thickness = o->value()/o->maximum();
-roller_trace_2_thickness->value(o->value());
+                callback {roller_trace_2_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 115 44 25} maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_2_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).thickness = o->value()/o->maximum();
-valinp_trace_2_thickness->value(o->value());
+                callback {valinp_trace_2_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 115 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_2_hue_min {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hue_min = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {200 115 44 25} maximum 360 step 0.1 value 180
               }
               Fl_Value_Input valinp_trace_2_hue_max {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).hue_max = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {245 115 44 25} maximum 360 step 0.1 value 300
               }
               Fl_Value_Input valinp_trace_2_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 115 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_2_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 115 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_2_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(2).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 115 17 25} down_box DOWN_BOX
               }
             }
@@ -2811,8 +2790,7 @@ hsv_view->redraw();}
             xywh {0 145 410 25}
           } {
             Fl_Check_Button chebut_trace_3_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_3->activate();  }
+              callback {if (o->value()) {group_trace_3->activate();  }
 else            {group_trace_3->deactivate();}
 image_view->redraw();}
               xywh {10 145 17 25} down_box DOWN_BOX value 1 align 4
@@ -2827,40 +2805,33 @@ image_view->redraw();}
                 xywh {30 145 25 25} color 19
               }
               Fl_Value_Input valinp_trace_3_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).thickness = o->value()/o->maximum();
-roller_trace_3_thickness->value(o->value());
+                callback {roller_trace_3_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 145 44 25} maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_3_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).thickness = o->value()/o->maximum();
-valinp_trace_3_thickness->value(o->value());
+                callback {valinp_trace_3_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 145 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_3_hue_min {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hue_min = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {200 145 44 25} maximum 360 step 0.1 value 60
               }
               Fl_Value_Input valinp_trace_3_hue_max {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).hue_max = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {245 145 44 25} maximum 360 step 0.1 value 180
               }
               Fl_Value_Input valinp_trace_3_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 145 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_3_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 145 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_3_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(3).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 145 17 25} down_box DOWN_BOX
               }
             }
@@ -2869,8 +2840,7 @@ hsv_view->redraw();}
             xywh {0 175 410 25}
           } {
             Fl_Check_Button chebut_trace_4_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_4->activate();  }
+              callback {if (o->value()) {group_trace_4->activate();  }
 else            {group_trace_4->deactivate();}
 image_view->redraw();}
               xywh {10 175 17 25} down_box DOWN_BOX align 4
@@ -2885,40 +2855,33 @@ image_view->redraw();}
                 xywh {30 175 25 25} color 20
               }
               Fl_Value_Input valinp_trace_4_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).thickness = o->value()/o->maximum();
-roller_trace_4_thickness->value(o->value());
+                callback {roller_trace_4_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 175 44 25} maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_4_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).thickness = o->value()/o->maximum();
-valinp_trace_4_thickness->value(o->value());
+                callback {valinp_trace_4_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 175 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_4_hue_min {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hue_min = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {200 175 44 25} maximum 360 step 0.1 value 180
               }
               Fl_Value_Input valinp_trace_4_hue_max {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).hue_max = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {245 175 44 25} maximum 360 step 0.1 value 180
               }
               Fl_Value_Input valinp_trace_4_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 175 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_4_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 175 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_4_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(4).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 175 17 25} down_box DOWN_BOX
               }
             }
@@ -2927,8 +2890,7 @@ hsv_view->redraw();}
             xywh {0 205 410 25}
           } {
             Fl_Check_Button chebut_trace_5_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_5->activate();  }
+              callback {if (o->value()) {group_trace_5->activate();  }
 else            {group_trace_5->deactivate();}
 image_view->redraw();}
               xywh {10 205 17 25} down_box DOWN_BOX align 4
@@ -2943,40 +2905,33 @@ image_view->redraw();}
                 xywh {30 205 25 25} color 21
               }
               Fl_Value_Input valinp_trace_5_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).thickness = o->value()/o->maximum();
-roller_trace_5_thickness->value(o->value());
+                callback {roller_trace_5_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 205 44 25} maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_5_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).thickness = o->value()/o->maximum();
-valinp_trace_5_thickness->value(o->value());
+                callback {valinp_trace_5_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 205 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_5_hue_min {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hue_min = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {200 205 44 25} maximum 360 step 0.1 value 300
               }
               Fl_Value_Input valinp_trace_5_hue_max {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).hue_max = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {245 205 44 25} maximum 360 step 0.1 value 300
               }
               Fl_Value_Input valinp_trace_5_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 205 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_5_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 205 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_5_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(5).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 205 17 25} down_box DOWN_BOX
               }
             }
@@ -2985,8 +2940,7 @@ hsv_view->redraw();}
             xywh {0 235 410 25}
           } {
             Fl_Check_Button chebut_trace_6_enable_sw {
-              callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).enable_sw = (o->value()==1 ?true :false);
-if (o->value()) {group_trace_6->activate();  }
+              callback {if (o->value()) {group_trace_6->activate();  }
 else            {group_trace_6->deactivate();}
 image_view->redraw();}
               xywh {10 235 17 25} down_box DOWN_BOX align 4
@@ -3001,40 +2955,33 @@ image_view->redraw();}
                 xywh {30 235 25 25} color 22
               }
               Fl_Value_Input valinp_trace_6_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).thickness = o->value()/o->maximum();
-roller_trace_6_thickness->value(o->value());
+                callback {roller_trace_6_thickness->value(o->value());
 image_view->redraw();}
                 xywh {60 235 44 25} maximum 100 step 0.1 value 70
               }
               Fl_Roller roller_trace_6_thickness {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).thickness = o->value()/o->maximum();
-valinp_trace_6_thickness->value(o->value());
+                callback {valinp_trace_6_thickness->value(o->value());
 image_view->redraw();}
                 xywh {104 235 76 25} type Horizontal maximum 100 step 0.1 value 70
               }
               Fl_Value_Input valinp_trace_6_hue_min {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hue_min = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {200 235 44 25} maximum 360 step 0.1 value 60
               }
               Fl_Value_Input valinp_trace_6_hue_max {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).hue_max = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {245 235 44 25} maximum 360 step 0.1 value 60
               }
               Fl_Value_Input valinp_trace_6_slope_deg {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).slope_deg = o->value();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {295 235 44 25} maximum 90 step 0.1 value 45
               }
               Fl_Value_Input valinp_trace_6_intercept {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).intercept = o->value()/o->maximum();
-image_view->redraw();}
+                callback {image_view->redraw();}
                 xywh {340 235 44 25} maximum 100 step 0.1 value 100
               }
               Fl_Check_Button chebut_trace_6_display_sw {
-                callback {cl_gts_master.cl_calcu_sep_hsv.cla_area_param.at(6).display_sw = (o->value()==1 ?true :false);
-hsv_view->redraw();}
+                callback {hsv_view->redraw();}
                 xywh {390 235 17 25} down_box DOWN_BOX
               }
             }
@@ -3076,7 +3023,7 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
         } {
           Submenu {} {
             label {Color of Display} open
-            xywh {0 0 62 20}
+            xywh {0 0 62 20} hide
           } {
             MenuItem menite_hsv_dot_normal {
               label Color
@@ -3098,16 +3045,6 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
               callback {image_view->redraw();}
               xywh {0 0 30 20} type Radio
             }
-          }
-          MenuItem menite_hsv_hue_partition {
-            label {Hue Partition}
-            callback {image_view->redraw();}
-            xywh {0 0 30 20} type Toggle
-          }
-          MenuItem menite_hsv_black_partition {
-            label {Black Partition}
-            callback {image_view->redraw();}
-            xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_hsv_random_position {
             label {Random Position}

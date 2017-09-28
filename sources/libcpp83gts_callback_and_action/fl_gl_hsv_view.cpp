@@ -1015,36 +1015,53 @@ void draw_black_partition_(
 	glEnd();
 }
 
-void draw_sep_hsv_()
+void draw_guide_display_()
 {
-	if ((cl_gts_gui.menite_hsv_hue_partition->value() != 0)
-	||  (cl_gts_gui.menite_hsv_black_partition->value() != 0)) {
-	  for (auto area : cl_gts_master.cl_calcu_sep_hsv.cla_area_param) {
-	    if (area.enable_sw && area.display_sw) {
-	      if ( area.hue_min < 0. || area.hue_max < 0.) {
-		if (cl_gts_gui.menite_hsv_black_partition->value() != 0) {
+	/* マスタースイッチがオフならガイドはすべて表示しない */
+	if (cl_gts_gui.chebut_trace_display_main_sw->value() == 0) {
+		return;
+	}
+
+	/* 各2値化範囲のガイド表示 */
+	for (unsigned ii=0
+	;ii<cl_gts_master.cl_trace_params.widget_sets.size() ;++ii) {
+		auto&wset=cl_gts_master.cl_trace_params.widget_sets.at(ii);
+
+		/* 無効かガイド表示オフなら次へ */
+		if (wset.chebut_enable_sw->value()==0
+		||  wset.chebut_display_sw->value()==0) {
+			continue;
+		}
+
+		/* 黒線範囲ガイド表示 */
+		if (wset.valinp_hue_min->value() < 0.
+		||  wset.valinp_hue_max->value() < 0.) {
 			draw_black_partition_(
-				area.thickness
-	,gts::liner_from_rad(gts::rad_from_deg(area.slope_deg))
-				,area.intercept
+				wset.valinp_thickness->value()
+				/wset.valinp_thickness->maximum()
+ ,gts::liner_from_rad(gts::rad_from_deg(wset.valinp_slope_deg->value()))
+				,wset.valinp_intercept->value()
+				/wset.valinp_intercept->maximum()
 			);
 		}
-	      } else {
-		if (cl_gts_gui.menite_hsv_hue_partition->value() != 0) {
+		/* 色線範囲ガイド表示 */
+		else {
+			uchar r=0,g=0,b=0;
+			cl_gts_master.cl_trace_params.get_target_rgb( ii,r,g,b );
+			const double mx = (std::numeric_limits<uchar>::max)();
 			draw_color_partition_(
-				area.thickness
-				,area.hue_min
-				,area.hue_max
-	,gts::liner_from_rad(gts::rad_from_deg(area.slope_deg))
-				,area.intercept
-				,area.target_r
-				,area.target_g
-				,area.target_b
+				wset.valinp_thickness->value()
+				/wset.valinp_thickness->maximum()
+				,wset.valinp_hue_min->value()
+				,wset.valinp_hue_max->value()
+ ,gts::liner_from_rad(gts::rad_from_deg(wset.valinp_slope_deg->value()))
+				,wset.valinp_intercept->value()
+				/wset.valinp_intercept->maximum()
+				,static_cast<double>(r) / mx
+				,static_cast<double>(g) / mx
+				,static_cast<double>(b) / mx
 			);
 		}
-	      }
-	    }
-	  }
 	}
 }
 } // namespace
@@ -1063,7 +1080,7 @@ void fl_gl_hsv_view::draw_object_()
 	glEnd();
 
 	/* 区切ガイド */
-	draw_sep_hsv_();
+	draw_guide_display_();
 
 	/* ポイント表示 */
 	vbo.draw();

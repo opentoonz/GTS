@@ -1,6 +1,7 @@
 #ifndef cb_trace_params_h
 #define cb_trace_params_h
 
+#include "calcu_color_trace_sep_hsv.h"
 #include "gts_gui.h"
 
 class cb_trace_params {
@@ -52,6 +53,9 @@ public:
 	};
 	std::vector<widget_set> widget_sets;
 	void init_widget_set(void) { this->init_widget_set_(); }
+	void set_params_for_speedup(
+		std::vector<calcu_sep_hsv>& param_sets
+	);
 private:
 	int number_;
 	uchar r_ ,g_ ,b_;

@@ -138,8 +138,14 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	/* トレース */
 	if ((	this->cl_iip_trac.get_l_channels() == 3L) && trace_sw) {
 		// RGB
-	//this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
-	this->cl_iip_trac.exec( this->cl_calcu_sep_hsv );/* 2値化処理 */
+
+		/* fltk GUIの値を高速計算のための変数に置きなおす */
+		this->cl_trace_params.set_params_for_speedup(
+			this->cl_calcu_sep_hsv.cla_area_param
+		);
+		/* 2値化処理 */
+	//this->cl_iip_trac.exec(&(this->cl_cal_trac));
+		this->cl_iip_trac.exec( this->cl_calcu_sep_hsv );
 	}
 	else {	// BW,Grayscale
 		this->cl_iip_trac.copy_image_from_parent(
