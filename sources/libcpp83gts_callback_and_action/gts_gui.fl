@@ -2603,11 +2603,12 @@ cl_gts_gui.menite_trace_params->clear();}
         Fl_Group {} {open
           xywh {0 0 440 270}
         } {
-          Fl_Button {} {
+          Fl_Button button_trace_params {
             label {Open Config This...}
-            callback {//cl_gts_master.cl_config.open_only_trace_color();}
+            callback {cl_gts_master.cl_config.open_only_trace_params();}
             xywh {5 5 130 25}
-            code0 {//\#include "cb_trace_color.h"}
+            code0 {\#include "cb_trace_params.h"}
+            class fltk_button_trace_params
           }
           Fl_Check_Button chebut_trace_display_main_sw {
             label {Guide Display}

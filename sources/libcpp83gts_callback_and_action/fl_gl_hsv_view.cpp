@@ -959,16 +959,24 @@ void draw_color_partition_(
 	}
 }
 
-double get_radius_(const double thickness ,const double tt ,const double offset)
+void draw_black_partition_(
+	double thickness
+	,double slope_line
+	,double intercept
+)
 {
-	const double z = 1. - thickness;	/* 太さ値によるz位置 */
-	const double z2 = 1. - offset * tt;	/* 外接点のz位置 */
+	const double z = 1. - thickness;	/* 太さ値からz位置に */
 
-	/* t-o直線部分 */
-	if (z2 <= z) {
-		return thickness;
+	/* 現位置が範囲外 --> 表示しない */
+	if (z < (1. - intercept)) {
+		return;
 	}
-	/* T-t直線部分
+
+	const double zfar = 1. - intercept * slope_line;/* 外接点のz位置 */
+	double len = 0.;
+	double len1 = 0. ,z1 = 1. - intercept;
+	double len2 = 0. ,z2 = 1. - intercept;
+	/* 白側
 		z = x*omT/(T*X) + omO .........................(2)
 
 		z - omO = x*omT/(T*X)
@@ -982,35 +990,27 @@ double get_radius_(const double thickness ,const double tt ,const double offset)
 		z = (1-Offset) * (T*X) / (1-T) / (T*X) * (1-T) 
 		z = 1-Offset
 	*/
-	if (z < (1. - offset)) {
-		return 0.;
+	if (z < zfar) {
+		len =
+	(z - (1. - intercept)) * slope_line * 1. / (1. - slope_line);
+	}
+	/* 黒側 */
+	else if (zfar <= z) {
+		len = thickness;
 	}
 
-	return (z - (1. - offset)) * tt * 1. / (1. - tt);
-}
-
-void draw_black_partition_(
-	double thickness
-	,double slope_line
-	,double intercept
-)
-{
-	const double len = get_radius_(
-		thickness ,slope_line ,intercept
-	);
-	const double zz = 1. - thickness;
-
+	/*---------- 表示 ----------*/
 	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
 	glCullFace(GL_BACK);	/* 後面を破棄 */
 
 	glColor3d(1.,1.,1.);
 
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex3d( 0. ,0. ,zz );
+	glVertex3d( 0. ,0. ,z );
 	for (int ii=0; ii<=360; ++ii) {
 		const double rad = gts::rad_from_deg(
 					static_cast<double>(ii) );
-		glVertex3d( len*cos(rad) ,len*sin(rad) ,zz );
+		glVertex3d( len*cos(rad) ,len*sin(rad) ,z );
 	}
 	glEnd();
 }

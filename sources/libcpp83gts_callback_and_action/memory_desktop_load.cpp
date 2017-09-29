@@ -173,6 +173,24 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_parameters->position(xx,yy);
 		}
+		else if ((this->str_window_trace_params_==key)
+		&& (6==ret)) {
+			if (di == "show") {
+		cl_gts_gui.menite_trace_params->set();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_trace_params->show();
+			}
+		cl_gts_gui.window_trace_params->resize(xx,yy,ww,hh);
+		}
+		else if ((this->str_window_trace_hsv_view_==key)
+		&& (6==ret)) {
+			if (di == "show") {
+		cl_gts_gui.menite_trace_hsv_view->set();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_trace_hsv_view->show();
+			}
+		cl_gts_gui.window_trace_hsv_view->resize(xx,yy,ww,hh);
+		}
 		else if ((this->str_window_trace_batch_==key)
 		&& (6==ret)) {
 			if (di == "show") {

@@ -30,6 +30,7 @@
 #include "fltk_1000x10_color_belt.h"
 #include "fltk_1000_range_minmax.h"
 #include <FL/Fl_Counter.H>
+#include "cb_trace_params.h"
 #include <FL/Fl_Roller.H>
 #include "fl_gl_hsv_view.h"
 
@@ -1370,8 +1371,11 @@ public:
 private:
   inline void cb_window_trace_params_i(Fl_Double_Window*, void*);
   static void cb_window_trace_params(Fl_Double_Window*, void*);
-  inline void cb_Open2_i(Fl_Button*, void*);
-  static void cb_Open2(Fl_Button*, void*);
+public:
+  fltk_button_trace_params *button_trace_params;
+private:
+  inline void cb_button_trace_params_i(fltk_button_trace_params*, void*);
+  static void cb_button_trace_params(fltk_button_trace_params*, void*);
 public:
   Fl_Check_Button *chebut_trace_display_main_sw;
 private:

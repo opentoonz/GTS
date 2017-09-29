@@ -142,6 +142,34 @@ void cb_config::open_only_pixel_type_and_bright( void )
 		return;
 	}
 }
+void cb_config::open_only_trace_params( void )
+{
+	/* NativeブラウザーOpenで開く */
+	int filter_current=0;
+	const std::string fpath = ids::path::fltk_native_browse_open(
+		"Open Config only Trace Params"
+		,this->dir_path_
+		,"" //,this->open_file_name_
+		,std::string("Text(Config)\t*")+this->ext_
+		,filter_current
+	).at(0);
+	/* Cancel */
+	if (fpath.empty()) {
+		return;
+	}
+
+	/* config情報を保存する */
+	if (OK !=
+	cl_gts_master.cl_memo_config.load_only_trace_params(
+		fpath
+	)) {
+		pri_funct_err_bttvr(
+"Error : cl_gts_master.cl_memo_config.load_only_trace_params(%s) returns NG"
+			, fpath.c_str()
+		);
+		return;
+	}
+}
 
 void cb_config::save_as( void )
 {

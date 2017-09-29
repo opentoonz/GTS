@@ -1,6 +1,7 @@
 #include <cassert>
 #include <iostream>
 #include "cb_trace_params.h"
+#include "ids_path_level_from_files.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -19,7 +20,7 @@ void set_target_color_( const int number , Fl_Button* button )
 }
 } // namespace
 
-//------------------------------------------------------------
+//---------------
 
 void cb_trace_params::init_color(void)
 {
@@ -38,7 +39,7 @@ void cb_trace_params::cb_open_color_editor(
 	,const int number
 )
 {
-	assert( number < this->widget_sets.size() );
+	assert( number < static_cast<int>(this->widget_sets.size()) );
 
 	/* rgb値を記憶 */
 	get_target_rgb_( number ,this->r_ ,this->g_ ,this->b_ );
@@ -66,9 +67,9 @@ void cb_trace_params::cb_change_color(void)
 {
 	/* Color Editorのrgb値をGUIカラーテーブルにセット */
 	set_target_rgb_( this->number_
-		,cl_gts_gui.valinp_set_color_red->value() 
-		,cl_gts_gui.valinp_set_color_gre->value()
-		,cl_gts_gui.valinp_set_color_blu->value()
+	,static_cast<uchar>(cl_gts_gui.valinp_set_color_red->value())
+	,static_cast<uchar>(cl_gts_gui.valinp_set_color_gre->value())
+	,static_cast<uchar>(cl_gts_gui.valinp_set_color_blu->value())
 	);
 
 	/* ボタンのターゲット色を再表示 */
@@ -94,7 +95,7 @@ void cb_trace_params::cb_cancel(void)
 	cl_gts_gui.image_view->redraw();
 }
 
-//------------------------------------------------------------
+//---------------
 
 void cb_trace_params::get_target_rgb(
 	const int number
@@ -112,7 +113,7 @@ void cb_trace_params::set_target_rgb(
 	set_target_rgb_( number ,r ,g ,b );
 }
 
-//------------------------------------------------------------
+//---------------
 
 void cb_trace_params::init_widget_set_(void) {
 	this->widget_sets = {
@@ -196,7 +197,7 @@ void cb_trace_params::init_widget_set_(void) {
 	};
 }
 
-//------------------------------------------------------------
+//---------------
 
 void cb_trace_params::set_params_for_speedup(
 	std::vector<calcu_sep_hsv>& param_sets
@@ -227,3 +228,71 @@ void cb_trace_params::set_params_for_speedup(
 				/wset.valinp_intercept->maximum();
 	}
 }
+
+//--------------------
+
+void fltk_button_trace_params::draw()
+{
+	Fl_Button::draw();
+}
+
+namespace {
+
+/* エラーがあればその情報を文字で返す、成功ならempty文字列を返す */
+const std::string dnd_paste_( const std::string &dnd_str )
+{
+	/* 複数のファイルパスはエラー */
+	if (std::string::npos != dnd_str.find("\n")) {
+		return "Error : Need Only 1 Filepath";
+	}
+
+	/* 必要な情報に変える */
+	std::string dpath , head , num_form , ext;
+	int number=-1;
+	std::vector<int> nums;
+	ids::path::level_from_files(
+		dnd_str ,dpath ,head ,num_form ,number ,ext ,nums
+	);
+
+	/* Config file */
+	if (ext == ".txt") {
+		if (cl_gts_master.cl_memo_config.load_only_trace_params(
+		dnd_str ) == NG) {
+		 return "Error : loading trace_params in config";
+		}
+	}
+	/* 拡張子が対応外エラー */
+	else {
+		return "Error : Need extension .txt";
+	}
+	return std::string();
+}
+
+} // namespace
+
+#include <FL/fl_ask.H>	// fl_alert(-) 
+int fltk_button_trace_params::handle( int event )
+{
+	switch (event) {
+	case FL_DND_ENTER:
+	case FL_DND_DRAG:
+	case FL_DND_RELEASE:
+		return 1;
+
+	case FL_PASTE: // DND Paste
+	{
+		std::string err(dnd_paste_( Fl::event_text() ));
+		if (!err.empty()) {
+			fl_alert( err.c_str() );
+		}
+	}
+		return 1;
+
+	default:
+		/* pass other events to the base class */
+		return Fl_Button::handle(event);
+	}
+	return 0;
+}
+
+//---------------

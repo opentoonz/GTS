@@ -5193,11 +5193,11 @@ void gts_gui::cb_window_trace_params(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_trace_params_i(o,v);
 }
 
-void gts_gui::cb_Open2_i(Fl_Button*, void*) {
-  //cl_gts_master.cl_config.open_only_trace_color();
+void gts_gui::cb_button_trace_params_i(fltk_button_trace_params*, void*) {
+  cl_gts_master.cl_config.open_only_trace_params();
 }
-void gts_gui::cb_Open2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_Open2_i(o,v);
+void gts_gui::cb_button_trace_params(fltk_button_trace_params* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_trace_params_i(o,v);
 }
 
 void gts_gui::cb_chebut_trace_display_main_sw_i(Fl_Check_Button*, void*) {
@@ -7933,10 +7933,18 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_params->callback((Fl_Callback*)cb_window_trace_params, (void*)(this));
     { Fl_Scroll* o = new Fl_Scroll(0, 0, 440, 270);
       { Fl_Group* o = new Fl_Group(0, 0, 440, 270);
-        { Fl_Button* o = new Fl_Button(5, 5, 130, 25, "Open Config This...");
-          o->callback((Fl_Callback*)cb_Open2);
-          //#include "cb_trace_color.h"
-        } // Fl_Button* o
+        { button_trace_params = new fltk_button_trace_params(5, 5, 130, 25, "Open Config This...");
+          button_trace_params->box(FL_UP_BOX);
+          button_trace_params->color(FL_BACKGROUND_COLOR);
+          button_trace_params->selection_color(FL_BACKGROUND_COLOR);
+          button_trace_params->labeltype(FL_NORMAL_LABEL);
+          button_trace_params->labelfont(0);
+          button_trace_params->labelsize(14);
+          button_trace_params->labelcolor(FL_FOREGROUND_COLOR);
+          button_trace_params->callback((Fl_Callback*)cb_button_trace_params);
+          button_trace_params->align(Fl_Align(FL_ALIGN_CENTER));
+          button_trace_params->when(FL_WHEN_RELEASE);
+        } // fltk_button_trace_params* button_trace_params
         { chebut_trace_display_main_sw = new Fl_Check_Button(390, 10, 17, 25, "Guide Display");
           chebut_trace_display_main_sw->down_box(FL_DOWN_BOX);
           chebut_trace_display_main_sw->callback((Fl_Callback*)cb_chebut_trace_display_main_sw);

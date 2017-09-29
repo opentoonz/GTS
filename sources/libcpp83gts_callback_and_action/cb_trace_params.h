@@ -1,8 +1,16 @@
 #ifndef cb_trace_params_h
 #define cb_trace_params_h
 
-#include "calcu_color_trace_sep_hsv.h"
-#include "gts_gui.h"
+#include <vector>
+#include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Button.H>
+#include <FL/Fl_Check_Button.H>
+#include <FL/Fl_Group.H>
+#include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Roller.H>
+
+#include "calcu_color_trace_sep_hsv.h"	// calcu_sep_hsv
+//#include "gts_gui.h"
 
 class cb_trace_params {
 public:
@@ -61,6 +69,19 @@ private:
 	uchar r_ ,g_ ,b_;
 
 	void init_widget_set_(void);
+};
+
+//--------------------
+
+class fltk_button_trace_params : public Fl_Button {
+public:
+	fltk_button_trace_params(
+	int x,int y,int w,int h,const char *l=0)
+	: Fl_Button(x,y,w,h,l)
+	{}
+private:
+	void draw();    
+	int handle(int);
 };
 
 #endif /* !cb_trace_params_h */

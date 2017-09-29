@@ -39,6 +39,10 @@ public:
 
 	,str_window_trace_parameters_(
 	    "window_trace_parameters" )
+	,str_window_trace_params_(
+	    "window_trace_params" )
+	,str_window_trace_hsv_view_(
+	    "window_trace_hsv_view" )
 	,str_window_trace_batch_(
 	    "window_trace_batch" )
 	,str_window_trace_thickness_(
@@ -87,6 +91,8 @@ private:
 	const char* str_window_number_;
 
 	const char* str_window_trace_parameters_;
+	const char* str_window_trace_params_;
+	const char* str_window_trace_hsv_view_;
 	const char* str_window_trace_batch_;
 	const char* str_window_trace_thickness_;
 	const char* str_window_trace_input_color_;
