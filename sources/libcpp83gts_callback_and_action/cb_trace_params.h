@@ -64,6 +64,7 @@ public:
 	void set_params_for_speedup(
 		std::vector<calcu_sep_hsv>& param_sets
 	);
+	void cb_swap_widget_set( const unsigned num1 , const unsigned num2 );
 private:
 	int number_;
 	uchar r_ ,g_ ,b_;

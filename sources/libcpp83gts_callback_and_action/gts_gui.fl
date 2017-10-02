@@ -2988,21 +2988,31 @@ image_view->redraw();}
             }
           }
           Fl_Group {} {open
-            xywh {415 100 15 145} deactivate
+            xywh {415 100 15 145}
           } {
             Fl_Button button_change_1_2 {
+              callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(1,2);
+image_view->redraw();}
               image {updown.png} xywh {415 100 15 25}
             }
             Fl_Button button_change_2_3 {
+              callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(2,3);
+image_view->redraw();}
               image {updown.png} xywh {415 130 15 25}
             }
             Fl_Button button_change_3_4 {
+              callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(3,4);
+image_view->redraw();}
               image {updown.png} xywh {415 160 15 25}
             }
             Fl_Button button_change_4_5 {
+              callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(4,5);
+image_view->redraw();}
               image {updown.png} xywh {415 190 15 25}
             }
             Fl_Button button_change_5_6 {
+              callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(5,6);
+image_view->redraw();}
               image {updown.png} xywh {415 220 15 25}
             }
           }

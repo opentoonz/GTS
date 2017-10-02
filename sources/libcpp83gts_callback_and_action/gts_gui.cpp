@@ -5676,6 +5676,14 @@ void gts_gui::cb_chebut_trace_6_display_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_chebut_trace_6_display_sw_i(o,v);
 }
 
+void gts_gui::cb_button_change_1_2_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_params.cb_swap_widget_set(1,2);
+image_view->redraw();
+}
+void gts_gui::cb_button_change_1_2(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_button_change_1_2_i(o,v);
+}
+
 static const unsigned char idata_updown[] =
 {255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
 255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
@@ -5705,6 +5713,38 @@ static const unsigned char idata_updown[] =
 255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
 255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255};
 static Fl_RGB_Image image_updown(idata_updown, 10, 20, 3, 0);
+
+void gts_gui::cb_button_change_2_3_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_params.cb_swap_widget_set(2,3);
+image_view->redraw();
+}
+void gts_gui::cb_button_change_2_3(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_button_change_2_3_i(o,v);
+}
+
+void gts_gui::cb_button_change_3_4_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_params.cb_swap_widget_set(3,4);
+image_view->redraw();
+}
+void gts_gui::cb_button_change_3_4(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_button_change_3_4_i(o,v);
+}
+
+void gts_gui::cb_button_change_4_5_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_params.cb_swap_widget_set(4,5);
+image_view->redraw();
+}
+void gts_gui::cb_button_change_4_5(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_button_change_4_5_i(o,v);
+}
+
+void gts_gui::cb_button_change_5_6_i(Fl_Button*, void*) {
+  cl_gts_master.cl_trace_params.cb_swap_widget_set(5,6);
+image_view->redraw();
+}
+void gts_gui::cb_button_change_5_6(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_button_change_5_6_i(o,v);
+}
 
 void gts_gui::cb_window_trace_hsv_view_i(Fl_Double_Window*, void*) {
   cl_gts_gui.window_trace_hsv_view->hide();
@@ -8369,21 +8409,25 @@ Fl_Double_Window* gts_gui::make_window() {
           o->end();
         } // Fl_Group* o
         { Fl_Group* o = new Fl_Group(415, 100, 15, 145);
-          o->deactivate();
           { button_change_1_2 = new Fl_Button(415, 100, 15, 25);
             button_change_1_2->image(image_updown);
+            button_change_1_2->callback((Fl_Callback*)cb_button_change_1_2);
           } // Fl_Button* button_change_1_2
           { button_change_2_3 = new Fl_Button(415, 130, 15, 25);
             button_change_2_3->image(image_updown);
+            button_change_2_3->callback((Fl_Callback*)cb_button_change_2_3);
           } // Fl_Button* button_change_2_3
           { button_change_3_4 = new Fl_Button(415, 160, 15, 25);
             button_change_3_4->image(image_updown);
+            button_change_3_4->callback((Fl_Callback*)cb_button_change_3_4);
           } // Fl_Button* button_change_3_4
           { button_change_4_5 = new Fl_Button(415, 190, 15, 25);
             button_change_4_5->image(image_updown);
+            button_change_4_5->callback((Fl_Callback*)cb_button_change_4_5);
           } // Fl_Button* button_change_4_5
           { button_change_5_6 = new Fl_Button(415, 220, 15, 25);
             button_change_5_6->image(image_updown);
+            button_change_5_6->callback((Fl_Callback*)cb_button_change_5_6);
           } // Fl_Button* button_change_5_6
           o->end();
         } // Fl_Group* o

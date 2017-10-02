@@ -1697,10 +1697,30 @@ private:
   static void cb_chebut_trace_6_display_sw(Fl_Check_Button*, void*);
 public:
   Fl_Button *button_change_1_2;
+private:
+  inline void cb_button_change_1_2_i(Fl_Button*, void*);
+  static void cb_button_change_1_2(Fl_Button*, void*);
+public:
   Fl_Button *button_change_2_3;
+private:
+  inline void cb_button_change_2_3_i(Fl_Button*, void*);
+  static void cb_button_change_2_3(Fl_Button*, void*);
+public:
   Fl_Button *button_change_3_4;
+private:
+  inline void cb_button_change_3_4_i(Fl_Button*, void*);
+  static void cb_button_change_3_4(Fl_Button*, void*);
+public:
   Fl_Button *button_change_4_5;
+private:
+  inline void cb_button_change_4_5_i(Fl_Button*, void*);
+  static void cb_button_change_4_5(Fl_Button*, void*);
+public:
   Fl_Button *button_change_5_6;
+private:
+  inline void cb_button_change_5_6_i(Fl_Button*, void*);
+  static void cb_button_change_5_6(Fl_Button*, void*);
+public:
   Fl_Double_Window *window_trace_hsv_view;
 private:
   inline void cb_window_trace_hsv_view_i(Fl_Double_Window*, void*);

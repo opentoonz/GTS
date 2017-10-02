@@ -965,17 +965,9 @@ void draw_black_partition_(
 	,double intercept
 )
 {
-	const double z = 1. - thickness;	/* 太さ値からz位置に */
-
 	/* 現位置が範囲外 --> 表示しない */
-	if (z < (1. - intercept)) {
-		return;
-	}
+	//if (z < (1. - intercept)) { return; }
 
-	const double zfar = 1. - intercept * slope_line;/* 外接点のz位置 */
-	double len = 0.;
-	double len1 = 0. ,z1 = 1. - intercept;
-	double len2 = 0. ,z2 = 1. - intercept;
 	/* 白側
 		z = x*omT/(T*X) + omO .........................(2)
 
@@ -990,13 +982,21 @@ void draw_black_partition_(
 		z = (1-Offset) * (T*X) / (1-T) / (T*X) * (1-T) 
 		z = 1-Offset
 	*/
+
+	/* 太さ値からz位置に */
+	double z = 1. - thickness;
+
+	/* (7)式より、最外点のz位置 */
+	const double zfar = 1. - intercept * slope_line;
+
+	double x = 0.;
 	if (z < zfar) {
-		len =
+		x =
 	(z - (1. - intercept)) * slope_line * 1. / (1. - slope_line);
 	}
 	/* 黒側 */
 	else if (zfar <= z) {
-		len = thickness;
+		x = thickness;
 	}
 
 	/*---------- 表示 ----------*/
@@ -1005,14 +1005,38 @@ void draw_black_partition_(
 
 	glColor3d(1.,1.,1.);
 
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3d( 0. ,0. ,z );
-	for (int ii=0; ii<=360; ++ii) {
+	/* 傘天板 */
+	if ((1. - intercept) <= z) {
+	 glBegin(GL_TRIANGLE_FAN);
+	 glVertex3d( 0. ,0. ,z );
+	 for (int ii=0; ii<=360; ++ii) {
 		const double rad = gts::rad_from_deg(
 					static_cast<double>(ii) );
-		glVertex3d( len*cos(rad) ,len*sin(rad) ,z );
+		glVertex3d( x*cos(rad) ,x*sin(rad) ,z );
+	 }
+	 glEnd();
 	}
-	glEnd();
+
+	/* 傘円錐 */
+	if (z < zfar) {
+	 /* (6)式より、最外点の横位置 */
+	 const double xfar = intercept * slope_line * 1.;
+	 if (x < 0.) {
+		x = 0.;
+		z = 1. - intercept;
+	 }
+	 glBegin(GL_QUAD_STRIP);
+	 for (int ii=0; ii<=360; ++ii) {
+		const double rad = gts::rad_from_deg( ii );
+		double x1=0. ,y1=0.;
+		double x2=0. ,y2=0.;
+		rotate2d( x  ,0. ,rad ,x1,y1 );
+		rotate2d( xfar ,0. ,rad ,x2,y2 );
+		glVertex3d( x1,y1,z );
+		glVertex3d( x2,y2,zfar );
+	 }
+	 glEnd();
+	}
 }
 
 void draw_guide_display_()

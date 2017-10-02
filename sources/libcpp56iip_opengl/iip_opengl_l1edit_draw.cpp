@@ -123,23 +123,26 @@ void iip_opengl_l1edit::_draw_image( void )
 	const int view_h = static_cast<int>(
 		this->_glsi_height * this->_d_zoom);
 
-#if 0
-std::cout << __FILE__ << " " << __LINE__ << std::endl;
-std::cout << "image  "
-<< " w=" << this->get_l_width()
-<< " h=" << this->get_l_height()
-<< " ch=" << this->get_l_channels()
-<< " by=" << this->cl_ch_info.get_l_bytes()
+//std::cout << __FILE__ << " " << __LINE__ << std::endl;
+std::cout
+<< " iw=" << this->get_l_width()
+<< " ih=" << this->get_l_height()
+<< " ic=" << this->get_l_channels()
+<< " ib=" << this->cl_ch_info.get_l_bytes()
 //<< " ref=" << this->_ucharp_rrggbbaa
 /* this->_ucharp_rrggbbaaは
 this->_i_disp_chがCH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
 もう使われていないのあとでrefactoringすべき2017-05-23 */
-<< " xo=" << this->_gli_skip_pixels
-<< " yo=" << this->_gli_skip_rows
-<< " xs=" << this->_glsi_width
-<< " ys=" << this->_glsi_height
+<< " sw=" << this->_glsi_width
+<< " sh=" << this->_glsi_height
+<< " sx=" << this->_gli_skip_pixels
+<< " sy=" << this->_gli_skip_rows
+<< " rx=" << this->_gli_rasterpos_x
+<< " ry=" << this->_gli_rasterpos_y
+<< " zm=" << this->_d_zoom
 << std::endl;
 
+#if 0
 std::cout << "pixel " 
 //<< " ch=" << this->_i_disp_ch,
 /* this->_i_disp_chは
@@ -152,9 +155,6 @@ CH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
 << std::endl;
 
 std::cout << "view  " 
-<< " xp=" << this->_gli_rasterpos_x
-<< " yp=" << this->_gli_rasterpos_y
-<< " zm=" << this->_d_zoom
 << " xs=" << view_w
 << " ys=" << view_h
 << std::endl;

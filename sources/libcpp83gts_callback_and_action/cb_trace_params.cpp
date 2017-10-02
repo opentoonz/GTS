@@ -229,6 +229,60 @@ void cb_trace_params::set_params_for_speedup(
 	}
 }
 
+void cb_trace_params::cb_swap_widget_set( const unsigned num1 , const unsigned num2 )
+{
+	assert( num1 < this->widget_sets.size() );
+	assert( num2 < this->widget_sets.size() );
+
+	auto& wset1 = this->widget_sets.at(num1);
+	auto& wset2 = this->widget_sets.at(num2);
+
+	int tmpint = 0;
+	tmpint = wset1.chebut_enable_sw->value();
+	wset1.chebut_enable_sw->value( wset2.chebut_enable_sw->value() );
+	wset2.chebut_enable_sw->value(tmpint);
+	if (	wset1.chebut_enable_sw->value()==1) {
+		wset1.group_trace->activate();
+	} else {wset1.group_trace->deactivate(); }
+	if (	wset2.chebut_enable_sw->value()==1) {
+		wset2.group_trace->activate();
+	} else {wset2.group_trace->deactivate(); }
+
+	uchar r1=0 ,g1=0 ,b1=0, r2=0 ,g2=0 ,b2=0;
+	this->get_target_rgb( num1 ,r1,g1,b1 );
+	this->get_target_rgb( num2 ,r2,g2,b2 );
+	this->set_target_rgb( num1 ,r2,g2,b2 );
+	this->set_target_rgb( num2 ,r1,g1,b1 );
+	wset1.button_target_rgb->redraw();
+	wset2.button_target_rgb->redraw();
+
+	tmpint = wset1.valinp_thickness->value();
+	wset1.valinp_thickness->value( wset2.valinp_thickness->value() );
+	wset1.roller_thickness->value( wset2.valinp_thickness->value() );
+	wset2.valinp_thickness->value(tmpint);
+	wset2.roller_thickness->value(tmpint);
+
+	tmpint = wset1.valinp_hue_min->value();
+	wset1.valinp_hue_min->value( wset2.valinp_hue_min->value() );
+	wset2.valinp_hue_min->value(tmpint);
+
+	tmpint = wset1.valinp_hue_max->value();
+	wset1.valinp_hue_max->value( wset2.valinp_hue_max->value() );
+	wset2.valinp_hue_max->value(tmpint);
+
+	tmpint = wset1.valinp_slope_deg->value();
+	wset1.valinp_slope_deg->value( wset2.valinp_slope_deg->value() );
+	wset2.valinp_slope_deg->value(tmpint);
+
+	tmpint = wset1.valinp_intercept->value();
+	wset1.valinp_intercept->value( wset2.valinp_intercept->value() );
+	wset2.valinp_intercept->value(tmpint);
+
+	tmpint = wset1.chebut_display_sw->value();
+	wset1.chebut_display_sw->value( wset2.chebut_display_sw->value() );
+	wset2.chebut_display_sw->value(tmpint);
+}
+
 //--------------------
 
 void fltk_button_trace_params::draw()
