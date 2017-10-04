@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>	// floor()
 #include <iostream>
 #include "pri.h"
 #include "../libcpp69iip_scale_by_subpixel/iip_crop_and_downsample.h"
@@ -111,6 +111,128 @@ void iip_opengl_l1edit::draw_opengl( void )
 	Redhat9ではハキダシをしないとGL_LINE_LOOP表示しない */
 }
 
+void iip_opengl_l1edit::from_cursor_pos_to_image_pos(
+	const int cursor_pos_x ,const int cursor_pos_y	/* (注意)左下原点 */
+	,int& image_pos_x ,int& image_pos_y		/* (注意)左下原点 */
+)
+{
+	/* 画像がないときは画像上の位置を示すことはできない */
+	if (this->get_vp_canvas() == nullptr) {
+		image_pos_x = -1;
+		image_pos_y = -1;
+		return;
+	}
+	/* zoom値が無効 */
+	if (this->_d_zoom == 0.) {
+		image_pos_x = -1;
+		image_pos_y = -1;
+		return;
+	}
+
+	/* カーソル位置から画像上の位置を得る */
+	// image_pos_x = (cursor_pos_x - sx) / zoom + ix
+	image_pos_x = static_cast<int>( floor(
+		(cursor_pos_x-this->_gli_rasterpos_x)
+		/ this->_d_zoom + this->_gli_skip_pixels
+	));
+	image_pos_y = static_cast<int>( floor(
+		(cursor_pos_y  - this->_gli_rasterpos_y)
+		/ this->_d_zoom + this->_gli_skip_rows
+	));
+
+	/* 範囲外 */
+	if ((image_pos_x < 0)
+	||  (image_pos_y < 0)
+	||  (this->get_l_width()  <= image_pos_x)
+	||  (this->get_l_height() <= image_pos_y)) {
+		image_pos_x = -1;
+		image_pos_y = -1;
+	}
+}
+
+void iip_opengl_l1edit::draw_image_pixel_pos(
+	const int image_pos_x ,const int image_pos_y
+)
+{
+	/* 範囲外 */
+	if ((image_pos_x < 0)
+	||  (image_pos_y < 0)
+	||  (this->get_l_width()  <= image_pos_x)
+	||  (this->get_l_height() <= image_pos_y)) {
+		return;
+	}
+
+	/* 画像上の位置(image)から画面上の位置(OpenGL)にする(左下原点) */
+	int x = static_cast<int>(floor(
+		(image_pos_x - this->_gli_skip_pixels)
+		* this->_d_zoom + this->_gli_rasterpos_x
+	));
+	int y = static_cast<int>(floor(
+		(image_pos_y - this->_gli_skip_rows)
+		* this->_d_zoom + this->_gli_rasterpos_y
+	));
+	int w = (1.<this->_d_zoom)?static_cast<int>(this->_d_zoom):1;
+
+	/* Draw */
+	glColor3d(0.0 ,0.0 ,0.0);
+	--x; --y; ++w;
+	glBegin( GL_LINE_LOOP );
+	glVertex2d( x   ,y   );
+	glVertex2d( x   ,y+w );
+	glVertex2d( x+w ,y+w );
+	glVertex2d( x+w ,y   );
+	glEnd();
+	glColor3d(1.0 ,1.0 ,1.0);
+	--x; --y; w+=2;
+	glBegin( GL_LINE_LOOP );
+	glVertex2d( x   ,y   );
+	glVertex2d( x   ,y+w );
+	glVertex2d( x+w ,y+w );
+	glVertex2d( x+w ,y   );
+	glEnd();
+}
+void iip_opengl_l1edit::get_image_pixel(
+	const int image_pos_x ,const int image_pos_y
+	,int&r ,int&g ,int&b ,int&ch ,int&by ,int&bt
+)
+{
+	/* 画像のpixel情報 */
+	ch = this->get_l_channels();
+	by = this->cl_ch_info.get_l_bytes();
+	bt = this->cl_ch_info.get_l_bits();
+
+	/* 範囲外 */
+	if ((image_pos_x < 0)
+	||  (image_pos_y < 0)
+	||  (this->get_l_width()  <= image_pos_x)
+	||  (this->get_l_height() <= image_pos_y)) {
+		r = -1; g = -1; b = -1;
+		return;
+	}
+
+	if (by == 1) {
+		auto p=static_cast<unsigned char *>(this->get_vp_canvas());
+		p += (image_pos_y*this->get_l_width()*ch) + image_pos_x*ch;
+		switch (ch) {
+		case 1: r = p[0]; g = p[0]; b = p[0]; break;
+		case 3:
+		case 4: r = p[0]; g = p[1]; b = p[2]; break;
+		default: r = -1; g = -1; b = -1; break;
+		}
+	} else if (by == 2) {
+		auto p=static_cast<unsigned short *>(this->get_vp_canvas());
+		p += (image_pos_y*this->get_l_width()*ch) + image_pos_x*ch;
+		switch (ch) {
+		case 1: r = p[0]; g = p[0]; b = p[0]; break;
+		case 3:
+		case 4: r = p[0]; g = p[1]; b = p[2]; break;
+		default: r = -1; g = -1; b = -1; break;
+		}
+	} else {
+		r = -1; g = -1; b = -1;
+	}
+}
+
 /*--------------------------------------------------------*/
 
 void iip_opengl_l1edit::_draw_image( void )
@@ -123,16 +245,12 @@ void iip_opengl_l1edit::_draw_image( void )
 	const int view_h = static_cast<int>(
 		this->_glsi_height * this->_d_zoom);
 
-//std::cout << __FILE__ << " " << __LINE__ << std::endl;
-std::cout
+#if 0
+std::cout << __FILE__ << " " << __LINE__
 << " iw=" << this->get_l_width()
 << " ih=" << this->get_l_height()
 << " ic=" << this->get_l_channels()
 << " ib=" << this->cl_ch_info.get_l_bytes()
-//<< " ref=" << this->_ucharp_rrggbbaa
-/* this->_ucharp_rrggbbaaは
-this->_i_disp_chがCH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
-もう使われていないのあとでrefactoringすべき2017-05-23 */
 << " sw=" << this->_glsi_width
 << " sh=" << this->_glsi_height
 << " sx=" << this->_gli_skip_pixels
@@ -142,8 +260,11 @@ this->_i_disp_chがCH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
 << " zm=" << this->_d_zoom
 << std::endl;
 
-#if 0
-std::cout << "pixel " 
+std::cout << __FILE__ << " " << __LINE__
+//<< " ref=" << this->_ucharp_rrggbbaa
+/* this->_ucharp_rrggbbaaは
+this->_i_disp_chがCH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
+もう使われていないのあとでrefactoringすべき2017-05-23 */
 //<< " ch=" << this->_i_disp_ch,
 /* this->_i_disp_chは
 CH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
@@ -152,11 +273,6 @@ CH_RED,CH_GRE,CH_BLU,CH_ALPの時使っていたが、
 << "=?GL_RGB=" << GL_RGB
 << " gle_type=" << this->_gle_type
 << "=?GL_UNSIGNED_BYTE=" << GL_UNSIGNED_BYTE
-<< std::endl;
-
-std::cout << "view  " 
-<< " xs=" << view_w
-<< " ys=" << view_h
 << std::endl;
 #endif
 

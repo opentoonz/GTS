@@ -110,9 +110,25 @@ class fl_gl_hsv_view : public Fl_Gl_Window {
 public:
 	fl_gl_hsv_view(int x ,int y ,int w ,int h ,const char*l=0);
 
+	void rgb_to_xyz( const double r ,const double g ,const double b );
+
 	gts::opengl_camera_eye eye;
 	gts::opengl_vbo        vbo;
 private:
+	/* 表示の状態 */	
+	bool depth_sw_;		/* デプス(Z)バッファーのON/OFF	*/
+	bool fog_sw_;		/* フォグ処理のON/OFF		*/
+	float bg_rgba_[4];	/* 背景色			*/
+
+	/* カメラ変更のための変数 */
+	int	mouse_x_when_push_
+		,mouse_y_when_push_;
+
+	/* pixel位置表示 */
+	double	pixel_x_ ,pixel_y_ ,pixel_z_;
+
+	//----------
+
 	void draw();
 	void draw_object_();
 
@@ -126,15 +142,6 @@ private:
 	void handle_scale_( const int mx ,const int my );
 
 	void handle_keyboard_( const int key , const char* text );
-
-	/* 表示の状態 */	
-	bool depth_sw_;		/* デプス(Z)バッファーのON/OFF	*/
-	bool fog_sw_;		/* フォグ処理のON/OFF		*/
-	float bg_rgba_[4];	/* 背景色			*/
-
-	/* カメラ変更のための変数 */
-	int	mouse_x_when_push_
-		,mouse_y_when_push_;
 
 	/* ダミーの入力画像 */
 	void dummy_reset_vbo( const int pixel_size );

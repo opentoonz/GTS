@@ -67,6 +67,20 @@ public:
 
 	void reshape_opengl( long l_view_xs, long l_view_ys );
 
+	void from_cursor_pos_to_image_pos(
+	 const int cursor_pos_x ,const int cursor_pos_y	/* 左上原点 */
+	 ,const int view_xs ,const int view_ys
+	 ,int& image_pos_x ,int& image_pos_y		/* (注意)左下原点 */
+	);
+
+	void draw_image_pixel_pos(
+		const int image_pos_x ,const int image_pos_y
+	);
+	void get_image_pixel(
+		const int image_pos_x ,const int image_pos_y
+		,int&r ,int&g ,int&b ,int&ch ,int&by ,int&bt
+	);
+
 	void draw_opengl( void );
 
 	void wview_main( void );

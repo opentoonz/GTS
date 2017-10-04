@@ -232,6 +232,21 @@ public:
 
 	E_SELECT_PART get_select_part( long l_xp, long l_yp );
 
+	//----------
+
+	void from_cursor_pos_to_image_pos(
+	const int cursor_pos_x ,const int cursor_pos_y	/* (注意)左下原点 */
+	,int& image_pos_x ,int& image_pos_y		/* (注意)左下原点 */
+	);
+
+	void draw_image_pixel_pos(
+		const int image_pos_x ,const int image_pos_y
+	);
+	void get_image_pixel(
+		const int image_pos_x ,const int image_pos_y
+		,int&r ,int&g ,int&b ,int&ch ,int&by ,int&bt
+	);
+
 private:
 	long	_l_view_x_pos,
 		_l_view_y_pos,

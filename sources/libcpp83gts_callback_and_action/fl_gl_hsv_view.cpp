@@ -546,15 +546,29 @@ void gts::opengl_vbo::pr_vbo_info(void)
 		 + this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
 }
 
+namespace {
+void hsv_to_xyz_(
+	const double h , const double s , const double v
+	,double& x , double& y , double& z
+)
+{
+	x = cos( gts::rad_from_deg(h) ) * s * v;
+	y = sin( gts::rad_from_deg(h) ) * s * v;
+	z = 1. - v;
+}
+} // namespace
+
 void gts::opengl_vbo::hsv_to_xyz(
 	const double h , const double s , const double v
 	, gts::opengl_vbo::vbo_float* xyz
 )
 {
 	/* hsv --> xyz */
-	double x = cos( gts::rad_from_deg(h) ) * s * v;
-	double y = sin( gts::rad_from_deg(h) ) * s * v;
-	double z = 1. - v;
+	double x = 0.;
+	double y = 0.;
+	double z = 0.;
+	hsv_to_xyz_( h,s,v ,x,y,z );
+
 	xyz[0] = static_cast<gts::opengl_vbo::vbo_float>(x);
 	xyz[1] = static_cast<gts::opengl_vbo::vbo_float>(y);
 	xyz[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
@@ -603,6 +617,9 @@ fl_gl_hsv_view::fl_gl_hsv_view(int x ,int y ,int w ,int h ,const char*l)
 	//,dummy_w_(6800) ,dummy_h_(4680) // 400dpi
 	//,dummy_w_(8500) ,dummy_h_(5850) // 500dpi too big when double
 	//,dummy_w_(10200) ,dummy_h_(7020) // 600dpi too big when double
+	,pixel_x_(-1.)
+	,pixel_y_(-1.)
+	,pixel_z_(-1.)
 {
 	/* 初期化できない？ので代入 */
 	this->bg_rgba_[0] = this->bg_rgba_[1] = this->bg_rgba_[2] = 0.f;
@@ -1088,6 +1105,24 @@ void draw_guide_display_()
 		}
 	}
 }
+void draw_pixel_mark_( const double x ,const double y ,const double z )
+{
+	if (z < 0.) {
+		return;
+	}
+
+	/* 現位置のhue色 */
+	glColor3d( 1. ,1. ,1. );
+
+	/* 裏でも存在を示すためのワイヤーフレーム表示 */
+	const double n=0.005 ,f=0.1;
+	glBegin(GL_LINES);glVertex3d(x+n,y,z);glVertex3d(x+f,y,z);glEnd();
+	glBegin(GL_LINES);glVertex3d(x,y+n,z);glVertex3d(x,y+f,z);glEnd();
+	glBegin(GL_LINES);glVertex3d(x,y,z+n);glVertex3d(x,y,z+f);glEnd();
+	glBegin(GL_LINES);glVertex3d(x-n,y,z);glVertex3d(x-f,y,z);glEnd();
+	glBegin(GL_LINES);glVertex3d(x,y-n,z);glVertex3d(x,y-f,z);glEnd();
+	glBegin(GL_LINES);glVertex3d(x,y,z-n);glVertex3d(x,y,z-f);glEnd();
+}
 } // namespace
 
 void fl_gl_hsv_view::draw_object_()
@@ -1108,6 +1143,40 @@ void fl_gl_hsv_view::draw_object_()
 
 	/* ポイント表示 */
 	vbo.draw();
+
+	/* pixel mark */
+	draw_pixel_mark_(
+		this->pixel_x_
+		,this->pixel_y_
+		,this->pixel_z_
+	);
+}
+
+void fl_gl_hsv_view::rgb_to_xyz(
+	const double r
+	,const double g
+	,const double b
+)
+{
+	if (r < 0 || g < 0. || b < 0.) {
+		this->pixel_x_ = -1.;
+		this->pixel_y_ = -1.;
+		this->pixel_z_ = -1.;
+		return;
+	}
+
+	double h = 0.;
+	double s = 0.;
+	double v = 0.;
+	calcu_rgb_to_hsv rgb2hsv;
+	rgb2hsv.to_hsv( r,g,b ,&h ,&s ,&v );
+	hsv_to_xyz_(h,s,v ,this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
+
+std::cout << __FILE__ << " " << __LINE__
+<< " x=" << this->pixel_x_
+<< " y=" << this->pixel_y_
+<< " z=" << this->pixel_z_
+<< std::endl;
 }
 
 void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )

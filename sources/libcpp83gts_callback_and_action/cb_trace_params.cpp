@@ -256,27 +256,28 @@ void cb_trace_params::cb_swap_widget_set( const unsigned num1 , const unsigned n
 	wset1.button_target_rgb->redraw();
 	wset2.button_target_rgb->redraw();
 
-	tmpint = wset1.valinp_thickness->value();
+	double tmpdbl = 0.;
+	tmpdbl = wset1.valinp_thickness->value();
 	wset1.valinp_thickness->value( wset2.valinp_thickness->value() );
 	wset1.roller_thickness->value( wset2.valinp_thickness->value() );
-	wset2.valinp_thickness->value(tmpint);
-	wset2.roller_thickness->value(tmpint);
+	wset2.valinp_thickness->value(tmpdbl);
+	wset2.roller_thickness->value(tmpdbl);
 
-	tmpint = wset1.valinp_hue_min->value();
+	tmpdbl = wset1.valinp_hue_min->value();
 	wset1.valinp_hue_min->value( wset2.valinp_hue_min->value() );
-	wset2.valinp_hue_min->value(tmpint);
+	wset2.valinp_hue_min->value(tmpdbl);
 
-	tmpint = wset1.valinp_hue_max->value();
+	tmpdbl = wset1.valinp_hue_max->value();
 	wset1.valinp_hue_max->value( wset2.valinp_hue_max->value() );
-	wset2.valinp_hue_max->value(tmpint);
+	wset2.valinp_hue_max->value(tmpdbl);
 
-	tmpint = wset1.valinp_slope_deg->value();
+	tmpdbl = wset1.valinp_slope_deg->value();
 	wset1.valinp_slope_deg->value( wset2.valinp_slope_deg->value() );
-	wset2.valinp_slope_deg->value(tmpint);
+	wset2.valinp_slope_deg->value(tmpdbl);
 
-	tmpint = wset1.valinp_intercept->value();
+	tmpdbl = wset1.valinp_intercept->value();
 	wset1.valinp_intercept->value( wset2.valinp_intercept->value() );
-	wset2.valinp_intercept->value(tmpint);
+	wset2.valinp_intercept->value(tmpdbl);
 
 	tmpint = wset1.chebut_display_sw->value();
 	wset1.chebut_display_sw->value( wset2.chebut_display_sw->value() );

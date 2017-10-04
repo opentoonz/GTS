@@ -56,6 +56,9 @@ void fl_gl_image_view::draw()
 
 		/* image view全表示 */
 		cl_gts_master.cl_ogl_view.draw_opengl();
+		cl_gts_master.cl_ogl_view.draw_image_pixel_pos(
+			this->pixel_x_ ,this->pixel_y_
+		);
 
 		/* hsv view再表示 */
 		cl_gts_gui.hsv_view->redraw();
@@ -264,7 +267,54 @@ int fl_gl_image_view::handle( int event )
 
 		/* ...再描画する */
 		cl_gts_gui.image_view->flush();
+{
+cl_gts_master.cl_ogl_view.from_cursor_pos_to_image_pos(
+	Fl::event_x() ,Fl::event_y()
+	,this->w() ,this->h()
+	,this->pixel_x_
+	,this->pixel_y_
+);
+/*std::cout
+<< __FILE__ << " " << __LINE__
+<< " mx=" << Fl::event_x()
+<< " my=" << Fl::event_y()
+<< " w=" << this->w()
+<< " h=" << this->h()
+<< std::endl;*/
 
+cl_gts_master.cl_ogl_view.get_image_pixel(
+	this->pixel_x_
+	,this->pixel_y_
+
+	,this->pixel_r_
+	,this->pixel_g_
+	,this->pixel_b_
+	,this->pixel_channel_
+	,this->pixel_byte_
+	,this->pixel_bit_
+);
+double ma = 255.;
+switch (this->pixel_byte_) {
+case 1: ma = (std::numeric_limits<unsigned char>::max)(); break;
+case 2: ma = (std::numeric_limits<unsigned short>::max)(); break;
+}
+cl_gts_gui.hsv_view->rgb_to_xyz(
+	this->pixel_r_ / ma
+	,this->pixel_g_ / ma
+	,this->pixel_b_ / ma
+);
+std::cout
+<< __FILE__ << " " << __LINE__
+<< " x=" << this->pixel_x_
+<< " y=" << this->pixel_y_
+<< " r=" << this->pixel_r_
+<< " g=" << this->pixel_g_
+<< " b=" << this->pixel_b_
+<< " ch=" << this->pixel_channel_
+<< " by=" << this->pixel_byte_
+<< " bi=" << this->pixel_bit_
+<< std::endl;
+}
 		return 1;
 
 	case FL_RELEASE: /* マウスボタンをリリースした瞬間 */
