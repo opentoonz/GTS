@@ -1171,12 +1171,6 @@ void fl_gl_hsv_view::rgb_to_xyz(
 	calcu_rgb_to_hsv rgb2hsv;
 	rgb2hsv.to_hsv( r,g,b ,&h ,&s ,&v );
 	hsv_to_xyz_(h,s,v ,this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
-
-std::cout << __FILE__ << " " << __LINE__
-<< " x=" << this->pixel_x_
-<< " y=" << this->pixel_y_
-<< " z=" << this->pixel_z_
-<< std::endl;
 }
 
 void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )

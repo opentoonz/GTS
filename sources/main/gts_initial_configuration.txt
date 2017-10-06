@@ -16,62 +16,6 @@ area_rotate_per_90           "CW_0"
 # Pixel Type and Bright
 pixel_type                   "RGB"
 
-# Trace Parameters
-color_trace_01_chk           ON
-color_trace_01_src_hue_min   280
-color_trace_01_src_hue_max   60
-color_trace_01_src_sat_min   20
-color_trace_01_src_sat_max   100
-color_trace_01_src_val_min   50
-color_trace_01_src_val_max   100
-color_trace_01_tgt_rgb       255 0 0
-color_trace_01_tgt_color     "not black"
-color_trace_02_chk           ON
-color_trace_02_src_hue_min   0
-color_trace_02_src_hue_max   360
-color_trace_02_src_sat_min   0
-color_trace_02_src_sat_max   30
-color_trace_02_src_val_min   0
-color_trace_02_src_val_max   70
-color_trace_02_tgt_rgb       0 0 0
-color_trace_02_tgt_color     "black"
-color_trace_03_chk           ON
-color_trace_03_src_hue_min   180
-color_trace_03_src_hue_max   300
-color_trace_03_src_sat_min   20
-color_trace_03_src_sat_max   100
-color_trace_03_src_val_min   50
-color_trace_03_src_val_max   100
-color_trace_03_tgt_rgb       0 0 255
-color_trace_03_tgt_color     "not black"
-color_trace_04_chk           ON
-color_trace_04_src_hue_min   60
-color_trace_04_src_hue_max   180
-color_trace_04_src_sat_min   20
-color_trace_04_src_sat_max   100
-color_trace_04_src_val_min   50
-color_trace_04_src_val_max   100
-color_trace_04_tgt_rgb       0 255 0
-color_trace_04_tgt_color     "not black"
-color_trace_05_chk           OFF
-color_trace_05_src_hue_min   240
-color_trace_05_src_hue_max   360
-color_trace_05_src_sat_min   20
-color_trace_05_src_sat_max   100
-color_trace_05_src_val_min   50
-color_trace_05_src_val_max   100
-color_trace_05_tgt_rgb       255 0 255
-color_trace_05_tgt_color     "not black"
-color_trace_06_chk           OFF
-color_trace_06_src_hue_min   120
-color_trace_06_src_hue_max   240
-color_trace_06_src_sat_min   20
-color_trace_06_src_sat_max   100
-color_trace_06_src_val_min   50
-color_trace_06_src_val_max   100
-color_trace_06_tgt_rgb       0 255 255
-color_trace_06_tgt_color     "not black"
-
 # Trace Params
 trace_display_main_sw            OFF
 trace_params 0 enable_sw         ON

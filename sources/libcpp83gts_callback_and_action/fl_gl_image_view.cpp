@@ -265,15 +265,13 @@ int fl_gl_image_view::handle( int event )
 			ms.which_button() == FL_LEFT_MOUSE
 		);
 
-		/* ...再描画する */
-		cl_gts_gui.image_view->flush();
-{
-cl_gts_master.cl_ogl_view.from_cursor_pos_to_image_pos(
-	Fl::event_x() ,Fl::event_y()
-	,this->w() ,this->h()
-	,this->pixel_x_
-	,this->pixel_y_
-);
+		/* カーソル位置から画像上の位置を得てセットする */
+		cl_gts_master.cl_ogl_view.from_cursor_pos_to_image_pos(
+			Fl::event_x() ,Fl::event_y()
+			,this->w() ,this->h()
+			,this->pixel_x_
+			,this->pixel_y_
+		);
 /*std::cout
 << __FILE__ << " " << __LINE__
 << " mx=" << Fl::event_x()
@@ -281,29 +279,35 @@ cl_gts_master.cl_ogl_view.from_cursor_pos_to_image_pos(
 << " w=" << this->w()
 << " h=" << this->h()
 << std::endl;*/
+		/* 画像上の位置から、画像のPixel情報を得る */
+		cl_gts_master.cl_ogl_view.get_image_pixel(
+			this->pixel_x_
+			,this->pixel_y_
 
-cl_gts_master.cl_ogl_view.get_image_pixel(
-	this->pixel_x_
-	,this->pixel_y_
+			,this->pixel_r_
+			,this->pixel_g_
+			,this->pixel_b_
+			,this->pixel_channel_
+			,this->pixel_byte_
+			,this->pixel_bit_
+		);
 
-	,this->pixel_r_
-	,this->pixel_g_
-	,this->pixel_b_
-	,this->pixel_channel_
-	,this->pixel_byte_
-	,this->pixel_bit_
-);
-double ma = 255.;
-switch (this->pixel_byte_) {
-case 1: ma = (std::numeric_limits<unsigned char>::max)(); break;
-case 2: ma = (std::numeric_limits<unsigned short>::max)(); break;
-}
-cl_gts_gui.hsv_view->rgb_to_xyz(
-	this->pixel_r_ / ma
-	,this->pixel_g_ / ma
-	,this->pixel_b_ / ma
-);
-std::cout
+		/* 画像のPixel情報からxyz位置をセット(表示設定)する */
+		{
+		double ma = 255.;
+		switch (this->pixel_byte_) {
+		case 1: ma = (std::numeric_limits<unsigned char>::max)();
+			break;
+		case 2: ma = (std::numeric_limits<unsigned short>::max)();
+			break;
+		}
+		cl_gts_gui.hsv_view->rgb_to_xyz(
+			this->pixel_r_ / ma
+			,this->pixel_g_ / ma
+			,this->pixel_b_ / ma
+		);
+		}
+/*std::cout
 << __FILE__ << " " << __LINE__
 << " x=" << this->pixel_x_
 << " y=" << this->pixel_y_
@@ -313,8 +317,11 @@ std::cout
 << " ch=" << this->pixel_channel_
 << " by=" << this->pixel_byte_
 << " bi=" << this->pixel_bit_
-<< std::endl;
-}
+<< std::endl;*/
+
+		/* ...再描画する */
+		cl_gts_gui.image_view->flush();
+
 		return 1;
 
 	case FL_RELEASE: /* マウスボタンをリリースした瞬間 */
