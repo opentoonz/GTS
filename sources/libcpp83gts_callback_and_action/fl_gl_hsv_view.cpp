@@ -70,7 +70,7 @@ double liner_from_rad( const double rad )
 gts::opengl_camera_eye::opengl_camera_eye()
 	:eye_x_(0.) ,eye_y_(0.) ,eye_z_(10.)
 	,cen_x_(0.) ,cen_y_(0.) ,cen_z_(0.)
-	,upp_x_(0.) ,upp_y_(1.) ,upp_z_(10.)
+	,upp_x_(0.) ,upp_y_(1.) ,upp_z_(0.)
 	,fovy_(30.) ,znear_(9.) ,zfar_(-11.)
 {
 	assert (0. < this->fovy_); /* ゼロ以下は致命的エラー */
@@ -92,25 +92,16 @@ void gts::opengl_camera_eye::reset_eye(void)
 	/* 視点 注視点 の距離
 	視野角がfovy_で、(0,0,0)を注視点としたとき、
 	注視点を中心とした半径1の球全体がピッタリ入るような視点の位置 */
-	const double zlen = 1. / sin( gts::rad_from_deg(this->fovy_) / 2. );
+	const double zlen= 1. / sin( gts::rad_from_deg(this->fovy_) / 2. );
 
-	/*	視点   (0,0,z)
-		注視点 (0,0,0)
-		頭上点 (0,1,z) */
-	this->eye_x_ = 0.; this->eye_y_ = 0.; this->eye_z_ = zlen;
-	this->cen_x_ = 0.; this->cen_y_ = 0.; this->cen_z_ = 0.;
-	this->upp_x_ = 0.; this->upp_y_ = 1.; this->upp_z_ = zlen;
+	/*	視点位置	(0,0,z)
+		注視点位置	(0,0,0)
+		頭上ベクトル	(0,1,0) */
+	this->eye_x_ = 0.; this->eye_y_ = 0.; this->eye_z_ = zlen;// Pos.
+	this->cen_x_ = 0.; this->cen_y_ = 0.; this->cen_z_ = 0.;  // Pos.
+	this->upp_x_ = 0.; this->upp_y_ = 1.; this->upp_z_ = 0.;  // Vector
 
-	/* z depth値 */
-	const double len = sqrt(
-		  (this->eye_x_ - this->cen_x_)
-		* (this->eye_x_ - this->cen_x_)
-		+ (this->eye_y_ - this->cen_y_)
-		* (this->eye_y_ - this->cen_y_)
-		+ (this->eye_z_ - this->cen_z_)
-		* (this->eye_z_ - this->cen_z_)
-	);
-
+	/* z depth値再設定 */
 	this->set_full_range_about_near_far_();
 }
 
@@ -152,174 +143,137 @@ void cross_product_(
 	y = z1*x2 - x1*z2;
 	z = x1*y2 - y1*x2;
 }
+void vector_to_unit_( double& vx ,double& vy ,double& vz )
+{
+	const double len = sqrt( vx*vx + vy*vy + vz*vz );
+	vx /= len;
+	vy /= len;
+	vz /= len;
+}
+void camera_to_x_vector_(
+double evx , double evy , double evz
+,const double uvx ,const double uvy ,const double uvz
+,double& vx ,double& vy ,double& vz
+)
+{
+	/* 視線ベクトル単位化 */
+	vector_to_unit_( evx ,evy ,evz );
+
+	/* カメラ横方向ベクトル */
+	cross_product_( uvx ,uvy ,uvz ,evx ,evy ,evz ,vx ,vy ,vz );
+
+	/* カメラ横方向ベクトル単位化 */
+	vector_to_unit_( vx ,vy ,vz );
+}
 } // namespace
 
 void gts::opengl_camera_eye::rotate( const double degree_x ,const double degree_y )
 {
- if (degree_x != 0) {
-  const double yr=gts::rad_from_deg(degree_x);/* x方向マウス移動はy軸回転 */
-
-  double ud_x = this->upp_x_ - this->eye_x_;
-  double ud_y = this->upp_y_ - this->eye_y_;
-  double ud_z = this->upp_z_ - this->eye_z_;
-  const double len = sqrt( ud_x * ud_x + ud_y * ud_y + ud_z * ud_z );
-  ud_x /= len;
-  ud_y /= len;
-  ud_z /= len;
-
-  rotate3d_vector_(
-	 this->eye_x_ , this->eye_y_ , this->eye_z_
-	,this->cen_x_ , this->cen_y_ , this->cen_z_/* 回転の中心 */
-	, ud_x , ud_y , ud_z /* 回転の軸ベクトル */
-	, -yr
+  if (degree_x != 0) {
+	/* x方向マウス移動は視点をカメラ座標系y軸回転 */
+	rotate3d_vector_(
+	 this->eye_x_ ,this->eye_y_ ,this->eye_z_
+	,this->cen_x_ ,this->cen_y_ ,this->cen_z_/* 回転の中心 */
+	,this->upp_x_ ,this->upp_y_ ,this->upp_z_/* 回転軸ベクトル */
+	, - gts::rad_from_deg(degree_x)
 	, this->eye_x_ , this->eye_y_ , this->eye_z_
-  );
+	);
+  }
+  if (degree_y != 0) {
+	/* y方向マウス移動はx軸回転 */
+	const double xr=gts::rad_from_deg(degree_y);
 
-  rotate3d_vector_(
-	 this->upp_x_ , this->upp_y_ , this->upp_z_
-	,this->cen_x_ , this->cen_y_ , this->cen_z_/* 回転の中心 */
-	, ud_x , ud_y , ud_z /* 回転の軸ベクトル */
-	, -yr
-	, this->upp_x_ , this->upp_y_ , this->upp_z_
-  );
- }
- if (degree_y != 0) {
-  const double xr=gts::rad_from_deg(degree_y);/* y方向マウス移動はx軸回転 */
-  /* 上下の単位ベクトル */
-  double ud_x = this->upp_x_ - this->eye_x_;
-  double ud_y = this->upp_y_ - this->eye_y_;
-  double ud_z = this->upp_z_ - this->eye_z_;
-  const double len = sqrt( ud_x * ud_x + ud_y * ud_y + ud_z * ud_z );
-  ud_x /= len;
-  ud_y /= len;
-  ud_z /= len;
-
-  /* 前後の単位ベクトル */
-  double fb_x = this->cen_x_ - this->eye_x_;
-  double fb_y = this->cen_y_ - this->eye_y_;
-  double fb_z = this->cen_z_ - this->eye_z_;
-  const double fb_len = sqrt( fb_x * fb_x + fb_y * fb_y + fb_z * fb_z );
-  fb_x /= fb_len;
-  fb_y /= fb_len;
-  fb_z /= fb_len;
-
-  /* 左右の単位ベクトル */
-  double lr_x = 0.;
-  double lr_y = 0.;
-  double lr_z = 0.;
-  cross_product_(
-	ud_x , ud_y , ud_z
-	, fb_x , fb_y , fb_z
-	, lr_x , lr_y , lr_z
-  );
-  const double lr_len = sqrt( lr_x * lr_x + lr_y * lr_y + lr_z * lr_z );
-  lr_x /= lr_len;
-  lr_y /= lr_len;
-  lr_z /= lr_len;
-
-  rotate3d_vector_(
-	 this->eye_x_ , this->eye_y_ , this->eye_z_
-	,this->cen_x_ , this->cen_y_ , this->cen_z_/* 回転の中心 */
-	, lr_x , lr_y , lr_z /* 回転の軸ベクトル */
-	, xr
-	, this->eye_x_ , this->eye_y_ , this->eye_z_
-  );
-
-  rotate3d_vector_(
-	 this->upp_x_ , this->upp_y_ , this->upp_z_
-	,this->cen_x_ , this->cen_y_ , this->cen_z_/* 回転の中心 */
-	, lr_x , lr_y , lr_z /* 回転の軸ベクトル */
-	, xr
-	, this->upp_x_ , this->upp_y_ , this->upp_z_
-  );
- }
-} 
-void gts::opengl_camera_eye::updownleftright( const double move_x ,const double move_y )
-{
-	/* カメラ上方向のベクトル */
-	const double vx1 = this->upp_x_ - this->eye_x_;
-	const double vy1 = this->upp_y_ - this->eye_y_;
-	const double vz1 = this->upp_z_ - this->eye_z_;
-
-	/* カメラ後ろ方向のベクトル */
-	const double vx2 = this->cen_x_ - this->eye_x_;
-	const double vy2 = this->cen_y_ - this->eye_y_;
-	const double vz2 = this->cen_z_ - this->eye_z_;
-
-	/* カメラ横方向のベクトル */
-	double vx3 = 0.0;
-	double vy3 = 0.0;
-	double vz3 = 0.0;
-	cross_product_(
-		vx1 , vy1 , vz1 , vx2 , vy2 , vz2 , vx3 , vy3 , vz3
+	/* カメラ横方向ベクトル */
+	double lr_x = 0.;
+	double lr_y = 0.;
+	double lr_z = 0.;
+	camera_to_x_vector_(
+		this->cen_x_ - this->eye_x_
+		,this->cen_y_ - this->eye_y_
+		,this->cen_z_ - this->eye_z_
+		,this->upp_x_ ,this->upp_y_ ,this->upp_z_
+		,lr_x ,lr_y ,lr_z
 	);
 
-	this->eye_x_ += vx3 * move_x;
-	this->eye_y_ += vy3 * move_x;
-	this->eye_z_ += vz3 * move_x;
-	this->upp_x_ += vx3 * move_x;
-	this->upp_y_ += vy3 * move_x;
-	this->upp_z_ += vz3 * move_x;
-	this->cen_x_ += vx3 * move_x;
-	this->cen_y_ += vy3 * move_x;
-	this->cen_z_ += vz3 * move_x;
+	rotate3d_vector_(
+		 this->eye_x_ , this->eye_y_ , this->eye_z_
+		,this->cen_x_ , this->cen_y_ , this->cen_z_/* 回転の中心 */
+		, lr_x , lr_y , lr_z /* 回転の軸ベクトル */
+		, xr
+		, this->eye_x_ , this->eye_y_ , this->eye_z_
+	);
+	rotate3d_vector_(
+		 this->upp_x_ , this->upp_y_ , this->upp_z_
+		,0. ,0. ,0./* 回転の中心 */
+		, lr_x , lr_y , lr_z /* 回転の軸ベクトル */
+		, xr
+		, this->upp_x_ , this->upp_y_ , this->upp_z_
+	);
+	vector_to_unit_( this->upp_x_ ,this->upp_y_ ,this->upp_z_ );
+  }
+} 
+void gts::opengl_camera_eye::updownleftright( const double scale_camera_x ,const double scale_camera_y )
+{
+	/* カメラ横方向ベクトル */
+	double lr_x = 0.;
+	double lr_y = 0.;
+	double lr_z = 0.;
+	camera_to_x_vector_(
+		this->cen_x_ - this->eye_x_
+		,this->cen_y_ - this->eye_y_
+		,this->cen_z_ - this->eye_z_
+		,this->upp_x_ ,this->upp_y_ ,this->upp_z_
+		,lr_x ,lr_y ,lr_z
+	);
 
-	/* 横移動しない！左右に回転しながら移動する？！ */
-	this->eye_x_ += vx1 * move_y;
-	this->eye_y_ += vy1 * move_y;
-	this->eye_z_ += vz1 * move_y;
-	this->upp_x_ += vx1 * move_y;
-	this->upp_y_ += vy1 * move_y;
-	this->upp_z_ += vz1 * move_y;
-	this->cen_x_ += vx1 * move_y;
-	this->cen_y_ += vy1 * move_y;
-	this->cen_z_ += vz1 * move_y;
+	this->eye_x_ += lr_x * scale_camera_x;
+	this->eye_y_ += lr_y * scale_camera_x;
+	this->eye_z_ += lr_z * scale_camera_x;
+	this->cen_x_ += lr_x * scale_camera_x;
+	this->cen_y_ += lr_y * scale_camera_x;
+	this->cen_z_ += lr_z * scale_camera_x;
+
+	this->eye_x_ += this->upp_x_ * scale_camera_y;
+	this->eye_y_ += this->upp_y_ * scale_camera_y;
+	this->eye_z_ += this->upp_z_ * scale_camera_y;
+	this->cen_x_ += this->upp_x_ * scale_camera_y;
+	this->cen_y_ += this->upp_y_ * scale_camera_y;
+	this->cen_z_ += this->upp_z_ * scale_camera_y;
 }
 
-void gts::opengl_camera_eye::frontback( const double track_scale)
+void gts::opengl_camera_eye::frontback( const double scale_camera_z)
 {
 	/* 視線ベクトル */
-	const double vx = this->eye_x_ - this->cen_x_;
-	const double vy = this->eye_y_ - this->cen_y_;
-	const double vz = this->eye_z_ - this->cen_z_;
+	double fb_x = this->cen_x_ - this->eye_x_;
+	double fb_y = this->cen_y_ - this->eye_y_;
+	double fb_z = this->cen_z_ - this->eye_z_;
+	vector_to_unit_( fb_x ,fb_y ,fb_z );
 
 	/* 視線ベクトルでカメラ移動 */
-	this->eye_x_ += vx * track_scale;
-	this->eye_y_ += vy * track_scale;
-	this->eye_z_ += vz * track_scale;
-	this->upp_x_ += vx * track_scale;
-	this->upp_y_ += vy * track_scale;
-	this->upp_z_ += vz * track_scale;
-	this->cen_x_ += vx * track_scale;
-	this->cen_y_ += vy * track_scale;
-	this->cen_z_ += vz * track_scale;
+	this->eye_x_ += fb_x * scale_camera_z;
+	this->eye_y_ += fb_y * scale_camera_z;
+	this->eye_z_ += fb_z * scale_camera_z;
+	this->cen_x_ += fb_x * scale_camera_z;
+	this->cen_y_ += fb_y * scale_camera_z;
+	this->cen_z_ += fb_z * scale_camera_z;
 }
 
 void gts::opengl_camera_eye::scale_self( const double scale )
 {
-	/* 注視点からの(距離ベクトル)位置に変換 */
-	double ux = this->upp_x_ - this->cen_x_;
-	double uy = this->upp_y_ - this->cen_y_;
-	double uz = this->upp_z_ - this->cen_z_;
-	double ex = this->eye_x_ - this->cen_x_;
-	double ey = this->eye_y_ - this->cen_y_;
-	double ez = this->eye_z_ - this->cen_z_;
+	/* 注視点から視点へのベクトル */
+	double vx = this->eye_x_ - this->cen_x_;
+	double vy = this->eye_y_ - this->cen_y_;
+	double vz = this->eye_z_ - this->cen_z_;
 
-	/* 拡大縮小 */
-	ux *= scale;
-	uy *= scale;
-	uz *= scale;
-	ex *= scale;
-	ey *= scale;
-	ez *= scale;
+	/* 注視点を中心にして、ベクトルを拡大縮小 */
+	vx *= scale;
+	vy *= scale;
+	vz *= scale;
 
-	/* 元の位置に変換 */
-	this->upp_x_ = this->cen_x_ + ux;
-	this->upp_y_ = this->cen_y_ + uy;
-	this->upp_z_ = this->cen_z_ + uz;
-	this->eye_x_ = this->cen_x_ + ex;
-	this->eye_y_ = this->cen_y_ + ey;
-	this->eye_z_ = this->cen_z_ + ez;
+	/* 拡大縮小したベクトルを元にした視点 */
+	this->eye_x_ = vx + this->cen_x_;
+	this->eye_y_ = vy + this->cen_y_;
+	this->eye_z_ = vz + this->cen_z_;
 
 	this->set_full_range_about_near_far_();
 }
@@ -1123,6 +1077,46 @@ void draw_pixel_mark_( const double x ,const double y ,const double z )
 	glBegin(GL_LINES);glVertex3d(x,y-n,z);glVertex3d(x,y-f,z);glEnd();
 	glBegin(GL_LINES);glVertex3d(x,y,z-n);glVertex3d(x,y,z-f);glEnd();
 }
+void draw_camera_center_mark_(
+ const double cx ,const double cy ,const double cz
+,double hvx ,double hvy ,double hvz
+,double vvx ,double vvy ,double vvz
+,const double zfar
+)
+{
+	/* 現位置のhue色 */
+	glColor3d( 1. ,1. ,1. );
+
+	hvx *= zfar * 0.09;
+	hvy *= zfar * 0.09;
+	hvz *= zfar * 0.09;
+	vvx *= zfar * 0.09;
+	vvy *= zfar * 0.09;
+	vvz *= zfar * 0.09;
+
+	const double n=0.1;
+	glBegin(GL_LINES);
+	glVertex3d(cx-n,cy,cz);
+	glVertex3d(cx+n,cy,cz);
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex3d(cx,cy-n,cz);
+	glVertex3d(cx,cy+n,cz);
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex3d(cx,cy,cz-n);
+	glVertex3d(cx,cy,cz+n);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3d(cx + hvx ,cy + hvy ,cz + hvz);
+	glVertex3d(cx - hvx ,cy - hvy ,cz - hvz);
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex3d(cx + vvx ,cy + vvy ,cz + vvz);
+	glVertex3d(cx - vvx ,cy - vvy ,cz - vvz);
+	glEnd();
+}
 } // namespace
 
 void fl_gl_hsv_view::draw_object_()
@@ -1142,13 +1136,33 @@ void fl_gl_hsv_view::draw_object_()
 	draw_guide_display_();
 
 	/* ポイント表示 */
-	vbo.draw();
+	this->vbo.draw();
 
 	/* pixel mark */
-	draw_pixel_mark_(
-		this->pixel_x_
-		,this->pixel_y_
-		,this->pixel_z_
+	draw_pixel_mark_( this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_ );
+
+	/* カメラ注視点マーク */
+	double lr_x = 0.;
+	double lr_y = 0.;
+	double lr_z = 0.;
+	camera_to_x_vector_(
+		this->eye.get_cen_x() - this->eye.get_eye_x()
+		,this->eye.get_cen_y() - this->eye.get_eye_y()
+		,this->eye.get_cen_z() - this->eye.get_eye_z()
+		,this->eye.get_upp_x()
+		,this->eye.get_upp_y()
+		,this->eye.get_upp_z()
+		,lr_x ,lr_y ,lr_z
+	);
+	draw_camera_center_mark_( 
+		this->eye.get_cen_x()
+		,this->eye.get_cen_y()
+		,this->eye.get_cen_z()
+		,lr_x ,lr_y ,lr_z
+		,this->eye.get_upp_x()
+		,this->eye.get_upp_y()
+		,this->eye.get_upp_z()
+		,this->eye.get_zfar()
 	);
 }
 
@@ -1354,8 +1368,8 @@ void fl_gl_hsv_view::handle_rotate_( const int mx ,const int my )
 void fl_gl_hsv_view::handle_updownleftright_( const int mx ,const int my )
 {
 	this->eye.updownleftright(
-		static_cast<double>(mx - this->mouse_x_when_push_) * 0.001
-		,static_cast<double>(my - this->mouse_y_when_push_) * 0.001
+		static_cast<double>(mx - this->mouse_x_when_push_) * 0.002
+		,static_cast<double>(my - this->mouse_y_when_push_) * 0.002
 	);
 	this->mouse_x_when_push_ = mx;
 	this->mouse_y_when_push_ = my;
@@ -1365,7 +1379,7 @@ void fl_gl_hsv_view::handle_updownleftright_( const int mx ,const int my )
 void fl_gl_hsv_view::handle_frontback_( const int mx , const int my )
 {
 	this->eye.frontback(
-		static_cast<double>(mx - this->mouse_x_when_push_) * 0.001
+		static_cast<double>(mx - this->mouse_x_when_push_) * 0.002
 	);
 	this->mouse_x_when_push_ = mx;
 	this->mouse_y_when_push_ = my;
@@ -1409,11 +1423,11 @@ void fl_gl_hsv_view::handle_keyboard_( const int key , const char* text )
 	 case 'z':
 		this->set_mouse_when_push_( 0 , 0 );
 		this->handle_scale_( -1 ,-1 );
-	 	break;
+		break;
 	 case 'x':
 		this->set_mouse_when_push_( 0 , 0 );
 		this->handle_scale_( 1 ,1 );
-	 	break;
+		break;
 	 }
 	}
 }
@@ -1425,11 +1439,11 @@ int fl_gl_hsv_view::handle(int event)
 		return 1;
 	case FL_DRAG:	// mouse moved while down event
 		if (Fl::event_state() & FL_SHIFT) {
-/* Bug有りのため動作停止中 2017-9-20 */
+/* 未公開 */
 //		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
 		}
 		else if (Fl::event_state() & FL_CTRL) {
-/* Bug有りのため動作停止中 2017-9-20 */
+/* 未公開 */
 //		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
 		}
 		else {
@@ -1467,7 +1481,7 @@ int fl_gl_hsv_view::handle(int event)
 }
 
 //--------------------
-#if defined DEBUG_FL_GL_HSV_SPACE_WINDOW
+#if defined DEBUG_FL_GL_HSV_VIEW
 #include "to_hsv.cpp"
 int main(void) {
 	Fl_Window win(1000, 500, "OpenGL");
@@ -1477,10 +1491,10 @@ int main(void) {
 	win.show();
 	return Fl::run();
 }
-#endif /* !DEBUG_FL_GL_HSV_SPACE_WINDOW */
+#endif /* !DEBUG_FL_GL_HSV_VIEW */
 /*
 rem
 rem :956,957 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_SPACE_WINDOW /I..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\sources\libcpp71iip_color_trace_hab /I..\thirdparty\glew\glew-2.1.0\include /I..\..\thirdparty\fltk\fltk-1.3.4-1 ../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_VIEW /I..\..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\..\sources\libcpp71iip_color_trace_hab /I..\..\thirdparty\glew\glew-2.1.0\include /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ../../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
 del fl_gl_hsv_view.obj
 */
