@@ -689,6 +689,7 @@ void fl_gl_hsv_view::dummy_create_rgb_image_(
 		z = 1 - Offset*T ------------------------------(7)
 */
 namespace {
+
 void xyzout_to_xyzin_(
 	const double xout , const double yout
 	,const double ss , const double tt ,const double offset
@@ -703,6 +704,7 @@ void xyzout_to_xyzin_(
 	 zin = xin * (1. - tt) / (tt * xout) + (1. - offset);
 	}
 }
+
 void xyzout_to_xyzmid_(
 	const double xout , const double yout
 	,const double tt ,const double offset
@@ -1059,6 +1061,7 @@ void draw_guide_display_()
 		}
 	}
 }
+
 void draw_pixel_mark_( const double x ,const double y ,const double z )
 {
 	if (z < 0.) {
@@ -1077,24 +1080,27 @@ void draw_pixel_mark_( const double x ,const double y ,const double z )
 	glBegin(GL_LINES);glVertex3d(x,y-n,z);glVertex3d(x,y-f,z);glEnd();
 	glBegin(GL_LINES);glVertex3d(x,y,z-n);glVertex3d(x,y,z-f);glEnd();
 }
+
 void draw_camera_center_mark_(
  const double cx ,const double cy ,const double cz
-,double hvx ,double hvy ,double hvz
-,double vvx ,double vvy ,double vvz
+,const double ex ,const double ey ,const double ez
+,const double vvx ,const double vvy ,const double vvz
 ,const double zfar
 )
 {
+	/* マスタースイッチがオフならガイドはすべて表示しない */
+	if (cl_gts_gui.chebut_trace_display_main_sw->value() == 0) {
+		return;
+	}
+	if (cl_gts_gui.chebut_trace_display_target_sw->value() == 0) {
+		return;
+	}
+
 	/* 現位置のhue色 */
 	glColor3d( 1. ,1. ,1. );
 
-	hvx *= zfar * 0.09;
-	hvy *= zfar * 0.09;
-	hvz *= zfar * 0.09;
-	vvx *= zfar * 0.09;
-	vvy *= zfar * 0.09;
-	vvz *= zfar * 0.09;
-
-	const double n=0.1;
+	/* ワールド座標軸方向表示 */
+	const double n = zfar * 0.01;
 	glBegin(GL_LINES);
 	glVertex3d(cx-n,cy,cz);
 	glVertex3d(cx+n,cy,cz);
@@ -1108,15 +1114,52 @@ void draw_camera_center_mark_(
 	glVertex3d(cx,cy,cz+n);
 	glEnd();
 
-	glBegin(GL_LINES);
-	glVertex3d(cx + hvx ,cy + hvy ,cz + hvz);
-	glVertex3d(cx - hvx ,cy - hvy ,cz - hvz);
+	/* カメラ注視点位置を示す */
+	double hvx = 0. ,hvy = 0. ,hvz = 0.;
+	camera_to_x_vector_(
+		cx-ex ,cy-ey ,cz-ez ,vvx ,vvy ,vvz ,hvx ,hvy ,hvz
+	);
+
+	const double h1x = hvx * zfar * 0.01;
+	const double h1y = hvy * zfar * 0.01;
+	const double h1z = hvz * zfar * 0.01;
+	const double h2x = hvx * zfar * 0.04;
+	const double h2y = hvy * zfar * 0.04;
+	const double h2z = hvz * zfar * 0.04;
+
+	const double v1x = vvx * zfar * 0.01;
+	const double v1y = vvy * zfar * 0.01;
+	const double v1z = vvz * zfar * 0.01;
+	const double v2x = vvx * zfar * 0.04;
+	const double v2y = vvy * zfar * 0.04;
+	const double v2z = vvz * zfar * 0.04;
+
+	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
+	glCullFace(GL_BACK);	/* 後面を破棄 */
+
+	glBegin(GL_TRIANGLES);
+	glVertex3d(cx + h1x       ,cy + h1y       ,cz + h1z);
+	glVertex3d(cx + h2x + v1x ,cy + h2y + v1y ,cz + h2z + v1z);
+	glVertex3d(cx + h2x - v1x ,cy + h2y - v1y ,cz + h2z - v1z);
 	glEnd();
-	glBegin(GL_LINES);
-	glVertex3d(cx + vvx ,cy + vvy ,cz + vvz);
-	glVertex3d(cx - vvx ,cy - vvy ,cz - vvz);
+	glBegin(GL_TRIANGLES);
+	glVertex3d(cx - h1x       ,cy - h1y       ,cz - h1z);
+	glVertex3d(cx - h2x - v1x ,cy - h2y - v1y ,cz - h2z - v1z);
+	glVertex3d(cx - h2x + v1x ,cy - h2y + v1y ,cz - h2z + v1z);
+	glEnd();
+
+	glBegin(GL_TRIANGLES);
+	glVertex3d(cx + v1x       ,cy + v1y       ,cz + v1z);
+	glVertex3d(cx + v2x - h1x ,cy + v2y - h1y ,cz + v2z - h1z);
+	glVertex3d(cx + v2x + h1x ,cy + v2y + h1y ,cz + v2z + h1z);
+	glEnd();
+	glBegin(GL_TRIANGLES);
+	glVertex3d(cx - v1x       ,cy - v1y       ,cz - v1z);
+	glVertex3d(cx - v2x + h1x ,cy - v2y + h1y ,cz - v2z + h1z);
+	glVertex3d(cx - v2x - h1x ,cy - v2y - h1y ,cz - v2z - h1z);
 	glEnd();
 }
+
 } // namespace
 
 void fl_gl_hsv_view::draw_object_()
@@ -1138,27 +1181,18 @@ void fl_gl_hsv_view::draw_object_()
 	/* ポイント表示 */
 	this->vbo.draw();
 
-	/* pixel mark */
+	/* 指定の画像pixelのrgb値からhsv-->xyz位置のマーキング表示 */
 	draw_pixel_mark_( this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_ );
 
 	/* カメラ注視点マーク */
-	double lr_x = 0.;
-	double lr_y = 0.;
-	double lr_z = 0.;
-	camera_to_x_vector_(
-		this->eye.get_cen_x() - this->eye.get_eye_x()
-		,this->eye.get_cen_y() - this->eye.get_eye_y()
-		,this->eye.get_cen_z() - this->eye.get_eye_z()
-		,this->eye.get_upp_x()
-		,this->eye.get_upp_y()
-		,this->eye.get_upp_z()
-		,lr_x ,lr_y ,lr_z
-	);
+/* 未公開 */
 	draw_camera_center_mark_( 
 		this->eye.get_cen_x()
 		,this->eye.get_cen_y()
 		,this->eye.get_cen_z()
-		,lr_x ,lr_y ,lr_z
+		,this->eye.get_eye_x()
+		,this->eye.get_eye_y()
+		,this->eye.get_eye_z()
 		,this->eye.get_upp_x()
 		,this->eye.get_upp_y()
 		,this->eye.get_upp_z()
@@ -1440,11 +1474,11 @@ int fl_gl_hsv_view::handle(int event)
 	case FL_DRAG:	// mouse moved while down event
 		if (Fl::event_state() & FL_SHIFT) {
 /* 未公開 */
-//		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
+		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
 		}
 		else if (Fl::event_state() & FL_CTRL) {
 /* 未公開 */
-//		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
+		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
 		}
 		else {
 		this->handle_rotate_( Fl::event_x(),Fl::event_y() );

@@ -5207,6 +5207,13 @@ void gts_gui::cb_chebut_trace_display_main_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_display_main_sw_i(o,v);
 }
 
+void gts_gui::cb_chebut_trace_display_target_sw_i(Fl_Check_Button*, void*) {
+  image_view->redraw();
+}
+void gts_gui::cb_chebut_trace_display_target_sw(Fl_Check_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_display_target_sw_i(o,v);
+}
+
 void gts_gui::cb_chebut_trace_0_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
@@ -7985,11 +7992,16 @@ Fl_Double_Window* gts_gui::make_window() {
           button_trace_params->align(Fl_Align(FL_ALIGN_CENTER));
           button_trace_params->when(FL_WHEN_RELEASE);
         } // fltk_button_trace_params* button_trace_params
-        { chebut_trace_display_main_sw = new Fl_Check_Button(390, 10, 17, 25, "Guide Display");
+        { chebut_trace_display_main_sw = new Fl_Check_Button(310, 10, 17, 25, "Guide Display");
           chebut_trace_display_main_sw->down_box(FL_DOWN_BOX);
           chebut_trace_display_main_sw->callback((Fl_Callback*)cb_chebut_trace_display_main_sw);
           chebut_trace_display_main_sw->align(Fl_Align(FL_ALIGN_LEFT));
         } // Fl_Check_Button* chebut_trace_display_main_sw
+        { chebut_trace_display_target_sw = new Fl_Check_Button(390, 10, 17, 25, "Target");
+          chebut_trace_display_target_sw->down_box(FL_DOWN_BOX);
+          chebut_trace_display_target_sw->callback((Fl_Callback*)cb_chebut_trace_display_target_sw);
+          chebut_trace_display_target_sw->align(Fl_Align(FL_ALIGN_LEFT));
+        } // Fl_Check_Button* chebut_trace_display_target_sw
         { Fl_Group* o = new Fl_Group(0, 40, 410, 25);
           { chebut_trace_0_enable_sw = new Fl_Check_Button(10, 40, 17, 25);
             chebut_trace_0_enable_sw->down_box(FL_DOWN_BOX);

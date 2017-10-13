@@ -1382,6 +1382,11 @@ private:
   inline void cb_chebut_trace_display_main_sw_i(Fl_Check_Button*, void*);
   static void cb_chebut_trace_display_main_sw(Fl_Check_Button*, void*);
 public:
+  Fl_Check_Button *chebut_trace_display_target_sw;
+private:
+  inline void cb_chebut_trace_display_target_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_display_target_sw(Fl_Check_Button*, void*);
+public:
   Fl_Check_Button *chebut_trace_0_enable_sw;
 private:
   inline void cb_chebut_trace_0_enable_sw_i(Fl_Check_Button*, void*);
