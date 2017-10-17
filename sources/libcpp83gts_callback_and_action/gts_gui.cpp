@@ -7992,12 +7992,12 @@ Fl_Double_Window* gts_gui::make_window() {
           button_trace_params->align(Fl_Align(FL_ALIGN_CENTER));
           button_trace_params->when(FL_WHEN_RELEASE);
         } // fltk_button_trace_params* button_trace_params
-        { chebut_trace_display_main_sw = new Fl_Check_Button(310, 10, 17, 25, "Guide Display");
+        { chebut_trace_display_main_sw = new Fl_Check_Button(390, 10, 17, 25, "Guide Display");
           chebut_trace_display_main_sw->down_box(FL_DOWN_BOX);
           chebut_trace_display_main_sw->callback((Fl_Callback*)cb_chebut_trace_display_main_sw);
           chebut_trace_display_main_sw->align(Fl_Align(FL_ALIGN_LEFT));
         } // Fl_Check_Button* chebut_trace_display_main_sw
-        { chebut_trace_display_target_sw = new Fl_Check_Button(390, 10, 17, 25, "Target");
+        { chebut_trace_display_target_sw = new Fl_Check_Button(270, 10, 17, 25, "Target");
           chebut_trace_display_target_sw->down_box(FL_DOWN_BOX);
           chebut_trace_display_target_sw->callback((Fl_Callback*)cb_chebut_trace_display_target_sw);
           chebut_trace_display_target_sw->align(Fl_Align(FL_ALIGN_LEFT));

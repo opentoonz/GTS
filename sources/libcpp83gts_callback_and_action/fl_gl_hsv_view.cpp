@@ -1081,17 +1081,13 @@ void draw_pixel_mark_( const double x ,const double y ,const double z )
 	glBegin(GL_LINES);glVertex3d(x,y,z-n);glVertex3d(x,y,z-f);glEnd();
 }
 
-void draw_camera_center_mark_(
+void draw_camera_target_mark_(
  const double cx ,const double cy ,const double cz
 ,const double ex ,const double ey ,const double ez
 ,const double vvx ,const double vvy ,const double vvz
 ,const double zfar
 )
 {
-	/* マスタースイッチがオフならガイドはすべて表示しない */
-	if (cl_gts_gui.chebut_trace_display_main_sw->value() == 0) {
-		return;
-	}
 	if (cl_gts_gui.chebut_trace_display_target_sw->value() == 0) {
 		return;
 	}
@@ -1186,7 +1182,7 @@ void fl_gl_hsv_view::draw_object_()
 
 	/* カメラ注視点マーク */
 /* 未公開 */
-	draw_camera_center_mark_( 
+	draw_camera_target_mark_( 
 		this->eye.get_cen_x()
 		,this->eye.get_cen_y()
 		,this->eye.get_cen_z()

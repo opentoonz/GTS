@@ -2613,12 +2613,12 @@ cl_gts_gui.menite_trace_params->clear();}
           Fl_Check_Button chebut_trace_display_main_sw {
             label {Guide Display}
             callback {image_view->redraw();}
-            xywh {310 10 17 25} down_box DOWN_BOX align 4
+            xywh {390 10 17 25} down_box DOWN_BOX align 4
           }
           Fl_Check_Button chebut_trace_display_target_sw {
             label Target
             callback {image_view->redraw();}
-            xywh {390 10 17 25} down_box DOWN_BOX align 4
+            xywh {270 10 17 25} down_box DOWN_BOX align 4
           }
           Fl_Group {} {open
             xywh {0 40 410 25}
