@@ -8,9 +8,8 @@ bool calcu_color_trace_sep_hsv::exec(
 {
 	calcu_sep_black_and_color sep_b_and_c(ss,vv);
 
-	//for (unsigned ii = 0; ii < this->cla_area_param.size(); ++ii) {
-	for (int ii = static_cast<int>(this->cla_area_param.size())-1
-	;0<=ii ;--ii) {
+	for (unsigned ii = 0; ii < this->cla_area_param.size(); ++ii) {
+	//for (int ii = static_cast<int>(this->cla_area_param.size())-1 ;0<=ii ;--ii) {
 		calcu_sep_hsv& area =  this->cla_area_param.at(ii);
 
 		/* 有効でない範囲は無視して他の範囲を探す */

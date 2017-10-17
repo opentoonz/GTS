@@ -980,13 +980,19 @@ bool memory_config::load_trace_params_( std::vector< std::string >& words )
 	  } else if (words.at(2) == this->str_trace_thickness_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_thickness->value(va);
-		wset.roller_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	  } else if (words.at(2) == this->str_trace_hue_min_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_hue_min->value(va);
+		if (wset.valinp_hue_min->value() < 0.) {
+			wset.valinp_hue_min->hide();
+		} else {wset.valinp_hue_min->show(); }
 	  } else if (words.at(2) == this->str_trace_hue_max_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_hue_max->value(va);
+		if (wset.valinp_hue_max->value() < 0.) {
+			wset.valinp_hue_max->hide();
+		} else {wset.valinp_hue_max->show(); }
 	  } else if (words.at(2) == this->str_trace_slope_deg_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_slope_deg->value(va);

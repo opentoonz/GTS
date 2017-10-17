@@ -7,7 +7,7 @@
 #include <FL/Fl_Check_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Input.H>
-#include <FL/Fl_Roller.H>
+#include <FL/Fl_Scrollbar.H>
 
 #include "calcu_color_trace_sep_hsv.h"	// calcu_sep_hsv
 //#include "gts_gui.h"
@@ -52,7 +52,7 @@ public:
 		Fl_Group*		group_trace;
 		Fl_Button*		button_target_rgb;
 		Fl_Value_Input*		valinp_thickness;
-		Fl_Roller*		roller_thickness;
+		Fl_Scrollbar*		scrbar_thickness;
 		Fl_Value_Input*		valinp_hue_min;
 		Fl_Value_Input*		valinp_hue_max;
 		Fl_Value_Input*		valinp_slope_deg;
