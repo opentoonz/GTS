@@ -319,28 +319,30 @@ public:
 	,str_color_trace_06_tgt_color_(
 	    "color_trace_06_tgt_color")
 
+	,str_trace_display_target_sw_(
+	    "trace_display_target_sw")
 	,str_trace_display_main_sw_(
 	    "trace_display_main_sw")
 	,str_trace_params_title_(
 	    "trace_params")
 	/*   1234567890123456789012345678 */
 	/*                6 */
-		 ,str_trace_enable_sw_(
-			   "enable_sw")
-		 ,str_trace_target_rgb_(
-			   "target_rgb")
-		 ,str_trace_thickness_(
-			   "thickness")
-		 ,str_trace_hue_min_(
-			   "hue_min")
-		 ,str_trace_hue_max_(
-			   "hue_max")
-		 ,str_trace_slope_deg_(
-			   "slope_deg")
-		 ,str_trace_intercept_(
-			   "intercept")
-		 ,str_trace_display_sw_(
-			   "display_sw")
+		,str_trace_enable_sw_(
+			  "enable_sw")
+		,str_trace_target_rgb_(
+			  "target_rgb")
+		,str_trace_thickness_(
+			  "thickness")
+		,str_trace_hue_min_(
+			  "hue_min")
+		,str_trace_hue_max_(
+			  "hue_max")
+		,str_trace_slope_deg_(
+			  "slope_deg")
+		,str_trace_intercept_(
+			  "intercept")
+		,str_trace_display_sw_(
+			  "display_sw")
 
 	,load_config_sw_(true)
 	,load_image_sw_(true)
@@ -530,8 +532,10 @@ private:
 	const char* str_color_trace_06_tgt_rgb_;
 	const char* str_color_trace_06_tgt_color_;
 
+	const char* str_trace_display_target_sw_;
 	const char* str_trace_display_main_sw_;
 	const char* str_trace_params_title_;
+
 	const char* str_trace_enable_sw_;
 	const char* str_trace_target_rgb_;
 	const char* str_trace_thickness_;

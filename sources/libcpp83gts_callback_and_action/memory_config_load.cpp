@@ -945,9 +945,13 @@ bool memory_config::load_trace_parameters_( std::vector< std::string >& words )
 bool memory_config::load_trace_params_( std::vector< std::string >& words )
 {
 	if (words.size() == 2) {
+	 if (words.at(0) == this->str_trace_display_target_sw_) {
+		const int sw = (words.at(1) == this->str_on_) ?1 :0;
+		    cl_gts_gui.chebut_trace_display_target_sw->value(sw);
+	 } else
 	 if (words.at(0) == this->str_trace_display_main_sw_) {
-		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chebut_trace_display_main_sw->value( sw_num );
+		const int sw = (words.at(1) == this->str_on_) ?1 :0;
+		    cl_gts_gui.chebut_trace_display_main_sw->value(sw);
 	 } else {
 		return false; // not defined
 	 }
@@ -986,13 +990,19 @@ bool memory_config::load_trace_params_( std::vector< std::string >& words )
 		wset.valinp_hue_min->value(va);
 		if (wset.valinp_hue_min->value() < 0.) {
 			wset.valinp_hue_min->hide();
-		} else {wset.valinp_hue_min->show(); }
+			wset.button_hue_min_max->hide();
+		} else {wset.valinp_hue_min->show();
+			wset.button_hue_min_max->show();
+		}
 	  } else if (words.at(2) == this->str_trace_hue_max_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_hue_max->value(va);
 		if (wset.valinp_hue_max->value() < 0.) {
 			wset.valinp_hue_max->hide();
-		} else {wset.valinp_hue_max->show(); }
+			wset.button_hue_min_max->hide();
+		} else {wset.valinp_hue_max->show();
+			wset.button_hue_min_max->show();
+		}
 	  } else if (words.at(2) == this->str_trace_slope_deg_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_slope_deg->value(va);

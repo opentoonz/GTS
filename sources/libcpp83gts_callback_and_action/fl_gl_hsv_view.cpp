@@ -1015,9 +1015,9 @@ void draw_black_partition_(
 void draw_guide_display_()
 {
 	/* マスタースイッチがオフならガイドはすべて表示しない */
-	if (cl_gts_gui.chebut_trace_display_main_sw->value() == 0) {
+/*	if (cl_gts_gui.chebut_trace_display_main_sw->value() == 0) {
 		return;
-	}
+	}*/
 
 	/* 各2値化範囲のガイド表示 */
 	for (unsigned ii=0
@@ -1470,11 +1470,11 @@ int fl_gl_hsv_view::handle(int event)
 	case FL_DRAG:	// mouse moved while down event
 		if (Fl::event_state() & FL_SHIFT) {
 /* 未公開 */
-		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
+//		this->handle_updownleftright_(Fl::event_x(),Fl::event_y());
 		}
 		else if (Fl::event_state() & FL_CTRL) {
 /* 未公開 */
-		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
+//		this->handle_frontback_( Fl::event_x(),Fl::event_y() );
 		}
 		else {
 		this->handle_rotate_( Fl::event_x(),Fl::event_y() );

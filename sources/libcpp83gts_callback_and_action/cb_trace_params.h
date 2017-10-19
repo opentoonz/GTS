@@ -19,19 +19,30 @@ public:
 		,r_(0)
 		,g_(0)
 		,b_(0)
+		,hmin_(0.)
+		,hmax_(0.)
 	{}
 
 	/* 初期化 */
 	void init_color(void);
 
-	/* fltk GUIからの呼出し動作 */
-	void cb_open_color_editor(
+	/* target rgb color editor */
+	void cb_target_rgb_color_open_editor(
 		Fl_Double_Window* flwin
 		,Fl_Button* flbut
 		,const int number
 	);
-	void cb_change_color(void);
-	void cb_cancel(void);
+	void cb_target_rgb_color_change(void);
+	void cb_target_rgb_color_cancel(void);
+
+	/* hue min max editor */
+	void cb_hue_min_or_max_open_editor(
+		Fl_Double_Window* flwin
+		,Fl_Button* flbut
+		,const int number
+	);
+	void cb_hue_min_or_max_change(void);
+	void cb_hue_min_or_max_cancel(void);
 
 	/* traceの目的色を得る */
 	void get_target_rgb(
@@ -55,6 +66,7 @@ public:
 		Fl_Scrollbar*		scrbar_thickness;
 		Fl_Value_Input*		valinp_hue_min;
 		Fl_Value_Input*		valinp_hue_max;
+		Fl_Button*		button_hue_min_max;
 		Fl_Value_Input*		valinp_slope_deg;
 		Fl_Value_Input*		valinp_intercept;
 		Fl_Check_Button*	chebut_display_sw;
@@ -64,10 +76,12 @@ public:
 	void set_params_for_speedup(
 		std::vector<calcu_sep_hsv>& param_sets
 	);
-	void cb_swap_widget_set( const unsigned num1 , const unsigned num2 );
+	void cb_swap_widget_set( const unsigned num1 ,const unsigned num2 );
+	int cb_get_window_height_active( void );
 private:
 	int number_;
 	uchar r_ ,g_ ,b_;
+	double hmin_ ,hmax_;
 
 	void init_widget_set_(void);
 };

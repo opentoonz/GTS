@@ -371,8 +371,10 @@ void memory_config::save_trace_params_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_trace_params->label() << "\n";
 
+	this->save_bool_( this->str_trace_display_target_sw_
+		, cl_gts_gui.chebut_trace_display_target_sw->value(),ofs);
 	this->save_bool_( this->str_trace_display_main_sw_
-	  , cl_gts_gui.chebut_trace_display_main_sw->value(),ofs);
+		, cl_gts_gui.chebut_trace_display_main_sw->value(),ofs);
 
 	std::vector<cb_trace_params::widget_set>& wset(
 		cl_gts_master.cl_trace_params.widget_sets

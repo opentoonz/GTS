@@ -32,6 +32,7 @@
 #include <FL/Fl_Counter.H>
 #include "cb_trace_params.h"
 #include "fl_gl_hsv_view.h"
+#include <FL/Fl_Roller.H>
 
 class gts_gui {
 public:
@@ -1373,10 +1374,21 @@ private:
   inline void cb_window_trace_params_i(Fl_Double_Window*, void*);
   static void cb_window_trace_params(Fl_Double_Window*, void*);
 public:
+  Fl_Group *group_trace_params;
   fltk_button_trace_params *button_trace_params;
 private:
   inline void cb_button_trace_params_i(fltk_button_trace_params*, void*);
   static void cb_button_trace_params(fltk_button_trace_params*, void*);
+public:
+  Fl_Button *togbut_trace_open_right_sw;
+private:
+  inline void cb_togbut_trace_open_right_sw_i(Fl_Button*, void*);
+  static void cb_togbut_trace_open_right_sw(Fl_Button*, void*);
+public:
+  Fl_Button *togbut_trace_open_under_sw;
+private:
+  inline void cb_togbut_trace_open_under_sw_i(Fl_Button*, void*);
+  static void cb_togbut_trace_open_under_sw(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_display_target_sw;
 private:
@@ -1410,7 +1422,20 @@ private:
   static void cb_scrbar_trace_0_thickness(Fl_Scrollbar*, void*);
 public:
   Fl_Value_Input *valinp_trace_0_hue_min;
+private:
+  inline void cb_valinp_trace_0_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_0_hue_min(Fl_Value_Input*, void*);
+public:
   Fl_Value_Input *valinp_trace_0_hue_max;
+private:
+  inline void cb_valinp_trace_0_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_trace_0_hue_max(Fl_Value_Input*, void*);
+public:
+  Fl_Button *button_trace_0_hue_min_max;
+private:
+  inline void cb_button_trace_0_hue_min_max_i(Fl_Button*, void*);
+  static void cb_button_trace_0_hue_min_max(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_0_slope_deg;
 private:
   inline void cb_valinp_trace_0_slope_deg_i(Fl_Value_Input*, void*);
@@ -1456,6 +1481,11 @@ public:
 private:
   inline void cb_valinp_trace_1_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_1_hue_max(Fl_Value_Input*, void*);
+public:
+  Fl_Button *button_trace_1_hue_min_max;
+private:
+  inline void cb_button_trace_1_hue_min_max_i(Fl_Button*, void*);
+  static void cb_button_trace_1_hue_min_max(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_1_slope_deg;
 private:
@@ -1503,6 +1533,11 @@ private:
   inline void cb_valinp_trace_2_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_2_hue_max(Fl_Value_Input*, void*);
 public:
+  Fl_Button *button_trace_2_hue_min_max;
+private:
+  inline void cb_button_trace_2_hue_min_max_i(Fl_Button*, void*);
+  static void cb_button_trace_2_hue_min_max(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_2_slope_deg;
 private:
   inline void cb_valinp_trace_2_slope_deg_i(Fl_Value_Input*, void*);
@@ -1548,6 +1583,11 @@ public:
 private:
   inline void cb_valinp_trace_3_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_3_hue_max(Fl_Value_Input*, void*);
+public:
+  Fl_Button *button_trace_3_hue_min_max;
+private:
+  inline void cb_button_trace_3_hue_min_max_i(Fl_Button*, void*);
+  static void cb_button_trace_3_hue_min_max(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_3_slope_deg;
 private:
@@ -1595,6 +1635,11 @@ private:
   inline void cb_valinp_trace_4_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_4_hue_max(Fl_Value_Input*, void*);
 public:
+  Fl_Button *button_trace_4_hue_min_max;
+private:
+  inline void cb_button_trace_4_hue_min_max_i(Fl_Button*, void*);
+  static void cb_button_trace_4_hue_min_max(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_4_slope_deg;
 private:
   inline void cb_valinp_trace_4_slope_deg_i(Fl_Value_Input*, void*);
@@ -1640,6 +1685,11 @@ public:
 private:
   inline void cb_valinp_trace_5_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_5_hue_max(Fl_Value_Input*, void*);
+public:
+  Fl_Button *button_trace_5_hue_min_max;
+private:
+  inline void cb_button_trace_5_hue_min_max_i(Fl_Button*, void*);
+  static void cb_button_trace_5_hue_min_max(Fl_Button*, void*);
 public:
   Fl_Value_Input *valinp_trace_5_slope_deg;
 private:
@@ -1747,6 +1797,25 @@ private:
   static void cb_OK2(Fl_Button*, void*);
   inline void cb_Cancel2_i(Fl_Button*, void*);
   static void cb_Cancel2(Fl_Button*, void*);
+public:
+  Fl_Double_Window *window_set_hue_min_or_max;
+private:
+  inline void cb_4_i(Fl_Roller*, void*);
+  static void cb_4(Fl_Roller*, void*);
+public:
+  Fl_Value_Input *valinp_set_hue_min;
+private:
+  inline void cb_valinp_set_hue_min_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_hue_min(Fl_Value_Input*, void*);
+public:
+  Fl_Value_Input *valinp_set_hue_max;
+private:
+  inline void cb_valinp_set_hue_max_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_hue_max(Fl_Value_Input*, void*);
+  inline void cb_OK3_i(Fl_Button*, void*);
+  static void cb_OK3(Fl_Button*, void*);
+  inline void cb_Cancel3_i(Fl_Button*, void*);
+  static void cb_Cancel3(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif
