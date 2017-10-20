@@ -3089,6 +3089,8 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
     }
     Fl_Window window_set_color {
       label {Set Color}
+      callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
+window_set_color->hide();}
       xywh {50 50 200 110} type Double resizable modal size_range {200 110 1000 110} visible
     } {
       Fl_Group {} {open
@@ -3147,35 +3149,69 @@ cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
         }
         Fl_Button {} {
           label OK
-          callback {cl_gts_gui.window_set_color->hide();}
+          callback {window_set_color->hide();}
           xywh {70 80 60 25}
         }
         Fl_Button {} {
           label Cancel
           callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
-cl_gts_gui.window_set_color->hide();}
+window_set_color->hide();}
           xywh {135 80 60 25}
         }
       }
     }
     Fl_Window window_set_hue_min_or_max {
       label {Set Hue Min or Max}
-      xywh {50 50 200 100} type Double resizable modal visible
+      callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
+window_set_hue_min_or_max->hide();}
+      xywh {50 50 200 100} type Double resizable modal size_range {200 100 1000 100} visible
     } {
       Fl_Group {} {open
-        xywh {0 0 200 64}
+        xywh {0 0 200 70}
       } {
-        Fl_Roller {} {
-          callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
-          xywh {10 10 180 15} type Horizontal maximum 0 step 0
+        Fl_Group {} {open
+          xywh {0 0 200 30}
+        } {
+          Fl_Box {} {
+            xywh {0 0 5 30}
+          }
+          Fl_Scrollbar {} {
+            callback {if (radbut_set_hue_min->value() == 1) {
+valinp_set_hue_min->value( o->value() );
+} else {
+valinp_set_hue_max->value( o->value() );
+}
+
+cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
+            xywh {5 5 190 20} type Horizontal maximum 360 resizable
+            code0 {o->linesize(1);}
+          }
+          Fl_Box {} {
+            xywh {195 0 5 30}
+          }
         }
-        Fl_Value_Input valinp_set_hue_min {
-          callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
-          xywh {10 35 35 25}
-        }
-        Fl_Value_Input valinp_set_hue_max {
-          callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
-          xywh {155 35 35 25}
+        Fl_Group {} {open
+          xywh {0 30 200 40}
+        } {
+          Fl_Button radbut_set_hue_min {
+            label {Min.}
+            xywh {5 30 35 15} type Radio value 1
+          }
+          Fl_Value_Input valinp_set_hue_min {
+            callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
+            xywh {5 45 35 20}
+          }
+          Fl_Box {} {
+            xywh {40 30 120 40} resizable
+          }
+          Fl_Button radbut_set_hue_max {
+            label {Max.}
+            xywh {160 30 35 15} type Radio
+          }
+          Fl_Value_Input valinp_set_hue_max {
+            callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
+            xywh {160 45 35 20}
+          }
         }
       }
       Fl_Group {} {open
@@ -3186,13 +3222,13 @@ cl_gts_gui.window_set_color->hide();}
         }
         Fl_Button {} {
           label OK
-          callback {cl_gts_gui.window_set_hue_min_or_max->hide();}
+          callback {window_set_hue_min_or_max->hide();}
           xywh {70 70 60 25}
         }
         Fl_Button {} {
           label Cancel
           callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
-cl_gts_gui.window_set_hue_min_or_max->hide();}
+window_set_hue_min_or_max->hide();}
           xywh {135 70 60 25}
         }
       }

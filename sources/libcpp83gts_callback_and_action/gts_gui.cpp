@@ -5912,6 +5912,14 @@ Fl_Menu_Item* gts_gui::menite_hsv_dot_white = gts_gui::menu_3 + 4;
 Fl_Menu_Item* gts_gui::menite_hsv_dot_black = gts_gui::menu_3 + 5;
 Fl_Menu_Item* gts_gui::menite_hsv_random_position = gts_gui::menu_3 + 7;
 
+void gts_gui::cb_window_set_color_i(Fl_Double_Window*, void*) {
+  cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
+window_set_color->hide();
+}
+void gts_gui::cb_window_set_color(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_set_color_i(o,v);
+}
+
 void gts_gui::cb_valinp_set_color_red_i(Fl_Value_Input* o, void*) {
   ((Fl_Valuator *)scrbar_set_color_red)->value(o->value());
 cl_gts_master.cl_trace_params.cb_target_rgb_color_change();
@@ -5961,7 +5969,7 @@ void gts_gui::cb_scrbar_set_color_blu(Fl_Scrollbar* o, void* v) {
 }
 
 void gts_gui::cb_OK2_i(Fl_Button*, void*) {
-  cl_gts_gui.window_set_color->hide();
+  window_set_color->hide();
 }
 void gts_gui::cb_OK2(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_OK2_i(o,v);
@@ -5969,35 +5977,49 @@ void gts_gui::cb_OK2(Fl_Button* o, void* v) {
 
 void gts_gui::cb_Cancel2_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
-cl_gts_gui.window_set_color->hide();
+window_set_color->hide();
 }
 void gts_gui::cb_Cancel2(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Cancel2_i(o,v);
 }
 
-void gts_gui::cb_4_i(Fl_Roller*, void*) {
-  cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
+void gts_gui::cb_window_set_hue_min_or_max_i(Fl_Double_Window*, void*) {
+  cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
+window_set_hue_min_or_max->hide();
 }
-void gts_gui::cb_4(Fl_Roller* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_4_i(o,v);
+void gts_gui::cb_window_set_hue_min_or_max(Fl_Double_Window* o, void* v) {
+  ((gts_gui*)(o->user_data()))->cb_window_set_hue_min_or_max_i(o,v);
+}
+
+void gts_gui::cb_4_i(Fl_Scrollbar* o, void*) {
+  if (radbut_set_hue_min->value() == 1) {
+valinp_set_hue_min->value( o->value() );
+} else {
+valinp_set_hue_max->value( o->value() );
+}
+
+cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
+}
+void gts_gui::cb_4(Fl_Scrollbar* o, void* v) {
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_4_i(o,v);
 }
 
 void gts_gui::cb_valinp_set_hue_min_i(Fl_Value_Input*, void*) {
   cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
 }
 void gts_gui::cb_valinp_set_hue_min(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_valinp_set_hue_min_i(o,v);
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_set_hue_min_i(o,v);
 }
 
 void gts_gui::cb_valinp_set_hue_max_i(Fl_Value_Input*, void*) {
   cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
 }
 void gts_gui::cb_valinp_set_hue_max(Fl_Value_Input* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_valinp_set_hue_max_i(o,v);
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_valinp_set_hue_max_i(o,v);
 }
 
 void gts_gui::cb_OK3_i(Fl_Button*, void*) {
-  cl_gts_gui.window_set_hue_min_or_max->hide();
+  window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_OK3(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_OK3_i(o,v);
@@ -6005,7 +6027,7 @@ void gts_gui::cb_OK3(Fl_Button* o, void* v) {
 
 void gts_gui::cb_Cancel3_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
-cl_gts_gui.window_set_hue_min_or_max->hide();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_Cancel3(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Cancel3_i(o,v);
@@ -8549,7 +8571,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_hsv_view->end();
   } // Fl_Double_Window* window_trace_hsv_view
   { window_set_color = new Fl_Double_Window(200, 110, "Set Color");
-    window_set_color->user_data((void*)(this));
+    window_set_color->callback((Fl_Callback*)cb_window_set_color, (void*)(this));
     { Fl_Group* o = new Fl_Group(0, 0, 200, 80);
       { Fl_Group* o = new Fl_Group(0, 0, 55, 80);
         { valinp_set_color_red = new Fl_Value_Input(20, 5, 35, 20, "R");
@@ -8611,20 +8633,41 @@ Fl_Double_Window* gts_gui::make_window() {
     window_set_color->end();
   } // Fl_Double_Window* window_set_color
   { window_set_hue_min_or_max = new Fl_Double_Window(200, 100, "Set Hue Min or Max");
-    window_set_hue_min_or_max->user_data((void*)(this));
-    { Fl_Group* o = new Fl_Group(0, 0, 200, 64);
-      { Fl_Roller* o = new Fl_Roller(10, 10, 180, 15);
-        o->type(1);
-        o->maximum(0);
-        o->step(0);
-        o->callback((Fl_Callback*)cb_4);
-      } // Fl_Roller* o
-      { valinp_set_hue_min = new Fl_Value_Input(10, 35, 35, 25);
-        valinp_set_hue_min->callback((Fl_Callback*)cb_valinp_set_hue_min);
-      } // Fl_Value_Input* valinp_set_hue_min
-      { valinp_set_hue_max = new Fl_Value_Input(155, 35, 35, 25);
-        valinp_set_hue_max->callback((Fl_Callback*)cb_valinp_set_hue_max);
-      } // Fl_Value_Input* valinp_set_hue_max
+    window_set_hue_min_or_max->callback((Fl_Callback*)cb_window_set_hue_min_or_max, (void*)(this));
+    { Fl_Group* o = new Fl_Group(0, 0, 200, 70);
+      { Fl_Group* o = new Fl_Group(0, 0, 200, 30);
+        { new Fl_Box(0, 0, 5, 30);
+        } // Fl_Box* o
+        { Fl_Scrollbar* o = new Fl_Scrollbar(5, 5, 190, 20);
+          o->type(1);
+          o->maximum(360);
+          o->callback((Fl_Callback*)cb_4);
+          Fl_Group::current()->resizable(o);
+          o->linesize(1);
+        } // Fl_Scrollbar* o
+        { new Fl_Box(195, 0, 5, 30);
+        } // Fl_Box* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Group* o = new Fl_Group(0, 30, 200, 40);
+        { radbut_set_hue_min = new Fl_Button(5, 30, 35, 15, "Min.");
+          radbut_set_hue_min->type(102);
+          radbut_set_hue_min->value(1);
+        } // Fl_Button* radbut_set_hue_min
+        { valinp_set_hue_min = new Fl_Value_Input(5, 45, 35, 20);
+          valinp_set_hue_min->callback((Fl_Callback*)cb_valinp_set_hue_min);
+        } // Fl_Value_Input* valinp_set_hue_min
+        { Fl_Box* o = new Fl_Box(40, 30, 120, 40);
+          Fl_Group::current()->resizable(o);
+        } // Fl_Box* o
+        { radbut_set_hue_max = new Fl_Button(160, 30, 35, 15, "Max.");
+          radbut_set_hue_max->type(102);
+        } // Fl_Button* radbut_set_hue_max
+        { valinp_set_hue_max = new Fl_Value_Input(160, 45, 35, 20);
+          valinp_set_hue_max->callback((Fl_Callback*)cb_valinp_set_hue_max);
+        } // Fl_Value_Input* valinp_set_hue_max
+        o->end();
+      } // Fl_Group* o
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 70, 200, 30);
@@ -8640,6 +8683,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     window_set_hue_min_or_max->set_modal();
+    window_set_hue_min_or_max->size_range(200, 100, 1000, 100);
     window_set_hue_min_or_max->end();
     window_set_hue_min_or_max->resizable(window_set_hue_min_or_max);
   } // Fl_Double_Window* window_set_hue_min_or_max

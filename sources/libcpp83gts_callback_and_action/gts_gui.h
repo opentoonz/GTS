@@ -32,7 +32,6 @@
 #include <FL/Fl_Counter.H>
 #include "cb_trace_params.h"
 #include "fl_gl_hsv_view.h"
-#include <FL/Fl_Roller.H>
 
 class gts_gui {
 public:
@@ -1764,6 +1763,10 @@ private:
 public:
   fl_gl_hsv_view *hsv_view;
   Fl_Double_Window *window_set_color;
+private:
+  inline void cb_window_set_color_i(Fl_Double_Window*, void*);
+  static void cb_window_set_color(Fl_Double_Window*, void*);
+public:
   Fl_Value_Input *valinp_set_color_red;
 private:
   inline void cb_valinp_set_color_red_i(Fl_Value_Input*, void*);
@@ -1800,14 +1803,18 @@ private:
 public:
   Fl_Double_Window *window_set_hue_min_or_max;
 private:
-  inline void cb_4_i(Fl_Roller*, void*);
-  static void cb_4(Fl_Roller*, void*);
+  inline void cb_window_set_hue_min_or_max_i(Fl_Double_Window*, void*);
+  static void cb_window_set_hue_min_or_max(Fl_Double_Window*, void*);
+  inline void cb_4_i(Fl_Scrollbar*, void*);
+  static void cb_4(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *radbut_set_hue_min;
   Fl_Value_Input *valinp_set_hue_min;
 private:
   inline void cb_valinp_set_hue_min_i(Fl_Value_Input*, void*);
   static void cb_valinp_set_hue_min(Fl_Value_Input*, void*);
 public:
+  Fl_Button *radbut_set_hue_max;
   Fl_Value_Input *valinp_set_hue_max;
 private:
   inline void cb_valinp_set_hue_max_i(Fl_Value_Input*, void*);

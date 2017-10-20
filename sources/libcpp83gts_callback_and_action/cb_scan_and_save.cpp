@@ -14,10 +14,17 @@
 
 //------------------------------------------------------------
 /* スキャン＆保存実行 */
+static bool while_scan_sw_=false;
 void cb_scan_and_save::cb_start( void )
 {
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	/* マルチスレッドに非対応 */
+	if ( while_scan_sw_ == true ) { return; }
+	while_scan_sw_ = true;
+
 	if ( !cl_gts_master.cl_number.is_scan() ) {
 		fl_alert("Set Number for Scan");
+		while_scan_sw_ = false;
 		return;
 	}
 
@@ -31,6 +38,7 @@ void cb_scan_and_save::cb_start( void )
 	std::string name(cl_gts_gui.strinp_scan_save_file_head->value());
 	if ( name.empty() ) {
 		fl_alert("Need Scan Save Name!");
+		while_scan_sw_ = false;
 		return;
 	}
 	}
@@ -45,11 +53,13 @@ void cb_scan_and_save::cb_start( void )
 		else {	/* Endless type */
 			fl_alert("Bad Number in Start!");
 		}
+		while_scan_sw_ = false;
 		return;
 	}
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	this->prev_scan_action_is_ = this->next_scan_and_save_();
+	while_scan_sw_ = false;
 	if (this->prev_scan_action_is_ != OK) { // NG or CANCEL
 		return; /* 始めにエラーやキャンセルしたら次はしない */
 	}
@@ -65,6 +75,11 @@ void cb_scan_and_save::cb_start( void )
 }
 void cb_scan_and_save::cb_next( void )
 {
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	/* マルチスレッドに非対応 */
+	if ( while_scan_sw_ == true ) { return; }
+	while_scan_sw_ = true;
+
 	/* windowを消す */
 	cl_gts_gui.window_next_scan->hide();
 
@@ -75,6 +90,8 @@ void cb_scan_and_save::cb_next( void )
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	this->prev_scan_action_is_ = this->next_scan_and_save_();
+	while_scan_sw_ = false;
+
 	if (this->prev_scan_action_is_ == NG) {
 		return;
 	}
@@ -94,11 +111,18 @@ void cb_scan_and_save::cb_next( void )
 }
 void cb_scan_and_save::cb_rescan( void )
 {
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	/* マルチスレッドに非対応 */
+	if ( while_scan_sw_ == true ) { return; }
+	while_scan_sw_ = true;
+
 	/* windowを消す */
 	cl_gts_gui.window_next_scan->hide();
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	this->prev_scan_action_is_ = this->next_scan_and_save_();
+	while_scan_sw_ = false;
+
 	if ( this->prev_scan_action_is_ == NG ) {
 		return;
 	}

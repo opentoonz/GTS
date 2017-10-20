@@ -20,8 +20,14 @@ void differ_dpi_marking_(const bool sw)
 	Crop
 */
 
+static bool while_scan_sw_=false;
 void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 {
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	/* マルチスレッドに非対応 */
+	if ( while_scan_sw_ == true ) { return; }
+	while_scan_sw_ = true;
+
 	/* Presetを解除する */
 	cl_gts_gui.choice_area_selecter->value(0);
 	cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
@@ -37,16 +43,19 @@ void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 	if (return_code == NG) {
 		pri_funct_err_bttvr(
 		      "Error : cl_gts_master.iipg_scan() returns NG" );
+		while_scan_sw_ = false;
 		return;
 	}
 	if (nullptr == clp_scan) {
 		pri_funct_err_bttvr(
 		      "Error : cl_gts_master.iipg_scan() returns nullptr" );
+		while_scan_sw_ = false;
 		return;
 	}
 
 	/* ユーザーからのキャンセルがあった */
 	if (return_code == CANCEL) {
+		while_scan_sw_ = false;
 		return;
 	}
 
@@ -63,6 +72,8 @@ void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
 	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
+
+	while_scan_sw_ = false;
 }
 
 /*
