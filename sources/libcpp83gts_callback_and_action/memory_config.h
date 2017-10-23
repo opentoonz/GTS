@@ -586,7 +586,7 @@ private:
 	bool load_trace_files_( std::vector< std::string >& words );
 	bool load_crop_area_and_rot90_( std::vector< std::string >& words );
 	bool load_pixel_type_and_bright_(std::vector< std::string >& words);
-	bool load_trace_parameters_( std::vector< std::string >& words );
+	bool load_trace_old_parameters_( std::vector< std::string >& words );
 	bool load_trace_params_( std::vector< std::string >& words );
 	bool load_trace_batch_( std::vector< std::string >& words );
 	bool load_number_( std::vector< std::string >& words );

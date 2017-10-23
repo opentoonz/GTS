@@ -164,6 +164,7 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_number->show();
 			}
 		}
+#if 0
 		else if ((this->str_window_trace_parameters_==key)
 		&& (4==ret)) {
 			if (di == "show") {
@@ -173,6 +174,7 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_parameters->position(xx,yy);
 		}
+#endif
 		else if ((this->str_window_trace_params_==key)
 		&& (6==ret)) {
 			if (di == "show") {
@@ -200,6 +202,7 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
 		}
+#if 0
 		else if ((this->str_window_trace_thickness_==key)
 		&& (6==ret)) {
 		cl_gts_gui.window_trace_thickness->resize( xx ,yy ,ww
@@ -235,6 +238,7 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_trace_output_color->show();
 			}
 		}
+#endif
 #ifndef _WIN32
 		else if ((this->str_sane_device_name_ == key)
 		&& (2 == ret)) {
