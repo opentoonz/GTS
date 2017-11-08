@@ -111,17 +111,40 @@ void cb_trace_params::cb_hue_min_or_max_open_editor(
 	this->hmin_ = wset.valinp_hue_min->value();
 	this->hmax_ = wset.valinp_hue_max->value();
 
+	/* 各min,max値をhue cyclic color wheelに表示するため値をセット */
+	int crnt_num = number;
+	for (int ii=0,jj=0 ;ii<static_cast<int>(this->widget_sets.size())
+	;++ii) {
+		auto& ws = this->widget_sets.at(ii);
+		if ((0. <= ws.valinp_hue_min->value())
+		&&  (0. <= ws.valinp_hue_max->value())) {
+			/* 色線 */
+			cl_gts_gui.cyclic_color_wheel->set_hue_range_value(
+			jj++
+			,ws.valinp_hue_min->value()
+			,ws.valinp_hue_max->value()
+			,((ws.chebut_enable_sw->value()==0) ?false :true)
+			);
+		} else {
+			/* 黒線 */
+			if (ii < number) {
+				--crnt_num;
+			}
+		}
+	}
+	cl_gts_gui.cyclic_color_wheel->set_hue_range_pos(
+		crnt_num
+		,(cl_gts_gui.radbut_set_hue_max->value()==0) ?false :true
+	);
+
 	/* 色テーブル番号を記憶 */
 	this->number_ = number;
-
-	/* Color Editorにrgb初期値を設定 */
-	cl_gts_gui.valinp_set_hue_min->value(this->hmin_);
-	cl_gts_gui.valinp_set_hue_max->value(this->hmax_);
 
 	/* window開く */
 	cl_gts_gui.window_set_hue_min_or_max->position(
 		 flwin->x() + flbut->x() + 10
-		,flwin->y() + flbut->y() - 110
+		,flwin->y() + flbut->y() -
+			(cl_gts_gui.window_set_hue_min_or_max->h() + 10)
 	);
 	cl_gts_gui.window_set_hue_min_or_max->show();
 }
@@ -132,8 +155,15 @@ void cb_trace_params::cb_hue_min_or_max_change(void)
 	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
 
 	/* Editorの値をTrace Paramsウインドウにセット */
-	wset.valinp_hue_min->value(cl_gts_gui.valinp_set_hue_min->value());
-	wset.valinp_hue_max->value(cl_gts_gui.valinp_set_hue_max->value());
+	if (cl_gts_gui.radbut_set_hue_max->value()==0) {
+		wset.valinp_hue_min->value(
+			cl_gts_gui.cyclic_color_wheel->get_hue()
+		);
+	} else {
+		wset.valinp_hue_max->value(
+			cl_gts_gui.cyclic_color_wheel->get_hue()
+		);
+	}
 
 	/* Image(& hsv viewもredrawしてる)の再表示 */
 	cl_gts_gui.image_view->redraw();

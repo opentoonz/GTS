@@ -32,6 +32,7 @@
 #include <FL/Fl_Counter.H>
 #include "cb_trace_params.h"
 #include "fl_gl_hsv_view.h"
+#include "fl_gl_cyclic_color_wheel.h"
 
 class gts_gui {
 public:
@@ -1805,20 +1806,17 @@ public:
 private:
   inline void cb_window_set_hue_min_or_max_i(Fl_Double_Window*, void*);
   static void cb_window_set_hue_min_or_max(Fl_Double_Window*, void*);
-  inline void cb_4_i(Fl_Scrollbar*, void*);
-  static void cb_4(Fl_Scrollbar*, void*);
 public:
+  fl_gl_cyclic_color_wheel *cyclic_color_wheel;
   Fl_Button *radbut_set_hue_min;
-  Fl_Value_Input *valinp_set_hue_min;
 private:
-  inline void cb_valinp_set_hue_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_set_hue_min(Fl_Value_Input*, void*);
+  inline void cb_radbut_set_hue_min_i(Fl_Button*, void*);
+  static void cb_radbut_set_hue_min(Fl_Button*, void*);
 public:
   Fl_Button *radbut_set_hue_max;
-  Fl_Value_Input *valinp_set_hue_max;
 private:
-  inline void cb_valinp_set_hue_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_set_hue_max(Fl_Value_Input*, void*);
+  inline void cb_radbut_set_hue_max_i(Fl_Button*, void*);
+  static void cb_radbut_set_hue_max(Fl_Button*, void*);
   inline void cb_OK3_i(Fl_Button*, void*);
   static void cb_OK3(Fl_Button*, void*);
   inline void cb_Cancel3_i(Fl_Button*, void*);

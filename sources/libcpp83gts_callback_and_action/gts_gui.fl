@@ -3164,54 +3164,40 @@ window_set_color->hide();}
       label {Set Hue Min or Max}
       callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
 window_set_hue_min_or_max->hide();}
-      xywh {50 50 200 100} type Double resizable modal size_range {200 100 1000 100} visible
+      xywh {50 50 200 100} type Double resizable modal size_range {200 100 1000 130} visible
     } {
       Fl_Group {} {open
-        xywh {0 0 200 70}
+        xywh {0 0 200 40} resizable
       } {
-        Fl_Group {} {open
-          xywh {0 0 200 30}
-        } {
-          Fl_Box {} {
-            xywh {0 0 5 30}
-          }
-          Fl_Scrollbar {} {
-            callback {if (radbut_set_hue_min->value() == 1) {
-valinp_set_hue_min->value( o->value() );
-} else {
-valinp_set_hue_max->value( o->value() );
-}
-
-cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
-            xywh {5 5 190 20} type Horizontal maximum 360 resizable
-            code0 {o->linesize(1);}
-          }
-          Fl_Box {} {
-            xywh {195 0 5 30}
-          }
+        Fl_Box {} {
+          xywh {0 0 200 5}
         }
-        Fl_Group {} {open
-          xywh {0 30 200 40}
-        } {
-          Fl_Button radbut_set_hue_min {
-            label {Min.}
-            xywh {5 30 35 15} type Radio value 1
-          }
-          Fl_Value_Input valinp_set_hue_min {
-            callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
-            xywh {5 45 35 20}
-          }
-          Fl_Box {} {
-            xywh {40 30 120 40} resizable
-          }
-          Fl_Button radbut_set_hue_max {
-            label {Max.}
-            xywh {160 30 35 15} type Radio
-          }
-          Fl_Value_Input valinp_set_hue_max {
-            callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();}
-            xywh {160 45 35 20}
-          }
+        Fl_Box cyclic_color_wheel {
+          xywh {0 5 200 30} resizable
+          code0 {\#include "fl_gl_cyclic_color_wheel.h"}
+          class fl_gl_cyclic_color_wheel
+        }
+        Fl_Box {} {
+          xywh {0 35 200 5}
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 40 200 30}
+      } {
+        Fl_Button radbut_set_hue_min {
+          label {Min.}
+          callback {cyclic_color_wheel->set_hue_range_is_max(false);
+cyclic_color_wheel->redraw();}
+          xywh {5 40 35 25} type Radio value 1
+        }
+        Fl_Box {} {
+          xywh {40 40 120 25} resizable
+        }
+        Fl_Button radbut_set_hue_max {
+          label {Max.}
+          callback {cyclic_color_wheel->set_hue_range_is_max(true);
+cyclic_color_wheel->redraw();}
+          xywh {160 40 35 25} type Radio
         }
       }
       Fl_Group {} {open

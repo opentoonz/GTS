@@ -167,6 +167,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_cyclic_color_wheel.cpp \
 					sources/libcpp83gts_callback_and_action/fl_gl_hsv_view.cpp \
 					sources/libcpp83gts_callback_and_action/fl_gl_image_view.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_event.cpp \

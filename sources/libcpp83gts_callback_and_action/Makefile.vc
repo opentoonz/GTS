@@ -51,6 +51,7 @@ cb_trace_params.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\
+fl_gl_cyclic_color_wheel.cpp\
 fl_gl_hsv_view.cpp\
 fl_gl_image_view.cpp\
 fltk_event.cpp\
