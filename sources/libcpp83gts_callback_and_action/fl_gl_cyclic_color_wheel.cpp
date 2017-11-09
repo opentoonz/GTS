@@ -66,7 +66,7 @@ void fl_gl_cyclic_color_wheel::set_hue_range_value(
 }
 double fl_gl_cyclic_color_wheel::get_hue(void)
 {
-	return rint( cyclic_hue_degree_( 180. - this->hue_offset_ ) );
+	return cyclic_hue_degree_( 180. - this->hue_offset_ );
 }
 
 /* 現在位置を最大/最小値にセットする */

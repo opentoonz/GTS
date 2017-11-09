@@ -786,8 +786,8 @@ void draw_one_partition_(
 
 void draw_color_partition_(
 	const double thickness
-	,const double hue_min
-	,const double hue_max
+	,double hue_min
+	,double hue_max
 	,const double thre_slope_line
 	,const double thre_intercept
 	,const double target_r
@@ -821,6 +821,14 @@ void draw_color_partition_(
 	2 3 6 7	--> その位置でのHue色
 	3 4 5 6	--> Target色
 */
+	/* min,maxの判断を先にやり... */
+	const bool min_equal_smaller_than_max = (hue_min <= hue_max);
+	/* min,maxの値が本当は同じである場合、
+	min<maxなのか、min>maxなのかを判断するため0.00001の差をつけている
+	ので、ここからホントのmin,max値にする */
+	if (fabs(hue_max - hue_min) <= 0.0000011) {
+		hue_max = hue_min = rint(hue_min);
+	}
 
 	/*---------- hue_min ----------*/
 	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
@@ -850,7 +858,12 @@ void draw_color_partition_(
 	);
 
 	/* 色点用背景色 */
-	const double hdiff = (hue_min <= hue_max)? hue_max-hue_min: hue_max+360.-hue_min;
+	const double hdiff =
+		//(hue_min <= hue_max)
+		min_equal_smaller_than_max
+		? hue_max-hue_min
+		: hue_max+360.-hue_min
+		;
 	glColor3d( 0.5 ,0.5 ,0.5 );
 	glBegin(GL_QUAD_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
@@ -1440,12 +1453,12 @@ void fl_gl_hsv_view::handle_keyboard_( const int key , const char* text )
 		this->eye.reset_eye();
 		this->redraw();
 		break;
-	 case 'd':
+	 case 4: /* Ctrl+D (ASCII制御文字(=EOT)(=伝送終了)) */
 		if (this->depth_sw_)	{ this->depth_sw_ = false; }
 		else			{ this->depth_sw_ = true; }
 		this->redraw();
 		break;
-	 case 'f':
+	 case 6: /* Ctrl+F (ASCII制御文字(=ACK)(=肯定応答)) */
 		if (this->fog_sw_)	{ this->fog_sw_ = false; }
 		else			{ this->fog_sw_ = true; }
 		this->redraw();

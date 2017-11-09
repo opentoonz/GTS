@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iomanip>
 #include <iostream>
 #include "cb_trace_params.h"
 #include "ids_path_level_from_files.h"
@@ -155,14 +156,18 @@ void cb_trace_params::cb_hue_min_or_max_change(void)
 	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
 
 	/* Editorの値をTrace Paramsウインドウにセット */
-	if (cl_gts_gui.radbut_set_hue_max->value()==0) {
-		wset.valinp_hue_min->value(
-			cl_gts_gui.cyclic_color_wheel->get_hue()
-		);
+	if (cl_gts_gui.radbut_set_hue_min->value()!=0) {
+		double hh = cl_gts_gui.cyclic_color_wheel->get_hue();
+		if (0.000001 < fabs(hh - wset.valinp_hue_max->value())) {
+			hh = rint( hh );
+		}
+		wset.valinp_hue_min->value( hh );
 	} else {
-		wset.valinp_hue_max->value(
-			cl_gts_gui.cyclic_color_wheel->get_hue()
-		);
+		double hh = cl_gts_gui.cyclic_color_wheel->get_hue();
+		if (0.000001 < fabs(hh - wset.valinp_hue_min->value())) {
+			hh = rint( hh );
+		}
+		wset.valinp_hue_max->value( hh );
 	}
 
 	/* Image(& hsv viewもredrawしてる)の再表示 */
