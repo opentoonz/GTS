@@ -2595,10 +2595,10 @@ cl_gts_master.cl_color_trace_edit_color.cb_change_color();}
       label {Trace Params}
       callback {cl_gts_gui.window_trace_params->hide();
 cl_gts_gui.menite_trace_params->clear();}
-      xywh {50 50 425 240} type Double non_modal visible
+      xywh {50 50 450 250} type Double non_modal visible
     } {
       Fl_Group group_trace_params {open
-        xywh {0 0 425 240}
+        xywh {0 0 450 250}
       } {
         Fl_Button button_trace_params {
           label {Open Config This...}
@@ -2607,9 +2607,12 @@ cl_gts_gui.menite_trace_params->clear();}
           code0 {\#include "cb_trace_params.h"}
           class fltk_button_trace_params
         }
-        Fl_Button togbut_trace_open_right_sw {
+        Fl_Button {} {
           callback {if (o->value()) {
-window_trace_params->size(group_trace_params->w(),window_trace_params->h());
+window_trace_params->size(
+ togbut_trace_open_right_middle_sw->x()+togbut_trace_open_right_middle_sw->w()+5
+ ,window_trace_params->h());
+togbut_trace_open_right_middle_sw->value(0);
 } else {
 window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
 }}
@@ -2621,417 +2624,449 @@ window_trace_params->size(window_trace_params->w(),group_trace_params->h());
 } else {
 window_trace_params->size(window_trace_params->w(),cl_gts_master.cl_trace_params.cb_get_window_height_active());
 }}
-          image {icon_open_close_under.png} xywh {175 25 20 20} type Toggle value 1
+          image {icon_open_close_under.png} xywh {205 5 20 20} type Toggle value 1
+        }
+        Fl_Button togbut_trace_open_right_middle_sw {
+          callback {if (o->value()) {
+window_trace_params->size(group_trace_params->w(),window_trace_params->h());
+} else {
+window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
+}}
+          image {icon_open_close_right_11x11.png} xywh {352 5 15 15} type Toggle value 1
         }
         Fl_Check_Button chebut_trace_display_target_sw {
           label Target
           callback {image_view->redraw();}
-          xywh {255 5 17 25} down_box DOWN_BOX align 4 hide
+          xywh {325 5 17 25} down_box DOWN_BOX align 4 hide
         }
         Fl_Check_Button chebut_trace_display_main_sw {
           label {Divide Dots}
           callback {image_view->redraw();}
-          xywh {375 5 17 20} down_box DOWN_BOX align 4
+          xywh {350 28 17 20} down_box DOWN_BOX align 4
         }
         Fl_Group {} {open
-          xywh {0 24 400 28}
+          xywh {0 34 450 31}
         } {
           Fl_Text_Display {} {
             label Thickness
-            xywh {60 37 0 0} align 6
+            xywh {70 47 0 0} align 6
           }
           Fl_Text_Display {} {
             label Hmin
-            xywh {210 37 0 0} align 6
+            xywh {250 47 0 0} align 6
           }
           Fl_Text_Display {} {
             label Hmax
-            xywh {245 37 0 0} align 6
+            xywh {285 47 0 0} align 6
           }
           Fl_Text_Display {} {
             label Slope
-            xywh {305 24 0 0} align 6
+            xywh {375 34 0 0} align 6
           }
           Fl_Text_Display {} {
             label Intercept
-            xywh {317 37 0 0} align 6
+            xywh {387 47 0 0} align 6
           }
         }
         Fl_Group {} {open
-          xywh {0 55 400 25}
+          xywh {0 65 450 25}
         } {
-          Fl_Check_Button chebut_trace_0_enable_sw {
-            callback {if (o->value()) {group_trace_0->activate();  }
-else            {group_trace_0->deactivate();}
-image_view->redraw();}
-            xywh {5 55 17 25} down_box DOWN_BOX value 1 align 4
-          }
           Fl_Group group_trace_0 {open
-            xywh {25 55 375 25}
+            xywh {0 65 450 25}
           } {
             Fl_Button button_trace_0_target_rgb {
               callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_open_editor(
 	window_trace_params ,o ,0
 );}
-              xywh {25 55 25 25} color 16
+              xywh {5 65 25 25} color 16
             }
             Fl_Value_Input valinp_trace_0_thickness {
               callback {((Fl_Valuator *)scrbar_trace_0_thickness)->value(o->value());
 image_view->redraw();}
-              xywh {55 55 30 25} box BORDER_BOX maximum 100 value 70
+              xywh {35 65 30 25} box BORDER_BOX maximum 100 value 70
             }
             Fl_Scrollbar scrbar_trace_0_thickness {
               callback {valinp_trace_0_thickness->value(o->value());
 image_view->redraw();}
-              xywh {90 55 105 20} type Horizontal maximum 100 value 70
+              xywh {70 65 125 20} type Horizontal maximum 100 value 70
               code0 {scrbar_trace_0_thickness->linesize(1);}
             }
             Fl_Value_Input valinp_trace_0_hue_min {
               callback {image_view->redraw();}
-              xywh {210 55 35 25} maximum 360 value -1 hide
+              xywh {250 65 35 25} maximum 360 value -1 hide
             }
             Fl_Value_Input valinp_trace_0_hue_max {
               callback {image_view->redraw();}
-              xywh {245 55 35 25} maximum 360 value -1 hide
+              xywh {285 65 35 25} maximum 360 value -1 hide
             }
             Fl_Button button_trace_0_hue_min_max {
               label {...}
               callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_open_editor(
 	window_trace_params ,o ,0
 );}
-              xywh {280 55 15 25} hide
+              xywh {320 65 15 25} hide
             }
-            Fl_Value_Input valinp_trace_0_slope_deg {
-              callback {image_view->redraw();}
-              xywh {305 55 30 25} maximum 90 value 45
-            }
-            Fl_Value_Input valinp_trace_0_intercept {
-              callback {image_view->redraw();}
-              xywh {340 55 35 25} maximum 100 value 100
+            Fl_Check_Button chebut_trace_0_rotate360_sw {
+              callback {hsv_view->redraw();}
+              xywh {335 65 15 25} down_box DOWN_BOX hide
             }
             Fl_Check_Button chebut_trace_0_display_sw {
               callback {hsv_view->redraw();}
-              xywh {375 55 17 25} down_box DOWN_BOX
+              xywh {350 65 17 25} down_box DOWN_BOX
             }
+            Fl_Value_Input valinp_trace_0_slope_deg {
+              callback {image_view->redraw();}
+              xywh {375 65 30 25} maximum 90 value 45
+            }
+            Fl_Value_Input valinp_trace_0_intercept {
+              callback {image_view->redraw();}
+              xywh {410 65 35 25} maximum 100 value 100
+            }
+          }
+          Fl_Check_Button chebut_trace_0_enable_sw {
+            callback {if (o->value()) {group_trace_0->activate();  }
+else            {group_trace_0->deactivate();}
+image_view->redraw();}
+            xywh {205 65 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
         Fl_Group {} {open
-          xywh {0 85 400 25}
+          xywh {0 95 450 25}
         } {
-          Fl_Check_Button chebut_trace_1_enable_sw {
-            callback {if (o->value()) {group_trace_1->activate();  }
-else            {group_trace_1->deactivate();}
-image_view->redraw();}
-            xywh {5 85 17 25} down_box DOWN_BOX value 1 align 4
-          }
           Fl_Group group_trace_1 {open
-            xywh {25 85 375 25}
+            xywh {0 95 450 25}
           } {
             Fl_Button button_trace_1_target_rgb {
               callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_open_editor(
 	window_trace_params ,o ,1
 );}
-              xywh {25 85 25 25} color 17
+              xywh {5 95 25 25} color 17
             }
             Fl_Value_Input valinp_trace_1_thickness {
               callback {((Fl_Valuator *)scrbar_trace_1_thickness)->value(o->value());
 image_view->redraw();}
-              xywh {55 85 30 25} maximum 100 value 70
+              xywh {35 95 30 25} maximum 100 value 70
             }
             Fl_Scrollbar scrbar_trace_1_thickness {
               callback {valinp_trace_1_thickness->value(o->value());
 image_view->redraw();}
-              xywh {90 85 105 20} type Horizontal maximum 100 value 70
+              xywh {70 95 125 20} type Horizontal maximum 100 value 70
               code0 {scrbar_trace_1_thickness->linesize(1);}
             }
             Fl_Value_Input valinp_trace_1_hue_min {
               callback {image_view->redraw();}
-              xywh {210 85 35 25} maximum 360 value 300
+              xywh {250 95 35 25} maximum 360 value 300
             }
             Fl_Value_Input valinp_trace_1_hue_max {
               callback {image_view->redraw();}
-              xywh {245 85 35 25} maximum 360 value 60
+              xywh {285 95 35 25} maximum 360 value 60
             }
             Fl_Button button_trace_1_hue_min_max {
               label {...}
               callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_open_editor(
 	window_trace_params ,o ,1
 );}
-              xywh {280 85 15 25}
+              xywh {320 95 15 25}
             }
-            Fl_Value_Input valinp_trace_1_slope_deg {
-              callback {image_view->redraw();}
-              xywh {305 85 30 25} maximum 90 value 45
-            }
-            Fl_Value_Input valinp_trace_1_intercept {
-              callback {image_view->redraw();}
-              xywh {340 85 35 25} maximum 100 value 100
+            Fl_Check_Button chebut_trace_1_rotate360_sw {
+              callback {hsv_view->redraw();}
+              xywh {335 95 15 25} down_box DOWN_BOX hide
             }
             Fl_Check_Button chebut_trace_1_display_sw {
               callback {hsv_view->redraw();}
-              xywh {375 85 17 25} down_box DOWN_BOX
+              xywh {350 95 17 25} down_box DOWN_BOX
             }
+            Fl_Value_Input valinp_trace_1_slope_deg {
+              callback {image_view->redraw();}
+              xywh {375 95 30 25} maximum 90 value 45
+            }
+            Fl_Value_Input valinp_trace_1_intercept {
+              callback {image_view->redraw();}
+              xywh {410 95 35 25} maximum 100 value 100
+            }
+          }
+          Fl_Check_Button chebut_trace_1_enable_sw {
+            callback {if (o->value()) {group_trace_1->activate();  }
+else            {group_trace_1->deactivate();}
+image_view->redraw();}
+            xywh {205 95 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
         Fl_Group {} {open
-          xywh {0 115 400 25}
+          xywh {0 125 450 25}
         } {
-          Fl_Check_Button chebut_trace_2_enable_sw {
-            callback {if (o->value()) {group_trace_2->activate();  }
-else            {group_trace_2->deactivate();}
-image_view->redraw();}
-            xywh {5 115 17 25} down_box DOWN_BOX value 1 align 4
-          }
           Fl_Group group_trace_2 {open
-            xywh {25 115 375 25}
+            xywh {0 125 450 25}
           } {
             Fl_Button button_trace_2_target_rgb {
               callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_open_editor(
 	window_trace_params ,o ,2
 );}
-              xywh {25 115 25 25} color 18
+              xywh {5 125 25 25} color 18
             }
             Fl_Value_Input valinp_trace_2_thickness {
               callback {((Fl_Valuator *)scrbar_trace_2_thickness)->value(o->value());
 image_view->redraw();}
-              xywh {55 115 30 25} maximum 100 value 70
+              xywh {35 125 30 25} maximum 100 value 70
             }
             Fl_Scrollbar scrbar_trace_2_thickness {
               callback {valinp_trace_2_thickness->value(o->value());
 image_view->redraw();}
-              xywh {90 115 105 20} type Horizontal maximum 100 value 70
+              xywh {70 125 125 20} type Horizontal maximum 100 value 70
               code0 {scrbar_trace_2_thickness->linesize(1);}
             }
             Fl_Value_Input valinp_trace_2_hue_min {
               callback {image_view->redraw();}
-              xywh {210 115 35 25} maximum 360 value 180
+              xywh {250 125 35 25} maximum 360 value 180
             }
             Fl_Value_Input valinp_trace_2_hue_max {
               callback {image_view->redraw();}
-              xywh {245 115 35 25} maximum 360 value 300
+              xywh {285 125 35 25} maximum 360 value 300
             }
             Fl_Button button_trace_2_hue_min_max {
               label {...}
               callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_open_editor(
 	window_trace_params ,o ,2
 );}
-              xywh {280 115 15 25}
+              xywh {320 125 15 25}
             }
-            Fl_Value_Input valinp_trace_2_slope_deg {
-              callback {image_view->redraw();}
-              xywh {305 115 30 25} maximum 90 value 45
-            }
-            Fl_Value_Input valinp_trace_2_intercept {
-              callback {image_view->redraw();}
-              xywh {340 115 35 25} maximum 100 value 100
+            Fl_Check_Button chebut_trace_2_rotate360_sw {
+              callback {hsv_view->redraw();}
+              xywh {335 125 15 25} down_box DOWN_BOX hide
             }
             Fl_Check_Button chebut_trace_2_display_sw {
               callback {hsv_view->redraw();}
-              xywh {375 115 17 25} down_box DOWN_BOX
+              xywh {350 125 17 25} down_box DOWN_BOX
             }
+            Fl_Value_Input valinp_trace_2_slope_deg {
+              callback {image_view->redraw();}
+              xywh {375 125 30 25} maximum 90 value 45
+            }
+            Fl_Value_Input valinp_trace_2_intercept {
+              callback {image_view->redraw();}
+              xywh {410 125 35 25} maximum 100 value 100
+            }
+          }
+          Fl_Check_Button chebut_trace_2_enable_sw {
+            callback {if (o->value()) {group_trace_2->activate();  }
+else            {group_trace_2->deactivate();}
+image_view->redraw();}
+            xywh {205 125 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
         Fl_Group {} {open
-          xywh {0 145 400 25}
+          xywh {0 155 450 25}
         } {
-          Fl_Check_Button chebut_trace_3_enable_sw {
-            callback {if (o->value()) {group_trace_3->activate();  }
-else            {group_trace_3->deactivate();}
-image_view->redraw();}
-            xywh {5 145 17 25} down_box DOWN_BOX value 1 align 4
-          }
           Fl_Group group_trace_3 {open
-            xywh {25 145 375 25}
+            xywh {0 155 450 25}
           } {
             Fl_Button button_trace_3_target_rgb {
               callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_open_editor(
 	window_trace_params ,o ,3
 );}
-              xywh {25 145 25 25} color 19
+              xywh {5 155 25 25} color 19
             }
             Fl_Value_Input valinp_trace_3_thickness {
               callback {((Fl_Valuator *)scrbar_trace_3_thickness)->value(o->value());
 image_view->redraw();}
-              xywh {55 145 30 25} maximum 100 value 70
+              xywh {35 155 30 25} maximum 100 value 70
             }
             Fl_Scrollbar scrbar_trace_3_thickness {
               callback {valinp_trace_3_thickness->value(o->value());
 image_view->redraw();}
-              xywh {90 145 105 20} type Horizontal maximum 100 value 70
+              xywh {70 155 125 20} type Horizontal maximum 100 value 70
               code0 {scrbar_trace_3_thickness->linesize(1);}
             }
             Fl_Value_Input valinp_trace_3_hue_min {
               callback {image_view->redraw();}
-              xywh {210 145 35 25} maximum 360 value 60
+              xywh {250 155 35 25} maximum 360 value 60
             }
             Fl_Value_Input valinp_trace_3_hue_max {
               callback {image_view->redraw();}
-              xywh {245 145 35 25} maximum 360 value 180
+              xywh {285 155 35 25} maximum 360 value 180
             }
             Fl_Button button_trace_3_hue_min_max {
               label {...}
               callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_open_editor(
 	window_trace_params ,o ,3
 );}
-              xywh {280 145 15 25}
+              xywh {320 155 15 25}
             }
-            Fl_Value_Input valinp_trace_3_slope_deg {
-              callback {image_view->redraw();}
-              xywh {305 145 30 25} maximum 90 value 45
-            }
-            Fl_Value_Input valinp_trace_3_intercept {
-              callback {image_view->redraw();}
-              xywh {340 145 35 25} maximum 100 value 100
+            Fl_Check_Button chebut_trace_3_rotate360_sw {
+              callback {hsv_view->redraw();}
+              xywh {335 155 15 25} down_box DOWN_BOX hide
             }
             Fl_Check_Button chebut_trace_3_display_sw {
               callback {hsv_view->redraw();}
-              xywh {375 145 17 25} down_box DOWN_BOX
+              xywh {350 155 17 25} down_box DOWN_BOX
             }
+            Fl_Value_Input valinp_trace_3_slope_deg {
+              callback {image_view->redraw();}
+              xywh {375 155 30 25} maximum 90 value 45
+            }
+            Fl_Value_Input valinp_trace_3_intercept {
+              callback {image_view->redraw();}
+              xywh {410 155 35 25} maximum 100 value 100
+            }
+          }
+          Fl_Check_Button chebut_trace_3_enable_sw {
+            callback {if (o->value()) {group_trace_3->activate();  }
+else            {group_trace_3->deactivate();}
+image_view->redraw();}
+            xywh {205 155 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
         Fl_Group {} {open
-          xywh {0 175 400 25}
+          xywh {0 185 450 25}
         } {
-          Fl_Check_Button chebut_trace_4_enable_sw {
-            callback {if (o->value()) {group_trace_4->activate();  }
-else            {group_trace_4->deactivate();}
-image_view->redraw();}
-            xywh {5 175 17 25} down_box DOWN_BOX align 4
-          }
           Fl_Group group_trace_4 {open
-            xywh {25 175 375 25} deactivate
+            xywh {0 185 450 25} deactivate
           } {
             Fl_Button button_trace_4_target_rgb {
               callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_open_editor(
 	window_trace_params ,o ,4
 );}
-              xywh {25 175 25 25} color 20
+              xywh {5 185 25 25} color 20
             }
             Fl_Value_Input valinp_trace_4_thickness {
               callback {((Fl_Valuator *)scrbar_trace_4_thickness)->value(o->value());
 image_view->redraw();}
-              xywh {55 175 30 25} maximum 100 value 70
+              xywh {35 185 30 25} maximum 100 value 70
             }
             Fl_Scrollbar scrbar_trace_4_thickness {
               callback {valinp_trace_4_thickness->value(o->value());
 image_view->redraw();}
-              xywh {90 175 105 20} type Horizontal maximum 100 value 70
+              xywh {70 185 125 20} type Horizontal maximum 100 value 70
               code0 {scrbar_trace_4_thickness->linesize(1);}
             }
             Fl_Value_Input valinp_trace_4_hue_min {
               callback {image_view->redraw();}
-              xywh {210 175 35 25} maximum 360 value 180
+              xywh {250 185 35 25} maximum 360 value 180
             }
             Fl_Value_Input valinp_trace_4_hue_max {
               callback {image_view->redraw();}
-              xywh {245 175 35 25} maximum 360 value 180
+              xywh {285 185 35 25} maximum 360 value 180
             }
             Fl_Button button_trace_4_hue_min_max {
               label {...}
               callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_open_editor(
 	window_trace_params ,o ,4
 );}
-              xywh {280 175 15 25}
+              xywh {320 185 15 25}
             }
-            Fl_Value_Input valinp_trace_4_slope_deg {
-              callback {image_view->redraw();}
-              xywh {305 175 30 25} maximum 90 value 45
-            }
-            Fl_Value_Input valinp_trace_4_intercept {
-              callback {image_view->redraw();}
-              xywh {340 175 35 25} maximum 100 value 100
+            Fl_Check_Button chebut_trace_4_rotate360_sw {
+              callback {hsv_view->redraw();}
+              xywh {335 185 17 25} down_box DOWN_BOX hide
             }
             Fl_Check_Button chebut_trace_4_display_sw {
               callback {hsv_view->redraw();}
-              xywh {375 175 17 25} down_box DOWN_BOX
+              xywh {350 185 17 25} down_box DOWN_BOX
             }
+            Fl_Value_Input valinp_trace_4_slope_deg {
+              callback {image_view->redraw();}
+              xywh {375 185 30 25} maximum 90 value 45
+            }
+            Fl_Value_Input valinp_trace_4_intercept {
+              callback {image_view->redraw();}
+              xywh {410 185 35 25} maximum 100 value 100
+            }
+          }
+          Fl_Check_Button chebut_trace_4_enable_sw {
+            callback {if (o->value()) {group_trace_4->activate();  }
+else            {group_trace_4->deactivate();}
+image_view->redraw();}
+            xywh {205 185 17 25} down_box DOWN_BOX align 4
           }
         }
         Fl_Group {} {open
-          xywh {0 205 400 25}
+          xywh {0 215 450 25}
         } {
-          Fl_Check_Button chebut_trace_5_enable_sw {
-            callback {if (o->value()) {group_trace_5->activate();  }
-else            {group_trace_5->deactivate();}
-image_view->redraw();}
-            xywh {5 205 17 25} down_box DOWN_BOX align 4
-          }
           Fl_Group group_trace_5 {open
-            xywh {25 205 375 25} deactivate
+            xywh {0 215 450 25} deactivate
           } {
             Fl_Button button_trace_5_target_rgb {
               callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_open_editor(
 	window_trace_params ,o ,5
 );}
-              xywh {25 205 25 25} color 21
+              xywh {5 215 25 25} color 21
             }
             Fl_Value_Input valinp_trace_5_thickness {
               callback {((Fl_Valuator *)scrbar_trace_5_thickness)->value(o->value());
 image_view->redraw();}
-              xywh {55 205 30 25} maximum 100 value 70
+              xywh {35 215 30 25} maximum 100 value 70
             }
             Fl_Scrollbar scrbar_trace_5_thickness {
               callback {valinp_trace_5_thickness->value(o->value());
 image_view->redraw();}
-              xywh {90 205 105 20} type Horizontal maximum 100 value 70
+              xywh {70 215 125 20} type Horizontal maximum 100 value 70
               code0 {scrbar_trace_5_thickness->linesize(1);}
             }
             Fl_Value_Input valinp_trace_5_hue_min {
               callback {image_view->redraw();}
-              xywh {210 205 35 25} maximum 360 value 300
+              xywh {250 215 35 25} maximum 360 value 300
             }
             Fl_Value_Input valinp_trace_5_hue_max {
               callback {image_view->redraw();}
-              xywh {245 205 35 25} maximum 360 value 300
+              xywh {285 215 35 25} maximum 360 value 300
             }
             Fl_Button button_trace_5_hue_min_max {
               label {...}
               callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_open_editor(
 	window_trace_params ,o ,5
 );}
-              xywh {280 205 15 25}
+              xywh {320 215 15 25}
             }
-            Fl_Value_Input valinp_trace_5_slope_deg {
-              callback {image_view->redraw();}
-              xywh {305 205 30 25} maximum 90 value 45
-            }
-            Fl_Value_Input valinp_trace_5_intercept {
-              callback {image_view->redraw();}
-              xywh {340 205 35 25} maximum 100 value 100
+            Fl_Check_Button chebut_trace_5_rotate360_sw {
+              callback {hsv_view->redraw();}
+              xywh {335 215 17 25} down_box DOWN_BOX hide
             }
             Fl_Check_Button chebut_trace_5_display_sw {
               callback {hsv_view->redraw();}
-              xywh {375 205 17 25} down_box DOWN_BOX
+              xywh {350 215 17 25} down_box DOWN_BOX
             }
+            Fl_Value_Input valinp_trace_5_slope_deg {
+              callback {image_view->redraw();}
+              xywh {375 215 30 25} maximum 90 value 45
+            }
+            Fl_Value_Input valinp_trace_5_intercept {
+              callback {image_view->redraw();}
+              xywh {410 215 35 25} maximum 100 value 100
+            }
+          }
+          Fl_Check_Button chebut_trace_5_enable_sw {
+            callback {if (o->value()) {group_trace_5->activate();  }
+else            {group_trace_5->deactivate();}
+image_view->redraw();}
+            xywh {205 215 17 25} down_box DOWN_BOX align 4
           }
         }
         Fl_Group {} {open
-          xywh {400 70 15 145}
+          xywh {225 80 15 145}
         } {
           Fl_Button button_change_0_1 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(0,1);
 image_view->redraw();}
-            image {icon_change_updown.png} xywh {400 70 15 25}
+            image {icon_change_updown.png} xywh {225 80 15 25}
           }
           Fl_Button button_change_1_2 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(1,2);
 image_view->redraw();}
-            image {icon_change_updown.png} xywh {400 100 15 25}
+            image {icon_change_updown.png} xywh {225 110 15 25}
           }
           Fl_Button button_change_2_3 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(2,3);
 image_view->redraw();}
-            image {icon_change_updown.png} xywh {400 130 15 25}
+            image {icon_change_updown.png} xywh {225 140 15 25}
           }
           Fl_Button button_change_3_4 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(3,4);
 image_view->redraw();}
-            image {icon_change_updown.png} xywh {400 160 15 25}
+            image {icon_change_updown.png} xywh {225 170 15 25}
           }
           Fl_Button button_change_4_5 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(4,5);
 image_view->redraw();}
-            image {icon_change_updown.png} xywh {400 190 15 25}
+            image {icon_change_updown.png} xywh {225 200 15 25}
           }
         }
       }
@@ -3184,18 +3219,18 @@ window_set_hue_min_or_max->hide();}
       Fl_Group {} {open
         xywh {0 40 200 30}
       } {
-        Fl_Button radbut_set_hue_min {
+        Fl_Button radbut_hue_min_sw {
           label {Min.}
-          callback {cyclic_color_wheel->set_hue_range_is_max(false);
+          callback {cyclic_color_wheel->set_min_or_max(false);
 cyclic_color_wheel->redraw();}
           xywh {5 40 35 25} type Radio value 1
         }
         Fl_Box {} {
           xywh {40 40 120 25} resizable
         }
-        Fl_Button radbut_set_hue_max {
+        Fl_Button radbut_hue_max_sw {
           label {Max.}
-          callback {cyclic_color_wheel->set_hue_range_is_max(true);
+          callback {cyclic_color_wheel->set_min_or_max(true);
 cyclic_color_wheel->redraw();}
           xywh {160 40 35 25} type Radio
         }

@@ -35,12 +35,21 @@ bool calcu_color_trace_sep_hsv::exec(
 		else {
 			/* 色相の範囲外の時は次ループへ */
 			if (area.hue_min < area.hue_max) {
-				if (hh < area.hue_min) { continue; }
-				if (area.hue_max < hh) { continue; }
-			}
-			else {
+				if ((hh < area.hue_min)
+				||  (area.hue_max < hh)) { continue; }
+			} else
+			if (area.hue_max < area.hue_min) {
 				if ((area.hue_max < hh)
 				&&  (hh < area.hue_min)) { continue; }
+			} else
+			if (area.hue_min == area.hue_max) {
+				if (area.rotate360_sw==false) {
+					if (area.hue_min != hh) {
+				/* 0回転でmin/max位置になければ範囲外 */
+						continue;
+					}
+				}
+				/* 1回転なら全て範囲内 */
 			}
 
 			/* 太さ外のときは次ループへ */

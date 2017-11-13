@@ -41,7 +41,6 @@ public:
 		,Fl_Button* flbut
 		,const int number
 	);
-	void cb_hue_min_or_max_change(void);
 	void cb_hue_min_or_max_cancel(void);
 
 	/* traceの目的色を得る */
@@ -70,6 +69,7 @@ public:
 		Fl_Value_Input*		valinp_slope_deg;
 		Fl_Value_Input*		valinp_intercept;
 		Fl_Check_Button*	chebut_display_sw;
+		Fl_Check_Button*	chebut_rotate360_sw;
 	};
 	std::vector<widget_set> widget_sets;
 	void init_widget_set(void) { this->init_widget_set_(); }
@@ -81,7 +81,7 @@ public:
 private:
 	int number_;
 	uchar r_ ,g_ ,b_;
-	double hmin_ ,hmax_;
+	double hmin_ ,hmax_ ,rotate360_sw_;
 
 	void init_widget_set_(void);
 };

@@ -106,37 +106,41 @@ void cb_trace_params::cb_hue_min_or_max_open_editor(
 {
 	assert( number < static_cast<int>(this->widget_sets.size()) );
 
-	/* hue min/max値を記憶 */
+	/* 各min,maxを補助表示するため色線のみ初期化設定する */
 	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
-	cb_trace_params::widget_set& wset( vwset.at( number ) );
-	this->hmin_ = wset.valinp_hue_min->value();
-	this->hmax_ = wset.valinp_hue_max->value();
-
-	/* 各min,max値をhue cyclic color wheelに表示するため値をセット */
 	int crnt_num = number;
-	for (int ii=0,jj=0 ;ii<static_cast<int>(this->widget_sets.size())
-	;++ii) {
+	for (int ii=0,jj=0 ;ii<static_cast<int>(vwset.size()) ;++ii) {
 		auto& ws = this->widget_sets.at(ii);
 		if ((0. <= ws.valinp_hue_min->value())
 		&&  (0. <= ws.valinp_hue_max->value())) {
-			/* 色線 */
-			cl_gts_gui.cyclic_color_wheel->set_hue_range_value(
-			jj++
-			,ws.valinp_hue_min->value()
-			,ws.valinp_hue_max->value()
-			,((ws.chebut_enable_sw->value()==0) ?false :true)
+			/* 色線のみセットする */
+			cl_gts_gui.cyclic_color_wheel->init_widget_set(
+				jj++
+				,ws.valinp_hue_min
+				,ws.valinp_hue_max
+				,ws.chebut_enable_sw
+				,ws.chebut_rotate360_sw
 			);
 		} else {
-			/* 黒線 */
+			/* メニュー上の現在位置より先に黒線があるとき */
+			/* 黒線の数の分... */
 			if (ii < number) {
-				--crnt_num;
+				--crnt_num; /* 位置が減少方向に減る */
 			}
 		}
 	}
-	cl_gts_gui.cyclic_color_wheel->set_hue_range_pos(
+
+	/* color wheel におけるカレント位置をセット */
+	cl_gts_gui.cyclic_color_wheel->init_number_and_is_max(
 		crnt_num
-		,(cl_gts_gui.radbut_set_hue_max->value()==0) ?false :true
+		,(cl_gts_gui.radbut_hue_min_sw->value()!=0) ?false :true
 	);
+
+	/* Cancelのとき戻す値を記憶 */
+	cb_trace_params::widget_set& wset( vwset.at( number ) );
+	this->hmin_         = wset.valinp_hue_min->value();
+	this->hmax_         = wset.valinp_hue_max->value();
+	this->rotate360_sw_ = wset.chebut_rotate360_sw->value();
 
 	/* 色テーブル番号を記憶 */
 	this->number_ = number;
@@ -150,30 +154,6 @@ void cb_trace_params::cb_hue_min_or_max_open_editor(
 	cl_gts_gui.window_set_hue_min_or_max->show();
 }
 
-void cb_trace_params::cb_hue_min_or_max_change(void)
-{
-	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
-	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
-
-	/* Editorの値をTrace Paramsウインドウにセット */
-	if (cl_gts_gui.radbut_set_hue_min->value()!=0) {
-		double hh = cl_gts_gui.cyclic_color_wheel->get_hue();
-		if (0.000001 < fabs(hh - wset.valinp_hue_max->value())) {
-			hh = rint( hh );
-		}
-		wset.valinp_hue_min->value( hh );
-	} else {
-		double hh = cl_gts_gui.cyclic_color_wheel->get_hue();
-		if (0.000001 < fabs(hh - wset.valinp_hue_min->value())) {
-			hh = rint( hh );
-		}
-		wset.valinp_hue_max->value( hh );
-	}
-
-	/* Image(& hsv viewもredrawしてる)の再表示 */
-	cl_gts_gui.image_view->redraw();
-}
-
 void cb_trace_params::cb_hue_min_or_max_cancel(void)
 {
 	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
@@ -182,6 +162,7 @@ void cb_trace_params::cb_hue_min_or_max_cancel(void)
 	/* 元の値をTrace Paramsウインドウに戻す */
 	wset.valinp_hue_min->value( this->hmin_ );
 	wset.valinp_hue_max->value( this->hmax_ );
+	wset.chebut_rotate360_sw->value( this->rotate360_sw_ ?1 :0 );
 
 	/* OpenGLの表示をredraw */
 	cl_gts_gui.image_view->redraw();
@@ -220,6 +201,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.valinp_trace_0_slope_deg
 	,cl_gts_gui.valinp_trace_0_intercept
 	,cl_gts_gui.chebut_trace_0_display_sw
+	,cl_gts_gui.chebut_trace_0_rotate360_sw
 	}
 	,{cl_gts_gui.chebut_trace_1_enable_sw
 	,cl_gts_gui.group_trace_1
@@ -232,6 +214,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.valinp_trace_1_slope_deg
 	,cl_gts_gui.valinp_trace_1_intercept
 	,cl_gts_gui.chebut_trace_1_display_sw
+	,cl_gts_gui.chebut_trace_1_rotate360_sw
 	}
 	,{cl_gts_gui.chebut_trace_2_enable_sw
 	,cl_gts_gui.group_trace_2
@@ -244,6 +227,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.valinp_trace_2_slope_deg
 	,cl_gts_gui.valinp_trace_2_intercept
 	,cl_gts_gui.chebut_trace_2_display_sw
+	,cl_gts_gui.chebut_trace_2_rotate360_sw
 	}
 	,{cl_gts_gui.chebut_trace_3_enable_sw
 	,cl_gts_gui.group_trace_3
@@ -256,6 +240,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.valinp_trace_3_slope_deg
 	,cl_gts_gui.valinp_trace_3_intercept
 	,cl_gts_gui.chebut_trace_3_display_sw
+	,cl_gts_gui.chebut_trace_3_rotate360_sw
 	}
 	,{cl_gts_gui.chebut_trace_4_enable_sw
 	,cl_gts_gui.group_trace_4
@@ -268,6 +253,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.valinp_trace_4_slope_deg
 	,cl_gts_gui.valinp_trace_4_intercept
 	,cl_gts_gui.chebut_trace_4_display_sw
+	,cl_gts_gui.chebut_trace_4_rotate360_sw
 	}
 	,{cl_gts_gui.chebut_trace_5_enable_sw
 	,cl_gts_gui.group_trace_5
@@ -280,6 +266,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.valinp_trace_5_slope_deg
 	,cl_gts_gui.valinp_trace_5_intercept
 	,cl_gts_gui.chebut_trace_5_display_sw
+	,cl_gts_gui.chebut_trace_5_rotate360_sw
 	}
 	};
 }
@@ -313,6 +300,8 @@ void cb_trace_params::set_params_for_speedup(
 		vset.slope_deg = wset.valinp_slope_deg->value();
 		vset.intercept = wset.valinp_intercept->value()
 				/wset.valinp_intercept->maximum();
+		vset.rotate360_sw =
+			(wset.chebut_rotate360_sw->value()!=0) ?true :false;
 	}
 }
 
@@ -390,6 +379,10 @@ void cb_trace_params::cb_swap_widget_set( const unsigned num1 , const unsigned n
 	tmpint = wset1.chebut_display_sw->value();
 	wset1.chebut_display_sw->value( wset2.chebut_display_sw->value() );
 	wset2.chebut_display_sw->value(tmpint);
+
+	tmpint = wset1.chebut_rotate360_sw->value();
+	wset1.chebut_rotate360_sw->value(wset2.chebut_rotate360_sw->value());
+	wset2.chebut_rotate360_sw->value(tmpint);
 }
 
 int cb_trace_params::cb_get_window_height_active( void )

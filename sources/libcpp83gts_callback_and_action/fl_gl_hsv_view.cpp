@@ -788,6 +788,7 @@ void draw_color_partition_(
 	const double thickness
 	,double hue_min
 	,double hue_max
+	,const bool rotate360_sw
 	,const double thre_slope_line
 	,const double thre_intercept
 	,const double target_r
@@ -821,15 +822,6 @@ void draw_color_partition_(
 	2 3 6 7	--> その位置でのHue色
 	3 4 5 6	--> Target色
 */
-	/* min,maxの判断を先にやり... */
-	const bool min_equal_smaller_than_max = (hue_min <= hue_max);
-	/* min,maxの値が本当は同じである場合、
-	min<maxなのか、min>maxなのかを判断するため0.00001の差をつけている
-	ので、ここからホントのmin,max値にする */
-	if (fabs(hue_max - hue_min) <= 0.0000011) {
-		hue_max = hue_min = rint(hue_min);
-	}
-
 	/*---------- hue_min ----------*/
 	glEnable(GL_CULL_FACE);	/* 片面表示（glCullFace）を有効に */
 	glCullFace(GL_BACK);	/* 後面を破棄 */
@@ -858,12 +850,18 @@ void draw_color_partition_(
 	);
 
 	/* 色点用背景色 */
-	const double hdiff =
-		//(hue_min <= hue_max)
-		min_equal_smaller_than_max
-		? hue_max-hue_min
-		: hue_max+360.-hue_min
-		;
+	double hdiff = 0.;
+	if (hue_min < hue_max) {
+		hdiff = hue_max - hue_min;
+	} else
+	if (hue_max < hue_min) {
+		hdiff = hue_max + 360. - hue_min;
+	} else
+	if (hue_min == hue_max) {
+		if (rotate360_sw) { hdiff = 360.; }
+		else              { hdiff = 0.;   }
+	}
+
 	glColor3d( 0.5 ,0.5 ,0.5 );
 	glBegin(GL_QUAD_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
@@ -1064,6 +1062,7 @@ void draw_guide_display_()
 				/wset.valinp_thickness->maximum()
 				,wset.valinp_hue_min->value()
 				,wset.valinp_hue_max->value()
+				,wset.chebut_rotate360_sw->value() != 0
  ,gts::liner_from_rad(gts::rad_from_deg(wset.valinp_slope_deg->value()))
 				,wset.valinp_intercept->value()
 				/wset.valinp_intercept->maximum()

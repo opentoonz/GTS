@@ -1,8 +1,10 @@
+#include <cassert>
 #include <iostream>
 #include <iomanip>
 #include <vector>
 #include <FL/glu.h>	/* gluOrtho2D(-) */
 #include "fl_gl_cyclic_color_wheel.h"
+#include "gts_gui.h"
 #include "gts_master.h"
 
 fl_gl_cyclic_color_wheel::fl_gl_cyclic_color_wheel(int x ,int y ,int w ,int h ,const char*l)
@@ -11,17 +13,32 @@ fl_gl_cyclic_color_wheel::fl_gl_cyclic_color_wheel(int x ,int y ,int w ,int h ,c
 	,mouse_y_when_push_(0)
 	,x_offset_(0.)
 	,hue_offset_(0.)
-	,hue_ranges_({
-	// double minimum ,maximum; bool enable_sw;
-	 { 330. , 60. ,true  }	// 0
-	,{ 180. ,300. ,true  }	// 1
-	,{  60. ,180. ,true  }	// 2
-	,{ 300. ,301. ,false }	// 3
-	,{ 301. ,330. ,false }	// 4
-	})
+	,guide_widget_sets_(
+	5,{ nullptr ,nullptr ,nullptr ,nullptr }
+	)
 	,hue_range_number_(0)
 	,hue_range_is_max_(false)
 {
+}
+
+/* cb_trace_params使用(GUIで各値が変更したとき設定する) */
+void fl_gl_cyclic_color_wheel::init_widget_set(
+	const int number
+	,Fl_Value_Input* valinp_hue_min
+	,Fl_Value_Input* valinp_hue_max
+	,Fl_Check_Button* chebut_enable_sw
+	,Fl_Check_Button* chebut_rotate360_sw
+)
+{
+	assert(	(0 <= number)
+	&& (number < static_cast<int>(this->guide_widget_sets_.size())) );
+
+	/* 値を記憶 */
+	auto& aa = this->guide_widget_sets_.at(number);
+	aa.valinp_hue_min = valinp_hue_min;
+	aa.valinp_hue_max = valinp_hue_max;
+	aa.chebut_enable_sw = chebut_enable_sw;
+	aa.chebut_rotate360_sw = chebut_rotate360_sw;
 }
 
 namespace {
@@ -32,91 +49,82 @@ double cyclic_hue_degree_( double hue )
 	return hue;
 }
 }
-
-void fl_gl_cyclic_color_wheel::set_hue_range_pos(const int num ,const bool is_max)
+void fl_gl_cyclic_color_wheel::init_number_and_is_max( const int number ,const bool is_max)
 {
-	/* 範囲外error */
-	if ( num < 0 || static_cast<int>(this->hue_ranges_.size()) <= num)
-	{ return; }
+	assert(	(0 <= number)
+	&& (number < static_cast<int>(this->guide_widget_sets_.size())) );
 
-	/* hue現在位置を記憶 */
-	auto& aa = this->hue_ranges_.at( num );
-	auto& hh = ( is_max ?aa.maximum :aa.minimum );
+	/* GUI値からhue現在位置をセット */
+	auto& aa = this->guide_widget_sets_.at( number );
+	auto hh = (is_max	?aa.valinp_hue_max->value()
+				:aa.valinp_hue_min->value() );
 	this->hue_offset_ = cyclic_hue_degree_( 180. - hh );
 	this->x_offset_ = this->xpos_from_hue_(this->hue_offset_);
 
 	/* パラメータ位置を記憶 */
-	this->hue_range_number_ = num;
+	this->hue_range_number_ = number;
 	this->hue_range_is_max_ = is_max;
 }
 
-void fl_gl_cyclic_color_wheel::set_hue_range_value(
- const int num ,const double mini ,const double maxi ,const bool enable_sw
-)
+namespace {
+double calc_between_min_max_( const double mini ,const double maxi ,const bool min_sw ,const double ratio )
 {
-	/* 範囲外error */
-	if ( num < 0 || static_cast<int>(this->hue_ranges_.size()) <= num)
-	{ return; }
-
-	/* 値を記憶 */
-	auto& aa = this->hue_ranges_.at(num);
-	aa.minimum = mini;
-	aa.maximum = maxi;
-	aa.enable_sw = enable_sw;
-}
-double fl_gl_cyclic_color_wheel::get_hue(void)
-{
-	return cyclic_hue_degree_( 180. - this->hue_offset_ );
-}
-
-/* 現在位置を最大/最小値にセットする */
-void fl_gl_cyclic_color_wheel::set_position_to_min_or_max_()
-{
-	auto& aa = this->hue_ranges_.at(this->hue_range_number_);
-	if (this->hue_range_is_max_) {
-		//aa.maximum = std::fmod(180.-this->hue_offset_ ,360.);
-		aa.maximum = cyclic_hue_degree_( 180. - this->hue_offset_ );
-	} else {
-		//aa.minimum = std::fmod(180.-this->hue_offset_ ,360.);
-		aa.minimum = cyclic_hue_degree_( 180. - this->hue_offset_ );
-	}
-}
-void fl_gl_cyclic_color_wheel::set_position_between_min_max( const double ratio )
-{
-	auto& aa = this->hue_ranges_.at(this->hue_range_number_);
-
 	/* mini...maxiの間の長さ */
 	double len = 0.;
-	if (aa.minimum < aa.maximum) {
-		len = aa.maximum - aa.minimum;
-	} else {
-		len = (360. - aa.minimum) + aa.maximum;
-	}
+	if (mini < maxi) { len = maxi - mini; }
+	else             { len = maxi + (360. - mini); }
 
 	/* 色相の値 360以上の値もあり */
 	double hh = 0.;
-	if (this->hue_range_is_max_) {
-		hh = len * (1. - ratio) + aa.minimum;
-	} else {
-		hh = len *       ratio  + aa.minimum;
-	}
-
-	/* 0...360の範囲で設定 */
-	this->hue_offset_ = cyclic_hue_degree_( 180. - hh );
-
-	/* 現在のwidgetの横幅内の位置 */
-	this->x_offset_ = this->xpos_from_hue_(this->hue_offset_);
+	if (min_sw) { hh = len *       ratio  + mini; }
+	else        { hh = len * (1. - ratio) + mini; }
+	return hh;
 }
-void fl_gl_cyclic_color_wheel::set_hue_range_is_max(const bool is_max )
+}
+void fl_gl_cyclic_color_wheel::set_min_or_max(const bool is_max )
 {
-	/*const int sz = 10;
+#if 0
+	/* 動作しない--> redraw() しない --> ひとまず保留*/
+	const int sz = 10;
 	for (int ii=1 ;ii<sz ;++ii) {
 		Sleep(100);
 		auto ratio = static_cast<double>(ii)/sz;
-		this->set_position_between_min_max( ratio );
+
+		auto& aa = this->guide_widget_sets_.at(
+						this->hue_range_number_);
+		auto mini = aa.valinp_hue_min->value();
+		auto maxi = aa.valinp_hue_max->value();
+		bool min_sw = (cl_gts_gui.radbut_hue_min_sw->value() != 0);
+		auto hh = calc_between_min_max_( mini ,maxi ,min_sw ,ratio);
+		/* 0...360の範囲で設定 */
+		this->hue_offset_ = cyclic_hue_degree_( 180. - hh );
+		/* 現在のwidgetの横幅内の位置 */
+		this->x_offset_ = this->xpos_from_hue_(this->hue_offset_);
+
 		this->redraw();
-	}*/ /* 動作しない--> redraw() しない */
-	this->set_hue_range_pos( this->hue_range_number_ ,is_max );
+	}
+#endif
+	this->init_number_and_is_max( this->hue_range_number_ ,is_max );
+}
+
+//--------------------
+
+/* 現在位置を最大/最小値にセットする */
+void fl_gl_cyclic_color_wheel::set_min_or_max_to_gui_(const bool rot360_sw)
+{
+	auto& aa = this->guide_widget_sets_.at(this->hue_range_number_);
+	if ( cl_gts_gui.radbut_hue_min_sw->value() != 0 ) {
+		aa.valinp_hue_min->value(
+			cyclic_hue_degree_( 180. - this->hue_offset_ )
+		);
+	} else {
+		aa.valinp_hue_max->value(
+			cyclic_hue_degree_( 180. - this->hue_offset_ )
+		);;
+	}
+
+	/* 0回転、あるいは1回転 */
+	aa.chebut_rotate360_sw->value( rot360_sw ? 1 :0 );
 }
 
 void fl_gl_cyclic_color_wheel::draw_object_()
@@ -212,27 +220,17 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 	glColor3d(1.,1.,1.);glVertex2d(0.5,0.95);glVertex2d(0.5,1.0);
 	glEnd();
 
-	/* 現在位置を最大/最小値にセットする */
-	/*{
-	auto& aa = this->hue_ranges_.at(this->hue_range_number_);
-	if (this->hue_range_is_max_) {
-		aa.maximum = std::fmod(180.-this->hue_offset_ ,360.);
-	} else {
-		aa.minimum = std::fmod(180.-this->hue_offset_ ,360.);
-	}
-	}*/
-
 	/* display each hue range */
-	auto sz = this->hue_ranges_.size();
+	auto sz = this->guide_widget_sets_.size();
 	auto he = 1./(sz+1.);
 	for (unsigned ii=0 ;ii<sz ;++ii) {
 		/* 各パラメータ */
-		auto& aa = this->hue_ranges_.at(ii);
+		auto& aa = this->guide_widget_sets_.at(ii);
 
 		/* 色 */
 		if (ii == this->hue_range_number_) {
 			glColor3d(1.  ,1.  ,1. );
-		} else if (aa.enable_sw) {
+		} else if (aa.chebut_enable_sw->value() != 0) {
 			glColor3d(0.7 ,0.7 ,0.7);
 		} else {glColor3d(0.3 ,0.3 ,0.3); }
 
@@ -242,15 +240,14 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 		double y2 = yy + he/2.;
 
 		/* 左右位置 */
-		//double x1=std::fmod(aa.minimum+this->hue_offset_ ,360.)/360;
-		//double x2=std::fmod(aa.maximum+this->hue_offset_ ,360.)/360;
-		double x1=cyclic_hue_degree_(aa.minimum+this->hue_offset_)
-								/360;
-		double x2=cyclic_hue_degree_(aa.maximum+this->hue_offset_)
-								/360;
+		double x1 = cyclic_hue_degree_(
+			aa.valinp_hue_min->value()+this->hue_offset_) /360.;
+		double x2 = cyclic_hue_degree_(
+			aa.valinp_hue_max->value()+this->hue_offset_) /360.;
+		bool rotate360_sw = (aa.chebut_rotate360_sw->value() != 0);
 
 		/* 表示 */
-		if (x1 <= x2) {
+		if (x1 < x2 || ((x1 == x2) && rotate360_sw==false)) {
 			glBegin(GL_LINES);
 			glVertex2d(x1,yy);glVertex2d(x2,yy);
 			glVertex2d(x1,y1);glVertex2d(x1,y2);
@@ -324,70 +321,120 @@ void fl_gl_cyclic_color_wheel::handle_push_( const int mx ,const int my )
 	this->mouse_y_when_push_ = my;
 }
 
-double fl_gl_cyclic_color_wheel::limit_new_hue_( double new_hue )
+namespace {
+void clamp_cyclic_color_wheel_(
+const bool change_min_sw
+,const double hmin
+,const double hmax
+,const double hold
+,const double hnew
+,double& huedeg
+,bool& rotate360_sw
+)
 {
-	/* 位置(h1,h2,h3) */
-	auto& aa = this->hue_ranges_.at(this->hue_range_number_);
-	auto& min_or_max= ((this->hue_range_is_max_)?aa.minimum:aa.maximum);
-	      double h1 = this->hue_offset_ + min_or_max;
-	const double h2 = 180.;
-	      double h3 = new_hue           + min_or_max;
-	while (360. < h1) {
-		h1 -= 360.;
-		h3 -= 360.;
+	if (change_min_sw) {/* min値を変更中 */
+		if ((hold < hmax) && (hmax <= hnew)) {
+		/* max値と同じか小さい値から、maxより大きい値に移動したら */
+			huedeg = hmax;
+			rotate360_sw = false;	/* 0回転 */
+		} else
+		if ((hmax < hold) && (hnew <= hmax)) {
+		/* max値と同じか大さい値から、maxより小さい値に移動したら */
+			huedeg = hmax;
+			rotate360_sw = true;	/* 1回転 */
+		} else
+		if (hold == hmax) { /* 前回hmaxと交差した */
+			if (rotate360_sw==false && (hnew < hmax)) {
+				huedeg = hnew; /* 0回転の状態から戻る */
+			} else
+			if (rotate360_sw==true && (hmax < hnew)) {
+				huedeg = hnew; /* 360回転の状態から戻る */
+			} else {
+				huedeg = hmax;
+			}
+		} else {
+			huedeg = hnew;
+		}
 	}
-
-	/* 新位置と旧位置の間に中間(180度の)位置をはさむ */
-	if ((h1 <= h2 && h2 <= h3)
-	||  (h3 <= h2 && h2 <= h1)) {
-		new_hue = 180. - min_or_max;
-
-		/* わずかに元来た場所に寄せてどちらから来たかわかるように */
-		new_hue += ((h1 < h2) || (h2 < h3)) ?-0.000001 :0.000001;
+	else {	/* max値を変更中 */
+		if ((hold < hmin) && (hmin <= hnew)) {
+		/* min値と同じか小さい値から、minより大きい値に移動したら */
+			huedeg = hmin;
+			rotate360_sw = true;	/* 1回転 */
+		} else
+		if ((hmin < hold) && (hnew <= hmin)) {
+		/* min値と同じか大さい値から、minより小さい値に移動したら */
+			huedeg = hmin;
+			rotate360_sw = false;	/* 0回転 */
+		} else
+		if (hold == hmin) { /* 前回hminと交差した */
+			if (rotate360_sw==false && (hmin < hnew)) {
+				huedeg = hnew; /* 0回転の状態から戻る */
+			} else
+			if (rotate360_sw==true && (hnew < hmin)) {
+				huedeg = hnew; /* 360回転の状態から戻る */
+			} else
+			{
+				huedeg = hmax;
+			}
+		} else {
+			huedeg = hnew;
+		}
 	}
-
-	/* cyclic about 360 */
-	new_hue = cyclic_hue_degree_( new_hue );
-
-	return new_hue;
 }
-double fl_gl_cyclic_color_wheel::limit_new_xpos_( double new_xpos )
+}
+
+double fl_gl_cyclic_color_wheel::limit_new_hue_( double hue_o_new ,bool& rotate360_sw )
 {
-	auto hh = this->hue_from_xpos_( new_xpos );
-	//hh = floor( hh ); /* 整数値化-->動き悪くなる-->ダメ */
-	auto h2 = this->limit_new_hue_( hh );
-	auto xp = this->xpos_from_hue_( h2 );
-	return xp;
+	auto& aa = this->guide_widget_sets_.at(this->hue_range_number_);
+	auto hmin = aa.valinp_hue_min->value();
+	auto hmax = aa.valinp_hue_max->value();
+	auto hold = 180. - this->hue_offset_; /* 0...360 --> 180...-180 */
+	auto hnew = 180. - hue_o_new;
+	while (hold < 0.) {	/* 同じサイクルで0-360範囲にする */
+		hold = hold + 360.;
+		hnew = hnew + 360.;
+	}
+
+	double huedeg=0.;
+	clamp_cyclic_color_wheel_(
+		cl_gts_gui.radbut_hue_min_sw->value()!=0
+		,hmin
+		,hmax
+		,hold
+		,hnew
+		,huedeg
+		,rotate360_sw
+	);
+
+	return huedeg;
 }
 
 void fl_gl_cyclic_color_wheel::handle_updownleftright_( const int mx ,const int my )
 {
-	auto xpos = this->limit_new_xpos_(
+	/* マウスの移動で変化した位置からhue offset値を得る */
+	auto hue_o = this->hue_from_xpos_( 
 		this->x_offset_ + (mx - this->mouse_x_when_push_)
 	);
-
-	/* セット */
-	this->x_offset_ = xpos;
-	this->hue_offset_ = this->hue_from_xpos_( xpos );
-//std::cout << std::fixed << std::setprecision(7) << "x_o=" << this->x_offset_ << " hue_o=" << this->hue_offset_ << " h=" << this->get_hue() << std::endl;
 
 	/* 現在地を記憶 */
 	this->mouse_x_when_push_ = mx;
 	this->mouse_y_when_push_ = my;
 
+	/* hue degree値を移動限界でclampし、あるいは0-360度範囲にする */
+	auto& aa = this->guide_widget_sets_.at(this->hue_range_number_);
+	bool rotate360_sw = (aa.chebut_rotate360_sw->value() != 0);
+	auto huedeg = this->limit_new_hue_( hue_o ,rotate360_sw );
+
+	/* セット */
+	this->hue_offset_ = rint( cyclic_hue_degree_( 180. - huedeg ) );
+	this->x_offset_ = this->xpos_from_hue_( this->hue_offset_ );
+
 	/* 再表示 */
-	cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
-	this->set_position_to_min_or_max_();
+	this->set_min_or_max_to_gui_( rotate360_sw );
 	this->redraw();
+	cl_gts_gui.image_view->redraw();
 }
-/*
-if (radbut_set_hue_min->value() == 1) {
-valinp_set_hue_min->value( o->value() );
-} else {
-valinp_set_hue_max->value( o->value() );
-}
-cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
-*/
 
 void fl_gl_cyclic_color_wheel::handle_keyboard_( const int key , const char* text )
 {
@@ -395,25 +442,34 @@ void fl_gl_cyclic_color_wheel::handle_keyboard_( const int key , const char* tex
 	 switch (key) {
 	 case FL_Left:
 		{
-		auto hue = this->limit_new_hue_(ceil(this->hue_offset_-1.));
-		this->hue_offset_ = hue;
-		this->x_offset_ = this->xpos_from_hue_( hue );
-//std::cout << std::fixed << std::setprecision(7) << "x_o=" << this->x_offset_ << " hue_o=" << this->hue_offset_ << " h=" << this->get_hue() << std::endl;
+	auto& aa = this->guide_widget_sets_.at(this->hue_range_number_);
+	bool rotate360_sw = (aa.chebut_rotate360_sw->value() != 0);
+	auto huedeg = this->limit_new_hue_( ceil(this->hue_offset_-1.)
+							,rotate360_sw );
+	/* セット */
+	this->hue_offset_ = cyclic_hue_degree_( 180. - huedeg );
+	this->x_offset_ = this->xpos_from_hue_( this->hue_offset_ );
+
+	/* 再表示 */
+	this->set_min_or_max_to_gui_( rotate360_sw );
+	this->redraw();
+	cl_gts_gui.image_view->redraw();
 		}
-		cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
-		this->set_position_to_min_or_max_();
-		this->redraw();
 		break;
 	 case FL_Right:
 		{
-		auto hue= this->limit_new_hue_(floor(this->hue_offset_+1.));
-		this->hue_offset_ = hue;
-		this->x_offset_ = this->xpos_from_hue_( hue );
-//std::cout << std::fixed << std::setprecision(7) << "x_o=" << this->x_offset_ << " hue_o=" << this->hue_offset_ << " h=" << this->get_hue() << std::endl;
+	auto& aa = this->guide_widget_sets_.at(this->hue_range_number_);
+	bool rotate360_sw = (aa.chebut_rotate360_sw->value() != 0);
+	auto huedeg = this->limit_new_hue_( floor(this->hue_offset_+1.)
+							,rotate360_sw );
+	/* セット */
+	this->hue_offset_ = cyclic_hue_degree_( 180. - huedeg );
+	this->x_offset_ = this->xpos_from_hue_( huedeg );
+	/* 再表示 */
+	this->set_min_or_max_to_gui_( rotate360_sw );
+	this->redraw();
+	cl_gts_gui.image_view->redraw();
 		}
-		cl_gts_master.cl_trace_params.cb_hue_min_or_max_change();
-		this->set_position_to_min_or_max_();
-		this->redraw();
 		break;
 	 }
 	}
@@ -470,7 +526,7 @@ int main(void) {
 	win.resizable(ogl);
 	win.size_range(200,50,1000,100);
 	win.show();
-	ogl.set_hue_range_pos(4,true);
+	ogl.init_number_and_is_max(4,true);
 	return Fl::run();
 }
 #endif /* !DEBUG_FL_GL_CYCLIC_COLOR_WHEEL */
