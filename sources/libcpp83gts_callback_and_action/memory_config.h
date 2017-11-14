@@ -343,6 +343,8 @@ public:
 			  "intercept")
 		,str_trace_display_sw_(
 			  "display_sw")
+		,str_trace_rotate360_sw_(
+			  "rotate360_sw")
 
 	,load_config_sw_(true)
 	,load_image_sw_(true)
@@ -544,6 +546,7 @@ private:
 	const char* str_trace_slope_deg_;
 	const char* str_trace_intercept_;
 	const char* str_trace_display_sw_;
+	const char* str_trace_rotate360_sw_;
 
 	bool load_config_sw_;
 	bool load_image_sw_;

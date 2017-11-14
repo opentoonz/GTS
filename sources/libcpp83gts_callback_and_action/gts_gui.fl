@@ -2640,32 +2640,64 @@ window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
           xywh {325 5 17 25} down_box DOWN_BOX align 4 hide
         }
         Fl_Check_Button chebut_trace_display_main_sw {
-          label {Divide Dots}
+          label {Divide Points}
           callback {image_view->redraw();}
-          xywh {350 28 17 20} down_box DOWN_BOX align 4
+          xywh {350 20 17 20} down_box DOWN_BOX align 4
         }
         Fl_Group {} {open
           xywh {0 34 450 31}
         } {
           Fl_Text_Display {} {
-            label Thickness
-            xywh {70 47 0 0} align 6
+            label {Col.}
+            xywh {5 45 0 0} align 6
           }
           Fl_Text_Display {} {
-            label Hmin
-            xywh {250 47 0 0} align 6
+            label {|-------- Thickness ---------|}
+            xywh {35 45 0 0} align 6
           }
           Fl_Text_Display {} {
-            label Hmax
-            xywh {285 47 0 0} align 6
+            label Enable
+            xywh {205 40 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label {↓}
+            xywh {210 53 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label {U/D}
+            xywh {225 53 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label {|----- Hue -----|}
+            xywh {250 36 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label min
+            xywh {252 48 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label max
+            xywh {285 48 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label {ed.}
+            xywh {320 48 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label {G.}
+            xywh {350 45 0 0} align 6
           }
           Fl_Text_Display {} {
             label Slope
-            xywh {375 34 0 0} align 6
+            xywh {375 36 0 0} align 6
+          }
+          Fl_Text_Display {} {
+            label {↓}
+            xywh {378 48 0 0} align 6
           }
           Fl_Text_Display {} {
             label Intercept
-            xywh {387 47 0 0} align 6
+            xywh {387 48 0 0} align 6
           }
         }
         Fl_Group {} {open
@@ -3225,14 +3257,14 @@ window_set_hue_min_or_max->hide();}
 cyclic_color_wheel->redraw();}
           xywh {5 40 35 25} type Radio value 1
         }
-        Fl_Box {} {
-          xywh {40 40 120 25} resizable
-        }
         Fl_Button radbut_hue_max_sw {
           label {Max.}
           callback {cyclic_color_wheel->set_min_or_max(true);
 cyclic_color_wheel->redraw();}
-          xywh {160 40 35 25} type Radio
+          xywh {45 40 35 25} type Radio
+        }
+        Fl_Box {} {
+          xywh {80 40 120 25} resizable
         }
       }
       Fl_Group {} {open

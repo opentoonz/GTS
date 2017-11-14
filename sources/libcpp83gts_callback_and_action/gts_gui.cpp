@@ -8236,25 +8236,49 @@ Fl_Double_Window* gts_gui::make_window() {
         chebut_trace_display_target_sw->align(Fl_Align(FL_ALIGN_LEFT));
         chebut_trace_display_target_sw->hide();
       } // Fl_Check_Button* chebut_trace_display_target_sw
-      { chebut_trace_display_main_sw = new Fl_Check_Button(350, 28, 17, 20, "Divide Dots");
+      { chebut_trace_display_main_sw = new Fl_Check_Button(350, 20, 17, 20, "Divide Points");
         chebut_trace_display_main_sw->down_box(FL_DOWN_BOX);
         chebut_trace_display_main_sw->callback((Fl_Callback*)cb_chebut_trace_display_main_sw);
         chebut_trace_display_main_sw->align(Fl_Align(FL_ALIGN_LEFT));
       } // Fl_Check_Button* chebut_trace_display_main_sw
       { Fl_Group* o = new Fl_Group(0, 34, 450, 31);
-        { Fl_Text_Display* o = new Fl_Text_Display(70, 47, 0, 0, "Thickness");
+        { Fl_Text_Display* o = new Fl_Text_Display(5, 45, 0, 0, "Col.");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
-        { Fl_Text_Display* o = new Fl_Text_Display(250, 47, 0, 0, "Hmin");
+        { Fl_Text_Display* o = new Fl_Text_Display(35, 45, 0, 0, "|-------- Thickness ---------|");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
-        { Fl_Text_Display* o = new Fl_Text_Display(285, 47, 0, 0, "Hmax");
+        { Fl_Text_Display* o = new Fl_Text_Display(205, 40, 0, 0, "Enable");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
-        { Fl_Text_Display* o = new Fl_Text_Display(375, 34, 0, 0, "Slope");
+        { Fl_Text_Display* o = new Fl_Text_Display(210, 53, 0, 0, "\342\206\223");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
-        { Fl_Text_Display* o = new Fl_Text_Display(387, 47, 0, 0, "Intercept");
+        { Fl_Text_Display* o = new Fl_Text_Display(225, 53, 0, 0, "U/D");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(250, 36, 0, 0, "|----- Hue -----|");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(252, 48, 0, 0, "min");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(285, 48, 0, 0, "max");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(320, 48, 0, 0, "ed.");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(350, 45, 0, 0, "G.");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(375, 36, 0, 0, "Slope");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(378, 48, 0, 0, "\342\206\223");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(387, 48, 0, 0, "Intercept");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
         o->end();
@@ -8761,13 +8785,13 @@ Fl_Double_Window* gts_gui::make_window() {
         radbut_hue_min_sw->value(1);
         radbut_hue_min_sw->callback((Fl_Callback*)cb_radbut_hue_min_sw);
       } // Fl_Button* radbut_hue_min_sw
-      { Fl_Box* o = new Fl_Box(40, 40, 120, 25);
-        Fl_Group::current()->resizable(o);
-      } // Fl_Box* o
-      { radbut_hue_max_sw = new Fl_Button(160, 40, 35, 25, "Max.");
+      { radbut_hue_max_sw = new Fl_Button(45, 40, 35, 25, "Max.");
         radbut_hue_max_sw->type(102);
         radbut_hue_max_sw->callback((Fl_Callback*)cb_radbut_hue_max_sw);
       } // Fl_Button* radbut_hue_max_sw
+      { Fl_Box* o = new Fl_Box(80, 40, 120, 25);
+        Fl_Group::current()->resizable(o);
+      } // Fl_Box* o
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(0, 70, 200, 30);

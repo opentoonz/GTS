@@ -419,6 +419,11 @@ void memory_config::save_trace_params_( std::ofstream& ofs )
 			,trace_set.valinp_hue_max->value()
 			,ofs
 		);
+		this->save_bool_(
+			ti+this->str_trace_rotate360_sw_
+			,trace_set.chebut_rotate360_sw->value()
+			,ofs
+		);
 
 		save_fl64_(
 			ti+this->str_trace_slope_deg_

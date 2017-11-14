@@ -925,6 +925,9 @@ bool memory_config::load_trace_params_( std::vector< std::string >& words )
 	  } else if (words.at(2) == this->str_trace_display_sw_) {
 		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
 		wset.chebut_display_sw->value(sw_num);
+	  } else if (words.at(2) == this->str_trace_rotate360_sw_) {
+		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
+		wset.chebut_rotate360_sw->value(sw_num);
 	  } else {
 		return false; // not defined
 	  }
