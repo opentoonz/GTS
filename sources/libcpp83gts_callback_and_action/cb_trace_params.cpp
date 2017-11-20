@@ -1,6 +1,7 @@
 #include <cassert>
 #include <iomanip>
 #include <iostream>
+#include "calc_hsv_rgb.h"
 #include "cb_trace_params.h"
 #include "ids_path_level_from_files.h"
 #include "gts_gui.h"
@@ -34,6 +35,56 @@ void cb_trace_params::init_color(void)
 	}
 }
 
+namespace {
+void gui_hsv_to_rgb_( void ) { 
+	double	r=0. ,g=0. ,b=0.;
+	calc::hsv_to_rgb(
+		calc::clamp_cyclic360(
+		cl_gts_gui.valinp_set_color_hue->value() )
+		,cl_gts_gui.valinp_set_color_sat->value()/
+		 cl_gts_gui.valinp_set_color_sat->maximum()
+		,cl_gts_gui.valinp_set_color_val->value()/
+		 cl_gts_gui.valinp_set_color_val->maximum()
+		,r,g,b
+	);
+	r *= (cl_gts_gui.valinp_set_color_red->maximum()+.999999);
+	g *= (cl_gts_gui.valinp_set_color_gre->maximum()+.999999);
+	b *= (cl_gts_gui.valinp_set_color_blu->maximum()+.999999);
+	r = floor(r);
+	g = floor(g);
+	b = floor(b);
+	cl_gts_gui.valinp_set_color_red->value(r);
+	cl_gts_gui.valinp_set_color_gre->value(g);
+	cl_gts_gui.valinp_set_color_blu->value(b);
+	cl_gts_gui.scrbar_set_color_red->value(r);
+	cl_gts_gui.scrbar_set_color_gre->value(g);
+	cl_gts_gui.scrbar_set_color_blu->value(b);
+}
+void gui_rgb_to_hsv_( void ) { 
+	double	h=0. ,s=0. ,v=0.;
+	calc::rgb_to_hsv(
+		 cl_gts_gui.valinp_set_color_red->value()/
+		 cl_gts_gui.valinp_set_color_red->maximum()
+		,cl_gts_gui.valinp_set_color_gre->value()/
+		 cl_gts_gui.valinp_set_color_gre->maximum()
+		,cl_gts_gui.valinp_set_color_blu->value()/
+		 cl_gts_gui.valinp_set_color_blu->maximum()
+		,h,s,v
+	);
+	s *= cl_gts_gui.valinp_set_color_sat->maximum();
+	v *= cl_gts_gui.valinp_set_color_val->maximum();
+	h = rint( h );
+	s = rint( s );
+	v = rint( v );
+	cl_gts_gui.valinp_set_color_hue->value(h);
+	cl_gts_gui.valinp_set_color_sat->value(s);
+	cl_gts_gui.valinp_set_color_val->value(v);
+	cl_gts_gui.scrbar_set_color_hue->value(h);
+	cl_gts_gui.scrbar_set_color_sat->value(s);
+	cl_gts_gui.scrbar_set_color_val->value(v);
+}
+}
+
 void cb_trace_params::cb_target_rgb_color_open_editor(
 	Fl_Double_Window* flwin
 	,Fl_Button* flbut
@@ -56,16 +107,22 @@ void cb_trace_params::cb_target_rgb_color_open_editor(
 	cl_gts_gui.valinp_set_color_blu->value(this->b_);
 	cl_gts_gui.scrbar_set_color_blu->value(this->b_);
 
+	/* rgb初期値からhsv値を設定 */
+	gui_rgb_to_hsv_();
+
 	/* window開く */
 	cl_gts_gui.window_set_color->position(
 		 flwin->x() + flbut->x() + 10
-		,flwin->y() + flbut->y() - 120
+		,flwin->y() + flbut->y() - 200
 	);
 	cl_gts_gui.window_set_color->show();
 }
 
-void cb_trace_params::cb_target_rgb_color_change(void)
+void cb_trace_params::cb_target_rgb_color_change(const bool change_hsv_sw)
 {
+	if (change_hsv_sw) { gui_hsv_to_rgb_(); }
+	else		   { gui_rgb_to_hsv_(); }
+
 	/* Color Editorのrgb値をGUIカラーテーブルにセット */
 	set_target_rgb_( this->number_
 	,static_cast<uchar>(cl_gts_gui.valinp_set_color_red->value())

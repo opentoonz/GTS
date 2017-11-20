@@ -332,6 +332,8 @@ const bool change_min_sw
 ,bool& rotate360_sw
 )
 {
+	rotate360_sw = false;	/* 0回転 --> これがdefault */
+
 	if (change_min_sw) {/* min値を変更中 */
 		if ((hold < hmax) && (hmax <= hnew)) {
 		/* max値と同じか小さい値から、maxより大きい値に移動したら */

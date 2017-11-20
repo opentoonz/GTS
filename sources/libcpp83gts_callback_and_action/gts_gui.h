@@ -1800,30 +1800,60 @@ private:
   inline void cb_window_set_color_i(Fl_Double_Window*, void*);
   static void cb_window_set_color(Fl_Double_Window*, void*);
 public:
+  Fl_Value_Input *valinp_set_color_hue;
+private:
+  inline void cb_valinp_set_color_hue_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_hue(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_set_color_hue;
+private:
+  inline void cb_scrbar_set_color_hue_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_set_color_hue(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_set_color_sat;
+private:
+  inline void cb_valinp_set_color_sat_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_sat(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_set_color_sat;
+private:
+  inline void cb_scrbar_set_color_sat_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_set_color_sat(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_set_color_val;
+private:
+  inline void cb_valinp_set_color_val_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_val(Fl_Value_Input*, void*);
+public:
+  Fl_Scrollbar *scrbar_set_color_val;
+private:
+  inline void cb_scrbar_set_color_val_i(Fl_Scrollbar*, void*);
+  static void cb_scrbar_set_color_val(Fl_Scrollbar*, void*);
+public:
   Fl_Value_Input *valinp_set_color_red;
 private:
   inline void cb_valinp_set_color_red_i(Fl_Value_Input*, void*);
   static void cb_valinp_set_color_red(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_set_color_gre;
-private:
-  inline void cb_valinp_set_color_gre_i(Fl_Value_Input*, void*);
-  static void cb_valinp_set_color_gre(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_set_color_blu;
-private:
-  inline void cb_valinp_set_color_blu_i(Fl_Value_Input*, void*);
-  static void cb_valinp_set_color_blu(Fl_Value_Input*, void*);
 public:
   Fl_Scrollbar *scrbar_set_color_red;
 private:
   inline void cb_scrbar_set_color_red_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_set_color_red(Fl_Scrollbar*, void*);
 public:
+  Fl_Value_Input *valinp_set_color_gre;
+private:
+  inline void cb_valinp_set_color_gre_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_gre(Fl_Value_Input*, void*);
+public:
   Fl_Scrollbar *scrbar_set_color_gre;
 private:
   inline void cb_scrbar_set_color_gre_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_set_color_gre(Fl_Scrollbar*, void*);
+public:
+  Fl_Value_Input *valinp_set_color_blu;
+private:
+  inline void cb_valinp_set_color_blu_i(Fl_Value_Input*, void*);
+  static void cb_valinp_set_color_blu(Fl_Value_Input*, void*);
 public:
   Fl_Scrollbar *scrbar_set_color_blu;
 private:

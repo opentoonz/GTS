@@ -3158,72 +3158,124 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
       label {Set Color}
       callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
 window_set_color->hide();}
-      xywh {50 50 200 110} type Double resizable modal size_range {200 110 1000 110} visible
+      xywh {50 50 200 185} type Double resizable modal size_range {200 185 1000 185} visible
     } {
       Fl_Group {} {open
-        xywh {0 0 200 80} resizable
+        xywh {0 5 200 144}
       } {
         Fl_Group {} {open
-          xywh {0 0 55 80}
+          xywh {0 5 200 20}
+        } {
+          Fl_Value_Input valinp_set_color_hue {
+            label H
+            callback {((Fl_Valuator *)scrbar_set_color_hue)->value(o->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change(true);}
+            xywh {20 5 35 18} box BORDER_BOX maximum 360
+          }
+          Fl_Scrollbar scrbar_set_color_hue {
+            callback {valinp_set_color_hue->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change(true);}
+            xywh {60 5 135 18} type Horizontal maximum 360 resizable
+            code0 {scrbar_set_color_hue->linesize(1);}
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 28 200 20}
+        } {
+          Fl_Value_Input valinp_set_color_sat {
+            label S
+            callback {((Fl_Valuator *)scrbar_set_color_sat)->value(o->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change(true);}
+            xywh {20 28 35 18} box BORDER_BOX maximum 100
+          }
+          Fl_Scrollbar scrbar_set_color_sat {
+            callback {valinp_set_color_sat->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change(true);}
+            xywh {60 28 135 18} type Horizontal maximum 100 resizable
+            code0 {scrbar_set_color_sat->linesize(1);}
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 51 200 20}
+        } {
+          Fl_Value_Input valinp_set_color_val {
+            label V
+            callback {((Fl_Valuator *)scrbar_set_color_val)->value(o->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change(true);}
+            xywh {20 51 35 18} box BORDER_BOX maximum 100
+          }
+          Fl_Scrollbar scrbar_set_color_val {
+            callback {valinp_set_color_val->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change(true);}
+            xywh {60 51 135 18} type Horizontal maximum 100 resizable
+            code0 {scrbar_set_color_val->linesize(1);}
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 80 200 20}
         } {
           Fl_Value_Input valinp_set_color_red {
             label R
             callback {((Fl_Valuator *)scrbar_set_color_red)->value(o->value());
 cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
-            xywh {20 5 35 20} box BORDER_BOX maximum 255
+            xywh {20 80 35 18} box BORDER_BOX maximum 255
           }
+          Fl_Scrollbar scrbar_set_color_red {
+            callback {valinp_set_color_red->value(((Fl_Valuator *)o)->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
+            xywh {60 80 135 18} type Horizontal maximum 255 resizable
+            code0 {scrbar_set_color_red->linesize(1);}
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 103 200 20}
+        } {
           Fl_Value_Input valinp_set_color_gre {
             label G
             callback {((Fl_Valuator *)scrbar_set_color_gre)->value(o->value());
 cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
-            xywh {20 30 35 20} box BORDER_BOX maximum 255
-          }
-          Fl_Value_Input valinp_set_color_blu {
-            label B
-            callback {((Fl_Valuator *)scrbar_set_color_blu)->value(o->value());
-cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
-            xywh {20 55 35 20} box BORDER_BOX maximum 255
-          }
-        }
-        Fl_Group {} {open
-          xywh {60 0 135 80} resizable
-        } {
-          Fl_Scrollbar scrbar_set_color_red {
-            callback {valinp_set_color_red->value(((Fl_Valuator *)o)->value());
-cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
-            xywh {60 5 135 20} type Horizontal maximum 255
-            code0 {scrbar_set_color_red->linesize(1);}
+            xywh {20 103 35 18} box BORDER_BOX maximum 255
           }
           Fl_Scrollbar scrbar_set_color_gre {
             callback {valinp_set_color_gre->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
-            xywh {60 30 135 20} type Horizontal maximum 255
+            xywh {60 103 135 18} type Horizontal maximum 255 resizable
             code0 {scrbar_set_color_gre->linesize(1);}
+          }
+        }
+        Fl_Group {} {open
+          xywh {0 126 200 20}
+        } {
+          Fl_Value_Input valinp_set_color_blu {
+            label B
+            callback {((Fl_Valuator *)scrbar_set_color_blu)->value(o->value());
+cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
+            xywh {20 126 35 18} box BORDER_BOX maximum 255
           }
           Fl_Scrollbar scrbar_set_color_blu {
             callback {valinp_set_color_blu->value(((Fl_Valuator *)o)->value());
 cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
-            xywh {60 55 135 20} type Horizontal maximum 255
+            xywh {60 126 135 18} type Horizontal maximum 255 resizable
             code0 {scrbar_set_color_blu->linesize(1);}
           }
         }
       }
       Fl_Group {} {open
-        xywh {0 80 200 30}
+        xywh {0 155 200 30}
       } {
         Fl_Box {} {
-          xywh {0 80 70 25} resizable
+          xywh {0 155 70 25} resizable
         }
         Fl_Button {} {
           label OK
           callback {window_set_color->hide();}
-          xywh {70 80 60 25}
+          xywh {70 155 60 25}
         }
         Fl_Button {} {
           label Cancel
           callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
 window_set_color->hide();}
-          xywh {135 80 60 25}
+          xywh {135 155 60 25}
         }
       }
     }

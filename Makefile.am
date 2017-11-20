@@ -13,6 +13,7 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libc14image_rw_base \
 				   -Isources/libc16image_rw_tif \
 				   -Isources/libc18image_rw_tga \
+				   -Isources/lib_util \
 				   -Isources/libcpp31calcu_precision \
 				   -Isources/libcpp38calcu_rgb_to_hsv \
 				   -Isources/libcpp51iip_canvas \
@@ -81,6 +82,7 @@ libgts_la_SOURCES = \
 					sources/libc18image_rw_tga/tga_write_open.c \
 					sources/libc18image_rw_tga/tga_write_scanline.c \
 					sources/libc18image_rw_tga/tga_write_setup_header.c \
+					sources/lib_util/calc_hsv_rgb.cpp \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
 					sources/libcpp38calcu_rgb_to_hsv/from_hsv.cpp \
 					sources/libcpp38calcu_rgb_to_hsv/to_hsv.cpp \

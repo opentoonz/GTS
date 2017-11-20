@@ -9,6 +9,7 @@ for %%a in (
  libc14image_rw_base
  libc16image_rw_tif
  libc18image_rw_tga
+ lib_util
  libcpp31calcu_precision
  libcpp38calcu_rgb_to_hsv
  libcpp51iip_canvas

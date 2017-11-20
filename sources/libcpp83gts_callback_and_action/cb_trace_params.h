@@ -32,7 +32,7 @@ public:
 		,Fl_Button* flbut
 		,const int number
 	);
-	void cb_target_rgb_color_change(void);
+	void cb_target_rgb_color_change(const bool change_hsv_sw=false);
 	void cb_target_rgb_color_cancel(void);
 
 	/* hue min max editor */
