@@ -103,7 +103,7 @@ public:
 		this->s_mul_v_ = (s * v);
 	}
 	inline bool is_black_side(
-		const double slope_line ,const double offset
+		const double slope_line ,const double intercept
 	) {
 		if ( slope_line == 0.) { /* slope_degが0なら全て色部分 */
 			return false;
@@ -112,7 +112,7 @@ public:
 			return true;
 		}
 		if ( ((1. - slope_line) / slope_line) <
-		(this->one_minus_v_ - (1. - offset)) / this->s_mul_v_ ) {
+		(this->one_minus_v_ - (1. - intercept)) / this->s_mul_v_ ) {
 			return true;	/* 斜め切断して黒味側 */
 		}
 		return false; /* 上以外は色側 */

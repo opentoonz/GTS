@@ -19,7 +19,7 @@
 #include <FL/glu.h>	/* gluPerspective(-) , gluLookAt(-) */
 #include <FL/glut.h>	/* glutWireTeapot(-) glutWireCone(-) */
 			/* glutExtensionSupported(-) --> link error */
-#include "calcu_rgb_to_hsv.h"
+#include "calc_hsv_rgb.h"
 #include "calcu_color_trace_sep_hsv.h"
 #include "fl_gl_hsv_view.h"
 #include "gts_master.h"
@@ -838,9 +838,8 @@ void draw_color_partition_(
 	xyzout_to_xyzmid_( x1,y1 ,thre_slope_line,thre_intercept ,x8,y8,z8 );
 
 	/* 現位置Hue色 */
-	calcu_rgb_to_hsv cl_hsv;
 	double r=0.,g=0.,b=0.;
-	cl_hsv.from_hsv( hue_min,1.,1. ,&r,&g,&b );
+	calc::hsv_to_rgb( hue_min,1.,1. ,r,g,b );
 
 	draw_one_partition_(
 		x1,y1,z1 ,x4,y4,z4 ,x5,y5,z5 ,x8,y8,z8
@@ -930,9 +929,8 @@ void draw_color_partition_(
 	xyzout_to_xyzmid_( x1,y1 ,thre_slope_line,thre_intercept ,x8,y8,z8 );
 
 	/* 外側 現位置Hue色 */
-	calcu_rgb_to_hsv cl_hsv;
 	double r=0.,g=0.,b=0.;
-	cl_hsv.from_hsv( hue_max,1.,1. ,&r,&g,&b );
+	calc::hsv_to_rgb( hue_max,1.,1. ,r,g,b );
 
 	draw_one_partition_(
 		x1,y1,z1 ,x4,y4,z4 ,x5,y5,z5 ,x8,y8,z8
@@ -1221,11 +1219,8 @@ void fl_gl_hsv_view::rgb_to_xyz(
 		return;
 	}
 
-	double h = 0.;
-	double s = 0.;
-	double v = 0.;
-	calcu_rgb_to_hsv rgb2hsv;
-	rgb2hsv.to_hsv( r,g,b ,&h ,&s ,&v );
+	double h=0. ,s=0. ,v=0.;
+	calc::rgb_to_hsv( r,g,b ,h,s,v );
 	hsv_to_xyz_(h,s,v ,this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
 }
 
@@ -1269,9 +1264,8 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,xyz+=3) {
 		/* rgb --> hsv */
 		double h=0. ,s=0. ,v=0.;
-		calcu_rgb_to_hsv rgb2hsv;
-		rgb2hsv.to_hsv(
-			da[0]/255. ,da[1]/255. ,da[2]/255. ,&h ,&s ,&v );
+		calc::rgb_to_hsv(
+			da[0]/255. ,da[1]/255. ,da[2]/255. ,h,s,v );
 
 		this->vbo.hsv_to_xyz( h ,s ,v ,xyz );
 	}

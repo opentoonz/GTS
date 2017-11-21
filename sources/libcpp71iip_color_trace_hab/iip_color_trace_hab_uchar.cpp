@@ -1,5 +1,5 @@
 #include "pri.h"
-#include "calcu_rgb_to_hsv.h"
+#include "calc_hsv_rgb.h"
 #include "iip_color_trace_hab.h"
 
 #define	UC (unsigned char)
@@ -11,7 +11,6 @@ void iip_color_trace_hab::_exec_uchar( long l_width, long l_height, long l_area_
 	double	d_red, d_gre, d_blu;
 	double	d_hh, d_aa, d_bb;
 	unsigned char	*ucharp_in_x, *ucharp_out_x;
-	calcu_rgb_to_hsv cl_rgb_to_hab;
 
 	l_height;
 
@@ -31,11 +30,11 @@ void iip_color_trace_hab::_exec_uchar( long l_width, long l_height, long l_area_
 	 ucharp_out_x = ucharp_out;
 
 	 for (xx = 0L; xx < l_area_xsize; ++xx) {
-		cl_rgb_to_hab.to_hsv(
+		calc::rgb_to_hsv(
 			(double)(ucharp_in_x[CH_RED])/d_in_max_div,
 			(double)(ucharp_in_x[CH_GRE])/d_in_max_div,
 			(double)(ucharp_in_x[CH_BLU])/d_in_max_div,
-			&d_hh, &d_aa, &d_bb );
+			d_hh, d_aa, d_bb );
 
 		/* histogramを設定する */
 		this->cl_hab_hist.add(

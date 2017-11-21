@@ -17,7 +17,6 @@ INCS =\
 /I..\libcpp53iip_precision\
 /I..\libcpp52iip_rw\
 /I..\libcpp51iip_canvas\
-/I..\libcpp38calcu_rgb_to_hsv\
 /I..\lib_util\
 /I..\libc12pri\
 /I..\libc11portable\

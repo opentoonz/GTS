@@ -16,7 +16,7 @@ void get_target_rgb_( const int number , uchar& r , uchar& g , uchar& b )
 {
 	Fl::get_color( static_cast<Fl_Color>( number + 16 ) ,r ,g ,b );
 }
-void set_target_color_( const int number , Fl_Button* button )
+void set_target_color_( const int number , Fl_Widget* button )
 {
 	button->color( static_cast<Fl_Color>( number + 16 ) );
 }
@@ -47,12 +47,18 @@ void gui_hsv_to_rgb_( void ) {
 		 cl_gts_gui.valinp_set_color_val->maximum()
 		,r,g,b
 	);
-	r *= (cl_gts_gui.valinp_set_color_red->maximum()+.999999);
+	/*r *= (cl_gts_gui.valinp_set_color_red->maximum()+.999999);
 	g *= (cl_gts_gui.valinp_set_color_gre->maximum()+.999999);
 	b *= (cl_gts_gui.valinp_set_color_blu->maximum()+.999999);
 	r = floor(r);
 	g = floor(g);
-	b = floor(b);
+	b = floor(b);*/
+	r *= cl_gts_gui.valinp_set_color_red->maximum();
+	g *= cl_gts_gui.valinp_set_color_gre->maximum();
+	b *= cl_gts_gui.valinp_set_color_blu->maximum();
+	r = rint(r);
+	g = rint(g);
+	b = rint(b);
 	cl_gts_gui.valinp_set_color_red->value(r);
 	cl_gts_gui.valinp_set_color_gre->value(g);
 	cl_gts_gui.valinp_set_color_blu->value(b);
@@ -96,6 +102,14 @@ void cb_trace_params::cb_target_rgb_color_open_editor(
 	/* rgb値を記憶 */
 	get_target_rgb_( number ,this->r_ ,this->g_ ,this->b_ );
 
+	/* Cancel(now) rgb値を設定 */
+	set_target_rgb_(
+		static_cast<int>(this->widget_sets.size())+0
+		,this->r_ ,this->g_ ,this->b_
+	);
+	/* OK(new) rgb値を設定 */
+	set_target_color_( number , cl_gts_gui.box_set_color_ok );
+
 	/* 色テーブル番号を記憶 */
 	this->number_ = number;
 
@@ -113,7 +127,7 @@ void cb_trace_params::cb_target_rgb_color_open_editor(
 	/* window開く */
 	cl_gts_gui.window_set_color->position(
 		 flwin->x() + flbut->x() + 10
-		,flwin->y() + flbut->y() - 200
+		,flwin->y() + flbut->y() - 220
 	);
 	cl_gts_gui.window_set_color->show();
 }
@@ -134,6 +148,8 @@ void cb_trace_params::cb_target_rgb_color_change(const bool change_hsv_sw)
 	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
 	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
 	wset.button_target_rgb->redraw();
+
+	cl_gts_gui.box_set_color_ok->redraw();
 
 	/* Image(& hsv viewもredrawしてる)の再表示 */
 	cl_gts_gui.image_view->redraw();

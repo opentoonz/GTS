@@ -3158,10 +3158,10 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
       label {Set Color}
       callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
 window_set_color->hide();}
-      xywh {50 50 200 185} type Double resizable modal size_range {200 185 1000 185} visible
+      xywh {50 50 200 205} type Double resizable modal size_range {200 205 1000 205} visible
     } {
       Fl_Group {} {open
-        xywh {0 5 200 144}
+        xywh {0 5 200 141}
       } {
         Fl_Group {} {open
           xywh {0 5 200 20}
@@ -3261,21 +3261,31 @@ cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
         }
       }
       Fl_Group {} {open
-        xywh {0 155 200 30}
+        xywh {0 150 200 50}
       } {
         Fl_Box {} {
-          xywh {0 155 70 25} resizable
+          xywh {0 150 65 50} resizable
         }
-        Fl_Button {} {
-          label OK
-          callback {window_set_color->hide();}
-          xywh {70 155 60 25}
-        }
-        Fl_Button {} {
-          label Cancel
-          callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
+        Fl_Group {} {open
+          xywh {65 150 130 50}
+        } {
+          Fl_Box box_set_color_ok {
+            xywh {65 150 65 25} box FLAT_BOX
+          }
+          Fl_Box box_set_color_cancel {
+            xywh {130 150 65 25} box FLAT_BOX color 22
+          }
+          Fl_Button {} {
+            label OK
+            callback {window_set_color->hide();}
+            xywh {65 175 60 25}
+          }
+          Fl_Button {} {
+            label Cancel
+            callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
 window_set_color->hide();}
-          xywh {135 155 60 25}
+            xywh {135 175 60 25}
+          }
         }
       }
     }

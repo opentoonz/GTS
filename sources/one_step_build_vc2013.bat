@@ -11,7 +11,6 @@ for %%a in (
  libc18image_rw_tga
  lib_util
  libcpp31calcu_precision
- libcpp38calcu_rgb_to_hsv
  libcpp51iip_canvas
  libcpp52iip_rw
  libcpp53iip_precision

@@ -6096,7 +6096,7 @@ void gts_gui::cb_OK2_i(Fl_Button*, void*) {
   window_set_color->hide();
 }
 void gts_gui::cb_OK2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_OK2_i(o,v);
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_OK2_i(o,v);
 }
 
 void gts_gui::cb_Cancel2_i(Fl_Button*, void*) {
@@ -6104,7 +6104,7 @@ void gts_gui::cb_Cancel2_i(Fl_Button*, void*) {
 window_set_color->hide();
 }
 void gts_gui::cb_Cancel2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_Cancel2_i(o,v);
+  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_Cancel2_i(o,v);
 }
 
 void gts_gui::cb_window_set_hue_min_or_max_i(Fl_Double_Window*, void*) {
@@ -8743,9 +8743,9 @@ Fl_Double_Window* gts_gui::make_window() {
     window_trace_hsv_view->set_non_modal();
     window_trace_hsv_view->end();
   } // Fl_Double_Window* window_trace_hsv_view
-  { window_set_color = new Fl_Double_Window(200, 185, "Set Color");
+  { window_set_color = new Fl_Double_Window(200, 205, "Set Color");
     window_set_color->callback((Fl_Callback*)cb_window_set_color, (void*)(this));
-    { Fl_Group* o = new Fl_Group(0, 5, 200, 144);
+    { Fl_Group* o = new Fl_Group(0, 5, 200, 141);
       { Fl_Group* o = new Fl_Group(0, 5, 200, 20);
         { valinp_set_color_hue = new Fl_Value_Input(20, 5, 35, 18, "H");
           valinp_set_color_hue->box(FL_BORDER_BOX);
@@ -8838,20 +8838,30 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Group* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(0, 155, 200, 30);
-      { Fl_Box* o = new Fl_Box(0, 155, 70, 25);
+    { Fl_Group* o = new Fl_Group(0, 150, 200, 50);
+      { Fl_Box* o = new Fl_Box(0, 150, 65, 50);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Button* o = new Fl_Button(70, 155, 60, 25, "OK");
-        o->callback((Fl_Callback*)cb_OK2);
-      } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(135, 155, 60, 25, "Cancel");
-        o->callback((Fl_Callback*)cb_Cancel2);
-      } // Fl_Button* o
+      { Fl_Group* o = new Fl_Group(65, 150, 130, 50);
+        { box_set_color_ok = new Fl_Box(65, 150, 65, 25);
+          box_set_color_ok->box(FL_FLAT_BOX);
+        } // Fl_Box* box_set_color_ok
+        { box_set_color_cancel = new Fl_Box(130, 150, 65, 25);
+          box_set_color_cancel->box(FL_FLAT_BOX);
+          box_set_color_cancel->color((Fl_Color)22);
+        } // Fl_Box* box_set_color_cancel
+        { Fl_Button* o = new Fl_Button(65, 175, 60, 25, "OK");
+          o->callback((Fl_Callback*)cb_OK2);
+        } // Fl_Button* o
+        { Fl_Button* o = new Fl_Button(135, 175, 60, 25, "Cancel");
+          o->callback((Fl_Callback*)cb_Cancel2);
+        } // Fl_Button* o
+        o->end();
+      } // Fl_Group* o
       o->end();
     } // Fl_Group* o
     window_set_color->set_modal();
-    window_set_color->size_range(200, 185, 1000, 185);
+    window_set_color->size_range(200, 205, 1000, 205);
     window_set_color->end();
     window_set_color->resizable(window_set_color);
   } // Fl_Double_Window* window_set_color

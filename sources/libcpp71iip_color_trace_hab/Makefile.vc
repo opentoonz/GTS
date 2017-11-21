@@ -11,8 +11,8 @@ INCS =\
 /I..\libcpp82gts_hsv_histogram\
 /I..\libcpp56iip_opengl\
 /I..\libcpp51iip_canvas\
-/I..\libcpp38calcu_rgb_to_hsv\
 /I..\libcpp31calcu_precision\
+/I..\lib_util\
 /I..\libc12pri\
 /I..\libc11portable\
 /I$(DPATH_FLTK)\

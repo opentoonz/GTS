@@ -1,5 +1,5 @@
 #include "pri.h"
-#include "calcu_rgb_to_hsv.h"
+#include "calc_hsv_rgb.h"
 #include "iip_color_trace_hab.h"
 
 void iip_color_trace_hab::_exec_doubl( long l_width, long l_height, long l_area_xpos, long l_area_ypos, long l_area_xsize, long l_area_ysize, long l_channels, double *doublp_in, calcu_color_trace_base *clp_calcu_color_trace_hab, double *doublp_out )
@@ -8,7 +8,6 @@ void iip_color_trace_hab::_exec_doubl( long l_width, long l_height, long l_area_
 	long	xx,yy;
 	double	d_hh, d_aa, d_bb;
 	double	*doublp_in_x, *doublp_out_x;
-	calcu_rgb_to_hsv cl_rgb_to_hab;
 
 	l_height;
 
@@ -28,11 +27,11 @@ void iip_color_trace_hab::_exec_doubl( long l_width, long l_height, long l_area_
 	 doublp_out_x = doublp_out;
 
 	 for (xx = 0L; xx < l_area_xsize; ++xx) {
-		cl_rgb_to_hab.to_hsv(
+		calc::rgb_to_hsv(
 			doublp_in_x[CH_RED],
 			doublp_in_x[CH_GRE],
 			doublp_in_x[CH_BLU],
-			&d_hh, &d_aa, &d_bb );
+			d_hh, d_aa, d_bb );
 
 		/* histogramを設定する */
 		this->cl_hab_hist.add(

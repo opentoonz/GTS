@@ -1859,6 +1859,10 @@ public:
 private:
   inline void cb_scrbar_set_color_blu_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_set_color_blu(Fl_Scrollbar*, void*);
+public:
+  Fl_Box *box_set_color_ok;
+  Fl_Box *box_set_color_cancel;
+private:
   inline void cb_OK2_i(Fl_Button*, void*);
   static void cb_OK2(Fl_Button*, void*);
   inline void cb_Cancel2_i(Fl_Button*, void*);

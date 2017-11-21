@@ -7,7 +7,7 @@
 //#include "ptbl_returncode.h"
 //#include "pri.h"
 //#include "calcu_precision.h"
-#include "calcu_rgb_to_hsv.h"
+#include "calc_hsv_rgb.h"
 #include "gts_gui.h"
 #include "iip_color_trace_sep_hsv.h"
 
@@ -44,7 +44,6 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	}
 
 	/* 初期パラメータ設定 */
-	calcu_rgb_to_hsv rgb2hsv;
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;
 
@@ -91,11 +90,11 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 
 		/* 2値化しない場合白点で表示する処理 */
 		double	hh=0., ss=0., vv=0.;
-		rgb2hsv.to_hsv(
+		calc::rgb_to_hsv(
 		 static_cast<double>(inn_x[CH_RED] >> shift_bit)/max_val_inn
 		,static_cast<double>(inn_x[CH_GRE] >> shift_bit)/max_val_inn
 		,static_cast<double>(inn_x[CH_BLU] >> shift_bit)/max_val_inn
-		,&hh, &ss, &vv );
+		,hh, ss, vv );
 		/* 2値化するかどうか判断 */
 		//if (cl_gts_gui.menite_hsv_dot_trace_area->value() != 0) {
 		if (cl_gts_gui.chebut_trace_display_main_sw->value() != 0) {
@@ -134,11 +133,11 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	    for (int xx = 0; xx < area_xsize ;++xx
 	    ,inn_x+=channels ,out_x+=channels ,xyz+=3/* ,rgb+=3*/) {
 		double	hh=0., ss=0., vv=0.;
-		rgb2hsv.to_hsv(
+		calc::rgb_to_hsv(
 		 static_cast<double>(inn_x[CH_RED] >> shift_bit)/max_val_inn
 		,static_cast<double>(inn_x[CH_GRE] >> shift_bit)/max_val_inn
 		,static_cast<double>(inn_x[CH_BLU] >> shift_bit)/max_val_inn
-		,&hh, &ss, &vv );
+		,hh, ss, vv );
 
 		/* 2値化 */
 		double	rr=0., gg=0., bb=0.;
@@ -153,19 +152,19 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 		RGB256段階のため幾何学的に並び気持ち悪いため
 		ランダムにずらす */
 		if (cl_gts_gui.menite_hsv_random_position->value()==0) {
-			rgb2hsv.to_hsv(
+			calc::rgb_to_hsv(
  (static_cast<double>(inn_x[CH_RED] >> shift_bit))/max_val_inn
 ,(static_cast<double>(inn_x[CH_GRE] >> shift_bit))/max_val_inn
 ,(static_cast<double>(inn_x[CH_BLU] >> shift_bit))/max_val_inn
-,&hh, &ss, &vv
+,hh, ss, vv
 			);
 		}
 		else {
-			rgb2hsv.to_hsv(
+			calc::rgb_to_hsv(
  (static_cast<double>(inn_x[CH_RED] >> shift_bit)+dist(engine))/max_val_inn
 ,(static_cast<double>(inn_x[CH_GRE] >> shift_bit)+dist(engine))/max_val_inn
 ,(static_cast<double>(inn_x[CH_BLU] >> shift_bit)+dist(engine))/max_val_inn
-,&hh, &ss, &vv
+,hh, ss, vv
 			);
 		}
 
@@ -182,7 +181,6 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
   /*--- hsv viewウインドウのOpenGL初期化してないのでimage viewのみ ---*/
 //std::cout << __FILE__ << " " << __LINE__ << " " << "VBO Off" << " xsize=" << area_xsize << " ysize=" << area_ysize << std::endl;
 	/* 初期パラメータ設定 */
-	calcu_rgb_to_hsv rgb2hsv;
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;
 
@@ -203,11 +201,11 @@ std::cerr << "Error:" << __FILE__ << " " << __LINE__ << "vbo" << std::endl;
 	    for (int xx = 0; xx < area_xsize ;++xx
 	    ,inn_x += channels ,out_x += channels ) {
 		double	hh=0., ss=0., vv=0.;
-		rgb2hsv.to_hsv(
+		calc::rgb_to_hsv(
 			static_cast<double>(inn_x[CH_RED])/max_val_inn,
 			static_cast<double>(inn_x[CH_GRE])/max_val_inn,
-			static_cast<double>(inn_x[CH_BLU])/max_val_inn,
-			&hh, &ss, &vv );
+			static_cast<double>(inn_x[CH_BLU])/max_val_inn
+			,hh, ss, vv );
 
 		/* 2値化 */
 		double	rr=0., gg=0., bb=0.;

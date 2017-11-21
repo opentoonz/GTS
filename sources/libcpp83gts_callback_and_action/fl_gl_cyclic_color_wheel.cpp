@@ -332,8 +332,6 @@ const bool change_min_sw
 ,bool& rotate360_sw
 )
 {
-	rotate360_sw = false;	/* 0回転 --> これがdefault */
-
 	if (change_min_sw) {/* min値を変更中 */
 		if ((hold < hmax) && (hmax <= hnew)) {
 		/* max値と同じか小さい値から、maxより大きい値に移動したら */
@@ -352,10 +350,10 @@ const bool change_min_sw
 			if (rotate360_sw==true && (hmax < hnew)) {
 				huedeg = hnew; /* 360回転の状態から戻る */
 			} else {
-				huedeg = hmax;
+				huedeg = hmax; /* 動かない */
 			}
 		} else {
-			huedeg = hnew;
+			huedeg = hnew;	/* min/maxとからまない時 */
 		}
 	}
 	else {	/* max値を変更中 */
@@ -377,10 +375,10 @@ const bool change_min_sw
 				huedeg = hnew; /* 360回転の状態から戻る */
 			} else
 			{
-				huedeg = hmax;
+				huedeg = hmax; /* 動かない */
 			}
 		} else {
-			huedeg = hnew;
+			huedeg = hnew;	/* min/maxとからまない時 */
 		}
 	}
 }
