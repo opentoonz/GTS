@@ -1078,14 +1078,6 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	//---------- after reading ----------
 
-	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
-	cl_gts_master.cl_color_trace_thickness.cb_enh_01();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_02();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_03();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_04();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_05();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
-
 	/* Scan and SaveのEnd/Endless指定がない時はStart...End指定にする */
 	if (!scan_num_continue_type_sw && this->load_scan_and_save_sw_) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(

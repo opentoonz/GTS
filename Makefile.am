@@ -23,9 +23,8 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libcpp56iip_opengl \
 				   -Isources/libcpp64iip_rot90 \
 				   -Isources/libcpp69iip_scale_by_subpixel \
-				   -Isources/libcpp71iip_color_trace_hab \
+				   -Isources/libcpp71iip_trace_by_hsv \
 				   -Isources/libcpp72iip_erase_dot_noise \
-				   -Isources/libcpp82gts_hsv_histogram \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
 				   $(FLTK_CPPFLAGS) \
@@ -126,32 +125,15 @@ libgts_la_SOURCES = \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_set_canvas.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_uchar.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_ushrt.cpp \
-					sources/libcpp71iip_color_trace_hab/calcu_color_trace_hab.cpp \
-					sources/libcpp71iip_color_trace_hab/calcu_color_trace_sep_hsv.cpp \
-					sources/libcpp71iip_color_trace_hab/calcu_histogram_hab.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_doubl.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_exec.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_uchar.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_ulong.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_ushrt.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_sep_hsv.cpp \
+					sources/libcpp71iip_trace_by_hsv/calc_trace_by_hsv.cpp \
+					sources/libcpp71iip_trace_by_hsv/iip_trace_by_hsv.cpp \
 					sources/libcpp72iip_erase_dot_noise/calcu_erase_dot_noise.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_exec.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_uchar.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000_range_cyclic.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000_range_minmax.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000x100_histogram.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000x10_color_belt.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_area_and_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_hsv_minmax.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_src.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_tgt.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config.cpp \
 					sources/libcpp83gts_callback_and_action/cb_image.cpp \
@@ -164,7 +146,6 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/cb_set_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
-					sources/libcpp83gts_callback_and_action/cb_trace_parameters.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_params.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \

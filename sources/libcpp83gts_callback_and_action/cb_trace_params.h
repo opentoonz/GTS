@@ -9,10 +9,7 @@
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Scrollbar.H>
 
-#include "calcu_color_trace_sep_hsv.h"	// calcu_sep_hsv
 #include "calc_trace_by_hsv.h"	// calc::trace_by_hsv_params
-
-//#include "gts_gui.h"
 
 class cb_trace_params {
 public:

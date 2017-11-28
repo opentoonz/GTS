@@ -532,6 +532,6 @@ int main(void) {
 #endif /* !DEBUG_FL_GL_CYCLIC_COLOR_WHEEL */
 /*
 :401,402 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_CYCLIC_COLOR_WHEEL /I..\..\..\sources\libcpp71iip_color_trace_hab /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_cyclic_color_wheel.cpp /Fea
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_CYCLIC_COLOR_WHEEL /I..\..\..\sources\libcpp71iip_trace_by_hsv /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_cyclic_color_wheel.cpp /Fea
 del fl_gl_cyclic_color_wheel.obj
 */

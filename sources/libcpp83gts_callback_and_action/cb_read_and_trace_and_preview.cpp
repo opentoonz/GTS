@@ -193,14 +193,6 @@ int gts_master::redraw_image(
 	/* 表示 */
 	cl_gts_gui.image_view->redraw(); /* 画像再表示 */
 
-	/* color trace histogram表示設定 */
-	if (3L <= parent->get_l_channels()) {
-		/* color trace histogram maxの設定 */
-		this->cl_color_trace_enhancement.src_set_histogram_max();
-
-		/* color trace histogram windowの再描画 */
-		cl_gts_gui.window_trace_input_color->flush();
-	}
 	return OK;
 }
 

@@ -66,8 +66,8 @@ void cb_scan_and_save::cb_start( void )
 
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
- cl_gts_master.cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
+	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
+		Fl::focus( cl_gts_gui.button_rescan );
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
 		cl_gts_gui.window_next_scan->show();
@@ -102,8 +102,8 @@ void cb_scan_and_save::cb_next( void )
 
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
- cl_gts_master.cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
+	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
+		Fl::focus( cl_gts_gui.button_rescan );
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
 		cl_gts_gui.window_next_scan->show();
@@ -130,8 +130,8 @@ void cb_scan_and_save::cb_rescan( void )
 
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-		/* Spaceに関しては常にここでfocus設定が必要2014-02-03 */
- cl_gts_master.cl_memo_short_cut_key.set_space_key_focus_in_next_scan();
+	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
+		Fl::focus( cl_gts_gui.button_rescan );
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
 		cl_gts_gui.window_next_scan->show();

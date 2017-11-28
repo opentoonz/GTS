@@ -46,7 +46,4 @@ void gts_master::color_trace_in_view_area( void )
 
 	/* トレス(viewエリアのみ) */
 	this->_iipg_color_trace_exec(ON);
-
-	/* color trace histogramの再描画 */
-	cl_gts_gui.window_trace_input_color->redraw();
 }

@@ -2,7 +2,7 @@
 #define iip_trace_by_hsv_h
 
 #include <vector>
-#include "calcu_histogram_hab.h" /* compileを通すためだけのdummy include */
+//#include "calcu_histogram_hab.h" /* compileを通すためだけのdummy include */
 #include "calc_trace_by_hsv.h"
 #include "iip_canvas.h"
 
@@ -37,7 +37,7 @@ public:
 		const std::vector<calc::trace_by_hsv_params>& hsv_params
 	);
 
- calcu_histogram_hab cl_hab_hist; /* compileを通すためだけのdummy include */
+ //calcu_histogram_hab cl_hab_hist; /* compileを通すためだけのdummy include */
 private:
 	int	area_xpos_
 		,area_ypos_

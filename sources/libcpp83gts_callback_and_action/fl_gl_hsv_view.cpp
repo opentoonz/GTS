@@ -20,7 +20,6 @@
 #include <FL/glut.h>	/* glutWireTeapot(-) glutWireCone(-) */
 			/* glutExtensionSupported(-) --> link error */
 #include "calc_hsv_rgb.h"
-#include "calcu_color_trace_sep_hsv.h"
 #include "fl_gl_hsv_view.h"
 #include "gts_master.h"
 #include "gts_gui.h"
@@ -1187,8 +1186,11 @@ void fl_gl_hsv_view::draw_object_()
 	/* ポイント表示 */
 	this->vbo.draw();
 
-	/* 指定の画像pixelのrgb値からhsv-->xyz位置のマーキング表示 */
-	draw_pixel_mark_( this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_ );
+	/* スポイト機能
+	指定の画像pixelのrgb値からhsv-->xyz位置のマーキング表示 */
+	if (0 <= cl_gts_gui.image_view->get_pixel_r()) {
+	 draw_pixel_mark_(this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
+	}
 
 	/* カメラ注視点マーク */
 /* 未公開 */
@@ -1531,6 +1533,6 @@ int main(void) {
 /*
 rem
 rem :956,957 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_VIEW /I..\..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\..\sources\libcpp71iip_color_trace_hab /I..\..\thirdparty\glew\glew-2.1.0\include /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ../../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_VIEW /I..\..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\..\sources\libcpp71iip_trace_by_hsv /I..\..\thirdparty\glew\glew-2.1.0\include /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ../../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
 del fl_gl_hsv_view.obj
 */

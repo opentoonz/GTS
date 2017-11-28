@@ -1,6 +1,6 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
-NAME = libcpp71iip_color_trace_hab
+NAME = libcpp71iip_trace_by_hsv
 OPTS = /W4 /MD /EHa /O2 /DWIN32 /wd4819 /wd4996
 # /DWIN32 : for Use fltk in Windows
 # /wd4819 : Stop warning message about Language Code
@@ -8,7 +8,6 @@ OPTS = /W4 /MD /EHa /O2 /DWIN32 /wd4819 /wd4996
 INCS =\
 /I.\
 /I..\libcpp83gts_callback_and_action\
-/I..\libcpp82gts_hsv_histogram\
 /I..\libcpp56iip_opengl\
 /I..\libcpp51iip_canvas\
 /I..\libcpp31calcu_precision\
@@ -19,15 +18,6 @@ INCS =\
 /I$(DPATH_GLEW)\include
 SRCS =\
 calc_trace_by_hsv.cpp\
-calcu_color_trace_hab.cpp\
-calcu_color_trace_sep_hsv.cpp\
-calcu_histogram_hab.cpp\
-iip_color_trace_hab_doubl.cpp\
-iip_color_trace_hab_exec.cpp\
-iip_color_trace_hab_uchar.cpp\
-iip_color_trace_hab_ulong.cpp\
-iip_color_trace_hab_ushrt.cpp\
-iip_color_trace_sep_hsv.cpp\
 iip_trace_by_hsv.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)

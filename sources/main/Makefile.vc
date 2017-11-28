@@ -7,9 +7,8 @@ OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
 # /wd4819 : Stop warning message about Language Code
 INCS =\
 /I..\libcpp83gts_callback_and_action\
-/I..\libcpp82gts_hsv_histogram\
 /I..\libcpp72iip_erase_dot_noise\
-/I..\libcpp71iip_color_trace_hab\
+/I..\libcpp71iip_trace_by_hsv\
 /I..\libcpp64iip_rot90\
 /I..\libcpp56iip_opengl\
 /I..\libcpp55iip_scan\
@@ -25,9 +24,8 @@ SRCS =\
 main.cpp
 LIBS =\
 $(DPATH_LIBR)\libcpp83gts_callback_and_action.lib\
-$(DPATH_LIBR)\libcpp82gts_hsv_histogram.lib\
 $(DPATH_LIBR)\libcpp72iip_erase_dot_noise.lib\
-$(DPATH_LIBR)\libcpp71iip_color_trace_hab.lib\
+$(DPATH_LIBR)\libcpp71iip_trace_by_hsv.lib\
 $(DPATH_LIBR)\libcpp69iip_scale_by_subpixel.lib\
 $(DPATH_LIBR)\libcpp64iip_rot90.lib\
 $(DPATH_LIBR)\libcpp56iip_opengl.lib\

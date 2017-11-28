@@ -54,11 +54,15 @@ void fl_gl_image_view::draw()
 		と(指定にあれば)ドットノイズ除去 */
 		cl_gts_master.color_trace_in_view_area();
 
-		/* image view全表示 */
+		/* image view表示 */
 		cl_gts_master.cl_ogl_view.draw_opengl();
-		cl_gts_master.cl_ogl_view.draw_image_pixel_pos(
-			this->pixel_x_ ,this->pixel_y_
-		);
+
+		/* スポイト位置表示 */
+		if (0 <= this->pixel_r_) {
+			cl_gts_master.cl_ogl_view.draw_image_pixel_pos(
+				this->pixel_x_ ,this->pixel_y_
+			);
+		}
 
 		/* hsv view再表示 */
 		cl_gts_gui.hsv_view->redraw();
@@ -265,6 +269,7 @@ int fl_gl_image_view::handle( int event )
 			ms.which_button() == FL_LEFT_MOUSE
 		);
 
+	if (Fl::event_state() & FL_CTRL) {
 		/* カーソル位置から画像上の位置を得てセットする */
 		cl_gts_master.cl_ogl_view.from_cursor_pos_to_image_pos(
 			Fl::event_x() ,Fl::event_y()
@@ -318,6 +323,7 @@ int fl_gl_image_view::handle( int event )
 << " by=" << this->pixel_byte_
 << " bi=" << this->pixel_bit_
 << std::endl;*/
+	}
 
 		/* ...再描画する */
 		cl_gts_gui.image_view->flush();

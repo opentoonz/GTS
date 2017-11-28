@@ -18,6 +18,7 @@ public:
 	,pixel_byte_(0)
 	,pixel_bit_(0)
 	{}
+	double get_pixel_r(void) const { return this->pixel_r_; }
 private:
 	int pixel_x_ ,pixel_y_;
 	int pixel_r_ ,pixel_g_ ,pixel_b_;

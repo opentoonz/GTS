@@ -21,17 +21,9 @@
 #include <FL/Fl_File_Input.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Browser.H>
-#include "cb_trace_parameters.h"
-#include <FL/Fl_Scroll.H>
-#include <FL/Fl_Round_Button.H>
-#include "fltk_1000x100_histogram.h"
-#include "fltk_1000_range_cyclic.h"
-#include <FL/Fl_Light_Button.H>
-#include "fltk_1000x10_color_belt.h"
-#include "fltk_1000_range_minmax.h"
-#include <FL/Fl_Counter.H>
 #include "cb_trace_params.h"
 #include "fl_gl_hsv_view.h"
+#include <FL/Fl_Counter.H>
 #include "fl_gl_cyclic_color_wheel.h"
 
 class gts_gui {
@@ -44,8 +36,6 @@ private:
   static Fl_Menu_Item menu_[];
   inline void cb_Open_i(Fl_Menu_*, void*);
   static void cb_Open(Fl_Menu_*, void*);
-  inline void cb_Set_i(Fl_Menu_*, void*);
-  static void cb_Set(Fl_Menu_*, void*);
   inline void cb_Save_i(Fl_Menu_*, void*);
   static void cb_Save(Fl_Menu_*, void*);
   inline void cb_Open1_i(Fl_Menu_*, void*);
@@ -102,26 +92,6 @@ public:
 private:
   inline void cb_menite_trace_files_i(Fl_Menu_*, void*);
   static void cb_menite_trace_files(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_trace_thickness;
-private:
-  inline void cb_menite_trace_thickness_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_thickness(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_trace_input_color;
-private:
-  inline void cb_menite_trace_input_color_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_input_color(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_trace_output_color;
-private:
-  inline void cb_menite_trace_output_color_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_output_color(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_trace_parameters;
-private:
-  inline void cb_menite_trace_parameters_i(Fl_Menu_*, void*);
-  static void cb_menite_trace_parameters(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_trace_params;
 private:
@@ -299,10 +269,10 @@ private:
   inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
   static void cb_choice_area_aspect_ratio_selecter(Fl_Choice*, void*);
   static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
+  inline void cb_Set_i(Fl_Button*, void*);
+  static void cb_Set(Fl_Button*, void*);
   inline void cb_Set1_i(Fl_Button*, void*);
   static void cb_Set1(Fl_Button*, void*);
-  inline void cb_Set2_i(Fl_Button*, void*);
-  static void cb_Set2(Fl_Button*, void*);
 public:
   Fl_Output *txtout_scanner_type;
   Fl_Value_Output *valout_scanner_size_cm_w;
@@ -449,8 +419,8 @@ public:
   static Fl_Menu_Item menu_choice_scan_num_endless_direction[];
   Fl_Value_Input *valinp_scan_num_end;
 private:
-  inline void cb_Set3_i(Fl_Button*, void*);
-  static void cb_Set3(Fl_Button*, void*);
+  inline void cb_Set2_i(Fl_Button*, void*);
+  static void cb_Set2(Fl_Button*, void*);
 public:
   Fl_Button *button_scan_save;
 private:
@@ -509,8 +479,8 @@ public:
   Fl_Value_Output *valout_trace_num_start;
   Fl_Value_Output *valout_trace_num_end;
 private:
-  inline void cb_Set4_i(Fl_Button*, void*);
-  static void cb_Set4(Fl_Button*, void*);
+  inline void cb_Set3_i(Fl_Button*, void*);
+  static void cb_Set3(Fl_Button*, void*);
   inline void cb_Trace1_i(Fl_Button*, void*);
   static void cb_Trace1(Fl_Button*, void*);
 public:
@@ -536,672 +506,6 @@ private:
   inline void cb_selbro_number_list_i(Fl_Browser*, void*);
   static void cb_selbro_number_list(Fl_Browser*, void*);
 public:
-  Fl_Double_Window *window_trace_parameters;
-private:
-  inline void cb_window_trace_parameters_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_parameters(Fl_Double_Window*, void*);
-public:
-  fltk_button_trace_parameters *button_trace_parameters;
-private:
-  inline void cb_button_trace_parameters_i(fltk_button_trace_parameters*, void*);
-  static void cb_button_trace_parameters(fltk_button_trace_parameters*, void*);
-public:
-  Fl_Check_Button *chkbtn_color_trace_01_chk;
-private:
-  inline void cb_chkbtn_color_trace_01_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_01_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_color_trace_01grp;
-  Fl_Scrollbar *scrbar_color_trace_01_src_hh_min;
-private:
-  inline void cb_scrbar_color_trace_01_src_hh_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_01_src_hh_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_01_src_hh_max;
-private:
-  inline void cb_scrbar_color_trace_01_src_hh_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_01_src_hh_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_01_src_aa_min;
-private:
-  inline void cb_scrbar_color_trace_01_src_aa_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_01_src_aa_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_01_src_aa_max;
-private:
-  inline void cb_scrbar_color_trace_01_src_aa_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_01_src_aa_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_01_src_bb_min;
-private:
-  inline void cb_scrbar_color_trace_01_src_bb_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_01_src_bb_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_01_src_bb_max;
-private:
-  inline void cb_scrbar_color_trace_01_src_bb_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_01_src_bb_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_01_src_hh_min;
-private:
-  inline void cb_valinp_color_trace_01_src_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_01_src_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_01_src_hh_max;
-private:
-  inline void cb_valinp_color_trace_01_src_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_01_src_hh_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_01_src_aa_min;
-private:
-  inline void cb_valinp_color_trace_01_src_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_01_src_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_01_src_aa_max;
-private:
-  inline void cb_valinp_color_trace_01_src_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_01_src_aa_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_01_src_bb_min;
-private:
-  inline void cb_valinp_color_trace_01_src_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_01_src_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_01_src_bb_max;
-private:
-  inline void cb_valinp_color_trace_01_src_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_01_src_bb_max(Fl_Value_Input*, void*);
-public:
-  Fl_Button *button_color_trace_01_tgt_rgb;
-private:
-  inline void cb_button_color_trace_01_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_color_trace_01_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Button *button_color_trace_01_src;
-private:
-  inline void cb_button_color_trace_01_src_i(Fl_Button*, void*);
-  static void cb_button_color_trace_01_src(Fl_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_color_trace_02_chk;
-private:
-  inline void cb_chkbtn_color_trace_02_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_02_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_color_trace_02grp;
-  Fl_Scrollbar *scrbar_color_trace_02_src_hh_min;
-private:
-  inline void cb_scrbar_color_trace_02_src_hh_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_02_src_hh_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_02_src_hh_max;
-private:
-  inline void cb_scrbar_color_trace_02_src_hh_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_02_src_hh_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_02_src_aa_min;
-private:
-  inline void cb_scrbar_color_trace_02_src_aa_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_02_src_aa_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_02_src_aa_max;
-private:
-  inline void cb_scrbar_color_trace_02_src_aa_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_02_src_aa_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_02_src_bb_min;
-private:
-  inline void cb_scrbar_color_trace_02_src_bb_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_02_src_bb_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_02_src_bb_max;
-private:
-  inline void cb_scrbar_color_trace_02_src_bb_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_02_src_bb_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_02_src_hh_min;
-private:
-  inline void cb_valinp_color_trace_02_src_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_02_src_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_02_src_hh_max;
-private:
-  inline void cb_valinp_color_trace_02_src_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_02_src_hh_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_02_src_aa_min;
-private:
-  inline void cb_valinp_color_trace_02_src_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_02_src_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_02_src_aa_max;
-private:
-  inline void cb_valinp_color_trace_02_src_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_02_src_aa_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_02_src_bb_min;
-private:
-  inline void cb_valinp_color_trace_02_src_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_02_src_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_02_src_bb_max;
-private:
-  inline void cb_valinp_color_trace_02_src_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_02_src_bb_max(Fl_Value_Input*, void*);
-public:
-  Fl_Button *button_color_trace_02_tgt_rgb;
-private:
-  inline void cb_button_color_trace_02_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_color_trace_02_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Button *button_color_trace_02_src;
-private:
-  inline void cb_button_color_trace_02_src_i(Fl_Button*, void*);
-  static void cb_button_color_trace_02_src(Fl_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_color_trace_03_chk;
-private:
-  inline void cb_chkbtn_color_trace_03_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_03_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_color_trace_03grp;
-  Fl_Scrollbar *scrbar_color_trace_03_src_hh_min;
-private:
-  inline void cb_scrbar_color_trace_03_src_hh_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_03_src_hh_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_03_src_hh_max;
-private:
-  inline void cb_scrbar_color_trace_03_src_hh_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_03_src_hh_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_03_src_aa_min;
-private:
-  inline void cb_scrbar_color_trace_03_src_aa_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_03_src_aa_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_03_src_aa_max;
-private:
-  inline void cb_scrbar_color_trace_03_src_aa_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_03_src_aa_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_03_src_bb_min;
-private:
-  inline void cb_scrbar_color_trace_03_src_bb_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_03_src_bb_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_03_src_bb_max;
-private:
-  inline void cb_scrbar_color_trace_03_src_bb_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_03_src_bb_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_03_src_hh_min;
-private:
-  inline void cb_valinp_color_trace_03_src_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_03_src_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_03_src_hh_max;
-private:
-  inline void cb_valinp_color_trace_03_src_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_03_src_hh_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_03_src_aa_min;
-private:
-  inline void cb_valinp_color_trace_03_src_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_03_src_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_03_src_aa_max;
-private:
-  inline void cb_valinp_color_trace_03_src_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_03_src_aa_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_03_src_bb_min;
-private:
-  inline void cb_valinp_color_trace_03_src_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_03_src_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_03_src_bb_max;
-private:
-  inline void cb_valinp_color_trace_03_src_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_03_src_bb_max(Fl_Value_Input*, void*);
-public:
-  Fl_Button *button_color_trace_03_tgt_rgb;
-private:
-  inline void cb_button_color_trace_03_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_color_trace_03_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Button *button_color_trace_03_src;
-private:
-  inline void cb_button_color_trace_03_src_i(Fl_Button*, void*);
-  static void cb_button_color_trace_03_src(Fl_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_color_trace_04_chk;
-private:
-  inline void cb_chkbtn_color_trace_04_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_04_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_color_trace_04grp;
-  Fl_Scrollbar *scrbar_color_trace_04_src_hh_min;
-private:
-  inline void cb_scrbar_color_trace_04_src_hh_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_04_src_hh_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_04_src_hh_max;
-private:
-  inline void cb_scrbar_color_trace_04_src_hh_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_04_src_hh_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_04_src_aa_min;
-private:
-  inline void cb_scrbar_color_trace_04_src_aa_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_04_src_aa_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_04_src_aa_max;
-private:
-  inline void cb_scrbar_color_trace_04_src_aa_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_04_src_aa_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_04_src_bb_min;
-private:
-  inline void cb_scrbar_color_trace_04_src_bb_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_04_src_bb_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_04_src_bb_max;
-private:
-  inline void cb_scrbar_color_trace_04_src_bb_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_04_src_bb_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_04_src_hh_min;
-private:
-  inline void cb_valinp_color_trace_04_src_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_04_src_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_04_src_hh_max;
-private:
-  inline void cb_valinp_color_trace_04_src_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_04_src_hh_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_04_src_aa_min;
-private:
-  inline void cb_valinp_color_trace_04_src_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_04_src_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_04_src_aa_max;
-private:
-  inline void cb_valinp_color_trace_04_src_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_04_src_aa_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_04_src_bb_min;
-private:
-  inline void cb_valinp_color_trace_04_src_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_04_src_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_04_src_bb_max;
-private:
-  inline void cb_valinp_color_trace_04_src_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_04_src_bb_max(Fl_Value_Input*, void*);
-public:
-  Fl_Button *button_color_trace_04_tgt_rgb;
-private:
-  inline void cb_button_color_trace_04_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_color_trace_04_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Button *button_color_trace_04_src;
-private:
-  inline void cb_button_color_trace_04_src_i(Fl_Button*, void*);
-  static void cb_button_color_trace_04_src(Fl_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_color_trace_05_chk;
-private:
-  inline void cb_chkbtn_color_trace_05_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_05_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_color_trace_05grp;
-  Fl_Scrollbar *scrbar_color_trace_05_src_hh_min;
-private:
-  inline void cb_scrbar_color_trace_05_src_hh_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_05_src_hh_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_05_src_hh_max;
-private:
-  inline void cb_scrbar_color_trace_05_src_hh_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_05_src_hh_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_05_src_aa_min;
-private:
-  inline void cb_scrbar_color_trace_05_src_aa_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_05_src_aa_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_05_src_aa_max;
-private:
-  inline void cb_scrbar_color_trace_05_src_aa_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_05_src_aa_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_05_src_bb_min;
-private:
-  inline void cb_scrbar_color_trace_05_src_bb_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_05_src_bb_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_05_src_bb_max;
-private:
-  inline void cb_scrbar_color_trace_05_src_bb_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_05_src_bb_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_05_src_hh_min;
-private:
-  inline void cb_valinp_color_trace_05_src_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_05_src_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_05_src_hh_max;
-private:
-  inline void cb_valinp_color_trace_05_src_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_05_src_hh_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_05_src_aa_min;
-private:
-  inline void cb_valinp_color_trace_05_src_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_05_src_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_05_src_aa_max;
-private:
-  inline void cb_valinp_color_trace_05_src_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_05_src_aa_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_05_src_bb_min;
-private:
-  inline void cb_valinp_color_trace_05_src_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_05_src_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_05_src_bb_max;
-private:
-  inline void cb_valinp_color_trace_05_src_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_05_src_bb_max(Fl_Value_Input*, void*);
-public:
-  Fl_Button *button_color_trace_05_tgt_rgb;
-private:
-  inline void cb_button_color_trace_05_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_color_trace_05_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Button *button_color_trace_05_src;
-private:
-  inline void cb_button_color_trace_05_src_i(Fl_Button*, void*);
-  static void cb_button_color_trace_05_src(Fl_Button*, void*);
-public:
-  Fl_Check_Button *chkbtn_color_trace_06_chk;
-private:
-  inline void cb_chkbtn_color_trace_06_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_color_trace_06_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_color_trace_06grp;
-  Fl_Scrollbar *scrbar_color_trace_06_src_hh_min;
-private:
-  inline void cb_scrbar_color_trace_06_src_hh_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_06_src_hh_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_06_src_hh_max;
-private:
-  inline void cb_scrbar_color_trace_06_src_hh_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_06_src_hh_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_06_src_aa_min;
-private:
-  inline void cb_scrbar_color_trace_06_src_aa_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_06_src_aa_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_06_src_aa_max;
-private:
-  inline void cb_scrbar_color_trace_06_src_aa_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_06_src_aa_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_06_src_bb_min;
-private:
-  inline void cb_scrbar_color_trace_06_src_bb_min_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_06_src_bb_min(Fl_Scrollbar*, void*);
-public:
-  Fl_Scrollbar *scrbar_color_trace_06_src_bb_max;
-private:
-  inline void cb_scrbar_color_trace_06_src_bb_max_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_color_trace_06_src_bb_max(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_06_src_hh_min;
-private:
-  inline void cb_valinp_color_trace_06_src_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_06_src_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_06_src_hh_max;
-private:
-  inline void cb_valinp_color_trace_06_src_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_06_src_hh_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_06_src_aa_min;
-private:
-  inline void cb_valinp_color_trace_06_src_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_06_src_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_06_src_aa_max;
-private:
-  inline void cb_valinp_color_trace_06_src_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_06_src_aa_max(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_06_src_bb_min;
-private:
-  inline void cb_valinp_color_trace_06_src_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_06_src_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_color_trace_06_src_bb_max;
-private:
-  inline void cb_valinp_color_trace_06_src_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_color_trace_06_src_bb_max(Fl_Value_Input*, void*);
-public:
-  Fl_Button *button_color_trace_06_tgt_rgb;
-private:
-  inline void cb_button_color_trace_06_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_color_trace_06_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Button *button_color_trace_06_src;
-private:
-  inline void cb_button_color_trace_06_src_i(Fl_Button*, void*);
-  static void cb_button_color_trace_06_src(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_trace_thickness;
-private:
-  inline void cb_window_trace_thickness_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_thickness(Fl_Double_Window*, void*);
-public:
-  fltk_button_trace_parameters *button_trace_thickness;
-private:
-  inline void cb_button_trace_thickness_i(fltk_button_trace_parameters*, void*);
-  static void cb_button_trace_thickness(fltk_button_trace_parameters*, void*);
-  inline void cb_3_i(Fl_Button*, void*);
-  static void cb_3(Fl_Button*, void*);
-public:
-  Fl_Scroll *scroll_trace_thickness;
-  Fl_Group *group_trace_thickness;
-  Fl_Check_Button *chkbtn_thickness_01_chk;
-private:
-  inline void cb_chkbtn_thickness_01_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_thickness_01_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_thickness_01grp;
-  Fl_Button *button_thickness_01_tgt_rgb;
-private:
-  inline void cb_button_thickness_01_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_thickness_01_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Round_Button *roubut_thickness_01_tgt_is_bl;
-private:
-  inline void cb_roubut_thickness_01_tgt_is_bl_i(Fl_Round_Button*, void*);
-  static void cb_roubut_thickness_01_tgt_is_bl(Fl_Round_Button*, void*);
-public:
-  Fl_Button *button_thickness_01_src;
-private:
-  inline void cb_button_thickness_01_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_01_src(Fl_Button*, void*);
-public:
-  Fl_Scrollbar *scrbar_thickness_01;
-private:
-  inline void cb_scrbar_thickness_01_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_thickness_01(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_thickness_01;
-private:
-  inline void cb_valinp_thickness_01_i(Fl_Value_Input*, void*);
-  static void cb_valinp_thickness_01(Fl_Value_Input*, void*);
-public:
-  Fl_Check_Button *chkbtn_thickness_02_chk;
-private:
-  inline void cb_chkbtn_thickness_02_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_thickness_02_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_thickness_02grp;
-  Fl_Button *button_thickness_02_tgt_rgb;
-private:
-  inline void cb_button_thickness_02_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_thickness_02_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Round_Button *roubut_thickness_02_tgt_is_bl;
-private:
-  inline void cb_roubut_thickness_02_tgt_is_bl_i(Fl_Round_Button*, void*);
-  static void cb_roubut_thickness_02_tgt_is_bl(Fl_Round_Button*, void*);
-public:
-  Fl_Button *button_thickness_02_src;
-private:
-  inline void cb_button_thickness_02_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_02_src(Fl_Button*, void*);
-public:
-  Fl_Scrollbar *scrbar_thickness_02;
-private:
-  inline void cb_scrbar_thickness_02_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_thickness_02(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_thickness_02;
-private:
-  inline void cb_valinp_thickness_02_i(Fl_Value_Input*, void*);
-  static void cb_valinp_thickness_02(Fl_Value_Input*, void*);
-public:
-  Fl_Check_Button *chkbtn_thickness_03_chk;
-private:
-  inline void cb_chkbtn_thickness_03_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_thickness_03_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_thickness_03grp;
-  Fl_Button *button_thickness_03_tgt_rgb;
-private:
-  inline void cb_button_thickness_03_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_thickness_03_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Round_Button *roubut_thickness_03_tgt_is_bl;
-private:
-  inline void cb_roubut_thickness_03_tgt_is_bl_i(Fl_Round_Button*, void*);
-  static void cb_roubut_thickness_03_tgt_is_bl(Fl_Round_Button*, void*);
-public:
-  Fl_Button *button_thickness_03_src;
-private:
-  inline void cb_button_thickness_03_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_03_src(Fl_Button*, void*);
-public:
-  Fl_Scrollbar *scrbar_thickness_03;
-private:
-  inline void cb_scrbar_thickness_03_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_thickness_03(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_thickness_03;
-private:
-  inline void cb_valinp_thickness_03_i(Fl_Value_Input*, void*);
-  static void cb_valinp_thickness_03(Fl_Value_Input*, void*);
-public:
-  Fl_Check_Button *chkbtn_thickness_04_chk;
-private:
-  inline void cb_chkbtn_thickness_04_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_thickness_04_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_thickness_04grp;
-  Fl_Button *button_thickness_04_tgt_rgb;
-private:
-  inline void cb_button_thickness_04_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_thickness_04_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Round_Button *roubut_thickness_04_tgt_is_bl;
-private:
-  inline void cb_roubut_thickness_04_tgt_is_bl_i(Fl_Round_Button*, void*);
-  static void cb_roubut_thickness_04_tgt_is_bl(Fl_Round_Button*, void*);
-public:
-  Fl_Button *button_thickness_04_src;
-private:
-  inline void cb_button_thickness_04_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_04_src(Fl_Button*, void*);
-public:
-  Fl_Scrollbar *scrbar_thickness_04;
-private:
-  inline void cb_scrbar_thickness_04_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_thickness_04(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_thickness_04;
-private:
-  inline void cb_valinp_thickness_04_i(Fl_Value_Input*, void*);
-  static void cb_valinp_thickness_04(Fl_Value_Input*, void*);
-public:
-  Fl_Check_Button *chkbtn_thickness_05_chk;
-private:
-  inline void cb_chkbtn_thickness_05_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_thickness_05_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_thickness_05grp;
-  Fl_Button *button_thickness_05_tgt_rgb;
-private:
-  inline void cb_button_thickness_05_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_thickness_05_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Round_Button *roubut_thickness_05_tgt_is_bl;
-private:
-  inline void cb_roubut_thickness_05_tgt_is_bl_i(Fl_Round_Button*, void*);
-  static void cb_roubut_thickness_05_tgt_is_bl(Fl_Round_Button*, void*);
-public:
-  Fl_Button *button_thickness_05_src;
-private:
-  inline void cb_button_thickness_05_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_05_src(Fl_Button*, void*);
-public:
-  Fl_Scrollbar *scrbar_thickness_05;
-private:
-  inline void cb_scrbar_thickness_05_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_thickness_05(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_thickness_05;
-private:
-  inline void cb_valinp_thickness_05_i(Fl_Value_Input*, void*);
-  static void cb_valinp_thickness_05(Fl_Value_Input*, void*);
-public:
-  Fl_Check_Button *chkbtn_thickness_06_chk;
-private:
-  inline void cb_chkbtn_thickness_06_chk_i(Fl_Check_Button*, void*);
-  static void cb_chkbtn_thickness_06_chk(Fl_Check_Button*, void*);
-public:
-  Fl_Group *group_thickness_06grp;
-  Fl_Button *button_thickness_06_tgt_rgb;
-private:
-  inline void cb_button_thickness_06_tgt_rgb_i(Fl_Button*, void*);
-  static void cb_button_thickness_06_tgt_rgb(Fl_Button*, void*);
-public:
-  Fl_Round_Button *roubut_thickness_06_tgt_is_bl;
-private:
-  inline void cb_roubut_thickness_06_tgt_is_bl_i(Fl_Round_Button*, void*);
-  static void cb_roubut_thickness_06_tgt_is_bl(Fl_Round_Button*, void*);
-public:
-  Fl_Button *button_thickness_06_src;
-private:
-  inline void cb_button_thickness_06_src_i(Fl_Button*, void*);
-  static void cb_button_thickness_06_src(Fl_Button*, void*);
-public:
-  Fl_Scrollbar *scrbar_thickness_06;
-private:
-  inline void cb_scrbar_thickness_06_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_thickness_06(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_thickness_06;
-private:
-  inline void cb_valinp_thickness_06_i(Fl_Value_Input*, void*);
-  static void cb_valinp_thickness_06(Fl_Value_Input*, void*);
-public:
   Fl_Double_Window *window_trace_batch;
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
@@ -1218,157 +522,6 @@ private:
   static void cb_Run(Fl_Button*, void*);
 public:
   Fl_Browser *selbro_trace_batch_config_list;
-  Fl_Double_Window *window_trace_input_color;
-private:
-  inline void cb_window_trace_input_color_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_input_color(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_2[];
-public:
-  static Fl_Menu_Item *menite_limit_nothing;
-private:
-  inline void cb_menite_limit_nothing_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_nothing(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_hh;
-private:
-  inline void cb_menite_limit_hh_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_hh(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_aa;
-private:
-  inline void cb_menite_limit_aa_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_aa(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_limit_bb;
-private:
-  inline void cb_menite_limit_bb_i(Fl_Menu_*, void*);
-  static void cb_menite_limit_bb(Fl_Menu_*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_hh_histogram;
-  Fl_Box *box_hh_color_belt;
-  fltk_hh_cyclic *fltkp_hh_cyclic;
-  Fl_Value_Input *valinp_hab_histogram_hh_min;
-private:
-  inline void cb_valinp_hab_histogram_hh_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_hh_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_hab_histogram_hh_max;
-private:
-  inline void cb_valinp_hab_histogram_hh_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_hh_max(Fl_Value_Input*, void*);
-  inline void cb_Max_i(Fl_Button*, void*);
-  static void cb_Max(Fl_Button*, void*);
-  inline void cb_Average_i(Fl_Button*, void*);
-  static void cb_Average(Fl_Button*, void*);
-  inline void cb_Color_i(Fl_Light_Button*, void*);
-  static void cb_Color(Fl_Light_Button*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_aa_histogram;
-  fltk_1000x10_color_belt *fltkp_aa_color_belt;
-  fltk_aa_minmax *fltkp_aa_minmax;
-  Fl_Value_Input *valinp_hab_histogram_aa_min;
-private:
-  inline void cb_valinp_hab_histogram_aa_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_aa_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_hab_histogram_aa_max;
-private:
-  inline void cb_valinp_hab_histogram_aa_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_aa_max(Fl_Value_Input*, void*);
-  inline void cb_Max1_i(Fl_Button*, void*);
-  static void cb_Max1(Fl_Button*, void*);
-  inline void cb_Average1_i(Fl_Button*, void*);
-  static void cb_Average1(Fl_Button*, void*);
-  inline void cb_Color1_i(Fl_Light_Button*, void*);
-  static void cb_Color1(Fl_Light_Button*, void*);
-public:
-  fltk_1000x100_histogram *fltkp_bb_histogram;
-  Fl_Box *box_bb_color_belt;
-  fltk_bb_minmax *fltkp_bb_minmax;
-  Fl_Value_Input *valinp_hab_histogram_bb_min;
-private:
-  inline void cb_valinp_hab_histogram_bb_min_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_bb_min(Fl_Value_Input*, void*);
-public:
-  Fl_Value_Input *valinp_hab_histogram_bb_max;
-private:
-  inline void cb_valinp_hab_histogram_bb_max_i(Fl_Value_Input*, void*);
-  static void cb_valinp_hab_histogram_bb_max(Fl_Value_Input*, void*);
-  inline void cb_Max2_i(Fl_Button*, void*);
-  static void cb_Max2(Fl_Button*, void*);
-  inline void cb_Average2_i(Fl_Button*, void*);
-  static void cb_Average2(Fl_Button*, void*);
-  inline void cb_Color2_i(Fl_Light_Button*, void*);
-  static void cb_Color2(Fl_Light_Button*, void*);
-public:
-  Fl_Double_Window *window_trace_output_color;
-private:
-  inline void cb_window_trace_output_color_i(Fl_Double_Window*, void*);
-  static void cb_window_trace_output_color(Fl_Double_Window*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_red;
-private:
-  inline void cb_scrbar_edit_color_red_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_red(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_red;
-private:
-  inline void cb_valinp_edit_color_red_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_red(Fl_Value_Input*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_gre;
-private:
-  inline void cb_scrbar_edit_color_gre_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_gre(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_gre;
-private:
-  inline void cb_valinp_edit_color_gre_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_gre(Fl_Value_Input*, void*);
-public:
-  Fl_Scrollbar *scrbar_edit_color_blu;
-private:
-  inline void cb_scrbar_edit_color_blu_i(Fl_Scrollbar*, void*);
-  static void cb_scrbar_edit_color_blu(Fl_Scrollbar*, void*);
-public:
-  Fl_Value_Input *valinp_edit_color_blu;
-private:
-  inline void cb_valinp_edit_color_blu_i(Fl_Value_Input*, void*);
-  static void cb_valinp_edit_color_blu(Fl_Value_Input*, void*);
-public:
-  Fl_Double_Window *window_set_number_format;
-private:
-  inline void cb_window_set_number_format_i(Fl_Double_Window*, void*);
-  static void cb_window_set_number_format(Fl_Double_Window*, void*);
-public:
-  Fl_Choice *choice_input_num_form_separator;
-private:
-  inline void cb_choice_input_num_form_separator_i(Fl_Choice*, void*);
-  static void cb_choice_input_num_form_separator(Fl_Choice*, void*);
-public:
-  Fl_Counter *counte_input_num_form_num_of_digits;
-private:
-  inline void cb_counte_input_num_form_num_of_digits_i(Fl_Counter*, void*);
-  static void cb_counte_input_num_form_num_of_digits(Fl_Counter*, void*);
-public:
-  Fl_Output *output_input_num_form_sample;
-private:
-  inline void cb_OK_i(Fl_Button*, void*);
-  static void cb_OK(Fl_Button*, void*);
-  inline void cb_Cancel_i(Fl_Button*, void*);
-  static void cb_Cancel(Fl_Button*, void*);
-public:
-  Fl_Double_Window *window_set_aspect_ratio;
-  Fl_Button *radbut_area_aspect_ratio_w;
-  Fl_Value_Input *valinp_area_aspect_ratio_w;
-  Fl_Button *radbut_area_aspect_ratio_h;
-  Fl_Value_Input *valinp_area_aspect_ratio_h;
-private:
-  inline void cb_OK1_i(Fl_Button*, void*);
-  static void cb_OK1(Fl_Button*, void*);
-  inline void cb_Cancel1_i(Fl_Button*, void*);
-  static void cb_Cancel1(Fl_Button*, void*);
-public:
   Fl_Double_Window *window_trace_params;
 private:
   inline void cb_window_trace_params_i(Fl_Double_Window*, void*);
@@ -1379,8 +532,8 @@ public:
 private:
   inline void cb_button_trace_params_i(fltk_button_trace_params*, void*);
   static void cb_button_trace_params(fltk_button_trace_params*, void*);
-  inline void cb_4_i(Fl_Button*, void*);
-  static void cb_4(Fl_Button*, void*);
+  inline void cb_3_i(Fl_Button*, void*);
+  static void cb_3(Fl_Button*, void*);
 public:
   Fl_Button *togbut_trace_open_under_sw;
 private:
@@ -1767,7 +920,7 @@ public:
 private:
   inline void cb_window_trace_hsv_view_i(Fl_Double_Window*, void*);
   static void cb_window_trace_hsv_view(Fl_Double_Window*, void*);
-  static Fl_Menu_Item menu_3[];
+  static Fl_Menu_Item menu_2[];
 public:
   static Fl_Menu_Item *menite_hsv_dot_normal;
 private:
@@ -1795,6 +948,39 @@ private:
   static void cb_menite_hsv_random_position(Fl_Menu_*, void*);
 public:
   fl_gl_hsv_view *hsv_view;
+  Fl_Double_Window *window_set_number_format;
+private:
+  inline void cb_window_set_number_format_i(Fl_Double_Window*, void*);
+  static void cb_window_set_number_format(Fl_Double_Window*, void*);
+public:
+  Fl_Choice *choice_input_num_form_separator;
+private:
+  inline void cb_choice_input_num_form_separator_i(Fl_Choice*, void*);
+  static void cb_choice_input_num_form_separator(Fl_Choice*, void*);
+public:
+  Fl_Counter *counte_input_num_form_num_of_digits;
+private:
+  inline void cb_counte_input_num_form_num_of_digits_i(Fl_Counter*, void*);
+  static void cb_counte_input_num_form_num_of_digits(Fl_Counter*, void*);
+public:
+  Fl_Output *output_input_num_form_sample;
+private:
+  inline void cb_OK_i(Fl_Button*, void*);
+  static void cb_OK(Fl_Button*, void*);
+  inline void cb_Cancel_i(Fl_Button*, void*);
+  static void cb_Cancel(Fl_Button*, void*);
+public:
+  Fl_Double_Window *window_set_aspect_ratio;
+  Fl_Button *radbut_area_aspect_ratio_w;
+  Fl_Value_Input *valinp_area_aspect_ratio_w;
+  Fl_Button *radbut_area_aspect_ratio_h;
+  Fl_Value_Input *valinp_area_aspect_ratio_h;
+private:
+  inline void cb_OK1_i(Fl_Button*, void*);
+  static void cb_OK1(Fl_Button*, void*);
+  inline void cb_Cancel1_i(Fl_Button*, void*);
+  static void cb_Cancel1(Fl_Button*, void*);
+public:
   Fl_Double_Window *window_set_color;
 private:
   inline void cb_window_set_color_i(Fl_Double_Window*, void*);

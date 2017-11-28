@@ -7,10 +7,9 @@ OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
 # /wd4819 : Stop warning message about Language Code
 INCS =\
 /I.\
-/I..\libcpp82gts_hsv_histogram\
 /I..\libcpp81gts_file_browser\
 /I..\libcpp72iip_erase_dot_noise\
-/I..\libcpp71iip_color_trace_hab\
+/I..\libcpp71iip_trace_by_hsv\
 /I..\libcpp64iip_rot90\
 /I..\libcpp56iip_opengl\
 /I..\libcpp55iip_scan\
@@ -28,12 +27,6 @@ gts_gui.cpp\
 gts_master.cpp\
 cb_area_and_rot90.cpp\
 cb_change_view.cpp\
-cb_color_trace_edit_color.cpp\
-cb_color_trace_edit_hsv_minmax.cpp\
-cb_color_trace_enhancement_src.cpp\
-cb_color_trace_enhancement_tgt.cpp\
-cb_color_trace_src.cpp\
-cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
 cb_config.cpp\
 cb_image.cpp\
@@ -46,7 +39,6 @@ cb_scan_and_save.cpp\
 cb_set_number_format.cpp\
 cb_trace_batch.cpp\
 cb_trace_files.cpp\
-cb_trace_parameters.cpp\
 cb_trace_params.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
@@ -68,8 +60,7 @@ memory_config_load.cpp\
 memory_config_save.cpp\
 memory_desktop_load.cpp\
 memory_desktop_save.cpp\
-memory_scan_area.cpp\
-memory_short_cut_key.cpp
+memory_scan_area.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty

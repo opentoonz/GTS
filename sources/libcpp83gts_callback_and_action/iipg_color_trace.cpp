@@ -66,9 +66,6 @@ int gts_master::_iipg_color_trace_setup( void )
 		this->cl_iip_edot.set_canvas_size(&(this->cl_iip_trac));
 	}
 
-	/* fltkメニューから実行パラメータをセットする */
-	this->cl_color_trace_enhancement.src_set_from_gui();
-
 	/* トレース範囲を全域に初期化 */
 	this->cl_iip_trac.set_area_xpos( 0 );
 	this->cl_iip_trac.set_area_ypos( 0 );
