@@ -140,12 +140,12 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 		// RGB
 
 		/* fltk GUIの値を高速計算のための変数に置きなおす */
-		this->cl_trace_params.set_params_for_speedup(
-			this->cl_calcu_sep_hsv.cla_area_param
-		);
+		this->cl_trace_params.set_params_for_speedup();
+
 		/* 2値化処理 */
-	//this->cl_iip_trac.exec(&(this->cl_cal_trac));
-		this->cl_iip_trac.exec( this->cl_calcu_sep_hsv );
+		this->cl_iip_trac.exec(
+			this->cl_trace_params.get_param_sets()
+		);
 	}
 	else {	// BW,Grayscale
 		this->cl_iip_trac.copy_image_from_parent(

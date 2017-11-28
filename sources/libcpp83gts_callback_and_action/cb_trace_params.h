@@ -10,6 +10,8 @@
 #include <FL/Fl_Scrollbar.H>
 
 #include "calcu_color_trace_sep_hsv.h"	// calcu_sep_hsv
+#include "calc_trace_by_hsv.h"	// calc::trace_by_hsv_params
+
 //#include "gts_gui.h"
 
 class cb_trace_params {
@@ -21,6 +23,8 @@ public:
 		,b_(0)
 		,hmin_(0.)
 		,hmax_(0.)
+		,param_sets_(6)
+		,widget_sets(6)
 	{}
 
 	/* 初期化 */
@@ -73,15 +77,21 @@ public:
 	};
 	std::vector<widget_set> widget_sets;
 	void init_widget_set(void) { this->init_widget_set_(); }
-	void set_params_for_speedup(
-		std::vector<calcu_sep_hsv>& param_sets
-	);
+
+	void set_params_for_speedup(void);
+	const std::vector<calc::trace_by_hsv_params>& get_param_sets(void) {
+		return this->param_sets_;
+	}
+
 	void cb_swap_widget_set( const unsigned num1 ,const unsigned num2 );
 	int cb_get_window_height_active( void );
 private:
 	int number_;
 	uchar r_ ,g_ ,b_;
 	double hmin_ ,hmax_ ,rotate360_sw_;
+
+	/* 計算する時のみ使う一時変数 */
+	std::vector<calc::trace_by_hsv_params> param_sets_;
 
 	void init_widget_set_(void);
 };

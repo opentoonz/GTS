@@ -18,6 +18,7 @@
 #include "calcu_color_trace_sep_hsv.h"
 #include "iip_color_trace_hab.h"
 #include "iip_color_trace_sep_hsv.h"
+#include "iip_trace_by_hsv.h"
 #include "iip_erase_dot_noise.h"
 
 #include "memory_desktop.h"
@@ -148,7 +149,8 @@ public:
 	calcu_color_trace_hab cl_cal_trac; /* refacteringで削除予定 */
 	calcu_color_trace_sep_hsv cl_calcu_sep_hsv;/* cl_cal_tracの次期 */
 	iip_color_trace_hab cl_iip_trac_dummy;/* refacteringで削除予定 */
-	iip_color_trace_sep_hsv	cl_iip_trac;	/* BL,R,G,Bトレース */
+	iip_color_trace_sep_hsv	cl_iip_trac_dummy2;/* refacteringで削除予定 */
+	iip_trace_by_hsv	cl_iip_trac;	/* BL,R,G,Bトレース */
 	iip_erase_dot_noise	cl_iip_edot;
 	iip_opengl_l3event cl_ogl_view;	/* OpenGL表示用unit */
 	iip_write	cl_iip_writ;	/* 画像保存 */

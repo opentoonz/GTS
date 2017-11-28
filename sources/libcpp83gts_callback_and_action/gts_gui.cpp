@@ -8843,10 +8843,10 @@ Fl_Double_Window* gts_gui::make_window() {
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       { Fl_Group* o = new Fl_Group(65, 150, 130, 50);
-        { box_set_color_ok = new Fl_Box(65, 150, 65, 25);
+        { box_set_color_ok = new Fl_Box(65, 150, 65, 20);
           box_set_color_ok->box(FL_FLAT_BOX);
         } // Fl_Box* box_set_color_ok
-        { box_set_color_cancel = new Fl_Box(130, 150, 65, 25);
+        { box_set_color_cancel = new Fl_Box(130, 150, 65, 20);
           box_set_color_cancel->box(FL_FLAT_BOX);
           box_set_color_cancel->color((Fl_Color)22);
         } // Fl_Box* box_set_color_cancel

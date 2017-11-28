@@ -18,6 +18,7 @@ INCS =\
 /I$(DPATH_FLTK)\
 /I$(DPATH_GLEW)\include
 SRCS =\
+calc_trace_by_hsv.cpp\
 calcu_color_trace_hab.cpp\
 calcu_color_trace_sep_hsv.cpp\
 calcu_histogram_hab.cpp\
@@ -26,7 +27,8 @@ iip_color_trace_hab_exec.cpp\
 iip_color_trace_hab_uchar.cpp\
 iip_color_trace_hab_ulong.cpp\
 iip_color_trace_hab_ushrt.cpp\
-iip_color_trace_sep_hsv.cpp
+iip_color_trace_sep_hsv.cpp\
+iip_trace_by_hsv.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty

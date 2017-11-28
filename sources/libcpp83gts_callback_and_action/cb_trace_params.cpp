@@ -62,9 +62,12 @@ void gui_hsv_to_rgb_( void ) {
 	cl_gts_gui.valinp_set_color_red->value(r);
 	cl_gts_gui.valinp_set_color_gre->value(g);
 	cl_gts_gui.valinp_set_color_blu->value(b);
-	cl_gts_gui.scrbar_set_color_red->value(r);
-	cl_gts_gui.scrbar_set_color_gre->value(g);
-	cl_gts_gui.scrbar_set_color_blu->value(b);
+	static_cast<Fl_Valuator *>(
+	cl_gts_gui.scrbar_set_color_red)->value(r);
+	static_cast<Fl_Valuator *>(
+	cl_gts_gui.scrbar_set_color_gre)->value(g);
+	static_cast<Fl_Valuator *>(
+	cl_gts_gui.scrbar_set_color_blu)->value(b);
 }
 void gui_rgb_to_hsv_( void ) { 
 	double	h=0. ,s=0. ,v=0.;
@@ -85,9 +88,12 @@ void gui_rgb_to_hsv_( void ) {
 	cl_gts_gui.valinp_set_color_hue->value(h);
 	cl_gts_gui.valinp_set_color_sat->value(s);
 	cl_gts_gui.valinp_set_color_val->value(v);
-	cl_gts_gui.scrbar_set_color_hue->value(h);
-	cl_gts_gui.scrbar_set_color_sat->value(s);
-	cl_gts_gui.scrbar_set_color_val->value(v);
+	static_cast<Fl_Valuator *>(
+	cl_gts_gui.scrbar_set_color_hue)->value(h);
+	static_cast<Fl_Valuator *>(
+	cl_gts_gui.scrbar_set_color_sat)->value(s);
+	static_cast<Fl_Valuator *>(
+	cl_gts_gui.scrbar_set_color_val)->value(v);
 }
 }
 
@@ -346,15 +352,13 @@ void cb_trace_params::init_widget_set_(void) {
 
 //---------------
 
-void cb_trace_params::set_params_for_speedup(
-	std::vector<calcu_sep_hsv>& param_sets
-)
+void cb_trace_params::set_params_for_speedup(void)
 {
-	assert( this->widget_sets.size() == param_sets.size() );
+	assert( this->widget_sets.size() == this->param_sets_.size() );
 
 	for (unsigned ii = 0 ; ii < this->widget_sets.size() ; ++ii) {
 		auto& wset = this->widget_sets.at(ii);
-		auto& vset = param_sets.at(ii);
+		auto& vset = this->param_sets_.at(ii);
 
 		vset.enable_sw = (wset.chebut_enable_sw->value()==1
 				?true:false);
@@ -370,9 +374,14 @@ void cb_trace_params::set_params_for_speedup(
 				/wset.valinp_thickness->maximum();
 		vset.hue_min = wset.valinp_hue_min->value();
 		vset.hue_max = wset.valinp_hue_max->value();
-		vset.slope_deg = wset.valinp_slope_deg->value();
-		vset.intercept = wset.valinp_intercept->value()
-				/wset.valinp_intercept->maximum();
+
+		vset.slope_line_len =
+			calc::line_len_from_rad( calc::rad_from_deg(
+					wset.valinp_slope_deg->value()
+			));
+
+		vset.intercept = 1. -	(wset.valinp_intercept->value()
+					/wset.valinp_intercept->maximum());
 		vset.rotate360_sw =
 			(wset.chebut_rotate360_sw->value()!=0) ?true :false;
 	}

@@ -3270,10 +3270,10 @@ cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
           xywh {65 150 130 50}
         } {
           Fl_Box box_set_color_ok {
-            xywh {65 150 65 25} box FLAT_BOX
+            xywh {65 150 65 20} box FLAT_BOX
           }
           Fl_Box box_set_color_cancel {
-            xywh {130 150 65 25} box FLAT_BOX color 22
+            xywh {130 150 65 20} box FLAT_BOX color 22
           }
           Fl_Button {} {
             label OK
