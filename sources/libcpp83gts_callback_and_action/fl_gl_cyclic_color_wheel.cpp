@@ -220,22 +220,29 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 	glColor3d(1.,1.,1.);glVertex2d(0.5,0.95);glVertex2d(0.5,1.0);
 	glEnd();
 
+	/* 有効なもののみを数える */
+	int sz=0;
+	for (auto& aa : this->guide_widget_sets_) {
+		if (aa.chebut_enable_sw->value() != 0) { ++sz; }
+	}
+
 	/* display each hue range */
-	auto sz = this->guide_widget_sets_.size();
 	auto he = 1./(sz+1.);
-	for (unsigned ii=0 ;ii<sz ;++ii) {
+	auto width = this->h() / 15.;
+	int ii=0;
+	for (auto& aa : this->guide_widget_sets_) {
 		/* 各パラメータ */
-		auto& aa = this->guide_widget_sets_.at(ii);
+		auto i2 = ii++; /* continueを避けてiiをカウントアップする */
 
 		/* 色 */
-		if (ii == this->hue_range_number_) {
+		if (i2 == this->hue_range_number_) {
 			glColor3d(1.  ,1.  ,1. );
 		} else if (aa.chebut_enable_sw->value() != 0) {
 			glColor3d(0.7 ,0.7 ,0.7);
-		} else {glColor3d(0.3 ,0.3 ,0.3); }
+		} else {continue;}
 
 		/* 上下位置 */
-		double yy = (sz-ii) / (sz+1.);
+		double yy = (sz-i2) / (sz+1.);
 		double y1 = yy - he/2.;
 		double y2 = yy + he/2.;
 
@@ -246,23 +253,28 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 			aa.valinp_hue_max->value()+this->hue_offset_) /360.;
 		bool rotate360_sw = (aa.chebut_rotate360_sw->value() != 0);
 
-		/* 表示 */
+		/* min/max位置表示 */
+		glLineWidth(1.);
+		glBegin(GL_LINES);
+		glVertex2d(x1,y1);glVertex2d(x1,y2);
+		glVertex2d(x2,y1);glVertex2d(x2,y2);
+		glEnd();
+
+		/* 範囲横線表示 */
+		glLineWidth(width);
 		if (x1 < x2 || ((x1 == x2) && rotate360_sw==false)) {
 			glBegin(GL_LINES);
 			glVertex2d(x1,yy);glVertex2d(x2,yy);
-			glVertex2d(x1,y1);glVertex2d(x1,y2);
-			glVertex2d(x2,y1);glVertex2d(x2,y2);
 			glEnd();
 		}
 		else {
 			glBegin(GL_LINES);
 			glVertex2d(x1,yy);glVertex2d(1.,yy);
 			glVertex2d(0.,yy);glVertex2d(x2,yy);
-			glVertex2d(x1,y1);glVertex2d(x1,y2);
-			glVertex2d(x2,y1);glVertex2d(x2,y2);
 			glEnd();
 		}
 	}
+	glLineWidth(1.);
 }
 
 double fl_gl_cyclic_color_wheel::xpos_from_hue_(const double hue)
