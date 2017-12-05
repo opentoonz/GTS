@@ -611,11 +611,13 @@ bool memory_config::load_trace_old_parameters_( std::vector< std::string >& word
 			wset.valinp_hue_max->value(-1.);
 			wset.valinp_hue_min->hide();
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
+			wset.button_hue_max->hide();
 		} else {va = smin_;
 			wset.valinp_hue_min->show();
 			wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
+			wset.button_hue_max->show();
 		}
 		wset.valinp_thickness->value(va);
 		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
@@ -657,11 +659,13 @@ bool memory_config::load_trace_old_parameters_( std::vector< std::string >& word
 			wset.valinp_hue_max->value(-1.);
 			wset.valinp_hue_min->hide();
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
+			wset.button_hue_max->hide();
 		} else {va = smin_;
 			wset.valinp_hue_min->show();
 			wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
+			wset.button_hue_max->show();
 		}
 		wset.valinp_thickness->value(va);
 		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
@@ -703,11 +707,13 @@ bool memory_config::load_trace_old_parameters_( std::vector< std::string >& word
 			wset.valinp_hue_max->value(-1.);
 			wset.valinp_hue_min->hide();
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
+			wset.button_hue_max->hide();
 		} else {va = smin_;
 			wset.valinp_hue_min->show();
 			wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
+			wset.button_hue_max->show();
 		}
 		wset.valinp_thickness->value(va);
 		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
@@ -749,11 +755,13 @@ bool memory_config::load_trace_old_parameters_( std::vector< std::string >& word
 			wset.valinp_hue_max->value(-1.);
 			wset.valinp_hue_min->hide();
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
+			wset.button_hue_max->hide();
 		} else {va = smin_;
 			wset.valinp_hue_min->show();
 			wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
+			wset.button_hue_max->show();
 		}
 		wset.valinp_thickness->value(va);
 		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
@@ -795,11 +803,13 @@ bool memory_config::load_trace_old_parameters_( std::vector< std::string >& word
 			wset.valinp_hue_max->value(-1.);
 			wset.valinp_hue_min->hide();
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
+			wset.button_hue_max->hide();
 		} else {va = smin_;
 			wset.valinp_hue_min->show();
 			wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
+			wset.button_hue_max->show();
 		}
 		wset.valinp_thickness->value(va);
 		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
@@ -841,11 +851,13 @@ bool memory_config::load_trace_old_parameters_( std::vector< std::string >& word
 			wset.valinp_hue_max->value(-1.);
 			wset.valinp_hue_min->hide();
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
+			wset.button_hue_max->hide();
 		} else {va = smin_;
 			wset.valinp_hue_min->show();
 			wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
+			wset.button_hue_max->show();
 		}
 		wset.valinp_thickness->value(va);
 		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
@@ -903,18 +915,18 @@ bool memory_config::load_trace_params_( std::vector< std::string >& words )
 		wset.valinp_hue_min->value(va);
 		if (wset.valinp_hue_min->value() < 0.) {
 			wset.valinp_hue_min->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_min->hide();
 		} else {wset.valinp_hue_min->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_min->show();
 		}
 	  } else if (words.at(2) == this->str_trace_hue_max_) {
 		const double va = std::stod(words.at(3));
 		wset.valinp_hue_max->value(va);
 		if (wset.valinp_hue_max->value() < 0.) {
 			wset.valinp_hue_max->hide();
-			wset.button_hue_min_max->hide();
+			wset.button_hue_max->hide();
 		} else {wset.valinp_hue_max->show();
-			wset.button_hue_min_max->show();
+			wset.button_hue_max->show();
 		}
 	  } else if (words.at(2) == this->str_trace_slope_deg_) {
 		const double va = std::stod(words.at(3));

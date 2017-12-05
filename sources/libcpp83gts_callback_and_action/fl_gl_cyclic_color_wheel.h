@@ -21,8 +21,6 @@ public:
 	);
 	void init_number_and_is_max( const int number ,const bool is_max);
 
-	void set_min_or_max(const bool is_max );
-
 private:
 	/* マウスドラッグ開始位置 */
 	int	mouse_x_when_push_

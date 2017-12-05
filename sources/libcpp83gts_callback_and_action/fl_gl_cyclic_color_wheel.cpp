@@ -81,31 +81,6 @@ double calc_between_min_max_( const double mini ,const double maxi ,const bool m
 	return hh;
 }
 }
-void fl_gl_cyclic_color_wheel::set_min_or_max(const bool is_max )
-{
-#if 0
-	/* 動作しない--> redraw() しない --> ひとまず保留*/
-	const int sz = 10;
-	for (int ii=1 ;ii<sz ;++ii) {
-		Sleep(100);
-		auto ratio = static_cast<double>(ii)/sz;
-
-		auto& aa = this->guide_widget_sets_.at(
-						this->hue_range_number_);
-		auto mini = aa.valinp_hue_min->value();
-		auto maxi = aa.valinp_hue_max->value();
-		bool min_sw = (cl_gts_gui.radbut_hue_min_sw->value() != 0);
-		auto hh = calc_between_min_max_( mini ,maxi ,min_sw ,ratio);
-		/* 0...360の範囲で設定 */
-		this->hue_offset_ = cyclic_hue_degree_( 180. - hh );
-		/* 現在のwidgetの横幅内の位置 */
-		this->x_offset_ = this->xpos_from_hue_(this->hue_offset_);
-
-		this->redraw();
-	}
-#endif
-	this->init_number_and_is_max( this->hue_range_number_ ,is_max );
-}
 
 //--------------------
 
@@ -482,6 +457,13 @@ void fl_gl_cyclic_color_wheel::handle_keyboard_( const int key , const char* tex
 	this->redraw();
 	cl_gts_gui.image_view->redraw();
 		}
+		break;
+	 case FL_Enter:
+		cl_gts_gui.window_set_hue_min_or_max->hide();
+		break;
+	 case FL_Escape:
+		cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
+		cl_gts_gui.window_set_hue_min_or_max->hide();
 		break;
 	 }
 	}

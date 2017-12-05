@@ -571,6 +571,11 @@ private:
   inline void cb_scrbar_trace_0_thickness_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_trace_0_thickness(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *button_trace_0_hue_min;
+private:
+  inline void cb_button_trace_0_hue_min_i(Fl_Button*, void*);
+  static void cb_button_trace_0_hue_min(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_0_hue_min;
 private:
   inline void cb_valinp_trace_0_hue_min_i(Fl_Value_Input*, void*);
@@ -581,10 +586,10 @@ private:
   inline void cb_valinp_trace_0_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_0_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_0_hue_min_max;
+  Fl_Button *button_trace_0_hue_max;
 private:
-  inline void cb_button_trace_0_hue_min_max_i(Fl_Button*, void*);
-  static void cb_button_trace_0_hue_min_max(Fl_Button*, void*);
+  inline void cb_button_trace_0_hue_max_i(Fl_Button*, void*);
+  static void cb_button_trace_0_hue_max(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_0_rotate360_sw;
 private:
@@ -627,6 +632,11 @@ private:
   inline void cb_scrbar_trace_1_thickness_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_trace_1_thickness(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *button_trace_1_hue_min;
+private:
+  inline void cb_button_trace_1_hue_min_i(Fl_Button*, void*);
+  static void cb_button_trace_1_hue_min(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_1_hue_min;
 private:
   inline void cb_valinp_trace_1_hue_min_i(Fl_Value_Input*, void*);
@@ -637,10 +647,10 @@ private:
   inline void cb_valinp_trace_1_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_1_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_1_hue_min_max;
+  Fl_Button *button_trace_1_hue_max;
 private:
-  inline void cb_button_trace_1_hue_min_max_i(Fl_Button*, void*);
-  static void cb_button_trace_1_hue_min_max(Fl_Button*, void*);
+  inline void cb_button_trace_1_hue_max_i(Fl_Button*, void*);
+  static void cb_button_trace_1_hue_max(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_1_rotate360_sw;
 private:
@@ -683,6 +693,11 @@ private:
   inline void cb_scrbar_trace_2_thickness_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_trace_2_thickness(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *button_trace_2_hue_min;
+private:
+  inline void cb_button_trace_2_hue_min_i(Fl_Button*, void*);
+  static void cb_button_trace_2_hue_min(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_2_hue_min;
 private:
   inline void cb_valinp_trace_2_hue_min_i(Fl_Value_Input*, void*);
@@ -693,10 +708,10 @@ private:
   inline void cb_valinp_trace_2_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_2_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_2_hue_min_max;
+  Fl_Button *button_trace_2_hue_max;
 private:
-  inline void cb_button_trace_2_hue_min_max_i(Fl_Button*, void*);
-  static void cb_button_trace_2_hue_min_max(Fl_Button*, void*);
+  inline void cb_button_trace_2_hue_max_i(Fl_Button*, void*);
+  static void cb_button_trace_2_hue_max(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_2_rotate360_sw;
 private:
@@ -739,6 +754,11 @@ private:
   inline void cb_scrbar_trace_3_thickness_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_trace_3_thickness(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *button_trace_3_hue_min;
+private:
+  inline void cb_button_trace_3_hue_min_i(Fl_Button*, void*);
+  static void cb_button_trace_3_hue_min(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_3_hue_min;
 private:
   inline void cb_valinp_trace_3_hue_min_i(Fl_Value_Input*, void*);
@@ -749,10 +769,10 @@ private:
   inline void cb_valinp_trace_3_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_3_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_3_hue_min_max;
+  Fl_Button *button_trace_3_hue_max;
 private:
-  inline void cb_button_trace_3_hue_min_max_i(Fl_Button*, void*);
-  static void cb_button_trace_3_hue_min_max(Fl_Button*, void*);
+  inline void cb_button_trace_3_hue_max_i(Fl_Button*, void*);
+  static void cb_button_trace_3_hue_max(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_3_rotate360_sw;
 private:
@@ -795,6 +815,11 @@ private:
   inline void cb_scrbar_trace_4_thickness_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_trace_4_thickness(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *button_trace_4_hue_min;
+private:
+  inline void cb_button_trace_4_hue_min_i(Fl_Button*, void*);
+  static void cb_button_trace_4_hue_min(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_4_hue_min;
 private:
   inline void cb_valinp_trace_4_hue_min_i(Fl_Value_Input*, void*);
@@ -805,10 +830,10 @@ private:
   inline void cb_valinp_trace_4_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_4_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_4_hue_min_max;
+  Fl_Button *button_trace_4_hue_max;
 private:
-  inline void cb_button_trace_4_hue_min_max_i(Fl_Button*, void*);
-  static void cb_button_trace_4_hue_min_max(Fl_Button*, void*);
+  inline void cb_button_trace_4_hue_max_i(Fl_Button*, void*);
+  static void cb_button_trace_4_hue_max(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_4_rotate360_sw;
 private:
@@ -851,6 +876,11 @@ private:
   inline void cb_scrbar_trace_5_thickness_i(Fl_Scrollbar*, void*);
   static void cb_scrbar_trace_5_thickness(Fl_Scrollbar*, void*);
 public:
+  Fl_Button *button_trace_5_hue_min;
+private:
+  inline void cb_button_trace_5_hue_min_i(Fl_Button*, void*);
+  static void cb_button_trace_5_hue_min(Fl_Button*, void*);
+public:
   Fl_Value_Input *valinp_trace_5_hue_min;
 private:
   inline void cb_valinp_trace_5_hue_min_i(Fl_Value_Input*, void*);
@@ -861,10 +891,10 @@ private:
   inline void cb_valinp_trace_5_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_5_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_5_hue_min_max;
+  Fl_Button *button_trace_5_hue_max;
 private:
-  inline void cb_button_trace_5_hue_min_max_i(Fl_Button*, void*);
-  static void cb_button_trace_5_hue_min_max(Fl_Button*, void*);
+  inline void cb_button_trace_5_hue_max_i(Fl_Button*, void*);
+  static void cb_button_trace_5_hue_max(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_5_rotate360_sw;
 private:

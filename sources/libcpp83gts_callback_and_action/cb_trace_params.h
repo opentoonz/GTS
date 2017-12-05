@@ -20,6 +20,7 @@ public:
 		,b_(0)
 		,hmin_(0.)
 		,hmax_(0.)
+		,rotate360_sw_(false)
 		,param_sets_(6)
 		,widget_sets(6)
 	{}
@@ -37,7 +38,12 @@ public:
 	void cb_target_rgb_color_cancel(void);
 
 	/* hue min max editor */
-	void cb_hue_min_or_max_open_editor(
+	void cb_hue_min_open_editor(
+		Fl_Double_Window* flwin
+		,Fl_Button* flbut
+		,const int number
+	);
+	void cb_hue_max_open_editor(
 		Fl_Double_Window* flwin
 		,Fl_Button* flbut
 		,const int number
@@ -66,7 +72,8 @@ public:
 		Fl_Scrollbar*		scrbar_thickness;
 		Fl_Value_Input*		valinp_hue_min;
 		Fl_Value_Input*		valinp_hue_max;
-		Fl_Button*		button_hue_min_max;
+		Fl_Button*		button_hue_min;
+		Fl_Button*		button_hue_max;
 		Fl_Value_Input*		valinp_slope_deg;
 		Fl_Value_Input*		valinp_intercept;
 		Fl_Check_Button*	chebut_display_sw;
@@ -85,12 +92,20 @@ public:
 private:
 	int number_;
 	uchar r_ ,g_ ,b_;
-	double hmin_ ,hmax_ ,rotate360_sw_;
+	double hmin_ ,hmax_;
+	bool rotate360_sw_;
 
 	/* 計算する時のみ使う一時変数 */
 	std::vector<calc::trace_by_hsv_params> param_sets_;
 
 	void init_widget_set_(void);
+	void cb_hue_min_or_max_open_editor_(
+		Fl_Double_Window* flwin
+		,Fl_Button* flbut
+		,const int x_offset
+		,const int y_offset
+		,const int number
+	);
 };
 
 //--------------------
