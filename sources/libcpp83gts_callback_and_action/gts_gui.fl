@@ -1307,6 +1307,10 @@ window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
             xywh {225 53 0 0} align 6
           }
           Fl_Text_Display {} {
+            label {↓}
+            xywh {229 63 0 0} align 6
+          }
+          Fl_Text_Display {} {
             label {|------ Hue -------|}
             xywh {250 36 0 0} align 6
           }
@@ -1316,11 +1320,11 @@ window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
           }
           Fl_Text_Display {} {
             label min
-            xywh {275 48 0 0} align 6
+            xywh {272 48 0 0} align 6
           }
           Fl_Text_Display {} {
             label max
-            xywh {305 48 0 0} align 6
+            xywh {302 48 0 0} align 6
           }
           Fl_Text_Display {} {
             label {ed.}
@@ -1408,7 +1412,8 @@ image_view->redraw();}
           Fl_Check_Button chebut_trace_0_enable_sw {
             callback {if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             xywh {205 65 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
@@ -1477,7 +1482,8 @@ image_view->redraw();}
           Fl_Check_Button chebut_trace_1_enable_sw {
             callback {if (o->value()) {group_trace_1->activate();  }
 else            {group_trace_1->deactivate();}
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             xywh {205 95 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
@@ -1546,7 +1552,8 @@ image_view->redraw();}
           Fl_Check_Button chebut_trace_2_enable_sw {
             callback {if (o->value()) {group_trace_2->activate();  }
 else            {group_trace_2->deactivate();}
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             xywh {205 125 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
@@ -1615,7 +1622,8 @@ image_view->redraw();}
           Fl_Check_Button chebut_trace_3_enable_sw {
             callback {if (o->value()) {group_trace_3->activate();  }
 else            {group_trace_3->deactivate();}
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             xywh {205 155 17 25} down_box DOWN_BOX value 1 align 4
           }
         }
@@ -1684,7 +1692,8 @@ image_view->redraw();}
           Fl_Check_Button chebut_trace_4_enable_sw {
             callback {if (o->value()) {group_trace_4->activate();  }
 else            {group_trace_4->deactivate();}
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             xywh {205 185 17 25} down_box DOWN_BOX align 4
           }
         }
@@ -1753,7 +1762,8 @@ image_view->redraw();}
           Fl_Check_Button chebut_trace_5_enable_sw {
             callback {if (o->value()) {group_trace_5->activate();  }
 else            {group_trace_5->deactivate();}
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             xywh {205 215 17 25} down_box DOWN_BOX align 4
           }
         }
@@ -1762,27 +1772,32 @@ image_view->redraw();}
         } {
           Fl_Button button_change_0_1 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(0,1);
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             image {icon_change_updown.png} xywh {225 80 15 25}
           }
           Fl_Button button_change_1_2 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(1,2);
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             image {icon_change_updown.png} xywh {225 110 15 25}
           }
           Fl_Button button_change_2_3 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(2,3);
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             image {icon_change_updown.png} xywh {225 140 15 25}
           }
           Fl_Button button_change_3_4 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(3,4);
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             image {icon_change_updown.png} xywh {225 170 15 25}
           }
           Fl_Button button_change_4_5 {
             callback {cl_gts_master.cl_trace_params.cb_swap_widget_set(4,5);
-image_view->redraw();}
+image_view->redraw();
+window_set_hue_min_or_max->hide();}
             image {icon_change_updown.png} xywh {225 200 15 25}
           }
         }
@@ -2040,7 +2055,7 @@ window_set_color->hide();}
       label {Set Hue Min or Max}
       callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
 window_set_hue_min_or_max->hide();}
-      xywh {50 50 200 70} type Double resizable modal size_range {200 70 1000 100} visible
+      xywh {50 50 200 70} type Double resizable non_modal size_range {200 70 1000 100} visible
     } {
       Fl_Group {} {open
         xywh {0 0 200 40} resizable

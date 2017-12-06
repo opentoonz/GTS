@@ -1313,6 +1313,7 @@ void gts_gui::cb_chebut_trace_0_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_0->activate();  }
 else            {group_trace_0->deactivate();}
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_chebut_trace_0_enable_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_0_enable_sw_i(o,v);
@@ -1407,6 +1408,7 @@ void gts_gui::cb_chebut_trace_1_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_1->activate();  }
 else            {group_trace_1->deactivate();}
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_chebut_trace_1_enable_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_1_enable_sw_i(o,v);
@@ -1501,6 +1503,7 @@ void gts_gui::cb_chebut_trace_2_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_2->activate();  }
 else            {group_trace_2->deactivate();}
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_chebut_trace_2_enable_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_2_enable_sw_i(o,v);
@@ -1595,6 +1598,7 @@ void gts_gui::cb_chebut_trace_3_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_3->activate();  }
 else            {group_trace_3->deactivate();}
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_chebut_trace_3_enable_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_3_enable_sw_i(o,v);
@@ -1689,6 +1693,7 @@ void gts_gui::cb_chebut_trace_4_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_4->activate();  }
 else            {group_trace_4->deactivate();}
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_chebut_trace_4_enable_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_4_enable_sw_i(o,v);
@@ -1783,6 +1788,7 @@ void gts_gui::cb_chebut_trace_5_enable_sw_i(Fl_Check_Button* o, void*) {
   if (o->value()) {group_trace_5->activate();  }
 else            {group_trace_5->deactivate();}
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_chebut_trace_5_enable_sw(Fl_Check_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_chebut_trace_5_enable_sw_i(o,v);
@@ -1791,6 +1797,7 @@ void gts_gui::cb_chebut_trace_5_enable_sw(Fl_Check_Button* o, void* v) {
 void gts_gui::cb_button_change_0_1_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_swap_widget_set(0,1);
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_button_change_0_1(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_change_0_1_i(o,v);
@@ -1829,6 +1836,7 @@ static Fl_RGB_Image image_icon_change_updown(idata_icon_change_updown, 10, 20, 3
 void gts_gui::cb_button_change_1_2_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_swap_widget_set(1,2);
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_button_change_1_2(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_change_1_2_i(o,v);
@@ -1837,6 +1845,7 @@ void gts_gui::cb_button_change_1_2(Fl_Button* o, void* v) {
 void gts_gui::cb_button_change_2_3_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_swap_widget_set(2,3);
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_button_change_2_3(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_change_2_3_i(o,v);
@@ -1845,6 +1854,7 @@ void gts_gui::cb_button_change_2_3(Fl_Button* o, void* v) {
 void gts_gui::cb_button_change_3_4_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_swap_widget_set(3,4);
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_button_change_3_4(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_change_3_4_i(o,v);
@@ -1853,6 +1863,7 @@ void gts_gui::cb_button_change_3_4(Fl_Button* o, void* v) {
 void gts_gui::cb_button_change_4_5_i(Fl_Button*, void*) {
   cl_gts_master.cl_trace_params.cb_swap_widget_set(4,5);
 image_view->redraw();
+window_set_hue_min_or_max->hide();
 }
 void gts_gui::cb_button_change_4_5(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_button_change_4_5_i(o,v);
@@ -2967,16 +2978,19 @@ Fl_Double_Window* gts_gui::make_window() {
         { Fl_Text_Display* o = new Fl_Text_Display(225, 53, 0, 0, "U/D");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
+        { Fl_Text_Display* o = new Fl_Text_Display(229, 63, 0, 0, "\342\206\223");
+          o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
+        } // Fl_Text_Display* o
         { Fl_Text_Display* o = new Fl_Text_Display(250, 36, 0, 0, "|------ Hue -------|");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
         { Fl_Text_Display* o = new Fl_Text_Display(250, 48, 0, 0, "ed.");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
-        { Fl_Text_Display* o = new Fl_Text_Display(275, 48, 0, 0, "min");
+        { Fl_Text_Display* o = new Fl_Text_Display(272, 48, 0, 0, "min");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
-        { Fl_Text_Display* o = new Fl_Text_Display(305, 48, 0, 0, "max");
+        { Fl_Text_Display* o = new Fl_Text_Display(302, 48, 0, 0, "max");
           o->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
         } // Fl_Text_Display* o
         { Fl_Text_Display* o = new Fl_Text_Display(335, 48, 0, 0, "ed.");
@@ -3651,7 +3665,7 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    window_set_hue_min_or_max->set_modal();
+    window_set_hue_min_or_max->set_non_modal();
     window_set_hue_min_or_max->size_range(200, 70, 1000, 100);
     window_set_hue_min_or_max->end();
   } // Fl_Double_Window* window_set_hue_min_or_max

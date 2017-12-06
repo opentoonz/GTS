@@ -217,6 +217,9 @@ void cb_trace_params::cb_hue_min_or_max_open_editor_(
 		,(cl_gts_gui.radbut_hue_min_sw->value()!=0) ?false :true
 	);
 
+	/* 再描画 */
+	cl_gts_gui.cyclic_color_wheel->redraw();
+
 	/* Cancelのとき戻す値を記憶 */
 	cb_trace_params::widget_set& wset( vwset.at( number ) );
 	this->hmin_         = wset.valinp_hue_min->value();
@@ -242,7 +245,7 @@ void cb_trace_params::cb_hue_min_open_editor(
 {
 	cl_gts_gui.radbut_hue_min_sw->value(1);
 	this->cb_hue_min_or_max_open_editor_( flwin ,flbut
-		,-cl_gts_gui.window_set_hue_min_or_max->w()
+		,-cl_gts_gui.window_set_hue_min_or_max->w() -10
 		,-cl_gts_gui.cyclic_color_wheel->y()
 		,number );
 }
@@ -254,7 +257,7 @@ void cb_trace_params::cb_hue_max_open_editor(
 {
 	cl_gts_gui.radbut_hue_min_sw->value(0);
 	this->cb_hue_min_or_max_open_editor_( flwin ,flbut
-		,10
+		,25
 		,-cl_gts_gui.cyclic_color_wheel->y()
 		,number );
 }
