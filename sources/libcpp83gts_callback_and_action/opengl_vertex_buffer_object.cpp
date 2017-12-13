@@ -210,6 +210,7 @@ void vertex_buffer_object::hsv_to_xyz(
 	,double& x , double& y , double& z
 )
 {
+	/* hsv --> x,y,z */
 	x = cos( calc::rad_from_deg(h) ) * s * v;
 	y = sin( calc::rad_from_deg(h) ) * s * v;
 	z = 1. - v;
@@ -220,14 +221,15 @@ void vertex_buffer_object::hsv_to_xyzarray(
 	, vertex_buffer_object::vbo_float* xyz
 )
 {
-	/* hsv --> xyz */
-	double x = 0.;
-	double y = 0.;
-	double z = 0.;
-	this->hsv_to_xyz( h,s,v ,x,y,z );
-
-	xyz[0] = static_cast<vertex_buffer_object::vbo_float>(x);
-	xyz[1] = static_cast<vertex_buffer_object::vbo_float>(y);
-	xyz[2] = static_cast<vertex_buffer_object::vbo_float>(z);
+	/* hsv --> xyzarray */
+	xyz[0] = static_cast<vertex_buffer_object::vbo_float>(
+		cos( calc::rad_from_deg(h) ) * s * v
+	);
+	xyz[1] = static_cast<vertex_buffer_object::vbo_float>(
+		sin( calc::rad_from_deg(h) ) * s * v
+	);
+	xyz[2] = static_cast<vertex_buffer_object::vbo_float>(
+		1. - v
+	);
 }
 } // namespace opengl

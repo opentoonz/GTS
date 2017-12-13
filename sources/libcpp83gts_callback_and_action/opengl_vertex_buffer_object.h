@@ -42,7 +42,7 @@ public:
 	);
 
 	void set_hsv_view_start_sw(bool sw) { this->hsv_view_start_sw_=sw; }
-	bool get_hsv_view_start_sw(void) { return this->hsv_view_start_sw_;}
+	bool get_hsv_view_start_sw(void) const { return this->hsv_view_start_sw_;}
 
 	/* for debug */
 	void pr_vbo_info(void);

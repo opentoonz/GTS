@@ -14,7 +14,7 @@
 		unsigned char
 		unsigned short
 		unsigned long
-		unsigned int	(=unsigned)
+		unsigned int	(= unsigned)
 	のみサポート
 		float
 		double
@@ -22,8 +22,13 @@
 */
 template <class TINN , class TOUT>
 std::string iip_trace_by_hsv_tplt_(
-	int width , int channels , TINN* image_inn_top
-	,int area_xpos , int area_ypos , int area_xsize , int area_ysize
+	int width
+	,int channels
+	,TINN* image_inn_top
+	,int area_xpos
+	,int area_ypos
+	,int area_xsize
+	,int area_ysize
 	,const std::vector<calc::trace_by_hsv_params>& hsv_params
 	,TOUT* image_out_top
 	,const bool white_out_of_area_sw
@@ -31,83 +36,68 @@ std::string iip_trace_by_hsv_tplt_(
 	,opengl::vertex_buffer_object& vbo
 )
 {
-util::stop_watch stwa; stwa.start();
-	const bool ready_to_vbo_sw = vbo.get_hsv_view_start_sw();
-	/* ----- hsv3d表示のrgb値セット ----- */
-  if ( ready_to_vbo_sw ) { /* vboを使うにはOpenGL初期化済であること */ 
-	/* vbo初期化 */
-	std::string err_msg( vbo.open_or_reopen(
-		area_xsize * area_ysize
-	) );
-	if (!err_msg.empty()) {
-		return err_msg;
-	}
-  }
-
 	/* 初期パラメータ設定 */
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;
 
-	/* windows.hのmax()マクロが先にきいてしまいエラーとなる */
 	const auto max_val_inn = (std::numeric_limits<TINN>::max)();
-	const auto max_val_out = (std::numeric_limits<TOUT>::max)();
-	const double max_val_out_f = max_val_out + 0.999999;
+		/* 注意:windows.hのmax()マクロを回避するためカッコで囲う */
 
-  if ( ready_to_vbo_sw ) {
 	const auto max_glub_out = (std::numeric_limits<GLubyte>::max)();
-	const int shift_bit = std::numeric_limits<TINN>::digits - 8;
+	const int shift_bit =	std::numeric_limits<TINN>::digits - 
+				std::numeric_limits<GLubyte>::digits;
 
-	/* Colorデータ書き込み */
-	GLubyte* rgb = vbo.start_color();
-	if (rgb == nullptr) { /* open出来ていればここはこないはず */
-		assert(!"Error:vbo.start_color() return null");
+util::stop_watch stwa; stwa.start();
+	/* ----- hsv3d表示のxyz値セット ----- */
+  if ( vbo.get_hsv_view_start_sw() ) {
+	opengl::vertex_buffer_object::vbo_float* xyz = vbo.start_vertex();
+	if (xyz == nullptr) { /* vboがopen出来ていればここはこないはず */
+		assert(!"Error:vbo.start_vertex() return null");
 	}
+	std::mt19937 engine;
+	std::uniform_real_distribution<> dist( -0.5 ,0.499999 );
 
 	TINN *image_inn = image_inn_top + start_pos;
 	for (int yy = 0; yy < area_ysize ; ++yy ,image_inn += scan_size) {
 
 	  TINN* inn_x = image_inn;
-	  for (int xx = 0; xx < area_xsize ;++xx ,inn_x+=channels ,rgb+=3) {
-		rgb[CH_RED] = inn_x[CH_RED] >> shift_bit;
-		rgb[CH_GRE] = inn_x[CH_GRE] >> shift_bit;
-		rgb[CH_BLU] = inn_x[CH_BLU] >> shift_bit;
-
-		if ( white_out_of_area_sw ) {
-			/* 2値化しない場合白点で表示する処理 */
-			double hh=0. ,ss=0. ,vv=0.;
+	  for (int xx = 0; xx < area_xsize ;++xx ,inn_x+=channels ,xyz+=3) {
+		double	hh=0., ss=0., vv=0.;
+		if ( !random_position_sw ) {
 			calc::rgb_to_hsv(
-			 static_cast<double>(inn_x[CH_RED])/max_val_inn
-			,static_cast<double>(inn_x[CH_GRE])/max_val_inn
-			,static_cast<double>(inn_x[CH_BLU])/max_val_inn
-			,hh, ss, vv );
-			/* 2値化するかどうか判断 */
-			double rr=0. ,gg=0. ,bb=0.;
-			if (!calc::trace_by_hsv_to_rgb(
-				hh,ss,vv, hsv_params ,rr,gg,bb
-			)) {	/* 2値化しないpixelは白表示 */
-				rgb[CH_RED] = max_glub_out;
-				rgb[CH_GRE] = max_glub_out;
-				rgb[CH_BLU] = max_glub_out;
-			}
+	 static_cast<double>(inn_x[CH_RED])/max_val_inn
+	,static_cast<double>(inn_x[CH_GRE])/max_val_inn
+	,static_cast<double>(inn_x[CH_BLU])/max_val_inn
+			,hh,ss,vv );
 		}
+
+		if ( random_position_sw ) {
+		/* RGB256段階で幾何学的並び気持ち悪いためランダムにずらす */
+			calc::rgb_to_hsv(
+	 (static_cast<double>(inn_x[CH_RED])+dist(engine))/max_val_inn
+	,(static_cast<double>(inn_x[CH_GRE])+dist(engine))/max_val_inn
+	,(static_cast<double>(inn_x[CH_BLU])+dist(engine))/max_val_inn
+			,hh,ss,vv );
+		}
+
+		/* hsvからxyz座標値を生成 */
+		vbo.hsv_to_xyzarray( hh ,ss ,vv ,xyz );
 	  }
 	}
-	vbo.end_color();
+	vbo.end_vertex();
   }
+std::cout << "xyz:" << stwa.stop_ms().count() << "milisec\n";
 
-std::cout << "rgb:" << stwa.stop_ms().count() << "milisec\n";
 stwa.start();
-
-	/* ----- 画像のpixel値と、hsv3d表示のxyz値セット(要高速化) ----- */
-	opengl::vertex_buffer_object::vbo_float* xyz = nullptr;
-  if ( ready_to_vbo_sw ) {
-	xyz = vbo.start_vertex();
-	if (xyz == nullptr) { /* open出来ていればここはこないはず */
-		assert(!"Error:vbo.start_vertex() return null");
+	/* ----- 画像のpixel値と、hsv3d表示のrgb値セット(要高速化) ----- */
+	const double max_val_out_f = (std::numeric_limits<TOUT>::max)() + 0.999999;
+	GLubyte* rgb = nullptr;
+  if ( vbo.get_hsv_view_start_sw() ) {
+	rgb = vbo.start_color();
+	if (rgb == nullptr) { /* open出来ていればここはこないはず */
+		assert(!"Error:vbo.start_color() return null");
 	}
   }
-	std::mt19937 engine;
-	std::uniform_real_distribution<> dist( -0.5 ,0.499999 );
   {
 	TINN *image_inn = image_inn_top + start_pos;
 	TOUT *image_out = image_out_top + start_pos;
@@ -117,7 +107,7 @@ stwa.start();
 	    TINN* inn_x = image_inn;
 	    TOUT* out_x = image_out;
 	    for (int xx = 0; xx < area_xsize ;++xx
-	    ,inn_x+=channels ,out_x+=channels) {
+	    ,inn_x+=channels ,out_x+=channels ,rgb+=3) {
 		double	hh=0., ss=0., vv=0.;
 		calc::rgb_to_hsv(
 		 static_cast<double>(inn_x[CH_RED])/max_val_inn
@@ -127,46 +117,36 @@ stwa.start();
 
 		/* 2値化 */
 		double	rr=0., gg=0., bb=0.;
-		calc::trace_by_hsv_to_rgb( hh,ss,vv, hsv_params ,rr,gg,bb );
+		const bool trace_sw = calc::trace_by_hsv_to_rgb(
+			hh,ss,vv, hsv_params ,rr,gg,bb );
 
 		/* 出力 */
 		out_x[CH_RED] = static_cast<TOUT>(rr * max_val_out_f);
 		out_x[CH_GRE] = static_cast<TOUT>(gg * max_val_out_f);
 		out_x[CH_BLU] = static_cast<TOUT>(bb * max_val_out_f);
 
-  if ( ready_to_vbo_sw ) {
-		/* xyz位置は別途計算
-		RGB256段階のため幾何学的に並び気持ち悪いため
-		ランダムにずらす */
-		if ( random_position_sw ) {
-			calc::rgb_to_hsv(
-	 (static_cast<double>(inn_x[CH_RED])+dist(engine))/max_val_inn
-	,(static_cast<double>(inn_x[CH_GRE])+dist(engine))/max_val_inn
-	,(static_cast<double>(inn_x[CH_BLU])+dist(engine))/max_val_inn
-			,hh,ss,vv
-			);
+  if ( vbo.get_hsv_view_start_sw() ) {
+		rgb[CH_RED] = inn_x[CH_RED] >> shift_bit;
+		rgb[CH_GRE] = inn_x[CH_GRE] >> shift_bit;
+		rgb[CH_BLU] = inn_x[CH_BLU] >> shift_bit;
+
+		if ( white_out_of_area_sw ) {
+			/* 2値化するかどうか判断より */
+			if (!trace_sw) {
+				/* 2値化しないpixelは白表示 */
+				rgb[CH_RED] = max_glub_out;
+				rgb[CH_GRE] = max_glub_out;
+				rgb[CH_BLU] = max_glub_out;
+			}
 		}
-		/*else {
-			calc::rgb_to_hsv(
-			 (static_cast<double>(inn_x[CH_RED]))/max_val_inn
-			,(static_cast<double>(inn_x[CH_GRE]))/max_val_inn
-			,(static_cast<double>(inn_x[CH_BLU]))/max_val_inn
-			,hh,ss,vv
-			);
-		}*/
-
-		/* hsvからxyz座標値を生成 */
-		vbo.hsv_to_xyzarray( hh ,ss ,vv ,xyz );
-
-		xyz += 3;
   }
 	    }
 	}
-  if ( ready_to_vbo_sw ) {
-	  vbo.end_vertex();
+  if ( vbo.get_hsv_view_start_sw() ) {
+	vbo.end_color();
   }
   }
-std::cout << "xyz:" << stwa.stop_ms().count() << "milisec\n";
+std::cout << "rgb:" << stwa.stop_ms().count() << "milisec\n";
 	return std::string();
 }
 
@@ -249,6 +229,17 @@ std::cerr << str << std::endl;
 	/*
 	 * 処理
 	 */
+
+	if ( vbo.get_hsv_view_start_sw() ) {
+  		/* vboを使うにはOpenGL初期化済であること */ 
+		/* vbo初期化あるいは再設定 */
+		std::string err_msg( vbo.open_or_reopen(
+			this->area_xsize_ * this->area_ysize_
+		) );
+		if (!err_msg.empty()) {
+			return err_msg;
+		}
+	}
 
 	switch (this->cl_ch_info.get_e_ch_num_type()) {
 	case E_CH_NUM_UCHAR:
