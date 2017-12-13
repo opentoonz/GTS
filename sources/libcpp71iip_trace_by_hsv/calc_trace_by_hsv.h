@@ -6,65 +6,9 @@
 
 namespace calc {
 
-template <typename T>
-T rad_from_deg( const T deg ) // T = float or double
-{
-	return 3.14159265358979323846264338327950288 * deg / 180.0;
-}
-
-template <typename T>
-T line_len_from_rad( const T rad ) // T = float or double
-{
-/*
-[直角二等辺三角形の直角点を中心とした回転角から、中心の対辺上の位置を得る]
-以下、計算式を得るための解法
-
-直線の方程式
-	(x - x1) / (x2 - x1) = (y - y1) / (y2 - y1)
-
-直線その1
-	x1 = 0 ,y1 = 0 ,x2 = cos(rad) ,y2 = sin(rad)
-
-直線その2
-	x1 = 1 ,y1 = 0 ,x2 = 0 ,y2 = 1
-
-直線の方程式に直線その1を当てはめる
-	(x - 0) / (c - 0) = (y - 0) / (s - 0)
--->	x / c = y / s
--->	s * x = c * y ... (式1)
-
-直線の方程式に直線その2を当てはめる
-	(x - 1) / (0 - 1) = (y - 0) / (1 - 0)
--->	(x - 1) / -1 = y / 1
--->	- x + 1 = y
--->	y = 1 - x ... (式2)
-
-(式1)に(式2)を代入
-	s * x = c * (1 - x)
--->	s * x = c - c * x
--->	s * x + c * x = c
--->	(s + c) * x = c
--->	x = c / (s + c) ... (式3)
-
-(式2)に(式3)を代入
-	y = 1 - c / (s + c) ... (式4)
-
-軸の意味
-	x(式3) --> 0から1への距離を、1から0への距離に替える	--> x(式5)
-	y(式4) --> 値そのまま使う				--> z
-
-(式3)を左右1幅で反転する
-	x = 1 - c / (s + c)
--->	x = (s + c) / (s + c) - c / (s + c)
--->	x = (s + c - c) / (s + c)
--->	x = s / (s + c) ... (式5)
-*/
-	const T si = sin(rad);
-	const T co = cos(rad);
-	const T x = si / (si+co);	/* (式5) */
-	const T z = 1. - co / (si+co);	/* (式4) */
-	return sqrt( x * x + z * z ) / sqrt(2.);
-}
+/* 直角二等辺三角形の直角点を中心とした回転角から、
+中心の対辺上の位置を得る */
+double line_len_from_rad( const double rad );
 
 /*
 [HSV色立体から各色区域分けをして目的の色を得る]

@@ -6,7 +6,9 @@ OPTS = /W4 /MD /EHa /O2 /wd4819
 INCS =\
 /I.
 SRCS =\
-calc_hsv_rgb.cpp
+calc_hsv_rgb.cpp\
+calc_rad_deg.cpp\
+util_stop_watch.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_APPL = ..\build

@@ -2,9 +2,10 @@
 #define iip_trace_by_hsv_h
 
 #include <vector>
-//#include "calcu_histogram_hab.h" /* compileを通すためだけのdummy include */
+#include <string>
 #include "calc_trace_by_hsv.h"
 #include "iip_canvas.h"
+#include "opengl_vertex_buffer_object.h"
 
 /*
 	template
@@ -33,11 +34,13 @@ public:
 	void set_area_xsize( const int xs ) { this->area_xsize_ = xs; }
 	void set_area_ysize( const int ys ) { this->area_ysize_ = ys; }
 
-	void exec( 
+	std::string exec( 
 		const std::vector<calc::trace_by_hsv_params>& hsv_params
+		,const bool white_out_of_area_sw
+		,const bool random_position_sw
+		,opengl::vertex_buffer_object& vbo
 	);
 
- //calcu_histogram_hab cl_hab_hist; /* compileを通すためだけのdummy include */
 private:
 	int	area_xpos_
 		,area_ypos_

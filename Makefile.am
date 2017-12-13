@@ -82,6 +82,8 @@ libgts_la_SOURCES = \
 					sources/libc18image_rw_tga/tga_write_scanline.c \
 					sources/libc18image_rw_tga/tga_write_setup_header.c \
 					sources/lib_util/calc_hsv_rgb.cpp \
+					sources/lib_util/calc_rad_deg.cpp \
+					sources/lib_util/util_stop_watch.cpp \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
 					sources/libcpp38calcu_rgb_to_hsv/from_hsv.cpp \
 					sources/libcpp38calcu_rgb_to_hsv/to_hsv.cpp \
@@ -168,7 +170,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_scan_area.cpp \
-					sources/libcpp83gts_callback_and_action/memory_short_cut_key.cpp
+					sources/libcpp83gts_callback_and_action/opengl_vertex_buffer_object.cpp
 
 if WINDOWS
 libgts_la_CPPFLAGS += -Ithirdparty/twain/twain-2.3

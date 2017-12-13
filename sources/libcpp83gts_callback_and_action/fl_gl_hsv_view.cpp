@@ -1,68 +1,26 @@
 #include <cassert>	/* assert(-) */
-#include <iostream>
-#include <sstream>
+#include <iostream>	/* std::cout */
+#include <sstream>	/* std::ostringstream */
 #include <string>
-#include <vector>
-#include <set>
-#include <algorithm>
+#include <algorithm>	/* std::replace */
 #include <cmath>	/* sin(-) cos(-) */
 #include <random>	/* mt19937 */
-#include <chrono>
 
 #define GLEW_STATIC	/* use glew32s.lib */
 #include <GL/glew.h>	/* gl.hより前に必要 */
 
-//#include <FL/Fl.H>
-//#include <FL/Fl_Gl_Window.H>
 #include "FL/fl_ask.H"  // fl_alert(-)
-//#include <FL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
+//#include <FL/gl.h>	/* GLfloat GLubyte GLenum */
 #include <FL/glu.h>	/* gluPerspective(-) , gluLookAt(-) */
 #include <FL/glut.h>	/* glutWireTeapot(-) glutWireCone(-) */
 			/* glutExtensionSupported(-) --> link error */
-#include "calc_hsv_rgb.h"
+#include "calc_hsv_rgb.h"	/* calc::rgb_to_hsv() */
+#include "calc_rad_deg.h"	/* calc::rad_from_deg() */
+#include "util_stop_watch.h"	/* util::stop_watch */
+#include "calc_trace_by_hsv.h"	/* calc::line_len_from_rad() */
 #include "fl_gl_hsv_view.h"
 #include "gts_master.h"
 #include "gts_gui.h"
-
-
-/*---------- 時間計測 ----------*/
-namespace gts {
-class stop_watch {
-public:
-	void start(void) {
-		/* 計測スタート時刻を保存 */
-		this->start_ = std::chrono::system_clock::now();
-	}
-
-	std::chrono::milliseconds stop_ms(void) {
-		return	std::chrono::duration_cast<
-			std::chrono::milliseconds>(
-			std::chrono::system_clock::now() - this->start_
-		);
-	}
-private:
-	std::chrono::system_clock::time_point start_;
-};
-} // gts
-
-/*---------- 単位変換 ----------*/
-
-namespace gts {
-
-double rad_from_deg( const double deg )
-{
-	return 3.14159265358979323846264338327950288 * deg / 180.0;
-}
-double liner_from_rad( const double rad )
-{
-	const double si = sin(rad);
-	const double co = cos(rad);
-	const double x = si / (si+co);
-	const double z = 1. - co / (si+co);
-	return sqrt( x * x + z * z ) / sqrt(2.);
-}
-
-} // gts
 
 /*---------- opengl_camera_eye関数 ----------*/
 
@@ -91,7 +49,7 @@ void gts::opengl_camera_eye::reset_eye(void)
 	/* 視点 注視点 の距離
 	視野角がfovy_で、(0,0,0)を注視点としたとき、
 	注視点を中心とした半径1の球全体がピッタリ入るような視点の位置 */
-	const double zlen= 1. / sin( gts::rad_from_deg(this->fovy_) / 2. );
+	const double zlen= 1. / sin( calc::rad_from_deg(this->fovy_) / 2. );
 
 	/*	視点位置	(0,0,z)
 		注視点位置	(0,0,0)
@@ -174,13 +132,13 @@ void gts::opengl_camera_eye::rotate( const double degree_x ,const double degree_
 	 this->eye_x_ ,this->eye_y_ ,this->eye_z_
 	,this->cen_x_ ,this->cen_y_ ,this->cen_z_/* 回転の中心 */
 	,this->upp_x_ ,this->upp_y_ ,this->upp_z_/* 回転軸ベクトル */
-	, - gts::rad_from_deg(degree_x)
+	, - calc::rad_from_deg(degree_x)
 	, this->eye_x_ , this->eye_y_ , this->eye_z_
 	);
   }
   if (degree_y != 0) {
 	/* y方向マウス移動はx軸回転 */
-	const double xr=gts::rad_from_deg(degree_y);
+	const double xr=calc::rad_from_deg(degree_y);
 
 	/* カメラ横方向ベクトル */
 	double lr_x = 0.;
@@ -308,225 +266,6 @@ void pr_opengl_info(void)
 }
 } // gts
 
-/*---------- opengl_vbo関数 ----------*/
-
-void gts::opengl_vbo::clear_id_vbo_(void)
-{
-	for (int ii=0;ii<sizeof(this->id_vbo_) / sizeof(GLuint) ;++ii) {
-		this->id_vbo_[0] = 0;
-	}
-}
-
-gts::opengl_vbo::opengl_vbo()
-	:pixel_size_(0)
-	/* vboメモリで浮動小数の型 vbo_floatと合わせること*/
-	//,vbo_type_(GL_DOUBLE)
-	,vbo_type_(GL_FLOAT)
-	,hsv_view_start_sw_(false)
-{
-	this->clear_id_vbo_();
-}
-gts::opengl_vbo::~opengl_vbo()
-{
-	this->close();
-}
-bool gts::opengl_vbo::open_or_reopen( unsigned pixel_size )
-{
-	/* 以前のvboバッファが残っていれば閉じる */
-	this->close();
-
-	/* vboバッファのIDを得る。座標と色の二つ */
-	glGenBuffers( sizeof(this->id_vbo_)/sizeof(GLuint),this->id_vbo_ );
-
-	/* 頂点用VBOを確保 */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[0] );
-	glBufferData( GL_ARRAY_BUFFER
-	 ,pixel_size * sizeof(vbo_float) * 3 ,nullptr ,GL_DYNAMIC_DRAW );
-
-	/* 頂点用VBO確保の確認 */
-	{
-	GLint chk_sz=0;
-	glGetBufferParameteriv( GL_ARRAY_BUFFER ,GL_BUFFER_SIZE ,&chk_sz );
-	if ( pixel_size * sizeof(vbo_float) * 3 != chk_sz ) {
-		if (0 < chk_sz) {
-			glDeleteBuffers( 1 , &this->id_vbo_[0] );
-		}
-
-		/* bindを指定なしにする */
-		glBindBuffer( GL_ARRAY_BUFFER ,0 );
-
-		this->clear_id_vbo_();
-
-		std::ostringstream ost;
-		ost	<< "Error:Can not get vbo for vertex:"
-			<< "pixel_size*sizeof(vbo_float)*3="
-			<< pixel_size*sizeof(vbo_float)*3
-			<< ":chk_sz="
-			<< chk_sz;
-		fl_alert( ost.str().c_str() );
-
-		return true;
-	}
-	}
-
-	/* 色用VBOを確保 */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[1] );
-	glBufferData( GL_ARRAY_BUFFER
-	 ,pixel_size * sizeof(GLubyte) * 3 ,nullptr ,GL_DYNAMIC_DRAW );
-
-	/* 色用VBO確保の確認 */
-	{
-	GLint chk_sz=0;
-	glGetBufferParameteriv( GL_ARRAY_BUFFER ,GL_BUFFER_SIZE ,&chk_sz );
-	if ( pixel_size * sizeof(GLubyte) * 3 != chk_sz ) {
-		if (0 < chk_sz) {
-			glDeleteBuffers(
-				sizeof(this->id_vbo_) / sizeof(GLuint)
-				, this->id_vbo_ );
-		}
-		else {
-			/* すでに確保したVBOを削除 */
-			glDeleteBuffers( 1 , &this->id_vbo_[0] );
-		}
-
-		/* bindを指定なしにする */
-		glBindBuffer( GL_ARRAY_BUFFER ,0 );
-
-		this->clear_id_vbo_();
-
-		std::ostringstream ost;
-		ost	<< "Error:Can not get vbo for color:"
-			<< "pixel_size*sizeof(GLubyte)*3="
-			<< pixel_size*sizeof(GLubyte)*3
-			<< ":chk_sz="
-			<< chk_sz;
-		fl_alert( ost.str().c_str() );
-
-		return true;
-	}
-	}
-
-	this->pixel_size_ = pixel_size;
-
-	/* bindを指定なしにする */
-	glBindBuffer( GL_ARRAY_BUFFER ,0 );
-
-	return false;
-}
-void gts::opengl_vbo::close(void)
-{
-	/* VBO用ID破棄 */
-	if (this->id_vbo_[0] != 0) {
-		glDeleteBuffers(
-			sizeof(this->id_vbo_) / sizeof(GLuint)
-			, this->id_vbo_ );
-		this->clear_id_vbo_();
-	}
-}
-
-gts::opengl_vbo::vbo_float* gts::opengl_vbo::start_vertex( void )
-{
-	if (this->id_vbo_[0] == 0) {
-		return nullptr;
-	}
-	/* 頂点用VBO */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[0] );
-	return static_cast<vbo_float *>(glMapBuffer(
-				GL_ARRAY_BUFFER , GL_READ_WRITE ));
-}
-void gts::opengl_vbo::end_vertex( void )
-{
-	if (this->id_vbo_[0] == 0) {
-		return;
-	}
-	glUnmapBuffer( GL_ARRAY_BUFFER );
-}
-GLubyte* gts::opengl_vbo::start_color( void )
-{
-	if (this->id_vbo_[1] == 0) {
-		return nullptr;
-	}
-	/* 色用VBO */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[1] );
-	return static_cast<GLubyte *>(glMapBuffer(
-				GL_ARRAY_BUFFER , GL_READ_WRITE ));
-	/* ここからend_color()までcolorbufferがbind状態 */
-}
-void gts::opengl_vbo::end_color( void )
-{
-	if (this->id_vbo_[1] == 0) {
-		return;
-	}
-	glUnmapBuffer( GL_ARRAY_BUFFER );
-}
-
-void gts::opengl_vbo::draw(void)
-{
-	if (this->id_vbo_[0] == 0) {
-		return;
-	}
-	/* 頂点の格納場所を伝える */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[0] );
-	glVertexPointer( 3 ,this->vbo_type_ ,0 ,0 );
-
-	/* 色の格納場所を伝える */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[1] );
-	glColorPointer( 3 ,GL_UNSIGNED_BYTE ,0 ,0 );
-
-	/* 描画を有効化 */
-	glEnableClientState( GL_VERTEX_ARRAY );
-	glEnableClientState( GL_COLOR_ARRAY );
-
-	/* 描画 */
-	glDrawArrays( GL_POINTS ,0 ,this->pixel_size_ );
-
-	/* 描画を無効化 */
-	glDisableClientState( GL_COLOR_ARRAY );
-	glDisableClientState( GL_VERTEX_ARRAY );
-
-	/* bind指定なしにする。エラー除け??? */
-	glBindBuffer( GL_ARRAY_BUFFER ,0 );
-}
-
-void gts::opengl_vbo::pr_vbo_info(void)
-{
-	std::cout << "vertex buffer="
-		<< this->pixel_size_ * sizeof(vbo_float) * 3 << "bytes\n";
-	std::cout << " color buffer="
-		<< this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
-	std::cout << "        total="
-		<< this->pixel_size_ * sizeof(vbo_float) * 3
-		 + this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
-}
-
-namespace {
-void hsv_to_xyz_(
-	const double h , const double s , const double v
-	,double& x , double& y , double& z
-)
-{
-	x = cos( gts::rad_from_deg(h) ) * s * v;
-	y = sin( gts::rad_from_deg(h) ) * s * v;
-	z = 1. - v;
-}
-} // namespace
-
-void gts::opengl_vbo::hsv_to_xyz(
-	const double h , const double s , const double v
-	, gts::opengl_vbo::vbo_float* xyz
-)
-{
-	/* hsv --> xyz */
-	double x = 0.;
-	double y = 0.;
-	double z = 0.;
-	hsv_to_xyz_( h,s,v ,x,y,z );
-
-	xyz[0] = static_cast<gts::opengl_vbo::vbo_float>(x);
-	xyz[1] = static_cast<gts::opengl_vbo::vbo_float>(y);
-	xyz[2] = static_cast<gts::opengl_vbo::vbo_float>(z);
-}
-
 /*---------- fl_gl_hsv_view関数 ----------*/
 
 namespace {
@@ -588,7 +327,7 @@ void fl_gl_hsv_view::dummy_create_rgb_image_(
 {
 	std::cout << "create_rgb_image size=" << pixel_size << "pixel\n";
 
-	gts::stop_watch stwa; stwa.start();
+	util::stop_watch stwa; stwa.start();
 
 	const int count = pixel_size * 3;
 
@@ -827,8 +566,8 @@ void draw_color_partition_(
 
 	{
 	const auto tt = 1. - thickness;
-	const double	x1 = cos( gts::rad_from_deg(hue_min) )
-			,y1 = sin( gts::rad_from_deg(hue_min) )
+	const double	x1 = cos( calc::rad_from_deg(hue_min) )
+			,y1 = sin( calc::rad_from_deg(hue_min) )
 			,z1 = 0.;
 	double		x5 = 0. ,y5 = 0. ,z5 = 0.;
 	xyzout_to_xyzin_( x1,y1 ,tt,thre_slope_line,thre_intercept ,x5,y5,z5 );
@@ -863,7 +602,7 @@ void draw_color_partition_(
 	glColor3d( 0.5 ,0.5 ,0.5 );
 	glBegin(GL_QUAD_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
-		const double rad = gts::rad_from_deg( ii );
+		const double rad = calc::rad_from_deg( ii );
 		double x1=0. ,y1=0.;
 		double x2=0. ,y2=0.;
 		rotate2d( x4,y4, rad , x1,y1 );
@@ -874,7 +613,7 @@ void draw_color_partition_(
 	glEnd();
 	glBegin(GL_QUAD_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
-		const double rad = gts::rad_from_deg( ii );
+		const double rad = calc::rad_from_deg( ii );
 		double x1=0. ,y1=0.;
 		double x2=0. ,y2=0.;
 		rotate2d( x5,y5, rad , x1,y1 );
@@ -888,7 +627,7 @@ void draw_color_partition_(
 	glColor3d( target_r ,target_g ,target_b );
 	glBegin(GL_LINE_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
-		const double rad = gts::rad_from_deg( ii );
+		const double rad = calc::rad_from_deg( ii );
 		double x1=0. ,y1=0.;
 		rotate2d( x4,y4, rad , x1,y1 );
 		glVertex3d( x1,y1,z4 );
@@ -896,7 +635,7 @@ void draw_color_partition_(
 	glEnd();
 	glBegin(GL_LINE_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
-		const double rad = gts::rad_from_deg( ii );
+		const double rad = calc::rad_from_deg( ii );
 		double x1=0. ,y1=0.;
 		rotate2d( x5,y5, rad , x1,y1 );
 		glVertex3d( x1,y1,z5 );
@@ -904,7 +643,7 @@ void draw_color_partition_(
 	glEnd();
 	glBegin(GL_LINE_STRIP);
 	for (double ii=0.; ii<=hdiff; ii+=1.) {
-		const double rad = gts::rad_from_deg( ii );
+		const double rad = calc::rad_from_deg( ii );
 		double x1=0. ,y1=0.;
 		rotate2d( x8,y8, rad , x1,y1 );
 		glVertex3d( x1,y1,z8 );
@@ -918,8 +657,8 @@ void draw_color_partition_(
 
 	{
 	const auto tt = 1. - thickness;
-	const double	x1 = cos( gts::rad_from_deg(hue_max) )
-			,y1 = sin( gts::rad_from_deg(hue_max) )
+	const double	x1 = cos( calc::rad_from_deg(hue_max) )
+			,y1 = sin( calc::rad_from_deg(hue_max) )
 			,z1 = 0.;
 	double		x5 = 0. ,y5 = 0. ,z5 = 0.;
 	xyzout_to_xyzin_( x1,y1 ,tt,thre_slope_line,thre_intercept,x5,y5,z5 );
@@ -991,7 +730,7 @@ void draw_black_partition_(
 	 glBegin(GL_TRIANGLE_FAN);
 	 glVertex3d( 0. ,0. ,z );
 	 for (int ii=0; ii<=360; ++ii) {
-		const double rad = gts::rad_from_deg(
+		const double rad = calc::rad_from_deg(
 					static_cast<double>(ii) );
 		glVertex3d( x*cos(rad) ,x*sin(rad) ,z );
 	 }
@@ -1008,7 +747,7 @@ void draw_black_partition_(
 	 }
 	 glBegin(GL_QUAD_STRIP);
 	 for (int ii=0; ii<=360; ++ii) {
-		const double rad = gts::rad_from_deg( ii );
+		const double rad = calc::rad_from_deg( ii );
 		double x1=0. ,y1=0.;
 		double x2=0. ,y2=0.;
 		rotate2d( x  ,0. ,rad ,x1,y1 );
@@ -1044,7 +783,7 @@ void draw_guide_display_()
 			draw_black_partition_(
 				wset.valinp_thickness->value()
 				/wset.valinp_thickness->maximum()
- ,gts::liner_from_rad(gts::rad_from_deg(wset.valinp_slope_deg->value()))
+ ,calc::line_len_from_rad(calc::rad_from_deg(wset.valinp_slope_deg->value()))
 				,wset.valinp_intercept->value()
 				/wset.valinp_intercept->maximum()
 			);
@@ -1060,7 +799,7 @@ void draw_guide_display_()
 				,wset.valinp_hue_min->value()
 				,wset.valinp_hue_max->value()
 				,wset.chebut_rotate360_sw->value() != 0
- ,gts::liner_from_rad(gts::rad_from_deg(wset.valinp_slope_deg->value()))
+ ,calc::line_len_from_rad(calc::rad_from_deg(wset.valinp_slope_deg->value()))
 				,wset.valinp_intercept->value()
 				/wset.valinp_intercept->maximum()
 				,static_cast<double>(r) / mx
@@ -1223,7 +962,8 @@ void fl_gl_hsv_view::rgb_to_xyz(
 
 	double h=0. ,s=0. ,v=0.;
 	calc::rgb_to_hsv( r,g,b ,h,s,v );
-	hsv_to_xyz_(h,s,v ,this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
+	this->vbo.hsv_to_xyz(
+		h,s,v ,this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
 }
 
 void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
@@ -1233,7 +973,9 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 	fl_gl_hsv_view::vboを使いデータサイズと内容の設定
 */
 	/* vbo初期化 */
-	if (this->vbo.open_or_reopen( pixel_size )) {
+	std::string err_msg( this->vbo.open_or_reopen( pixel_size ) );
+	if (!err_msg.empty()) {
+		fl_alert( err_msg.c_str() );
 		return; // by Error
 	}
 	this->vbo.pr_vbo_info();
@@ -1256,8 +998,8 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 	this->vbo.end_color();
 
 	/* dummy vbo vertexデータ書き込み */
-	gts::stop_watch stwa; stwa.start();
-	gts::opengl_vbo::vbo_float* xyz= this->vbo.start_vertex();
+	util::stop_watch stwa; stwa.start();
+	opengl::vertex_buffer_object::vbo_float* xyz= this->vbo.start_vertex();
 	if (xyz == nullptr) { /* open出来ていればここはこないはず */
 	 assert(!"Error:vbo.start_vertex() return null");
 	}
@@ -1269,7 +1011,7 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 		calc::rgb_to_hsv(
 			da[0]/255. ,da[1]/255. ,da[2]/255. ,h,s,v );
 
-		this->vbo.hsv_to_xyz( h ,s ,v ,xyz );
+		this->vbo.hsv_to_xyzarray( h ,s ,v ,xyz );
 	}
 	this->vbo.end_vertex();
  std::cout << "from_rgb_to_xyz time=" << stwa.stop_ms().count() << "milisec\n";
@@ -1378,7 +1120,7 @@ void fl_gl_hsv_view::draw()
 	if (this->fog_sw_)   { glEnable( GL_FOG ); }
 
 	/* 描画	 */
- //gts::stop_watch stwa; stwa.start();
+ //util::stop_watch stwa; stwa.start();
 	this->draw_object_();
  //std::cout << stwa.stop_ms().count() << "milisec\n";
 

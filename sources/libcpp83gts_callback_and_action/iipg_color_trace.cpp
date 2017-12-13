@@ -140,9 +140,15 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 		this->cl_trace_params.set_params_for_speedup();
 
 		/* 2値化処理 */
-		this->cl_iip_trac.exec(
-			this->cl_trace_params.get_param_sets()
-		);
+		std::string err_msg (this->cl_iip_trac.exec(
+	this->cl_trace_params.get_param_sets()
+	,(cl_gts_gui.chebut_trace_display_main_sw->value()!=0) ?true :false
+	,(cl_gts_gui.menite_hsv_random_position->value()!=0) ?true :false
+	,cl_gts_gui.hsv_view->vbo
+		));
+		if (!err_msg.empty()) {
+			fl_alert( err_msg.c_str() );
+		}
 	}
 	else {	// BW,Grayscale
 		this->cl_iip_trac.copy_image_from_parent(

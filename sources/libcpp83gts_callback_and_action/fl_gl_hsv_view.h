@@ -9,11 +9,9 @@
 
 #include <FL/Fl.H>
 #include <FL/Fl_Gl_Window.H>
+#include "opengl_vertex_buffer_object.h"
 
 namespace gts {
-
-double rad_from_deg( const double deg );
-double liner_from_rad( const double rad );
 
 class opengl_camera_eye {
 public:
@@ -56,54 +54,6 @@ private:
 }; // class opengl_camera_eye
 } // gts
 
-namespace gts {
-class opengl_vbo {
-public:
-	opengl_vbo();
-	~opengl_vbo();
-
-	/* vboメモリで浮動小数の型 vbo_type_と合わせること*/
-	//using vbo_float = GLdouble;
-	using vbo_float = GLfloat;
-
-	/* 処理開始と終了、あるいは pixel_size数の変更のときは
-	一旦close()してから再度open_or_reopen()する */
-	bool open_or_reopen( unsigned pixel_size );/* false=OK,true=Error */
-	void close(void);
-
-	/* 始めの値のセット、あるいは 数が同じで値のみ変更 */
-	vbo_float* start_vertex( void );
-	/* 注:start_vertex()からend_vertex()までvertex bufferがbind状態 */
-	void end_vertex( void );
-
-	GLubyte* start_color( void );
-	/* 注:start_color()からend_color()までcolor bufferがbind状態 */
-	void end_color( void );
-
-	/* 描画実行 */
-	void draw(void);
-
-	/* hsv --> xyz変換 */
-	void hsv_to_xyz(
-		const double h , const double s , const double v
-		, gts::opengl_vbo::vbo_float* xyz
-	);
-
-	void set_hsv_view_start_sw(bool sw) { this->hsv_view_start_sw_=sw; }
-	bool get_hsv_view_start_sw(void) { return this->hsv_view_start_sw_;}
-
-	/* for debug */
-	void pr_vbo_info(void);
-private:
-	GLuint id_vbo_[2];
-	GLuint pixel_size_;
-	const GLenum vbo_type_;// use glVertexPointer(,vbo_type,,)
-	bool hsv_view_start_sw_;
-
-	void clear_id_vbo_(void);
-}; // class opengl_vbo
-} // gts
-
 //--------------------
 
 class fl_gl_hsv_view : public Fl_Gl_Window {
@@ -113,7 +63,7 @@ public:
 	void rgb_to_xyz( const double r ,const double g ,const double b );
 
 	gts::opengl_camera_eye eye;
-	gts::opengl_vbo        vbo;
+	opengl::vertex_buffer_object vbo;
 private:
 	/* 表示の状態 */	
 	bool depth_sw_;		/* デプス(Z)バッファーのON/OFF	*/

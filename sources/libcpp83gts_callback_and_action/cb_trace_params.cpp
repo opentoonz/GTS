@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <iostream>
 #include "calc_hsv_rgb.h"
+#include "calc_rad_deg.h"
+#include "calc_trace_by_hsv.h"	/* calc::line_len_from_rad() */
 #include "cb_trace_params.h"
 #include "ids_path_level_from_files.h"
 #include "gts_gui.h"

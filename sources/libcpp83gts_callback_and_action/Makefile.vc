@@ -60,7 +60,8 @@ memory_config_load.cpp\
 memory_config_save.cpp\
 memory_desktop_load.cpp\
 memory_desktop_save.cpp\
-memory_scan_area.cpp
+memory_scan_area.cpp\
+opengl_vertex_buffer_object.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
