@@ -102,6 +102,17 @@ void fl_gl_cyclic_color_wheel::set_min_or_max_to_gui_(const bool rot360_sw)
 	aa.chebut_rotate360_sw->value( rot360_sw ? 1 :0 );
 }
 
+void fl_gl_cyclic_color_wheel::set_min_or_max(const bool is_max )
+{
+	this->init_number_and_is_max( this->hue_range_number_ ,is_max );
+}
+void fl_gl_cyclic_color_wheel::set_reset(void)
+{
+	this->init_number_and_is_max(
+		this->hue_range_number_ ,this->hue_range_is_max_
+	);
+}
+
 void fl_gl_cyclic_color_wheel::draw_object_()
 {
 	/* display cyclic color wheel */
@@ -459,11 +470,11 @@ void fl_gl_cyclic_color_wheel::handle_keyboard_( const int key , const char* tex
 		}
 		break;
 	 case FL_Enter:
-		cl_gts_gui.window_set_hue_min_or_max->hide();
+		cl_gts_gui.window_trace_hue_minmax->hide();
 		break;
 	 case FL_Escape:
 		cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
-		cl_gts_gui.window_set_hue_min_or_max->hide();
+		cl_gts_gui.window_trace_hue_minmax->hide();
 		break;
 	 }
 	}

@@ -164,17 +164,6 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_number->show();
 			}
 		}
-#if 0
-		else if ((this->str_window_trace_parameters_==key)
-		&& (4==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_trace_parameters->set();
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_parameters->show();
-			}
-		cl_gts_gui.window_trace_parameters->position(xx,yy);
-		}
-#endif
 		else if ((this->str_window_trace_params_==key)
 		&& (6==ret)) {
 			if (di == "show") {
@@ -202,43 +191,16 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
 		}
-#if 0
-		else if ((this->str_window_trace_thickness_==key)
+		else if ((this->str_window_trace_hue_minmax_==key)
 		&& (6==ret)) {
-		cl_gts_gui.window_trace_thickness->resize( xx ,yy ,ww
-		//,cl_gts_gui.window_trace_thickness->h()
-		,hh
-		);
-		cl_gts_gui.group_trace_thickness->size(
-		 cl_gts_gui.window_trace_thickness->w()-15
-		 ,cl_gts_gui.group_trace_thickness->h()
-		);
 			if (di == "show") {
-		cl_gts_gui.menite_trace_thickness->set();
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_thickness->show();
+		/* 始めは閉じておく(初期位置設定してないから開くと落ちる) */
+		//cl_gts_gui.menite_trace_hue_minmax->set();
+		//cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		//cl_gts_gui.window_trace_hue_minmax->show();
 			}
+		cl_gts_gui.window_trace_hue_minmax->resize(xx,yy ,ww,hh);
 		}
-		else if ((this->str_window_trace_input_color_==key)
-		&& (4==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_trace_input_color->set();
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_input_color->show();
-			}
-		cl_gts_gui.window_trace_input_color->position(xx,yy);
-		}
-		else if ((this->str_window_trace_output_color_==key)
-		&& ((4==ret) || (6==ret)/* for old format */)) {
-		cl_gts_gui.window_trace_output_color->resize( xx ,yy ,ww
-		,cl_gts_gui.window_trace_output_color->h()  );
-			if (di == "show") {
-		cl_gts_gui.menite_trace_output_color->set();
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_output_color->show();
-			}
-		}
-#endif
 #ifndef _WIN32
 		else if ((this->str_sane_device_name_ == key)
 		&& (2 == ret)) {

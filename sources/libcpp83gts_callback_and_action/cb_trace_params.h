@@ -38,16 +38,7 @@ public:
 	void cb_target_rgb_color_cancel(void);
 
 	/* hue min max editor */
-	void cb_hue_min_open_editor(
-		Fl_Double_Window* flwin
-		,Fl_Button* flbut
-		,const int number
-	);
-	void cb_hue_max_open_editor(
-		Fl_Double_Window* flwin
-		,Fl_Button* flbut
-		,const int number
-	);
+	void cb_hue_minmax_open_editor( const int number );
 	void cb_hue_min_or_max_cancel(void);
 
 	/* traceの目的色を得る */
@@ -72,8 +63,7 @@ public:
 		Fl_Scrollbar*		scrbar_thickness;
 		Fl_Value_Input*		valinp_hue_min;
 		Fl_Value_Input*		valinp_hue_max;
-		Fl_Button*		button_hue_min;
-		Fl_Button*		button_hue_max;
+		Fl_Button*		button_hue_minmax;
 		Fl_Value_Input*		valinp_slope_deg;
 		Fl_Value_Input*		valinp_intercept;
 		Fl_Check_Button*	chebut_display_sw;
@@ -99,13 +89,7 @@ private:
 	std::vector<calc::trace_by_hsv_params> param_sets_;
 
 	void init_widget_set_(void);
-	void cb_hue_min_or_max_open_editor_(
-		Fl_Double_Window* flwin
-		,Fl_Button* flbut
-		,const int x_offset
-		,const int y_offset
-		,const int number
-	);
+	void cb_hue_min_or_max_open_editor_( const int number );
 };
 
 //--------------------

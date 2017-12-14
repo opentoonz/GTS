@@ -103,6 +103,11 @@ private:
   inline void cb_menite_trace_hsv_view_i(Fl_Menu_*, void*);
   static void cb_menite_trace_hsv_view(Fl_Menu_*, void*);
 public:
+  static Fl_Menu_Item *menite_trace_hue_minmax;
+private:
+  inline void cb_menite_trace_hue_minmax_i(Fl_Menu_*, void*);
+  static void cb_menite_trace_hue_minmax(Fl_Menu_*, void*);
+public:
   static Fl_Menu_Item *menite_trace_batch;
 private:
   inline void cb_menite_trace_batch_i(Fl_Menu_*, void*);
@@ -586,10 +591,10 @@ private:
   inline void cb_valinp_trace_0_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_0_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_0_hue_max;
+  Fl_Button *button_trace_0_hue_minmax;
 private:
-  inline void cb_button_trace_0_hue_max_i(Fl_Button*, void*);
-  static void cb_button_trace_0_hue_max(Fl_Button*, void*);
+  inline void cb_button_trace_0_hue_minmax_i(Fl_Button*, void*);
+  static void cb_button_trace_0_hue_minmax(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_0_rotate360_sw;
 private:
@@ -647,10 +652,10 @@ private:
   inline void cb_valinp_trace_1_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_1_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_1_hue_max;
+  Fl_Button *button_trace_1_hue_minmax;
 private:
-  inline void cb_button_trace_1_hue_max_i(Fl_Button*, void*);
-  static void cb_button_trace_1_hue_max(Fl_Button*, void*);
+  inline void cb_button_trace_1_hue_minmax_i(Fl_Button*, void*);
+  static void cb_button_trace_1_hue_minmax(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_1_rotate360_sw;
 private:
@@ -708,10 +713,10 @@ private:
   inline void cb_valinp_trace_2_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_2_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_2_hue_max;
+  Fl_Button *button_trace_2_hue_minmax;
 private:
-  inline void cb_button_trace_2_hue_max_i(Fl_Button*, void*);
-  static void cb_button_trace_2_hue_max(Fl_Button*, void*);
+  inline void cb_button_trace_2_hue_minmax_i(Fl_Button*, void*);
+  static void cb_button_trace_2_hue_minmax(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_2_rotate360_sw;
 private:
@@ -769,10 +774,10 @@ private:
   inline void cb_valinp_trace_3_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_3_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_3_hue_max;
+  Fl_Button *button_trace_3_hue_minmax;
 private:
-  inline void cb_button_trace_3_hue_max_i(Fl_Button*, void*);
-  static void cb_button_trace_3_hue_max(Fl_Button*, void*);
+  inline void cb_button_trace_3_hue_minmax_i(Fl_Button*, void*);
+  static void cb_button_trace_3_hue_minmax(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_3_rotate360_sw;
 private:
@@ -830,10 +835,10 @@ private:
   inline void cb_valinp_trace_4_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_4_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_4_hue_max;
+  Fl_Button *button_trace_4_hue_minmax;
 private:
-  inline void cb_button_trace_4_hue_max_i(Fl_Button*, void*);
-  static void cb_button_trace_4_hue_max(Fl_Button*, void*);
+  inline void cb_button_trace_4_hue_minmax_i(Fl_Button*, void*);
+  static void cb_button_trace_4_hue_minmax(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_4_rotate360_sw;
 private:
@@ -891,10 +896,10 @@ private:
   inline void cb_valinp_trace_5_hue_max_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_5_hue_max(Fl_Value_Input*, void*);
 public:
-  Fl_Button *button_trace_5_hue_max;
+  Fl_Button *button_trace_5_hue_minmax;
 private:
-  inline void cb_button_trace_5_hue_max_i(Fl_Button*, void*);
-  static void cb_button_trace_5_hue_max(Fl_Button*, void*);
+  inline void cb_button_trace_5_hue_minmax_i(Fl_Button*, void*);
+  static void cb_button_trace_5_hue_minmax(Fl_Button*, void*);
 public:
   Fl_Check_Button *chebut_trace_5_rotate360_sw;
 private:
@@ -1001,6 +1006,10 @@ private:
   static void cb_Cancel(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_set_aspect_ratio;
+private:
+  inline void cb_window_set_aspect_ratio_i(Fl_Double_Window*, void*);
+  static void cb_window_set_aspect_ratio(Fl_Double_Window*, void*);
+public:
   Fl_Button *radbut_area_aspect_ratio_w;
   Fl_Value_Input *valinp_area_aspect_ratio_w;
   Fl_Button *radbut_area_aspect_ratio_h;
@@ -1084,10 +1093,10 @@ private:
   inline void cb_Cancel2_i(Fl_Button*, void*);
   static void cb_Cancel2(Fl_Button*, void*);
 public:
-  Fl_Double_Window *window_set_hue_min_or_max;
+  Fl_Double_Window *window_trace_hue_minmax;
 private:
-  inline void cb_window_set_hue_min_or_max_i(Fl_Double_Window*, void*);
-  static void cb_window_set_hue_min_or_max(Fl_Double_Window*, void*);
+  inline void cb_window_trace_hue_minmax_i(Fl_Double_Window*, void*);
+  static void cb_window_trace_hue_minmax(Fl_Double_Window*, void*);
 public:
   fl_gl_cyclic_color_wheel *cyclic_color_wheel;
   Fl_Button *radbut_hue_min_sw;
@@ -1099,10 +1108,8 @@ public:
 private:
   inline void cb_radbut_hue_max_sw_i(Fl_Button*, void*);
   static void cb_radbut_hue_max_sw(Fl_Button*, void*);
-  inline void cb_OK3_i(Fl_Button*, void*);
-  static void cb_OK3(Fl_Button*, void*);
-  inline void cb_Cancel3_i(Fl_Button*, void*);
-  static void cb_Cancel3(Fl_Button*, void*);
+  inline void cb_Reset_i(Fl_Button*, void*);
+  static void cb_Reset(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif

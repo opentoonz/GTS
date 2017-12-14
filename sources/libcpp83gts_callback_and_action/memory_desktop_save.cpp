@@ -110,16 +110,6 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	);
 	if (i_ret < 0) { return NG; }
 
-/*
-	i_ret = fprintf(fp, "%-32s %s %d %d\n"
-	, this->str_window_trace_parameters_
-	, cl_gts_gui.menite_trace_parameters->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_parameters->x()
-	, cl_gts_gui.window_trace_parameters->y()
-	);
-	if (i_ret < 0) { return NG; }
-*/
-
 	i_ret = fprintf(fp, "%-32s %s %d %d %d %d\n"
 	, this->str_window_trace_params_
 	, cl_gts_gui.menite_trace_params->value()?ccp_show:ccp_hide
@@ -149,35 +139,16 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	, cl_gts_gui.window_trace_batch->h()
 	);
 	if (i_ret < 0) { return NG; }
-/*
-	i_ret = fprintf(fp, "%-32s %s %d %d %d %d\n"
-	, this->str_window_trace_thickness_
-	, cl_gts_gui.menite_trace_thickness->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_thickness->x()
-	, cl_gts_gui.window_trace_thickness->y()
-	, cl_gts_gui.window_trace_thickness->w()
-	, cl_gts_gui.window_trace_thickness->h()
-	);
-	if (i_ret < 0) { return NG; }
-
-	i_ret = fprintf(fp, "%-32s %s %d %d\n"
-	, this->str_window_trace_input_color_
-	, cl_gts_gui.menite_trace_input_color->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_input_color->x()
-	, cl_gts_gui.window_trace_input_color->y()
-	);
-	if (i_ret < 0) { return NG; }
 
 	i_ret = fprintf(fp, "%-32s %s %d %d %d %d\n"
-	, this->str_window_trace_output_color_
-	, cl_gts_gui.menite_trace_output_color->value()?ccp_show:ccp_hide
-	, cl_gts_gui.window_trace_output_color->x()
-	, cl_gts_gui.window_trace_output_color->y()
-	, cl_gts_gui.window_trace_output_color->w()
-	, cl_gts_gui.window_trace_output_color->h()
+	, this->str_window_trace_hue_minmax_
+	, cl_gts_gui.menite_trace_hue_minmax->value()?ccp_show:ccp_hide
+	, cl_gts_gui.window_trace_hue_minmax->x()
+	, cl_gts_gui.window_trace_hue_minmax->y()
+	, cl_gts_gui.window_trace_hue_minmax->w()
+	, cl_gts_gui.window_trace_hue_minmax->h()
 	);
 	if (i_ret < 0) { return NG; }
-*/
 
 # ifndef _WIN32
     if(cl_gts_master.cl_iip_scan.device_name()) {

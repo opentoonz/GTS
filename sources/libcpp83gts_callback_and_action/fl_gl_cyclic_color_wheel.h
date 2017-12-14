@@ -20,6 +20,8 @@ public:
 		,Fl_Check_Button* chebut_rotate360_sw
 	);
 	void init_number_and_is_max( const int number ,const bool is_max);
+	void set_min_or_max(const bool is_max );
+	void set_reset(void);
 
 private:
 	/* マウスドラッグ開始位置 */

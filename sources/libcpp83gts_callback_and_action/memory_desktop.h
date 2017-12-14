@@ -37,20 +37,14 @@ public:
 	,str_window_number_(
 	    "window_number" )
 
-	,str_window_trace_parameters_(
-	    "window_trace_parameters" )
 	,str_window_trace_params_(
 	    "window_trace_params" )
 	,str_window_trace_hsv_view_(
 	    "window_trace_hsv_view" )
 	,str_window_trace_batch_(
 	    "window_trace_batch" )
-	,str_window_trace_thickness_(
-	    "window_trace_thickness" )
-	,str_window_trace_input_color_(
-	    "window_trace_input_color" )
-	,str_window_trace_output_color_(
-	    "window_trace_output_color" )
+	,str_window_trace_hue_minmax_(
+	    "window_trace_hue_minmax" )
 # ifndef _WIN32
 	,str_desktop_dir_( ".GTS" )
 	,str_sane_device_name_(
@@ -90,13 +84,10 @@ private:
 
 	const char* str_window_number_;
 
-	const char* str_window_trace_parameters_;
 	const char* str_window_trace_params_;
 	const char* str_window_trace_hsv_view_;
 	const char* str_window_trace_batch_;
-	const char* str_window_trace_thickness_;
-	const char* str_window_trace_input_color_;
-	const char* str_window_trace_output_color_;
+	const char* str_window_trace_hue_minmax_;
 # ifndef _WIN32
 	const char* str_desktop_dir_;
 	const char* str_sane_device_name_;

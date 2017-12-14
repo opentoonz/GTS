@@ -33,7 +33,7 @@ std::string trace_xyz_(
 	,opengl::vertex_buffer_object& vbo
 )
 {
-util::stop_watch stwa; stwa.start();
+//util::stop_watch stwa; stwa.start();
   if ( vbo.get_hsv_view_start_sw() ) {
 	/* 初期パラメータ設定 */
 	const int scan_size = width * channels;
@@ -77,7 +77,7 @@ util::stop_watch stwa; stwa.start();
 	}
 	vbo.end_vertex();
   }
-std::cout << "xyz:" << stwa.stop_ms().count() << "milisec\n";
+//std::cout << "xyz:" << stwa.stop_ms().count() << "milisec\n";
   	return std::string();
 }
 
@@ -96,7 +96,7 @@ std::string trace_out_and_rgb_(
 	,opengl::vertex_buffer_object& vbo
 )
 {
-util::stop_watch stwa; stwa.start();
+//util::stop_watch stwa; stwa.start();
 	/* 初期パラメータ設定 */
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;
@@ -162,7 +162,7 @@ util::stop_watch stwa; stwa.start();
   if ( vbo.get_hsv_view_start_sw() ) {
 	vbo.end_color();
   }
-std::cout << "rgb:" << stwa.stop_ms().count() << "milisec\n";
+//std::cout << "rgb:" << stwa.stop_ms().count() << "milisec\n";
 	return std::string();
 }
 

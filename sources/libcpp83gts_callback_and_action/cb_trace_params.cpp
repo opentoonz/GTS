@@ -49,7 +49,8 @@ void gui_hsv_to_rgb_( void ) {
 		 cl_gts_gui.valinp_set_color_val->maximum()
 		,r,g,b
 	);
-	/*r *= (cl_gts_gui.valinp_set_color_red->maximum()+.999999);
+	/*
+	r *= (cl_gts_gui.valinp_set_color_red->maximum()+.999999);
 	g *= (cl_gts_gui.valinp_set_color_gre->maximum()+.999999);
 	b *= (cl_gts_gui.valinp_set_color_blu->maximum()+.999999);
 	r = floor(r);
@@ -179,13 +180,7 @@ void cb_trace_params::cb_target_rgb_color_cancel(void)
 
 //---------------
 
-void cb_trace_params::cb_hue_min_or_max_open_editor_(
-	Fl_Double_Window* flwin
-	,Fl_Button* flbut
-	,const int x_offset
-	,const int y_offset
-	,const int number
-)
+void cb_trace_params::cb_hue_min_or_max_open_editor_( const int number )
 {
 	assert( number < static_cast<int>(this->widget_sets.size()) );
 
@@ -233,35 +228,13 @@ void cb_trace_params::cb_hue_min_or_max_open_editor_(
 	this->number_ = number;
 
 	/* window開く */
-	cl_gts_gui.window_set_hue_min_or_max->position(
-		 flwin->x() + flbut->x() + x_offset
-		,flwin->y() + flbut->y() + y_offset
-	);
-	cl_gts_gui.window_set_hue_min_or_max->show();
+	cl_gts_gui.window_main_view->show();/* Need for Minimize */
+	cl_gts_gui.window_trace_hue_minmax->show();
 }
-void cb_trace_params::cb_hue_min_open_editor(
-	Fl_Double_Window* flwin
-	,Fl_Button* flbut
-	,const int number
-)
+
+void cb_trace_params::cb_hue_minmax_open_editor( const int number )
 {
-	cl_gts_gui.radbut_hue_min_sw->value(1);
-	this->cb_hue_min_or_max_open_editor_( flwin ,flbut
-		,-cl_gts_gui.window_set_hue_min_or_max->w() -10
-		,-cl_gts_gui.cyclic_color_wheel->y()
-		,number );
-}
-void cb_trace_params::cb_hue_max_open_editor(
-	Fl_Double_Window* flwin
-	,Fl_Button* flbut
-	,const int number
-)
-{
-	cl_gts_gui.radbut_hue_min_sw->value(0);
-	this->cb_hue_min_or_max_open_editor_( flwin ,flbut
-		,25
-		,-cl_gts_gui.cyclic_color_wheel->y()
-		,number );
+	this->cb_hue_min_or_max_open_editor_( number );
 }
 
 void cb_trace_params::cb_hue_min_or_max_cancel(void)
@@ -310,8 +283,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.scrbar_trace_0_thickness
 	,cl_gts_gui.valinp_trace_0_hue_min
 	,cl_gts_gui.valinp_trace_0_hue_max
-	,cl_gts_gui.button_trace_0_hue_min
-	,cl_gts_gui.button_trace_0_hue_max
+	,cl_gts_gui.button_trace_0_hue_minmax
 	,cl_gts_gui.valinp_trace_0_slope_deg
 	,cl_gts_gui.valinp_trace_0_intercept
 	,cl_gts_gui.chebut_trace_0_display_sw
@@ -324,8 +296,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.scrbar_trace_1_thickness
 	,cl_gts_gui.valinp_trace_1_hue_min
 	,cl_gts_gui.valinp_trace_1_hue_max
-	,cl_gts_gui.button_trace_1_hue_min
-	,cl_gts_gui.button_trace_1_hue_max
+	,cl_gts_gui.button_trace_1_hue_minmax
 	,cl_gts_gui.valinp_trace_1_slope_deg
 	,cl_gts_gui.valinp_trace_1_intercept
 	,cl_gts_gui.chebut_trace_1_display_sw
@@ -338,8 +309,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.scrbar_trace_2_thickness
 	,cl_gts_gui.valinp_trace_2_hue_min
 	,cl_gts_gui.valinp_trace_2_hue_max
-	,cl_gts_gui.button_trace_2_hue_min
-	,cl_gts_gui.button_trace_2_hue_max
+	,cl_gts_gui.button_trace_2_hue_minmax
 	,cl_gts_gui.valinp_trace_2_slope_deg
 	,cl_gts_gui.valinp_trace_2_intercept
 	,cl_gts_gui.chebut_trace_2_display_sw
@@ -352,8 +322,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.scrbar_trace_3_thickness
 	,cl_gts_gui.valinp_trace_3_hue_min
 	,cl_gts_gui.valinp_trace_3_hue_max
-	,cl_gts_gui.button_trace_3_hue_min
-	,cl_gts_gui.button_trace_3_hue_max
+	,cl_gts_gui.button_trace_3_hue_minmax
 	,cl_gts_gui.valinp_trace_3_slope_deg
 	,cl_gts_gui.valinp_trace_3_intercept
 	,cl_gts_gui.chebut_trace_3_display_sw
@@ -366,8 +335,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.scrbar_trace_4_thickness
 	,cl_gts_gui.valinp_trace_4_hue_min
 	,cl_gts_gui.valinp_trace_4_hue_max
-	,cl_gts_gui.button_trace_4_hue_min
-	,cl_gts_gui.button_trace_4_hue_max
+	,cl_gts_gui.button_trace_4_hue_minmax
 	,cl_gts_gui.valinp_trace_4_slope_deg
 	,cl_gts_gui.valinp_trace_4_intercept
 	,cl_gts_gui.chebut_trace_4_display_sw
@@ -380,8 +348,7 @@ void cb_trace_params::init_widget_set_(void) {
 	,cl_gts_gui.scrbar_trace_5_thickness
 	,cl_gts_gui.valinp_trace_5_hue_min
 	,cl_gts_gui.valinp_trace_5_hue_max
-	,cl_gts_gui.button_trace_5_hue_min
-	,cl_gts_gui.button_trace_5_hue_max
+	,cl_gts_gui.button_trace_5_hue_minmax
 	,cl_gts_gui.valinp_trace_5_slope_deg
 	,cl_gts_gui.valinp_trace_5_intercept
 	,cl_gts_gui.chebut_trace_5_display_sw
@@ -471,27 +438,23 @@ void cb_trace_params::cb_swap_widget_set( const unsigned num1 , const unsigned n
 	if ((wset1.valinp_hue_min->value() < 0.)
 	||  (wset1.valinp_hue_max->value() < 0.)) {
 		wset1.valinp_hue_min->hide();
-		wset1.button_hue_min->hide();
 		wset1.valinp_hue_max->hide();
-		wset1.button_hue_max->hide();
+		wset1.button_hue_minmax->hide();
 	} else {
 		wset1.valinp_hue_min->show();
-		wset1.button_hue_min->show();
 		wset1.valinp_hue_max->show();
-		wset1.button_hue_max->show();
+		wset1.button_hue_minmax->show();
 	}
 
 	if ((wset2.valinp_hue_min->value() < 0.)
 	||  (wset2.valinp_hue_max->value() < 0.)) {
 		wset2.valinp_hue_min->hide();
-		wset2.button_hue_min->hide();
 		wset2.valinp_hue_max->hide();
-		wset2.button_hue_max->hide();
+		wset2.button_hue_minmax->hide();
 	} else {
 		wset2.valinp_hue_min->show();
-		wset2.button_hue_min->show();
 		wset2.valinp_hue_max->show();
-		wset2.button_hue_max->show();
+		wset2.button_hue_minmax->show();
 	}
 
 	tmpdbl = wset1.valinp_slope_deg->value();
