@@ -14,7 +14,8 @@
 class cb_trace_params {
 public:
 	cb_trace_params()
-		:number_(0)
+		:target_rgb_editing_number_(0)
+		,hue_minmax_editing_number_(0)
 		,r_(0)
 		,g_(0)
 		,b_(0)
@@ -38,8 +39,11 @@ public:
 	void cb_target_rgb_color_cancel(void);
 
 	/* hue min max editor */
+	void cb_hue_minmax_init_editor( const int number );
 	void cb_hue_minmax_open_editor( const int number );
 	void cb_hue_min_or_max_cancel(void);
+	int get_hue_minmax_editing_number(void) const {
+		return this->hue_minmax_editing_number_; }
 
 	/* traceの目的色を得る */
 	void get_target_rgb(
@@ -80,7 +84,8 @@ public:
 	void cb_swap_widget_set( const unsigned num1 ,const unsigned num2 );
 	int cb_get_window_height_active( void );
 private:
-	int number_;
+	int target_rgb_editing_number_;
+	int hue_minmax_editing_number_;
 	uchar r_ ,g_ ,b_;
 	double hmin_ ,hmax_;
 	bool rotate360_sw_;
@@ -89,7 +94,6 @@ private:
 	std::vector<calc::trace_by_hsv_params> param_sets_;
 
 	void init_widget_set_(void);
-	void cb_hue_min_or_max_open_editor_( const int number );
 };
 
 //--------------------

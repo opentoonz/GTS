@@ -102,91 +102,94 @@ cl_gts_master.cb_quit();}
         } {
           MenuItem menite_area_and_rot90 {
             label {Area and Rot90...}
-            callback {if (cl_gts_gui.menite_area_and_rot90->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_area_and_rot90->show();
+            callback {if (menite_area_and_rot90->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_area_and_rot90->show();
 } else {
-    cl_gts_gui.window_area_and_rot90->hide();
+ window_area_and_rot90->hide();
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffbe
           }
           MenuItem menite_pixel_type_and_bright {
             label {Pixel Type and Bright...}
-            callback {if (cl_gts_gui.menite_pixel_type_and_bright->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_pixel_type_and_bright->show();
+            callback {if (menite_pixel_type_and_bright->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_pixel_type_and_bright->show();
 } else {
-    cl_gts_gui.window_pixel_type_and_bright->hide();
+ window_pixel_type_and_bright->hide();
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffbf
           }
           MenuItem menite_number {
             label {Number ...}
-            callback {if (cl_gts_gui.menite_number->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_number->show();
+            callback {if (menite_number->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_number->show();
 } else {
-    cl_gts_gui.window_number->hide();
+ window_number->hide();
 }}
             xywh {5 5 100 20} type Toggle shortcut 0xffc0 divider
           }
           MenuItem menite_scan_and_save {
             label {Scan Save...}
-            callback {if (cl_gts_gui.menite_scan_and_save->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_scan_and_save->show();
+            callback {if (menite_scan_and_save->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_scan_and_save->show();
 } else {
-    cl_gts_gui.window_scan_and_save->hide();
+ window_scan_and_save->hide();
 }}
             xywh {10 10 100 20} type Toggle shortcut 0xffc1
           }
           MenuItem menite_trace_files {
             label {Trace Files...}
-            callback {if (cl_gts_gui.menite_trace_files->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_files->show();
+            callback {if (menite_trace_files->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_trace_files->show();
 } else {
-    cl_gts_gui.window_trace_files->hide();
+ window_trace_files->hide();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc2 divider
           }
           MenuItem menite_trace_params {
             label {Trace Params...}
-            callback {if (cl_gts_gui.menite_trace_params->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_params->show();
+            callback {if (menite_trace_params->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_trace_params->show();
 } else {
-    cl_gts_gui.window_trace_params->hide();
+ window_trace_params->hide();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc3
           }
           MenuItem menite_trace_hsv_view {
             label {Trace HSV View}
-            callback {if (cl_gts_gui.menite_trace_hsv_view->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_hsv_view->show();
+            callback {if (menite_trace_hsv_view->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_trace_hsv_view->show();
 } else {
-    cl_gts_gui.window_trace_hsv_view->hide();
+ window_trace_hsv_view->hide();
 }}
             xywh {0 0 30 20} type Toggle shortcut 0xffc4
           }
           MenuItem menite_trace_hue_minmax {
             label {Trace Hue Min,Max}
-            callback {if (cl_gts_gui.menite_trace_hue_minmax->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_hue_minmax->show();
+            callback {if (menite_trace_hue_minmax->value()) {
+ cl_gts_master.cl_trace_params.cb_hue_minmax_init_editor(
+  cl_gts_master.cl_trace_params.get_hue_minmax_editing_number()
+ );
+ window_main_view->show();/* Need for Minimize */
+ window_trace_hue_minmax->show();
 } else {
-    cl_gts_gui.window_trace_hue_minmax->hide();
+ window_trace_hue_minmax->hide();
 }}
             xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_trace_batch {
             label {Trace Batch...}
-            callback {if (cl_gts_gui.menite_trace_batch->value()) {
-    cl_gts_gui.window_main_view->show();/* Need for Minimize */
-    cl_gts_gui.window_trace_batch->show();
+            callback {if (menite_trace_batch->value()) {
+ window_main_view->show();/* Need for Minimize */
+ window_trace_batch->show();
 } else {
-    cl_gts_gui.window_trace_batch->hide();
+ window_trace_batch->hide();
 }}
             xywh {0 0 100 20} type Toggle
           }

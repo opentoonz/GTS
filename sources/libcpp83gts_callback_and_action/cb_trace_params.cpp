@@ -120,7 +120,7 @@ void cb_trace_params::cb_target_rgb_color_open_editor(
 	set_target_color_( number , cl_gts_gui.box_set_color_ok );
 
 	/* 色テーブル番号を記憶 */
-	this->number_ = number;
+	this->target_rgb_editing_number_ = number;
 
 	/* Color Editorにrgb初期値を設定 */
 	cl_gts_gui.valinp_set_color_red->value(this->r_);
@@ -147,7 +147,7 @@ void cb_trace_params::cb_target_rgb_color_change(const bool change_hsv_sw)
 	else		   { gui_rgb_to_hsv_(); }
 
 	/* Color Editorのrgb値をGUIカラーテーブルにセット */
-	set_target_rgb_( this->number_
+	set_target_rgb_( this->target_rgb_editing_number_
 	,static_cast<uchar>(cl_gts_gui.valinp_set_color_red->value())
 	,static_cast<uchar>(cl_gts_gui.valinp_set_color_gre->value())
 	,static_cast<uchar>(cl_gts_gui.valinp_set_color_blu->value())
@@ -155,7 +155,8 @@ void cb_trace_params::cb_target_rgb_color_change(const bool change_hsv_sw)
 
 	/* ボタンのターゲット色を再表示 */
 	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
-	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
+	cb_trace_params::widget_set& wset( vwset.at(
+		this->target_rgb_editing_number_) );
 	wset.button_target_rgb->redraw();
 
 	cl_gts_gui.box_set_color_ok->redraw();
@@ -167,11 +168,13 @@ void cb_trace_params::cb_target_rgb_color_change(const bool change_hsv_sw)
 void cb_trace_params::cb_target_rgb_color_cancel(void)
 {
 	/* rgb値を戻す */
-	set_target_rgb_( this->number_ ,this->r_ ,this->g_ ,this->b_ );
+	set_target_rgb_(
+	this->target_rgb_editing_number_ ,this->r_ ,this->g_ ,this->b_ );
 
 	/* ボタンのターゲット色を再表示 */
 	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
-	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
+	cb_trace_params::widget_set& wset( vwset.at(
+		this->target_rgb_editing_number_) );
 	wset.button_target_rgb->redraw();
 
 	/* OpenGLの表示をredraw */
@@ -180,7 +183,7 @@ void cb_trace_params::cb_target_rgb_color_cancel(void)
 
 //---------------
 
-void cb_trace_params::cb_hue_min_or_max_open_editor_( const int number )
+void cb_trace_params::cb_hue_minmax_init_editor( const int number )
 {
 	assert( number < static_cast<int>(this->widget_sets.size()) );
 
@@ -214,9 +217,6 @@ void cb_trace_params::cb_hue_min_or_max_open_editor_( const int number )
 		,(cl_gts_gui.radbut_hue_min_sw->value()!=0) ?false :true
 	);
 
-	/* 再描画 */
-	cl_gts_gui.cyclic_color_wheel->redraw();
-
 	/* Cancelのとき戻す値を記憶 */
 	cb_trace_params::widget_set& wset( vwset.at( number ) );
 	this->hmin_         = wset.valinp_hue_min->value();
@@ -225,22 +225,27 @@ void cb_trace_params::cb_hue_min_or_max_open_editor_( const int number )
 				?true :false;
 
 	/* 色テーブル番号を記憶 */
-	this->number_ = number;
-
-	/* window開く */
-	cl_gts_gui.window_main_view->show();/* Need for Minimize */
-	cl_gts_gui.window_trace_hue_minmax->show();
+	this->hue_minmax_editing_number_ = number;
 }
 
 void cb_trace_params::cb_hue_minmax_open_editor( const int number )
 {
-	this->cb_hue_min_or_max_open_editor_( number );
+	this->cb_hue_minmax_init_editor( number );
+
+	/* 再描画 */
+	cl_gts_gui.cyclic_color_wheel->redraw();
+
+	/* window開く */
+	cl_gts_gui.window_main_view->show();/* Need for Minimize */
+	cl_gts_gui.window_trace_hue_minmax->show();
+	cl_gts_gui.menite_trace_hue_minmax->set();
 }
 
 void cb_trace_params::cb_hue_min_or_max_cancel(void)
 {
 	std::vector<cb_trace_params::widget_set>& vwset(this->widget_sets);
-	cb_trace_params::widget_set& wset( vwset.at(this->number_) );
+	cb_trace_params::widget_set& wset( vwset.at(
+		this->hue_minmax_editing_number_) );
 
 	/* 元の値をTrace Paramsウインドウに戻す */
 	if (cl_gts_gui.radbut_hue_min_sw->value() != 0) {

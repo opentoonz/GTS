@@ -194,10 +194,9 @@ int memory_desktop::load( void ) {
 		else if ((this->str_window_trace_hue_minmax_==key)
 		&& (6==ret)) {
 			if (di == "show") {
-		/* 始めは閉じておく(初期位置設定してないから開くと落ちる) */
-		//cl_gts_gui.menite_trace_hue_minmax->set();
-		//cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		//cl_gts_gui.window_trace_hue_minmax->show();
+		cl_gts_gui.menite_trace_hue_minmax->set();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_trace_hue_minmax->show();
 			}
 		cl_gts_gui.window_trace_hue_minmax->resize(xx,yy ,ww,hh);
 		}

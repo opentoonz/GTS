@@ -184,6 +184,10 @@ int gts_master::exec( const char *comm )
 	}
 	}
 
+	/* trace paramsのguiを配列で利用するための変数初期設定 */
+	/* configで順番が決まってから0番目(赤)を指定 */
+	this->cl_trace_params.cb_hue_minmax_init_editor(0);
+
 	/* desktop.txtによる fltk window位置とサイズを復元 */
 	if (OK != this->cl_memo_desktop.load()) {
 		pri_funct_err_bttvr(
