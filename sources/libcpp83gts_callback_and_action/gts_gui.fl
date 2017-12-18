@@ -1805,7 +1805,7 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
       xywh {50 50 500 500} type Double resizable non_modal visible
     } {
       Fl_Menu_Bar {} {open
-        xywh {0 0 500 25}
+        xywh {0 0 500 25} hide
       } {
         Submenu {} {
           label View open
@@ -1844,7 +1844,7 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
         }
       }
       Fl_Box hsv_view {
-        xywh {0 25 500 475} resizable
+        xywh {0 0 500 500} resizable
         code0 {\#include "fl_gl_hsv_view.h"}
         class fl_gl_hsv_view
       }

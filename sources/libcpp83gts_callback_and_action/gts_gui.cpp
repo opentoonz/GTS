@@ -3430,9 +3430,10 @@ Fl_Double_Window* gts_gui::make_window() {
   { window_trace_hsv_view = new Fl_Double_Window(500, 500, "Trace HSV View");
     window_trace_hsv_view->callback((Fl_Callback*)cb_window_trace_hsv_view, (void*)(this));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 500, 25);
+      o->hide();
       o->menu(menu_2);
     } // Fl_Menu_Bar* o
-    { hsv_view = new fl_gl_hsv_view(0, 25, 500, 475);
+    { hsv_view = new fl_gl_hsv_view(0, 0, 500, 500);
       hsv_view->box(FL_NO_BOX);
       hsv_view->color(FL_BACKGROUND_COLOR);
       hsv_view->selection_color(FL_BACKGROUND_COLOR);
