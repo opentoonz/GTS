@@ -19,8 +19,11 @@
 #include "util_stop_watch.h"	/* util::stop_watch */
 #include "calc_trace_by_hsv.h"	/* calc::line_len_from_rad() */
 #include "fl_gl_hsv_view.h"
+
+#if !defined DEBUG_FL_GL_HSV_VIEW
 #include "gts_master.h"
 #include "gts_gui.h"
+#endif
 
 /*---------- opengl_camera_eye関数 ----------*/
 
@@ -318,25 +321,27 @@ fl_gl_hsv_view::fl_gl_hsv_view(int x ,int y ,int w ,int h ,const char*l)
 	this->bg_rgba_[3] = 1.f;
 
 	/* dummy_rgb_image_ に8bitサンプリングでランダムなrgb画像を生成 */
-//	this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ / 2);
+#if defined DEBUG_FL_GL_HSV_VIEW
+	//this->dummy_create_rgb_image_( this->dummy_w_ * this->dummy_h_ / 2);
+#endif
 }
 
-void fl_gl_hsv_view::dummy_create_rgb_image_(
-	const int pixel_size
-)
+#if defined DEBUG_FL_GL_HSV_VIEW
+void fl_gl_hsv_view::dummy_create_rgb_image_( const int pixel_size )
 {
 	std::cout << "create_rgb_image size=" << pixel_size << "pixel\n";
 
 	util::stop_watch stwa; stwa.start();
 
-	const int count = pixel_size * 3;
+	const int count = pixel_size * 3; // rgb
 
 	std::mt19937 engine;
 	std::uniform_int_distribution<> dist( 0 ,255 );
 	this->dummy_rgb_image_.clear();
 	this->dummy_rgb_image_.reserve( count );
 	for (int ii=0 ;ii<count;++ii) {
-		this->dummy_rgb_image_.push_back( dist(engine) );
+		this->dummy_rgb_image_.push_back(
+			static_cast<GLubyte>( dist(engine) ) );
 	}
 
 	std::cout << "create_rgb_image time="
@@ -345,6 +350,7 @@ void fl_gl_hsv_view::dummy_create_rgb_image_(
 	std::cout << "create_rgb_image size="
 		<< this->dummy_rgb_image_.size() << "bytes\n";
 }
+#endif
 
 /*
 	0  -------x----->  X
@@ -759,6 +765,7 @@ void draw_black_partition_(
 	}
 }
 
+#if !defined DEBUG_FL_GL_HSV_VIEW
 void draw_guide_display_()
 {
 	/* マスタースイッチがオフならガイドはすべて表示しない */
@@ -809,6 +816,7 @@ void draw_guide_display_()
 		}
 	}
 }
+#endif
 
 void draw_pixel_mark_( const double x ,const double y ,const double z )
 {
@@ -836,9 +844,11 @@ void draw_camera_target_mark_(
 ,const double zfar
 )
 {
+#if !defined DEBUG_FL_GL_HSV_VIEW
 	if (cl_gts_gui.chebut_trace_display_target_sw->value() == 0) {
 		return;
 	}
+#endif
 
 	/* 現位置のhue色 */
 	glColor3d( 1. ,1. ,1. );
@@ -919,17 +929,21 @@ void fl_gl_hsv_view::draw_object_()
 		glVertex3d(0. , 0. , 1.0);
 	glEnd();
 
+#if !defined DEBUG_FL_GL_HSV_VIEW
 	/* 区切ガイド */
 	draw_guide_display_();
+#endif
 
 	/* ポイント表示 */
 	this->vbo.draw();
 
+#if !defined DEBUG_FL_GL_HSV_VIEW
 	/* スポイト機能
 	指定の画像pixelのrgb値からhsv-->xyz位置のマーキング表示 */
 	if (0 <= cl_gts_gui.image_view->get_pixel_r()) {
 	 draw_pixel_mark_(this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
 	}
+#endif
 
 	/* カメラ注視点マーク */
 /* 未公開 */
@@ -966,6 +980,7 @@ void fl_gl_hsv_view::rgb_to_xyz(
 		h,s,v ,this->pixel_x_ ,this->pixel_y_ ,this->pixel_z_);
 }
 
+#if defined DEBUG_FL_GL_HSV_VIEW
 void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 {
 /*
@@ -980,42 +995,35 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 	}
 	this->vbo.pr_vbo_info();
 
-	/* ダミーの画像サイズも変更しランダムし直し */
-	this->dummy_create_rgb_image_( pixel_size / 2 );
+util::stop_watch stwa; stwa.start();
 
-	/* vbo colorデータ書き込み */
-	GLubyte* rgb = this->vbo.start_color();
-	if (rgb == nullptr) { /* open出来ていればここはこないはず */
+	/* ダミーの画像サイズも変更しランダムし直し */
+	this->dummy_create_rgb_image_( pixel_size );
+
+	/* dummy vbo vertex,colorデータ書き込み */
+	opengl::vertex_buffer_object::vertex_color* vbo_p =
+			this->vbo.start_vertex_color();
+	if (vbo_p == nullptr) { /* open出来ていればここはこないはず */
 	 assert(!"Error:vbo.start_color() return null");
 	}
-	unsigned char* da = this->dummy_rgb_image_.data();
+	unsigned char* rgb = this->dummy_rgb_image_.data();
 	unsigned sz = this->dummy_rgb_image_.size();
-	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,rgb+=3) {
-		rgb[0] = da[0];
-		rgb[1] = da[1];
-		rgb[2] = da[2];
-	}
-	this->vbo.end_color();
+std::cout << "rgb_pixel_size=" << sz/3 << "\n";
+std::cout << "vbo_pixel_size=" << this->vbo.get_pixel_size() << "\n";
+	for (unsigned ii=0 ;ii< sz ;ii+=3, rgb+=3 ,++vbo_p) {
+		vbo_p->rgb.r = rgb[0];
+		vbo_p->rgb.g = rgb[1];
+		vbo_p->rgb.b = rgb[2];
 
-	/* dummy vbo vertexデータ書き込み */
-	util::stop_watch stwa; stwa.start();
-	opengl::vertex_buffer_object::vbo_float* xyz= this->vbo.start_vertex();
-	if (xyz == nullptr) { /* open出来ていればここはこないはず */
-	 assert(!"Error:vbo.start_vertex() return null");
-	}
-	da = this->dummy_rgb_image_.data();
-	sz = this->dummy_rgb_image_.size();
-	for (unsigned ii=0 ;ii< sz ;ii+=3, da+=3 ,xyz+=3) {
-		/* rgb --> hsv */
 		double h=0. ,s=0. ,v=0.;
 		calc::rgb_to_hsv(
-			da[0]/255. ,da[1]/255. ,da[2]/255. ,h,s,v );
-
-		this->vbo.hsv_to_xyzarray( h ,s ,v ,xyz );
+			rgb[0]/255. ,rgb[1]/255. ,rgb[2]/255. ,h,s,v );
+		this->vbo.hsv_to_xyzarray( h ,s ,v ,vbo_p->xyz );
 	}
-	this->vbo.end_vertex();
- std::cout << "from_rgb_to_xyz time=" << stwa.stop_ms().count() << "milisec\n";
+	this->vbo.end_vertex_color();
+std::cout << "time=" << stwa.stop_ms().count() << "milisec\n";
 }
+#endif
 void fl_gl_hsv_view::draw()
 {
 	if (!valid()) {
@@ -1065,7 +1073,9 @@ void fl_gl_hsv_view::draw()
 		}
 
 		/* ピクセル値あるいはサイズの変更 */
-		//this->dummy_reset_vbo( this->w() * this->h() / 2 );
+#if defined DEBUG_FL_GL_HSV_VIEW
+		this->dummy_reset_vbo( this->w() * this->h() );
+#endif
 	}
 
 	/* 表示範囲の再設定 */
@@ -1184,6 +1194,7 @@ void fl_gl_hsv_view::handle_scale_( const int mx ,const int my )
 
 void fl_gl_hsv_view::handle_keyboard_( const int key , const char* text )
 {
+	key;
 	if (text != nullptr) {
 	 switch (text[0]) {
 	 case 'm':
@@ -1262,7 +1273,11 @@ int fl_gl_hsv_view::handle(int event)
 
 //--------------------
 #if defined DEBUG_FL_GL_HSV_VIEW
-#include "to_hsv.cpp"
+#include "calc_hsv_rgb.cpp"	/* calc::rgb_to_hsv() */
+#include "calc_rad_deg.cpp"	/* calc::rad_from_deg() */
+#include "util_stop_watch.cpp"	/* util::stop_watch */
+#include "calc_trace_by_hsv.cpp"	/* calc::line_len_from_rad() */
+#include "opengl_vertex_buffer_object.cpp"
 int main(void) {
 	Fl_Window win(1000, 500, "OpenGL");
 	fl_gl_hsv_view ogl(0, 0, win.w(), win.h());
@@ -1274,7 +1289,7 @@ int main(void) {
 #endif /* !DEBUG_FL_GL_HSV_VIEW */
 /*
 rem
-rem :956,957 w! make.bat
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_VIEW /I..\..\..\sources\libcpp38calcu_rgb_to_hsv /I..\..\..\sources\libcpp71iip_trace_by_hsv /I..\..\thirdparty\glew\glew-2.1.0\include /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ../../../sources/build/lib/libcpp38calcu_rgb_to_hsv.lib ..\..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
+rem :1302,1304 w! make.bat
+cl /W4 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_FL_GL_HSV_VIEW /I..\..\..\sources\libcpp71iip_trace_by_hsv /I..\..\..\sources\lib_util /I..\..\thirdparty\glew\glew-2.1.0\include /I..\..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\thirdparty\glew\glew-2.1.0\lib\Release\Win32\glew32s.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ..\..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltkgl-1.3.4-1-vc2013-32.lib glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib fl_gl_hsv_view.cpp /Fea
 del fl_gl_hsv_view.obj
 */

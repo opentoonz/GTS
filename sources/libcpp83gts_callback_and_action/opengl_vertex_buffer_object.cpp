@@ -12,21 +12,15 @@
 /*---------- opengl::vertex_buffer_object関数 ----------*/
 
 namespace opengl {
-void vertex_buffer_object::clear_id_vbo_(void)
-{
-	for (int ii=0;ii<sizeof(this->id_vbo_) / sizeof(GLuint) ;++ii) {
-		this->id_vbo_[0] = 0;
-	}
-}
 
 vertex_buffer_object::vertex_buffer_object()
-	:pixel_size_(0)
+	:id_vbo_(0)
+	,pixel_size_(0)
 	/* vboメモリで浮動小数の型 vbo_floatと合わせること*/
 	//,vbo_type_(GL_DOUBLE)
 	,vbo_type_(GL_FLOAT)
 	,hsv_view_start_sw_(false)
 {
-	this->clear_id_vbo_();
 }
 vertex_buffer_object::~vertex_buffer_object()
 {
@@ -37,81 +31,45 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 	/* 以前のvboバッファが残っていれば閉じる */
 	this->close();
 
-	/* vboバッファのIDを得る。座標と色の二つ */
-	glGenBuffers( sizeof(this->id_vbo_)/sizeof(GLuint),this->id_vbo_ );
+	/* vboバッファのIDを得る。座標と色をまとめて一つで */
+	glGenBuffers( 1 ,&(this->id_vbo_) );
 
-	/* 頂点用VBOを確保 */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[0] );
-	glBufferData( GL_ARRAY_BUFFER
-	 ,pixel_size * sizeof(vbo_float) * 3 ,nullptr ,GL_DYNAMIC_DRAW );
+	/* 処理対象指定 */
+	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_ );
 
-	/* 頂点用VBO確保の確認 */
-	{
+	/* 頂点用と色用のVBOを同時に確保 */
+	const GLsizeiptr glsize = pixel_size * sizeof(vertex_color);
+	glBufferData( GL_ARRAY_BUFFER ,glsize ,nullptr ,GL_DYNAMIC_DRAW );
+
+	/* 頂点用と色用のVBO確保の確認 */
 	GLint chk_sz=0;
 	glGetBufferParameteriv( GL_ARRAY_BUFFER ,GL_BUFFER_SIZE ,&chk_sz );
-	if ( pixel_size * sizeof(vbo_float) * 3 != chk_sz ) {
+	if ( glsize != chk_sz ) {
+
+		/* バッファオブジェクトを破棄する */
 		if (0 < chk_sz) {
-			glDeleteBuffers( 1 , &this->id_vbo_[0] );
+			glDeleteBuffers( 1 , &(this->id_vbo_) );
 		}
 
 		/* bindを指定なしにする */
 		glBindBuffer( GL_ARRAY_BUFFER ,0 );
 
-		this->clear_id_vbo_();
+		this->id_vbo_ = 0;
 
 		std::ostringstream ost;
 		ost	<< "Error:Can not get vbo for vertex:"
 			<< "pixel_size("
 			<<  pixel_size
-			<< ")*sizeof(vbo_float)("
-			<<    sizeof(vbo_float)
-			<< ")*3!=chk_sz("
+			<< ")*sizeof(vertex_color)("
+			<<    sizeof(vertex_color)
+			<< ")!=chk_sz("
 			<<       chk_sz
 			<< ")"
 			;
 		return ost.str();
 	}
-	}
 
-	/* 色用VBOを確保 */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[1] );
-	glBufferData( GL_ARRAY_BUFFER
-	 ,pixel_size * sizeof(GLubyte) * 3 ,nullptr ,GL_DYNAMIC_DRAW );
-
-	/* 色用VBO確保の確認 */
-	{
-	GLint chk_sz=0;
-	glGetBufferParameteriv( GL_ARRAY_BUFFER ,GL_BUFFER_SIZE ,&chk_sz );
-	if ( pixel_size * sizeof(GLubyte) * 3 != chk_sz ) {
-		if (0 < chk_sz) {
-			glDeleteBuffers(
-				sizeof(this->id_vbo_) / sizeof(GLuint)
-				, this->id_vbo_ );
-		}
-		else {
-			/* すでに確保したVBOを削除 */
-			glDeleteBuffers( 1 , &this->id_vbo_[0] );
-		}
-
-		/* bindを指定なしにする */
-		glBindBuffer( GL_ARRAY_BUFFER ,0 );
-
-		this->clear_id_vbo_();
-
-		std::ostringstream ost;
-		ost	<< "Error:Can not get vbo for color:"
-			<< "pixel_size("
-			<<  pixel_size
-			<< ")*sizeof(GLubyte)("
-			<<    sizeof(GLubyte)
-			<< ")*3!=chk_sz("
-			<<       chk_sz
-			<< ")"
-			;
-		return ost.str();
-	}
-	}
-
+	/* 確保した数を記憶 */
 	this->pixel_size_ = pixel_size;
 
 	/* bindを指定なしにする */
@@ -122,62 +80,38 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 void vertex_buffer_object::close(void)
 {
 	/* VBO用ID破棄 */
-	if (this->id_vbo_[0] != 0) {
-		glDeleteBuffers(
-			sizeof(this->id_vbo_) / sizeof(GLuint)
-			, this->id_vbo_ );
-		this->clear_id_vbo_();
+	if (this->id_vbo_ != 0) {
+		glDeleteBuffers( 1 , &(this->id_vbo_) );
+		this->id_vbo_ = 0;
 	}
 }
 
-vertex_buffer_object::vbo_float* vertex_buffer_object::start_vertex( void )
+vertex_buffer_object::vertex_color* vertex_buffer_object::start_vertex_color( void )
 {
-	if (this->id_vbo_[0] == 0) {
-		return nullptr;
-	}
+	if (this->id_vbo_ == 0) { return nullptr; }
 	/* 頂点用VBO */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[0] );
-	return static_cast<vbo_float *>(glMapBuffer(
+	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_ );
+	return static_cast<vertex_color *>(glMapBuffer(
 				GL_ARRAY_BUFFER , GL_READ_WRITE ));
+	/* ここからend_vertex_color()までbufferがbind状態 */
 }
-void vertex_buffer_object::end_vertex( void )
+void vertex_buffer_object::end_vertex_color( void )
 {
-	if (this->id_vbo_[0] == 0) {
-		return;
-	}
-	glUnmapBuffer( GL_ARRAY_BUFFER );
-}
-GLubyte* vertex_buffer_object::start_color( void )
-{
-	if (this->id_vbo_[1] == 0) {
-		return nullptr;
-	}
-	/* 色用VBO */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[1] );
-	return static_cast<GLubyte *>(glMapBuffer(
-				GL_ARRAY_BUFFER , GL_READ_WRITE ));
-	/* ここからend_color()までcolorbufferがbind状態 */
-}
-void vertex_buffer_object::end_color( void )
-{
-	if (this->id_vbo_[1] == 0) {
-		return;
-	}
+	if (this->id_vbo_ == 0) { return; }
 	glUnmapBuffer( GL_ARRAY_BUFFER );
 }
 
 void vertex_buffer_object::draw(void)
 {
-	if (this->id_vbo_[0] == 0) {
+	if (this->id_vbo_ == 0) {
 		return;
 	}
-	/* 頂点の格納場所を伝える */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[0] );
-	glVertexPointer( 3 ,this->vbo_type_ ,0 ,0 );
-
-	/* 色の格納場所を伝える */
-	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_[1] );
-	glColorPointer( 3 ,GL_UNSIGNED_BYTE ,0 ,0 );
+	/* 頂点,色 の格納場所を伝える */
+	glBindBuffer( GL_ARRAY_BUFFER ,this->id_vbo_ );
+	glVertexPointer( 3 ,this->vbo_type_ ,sizeof(vertex_color)
+			,static_cast<GLubyte *>(nullptr) );
+	glColorPointer( 3 ,GL_UNSIGNED_BYTE ,sizeof(vertex_color)
+			,static_cast<GLubyte *>(nullptr)+sizeof(vertex) );
 
 	/* 描画を有効化 */
 	glEnableClientState( GL_VERTEX_ARRAY );
@@ -196,13 +130,12 @@ void vertex_buffer_object::draw(void)
 
 void vertex_buffer_object::pr_vbo_info(void)
 {
-	std::cout << "vertex buffer="
-		<< this->pixel_size_ * sizeof(vbo_float) * 3 << "bytes\n";
-	std::cout << " color buffer="
-		<< this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
-	std::cout << "        total="
-		<< this->pixel_size_ * sizeof(vbo_float) * 3
-		 + this->pixel_size_ * sizeof(GLubyte)   * 3 << "bytes\n";
+	std::cout << "      vertex size="
+		<< this->pixel_size_ * sizeof(vertex) << "bytes\n";
+	std::cout << "       color size="
+		<< this->pixel_size_ * sizeof(color) << "bytes\n";
+	std::cout << "vertex_color size="
+		<< this->pixel_size_ * sizeof(vertex_color) << "bytes\n";
 }
 
 void vertex_buffer_object::hsv_to_xyz(
@@ -218,17 +151,17 @@ void vertex_buffer_object::hsv_to_xyz(
 
 void vertex_buffer_object::hsv_to_xyzarray(
 	const double h , const double s , const double v
-	, vertex_buffer_object::vbo_float* xyz
+	, vertex_buffer_object::vertex& xyz
 )
 {
 	/* hsv --> xyzarray */
-	xyz[0] = static_cast<vertex_buffer_object::vbo_float>(
+	xyz.x = static_cast<vertex_buffer_object::vbo_float>(
 		cos( calc::rad_from_deg(h) ) * s * v
 	);
-	xyz[1] = static_cast<vertex_buffer_object::vbo_float>(
+	xyz.y = static_cast<vertex_buffer_object::vbo_float>(
 		sin( calc::rad_from_deg(h) ) * s * v
 	);
-	xyz[2] = static_cast<vertex_buffer_object::vbo_float>(
+	xyz.z = static_cast<vertex_buffer_object::vbo_float>(
 		1. - v
 	);
 }
