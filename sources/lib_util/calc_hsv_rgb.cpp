@@ -1,13 +1,15 @@
 #include <cmath> /* floor() */
 #include "calc_hsv_rgb.h"
 
-double calc::clamp_cyclic360( double h360 )
+namespace calc {
+
+double clamp_cyclic360( double h360 )
 {
 	while (h360 <    0.) { h360 += 360.; }	/* 0<= */
 	while (360. <= h360) { h360 -= 360.; }	/* <360 */
 	return h360;
 }
-void calc::hsv_to_rgb(
+void hsv_to_rgb(
 	const double h, const double s, const double v
 	, double& r, double& g, double& b
 ) {
@@ -30,7 +32,7 @@ void calc::hsv_to_rgb(
 	}
 }
 
-void calc::rgb_to_hsv(
+void rgb_to_hsv(
 	const double r, const double g, const double b
 	, double& h, double& s, double& v
 ) {
@@ -75,3 +77,5 @@ void calc::rgb_to_hsv(
 	else		{ h = 4.0+(r - g)/(maxv - minv); }
 	h *= 60.; /* Renge 6 --> 360 */
 }
+
+} // namespace calc

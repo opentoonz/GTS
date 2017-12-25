@@ -60,13 +60,12 @@ memory_config_load.cpp\
 memory_config_save.cpp\
 memory_desktop_load.cpp\
 memory_desktop_save.cpp\
-memory_scan_area.cpp\
-opengl_vertex_buffer_object.cpp
+memory_scan_area.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
-DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-1
-DPATH_GLEW  = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
+DPATH_FLTK = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-1
+DPATH_GLEW = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
 DPATH_TWAIN = $(DPATH_3RD_PARTY)\twain\twain-2.3
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib

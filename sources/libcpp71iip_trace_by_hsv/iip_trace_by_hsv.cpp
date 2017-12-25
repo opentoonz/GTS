@@ -7,6 +7,7 @@
 #include <thread>
 
 #include "calc_hsv_rgb.h"
+#include "calc_hsv_xyz.h"
 #include "util_stop_watch.h"    /* util::stop_watch */
 #include "iip_trace_by_hsv.h"
 
@@ -113,7 +114,11 @@ public:
 		}
 
 		/* hsv-->xyz(for hsv3d) */
-		this->vbo_->hsv_to_xyzarray( hh,ss,vv ,this->vbo_p_->xyz );
+		calc::hsv_to_xyz( hh,ss,vv
+			,this->vbo_p_->xyz.x
+			,this->vbo_p_->xyz.y
+			,this->vbo_p_->xyz.z
+		);
 
 		/* hsv-->2値化rgb */
 		double	rr=0., gg=0., bb=0.;

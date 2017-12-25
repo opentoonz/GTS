@@ -5,8 +5,6 @@
 #define GLEW_STATIC	/* use glew32s.lib */
 #include <GL/glew.h>	/* gl.hより前に必要 */
 
-#include "calc_rad_deg.h"
-#include "calc_trace_by_hsv.h"
 #include "opengl_vertex_buffer_object.h"
 
 /*---------- opengl::vertex_buffer_object関数 ----------*/
@@ -16,7 +14,7 @@ namespace opengl {
 vertex_buffer_object::vertex_buffer_object()
 	:id_vbo_(0)
 	,pixel_size_(0)
-	/* vboメモリで浮動小数の型 vbo_floatと合わせること*/
+	/* vboメモリ浮動小数型vertex_buffer_object::vbo_floatと合わせる */
 	//,vbo_type_(GL_DOUBLE)
 	,vbo_type_(GL_FLOAT)
 	,hsv_view_start_sw_(false)
@@ -57,7 +55,7 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 		this->id_vbo_ = 0;
 
 		std::ostringstream ost;
-		ost	<< "Error:Can not get vbo for vertex:"
+		ost	<< "Error:Can not get vbo for vertex_color:"
 			<< "pixel_size("
 			<<  pixel_size
 			<< ")*sizeof(vertex_color)("
@@ -69,7 +67,7 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 		return ost.str();
 	}
 
-	/* 確保した数を記憶 */
+	/* 確保したpixel数を記憶 */
 	this->pixel_size_ = pixel_size;
 
 	/* bindを指定なしにする */
@@ -138,31 +136,4 @@ void vertex_buffer_object::pr_vbo_info(void)
 		<< this->pixel_size_ * sizeof(vertex_color) << "bytes\n";
 }
 
-void vertex_buffer_object::hsv_to_xyz(
-	const double h , const double s , const double v
-	,double& x , double& y , double& z
-)
-{
-	/* hsv --> x,y,z */
-	x = cos( calc::rad_from_deg(h) ) * s * v;
-	y = sin( calc::rad_from_deg(h) ) * s * v;
-	z = 1. - v;
-}
-
-void vertex_buffer_object::hsv_to_xyzarray(
-	const double h , const double s , const double v
-	, vertex_buffer_object::vertex& xyz
-)
-{
-	/* hsv --> xyzarray */
-	xyz.x = static_cast<vertex_buffer_object::vbo_float>(
-		cos( calc::rad_from_deg(h) ) * s * v
-	);
-	xyz.y = static_cast<vertex_buffer_object::vbo_float>(
-		sin( calc::rad_from_deg(h) ) * s * v
-	);
-	xyz.z = static_cast<vertex_buffer_object::vbo_float>(
-		1. - v
-	);
-}
 } // namespace opengl

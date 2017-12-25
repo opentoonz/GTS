@@ -374,9 +374,12 @@ void gts_gui::cb_Blue1(Fl_Menu_* o, void* v) {
 void gts_gui::cb_menite_help_about_i(Fl_Menu_*, void*) {
   std::ostringstream ost;
 ost
-<< cl_gts_master.cp_release_name() << '\n'
-<< "Version " << cl_gts_master.cp_release_number() << '\n'
-<< "Date " << cl_gts_master.cp_release_date()
+<< cl_gts_master.cp_release_name()
+<< '\n' << "Version:" << cl_gts_master.cp_release_number()
+<< '\n' << "Date:" << cl_gts_master.cp_release_date()
+<< '\n' << "GL_Vender:" << glGetString(GL_VENDOR)	// already showed Fl_Gl_Window
+<< '\n' << "GL_Renderer:" << glGetString(GL_RENDERER)	// already showed Fl_Gl_Window
+<< '\n' << "GL_Version:" << glGetString(GL_VERSION)	// already showed Fl_Gl_Window
 ;
 fl_message( ost.str().c_str() );
 }

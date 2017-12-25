@@ -2,8 +2,10 @@
 #define opengl_vertex_buffer_object_h
 
 #include <FL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
+//#include <GL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
 
 namespace opengl {
+
 class vertex_buffer_object {
 public:
 	vertex_buffer_object();
@@ -33,16 +35,6 @@ public:
 	/* 描画実行 */
 	void draw(void);
 
-	/* hsv --> xyz変換 */
-	void hsv_to_xyz(
-		const double h , const double s , const double v
-		,double& x , double& y , double& z
-	);
-	void hsv_to_xyzarray(
-		const double h , const double s , const double v
-		,vertex_buffer_object::vertex& xyz
-	);
-
 	void set_hsv_view_start_sw(bool sw) { this->hsv_view_start_sw_=sw; }
 	bool get_hsv_view_start_sw(void) const { return this->hsv_view_start_sw_;}
 	int get_pixel_size(void) const { return this->pixel_size_; }
@@ -56,6 +48,7 @@ private:
 	bool hsv_view_start_sw_;
 
 }; // class vertex_buffer_object
+
 } // namespace opengl
 
 #endif /* !opengl_vertex_buffer_object_h */
