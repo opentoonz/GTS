@@ -23,6 +23,7 @@ INCS =\
 /I$(DPATH_FLTK)\
 /I$(DPATH_GLEW)\include
 SRCS =\
+gts_file_path.cpp\
 gts_gui.cpp\
 gts_master.cpp\
 cb_area_and_rot90.cpp\
@@ -59,8 +60,7 @@ iipg_view.cpp\
 memory_config_load.cpp\
 memory_config_save.cpp\
 memory_desktop_load.cpp\
-memory_desktop_save.cpp\
-memory_scan_area.cpp
+memory_desktop_save.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty

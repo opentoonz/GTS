@@ -28,7 +28,6 @@
 #include "cb_trace_batch.h"
 #include "cb_trace_files.h"
 #include "cb_trace_params.h"
-#include "memory_scan_area.h"
 
 class gts_master {
 public:
@@ -112,7 +111,6 @@ public:
 	fltk_event	cl_fltk_event;	/* イベントドリブン */
 	memory_desktop	cl_memo_desktop;	/* desktopの再現 */
 	memory_config	cl_memo_config;	/* 各パラメータの再現 */
-	memory_scan_area	cl_memo_scan_area;
 
 	cb_image		cl_image;
 	cb_config		cl_config;

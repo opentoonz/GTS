@@ -5,8 +5,11 @@
 #include <fstream>
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h" // ptbl_getenv(-)
+#include "ptbl_funct.h"		/* ptbl_get_cp_path_separeter()
+				ptbl_charcode_cp932_from_utf8() */
 #include "memory_desktop.h"
+#include "gts_file_path.h"	/* ptbl_get_user_home(-)
+				get_desktop_dir_when_unix() */
 #include "gts_gui.h"
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
@@ -28,8 +31,7 @@ int memory_desktop::set_desktop_file_path_( void ) {
 		this->desktop_file_path_ = this->user_home_;
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
 #ifndef _WIN32
-		this->desktop_file_path_ +=
-			this->get_install_and_scan_area_and_desktop_dir();
+		this->desktop_file_path_ += get_desktop_dir_when_unix();
 		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
 		if (!ptbl_dir_or_file_is_exist(
 			const_cast<char *>(this->desktop_file_path_.c_str())

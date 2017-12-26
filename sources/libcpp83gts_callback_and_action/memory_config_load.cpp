@@ -340,16 +340,7 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	const std::string& ke = words.at(0);
 	const std::string& va = words.at(1);
 
-	if ( this->str_area_select_ == ke) {
-		const Fl_Menu_Item *crnt =
-			cl_gts_gui.choice_area_selecter->find_item(
-				va.c_str() );
-		if (crnt != nullptr) {
-			cl_gts_gui.choice_area_selecter->value(crnt);
-			cl_gts_master.cl_area_and_rot90.cb_area_selecter();
-		}
-	}
-	else if ((this->str_area_offset_cm_x_		 == ke)
+	if ((this->str_area_offset_cm_x_		 == ke)
 	||	 (this->str_area_offset_cm_x_legacy2017_ == ke)
 	) {
 	  cl_gts_gui.valinp_area_offset_cm_x->value( std::stod(va) );
@@ -358,15 +349,6 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	||	 (this->str_area_offset_cm_y_legacy2017_ == ke)
 	) {
 	  cl_gts_gui.valinp_area_offset_cm_y->value( std::stod(va) );
-	}
-	else if ( this->str_area_aspect_ratio_select_ == ke) {
-		const Fl_Menu_Item *crnt =
-	       cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
-			va.c_str() );
-		if (crnt != 0) {
-	cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
-	cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
-		}
 	}
 	else if ((this->str_area_size_cm_w_		== ke)
 	||	 (this->str_area_size_cm_w_legacy2017_  == ke)

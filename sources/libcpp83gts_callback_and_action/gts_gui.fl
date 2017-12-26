@@ -360,6 +360,9 @@ ost
 << '\\n' << "GL_Vender:" << glGetString(GL_VENDOR)	// already showed Fl_Gl_Window
 << '\\n' << "GL_Renderer:" << glGetString(GL_RENDERER)	// already showed Fl_Gl_Window
 << '\\n' << "GL_Version:" << glGetString(GL_VERSION)	// already showed Fl_Gl_Window
+<< '\\n' << "ScannerType:" << cl_gts_master.cl_iip_scan.get_cp_machine_type()
+<< '\\n' << "ScannerMaxWidth(cm):" << cl_gts_gui.valout_scanner_size_cm_w->value()
+<< '\\n' << "ScannerMaxHeight(cm):" << cl_gts_gui.valout_scanner_size_cm_h->value()
 ;
 fl_message( ost.str().c_str() );}
             xywh {0 0 30 20}
@@ -468,15 +471,6 @@ cl_gts_gui.menite_area_and_rot90->clear();}
       Fl_Group {} {open
         xywh {0 125 200 165} labeltype ENGRAVED_LABEL align 5
       } {
-        Fl_Choice choice_area_selecter {
-          callback {cl_gts_master.cl_area_and_rot90.cb_area_selecter();} open
-          xywh {90 130 105 25} down_box BORDER_BOX align 13 hide
-        } {
-          MenuItem {} {
-            label Custom
-            xywh {0 0 100 20}
-          }
-        }
         Fl_Group group_area_crop {
           label Area open
           xywh {1 140 198 150} box BORDER_FRAME color 41 align 5
@@ -543,16 +537,6 @@ cl_gts_gui.menite_area_and_rot90->clear();}
                 label pixel
                 xywh {155 250 35 25} type Radio value 1
               }
-            }
-          }
-          Fl_Choice choice_area_aspect_ratio_selecter {
-            label {Aspect Ratio}
-            callback {cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();} open
-            xywh {90 250 105 25} down_box BORDER_BOX hide
-          } {
-            MenuItem {} {
-              label Custom
-              xywh {0 0 30 20}
             }
           }
           Fl_Button {} {

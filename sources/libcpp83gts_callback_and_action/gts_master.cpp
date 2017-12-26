@@ -3,6 +3,7 @@
 #include <FL/x.H> /* for fl_xid() */
 #include "pri.h"
 #include "ids_path_level_from_files.h"
+#include "gts_file_path.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 

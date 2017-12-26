@@ -46,7 +46,6 @@ public:
 	,str_window_trace_hue_minmax_(
 	    "window_trace_hue_minmax" )
 # ifndef _WIN32
-	,str_desktop_dir_( ".GTS" )
 	,str_sane_device_name_(
 	    "sane_device_name" )
 # endif
@@ -55,13 +54,6 @@ public:
 
 	int save( void );
 	int load( void );
-
-# ifndef _WIN32
-	const char* get_install_and_scan_area_and_desktop_dir( void )
-	{
-		return this->str_desktop_dir_;
-	}
-# endif
 
 private:
 	const char* str_desktop_filename_;
@@ -89,7 +81,6 @@ private:
 	const char* str_window_trace_batch_;
 	const char* str_window_trace_hue_minmax_;
 # ifndef _WIN32
-	const char* str_desktop_dir_;
 	const char* str_sane_device_name_;
 # endif
 

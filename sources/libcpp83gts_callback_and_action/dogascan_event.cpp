@@ -257,24 +257,6 @@ void gts_master::_move_drag( void )
 	double crop_aspect_ratio_w = 0.0;
 	double crop_aspect_ratio_h = 0.0;
 
-	/* 画像上のCrop修正をするときは自動的にAspect Ratio指定解除する */
-	cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
-
-	/* 画像上のCrop修正でもAspect Ratio固定する --> 将来... */
-/************
-	if (0 < cl_gts_master.cl_memo_scan_area.aspect_ratios.size()
-	&&  0 < cl_gts_gui.choice_area_aspect_ratio_selecter->value()
-	) {
-		preset_rwh ratio =
-		cl_gts_master.cl_memo_scan_area.aspect_ratios.at(
-		cl_gts_gui.choice_area_aspect_ratio_selecter->value()
-			-1
-		);
-		crop_aspect_ratio_w = ratio.w;
-		crop_aspect_ratio_h = ratio.h;
-	}
-*************/
-
 	/* マウスポインター移動に合わせて画像表示パラメータを設定 */
 	this->cl_ogl_view.drag_moving(
 		cl_gts_master.cl_fltk_event.cl_mouse_state.x_move()

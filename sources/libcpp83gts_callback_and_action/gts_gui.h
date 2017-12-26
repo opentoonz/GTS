@@ -230,12 +230,6 @@ private:
   inline void cb_button_scan_crop_i(Fl_Button*, void*);
   static void cb_button_scan_crop(Fl_Button*, void*);
 public:
-  Fl_Choice *choice_area_selecter;
-private:
-  inline void cb_choice_area_selecter_i(Fl_Choice*, void*);
-  static void cb_choice_area_selecter(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_area_selecter[];
-public:
   Fl_Group *group_area_crop;
   Fl_Value_Input *valinp_area_offset_cm_x;
 private:
@@ -269,11 +263,7 @@ private:
 public:
   Fl_Button *radbut_area_reso_fix_cm;
   Fl_Button *radbut_area_reso_fix_pixel;
-  Fl_Choice *choice_area_aspect_ratio_selecter;
 private:
-  inline void cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*);
-  static void cb_choice_area_aspect_ratio_selecter(Fl_Choice*, void*);
-  static Fl_Menu_Item menu_choice_area_aspect_ratio_selecter[];
   inline void cb_Set_i(Fl_Button*, void*);
   static void cb_Set(Fl_Button*, void*);
   inline void cb_Set1_i(Fl_Button*, void*);

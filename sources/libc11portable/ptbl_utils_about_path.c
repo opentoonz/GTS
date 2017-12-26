@@ -32,6 +32,7 @@ char *ptbl_get_cp_path_separeter( void )
 //------------------------------------------------------------
 char *ptbl_getenv(const char *name)
 {
+	/* _MAX_ENV is 32767 at VS2013 */
 	size_t length = 0;
 	char *value = (char*)calloc( _MAX_ENV ,sizeof(char) );
 	if (value == NULL) {

@@ -380,6 +380,9 @@ ost
 << '\n' << "GL_Vender:" << glGetString(GL_VENDOR)	// already showed Fl_Gl_Window
 << '\n' << "GL_Renderer:" << glGetString(GL_RENDERER)	// already showed Fl_Gl_Window
 << '\n' << "GL_Version:" << glGetString(GL_VERSION)	// already showed Fl_Gl_Window
+<< '\n' << "ScannerType:" << cl_gts_master.cl_iip_scan.get_cp_machine_type()
+<< '\n' << "ScannerMaxWidth(cm):" << cl_gts_gui.valout_scanner_size_cm_w->value()
+<< '\n' << "ScannerMaxHeight(cm):" << cl_gts_gui.valout_scanner_size_cm_h->value()
 ;
 fl_message( ost.str().c_str() );
 }
@@ -550,18 +553,6 @@ void gts_gui::cb_button_scan_crop(Fl_Button* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_button_scan_crop_i(o,v);
 }
 
-void gts_gui::cb_choice_area_selecter_i(Fl_Choice*, void*) {
-  cl_gts_master.cl_area_and_rot90.cb_area_selecter();
-}
-void gts_gui::cb_choice_area_selecter(Fl_Choice* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->user_data()))->cb_choice_area_selecter_i(o,v);
-}
-
-Fl_Menu_Item gts_gui::menu_choice_area_selecter[] = {
- {"Custom", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0}
-};
-
 void gts_gui::cb_valinp_area_offset_cm_x_i(Fl_Value_Input*, void*) {
   cl_gts_master.cl_area_and_rot90.cb_area_offset_cm_x();
 }
@@ -603,18 +594,6 @@ void gts_gui::cb_valinp_area_size_pixel_h_i(Fl_Value_Input*, void*) {
 void gts_gui::cb_valinp_area_size_pixel_h(Fl_Value_Input* o, void* v) {
   ((gts_gui*)(o->parent()->parent()->parent()->parent()->parent()->user_data()))->cb_valinp_area_size_pixel_h_i(o,v);
 }
-
-void gts_gui::cb_choice_area_aspect_ratio_selecter_i(Fl_Choice*, void*) {
-  cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
-}
-void gts_gui::cb_choice_area_aspect_ratio_selecter(Fl_Choice* o, void* v) {
-  ((gts_gui*)(o->parent()->parent()->parent()->user_data()))->cb_choice_area_aspect_ratio_selecter_i(o,v);
-}
-
-Fl_Menu_Item gts_gui::menu_choice_area_aspect_ratio_selecter[] = {
- {"Custom", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0}
-};
 
 void gts_gui::cb_Set_i(Fl_Button* o, void*) {
   cl_gts_master.cl_area_and_rot90.cb_dialog_set_aspect_ratio(
@@ -2244,13 +2223,6 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Group* o = new Fl_Group(0, 125, 200, 165);
       o->labeltype(FL_ENGRAVED_LABEL);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { choice_area_selecter = new Fl_Choice(90, 130, 105, 25);
-        choice_area_selecter->down_box(FL_BORDER_BOX);
-        choice_area_selecter->callback((Fl_Callback*)cb_choice_area_selecter);
-        choice_area_selecter->align(Fl_Align(FL_ALIGN_LEFT_BOTTOM));
-        choice_area_selecter->hide();
-        choice_area_selecter->menu(menu_choice_area_selecter);
-      } // Fl_Choice* choice_area_selecter
       { group_area_crop = new Fl_Group(1, 140, 198, 150, "Area");
         group_area_crop->box(FL_BORDER_FRAME);
         group_area_crop->color((Fl_Color)41);
@@ -2323,12 +2295,6 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Group* o
           o->end();
         } // Fl_Group* o
-        { choice_area_aspect_ratio_selecter = new Fl_Choice(90, 250, 105, 25, "Aspect Ratio");
-          choice_area_aspect_ratio_selecter->down_box(FL_BORDER_BOX);
-          choice_area_aspect_ratio_selecter->callback((Fl_Callback*)cb_choice_area_aspect_ratio_selecter);
-          choice_area_aspect_ratio_selecter->hide();
-          choice_area_aspect_ratio_selecter->menu(menu_choice_area_aspect_ratio_selecter);
-        } // Fl_Choice* choice_area_aspect_ratio_selecter
         { Fl_Button* o = new Fl_Button(75, 195, 120, 17, "Set Aspect Ratio...");
           o->callback((Fl_Callback*)cb_Set);
         } // Fl_Button* o

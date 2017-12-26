@@ -154,14 +154,10 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_area_and_rot90->label() << "\n";
-//	save_stri_( this->str_area_select_
-//	   ,cl_gts_gui.choice_area_selecter->text() ,ofs );
 	save_fl64_( this->str_area_offset_cm_x_
 	   ,cl_gts_gui.valinp_area_offset_cm_x->value() ,ofs );
 	save_fl64_( this->str_area_offset_cm_y_
 	   ,cl_gts_gui.valinp_area_offset_cm_y->value() ,ofs );
-//	save_stri_( this->str_area_aspect_ratio_select_
-//	   ,cl_gts_gui.choice_area_aspect_ratio_selecter->text() ,ofs);
 	save_fl64_( this->str_area_size_cm_w_
 	   ,cl_gts_gui.valinp_area_size_cm_w->value() ,ofs );
 	save_fl64_( this->str_area_size_cm_h_

@@ -135,6 +135,7 @@ libgts_la_SOURCES = \
 					sources/libcpp72iip_erase_dot_noise/calcu_erase_dot_noise.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_exec.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_uchar.cpp \
+					sources/libcpp83gts_callback_and_action/gts_file_path.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_area_and_rot90.cpp \
@@ -171,8 +172,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_config_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_config_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
-					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
-					sources/libcpp83gts_callback_and_action/memory_scan_area.cpp
+					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp
 
 if WINDOWS
 libgts_la_CPPFLAGS += -Ithirdparty/twain/twain-2.3
