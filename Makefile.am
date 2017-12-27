@@ -86,6 +86,7 @@ libgts_la_SOURCES = \
 					sources/lib_util/calc_rad_deg.cpp \
 					sources/lib_util/opengl_camera_eye.cpp \
 					sources/lib_util/opengl_vertex_buffer_object.cpp \
+					sources/lib_util/rsrc_getenv.cpp \
 					sources/lib_util/util_stop_watch.cpp \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
 					sources/libcpp38calcu_rgb_to_hsv/from_hsv.cpp \

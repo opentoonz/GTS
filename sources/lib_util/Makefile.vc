@@ -14,6 +14,7 @@ calc_hsv_xyz.cpp\
 calc_rad_deg.cpp\
 opengl_camera_eye.cpp\
 opengl_vertex_buffer_object.cpp\
+rsrc_getenv.cpp\
 util_stop_watch.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)

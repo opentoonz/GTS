@@ -38,9 +38,6 @@ extern char *ptbl_get_cp_filename_from_path( char *cp_filepath );
 /* パスの区切り文字を得る(文字列の方が使いやすいので) */
 extern char *ptbl_get_cp_path_separeter( void );
 
-/* 環境変数を得る。戻り値はcalloc()によるヒープアドレスなのでfree()必須 */
-char *ptbl_getenv(const char *name);
-
 #if defined _WIN32
 /* Windowsでファイルアクセルするときのパス名の日本語文字コードの変換 */
 /* 戻り値は内部static文字配列なのでスレッドセーフではない */

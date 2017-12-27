@@ -1,5 +1,6 @@
 #include <fstream>
-#include "ptbl_funct.h" // ptbl_getenv(-)
+#include "ptbl_funct.h"	/* ptbl_get_cp_path_separeter() */
+#include "rsrc_getenv.h"	/* rsrc::getenv(-) */
 #include "gts_file_path.h"
 
 namespace {
@@ -37,13 +38,13 @@ std::string get_dexe_home_(const char *comm) {
 }
 
 /* 環境変数を得る */
-void ptbl_getenv_(const char *name, std::string& env) {
+/*void ptbl_getenv_(const char *name, std::string& env) {
 	char *value = ptbl_getenv(name);
 	if (value != nullptr) {
 		env = value;
 		free(value);
 	}
-}
+}*/
 
 } // namespace
 
@@ -59,15 +60,14 @@ const char* get_desktop_dir_when_unix( void )
 void ptbl_get_user_home(std::string& user_home)
 {
 #ifdef _WIN32
-	std::string homedrive, homepath;
-	ptbl_getenv_("HOMEDRIVE", homedrive);
-	ptbl_getenv_("HOMEPATH" , homepath);
+	std::string homedrive( rsrc::getenv( "HOMEDRIVE" ) );
+	std::string homepath(  rsrc::getenv( "HOMEPATH"  ) );
 	if (!homedrive.empty() && !homepath.empty()) {
 		user_home = homedrive;
 		user_home += homepath;
 	}
 #else
-	ptbl_getenv_("HOME", user_home);
+	user_home = rsrc::getenv( "HOME" );
 #endif
 }
 
@@ -104,8 +104,8 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 	=     "C:\ProgramData\_gts-scan_area.txt" at Windows7  
 		Windows7では一般ユーザーが書き込めないので使えない
 	*/
-	std::string fpath_prof;
-	ptbl_getenv_("ALLUSERSPROFILE", fpath_prof);
+	std::string fpath_prof( rsrc::getenv( "ALLUSERSPROFILE" ) );
+
 	file_path_from_dir_(fpath_prof, file_name);
 	if (!fpath_prof.empty()) {
 		return fpath_prof;
@@ -115,15 +115,16 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 	-->	%PUBLIC%\_gts-scan_area.txt"
 	= "C:\Users\Public\_gts-scan_area.txt" at Windows7
 	*/
-	std::string fpath_publ;
-	ptbl_getenv_("PUBLIC", fpath_publ);
+	std::string fpath_publ( rsrc::getenv( "PUBLIC" ) );
+
 	file_path_from_dir_(fpath_publ, file_name);
 	if (!fpath_publ.empty()) {
 		return fpath_publ;
 	}
 
 	/* 優先度D  .exeと同じ場所にあるなら */
-	std::string fpath_dexe(get_dexe_home_(comm));
+	std::string fpath_dexe( get_dexe_home_(comm) );
+
 	file_path_from_dir_(fpath_dexe, file_name);
 	if (!fpath_dexe.empty()) {
 		return fpath_dexe;
