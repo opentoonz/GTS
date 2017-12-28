@@ -67,10 +67,17 @@ void cb_scan_and_save::cb_start( void )
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
 	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-		Fl::focus( cl_gts_gui.button_rescan );
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_next_scan->show();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
+		== 0) {
+			Fl::focus( cl_gts_gui.button_rescan );
+			cl_gts_gui.window_next_scan->show();
+		} else {
+			Fl::focus( cl_gts_gui.button_rescan_non_modal );
+			cl_gts_gui.window_next_scan_non_modal->show();
+		}
 	}
 }
 void cb_scan_and_save::cb_next( void )
@@ -82,6 +89,7 @@ void cb_scan_and_save::cb_next( void )
 
 	/* windowを消す */
 	cl_gts_gui.window_next_scan->hide();
+	cl_gts_gui.window_next_scan_non_modal->hide();
 
 	/* 次の番号を得る。ただし以前CANCELであったら以前のまま */
 	cl_gts_master.cl_number.counter_next(
@@ -103,10 +111,16 @@ void cb_scan_and_save::cb_next( void )
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
 	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-		Fl::focus( cl_gts_gui.button_rescan );
-
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_next_scan->show();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
+		== 0) {
+			Fl::focus( cl_gts_gui.button_rescan );
+			cl_gts_gui.window_next_scan->show();
+		} else {
+			Fl::focus( cl_gts_gui.button_rescan_non_modal );
+			cl_gts_gui.window_next_scan_non_modal->show();
+		}
 	}
 }
 void cb_scan_and_save::cb_rescan( void )
@@ -118,6 +132,7 @@ void cb_scan_and_save::cb_rescan( void )
 
 	/* windowを消す */
 	cl_gts_gui.window_next_scan->hide();
+	cl_gts_gui.window_next_scan_non_modal->hide();
 
 	/* カレントのスキャンと保存をして、次があるなら準備もする */
 	this->prev_scan_action_is_ = this->next_scan_and_save_();
@@ -131,10 +146,17 @@ void cb_scan_and_save::cb_rescan( void )
 	/* 次のスキャンがあるなら */
 	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
 	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-		Fl::focus( cl_gts_gui.button_rescan );
 
 		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_next_scan->show();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
+		== 0) {
+			Fl::focus( cl_gts_gui.button_rescan );
+			cl_gts_gui.window_next_scan->show();
+		} else {
+			Fl::focus( cl_gts_gui.button_rescan_non_modal );
+			cl_gts_gui.window_next_scan_non_modal->show();
+		}
 	}
 }
 int cb_scan_and_save::next_scan_and_save_( void )
@@ -241,11 +263,16 @@ int cb_scan_and_save::next_scan_and_save_( void )
 		char	ca8_but[8];
 		(void)sprintf( ca8_but ,"%d" ,crnt_file_num );
 		cl_gts_gui.norout_crnt_scan_number->value(ca8_but);
+		cl_gts_gui.norout_crnt_scan_number_non_modal->value(ca8_but);
 
 		(void)sprintf( ca8_but ,"%d" ,next_file_num );
 		cl_gts_gui.norout_next_scan_number->value(ca8_but);
+		cl_gts_gui.norout_next_scan_number_non_modal->value(ca8_but);
 
 		cl_gts_gui.norout_crnt_scan_level->value(
+		 cl_gts_gui.strinp_scan_save_file_head->value()
+		);
+		cl_gts_gui.norout_crnt_scan_level_non_modal->value(
 		 cl_gts_gui.strinp_scan_save_file_head->value()
 		);
 	}

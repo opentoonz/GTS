@@ -190,20 +190,31 @@ public:
 private:
   inline void cb_button_rescan_i(Fl_Button*, void*);
   static void cb_button_rescan(Fl_Button*, void*);
-public:
-  Fl_Button *button_next_scan;
-private:
-  inline void cb_button_next_scan_i(Fl_Button*, void*);
-  static void cb_button_next_scan(Fl_Button*, void*);
-public:
-  Fl_Button *button_stop_scan;
-private:
-  inline void cb_button_stop_scan_i(Fl_Button*, void*);
-  static void cb_button_stop_scan(Fl_Button*, void*);
+  inline void cb_Next1_i(Fl_Button*, void*);
+  static void cb_Next1(Fl_Button*, void*);
+  inline void cb_Stop_i(Fl_Button*, void*);
+  static void cb_Stop(Fl_Button*, void*);
 public:
   Fl_Output *norout_crnt_scan_level;
   Fl_Output *norout_crnt_scan_number;
   Fl_Output *norout_next_scan_number;
+  Fl_Double_Window *window_next_scan_non_modal;
+private:
+  inline void cb_window_next_scan_non_modal_i(Fl_Double_Window*, void*);
+  static void cb_window_next_scan_non_modal(Fl_Double_Window*, void*);
+public:
+  Fl_Button *button_rescan_non_modal;
+private:
+  inline void cb_button_rescan_non_modal_i(Fl_Button*, void*);
+  static void cb_button_rescan_non_modal(Fl_Button*, void*);
+  inline void cb_Next2_i(Fl_Button*, void*);
+  static void cb_Next2(Fl_Button*, void*);
+  inline void cb_Stop1_i(Fl_Button*, void*);
+  static void cb_Stop1(Fl_Button*, void*);
+public:
+  Fl_Output *norout_crnt_scan_level_non_modal;
+  Fl_Output *norout_crnt_scan_number_non_modal;
+  Fl_Output *norout_next_scan_number_non_modal;
   Fl_Double_Window *window_area_and_rot90;
 private:
   inline void cb_window_area_and_rot90_i(Fl_Double_Window*, void*);
@@ -417,6 +428,7 @@ private:
   inline void cb_Set2_i(Fl_Button*, void*);
   static void cb_Set2(Fl_Button*, void*);
 public:
+  Fl_Check_Button *chkbtn_scan_adjustable_per_frame_sw;
   Fl_Button *button_scan_save;
 private:
   inline void cb_button_scan_save_i(Fl_Button*, void*);
