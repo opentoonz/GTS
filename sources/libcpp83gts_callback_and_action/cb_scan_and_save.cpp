@@ -12,233 +12,103 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-//------------------------------------------------------------
-/* スキャン＆保存実行 */
-static bool while_scan_sw_=false;
-void cb_scan_and_save::cb_start( void )
+const char* cb_scan_and_save::cb_start_check_( void )
 {
-	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
-	/* マルチスレッドに非対応 */
-	if ( while_scan_sw_ == true ) { return; }
-	while_scan_sw_ = true;
-
+	/* 01 チェック：スキャンモードであること */
 	if ( !cl_gts_master.cl_number.is_scan() ) {
-		fl_alert("Set Number for Scan");
-		while_scan_sw_ = false;
-		return;
+		return "Set Number for Scan";
 	}
 
-	/* 先頭を得る */
+	/* 02 チェック：保存ファイルのLevel名があること */
+	std::string name(cl_gts_gui.strinp_scan_save_file_head->value());
+	if ( name.empty() ) {
+		return "Need Scan Save Name!";
+	}
+
+	/* 03 値セット：選択リストから先頭を得る */
 	cl_gts_master.cl_number.counter_start(
 		cl_gts_gui.choice_scan_num_continue_type->value()
 	);
 
-	/* チェック：保存ファイルのLevel名がない */
-	{
-	std::string name(cl_gts_gui.strinp_scan_save_file_head->value());
-	if ( name.empty() ) {
-		fl_alert("Need Scan Save Name!");
-		while_scan_sw_ = false;
-		return;
-	}
-	}
-
-	/* 番号選択がない/設定できない */
+	/* 04 チェック：番号リストの選択からカレントを得る */
 	if (cl_gts_master.cl_number.get_crnt_file_num() < 1) {
 		if (cl_gts_gui.choice_scan_num_continue_type->value()
 		== cl_gts_master.cl_number.get_end_type_value()
 		) {	/* End type */
-			fl_alert("Select Number!");
+		return "Select Number!";
 		}
 		else {	/* Endless type */
-			fl_alert("Bad Number in Start!");
-		}
-		while_scan_sw_ = false;
-		return;
-	}
-
-	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	this->prev_scan_action_is_ = this->next_scan_and_save_();
-	while_scan_sw_ = false;
-	if (this->prev_scan_action_is_ != OK) { // NG or CANCEL
-		return; /* 始めにエラーやキャンセルしたら次はしない */
-	}
-
-	/* 次のスキャンがあるなら */
-	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-
-		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
-		== 0) {
-			Fl::focus( cl_gts_gui.button_rescan );
-			cl_gts_gui.window_next_scan->show();
-		} else {
-			Fl::focus( cl_gts_gui.button_rescan_non_modal );
-			cl_gts_gui.window_next_scan_non_modal->show();
+		return "Bad Number in Start!";
 		}
 	}
+	return "";
 }
-void cb_scan_and_save::cb_next( void )
+
+std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 {
-	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
-	/* マルチスレッドに非対応 */
-	if ( while_scan_sw_ == true ) { return; }
-	while_scan_sw_ = true;
+	/* 01 チェック：スキャンする番号を得る */
+	if (cl_gts_master.cl_number.get_crnt_list_num() < 1
+	||  cl_gts_master.cl_number.get_crnt_file_num() < 1) {
+		std::ostringstream ost;
+		ost	<< "Bad Number(crnt_list_num="
+			<< cl_gts_master.cl_number.get_crnt_list_num()
+			<< ",crnt_file_num="
+			<< cl_gts_master.cl_number.get_crnt_file_num()
+			<< ")"
+		;
+		return_code = NG;
+		return ost.str();
+	}
 
-	/* windowを消す */
-	cl_gts_gui.window_next_scan->hide();
-	cl_gts_gui.window_next_scan_non_modal->hide();
-
-	/* 次の番号を得る。ただし以前CANCELであったら以前のまま */
-	cl_gts_master.cl_number.counter_next(
-		cl_gts_gui.choice_scan_num_continue_type->value()
+	/* 02 表示：スキャンするフレーム番号位置にリストをスクロール */
+	cl_gts_gui.selbro_number_list->middleline(
+		cl_gts_master.cl_number.get_crnt_list_num()
 	);
 
-	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	this->prev_scan_action_is_ = this->next_scan_and_save_();
-	while_scan_sw_ = false;
-
-	if (this->prev_scan_action_is_ == NG) {
-		return;
-	}
-	/* キャンセルであっても次を... */
-	if (this->prev_scan_action_is_ == CANCEL) {
-		cl_gts_master.cl_number.counter_cancel_one_step();
-	}
-
-	/* 次のスキャンがあるなら */
-	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
-		== 0) {
-			Fl::focus( cl_gts_gui.button_rescan );
-			cl_gts_gui.window_next_scan->show();
-		} else {
-			Fl::focus( cl_gts_gui.button_rescan_non_modal );
-			cl_gts_gui.window_next_scan_non_modal->show();
-		}
-	}
-}
-void cb_scan_and_save::cb_rescan( void )
-{
-	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
-	/* マルチスレッドに非対応 */
-	if ( while_scan_sw_ == true ) { return; }
-	while_scan_sw_ = true;
-
-	/* windowを消す */
-	cl_gts_gui.window_next_scan->hide();
-	cl_gts_gui.window_next_scan_non_modal->hide();
-
-	/* カレントのスキャンと保存をして、次があるなら準備もする */
-	this->prev_scan_action_is_ = this->next_scan_and_save_();
-	while_scan_sw_ = false;
-
-	if ( this->prev_scan_action_is_ == NG ) {
-		return;
-	}
-	/* キャンセルであっても次を... */
-
-	/* 次のスキャンがあるなら */
-	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-
-		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
-		== 0) {
-			Fl::focus( cl_gts_gui.button_rescan );
-			cl_gts_gui.window_next_scan->show();
-		} else {
-			Fl::focus( cl_gts_gui.button_rescan_non_modal );
-			cl_gts_gui.window_next_scan_non_modal->show();
-		}
-	}
-}
-int cb_scan_and_save::next_scan_and_save_( void )
-{
-	/* 01 次(始め)の位置を得る */
-	int crnt_list_num = cl_gts_master.cl_number.get_crnt_list_num();
-	int crnt_file_num = cl_gts_master.cl_number.get_crnt_file_num();
-	int next_file_num = cl_gts_master.cl_number.get_next_file_num();
-	if (crnt_list_num< 1 || crnt_file_num< 1) {
-		pri_funct_err_bttvr(
-   "Error : crnt_list_num=%d or crnt_file_num=%d"
-			,crnt_list_num ,crnt_file_num );
-		return NG;
-	}
-
-	/* 02 保存するファイルパスを得る
-		DirPath/Level.Number.Ext-->例:"C:/users/public/A.0001.tif"
-	*/
-	std::string fpath_save( this->get_save_path(crnt_file_num) );
-	if (fpath_save.empty()) {
-		pri_funct_err_bttvr(
-			"Error : this->get_save_path(%d) returns empty"
-			, crnt_file_num );
-		return NG;
-	}
-
-	/* 03 フレーム番号(crnt_list_num)を表示するようリストをスクロール */
-	cl_gts_gui.selbro_number_list->middleline(crnt_list_num);
-
-	/* 04 スキャンを実行 */
-	int return_code=NG;
+	/* 03 スキャン：実行 */
 	iip_canvas* clp_scan = cl_gts_master.iipg_scan( return_code );
 	if (return_code == NG) {
-		pri_funct_err_bttvr(
-		      "Error : cl_gts_master.iipg_scan() returns NG" );
-		return NG;
+		return_code = NG;
+		return std::string("Can not Scan(NG)");
 	}
+
+	/* 04 スキャン：ユーザーからキャンセル指示があればここまで */
 	if (return_code == CANCEL) {
-		return CANCEL;
+		return_code = CANCEL;
+		return std::string();
 	}
+
+	/* 05 スキャン：return_codeチェックのあとにエラーチェックする */
 	if (nullptr == clp_scan) {
-		pri_funct_err_bttvr(
-		      "Error : cl_gts_master.iipg_scan() returns nullptr" );
-		return NG;
+		return_code = NG;
+		return std::string("Can not Scan(nullptr)");
 	}
 
-	/* Crop以外の画像表示をした場合 */
-	cl_gts_master.cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
+	//------------------------------
 
-	/* 05 回転、2値化、ドットノイズ消去　処理 */
+	/* 06 画像処理：回転、2値化、ドットノイズ消去 */
 	if (cl_gts_master.rot_and_trace_and_enoise(
 		clp_scan ,cl_gts_gui.choice_rot90->value()
 	) != OK) {
-		return NG;
+		return_code = NG;
+		return std::string("Can not Fx");
 	}
 
-	/* 06 画像を保存する
-		BW/Grayscale/RGB/RGBTraceのどれか
-	*/
-	if (OK != cl_gts_master.iipg_save(
-		&(cl_gts_master.cl_iip_edot)/* Effectの最後Node画像を保存 */
-		, const_cast<char *>(fpath_save.c_str())
-		, cl_gts_gui.valinp_area_reso->value()
-		/* 回転値後を正対として角度ゼロ(default)として保存する */
-	) ) {
-		pri_funct_err_bttvr(
-	 "Error : this->iipg_save(-) returns NG" );
-		return NG;
-	}
+	//------------------------------
 
-	/* 07 リストに保存済マーク付け "0000" --> "0000 S" */
-	cl_gts_master.cl_number.add_S(crnt_list_num);
+	/* 07 表示：Crop以外の画像をスキャンし表示をする場合 */
+	cl_gts_master.cl_area_and_rot90.reset_dpi_to_zero_by_scan_or_preview();
 
-	/* 08 リストの選択解除 */
-	cl_gts_master.cl_number.unselect(crnt_list_num);
+	/* 08 表示：Crop(切抜き)はしないのでOFFにしておく */
+	cl_gts_master.cl_ogl_view.set_crop_disp_sw(OFF);
 
-	/* 09 画像表示 */
+	/* 09 表示：画像 */
 	if (cl_gts_master.redraw_image( clp_scan ,false ,false ) != OK) {
-		return NG;
+		return_code = NG;
+		return std::string("Can not Redraw");
 	}
 
-	/* 10 保存するタイプで画像を表示する */
+	/* 10 表示：保存するタイプで画像を表示する */
 	if ( cl_gts_gui.chkbtn_scan_filter_trace_sw->value() ) {
 		/* TracenImage画像のみ表示 */
 		cl_gts_master.cb_change_wview_sub();
@@ -254,30 +124,345 @@ int cb_scan_and_save::next_scan_and_save_( void )
 		cl_gts_gui.menite_wview_main->setonly();
 	}
 
-	/* 11 切抜きはしないのでOFFにしておく */
-	cl_gts_master.cl_ogl_view.set_crop_disp_sw(OFF);
+	return_code = OK;
+}
 
-	/* 12 次のフレーム番号があるなら、
-	次の処理を促すwindowの設定をしておく */
-	if (0 < cl_gts_master.cl_number.get_next_file_num()) {
-		char	ca8_but[8];
-		(void)sprintf( ca8_but ,"%d" ,crnt_file_num );
-		cl_gts_gui.norout_crnt_scan_number->value(ca8_but);
-		cl_gts_gui.norout_crnt_scan_number_non_modal->value(ca8_but);
-
-		(void)sprintf( ca8_but ,"%d" ,next_file_num );
-		cl_gts_gui.norout_next_scan_number->value(ca8_but);
-		cl_gts_gui.norout_next_scan_number_non_modal->value(ca8_but);
-
-		cl_gts_gui.norout_crnt_scan_level->value(
-		 cl_gts_gui.strinp_scan_save_file_head->value()
-		);
-		cl_gts_gui.norout_crnt_scan_level_non_modal->value(
-		 cl_gts_gui.strinp_scan_save_file_head->value()
-		);
+std::string cb_scan_and_save::cb_save_( void )
+{
+	/* 01 保存するファイルパスを得る
+	DirPath/Level.Number.Ext-->例:"C:/users/public/A.0001.tif" */
+	std::string fpath_save( this->get_save_path(
+		cl_gts_master.cl_number.get_crnt_file_num()
+	) );
+	if (fpath_save.empty()) {
+		std::ostringstream ost;
+		ost	<< "Can not get save_file_path at current_number("
+			<< cl_gts_master.cl_number.get_crnt_file_num()
+			<< ")"
+			;
+		return ost.str();
 	}
 
-	return OK;
+	/* 02 画像を保存する BW/Grayscale/RGB/RGBTraceのどれか */
+	if (OK != cl_gts_master.iipg_save(
+		&(cl_gts_master.cl_iip_edot)/* Effectの最後Node画像を保存 */
+		, const_cast<char *>(fpath_save.c_str())
+		, cl_gts_gui.valinp_area_reso->value()
+		/* 回転値後を正対として角度ゼロ(default)として保存する */
+	) ) {
+		std::ostringstream ost;
+		ost	<< "Can not Save file("
+			<< fpath_save
+			<< ")"
+			;
+		return ost.str();
+	}
+
+	/* 03 リストに保存済マーク付け "0000" --> "0000 S" */
+	cl_gts_master.cl_number.add_S(
+	 cl_gts_master.cl_number.get_crnt_list_num()
+	);
+
+	/* 04 リストの選択解除 */
+	cl_gts_master.cl_number.unselect(
+	 cl_gts_master.cl_number.get_crnt_list_num()
+	);
+
+	return std::string();
+}
+
+void cb_scan_and_save::cb_set_next_window_( void )
+{
+	if (cl_gts_master.cl_number.get_next_file_num() <= 0) {
+		return;
+	}
+ {
+	std::ostringstream ost;
+	ost << cl_gts_master.cl_number.get_crnt_file_num();
+	std::string str(ost.str());
+	cl_gts_gui.norout_crnt_scan_number->value( str.c_str() );
+ }
+ {
+	std::ostringstream ost;
+	ost << cl_gts_master.cl_number.get_next_file_num();
+	std::string str(ost.str());
+	cl_gts_gui.norout_next_scan_number->value( str.c_str() );
+ }
+	cl_gts_gui.norout_crnt_scan_level->value(
+		cl_gts_gui.strinp_scan_save_file_head->value()
+	);
+}
+void cb_scan_and_save::cb_set_next_window_non_modal_( void )
+{
+	std::string fpath_save( this->get_save_path(
+		cl_gts_master.cl_number.get_crnt_file_num()
+	) );
+	cl_gts_gui.norout_next_save_non_modal->value( fpath_save.c_str() );
+}
+
+//-----------------------------
+
+#if 0
+int cb_scan_and_save::cb_scan( ScanSaveFramesAct type )
+{
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	/* マルチスレッドに非対応 */
+	if ( this->during_the_scan_is_ == true ) { return; }
+	this->during_the_scan_is_ = true;
+
+	/* nextウインドウを消す */
+	cl_gts_gui.window_next_scan->hide();
+	cl_gts_gui.window_next_scan_non_modal->hide();
+
+ if ( type == ScanSaveFramesAct::Start ) {
+	/* 連番処理の開始処理 */
+	std::string err_msg( this->cb_start_check_() );
+	if ( !err_msg.empty() ) {
+		this->during_the_scan_is_ = false;
+		fl_alert( err_msg.c_str() );
+		return NG;
+	}
+ } else
+ if ( type == ScanSaveFramesAct::Next ) {
+	/* 次の番号を得る。ただし以前CANCELであったら以前のまま */
+	cl_gts_master.cl_number.counter_next(
+		cl_gts_gui.choice_scan_num_continue_type->value()
+	);
+ }
+
+	/* スキャンしエフェクト処理し表示をする */
+	int return_code = NG;
+	std::string err_msg = this->cb_scan_fx_display_( return_code );
+
+ if ( type == ScanSaveFramesAct::Start ) {
+	if (return_code == CANCEL) {
+	/* start時のユーザーキャンセルは動作終了する */
+		return CANCEL;
+	}
+ else
+ if ( type == ScanSaveFramesAct::Next ) {
+	if (return_code == CANCEL) {
+	/* next時のユーザーキャンセルはフレーム戻して次のフレーム動作へ */
+		cl_gts_master.cl_number.counter_cancel_one_step();
+	}
+ }
+
+	/* CANCELかNGの時はNextウインドウを表示しない */
+	if (return_code != OK) {
+		if (return_code == NG) {
+			fl_alert( err_msg.c_str() );
+		}
+		return return_code;
+	}
+
+	/* ファイル保存する */
+	std::string err_msg = this->cb_save_();
+	if ( !err_msg.empty() ) { fl_alert( err_msg.c_str() ); return NG; }
+
+	/* 次のフレーム番号があるなら、次処理を促すwindowの設定をしておく */
+	this->cb_set_next_window_();
+
+	this->during_the_scan_is_ = false;
+
+	/* 次のスキャンがあるなら */
+	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
+	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
+
+		/* 次をどうするかwindowを表示して指示を仰ぐ */
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
+		== 0) {
+			Fl::focus( cl_gts_gui.button_rescan );
+			cl_gts_gui.window_next_scan->show();
+		} else {
+			Fl::focus( cl_gts_gui.button_rescan_non_modal );
+			cl_gts_gui.window_next_scan_non_modal->show();
+		}
+	}
+}
+#endif
+
+void cb_scan_and_save::cb_start( void )
+{
+	/* ショートカット動作で連続してキーインしたときの誤動作防止 */
+	if ( this->during_the_scan_is_ == true ) { return; }
+	this->during_the_scan_is_ = true;
+
+	/* 連番処理のパラメータチェックと、連番の始めの番号をセット */
+	{
+	std::string err_msg( this->cb_start_check_() );
+	if ( !err_msg.empty() ) {
+		this->during_the_scan_is_ = false;
+		fl_alert( err_msg.c_str() ); return;
+	}
+	}
+
+ {
+	/* スキャンしエフェクト処理し表示をする */
+	int return_code = NG;
+	std::string err_msg( this->cb_scan_fx_display_( return_code ) );
+
+	/* start時のユーザーキャンセルは動作終了する */
+	if (return_code == CANCEL) {
+		this->during_the_scan_is_ = false;
+		return;
+	}
+
+	/* NGの時は動作終了する */
+	if (return_code == NG) {
+		this->during_the_scan_is_ = false;
+		fl_alert( err_msg.c_str() ); return;
+	}
+ }
+
+	/* 調整しないで次番号を処理する */
+	if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value() == 0) {
+		/* 保存処理 */
+		this->cb_save();
+	}
+	/* 調整してから次番号を処理する */
+	else {
+		/* ファイル保存を促すwindowの設定をしておく */
+		this->cb_set_next_window_non_modal_();
+
+		/* 今の画像を保存を促すウインドウを表示する */
+		Fl::focus( cl_gts_gui.button_next_save_non_modal );
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_next_scan_non_modal->show();
+	}
+}
+void cb_scan_and_save::cb_next( void )
+{
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	if ( this->during_the_scan_is_ == true ) { return; }
+	this->during_the_scan_is_ = true;
+
+	/* nextウインドウを消す */
+	cl_gts_gui.window_next_scan_non_modal->position(
+	cl_gts_gui.window_next_scan->x(),
+	cl_gts_gui.window_next_scan->y()
+	);
+	cl_gts_gui.window_next_scan->hide();
+
+	/* 次の番号をセット */
+	cl_gts_master.cl_number.counter_next(
+		cl_gts_gui.choice_scan_num_continue_type->value()
+	);
+
+	/* スキャンしエフェクト処理し表示をする */
+	int return_code = NG;
+	std::string err_msg = this->cb_scan_fx_display_( return_code );
+
+	/* next時のユーザーキャンセルはフレーム戻して次フレームスキャンへ */
+	if (return_code == CANCEL) {
+		cl_gts_master.cl_number.counter_cancel_one_step();
+		this->during_the_scan_is_ = false;
+		Fl::focus( cl_gts_gui.button_rescan );
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_next_scan->show();
+		return;
+	}
+
+	/* NGの時は動作終了する */
+	if (return_code == NG) {
+		this->during_the_scan_is_ = false;
+		fl_alert( err_msg.c_str() ); return;
+	}
+
+	/* 調整しないで次番号を処理する */
+	if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value() == 0) {
+		/* 保存処理 */
+		this->cb_save();
+	}
+	/* 調整してから次番号を処理する */
+	else {
+		/* ファイル保存を促すwindowの設定をしておく */
+		this->cb_set_next_window_non_modal_();
+
+		/* 今の画像を保存を促すウインドウを表示する */
+		Fl::focus( cl_gts_gui.button_next_save_non_modal );
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_next_scan_non_modal->show();
+	}
+}
+void cb_scan_and_save::cb_rescan( void )
+{
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	if ( this->during_the_scan_is_ == true ) { return; }
+	this->during_the_scan_is_ = true;
+
+	/* nextウインドウを消す */
+	cl_gts_gui.window_next_scan_non_modal->position(
+	cl_gts_gui.window_next_scan->x(),
+	cl_gts_gui.window_next_scan->y()
+	);
+	cl_gts_gui.window_next_scan->hide();
+
+	/* スキャンしエフェクト処理し表示をする */
+	int return_code = NG;
+	std::string err_msg = this->cb_scan_fx_display_( return_code );
+
+	/* next時のユーザーキャンセルはフレーム戻して次フレームスキャンへ */
+	if (return_code == CANCEL) {
+		cl_gts_master.cl_number.counter_cancel_one_step();
+		this->during_the_scan_is_ = false;
+		Fl::focus( cl_gts_gui.button_rescan );
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_next_scan->show();
+		return;
+	}
+
+	/* NGの時は動作終了する */
+	if (return_code == NG) {
+		this->during_the_scan_is_ = false;
+		fl_alert( err_msg.c_str() ); return;
+	}
+
+	/* 調整しないで次番号を処理する */
+	if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value() == 0) {
+		/* 保存処理 */
+		this->cb_save();
+	}
+	/* 調整してから次番号を処理する */
+	else {
+		/* ファイル保存を促すwindowの設定をしておく */
+		this->cb_set_next_window_non_modal_();
+
+		/* 今の画像を保存を促すウインドウを表示する */
+		Fl::focus( cl_gts_gui.button_next_save_non_modal );
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_next_scan_non_modal->show();
+	}
+}
+void cb_scan_and_save::cb_save( void )
+{
+	/* nextウインドウを消す */
+	cl_gts_gui.window_next_scan->position(
+	cl_gts_gui.window_next_scan_non_modal->x(),
+	cl_gts_gui.window_next_scan_non_modal->y()
+	);
+	cl_gts_gui.window_next_scan_non_modal->hide();
+
+	/* ファイル保存する */
+	std::string err_msg = this->cb_save_();
+	if ( !err_msg.empty() ) {
+		this->during_the_scan_is_ = false;
+		fl_alert( err_msg.c_str() );
+		/* エラー情報を出して次のフレーム処理に行くことにしとく */
+	}
+
+	/* ショートカット動作で連続してキーインしたときの誤動作防止 */
+	this->during_the_scan_is_ = false;
+
+	/* 次のフレーム番号あるなら、次処理を促すwindowの設定をしておく */
+	this->cb_set_next_window_();
+
+	/* 次のスキャンを促すウインドウを表示する */
+	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
+		Fl::focus( cl_gts_gui.button_rescan );
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_next_scan->show();
+	}
 }
 
 //------------------------------------------------------------

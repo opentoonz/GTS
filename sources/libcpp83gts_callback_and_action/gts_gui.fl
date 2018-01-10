@@ -418,23 +418,20 @@ cl_gts_gui.window_next_scan->hide();}
       }
     }
     Fl_Window window_next_scan_non_modal {
-      label {Next Scan(Adjustable)}
+      label {Save (Adjustable Image)}
       callback {cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
 cl_gts_gui.window_next_scan_non_modal->y()
-);
-cl_gts_gui.window_next_scan_non_modal->hide();}
+);}
       xywh {60 60 545 100} type Double non_modal visible
     } {
-      Fl_Button button_rescan_non_modal {
-        label {Rescan (Space)}
-        callback {cl_gts_master.cl_scan_and_save.cb_rescan();}
-        xywh {60 75 110 25} shortcut 0x20
+      Fl_Output norout_next_save_non_modal {
+        xywh {0 10 545 25}
       }
-      Fl_Button {} {
-        label {Next (Enter)}
-        callback {cl_gts_master.cl_scan_and_save.cb_next();}
-        xywh {325 40 120 60} shortcut 0xff0d
+      Fl_Button button_next_save_non_modal {
+        label {Save (Enter)}
+        callback {cl_gts_master.cl_scan_and_save.cb_save();}
+        xywh {430 45 100 45} shortcut 0xff0d
       }
       Fl_Button {} {
         label {Stop (Esc)}
@@ -443,16 +440,7 @@ cl_gts_gui.window_next_scan_non_modal->x(),
 cl_gts_gui.window_next_scan_non_modal->y()
 );
 cl_gts_gui.window_next_scan_non_modal->hide();}
-        xywh {455 75 90 25} shortcut 0xff1b
-      }
-      Fl_Output norout_crnt_scan_level_non_modal {
-        xywh {0 0 545 40} textsize 30
-      }
-      Fl_Output norout_crnt_scan_number_non_modal {
-        xywh {0 75 60 25}
-      }
-      Fl_Output norout_next_scan_number_non_modal {
-        xywh {180 40 145 60} align 6 textsize 60
+        xywh {455 75 90 25} shortcut 0xff1b hide
       }
     }
     Fl_Window window_area_and_rot90 {

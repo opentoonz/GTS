@@ -203,18 +203,14 @@ private:
   inline void cb_window_next_scan_non_modal_i(Fl_Double_Window*, void*);
   static void cb_window_next_scan_non_modal(Fl_Double_Window*, void*);
 public:
-  Fl_Button *button_rescan_non_modal;
+  Fl_Output *norout_next_save_non_modal;
+  Fl_Button *button_next_save_non_modal;
 private:
-  inline void cb_button_rescan_non_modal_i(Fl_Button*, void*);
-  static void cb_button_rescan_non_modal(Fl_Button*, void*);
-  inline void cb_Next2_i(Fl_Button*, void*);
-  static void cb_Next2(Fl_Button*, void*);
+  inline void cb_button_next_save_non_modal_i(Fl_Button*, void*);
+  static void cb_button_next_save_non_modal(Fl_Button*, void*);
   inline void cb_Stop1_i(Fl_Button*, void*);
   static void cb_Stop1(Fl_Button*, void*);
 public:
-  Fl_Output *norout_crnt_scan_level_non_modal;
-  Fl_Output *norout_crnt_scan_number_non_modal;
-  Fl_Output *norout_next_scan_number_non_modal;
   Fl_Double_Window *window_area_and_rot90;
 private:
   inline void cb_window_area_and_rot90_i(Fl_Double_Window*, void*);

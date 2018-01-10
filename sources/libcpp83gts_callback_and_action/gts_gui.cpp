@@ -518,24 +518,16 @@ void gts_gui::cb_window_next_scan_non_modal_i(Fl_Double_Window*, void*) {
 cl_gts_gui.window_next_scan_non_modal->x(),
 cl_gts_gui.window_next_scan_non_modal->y()
 );
-cl_gts_gui.window_next_scan_non_modal->hide();
 }
 void gts_gui::cb_window_next_scan_non_modal(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_next_scan_non_modal_i(o,v);
 }
 
-void gts_gui::cb_button_rescan_non_modal_i(Fl_Button*, void*) {
-  cl_gts_master.cl_scan_and_save.cb_rescan();
+void gts_gui::cb_button_next_save_non_modal_i(Fl_Button*, void*) {
+  cl_gts_master.cl_scan_and_save.cb_save();
 }
-void gts_gui::cb_button_rescan_non_modal(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_button_rescan_non_modal_i(o,v);
-}
-
-void gts_gui::cb_Next2_i(Fl_Button*, void*) {
-  cl_gts_master.cl_scan_and_save.cb_next();
-}
-void gts_gui::cb_Next2(Fl_Button* o, void* v) {
-  ((gts_gui*)(o->parent()->user_data()))->cb_Next2_i(o,v);
+void gts_gui::cb_button_next_save_non_modal(Fl_Button* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_button_next_save_non_modal_i(o,v);
 }
 
 void gts_gui::cb_Stop1_i(Fl_Button*, void*) {
@@ -2214,29 +2206,19 @@ Fl_Double_Window* gts_gui::make_window() {
     window_next_scan->set_modal();
     window_next_scan->end();
   } // Fl_Double_Window* window_next_scan
-  { window_next_scan_non_modal = new Fl_Double_Window(545, 100, "Next Scan(Adjustable)");
+  { window_next_scan_non_modal = new Fl_Double_Window(545, 100, "Save (Adjustable Image)");
     window_next_scan_non_modal->callback((Fl_Callback*)cb_window_next_scan_non_modal, (void*)(this));
-    { button_rescan_non_modal = new Fl_Button(60, 75, 110, 25, "Rescan (Space)");
-      button_rescan_non_modal->shortcut(0x20);
-      button_rescan_non_modal->callback((Fl_Callback*)cb_button_rescan_non_modal);
-    } // Fl_Button* button_rescan_non_modal
-    { Fl_Button* o = new Fl_Button(325, 40, 120, 60, "Next (Enter)");
-      o->shortcut(0xff0d);
-      o->callback((Fl_Callback*)cb_Next2);
-    } // Fl_Button* o
+    { norout_next_save_non_modal = new Fl_Output(0, 10, 545, 25);
+    } // Fl_Output* norout_next_save_non_modal
+    { button_next_save_non_modal = new Fl_Button(430, 45, 100, 45, "Save (Enter)");
+      button_next_save_non_modal->shortcut(0xff0d);
+      button_next_save_non_modal->callback((Fl_Callback*)cb_button_next_save_non_modal);
+    } // Fl_Button* button_next_save_non_modal
     { Fl_Button* o = new Fl_Button(455, 75, 90, 25, "Stop (Esc)");
       o->shortcut(0xff1b);
       o->callback((Fl_Callback*)cb_Stop1);
+      o->hide();
     } // Fl_Button* o
-    { norout_crnt_scan_level_non_modal = new Fl_Output(0, 0, 545, 40);
-      norout_crnt_scan_level_non_modal->textsize(30);
-    } // Fl_Output* norout_crnt_scan_level_non_modal
-    { norout_crnt_scan_number_non_modal = new Fl_Output(0, 75, 60, 25);
-    } // Fl_Output* norout_crnt_scan_number_non_modal
-    { norout_next_scan_number_non_modal = new Fl_Output(180, 40, 145, 60);
-      norout_next_scan_number_non_modal->textsize(60);
-      norout_next_scan_number_non_modal->align(Fl_Align(FL_ALIGN_BOTTOM_LEFT));
-    } // Fl_Output* norout_next_scan_number_non_modal
     window_next_scan_non_modal->set_non_modal();
     window_next_scan_non_modal->end();
   } // Fl_Double_Window* window_next_scan_non_modal
