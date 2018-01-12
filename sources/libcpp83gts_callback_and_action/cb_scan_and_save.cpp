@@ -66,7 +66,7 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	);
 
 	/* 03 スキャン：実行 */
-	iip_canvas* clp_scan = cl_gts_master.iipg_scan( return_code );
+	iip_canvas* clp_scan_err = cl_gts_master.iipg_scan( return_code );
 	if (return_code == NG) {
 		return_code = NG;
 		return std::string("Can not Scan(NG)");
@@ -79,7 +79,7 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	}
 
 	/* 05 スキャン：return_codeチェックのあとにエラーチェックする */
-	if (nullptr == clp_scan) {
+	if (nullptr == clp_scan_err) {
 		return_code = NG;
 		return std::string("Can not Scan(nullptr)");
 	}
@@ -87,12 +87,15 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	//------------------------------
 
 	/* 06 画像処理：回転、2値化、ドットノイズ消去 */
+/*
 	if (cl_gts_master.rot_and_trace_and_enoise(
-		clp_scan ,cl_gts_gui.choice_rot90->value()
+		cl_gts_master.cl_iip_scan.get_clp_canvas()
+		,cl_gts_gui.choice_rot90->value()
 	) != OK) {
 		return_code = NG;
 		return std::string("Can not Fx");
 	}
+*/
 
 	//------------------------------
 
@@ -103,7 +106,9 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	cl_gts_master.cl_ogl_view.set_crop_disp_sw(OFF);
 
 	/* 09 表示：画像 */
-	if (cl_gts_master.redraw_image( clp_scan ,false ,false ) != OK) {
+	if (cl_gts_master.redraw_image(
+		cl_gts_master.cl_iip_scan.get_clp_canvas()
+		,false ,false ) != OK) {
 		return_code = NG;
 		return std::string("Can not Redraw");
 	}
@@ -198,89 +203,12 @@ void cb_scan_and_save::cb_set_next_window_non_modal_( void )
 		cl_gts_master.cl_number.get_crnt_file_num()
 	) );
 	cl_gts_gui.norout_next_save_non_modal->value( fpath_save.c_str() );
+	cl_gts_gui.norout_next_save_non_modal->position(
+	cl_gts_gui.norout_next_save_non_modal->size()
+	);
 }
 
 //-----------------------------
-
-#if 0
-int cb_scan_and_save::cb_scan( ScanSaveFramesAct type )
-{
-	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
-	/* マルチスレッドに非対応 */
-	if ( this->during_the_scan_is_ == true ) { return; }
-	this->during_the_scan_is_ = true;
-
-	/* nextウインドウを消す */
-	cl_gts_gui.window_next_scan->hide();
-	cl_gts_gui.window_next_scan_non_modal->hide();
-
- if ( type == ScanSaveFramesAct::Start ) {
-	/* 連番処理の開始処理 */
-	std::string err_msg( this->cb_start_check_() );
-	if ( !err_msg.empty() ) {
-		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() );
-		return NG;
-	}
- } else
- if ( type == ScanSaveFramesAct::Next ) {
-	/* 次の番号を得る。ただし以前CANCELであったら以前のまま */
-	cl_gts_master.cl_number.counter_next(
-		cl_gts_gui.choice_scan_num_continue_type->value()
-	);
- }
-
-	/* スキャンしエフェクト処理し表示をする */
-	int return_code = NG;
-	std::string err_msg = this->cb_scan_fx_display_( return_code );
-
- if ( type == ScanSaveFramesAct::Start ) {
-	if (return_code == CANCEL) {
-	/* start時のユーザーキャンセルは動作終了する */
-		return CANCEL;
-	}
- else
- if ( type == ScanSaveFramesAct::Next ) {
-	if (return_code == CANCEL) {
-	/* next時のユーザーキャンセルはフレーム戻して次のフレーム動作へ */
-		cl_gts_master.cl_number.counter_cancel_one_step();
-	}
- }
-
-	/* CANCELかNGの時はNextウインドウを表示しない */
-	if (return_code != OK) {
-		if (return_code == NG) {
-			fl_alert( err_msg.c_str() );
-		}
-		return return_code;
-	}
-
-	/* ファイル保存する */
-	std::string err_msg = this->cb_save_();
-	if ( !err_msg.empty() ) { fl_alert( err_msg.c_str() ); return NG; }
-
-	/* 次のフレーム番号があるなら、次処理を促すwindowの設定をしておく */
-	this->cb_set_next_window_();
-
-	this->during_the_scan_is_ = false;
-
-	/* 次のスキャンがあるなら */
-	if (1 <= cl_gts_master.cl_number.get_next_file_num()) {
-	/* Space(=Rescan)に関しては常にここでfocus設定が必要2014-02-03 */
-
-		/* 次をどうするかwindowを表示して指示を仰ぐ */
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		if (cl_gts_gui.chkbtn_scan_adjustable_per_frame_sw->value()
-		== 0) {
-			Fl::focus( cl_gts_gui.button_rescan );
-			cl_gts_gui.window_next_scan->show();
-		} else {
-			Fl::focus( cl_gts_gui.button_rescan_non_modal );
-			cl_gts_gui.window_next_scan_non_modal->show();
-		}
-	}
-}
-#endif
 
 void cb_scan_and_save::cb_start( void )
 {
@@ -442,6 +370,15 @@ void cb_scan_and_save::cb_save( void )
 	cl_gts_gui.window_next_scan_non_modal->y()
 	);
 	cl_gts_gui.window_next_scan_non_modal->hide();
+
+	/* 06 画像処理：回転、2値化、ドットノイズ消去 */
+	if (cl_gts_master.rot_and_trace_and_enoise(
+		cl_gts_master.cl_iip_scan.get_clp_canvas()
+		,cl_gts_gui.choice_rot90->value()
+	) != OK) {
+		fl_alert("Can not Fx");
+		return;
+	}
 
 	/* ファイル保存する */
 	std::string err_msg = this->cb_save_();

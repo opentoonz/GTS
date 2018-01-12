@@ -44,15 +44,11 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 	glGetBufferParameteriv( GL_ARRAY_BUFFER ,GL_BUFFER_SIZE ,&chk_sz );
 	if ( glsize != chk_sz ) {
 
-		/* バッファオブジェクトを破棄する */
-		if (0 < chk_sz) {
-			glDeleteBuffers( 1 , &(this->id_vbo_) );
-		}
-
 		/* bindを指定なしにする */
 		glBindBuffer( GL_ARRAY_BUFFER ,0 );
 
-		this->id_vbo_ = 0;
+		/* バッファオブジェクトを破棄する */
+		glDeleteBuffers( 1 , &(this->id_vbo_) );
 
 		std::ostringstream ost;
 		ost	<< "Error:Can not get vbo for vertex_color:"
@@ -62,8 +58,12 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 			<<    sizeof(vertex_color)
 			<< ")!=chk_sz("
 			<<       chk_sz
-			<< ")"
+			<< ") id_vbo="
+			<< this->id_vbo_
 			;
+
+		this->id_vbo_ = 0;
+
 		return ost.str();
 	}
 

@@ -111,12 +111,8 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_main_view->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_next_scan_==key) && (4==ret)) {
-			if (di == "show") {
-		////cl_gts_gui.menite_next_scan->set();
-		//cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		//cl_gts_gui.window_next_scan->show();
-			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
+		cl_gts_gui.window_next_scan_non_modal->position(xx,yy);
 		}
 		else if ((this->str_window_area_and_rot90==key)
 		&&(4==ret)) {

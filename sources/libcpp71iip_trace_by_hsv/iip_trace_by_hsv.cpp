@@ -196,7 +196,7 @@ std::string trace_exec_(
 	,const bool random_position_sw
 )
 {
-util::stop_watch stwa; stwa.start();
+//util::stop_watch stwa; stwa.start();
 	/* ---------- 初期パラメータ設定 ------------------ */
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;
@@ -279,7 +279,7 @@ util::stop_watch stwa; stwa.start();
   if ( vbo.get_hsv_view_start_sw() ) {
 	vbo.end_vertex_color();
   }
-std::cout << "frame=" << stwa.stop_ms().count() << "milisec" << "mt=" << thread_count << std::endl;
+//std::cout << "frame=" << stwa.stop_ms().count() << "milisec" << "\tmt=" << thread_count << std::endl;
 	return std::string();
 }
 } // namespace
