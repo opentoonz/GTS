@@ -212,6 +212,17 @@ void cb_scan_and_save::cb_set_next_window_non_modal_( void )
 
 void cb_scan_and_save::cb_start( void )
 {
+	/* ファイル保存待ちのときは連番スキャンできない */
+	if (cl_gts_gui.window_next_scan_non_modal->shown() != 0) {
+		return;
+	}
+
+/*
+	ウインドウがicon化されている場合
+	w->shown（）&&！w->visible()
+	が真
+*/
+
 	/* ショートカット動作で連続してキーインしたときの誤動作防止 */
 	if ( this->during_the_scan_is_ == true ) { return; }
 	this->during_the_scan_is_ = true;

@@ -2581,7 +2581,7 @@ Fl_Double_Window* gts_gui::make_window() {
     window_pixel_type_and_bright->end();
     window_pixel_type_and_bright->resizable(window_pixel_type_and_bright);
   } // Fl_Double_Window* window_pixel_type_and_bright
-  { window_scan_and_save = new Fl_Double_Window(200, 360, "Scan Save");
+  { window_scan_and_save = new Fl_Double_Window(200, 330, "Scan Save");
     window_scan_and_save->callback((Fl_Callback*)cb_window_scan_and_save, (void*)(this));
     { Fl_Group* o = new Fl_Group(1, 20, 198, 65, "Filter");
       o->box(FL_BORDER_BOX);
@@ -2696,19 +2696,13 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(1, 300, 198, 25);
-      { chkbtn_scan_adjustable_per_frame_sw = new Fl_Check_Button(5, 300, 160, 25, "Adjustable per Frame");
+      { chkbtn_scan_adjustable_per_frame_sw = new Fl_Check_Button(5, 300, 85, 25, "Adjustable");
         chkbtn_scan_adjustable_per_frame_sw->down_box(FL_DOWN_BOX);
       } // Fl_Check_Button* chkbtn_scan_adjustable_per_frame_sw
-      { Fl_Box* o = new Fl_Box(165, 300, 33, 25);
+      { Fl_Box* o = new Fl_Box(90, 300, 5, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      o->end();
-    } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(1, 330, 198, 25);
-      { Fl_Box* o = new Fl_Box(1, 330, 94, 25);
-        Fl_Group::current()->resizable(o);
-      } // Fl_Box* o
-      { button_scan_save = new Fl_Button(95, 330, 100, 25, "Scan Save");
+      { button_scan_save = new Fl_Button(95, 300, 100, 25, "Scan Save");
         button_scan_save->tooltip("Scan and Save Files");
         button_scan_save->callback((Fl_Callback*)cb_button_scan_save);
       } // Fl_Button* button_scan_save
