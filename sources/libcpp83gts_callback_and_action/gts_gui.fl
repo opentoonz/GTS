@@ -782,8 +782,8 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
     Fl_Window window_scan_and_save {
       label {Scan Save}
       callback {cl_gts_gui.window_scan_and_save->hide();
-cl_gts_gui.menite_scan_and_save->clear();}
-      xywh {50 50 200 330} type Double resizable non_modal size_range {200 360 1000 360} visible
+cl_gts_gui.menite_scan_and_save->clear();} selected
+      xywh {50 50 200 330} type Double resizable non_modal size_range {200 330 1000 330} visible
     } {
       Fl_Group {} {
         label Filter open

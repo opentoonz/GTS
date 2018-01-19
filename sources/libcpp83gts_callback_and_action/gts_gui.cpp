@@ -2709,7 +2709,7 @@ Fl_Double_Window* gts_gui::make_window() {
       o->end();
     } // Fl_Group* o
     window_scan_and_save->set_non_modal();
-    window_scan_and_save->size_range(200, 360, 1000, 360);
+    window_scan_and_save->size_range(200, 330, 1000, 330);
     window_scan_and_save->end();
     window_scan_and_save->resizable(window_scan_and_save);
   } // Fl_Double_Window* window_scan_and_save
