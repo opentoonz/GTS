@@ -71,7 +71,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 1. 環境を準備
 
- Ubuntu 16.04-desktop 64bits (on VMware Workstation 12.1.1 Player(on Windows 7 Enterprise SP1)) を用意します。
+ Ubuntu 16.04-desktop 64bits (on VMware Workstation 12.5.9 Player(on Windows 7 Enterprise SP1)) を用意します。
 
  この環境で簡単な動作確認をしており、他の環境については未確認です。
 
@@ -97,7 +97,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  $ rm m4/ax_check_glu.m4
  $ ./autogen.sh && ./configure && make
  ```
- makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lGLU -lGL`を付加して再実行します。
+ makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lpthread -lGLEW -lGLU -lGL`を付加して再実行します。
 
  デバッグビルドをしたいときは以下のようにします。
  ```sh

@@ -1,4 +1,11 @@
 #include <cstdlib>	/* getenv_s(-) getenv(-) */
+#include <stdexcept>	/* std::invalid_argument(-) */
+
+#ifdef _WIN32
+#else
+#include <cstring>
+#endif
+
 #include "rsrc_getenv.h"
 
 namespace rsrc {
@@ -11,42 +18,23 @@ std::string getenv(const std::string& name)
 	/* _MAX_ENV is 32767 at VS2013 */
 	/* _MAX_ENVはVisualStudio C++のみらしい */
 	/* getenv_s() supported vc2010 or higher */
-	errno_t err_no = getenv_s(&length, env_array, _MAX_ENV, name.c_str());
+	errno_t err_no = getenv_s(&length,env_array,_MAX_ENV,name.c_str());
 
-	if (err_no != 0) { /* getenv_s(-)の引数問題あるとき */
-		char buf[255+1]; buf[0]='\0';
-		strerror_s(buf,255,err_no);
-		std::string errmsg;
-		errmsg += "getenv_s(-)";
-		errmsg += ":"; errmsg += name;
-		errmsg += ":"; errmsg += buf;
-
-		throw std::exception(errmsg.c_str());
+	if (err_no != 0) { /* getenv_s(-)の引数問題ある */
+		return std::string();
 	}
-	if (length <= 0) { /* 対象の環境変数がないとき */
-		std::string errmsg;
-		errmsg += "getenv_s(-)";
-		errmsg += ":"; errmsg += name;
-		errmsg += ":"; errmsg += "Doesn't exist(empty)";
-		throw std::exception(errmsg.c_str());
+	if (length <= 0) { /* 対象の環境変数がない */
+		return std::string();
 	}
 #else
-	const char* env_array = getenv(name.c_str());
+	const char* env_array = ::getenv(name.c_str());
 
 	if (env_array == nullptr) {
-		std::string errmsg;
-		errmsg += "getenv_s(-)";
-		errmsg += ":"; errmsg += name;
-		errmsg += ":"; errmsg += "Returns nullptr";
-		throw std::exception(errmsg.c_str());
+		return std::string();
 	}
 	size_t length = strlen(env_array);
-	if (length <= 0) { /* 対象の環境変数がないとき */
-		std::string errmsg;
-		errmsg += "getenv(-)";
-		errmsg += ":"; errmsg += name;
-		errmsg += ":"; errmsg += "Doesn't exist(empty)";
-		throw std::exception(errmsg.c_str());
+	if (length <= 0) { /* 対象の環境変数がない */
+		return std::string();
 	}
 #endif
 	return std::string( env_array );

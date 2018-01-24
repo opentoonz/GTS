@@ -11,7 +11,7 @@
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include <FL/gl.h>	/* GLfloat GLubyte GLenum */
 #include <FL/glu.h>	/* gluPerspective(-) , gluLookAt(-) */
-#include <FL/glut.h>	/* glutWireTeapot(-) glutWireCone(-) */
+#include <FL/glut.H>	/* glutWireCone(-) */
 			/* glutExtensionSupported(-) --> link error */
 #include "calc_hsv_rgb.h"	/* calc::rgb_to_hsv() */
 #include "calc_hsv_xyz.h"	/* calc::rgb_to_xyz() */

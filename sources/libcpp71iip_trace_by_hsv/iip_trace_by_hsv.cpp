@@ -268,7 +268,7 @@ std::string trace_exec_(
 	/* ---------- マルチスレッド実行開始 -------------- */
 	int id = 0;
 	for (std::thread& th : ths) {
-	 th = std::thread( worker<TINN,TOUT>() ,tjob.at(id) ,id );
+	 th = std::thread( worker<TINN,TOUT>() ,std::ref(tjob.at(id)) ,id );
 	 ++id;
 	}
 

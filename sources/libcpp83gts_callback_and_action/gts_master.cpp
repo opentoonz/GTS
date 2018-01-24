@@ -1,5 +1,3 @@
-#include <iostream> // std::cout
-#include <stdlib.h> /* getenv() */
 #include <FL/x.H> /* for fl_xid() */
 #include "pri.h"
 #include "ids_path_level_from_files.h"

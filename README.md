@@ -61,7 +61,7 @@ Execute "./gts" in unziped folder.
 
 1. Environment for development
 
- Tested simply on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.1.1 Player(on a Windows 7 Enterprise SP1))
+ Tested simply on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.5.9 Player(on a Windows 7 Enterprise SP1))
 
 2. Get source code
 
@@ -85,7 +85,7 @@ Execute "./gts" in unziped folder.
  $ rm m4/ax_check_glu.m4
  $ ./autogen.sh && ./configure && make
  ```
- The last(link) of make is an error, and then re-run by adding `-lGLU -lGL` in the run command line.
+ The last(link) of make is an error, and then re-run by adding `-lpthread -lGLEW -lGLU -lGL` in the run command line.
 
  If you're a developer and you need a debug build, do it like this:
  ```sh

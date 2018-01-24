@@ -1,6 +1,7 @@
 #include <cassert>
 #include <iomanip>
 #include <iostream>
+#include <limits>	/* (std::numeric_limits<uchar>::max)() */
 #include "calc_hsv_rgb.h"
 #include "calc_rad_deg.h"
 #include "calc_trace_by_hsv.h"	/* calc::line_len_from_rad() */

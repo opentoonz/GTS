@@ -1,6 +1,7 @@
 #ifndef opengl_vertex_buffer_object_h
 #define opengl_vertex_buffer_object_h
 
+#include <string>
 #include <FL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
 //#include <GL/gl.h>	/* GLfloat GLubyte GLuint GLenum */
 

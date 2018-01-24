@@ -15,7 +15,6 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libc18image_rw_tga \
 				   -Isources/lib_util \
 				   -Isources/libcpp31calcu_precision \
-				   -Isources/libcpp38calcu_rgb_to_hsv \
 				   -Isources/libcpp51iip_canvas \
 				   -Isources/libcpp52iip_rw \
 				   -Isources/libcpp53iip_precision \
@@ -89,8 +88,6 @@ libgts_la_SOURCES = \
 					sources/lib_util/rsrc_getenv.cpp \
 					sources/lib_util/util_stop_watch.cpp \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
-					sources/libcpp38calcu_rgb_to_hsv/from_hsv.cpp \
-					sources/libcpp38calcu_rgb_to_hsv/to_hsv.cpp \
 					sources/libcpp51iip_canvas/iip_canvas.cpp \
 					sources/libcpp51iip_canvas/iip_channel_info.cpp \
 					sources/libcpp52iip_rw/check_save.cpp \
