@@ -70,10 +70,10 @@ fl_gl_hsv_view::fl_gl_hsv_view(int x ,int y ,int w ,int h ,const char*l)
 	//,dummy_w_(1000) ,dummy_h_(500) // test
 	//,dummy_w_(3013) ,dummy_h_(1710) // 200dpi
 	//,dummy_w_(3400) ,dummy_h_(2340) // 200dpi
-	,dummy_w_(5100) ,dummy_h_(3510) // 300dpi
+	//,dummy_w_(5100) ,dummy_h_(3510) // 300dpi
 	//,dummy_w_(6800) ,dummy_h_(4680) // 400dpi
 	//,dummy_w_(8500) ,dummy_h_(5850) // 500dpi too big when double
-	//,dummy_w_(10200) ,dummy_h_(7020) // 600dpi too big when double
+	,dummy_w_(10200) ,dummy_h_(7020) // 600dpi too big when double
 #endif
 	,pixel_x_(-1.)
 	,pixel_y_(-1.)
@@ -102,13 +102,19 @@ void fl_gl_hsv_view::dummy_create_rgb_image_( const int pixel_size )
 	std::mt19937 engine;
 	std::uniform_int_distribution<> dist( 0 ,255 );
 	this->dummy_rgb_image_.clear();
+	std::cout << "vector::max_size()="
+			<< this->dummy_rgb_image_.max_size() << "\n";
+	std::cout << "vector::reserve() =" << count << "\n";
 	this->dummy_rgb_image_.reserve( count );
 	for (int ii=0 ;ii<count;++ii) {
 		this->dummy_rgb_image_.push_back(
 			static_cast<GLubyte>( dist(engine) ) );
+		if ((ii%1000000) == 0) {
+	std::cout << "\r" << ii ;
+		}
 	}
 
-	std::cout << "create_rgb_image time="
+	std::cout << "\ncreate_rgb_image time="
 		<< stwa.stop_ms().count() << "milisec\n";
 
 	std::cout << "create_rgb_image size="
@@ -776,7 +782,7 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 util::stop_watch stwa; stwa.start();
 
 	/* ダミーの画像サイズも変更しランダムし直し */
-	this->dummy_create_rgb_image_( pixel_size );
+	this->dummy_create_rgb_image_( pixel_size / 2 );
 
 	/* dummy vbo vertex,colorデータ書き込み */
 	opengl::vertex_buffer_object::vertex_color* vbo_p =
@@ -797,13 +803,13 @@ std::cout << "vbo_pixel_size=" << this->vbo.get_pixel_size() << "\n";
 		calc::rgb_to_hsv(
 			rgb[0]/255. ,rgb[1]/255. ,rgb[2]/255. ,h,s,v );
 		calc::hsv_to_xyz( h,s,v
-			,vbo_p_->xyz.x
-			,vbo_p_->xyz.y
-			,vbo_p_->xyz.z
+			,vbo_p->xyz.x
+			,vbo_p->xyz.y
+			,vbo_p->xyz.z
 		);
 	}
 	this->vbo.end_vertex_color();
-std::cout << "time=" << stwa.stop_ms().count() << "milisec\n";
+std::cout << "image to vbo time=" << stwa.stop_ms().count() << "milisec\n";
 }
 #endif
 void fl_gl_hsv_view::draw()
@@ -848,12 +854,16 @@ void fl_gl_hsv_view::draw()
 				glFogfv( GL_FOG_COLOR , this->bg_rgba_ );
 			}
 			/* HSV ViewウインドウのOpenGLが初期化された */
-			this->vbo.set_hsv_view_start_sw(true);
+			this->vbo.set_enable_sw(true);
+
+#if defined DEBUG_FL_GL_HSV_VIEW
+		this->dummy_reset_vbo( this->dummy_w_ * this->dummy_h_ );
+#endif
 		}
 
 		/* ピクセル値あるいはサイズの変更 */
 #if defined DEBUG_FL_GL_HSV_VIEW
-		this->dummy_reset_vbo( this->w() * this->h() );
+//		this->dummy_reset_vbo( this->w() * this->h() );
 #endif
 	}
 
@@ -1052,10 +1062,12 @@ int fl_gl_hsv_view::handle(int event)
 
 //--------------------
 #if defined DEBUG_FL_GL_HSV_VIEW
-#include "calc_hsv_rgb.cpp"	/* calc::rgb_to_hsv() */
-#include "calc_rad_deg.cpp"	/* calc::rad_from_deg() */
+#include "calc_hsv_rgb.cpp"	/* calc::rgb_to_hsv(-) */
+#include "calc_rad_deg.cpp"	/* calc::rad_from_deg(-) */
+#include "calc_hsv_xyz.cpp"	/* calc::hsv_to_xyz(-) */
 #include "util_stop_watch.cpp"	/* util::stop_watch */
-#include "calc_trace_by_hsv.cpp"	/* calc::line_len_from_rad() */
+#include "calc_trace_by_hsv.cpp"	/* calc::line_len_from_rad(-) */
+#include "opengl_camera_eye.cpp"	/* opengl::camera_eye */
 #include "opengl_vertex_buffer_object.cpp"
 int main(void) {
 	Fl_Window win(1000, 500, "OpenGL");

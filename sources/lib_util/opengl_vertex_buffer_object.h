@@ -36,8 +36,8 @@ public:
 	/* 描画実行 */
 	void draw(void);
 
-	void set_hsv_view_start_sw(bool sw) { this->hsv_view_start_sw_=sw; }
-	bool get_hsv_view_start_sw(void) const { return this->hsv_view_start_sw_;}
+	void set_enable_sw(bool sw) { this->enable_sw_=sw; }
+	bool get_enable_sw(void) const { return this->enable_sw_;}
 	int get_pixel_size(void) const { return this->pixel_size_; }
 
 	/* for debug */
@@ -46,7 +46,7 @@ private:
 	GLuint id_vbo_;
 	GLuint pixel_size_;
 	GLenum vbo_type_;// use glVertexPointer(,vbo_type,,)
-	bool hsv_view_start_sw_;
+	bool enable_sw_;
 
 }; // class vertex_buffer_object
 

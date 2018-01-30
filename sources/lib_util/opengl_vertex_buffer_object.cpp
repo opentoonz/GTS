@@ -17,7 +17,7 @@ vertex_buffer_object::vertex_buffer_object()
 	/* vboメモリ浮動小数型vertex_buffer_object::vbo_floatと合わせる */
 	//,vbo_type_(GL_DOUBLE)
 	,vbo_type_(GL_FLOAT)
-	,hsv_view_start_sw_(false)
+	,enable_sw_(false)
 {
 }
 vertex_buffer_object::~vertex_buffer_object()
@@ -42,6 +42,18 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 	/* 頂点用と色用のVBO確保の確認 */
 	GLint chk_sz=0;
 	glGetBufferParameteriv( GL_ARRAY_BUFFER ,GL_BUFFER_SIZE ,&chk_sz );
+/*{
+std::ostringstream ost;
+ost
+<< pixel_size*sizeof(vertex_color) << "bytes="
+<< "pixel(" <<  pixel_size << ")"
+<< "*sizeof(vertex_color)(" <<    sizeof(vertex_color) << ")"
+<< " chk_sz=(" << chk_sz << ")"
+<< " id_vbo=(" << this->id_vbo_ << ")"
+<< "\n"
+;
+std::cout << ost.str();
+}*/
 	if ( glsize != chk_sz ) {
 
 		/* エラー情報セット */
@@ -55,6 +67,7 @@ std::string vertex_buffer_object::open_or_reopen( unsigned pixel_size )
 			<<       chk_sz
 			<< ") id_vbo="
 			<< this->id_vbo_
+			<< " --> Zoom up!"
 			;
 
 		/* bindを指定なしにする */

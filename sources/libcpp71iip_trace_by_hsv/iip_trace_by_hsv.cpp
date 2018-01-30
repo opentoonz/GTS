@@ -36,34 +36,32 @@ public:
 	,area_xsize_(0)
 	,channels_(0)
 	,seg_ysize_(0)
+
 	,max_val_inn_(0)
 	,hsv_params_(nullptr)
 	,max_val_out_f_(0)
 	,white_out_of_area_sw_(0)
-	,hsv_view_start_sw_(0)
 	,shift_bit_(0)
 	,max_glub_out_(0)
 	,random_position_sw_(0)
-	,vbo_(nullptr)
 	{}
+
 	void set(
 	 TINN* image_inn		/* 入力画像位置 */
 	,TOUT* image_out		/* 出力画像位置 */
-	,opengl::vertex_buffer_object::vertex_color* vbo_p
-					/* OpenGL VBO メモリ */
+	,opengl::vertex_buffer_object::vertex_color* vbo_p /* VBOメモリ */
 	,int scan_size			/* 横データサイズ */
 	,int area_xsize			/* 横処理サイズ */
 	,int channels			/* pixelデータchannelsサイズ */
 	,int seg_ysize			/* yサイズ */
+
 	,int max_val_inn		/* 入力画像値正規化用Range */
 	,std::vector<calc::trace_by_hsv_params>* hsv_params
 	,double max_val_out_f		/* 出力画像値展開用Range */
 	,bool white_out_of_area_sw	/* 範囲外を白点表示するか */
-	,bool hsv_view_start_sw		/* vbo表示するか */
 	,int shift_bit			/* in画像を8bitにするshift値 */
 	,GLubyte max_glub_out		/* 白の数値 */
 	,bool random_position_sw
-	,opengl::vertex_buffer_object* vbo
 	) {
 		this->image_inn_ = image_inn;
 		this->image_out_ = image_out;
@@ -72,15 +70,14 @@ public:
 		this->area_xsize_ = area_xsize;
 		this->channels_ = channels;
 		this->seg_ysize_ = seg_ysize;
+
 		this->max_val_inn_ = max_val_inn;
 		this->hsv_params_ = hsv_params;
 		this->max_val_out_f_ = max_val_out_f;
 		this->white_out_of_area_sw_ = white_out_of_area_sw;
-		this->hsv_view_start_sw_ = hsv_view_start_sw;
 		this->shift_bit_ = shift_bit;
 		this->max_glub_out_ = max_glub_out;
 		this->random_position_sw_ = random_position_sw;
-		this->vbo_ = vbo;
 	}
 
 	void work(void) {
@@ -93,17 +90,11 @@ public:
 	    TINN* inn_x = this->image_inn_;
 	    TOUT* out_x = this->image_out_;
 	    for (int xx = 0; xx < this->area_xsize_ ;++xx
-	    ,inn_x+=this->channels_ ,out_x+=this->channels_ ,++ this->vbo_p_
+	    ,inn_x+=this->channels_ ,out_x+=this->channels_
 	    ) {
 	    	/* in_pixel-->hsv */
 		double	hh=0., ss=0., vv=0.;
-		if ( !this->random_position_sw_ ) {
-			calc::rgb_to_hsv(
-	 static_cast<double>(inn_x[CH_RED])/this->max_val_inn_
-	,static_cast<double>(inn_x[CH_GRE])/this->max_val_inn_
-	,static_cast<double>(inn_x[CH_BLU])/this->max_val_inn_
-			,hh,ss,vv );
-		} else {
+		if ( this->random_position_sw_ ) {
 		/* RGB256段階で幾何学的並び気持ち悪いためランダムにずらす */
 		/* 不用なら外す */
 			calc::rgb_to_hsv(
@@ -111,18 +102,17 @@ public:
 ,(static_cast<double>(inn_x[CH_GRE])+dist(engine))/this->max_val_inn_
 ,(static_cast<double>(inn_x[CH_BLU])+dist(engine))/this->max_val_inn_
 			,hh,ss,vv );
+		} else {
+			calc::rgb_to_hsv(
+	 static_cast<double>(inn_x[CH_RED])/this->max_val_inn_
+	,static_cast<double>(inn_x[CH_GRE])/this->max_val_inn_
+	,static_cast<double>(inn_x[CH_BLU])/this->max_val_inn_
+			,hh,ss,vv );
 		}
 
-		/* hsv-->xyz(for hsv3d) */
-		calc::hsv_to_xyz( hh,ss,vv
-			,this->vbo_p_->xyz.x
-			,this->vbo_p_->xyz.y
-			,this->vbo_p_->xyz.z
-		);
-
-		/* hsv-->2値化rgb */
+		/* hsv-->2値化rgb&範囲内外判定 */
 		double	rr=0., gg=0., bb=0.;
-		const bool trace_sw = calc::trace_by_hsv_to_rgb(
+		const bool inside_trace_area_sw = calc::trace_by_hsv_to_rgb(
 			hh,ss,vv, *(this->hsv_params_) ,rr,gg,bb );
 
 		/* 2値化rgb-->out_pixel */
@@ -130,23 +120,30 @@ public:
 		out_x[CH_GRE] = static_cast<TOUT>(gg*this->max_val_out_f_);
 		out_x[CH_BLU] = static_cast<TOUT>(bb*this->max_val_out_f_);
 
-		/* in_pixel-->rgb(for hsv3d) */
-	      if ( this->hsv_view_start_sw_ ) {
-		if ( trace_sw || !this->white_out_of_area_sw_) {
+		if ( this->vbo_p_ != nullptr ) {
+		 /* hsv-->xyz(for hsv3d) */
+		 calc::hsv_to_xyz( hh,ss,vv
+			,this->vbo_p_->xyz.x
+			,this->vbo_p_->xyz.y
+			,this->vbo_p_->xyz.z
+		 );
+		 /* in_pixel-->rgb(for hsv3d) */
+		 if (inside_trace_area_sw || !this->white_out_of_area_sw_) {
 		  this->vbo_p_->rgb.r = static_cast<GLubyte>(
 		  	inn_x[CH_RED] >> this->shift_bit_);
 		  this->vbo_p_->rgb.g = static_cast<GLubyte>(
 		  	inn_x[CH_GRE] >> this->shift_bit_);
 		  this->vbo_p_->rgb.b = static_cast<GLubyte>(
 		  	inn_x[CH_BLU] >> this->shift_bit_);
-		} else {
+		 } else {
 		  /* 2値化しない、かつ、範囲外を白表示モードのとき
 		  pixelは白表示 */
 		  this->vbo_p_->rgb.r = this->max_glub_out_;
 		  this->vbo_p_->rgb.g = this->max_glub_out_;
 		  this->vbo_p_->rgb.b = this->max_glub_out_;
+		 }
+		 ++ this->vbo_p_;
 		}
-	      }
 	    }
 	  }
 	}
@@ -155,19 +152,19 @@ private:
 	TOUT* image_out_;		/* 出力画像位置 */
 	opengl::vertex_buffer_object::vertex_color* vbo_p_;
 					/* OpenGL VBO メモリ */
+					/* nullptrならvbo表示しない */
 	int scan_size_;			/* 横データサイズ */
 	int area_xsize_;		/* 横処理サイズ */
 	int channels_;			/* pixelデータchannelsサイズ */
 	int seg_ysize_;			/* yサイズ */
+
 	int max_val_inn_;		/* 入力画像値正規化用Range */
 	std::vector<calc::trace_by_hsv_params>* hsv_params_;
 	double max_val_out_f_;		/* 出力画像値展開用Range */
 	bool white_out_of_area_sw_;	/* 範囲外を白点表示するか */
-	bool hsv_view_start_sw_;	/* vbo表示するか */
 	int shift_bit_;			/* in画像を8bitにするshift値 */
 	GLubyte max_glub_out_;		/* 白の数値 */
 	bool random_position_sw_;	/* 範囲外を白点表示するか */
-	opengl::vertex_buffer_object* vbo_;
 };
 
 template <class TINN , class TOUT>
@@ -181,7 +178,7 @@ void operator() (thread_job<TINN,TOUT>& oj ,const int id) {
 };
 
 template <class TINN , class TOUT>
-std::string trace_exec_(
+void trace_exec_(
 	int width
 	,int channels
 	,TINN* image_inn_top
@@ -189,9 +186,11 @@ std::string trace_exec_(
 	,int area_ypos
 	,int area_xsize
 	,int area_ysize
+
 	,const std::vector<calc::trace_by_hsv_params>& hsv_params
 	,TOUT* image_out_top
 	,const bool white_out_of_area_sw
+	,const bool vbo_enable_sw
 	,opengl::vertex_buffer_object& vbo
 	,const bool random_position_sw
 )
@@ -212,11 +211,8 @@ std::string trace_exec_(
 
 	/* 画像のpixel値と、hsv3d表示のxyz値とrgb値セット */
 	opengl::vertex_buffer_object::vertex_color* vbo_p = nullptr;
-  if ( vbo.get_hsv_view_start_sw() ) {
+  if ( vbo_enable_sw ) {
 	vbo_p = vbo.start_vertex_color();
-	if (vbo_p == nullptr) { /* open出来ていればここはこないはず */
-		return "Error:vbo.start_color() return null";
-	}
   }
 	TINN *image_inn = image_inn_top + start_pos;
 	TOUT *image_out = image_out_top + start_pos;
@@ -243,25 +239,28 @@ std::string trace_exec_(
 	for (int ii = 0 ;ii < thread_count ;++ii , y1 = y2) {
 		y2 = area_ysize * (ii+1) / thread_count;
 
+		opengl::vertex_buffer_object::vertex_color* vbop = nullptr;
+		if ( vbo_enable_sw && (vbo_p != nullptr) ) {
+			vbop = vbo_p + y1*area_xsize;
+		}
 		/* set */
 		tjob.at(ii).set(
 		 image_inn+y1*scan_size	/* 入力画像位置 */
 		,image_out+y1*scan_size	/* 出力画像位置 */
-		,vbo_p+y1*area_xsize	/* OpenGL VBO メモリ */
+		,vbop			/* OpenGL VBO メモリ */
 		,scan_size		/* 横データサイズ */
 		,area_xsize		/* 横処理サイズ */
 		,channels		/* pixelデータchannelsサイズ */
 		,y2 - y1		/* yサイズ */
+
 		,max_val_inn		/* 入力画像値正規化用Range */
 	,const_cast<std::vector<calc::trace_by_hsv_params> *>(&hsv_params)
 					/* 2値化処理パラメータ */
 		,max_val_out_f		/* 出力画像値展開用Range */
 		,white_out_of_area_sw	/* 範囲外を白点表示するか */
-		,vbo.get_hsv_view_start_sw()
 		,shift_bit		/* in画像を8bitにするshift値 */
 		,max_glub_out		/* 白の数値 */
 		,random_position_sw
-		,&vbo
 		);
 	}
 
@@ -276,11 +275,10 @@ std::string trace_exec_(
 	for (std::thread& th : ths) { th.join(); }
 
 	//-----------------------------------------------------
-  if ( vbo.get_hsv_view_start_sw() ) {
+  if ( vbo_enable_sw ) {
 	vbo.end_vertex_color();
   }
 //std::cout << "frame=" << stwa.stop_ms().count() << "milisec" << "\tmt=" << thread_count << std::endl;
-	return std::string();
 }
 } // namespace
 
@@ -364,21 +362,23 @@ std::cerr << str << std::endl;
 	 * 処理
 	 */
 
-	if ( vbo.get_hsv_view_start_sw() ) {
+	bool vbo_enable_sw = vbo.get_enable_sw();
+	std::string err_msg;
+	if ( vbo.get_enable_sw() ) {
   		/* vboを使うにはOpenGL初期化済であること */ 
 		/* vbo初期化あるいは再設定 */
-		std::string err_msg( vbo.open_or_reopen(
+		err_msg = vbo.open_or_reopen(
 			this->area_xsize_ * this->area_ysize_
-		) );
+		);
 		if (!err_msg.empty()) {
-			return err_msg;
+		/* エラーのとき以後のvbo処理のみやらない */
+			vbo_enable_sw = false;
 		}
 	}
 
-	std::string err_msg;
 	switch (this->cl_ch_info.get_e_ch_num_type()) {
 	case E_CH_NUM_UCHAR:
-		err_msg = trace_exec_<unsigned char,unsigned char>(
+		trace_exec_<unsigned char,unsigned char>(
 			this->get_l_width()
 			,this->get_l_channels()
 			,static_cast<unsigned char*>(pare->get_vp_canvas())
@@ -389,12 +389,13 @@ std::cerr << str << std::endl;
 			,hsv_params
 			,static_cast<unsigned char*>(this->get_vp_canvas())
 			,white_out_of_area_sw
+			,vbo_enable_sw
 			,vbo
 			,random_position_sw
 		);
-		return err_msg;
+		break;
 	case E_CH_NUM_USHRT:
-		err_msg = trace_exec_<unsigned short,unsigned short>(
+		trace_exec_<unsigned short,unsigned short>(
 			this->get_l_width()
 			,this->get_l_channels()
 			,static_cast<unsigned short*>(pare->get_vp_canvas())
@@ -405,12 +406,13 @@ std::cerr << str << std::endl;
 			,hsv_params
 			,static_cast<unsigned short*>(this->get_vp_canvas())
 			,white_out_of_area_sw
+			,vbo_enable_sw
 			,vbo
 			,random_position_sw
 		);
-		return err_msg;
+		break;
 	case E_CH_NUM_ULONG:
-		err_msg = trace_exec_<unsigned long,unsigned long>(
+		trace_exec_<unsigned long,unsigned long>(
 			this->get_l_width()
 			,this->get_l_channels()
 			,static_cast<unsigned long*>(pare->get_vp_canvas())
@@ -421,14 +423,15 @@ std::cerr << str << std::endl;
 			,hsv_params
 			,static_cast<unsigned long*>(this->get_vp_canvas())
 			,white_out_of_area_sw
+			,vbo_enable_sw
 			,vbo
 			,random_position_sw
 		);
-		return err_msg;
+		break;
 	case E_CH_NUM_DOUBL: break; /* Not support */
 	case E_CH_NUM_BITBW: break; /* for no warning */
 	case E_CH_NUM_EMPTY: break; /* for no warning */
 	}
 
-	return std::string();
+	return err_msg;
 }
