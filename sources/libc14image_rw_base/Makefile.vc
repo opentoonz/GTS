@@ -10,7 +10,8 @@ INCS =\
 /I..\libc11portable
 SRCS =\
 bread.c\
-bwrite.c
+bwrite.c\
+cpu_byte_order_is_little_endian.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
 DPATH_APPL = ..\build

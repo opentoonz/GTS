@@ -1,10 +1,10 @@
 #include <stdlib.h>	/* for calloc() */
 #include <string.h>	/* for memcpy() */
 
-#include "ptbl_funct.h"
 #include "ptbl_returncode.h"
 #include "pri.h"
 
+#include "cpu_byte_order_is_little_endian.h"
 #include "tif.h"
 #include "tif_stat.h"
 #include "tif_image_rw.h"
@@ -23,8 +23,7 @@ static void _tif_image_write_body_byte_swap( uint8_t *ui8p_src, uint8_t *ui8p_tg
 
 static int _tif_image_write_body( TIF_IMAGE_RW *tp_write, uint8_t *ui8p_image, uint8_t *ui8p_buffer, uint32_t ui32_width, uint32_t ui32_height, uint16_t ui16_samples, uint16_t ui16_bytes, int i_byte_swap_mode, int i_cv_sw )
 {
-	int	i_cpu_is_little_endian,
-		i_byte_swap_sw,
+	int	i_byte_swap_sw,
 		i_yy;
 	uint8_t	*ui8p_scanline;
 
@@ -32,10 +31,10 @@ static int _tif_image_write_body( TIF_IMAGE_RW *tp_write, uint8_t *ui8p_image, u
 	   バイトスワップが必要なときのためのスイッチ */
 	i_byte_swap_sw = OFF;
 	if (2 == ui16_bytes) {
-		i_cpu_is_little_endian = ptbl_cpu_is_little_endian();
+		int is_little_endian = cpu_byte_order_is_little_endian();
 		if (
-		  ( i_cpu_is_little_endian && ('b'==i_byte_swap_mode))
-		||(!i_cpu_is_little_endian && ('l'==i_byte_swap_mode))
+		  ( is_little_endian && ('b'==i_byte_swap_mode))
+		||(!is_little_endian && ('l'==i_byte_swap_mode))
 		) {
 			i_byte_swap_sw = ON;
 		}

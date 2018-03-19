@@ -18,6 +18,9 @@ char *ptbl_get_cp_username( void )
 	/* getenv()は環境文字列への値へのポインタを返す */
 	cp_username = getenv( "USERNAME" );
 #else
+	/* getlogin()はlogin時のユーザー名の文字列へのポインタを返す */
+	// cp_loginname = getlogin();
+
 	/* cp_username = tp_pw->pw_name;が示す先は、
 	   関数からぬけても存在する? */
 	struct passwd *tp_pw; /* staticでなくてもいい? */

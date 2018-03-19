@@ -7,6 +7,7 @@ OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
 INCS =\
 /I.\
 /I$(DPATH_TIFF)\
+/I..\libc14image_rw_base\
 /I..\libc12pri\
 /I..\libc11portable
 SRCS =\

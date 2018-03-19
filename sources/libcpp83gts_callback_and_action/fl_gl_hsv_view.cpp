@@ -16,7 +16,7 @@
 #include "calc_hsv_rgb.h"	/* calc::rgb_to_hsv() */
 #include "calc_hsv_xyz.h"	/* calc::rgb_to_xyz() */
 #include "calc_rad_deg.h"	/* calc::rad_from_deg() */
-#include "util_stop_watch.h"	/* util::stop_watch */
+#include "cppl_stop_watch.h"	/* cppl::stop_watch */
 #include "calc_trace_by_hsv.h"	/* calc::line_len_from_rad() */
 #include "fl_gl_hsv_view.h"
 
@@ -95,7 +95,7 @@ void fl_gl_hsv_view::dummy_create_rgb_image_( const int pixel_size )
 {
 	std::cout << "create_rgb_image size=" << pixel_size << "pixel\n";
 
-	util::stop_watch stwa; stwa.start();
+	cppl::stop_watch stwa; stwa.start();
 
 	const int count = pixel_size * 3; // rgb
 
@@ -779,7 +779,7 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 	}
 	this->vbo.pr_vbo_info();
 
-util::stop_watch stwa; stwa.start();
+cppl::stop_watch stwa; stwa.start();
 
 	/* ダミーの画像サイズも変更しランダムし直し */
 	this->dummy_create_rgb_image_( pixel_size / 2 );
@@ -919,7 +919,7 @@ void fl_gl_hsv_view::draw()
 	if (this->fog_sw_)   { glEnable( GL_FOG ); }
 
 	/* 描画	 */
- //util::stop_watch stwa; stwa.start();
+ //cppl::stop_watch stwa; stwa.start();
 	this->draw_object_();
  //std::cout << stwa.stop_ms().count() << "milisec\n";
 
@@ -1065,7 +1065,7 @@ int fl_gl_hsv_view::handle(int event)
 #include "calc_hsv_rgb.cpp"	/* calc::rgb_to_hsv(-) */
 #include "calc_rad_deg.cpp"	/* calc::rad_from_deg(-) */
 #include "calc_hsv_xyz.cpp"	/* calc::hsv_to_xyz(-) */
-#include "util_stop_watch.cpp"	/* util::stop_watch */
+#include "cppl_stop_watch.cpp"	/* cppl::stop_watch */
 #include "calc_trace_by_hsv.cpp"	/* calc::line_len_from_rad(-) */
 #include "opengl_camera_eye.cpp"	/* opengl::camera_eye */
 #include "opengl_vertex_buffer_object.cpp"

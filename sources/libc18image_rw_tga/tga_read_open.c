@@ -1,7 +1,8 @@
 #include <string.h> /* for memset() */
-#include "ptbl_funct.h"
 #include "ptbl_returncode.h"
 #include "pri.h"
+
+#include "cpu_byte_order_is_little_endian.h"
 #include "tga.h"
 
 /* へッダー情報をファイルから読み込む */
@@ -95,7 +96,7 @@ int tga_read_open( char *cp_fname, TGA_READ *tp_read )
 	}
 
 	/* ファイルはリトルインディアンオーダーであるとして読み込む */
-	if (ptbl_cpu_is_little_endian()) {
+	if (cpu_byte_order_is_little_endian()) {
 		bread_set_byte_swap_sw( OFF, &(tp_read->t_bread) );
 	} else {
 		bread_set_byte_swap_sw( ON, &(tp_read->t_bread) );

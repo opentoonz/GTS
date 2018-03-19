@@ -1,6 +1,6 @@
-#include "util_stop_watch.h"
+#include "cppl_stop_watch.h"
 
-namespace util {
+namespace cppl {
 
 void stop_watch::start(void) {
 	this->start_ = std::chrono::system_clock::now();
@@ -13,4 +13,4 @@ std::chrono::milliseconds stop_watch::stop_ms(void) {
 	);
 }
 
-} // util
+} // cppl

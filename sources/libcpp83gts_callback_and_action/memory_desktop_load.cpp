@@ -5,14 +5,16 @@
 #include <fstream>
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h"		/* ptbl_get_cp_path_separeter()
-				ptbl_charcode_cp932_from_utf8() */
+#include "ptbl_funct.h"		/* ptbl_charcode_cp932_from_utf8() */
 #include "memory_desktop.h"
+#include "cppl_file_system.h"
 #include "gts_file_path.h"	/* ptbl_get_user_home(-)
 				get_desktop_dir_when_unix() */
 #include "gts_gui.h"
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
+
+#define PATH_SEPARETER	('/')
 
 int memory_desktop::set_desktop_file_path_( void ) {
 	int ret = OK;
@@ -29,14 +31,18 @@ int memory_desktop::set_desktop_file_path_( void ) {
 	if (this->desktop_file_path_.empty()) {
 		/* 場所はホームディレクトリ固定 */
 		this->desktop_file_path_ = this->user_home_;
-		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+		this->desktop_file_path_ += PATH_SEPARETER;
 #ifndef _WIN32
 		this->desktop_file_path_ += get_desktop_dir_when_unix();
-		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+		this->desktop_file_path_ += PATH_SEPARETER;
 		if (!ptbl_dir_or_file_is_exist(
 			const_cast<char *>(this->desktop_file_path_.c_str())
 		)) {
-			ptbl_mkdir(this->desktop_file_path_.c_str());
+			if (cppl::file_system::create_directory(
+			cppl::file_system_path(this->desktop_file_path_)
+			)==false) {
+				ret = NG;
+			}
 		}
 #endif
 		this->desktop_file_path_ += this->str_desktop_filename2_;
@@ -55,7 +61,7 @@ int memory_desktop::load( void ) {
 	/* 古いfileパスを得る */
 	std::string old_path;
 	old_path = this->user_home_;
-	old_path += ptbl_get_cp_path_separeter();
+	old_path += PATH_SEPARETER;
 	old_path += this->str_desktop_filename_;
 
 	/* 古いfileパスでファイルあるならそちらを優先-->保存は標準パス */

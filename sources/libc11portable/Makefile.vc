@@ -8,14 +8,9 @@ INCS =\
 /I.
 SRCS =\
 ptbl_charcode.c\
-ptbl_cpu_is_little_endian.c\
 ptbl_dir_or_file_is_exist.c\
 ptbl_get_cp_hostname.c\
-ptbl_get_cp_loginname.c\
-ptbl_get_cp_username.c\
-ptbl_get_cp_userrealname.c\
-ptbl_mkdir.c\
-ptbl_utils_about_path.c
+ptbl_get_cp_username.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
 DPATH_APPL = ..\build

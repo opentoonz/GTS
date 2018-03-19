@@ -1,5 +1,5 @@
-#include "ptbl_stdint.h"
-#include "ptbl_funct.h"
+#include <stdint.h>
+#include "cpu_byte_order_is_little_endian.h"
 
 /* カレントシステムのバイトオーダーが
    ビッグインディアンなのかリトルインディアンなのか判定
@@ -7,7 +7,7 @@
 	big    endian なら 0 を返す
  */
 
-int ptbl_cpu_is_little_endian( void )
+int cpu_byte_order_is_little_endian( void )
 {
 	union { int32_t i; int8_t c[4]; } u;
 /*

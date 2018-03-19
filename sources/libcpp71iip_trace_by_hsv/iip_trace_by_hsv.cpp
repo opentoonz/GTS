@@ -8,7 +8,7 @@
 
 #include "calc_hsv_rgb.h"
 #include "calc_hsv_xyz.h"
-#include "util_stop_watch.h"    /* util::stop_watch */
+#include "cppl_stop_watch.h"    /* cppl::stop_watch */
 #include "iip_trace_by_hsv.h"
 
 /*
@@ -195,7 +195,7 @@ void trace_exec_(
 	,const bool random_position_sw
 )
 {
-//util::stop_watch stwa; stwa.start();
+//cppl::stop_watch stwa; stwa.start();
 	/* ---------- 初期パラメータ設定 ------------------ */
 	const int scan_size = width * channels;
 	const int start_pos = area_ypos * scan_size + area_xpos * channels;

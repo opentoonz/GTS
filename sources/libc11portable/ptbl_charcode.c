@@ -2,7 +2,23 @@
 
 #include "windows.h"
 #include "ptbl_funct.h"
-#include "ptbl_path_max.h"
+
+/*
+PTBL_PATH_MAX値を決めるための参考
+
+Windows7 64bit(2017-06-23)
+VC2013
++-- C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h
+    +-- #define _MAX_PATH   260 // max. length of full pathname
+パスの長さの制限は最大260文字(終端含む)となっている...らしい
+
+Windows NT系(2017-06-23)
+(Windows NT〜Windows 8.1)は
+フルパス約32,767文字まで対応、がアプリが対応してない場合がある
+*/
+#ifndef PTBL_PATH_MAX
+#define PTBL_PATH_MAX /*4096*/32767
+#endif
 
 /* utf-8を含む文字列をcp932に変換(マルチバイト文字列) */
 char* ptbl_charcode_cp932_from_utf8(const char* utf8)

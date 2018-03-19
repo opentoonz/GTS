@@ -214,7 +214,7 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 
 	/* display each hue range */
 	auto he = 1./(sz+1.);
-	auto width = this->h() / 15.;
+	GLfloat width = this->h() / 15.f;
 	int ii=0;
 	for (auto& aa : this->guide_widget_sets_) {
 		/* 各パラメータ */
@@ -247,7 +247,7 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 		glEnd();
 
 		/* 範囲横線表示 */
-		glLineWidth(width);
+		glLineWidth( width );
 		if (x1 < x2 || ((x1 == x2) && rotate360_sw==false)) {
 			glBegin(GL_LINES);
 			glVertex2d(x1,yy);glVertex2d(x2,yy);

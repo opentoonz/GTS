@@ -1,27 +1,27 @@
 #include <string.h>	/* strncpy() */
-#include "ptbl_funct.h"
 #include "ptbl_returncode.h"
 #include "pri.h"
+
+#include "cpu_byte_order_is_little_endian.h"
 #include "tga_stat.h"
 
 static void _tga_stat_detail_reading_byte_swap_info( int i_read_is_byte_swap )
 {
-	int	i_cpu_is_little_endian,
-		i_file_is_swapped_order;
+	int i_file_is_swapped_order;
 
-	i_cpu_is_little_endian = ptbl_cpu_is_little_endian();
+	int is_little_endian = cpu_byte_order_is_little_endian();
 
 	/* ファイルのバイトオーダーは? */
 	i_file_is_swapped_order = 
 		/* CPUがbig endianで、swapして読んでる */
-		( !i_cpu_is_little_endian && i_read_is_byte_swap )||
+		( !is_little_endian && i_read_is_byte_swap )||
 
 		/* CPUがlittle endianで、orderどおり読んでる */
-		( i_cpu_is_little_endian && !i_read_is_byte_swap );
+		( is_little_endian && !i_read_is_byte_swap );
 
 	(void)fprintf(stdout,
-		"          cpu byte order         %5d",
-		i_cpu_is_little_endian );
+		"          cpu byte order         %s",
+		is_little_endian ?"little endian" :"big endian" );
 	(void)fprintf(stdout,
 		" 0:big_endian(MIPS),1:little_endian(Intel)\n" );
 
@@ -133,22 +133,21 @@ static void _tga_stat_column_head( void )
 
 static void _tga_stat_column_body( TGA_READ *tp_read, char *cp_filepath )
 {
-	int	i_cpu_is_little_endian,
-		i_read_is_byte_swap;
+	int i_read_is_byte_swap;
 	TGA_FILE_HEADER *tp_tga;
 	char	*cp_byte_order;
-	char	*cp_fname;
 
-	i_cpu_is_little_endian = ptbl_cpu_is_little_endian();
+	int is_little_endian = cpu_byte_order_is_little_endian();
+
 	i_read_is_byte_swap =
 		(bread_get_byte_swap_sw(&(tp_read->t_bread)) == ON);
 
 	if (
 		/* CPUがbig endianで、swapして読んでる */
-		( !i_cpu_is_little_endian && i_read_is_byte_swap )||
+		( !is_little_endian && i_read_is_byte_swap )||
 
 		/* CPUがlittle endianで、orderどおり読んでる */
-		( i_cpu_is_little_endian && !i_read_is_byte_swap )
+		( is_little_endian && !i_read_is_byte_swap )
 	) {
 		cp_byte_order = "lit";
 	}
@@ -156,9 +155,6 @@ static void _tga_stat_column_body( TGA_READ *tp_read, char *cp_filepath )
 		cp_byte_order = "big";
 	}
 	tp_tga = &(tp_read->t_tga_file_header);
-
-	/* ファイル名 */
-	cp_fname = ptbl_get_cp_filename_from_path( cp_filepath );
 
 	(void)fprintf(stdout,
 	"%3s %3d %3d %3d %5d %5d %3d %5d %5d %5d %5d %3d %3d %s\n",
@@ -175,7 +171,7 @@ static void _tga_stat_column_body( TGA_READ *tp_read, char *cp_filepath )
 	tp_read->t_tga_file_header.s_ysize,
 	tp_read->t_tga_file_header.uc_pixsize,
 	tp_read->t_tga_file_header.uc_imgdes,
-	cp_fname );
+	cp_filepath );
 
 	(void)fflush(stdout);
 }

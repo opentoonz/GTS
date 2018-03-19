@@ -12,10 +12,14 @@ SRCS =\
 calc_hsv_rgb.cpp\
 calc_hsv_xyz.cpp\
 calc_rad_deg.cpp\
+cppl_file_system.cpp\
+cppl_stop_watch.cpp\
 opengl_camera_eye.cpp\
 opengl_vertex_buffer_object.cpp\
-rsrc_getenv.cpp\
-util_stop_watch.cpp
+osapi_getenv.cpp\
+osapi_log_with_msg_and_id.cpp\
+osapi_mbs_wcs.cpp\
+osapi_str_from_errid.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty

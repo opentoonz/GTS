@@ -1,9 +1,9 @@
-#ifndef util_stop_watch_h
-#define util_stop_watch_h
+#ifndef cppl_stop_watch_h
+#define cppl_stop_watch_h
 
 #include <chrono>
 
-namespace util {
+namespace cppl {
 
 class stop_watch { /* 処理時間計測クラス */
 public:
@@ -16,12 +16,12 @@ private:
 	std::chrono::system_clock::time_point start_;
 };
 
-} // util
+} // cppl
 
-#endif /* !util_stop_watch_h */
+#endif /* !cppl_stop_watch_h */
 /*
 # How to use.
-util::stop_watch stwa; stwa.start();
+cppl::stop_watch stwa; stwa.start();
 ...
 std::cout << stwa.stop_ms().count() << "milisecond\n";
 */

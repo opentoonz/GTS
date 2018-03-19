@@ -130,6 +130,7 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	}
 
 	return_code = OK;
+	return std::string();
 }
 
 std::string cb_scan_and_save::cb_save_( void )

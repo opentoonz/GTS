@@ -558,6 +558,11 @@ private:
   inline void cb_chebut_trace_display_main_sw_i(Fl_Check_Button*, void*);
   static void cb_chebut_trace_display_main_sw(Fl_Check_Button*, void*);
 public:
+  Fl_Check_Button *chebut_trace_0_enable_sw;
+private:
+  inline void cb_chebut_trace_0_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_0_enable_sw(Fl_Check_Button*, void*);
+public:
   Fl_Group *group_trace_0;
   Fl_Button *button_trace_0_target_rgb;
 private:
@@ -614,10 +619,10 @@ private:
   inline void cb_valinp_trace_0_intercept_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_0_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_0_enable_sw;
+  Fl_Check_Button *chebut_trace_1_enable_sw;
 private:
-  inline void cb_chebut_trace_0_enable_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_0_enable_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_1_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_1_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_1;
   Fl_Button *button_trace_1_target_rgb;
@@ -675,10 +680,10 @@ private:
   inline void cb_valinp_trace_1_intercept_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_1_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_1_enable_sw;
+  Fl_Check_Button *chebut_trace_2_enable_sw;
 private:
-  inline void cb_chebut_trace_1_enable_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_1_enable_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_2_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_2_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_2;
   Fl_Button *button_trace_2_target_rgb;
@@ -736,10 +741,10 @@ private:
   inline void cb_valinp_trace_2_intercept_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_2_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_2_enable_sw;
+  Fl_Check_Button *chebut_trace_3_enable_sw;
 private:
-  inline void cb_chebut_trace_2_enable_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_2_enable_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_3_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_3_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_3;
   Fl_Button *button_trace_3_target_rgb;
@@ -797,10 +802,10 @@ private:
   inline void cb_valinp_trace_3_intercept_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_3_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_3_enable_sw;
+  Fl_Check_Button *chebut_trace_4_enable_sw;
 private:
-  inline void cb_chebut_trace_3_enable_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_3_enable_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_4_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_4_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_4;
   Fl_Button *button_trace_4_target_rgb;
@@ -858,10 +863,10 @@ private:
   inline void cb_valinp_trace_4_intercept_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_4_intercept(Fl_Value_Input*, void*);
 public:
-  Fl_Check_Button *chebut_trace_4_enable_sw;
+  Fl_Check_Button *chebut_trace_5_enable_sw;
 private:
-  inline void cb_chebut_trace_4_enable_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_4_enable_sw(Fl_Check_Button*, void*);
+  inline void cb_chebut_trace_5_enable_sw_i(Fl_Check_Button*, void*);
+  static void cb_chebut_trace_5_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Group *group_trace_5;
   Fl_Button *button_trace_5_target_rgb;
@@ -918,11 +923,6 @@ public:
 private:
   inline void cb_valinp_trace_5_intercept_i(Fl_Value_Input*, void*);
   static void cb_valinp_trace_5_intercept(Fl_Value_Input*, void*);
-public:
-  Fl_Check_Button *chebut_trace_5_enable_sw;
-private:
-  inline void cb_chebut_trace_5_enable_sw_i(Fl_Check_Button*, void*);
-  static void cb_chebut_trace_5_enable_sw(Fl_Check_Button*, void*);
 public:
   Fl_Button *button_change_0_1;
 private:
