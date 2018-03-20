@@ -113,6 +113,10 @@ try {
 }*/
 catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
+/*
+ubuntu16.04での例 --> 文面にコロンが使われている!
+"filesystem error: cannot rename: No such file or directory [/home/public/tmpフォルダ] [/home/public/tmpフォルダ2]"
+*/
 		return 1;
 }
 #endif
@@ -178,10 +182,10 @@ int main(int argc ,const char* argv[])
 }
 #endif /* !DEBUG_CPPL_FILE_SYSTEM */
 /*
-rem :181,183 w! make.bat
+rem :186,188 w! make.bat
 cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_CPPL_FILE_SYSTEM cppl_file_system.cpp /Fea_u08
 cl /W4 /WX /MD /EHa /O2 /wd4819 /DUNICODE /DDEBUG_CPPL_FILE_SYSTEM cppl_file_system.cpp /Fea_u16
 del cppl_file_system.obj
-# :168,168 w! make.sh
+# :190,190 w! make.sh
 g++ -Wall -DDEBUG_CPPL_FILE_SYSTEM -std=c++11 cppl_file_system.cpp -lstdc++fs
 */

@@ -37,7 +37,7 @@ const std::string log_with_msg_and_id_(
 /*
 osapi_log_with_msg_and_id("msg",::GetLastError())
 --> 実行結果例
---> "osapi_log_with_msg_and_id_win.cxx:58:int __cdecl main(int,char *[]):_MSC_VER:150030729:2012:Jan:30:15:37:59:msg:指定されたモジュールが見つかりません。" */
+--> "osapi_log_with_msg_and_id_win.cxx 58;int __cdecl main(int,char *[]);_MSC_VER 150030729;2012-Jan-30 15:37:59;msg;指定されたモジュールが見つかりません。" */
 /* メッセージを付加したエラーログを生成 */
 #define osapi_log_with_msg( msg                 ) osapi::log_with_msg_and_id_(msg     ,NO_ERROR  ,__FILE__,to_str_(__LINE__),__FUNCSIG__,to_str__(_MSC_VER),to_str_(_MSC_FULL_VER),__DATE__,__TIME__)
 /* ::GetLastError()によるエラーメッセージを付加したエラーログを生成 */

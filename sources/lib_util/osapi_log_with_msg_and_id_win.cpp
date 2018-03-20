@@ -30,33 +30,31 @@ msg
 )
 */
 	std::string errmsg;
+	const char log_sep_c = ';';
 
-	/* 発生場所 ファイル名:フルパスの場合ファイル名だけにする */
+	/* 発生場所 ファイル名(フルパスの場合ファイル名だけにする) 行番号 */
 	std::string::size_type index = file.find_last_of("/\\");
 	if (std::string::npos != index) {
 	 errmsg += file.substr(index+1);
 	} else {
 	 errmsg += file;
 	}
-	/* 発生場所 行番号 */
-	errmsg += ':'; errmsg += line;
+				errmsg += ' ';	errmsg += line;
 	/* 発生場所 関数名 */
-	errmsg += ':'; errmsg += funcsig;
-	/* コンパイラータイプ */
-	errmsg += ':'; errmsg += comp_type;
-	/* コンパイラーバージョン */
-	errmsg += ":"; errmsg += msc_full_ver;
-	/* ビルド年:月:日 */
+	errmsg += log_sep_c;	errmsg += funcsig;
+	/* コンパイラー タイプ バージョン */
+	errmsg += log_sep_c;	errmsg += comp_type;
+				errmsg += ' '; errmsg += msc_full_ver;
+	/* ビルド 年-月-日 時:分:秒 */
 	std::istringstream ist(date);
 	std::string month,day,year; ist >> month; ist >> day; ist >> year;
-	errmsg += ':'; errmsg += year;
-	errmsg += ':'; errmsg += month;
-	errmsg += ':'; errmsg += day;
-	/* ビルド自:分:秒 */
-	errmsg += ':'; errmsg += time;
+	errmsg += log_sep_c;	errmsg += year;
+				errmsg += '-'; errmsg += month;
+				errmsg += '-'; errmsg += day;
+				errmsg += ' '; errmsg += time;
 	/* メッセージ */
 	if (0 < msg.size()) {
-	errmsg += ':';
+	errmsg += log_sep_c;
 #ifdef UNICODE
 	errmsg += osapi::mbs_from_wcs(msg);
 #else
@@ -65,7 +63,7 @@ msg
 	}
 	/* エラー番号→エラーメッセージ */
 	if (NO_ERROR != message_id) {
-	errmsg += ':';
+	errmsg += log_sep_c;
 #ifdef UNICODE
 	errmsg += osapi::mbs_from_wcs(osapi::tstr_from_errid(message_id));
 #else

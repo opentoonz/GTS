@@ -23,22 +23,21 @@ const std::string log_with_msg_and_id_(
 	,const std::string& gnuc
 	,const std::string& gnuc_minor
 	,const std::string& gnuc_patchlevel
-	,const std::string& gnuc_rh_release
 	,const std::string& date
 	,const std::string& time
 );
 } // osapi
 
 /* メッセージと::errnoによるエラーメッセージを付加したエラーログを生成 */
-#define osapi_log_with_msg_and_id(msg,erno) osapi::log_with_msg_and_id_(msg,erno,__FILE__,to_str_(__LINE__),__PRETTY_FUNCTION__,to_str__(__GNUC__),to_str_(__GNUC__),to_str_(__GNUC_MINOR__),to_str_(__GNUC_PATCHLEVEL__),to_str_(__GNUC_RH_RELEASE__),__DATE__,__TIME__)
+#define osapi_log_with_msg_and_id(msg,erno) osapi::log_with_msg_and_id_(msg,erno,__FILE__,to_str_(__LINE__),__PRETTY_FUNCTION__,to_str__(__GNUC__),to_str_(__GNUC__),to_str_(__GNUC_MINOR__),to_str_(__GNUC_PATCHLEVEL__),__DATE__,__TIME__)
 /*
 osapi_log_with_msg_and_id("msg",errno)
 --> 実行結果例
---> "osapi_log_with_msg_and_id.cxx:86:int main(int, char**):__GNUC__:4.1.2-48:2012:Jan:30:15:36:27:msg:No such file or directory"
+--> "osapi_log_with_msg_and_id.cxx 86;int main(int, char**);__GNUC__ 4.1.2-48;2012-Jan-30 15:36:27;msg;No such file or directory"
 */
 /* メッセージを付加したエラーログを生成 */
-#define osapi_log_with_msg(msg            ) osapi::log_with_msg_and_id_(msg,0   ,__FILE__,to_str_(__LINE__),__PRETTY_FUNCTION__,to_str__(__GNUC__),to_str_(__GNUC__),to_str_(__GNUC_MINOR__),to_str_(__GNUC_PATCHLEVEL__),to_str_(__GNUC_RH_RELEASE__),__DATE__,__TIME__)
+#define osapi_log_with_msg(msg            ) osapi::log_with_msg_and_id_(msg,0   ,__FILE__,to_str_(__LINE__),__PRETTY_FUNCTION__,to_str__(__GNUC__),to_str_(__GNUC__),to_str_(__GNUC_MINOR__),to_str_(__GNUC_PATCHLEVEL__),__DATE__,__TIME__)
 /* errnoによるエラーメッセージを付加したエラーログを生成 */
-#define osapi_log_with_id(           erno ) osapi::log_with_msg_and_id_("",erno ,__FILE__,to_str_(__LINE__),__PRETTY_FUNCTION__,to_str__(__GNUC__),to_str_(__GNUC__),to_str_(__GNUC_MINOR__),to_str_(__GNUC_PATCHLEVEL__),to_str_(__GNUC_RH_RELEASE__),__DATE__,__TIME__)
+#define osapi_log_with_id(           erno ) osapi::log_with_msg_and_id_("",erno ,__FILE__,to_str_(__LINE__),__PRETTY_FUNCTION__,to_str__(__GNUC__),to_str_(__GNUC__),to_str_(__GNUC_MINOR__),to_str_(__GNUC_PATCHLEVEL__),__DATE__,__TIME__)
 
 #endif /* !osapi_log_with_msg_and_id_unix_h */

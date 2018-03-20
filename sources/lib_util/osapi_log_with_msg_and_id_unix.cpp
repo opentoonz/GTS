@@ -15,7 +15,6 @@ osapi::log_with_msg_and_id_(
 	,const std::string& gnuc
 	,const std::string& gnuc_minor
 	,const std::string& gnuc_patchlevel
-	,const std::string& gnuc_rh_release
 	,const std::string& date
 	,const std::string& time
 ) {
@@ -36,41 +35,37 @@ tit
 )
 */
 	std::string errmsg;
+	const char log_sep_c = ';';
 
-	/* 発生場所 ファイル名:フルパスの場合ファイル名だけにする */
+	/* 発生場所 ファイル名(フルパスの場合ファイル名だけにする) 行番号 */
 	std::string::size_type index = file.find_last_of("/\\");
 	if (std::string::npos != index) {
 	 errmsg += file.substr(index+1);
 	} else {
 	 errmsg += file;
 	}
-	/* 発生場所 行番号 */
-	errmsg += ':'; errmsg += line;
+				errmsg += ' ';	errmsg += line;
 	/* 発生場所 関数名 */
-	errmsg += ':'; errmsg += pretty_function;
-	/* コンパイラータイプ */
-	errmsg += ':'; errmsg += comp_type;
-	/* コンパイラーバージョン */
-	errmsg += ':'; errmsg += gnuc;
-	errmsg += '.'; errmsg += gnuc_minor;
-	errmsg += '.'; errmsg += gnuc_patchlevel;
-	errmsg += '-'; errmsg += gnuc_rh_release;
-	/* ビルド年:月:日 */
+	errmsg += log_sep_c;	errmsg += pretty_function;
+	/* コンパイラー タイプ バージョン */
+	errmsg += log_sep_c;	errmsg += comp_type;
+				errmsg += ' '; errmsg += gnuc;
+				errmsg += '.'; errmsg += gnuc_minor;
+				errmsg += '.'; errmsg += gnuc_patchlevel;
+	/* ビルド 年-月-日 時:分:秒 */
 	std::istringstream ist(date);
 	std::string month,day,year; ist >> month; ist >> day; ist >> year;
-	errmsg += ':'; errmsg += year;
-	errmsg += ':'; errmsg += month;
-	errmsg += ':'; errmsg += day;
-	/* ビルド自:分:秒 */
-	errmsg += ':'; errmsg += time;
+	errmsg += log_sep_c;	errmsg += year;
+				errmsg += '-'; errmsg += month;
+				errmsg += '-'; errmsg += day;
+				errmsg += ' '; errmsg += time;
 	/* メッセージ */
  if (0 < msg.size()) {
-	errmsg += ':';
-	errmsg += msg;
+	errmsg += log_sep_c;	errmsg += msg;
  }
 	/* エラー番号→エラーメッセージ */
  if (0 != erno) {
-	errmsg += ':'; errmsg += osapi::str_from_errid(erno);
+	errmsg += log_sep_c;	errmsg += osapi::str_from_errid(erno);
  }
 	/* MBCSで返す */
 	return errmsg;
