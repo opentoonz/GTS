@@ -83,14 +83,14 @@ Execute "./gts" in unziped folder.
 
  ```sh
  $ rm m4/ax_check_glu.m4
- $ ./autogen.sh && ./configure && make
+ $ sh ./autogen.sh && ./configure && make
  ```
- The last(link) of make is an error, and then re-run by adding `-lpthread -lGLEW -lGLU -lGL` in the run command line.
+ The last(link) of make is an error, and then re-run by adding `-lpthread -lstdc++fs -lGLEW -lGLU -lGL` in the run command line.
 
  If you're a developer and you need a debug build, do it like this:
  ```sh
  $ rm m4/ax_check_glu.m4
- $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ $ sh ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
  ```
 
 5. Preparation for Execute
@@ -133,7 +133,7 @@ Execute "./gts" in unziped folder.
 
  ```sh
  $ rm m4/ax_check_glu.m4 #it seems broken?
- $ ./autogen.sh && ./configure && make
+ $ sh ./autogen.sh && ./configure && make
  ```
 
 5. Preparation for Execute

@@ -8,12 +8,12 @@ pkgdata_DATA = \
 noinst_LTLIBRARIES = libgts.la
 
 libgts_la_CPPFLAGS = \
+				   -Isources/lib_util \
 				   -Isources/libc11portable \
 				   -Isources/libc12pri \
 				   -Isources/libc14image_rw_base \
 				   -Isources/libc16image_rw_tif \
 				   -Isources/libc18image_rw_tga \
-				   -Isources/lib_util \
 				   -Isources/libcpp31calcu_precision \
 				   -Isources/libcpp51iip_canvas \
 				   -Isources/libcpp52iip_rw \
@@ -30,19 +30,26 @@ libgts_la_CPPFLAGS = \
 				   -std=c++11
 
 libgts_la_SOURCES = \
+					sources/lib_util/calc_hsv_rgb.cpp \
+					sources/lib_util/calc_hsv_xyz.cpp \
+					sources/lib_util/calc_rad_deg.cpp \
+					sources/lib_util/cppl_file_system.cpp \
+					sources/lib_util/cppl_stop_watch.cpp \
+					sources/lib_util/opengl_camera_eye.cpp \
+					sources/lib_util/opengl_vertex_buffer_object.cpp \
+					sources/lib_util/osapi_getenv.cpp \
+					sources/lib_util/osapi_log_with_msg_and_id.cpp \
+					sources/lib_util/osapi_mbs_wcs.cpp \
+					sources/lib_util/osapi_str_from_errid.cpp \
 					sources/libc11portable/ptbl_charcode.c \
-					sources/libc11portable/ptbl_cpu_is_little_endian.c \
 					sources/libc11portable/ptbl_dir_or_file_is_exist.c \
 					sources/libc11portable/ptbl_get_cp_hostname.c \
-					sources/libc11portable/ptbl_get_cp_loginname.c \
 					sources/libc11portable/ptbl_get_cp_username.c \
-					sources/libc11portable/ptbl_get_cp_userrealname.c \
-					sources/libc11portable/ptbl_mkdir.c \
-					sources/libc11portable/ptbl_utils_about_path.c \
 					sources/libc12pri/pri_cv.c \
 					sources/libc12pri/pri_msg_and_err.c \
 					sources/libc14image_rw_base/bread.c \
 					sources/libc14image_rw_base/bwrite.c \
+					sources/libc14image_rw_base/cpu_byte_order_is_little_endian.c \
 					sources/libc16image_rw_tif/tif_bw_invert.c \
 					sources/libc16image_rw_tif/tif_bw_read.c \
 					sources/libc16image_rw_tif/tif_bw_reverse.c \
@@ -80,13 +87,6 @@ libgts_la_SOURCES = \
 					sources/libc18image_rw_tga/tga_write_open.c \
 					sources/libc18image_rw_tga/tga_write_scanline.c \
 					sources/libc18image_rw_tga/tga_write_setup_header.c \
-					sources/lib_util/calc_hsv_rgb.cpp \
-					sources/lib_util/calc_hsv_xyz.cpp \
-					sources/lib_util/calc_rad_deg.cpp \
-					sources/lib_util/opengl_camera_eye.cpp \
-					sources/lib_util/opengl_vertex_buffer_object.cpp \
-					sources/lib_util/rsrc_getenv.cpp \
-					sources/lib_util/util_stop_watch.cpp \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
 					sources/libcpp51iip_canvas/iip_canvas.cpp \
 					sources/libcpp51iip_canvas/iip_channel_info.cpp \

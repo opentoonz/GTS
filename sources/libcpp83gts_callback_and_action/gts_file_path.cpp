@@ -1,4 +1,5 @@
 #include <fstream>
+#include "ptbl_funct.h"	/* ptbl_dir_or_file_is_exist(-) */
 #include "osapi_getenv.h"	/* osapi::getenv(-) */
 #include "cppl_file_system.h"
 #include "gts_file_path.h"

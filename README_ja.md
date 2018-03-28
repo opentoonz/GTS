@@ -95,14 +95,14 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
  ```sh
  $ rm m4/ax_check_glu.m4
- $ ./autogen.sh && ./configure && make
+ $ sh ./autogen.sh && ./configure && make
  ```
- makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lpthread -lGLEW -lGLU -lGL`を付加して再実行します。
+ makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lpthread -lstdc++fs -lGLEW -lGLU -lGL`を付加して再実行します。
 
  デバッグビルドをしたいときは以下のようにします。
  ```sh
  $ rm m4/ax_check_glu.m4
- $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ $ sh ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
  ```
 
 5. 動作準備
@@ -145,7 +145,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
  ```sh
  $ rm m4/ax_check_glu.m4 #it seems broken?
- $ ./autogen.sh && ./configure && make
+ $ sh ./autogen.sh && ./configure && make
  ```
 
 5. 動作準備
