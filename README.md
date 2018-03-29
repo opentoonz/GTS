@@ -28,7 +28,7 @@ Execute "./gts" in unziped folder.
 
 1. Environment for development
 
- Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
+ Microsoft Visual C++ 2017 (tested on a Windows 7 Enterprise SP1)
 
 2. Get source code
 
@@ -39,15 +39,32 @@ Execute "./gts" in unziped folder.
 
 3. Get third party libraries
 
- third party libraries unarchived in:
- - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
- - `GTS/thirdparty/libtiff/tiff-4.0.3/`
- - `GTS/thirdparty/glew/glew-2.1.0/`
+ - Unzip third party libraries on the spot.
+   - `GTS/thirdparty/fltk/fltk-1.3.4-2.zip`
+   - `GTS/thirdparty/glew/glew-2.1.0.zip`
+   - `GTS/thirdparty/libtiff/tiff-4.0.9.zip`
+
+ - How to build fltk
+   - Open `GTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.sln`
+   - Set to `Release` about `Solution Configuration`
+   - Set to `Win32` about `Solution Platform`
+   - Set to /MD about Runtime Library
+   - Execute Solution Build
+ - How to build glew
+   - Open `GTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.sln`
+   - Set to `Release` about `Solution Configuration`
+   - Set to `Win32` about `Solution Platform`
+   - Set to /MD about Runtime Library
+   - Execute Solution Build
+ - How to build libtiff
+   - vc2017(32bit) Command Prompt 
+   > cd GTS/thirdparty/libtiff/tiff-4.0.9/
+   > nmake /f Makefile.vc lib
 
 4. How to build
 
  The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
- After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2013.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
+ After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2017.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
 
 5. Preparation for Execute
 

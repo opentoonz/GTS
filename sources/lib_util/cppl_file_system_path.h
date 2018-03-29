@@ -23,7 +23,7 @@ namespace cppl {
 		utf8文字コードで埋め込みができる(vc2015以後)
 	使用上の注意：WindowsAPIにはcp932に変換して渡すこと
 */
-#ifdef _WIN32
+#if defined(_WIN32) && (_MSC_VER < 1910)	/* vc2017より前のMS-C */
 using file_system_path = std::tr2::sys::path;
 #else
 using file_system_path = std::experimental::filesystem::path;

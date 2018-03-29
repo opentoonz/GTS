@@ -119,5 +119,5 @@ int main(int argc ,char *argv[]) {
 #endif  /* !DEBUG_WRITE_TIF */
 /*
 rem :121,122 w! tes_tif_write.bat
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_WRITE_TIF /I%HOMEDRIVE%%%HOMEPATH%\utility_tools\vc2010md\x86\tiff-4.0.3\include tes_tif_write.cxx %HOMEDRIVE%%%HOMEPATH%\utility_tools\vc2010md\x86\tiff-4.0.3\lib\libtiff.lib /Fetes_tif_write
+cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_WRITE_TIF /I%HOMEDRIVE%%%HOMEPATH%\utility_tools\vc2010md\x86\tiff-4.0.9\include tes_tif_write.cxx %HOMEDRIVE%%%HOMEPATH%\utility_tools\vc2010md\x86\tiff-4.0.9\lib\libtiff.lib /Fetes_tif_write
 */

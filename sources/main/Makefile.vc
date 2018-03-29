@@ -41,9 +41,9 @@ $(DPATH_LIBR)\libc16image_rw_tif.lib\
 $(DPATH_LIBR)\libc14image_rw_base.lib\
 $(DPATH_LIBR)\libc12pri.lib\
 $(DPATH_LIBR)\libc11portable.lib\
-$(DPATH_TIFF)\lib\libtiff-4.0.3-vc2013-32.lib\
-$(DPATH_FLTK)\lib\fltk-1.3.4-1-vc2013-32.lib\
-$(DPATH_FLTK)\lib\fltkgl-1.3.4-1-vc2013-32.lib\
+$(DPATH_TIFF)\libtiff\libtiff.lib\
+$(DPATH_FLTK)\lib\fltk.lib\
+$(DPATH_FLTK)\lib\fltkgl.lib\
 $(DPATH_GLEW)\lib\Release\Win32\glew32s.lib\
 glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib\
 user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib
@@ -52,15 +52,15 @@ TARG_CON = $(APPLICATION_NAME)_console.exe
 TARG = $(APPLICATION_NAME).exe
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
-DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-1
+DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-2
 DPATH_GLEW  = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
 DPATH_TWAIN = $(DPATH_3RD_PARTY)\twain\twain-2.3
-DPATH_TIFF  = $(DPATH_3RD_PARTY)\libtiff\tiff-4.0.3
+DPATH_TIFF  = $(DPATH_3RD_PARTY)\libtiff\tiff-4.0.9
 DPATH_APPL = ..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj
 DPATH_BINA = ..\..\x86_release
-DPATH_REDIST = "%VCINSTALLDIR%"redist\x86\Microsoft.VC120.CRT
+DPATH_REDIST = "%VCINSTALLDIR%"Redist\MSVC\14.13.26020\x86\Microsoft.VC141.CRT
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
 #---action--------------------------------------------------------------
 #	copy _gts-scan_area.txt $(DPATH_BINA)
@@ -80,7 +80,6 @@ $(TARG):
 inst:
 	move $(TARG) $(DPATH_BINA)
 	copy gts_initial_configuration.txt $(DPATH_BINA)
-	copy $(DPATH_REDIST)\msvcp120.dll $(DPATH_BINA)
-	copy $(DPATH_REDIST)\msvcr120.dll $(DPATH_BINA)
+	copy $(DPATH_REDIST)\msvcp140.dll $(DPATH_BINA)
 inst_con:
 	move $(TARG_CON) $(DPATH_BINA)

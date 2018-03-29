@@ -32,7 +32,7 @@ namespace cppl {
 	----------------------------------------//------------------------
 	注意:remove()は存在しないフォルダーを指定すると例外を投げてくる
 */
-#ifdef _WIN32
+#if defined(_WIN32) && (_MSC_VER < 1910)	/* vc2017より前のMS-C */
 namespace file_system = std::tr2::sys;
 #else
 namespace file_system = std::experimental::filesystem;
