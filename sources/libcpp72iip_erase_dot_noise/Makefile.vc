@@ -16,7 +16,7 @@ iip_erase_dot_noise_exec.cpp\
 iip_erase_dot_noise_uchar.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

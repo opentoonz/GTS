@@ -12,7 +12,7 @@ pri_cv.c\
 pri_msg_and_err.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

@@ -10,7 +10,7 @@ It's specialized in hand-drawn animation frames.
 
 GTS's uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-Interface is in English and scanned images are saved as TIFF.
+Interface is in English and scanned images are saved as TIFF/Targa.
 
 ## Requirements
 
@@ -45,13 +45,13 @@ Execute "./gts" in unziped folder.
    - `GTS/thirdparty/libtiff/tiff-4.0.9.zip`
 
  - How to build fltk
-   - Open `GTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.sln`
+   - Open `GTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.sln` at Visual Studio 2017
    - Set to `Release` about `Solution Configuration`
    - Set to `Win32` about `Solution Platform`
    - Set to /MD about Runtime Library
    - Execute Solution Build
  - How to build glew
-   - Open `GTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.sln`
+   - Open `GTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.sln` at Visual Studio 2017
    - Set to `Release` about `Solution Configuration`
    - Set to `Win32` about `Solution Platform`
    - Set to /MD about Runtime Library
@@ -72,7 +72,7 @@ Execute "./gts" in unziped folder.
 
 6. How to Execute
 
- In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
+ In `GTS/build/bin_x86/` you'll find the executable `gts.exe`. Run it.
 
 ## How to Build Locally(Linux)
 

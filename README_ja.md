@@ -14,7 +14,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 メニュー表記は英語のみ。
 
-保存する画像はTIFFです。
+保存する画像はTarga/TIFFです。
 
 ## 推奨環境
 
@@ -26,7 +26,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 ## 実行方法(Windows)
 
-解凍したフォルダー内にて、".\gts" を実行します。
+解凍したフォルダー内にて、"gts.exe" を実行します。
 
 ## ビルド方法(Windows)
 
@@ -52,13 +52,13 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
    - `GTS/thirdparty/libtiff/tiff-4.0.9.zip`
 
  - fltkのビルド方法
-   - GTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.slnを開く
+   - Visual Studio 2017でGTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.slnを開く
    - ソリューション構成をReleaseにする
    - ソリューションプラットフォームをWin32にする(default)
    - ランタイムライブラリを/MDにする(default)
    - ソリューションビルドを実行する
  - glewのビルド方法
-   - GTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.slnを開く
+   - Visual Studio 2017でGTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.slnを開く
    - ソリューション構成をReleaseにする
    - ソリューションプラットフォームをWin32にする(default)
    - ランタイムライブラリを/MDにする
@@ -82,7 +82,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
 6. 動作確認
 
- `GTS/x86_release/` にある、`gts.exe` を実行して動作を確かめてください。
+ `GTS/build/bin_x86/` にある、`gts.exe` を実行して動作を確かめてください。
 
 ## ビルド方法(Linux)
 

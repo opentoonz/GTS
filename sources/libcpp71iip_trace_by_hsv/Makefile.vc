@@ -24,7 +24,7 @@ OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
 DPATH_FLTK = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-2
 DPATH_GLEW = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
