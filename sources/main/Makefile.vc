@@ -81,5 +81,6 @@ inst:
 	move $(TARG) $(DPATH_BINA)
 	copy gts_initial_configuration.txt $(DPATH_BINA)
 	copy $(DPATH_REDIST)\msvcp140.dll $(DPATH_BINA)
+	copy $(DPATH_REDIST)\vcruntime140.dll $(DPATH_BINA)
 inst_con:
 	move $(TARG_CON) $(DPATH_BINA)
