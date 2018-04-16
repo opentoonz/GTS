@@ -52,21 +52,23 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
    - `GTS/thirdparty/libtiff/tiff-4.0.9.zip`
 
  - fltkのビルド方法
-   - Visual Studio 2017でGTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.slnを開く
-   - ソリューション構成をReleaseにする
-   - ソリューションプラットフォームをWin32にする(default)
-   - ランタイムライブラリを/MDにする(default)
+   - Visual Studio 2017で`GTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.sln`を開く
+   - `ソリューション構成`を`Release`にする
+   - `ソリューションプラットフォーム`を`Win32`にする(default)
+   - `ランタイムライブラリ`を`/MD`にする(default)
    - ソリューションビルドを実行する
  - glewのビルド方法
-   - Visual Studio 2017でGTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.slnを開く
-   - ソリューション構成をReleaseにする
-   - ソリューションプラットフォームをWin32にする(default)
-   - ランタイムライブラリを/MDにする
+   - Visual Studio 2017で`GTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.sln`を開く
+   - `ソリューション構成`を`Release`にする
+   - `ソリューションプラットフォーム`を`Win32`にする(default)
+   - `ランタイムライブラリ`を`/MD`にする
    - ソリューションビルドを実行する
  - libtiffのビルド方法
    - vc2017(32bit)用コマンドプロンプトにて以下を実行する
-   > cd GTS/thirdparty/libtiff/tiff-4.0.9/
-   > nmake /f Makefile.vc lib
+ ```sh
+ $ cd GTS/thirdparty/libtiff/tiff-4.0.9/
+ $ nmake /f Makefile.vc lib
+ ```
 
 4. ビルドする
 
@@ -74,7 +76,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 
  先に、外部ライブラリを、32-bitでビルドします。
 
- `GTS/sources/` へ移動し、本体ビルドバッチファイル `one_step_build_vc2017.bat` を実行します(64ビットWindowsでない場合、`vcvarsall.bat`のパスを変更する必要があるかもしれません)。
+ `GTS/sources/` へ移動し、本体ビルドバッチファイル `one_step_build_vc2017.bat` を実行します
 
 5. 動作準備
 
