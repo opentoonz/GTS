@@ -6,7 +6,12 @@
 #include <sstream>
 #include <FL/Fl.H>
 #include <FL/fl_ask.H> // fl_alert()
-#include "ptbl_funct.h" // ptbl_get_cp_username
+#include "ptbl_funct.h"	// ptbl_charcode_cp932_from_utf8(-)
+#ifdef UNICODE
+#include "osapi_mbs_wcs.h"
+#endif
+#include "osapi_getusername.h"
+#include "osapi_gethostname.h"
 #include "memory_config.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -60,13 +65,17 @@ void memory_config::save_head_( std::ofstream& ofs )
 	asctime()が返す文字列はstatic領域なのでfree()してはいけません
 	*/
 
-	const char* un = ptbl_get_cp_username();
-	if (un == nullptr) { un = "unknown"; }
-	ofs << "# username  : " << un << "\n";
-
-	const char* hn = ptbl_get_cp_hostname();
-	if (hn == nullptr) { hn = "unknown"; }
-	ofs << "# hostname  : " << hn << "\n";
+#ifdef UNICODE
+	std::string usern( osapi::mbs_from_wcs( osapi::getusername() ) );
+	std::string hostn( osapi::mbs_from_wcs( osapi::gethostname() ) );
+#else
+	std::string usern( osapi::getusername() );
+	std::string hostn( osapi::gethostname() );
+#endif
+	if (usern.empty()) { usern = "unknown"; }
+	ofs << "# username  : " << usern << "\n";
+	if (hostn.empty()) { hostn = "unknown"; }
+	ofs << "# hostname  : " << hostn << "\n";
 }
 void memory_config::save_config_( std::ofstream& ofs )
 {

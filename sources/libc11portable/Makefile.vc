@@ -8,9 +8,7 @@ INCS =\
 /I.
 SRCS =\
 ptbl_charcode.c\
-ptbl_dir_or_file_is_exist.c\
-ptbl_get_cp_hostname.c\
-ptbl_get_cp_username.c
+ptbl_dir_or_file_is_exist.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
 DPATH_APPL = ..\..\build

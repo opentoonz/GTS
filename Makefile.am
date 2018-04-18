@@ -38,13 +38,13 @@ libgts_la_SOURCES = \
 					sources/lib_util/opengl_camera_eye.cpp \
 					sources/lib_util/opengl_vertex_buffer_object.cpp \
 					sources/lib_util/osapi_getenv.cpp \
+					sources/lib_util/osapi_gethostname.cpp \
+					sources/lib_util/osapi_getusername.cpp \
 					sources/lib_util/osapi_log_with_msg_and_id.cpp \
 					sources/lib_util/osapi_mbs_wcs.cpp \
 					sources/lib_util/osapi_str_from_errid.cpp \
 					sources/libc11portable/ptbl_charcode.c \
 					sources/libc11portable/ptbl_dir_or_file_is_exist.c \
-					sources/libc11portable/ptbl_get_cp_hostname.c \
-					sources/libc11portable/ptbl_get_cp_username.c \
 					sources/libc12pri/pri_cv.c \
 					sources/libc12pri/pri_msg_and_err.c \
 					sources/libc14image_rw_base/bread.c \

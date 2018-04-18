@@ -16,10 +16,10 @@ int main(int argc , char *argv[])
 	const int num = std::stoi( argv[1] );
 #ifdef _WIN32 // win32 or win64
 	std::TSTRING msg( osapi::tstr_from_errid(num) );
-	std::TCOUT << TEXT("\"") << msg << TEXT("\"") << std::endl;
+	std::TCOUT << msg.size() << TEXT("\"") << msg << TEXT("\"") << std::endl;
 #else
 	std::string msg( osapi::str_from_errid(num) );
-	std::cout << "\"" << msg << "\"" << std::endl;
+	std::cout << msg.size() << "\"" << msg << "\"" << std::endl;
 #endif
  }
 	return 0;

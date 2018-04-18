@@ -17,6 +17,8 @@ cppl_stop_watch.cpp\
 opengl_camera_eye.cpp\
 opengl_vertex_buffer_object.cpp\
 osapi_getenv.cpp\
+osapi_gethostname.cpp\
+osapi_getusername.cpp\
 osapi_log_with_msg_and_id.cpp\
 osapi_mbs_wcs.cpp\
 osapi_str_from_errid.cpp

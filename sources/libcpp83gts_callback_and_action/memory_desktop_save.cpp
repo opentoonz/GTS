@@ -2,8 +2,13 @@
 #include <cstring>
 #include <ctime>
 #include <string>
+#include "ptbl_funct.h"	// ptbl_charcode_cp932_from_utf8(-)
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h"
+#ifdef UNICODE
+#include "osapi_mbs_wcs.h"
+#endif
+#include "osapi_getusername.h"
+#include "osapi_gethostname.h"
 #include "pri.h"
 #include "memory_desktop.h"
 #include "gts_gui.h"
@@ -28,18 +33,18 @@ int memory_desktop::_save_by_fp( FILE *fp )
 	);
 	if (i_ret < 0) { return NG; }
 
-	const char* un = ptbl_get_cp_username();
-	if (un == nullptr) { un = "unknown"; }
-	i_ret = fprintf(fp, "# username  : %s\n"
-	,un
-	);
+#ifdef UNICODE
+	std::string usern( osapi::mbs_from_wcs( osapi::getusername() ) );
+	std::string hostn( osapi::mbs_from_wcs( osapi::gethostname() ) );
+#else
+	std::string usern( osapi::getusername() );
+	std::string hostn( osapi::gethostname() );
+#endif
+	if (usern.empty()) { usern = "unknown"; }
+	i_ret = fprintf( fp, "# username  : %s\n" ,usern.c_str() );
 	if (i_ret < 0) { return NG; }
-
-	const char* hn = ptbl_get_cp_hostname();
-	if (hn == nullptr) { hn = "unknown"; }
-	i_ret = fprintf(fp, "# hostname  : %s\n\n"
-	,hn
-	);
+	if (hostn.empty()) { hostn = "unknown"; }
+	i_ret = fprintf( fp, "# hostname  : %s\n\n" ,hostn.c_str() );
 	if (i_ret < 0) { return NG; }
 
 	//---------------------------------------
