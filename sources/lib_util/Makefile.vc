@@ -1,9 +1,9 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = lib_util
-OPTS = /W4 /MD /EHa /O2 /wd4819
-# /wd4819 : Stop warning message about Language Code
-#
+OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I$(DPATH_GLEW)\include\
 /I$(DPATH_FLTK)\
@@ -21,6 +21,7 @@ osapi_gethostname.cpp\
 osapi_getusername.cpp\
 osapi_log_with_msg_and_id.cpp\
 osapi_mbs_wcs.cpp\
+osapi_mkdir.cpp\
 osapi_str_from_errid.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)

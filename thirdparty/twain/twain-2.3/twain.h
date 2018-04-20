@@ -2232,7 +2232,7 @@ typedef struct {
         #pragma pack (pop, before_twain)
     #endif
 #elif defined(TWH_CMP_BORLAND)
-    #pragma option –a.
+    #pragma option ç´¡.
 #endif
 
 #endif  /* TWAIN */

@@ -107,8 +107,8 @@ catch (...) {
 #endif
 /*
 rem :110,112 w! make.bat
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DUNICODE /D_UNICODE /DDEBUG_OSAPI_GETENV osapi_getenv.cpp /Fea_u16
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_OSAPI_GETENV osapi_getenv.cpp /Fea_u08
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8 /DUNICODE /D_UNICODE /DDEBUG_OSAPI_GETENV osapi_getenv.cpp /Fea_u16
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8                      /DDEBUG_OSAPI_GETENV osapi_getenv.cpp /Fea_u08
 del osapi_getenv.obj
 # :115,115 w! make.sh
 #!/bin/bash -x

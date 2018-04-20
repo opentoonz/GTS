@@ -62,7 +62,8 @@ std::string gethostname( void )
 #include "osapi_mbs_wcs.cpp"
 int main(void)
 {
-// try { osapi::init_locale_to_jp();
+// try {
+	osapi::init_locale_to_jp();
 #ifdef _WIN32
 	std::TCOUT <<_T("hostname=\"") <<osapi::gethostname() <<_T("\"\n");
 #else
@@ -77,8 +78,8 @@ int main(void)
 #endif
 /*
 rem :80,82 w! make.bat
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DUNICODE /D_UNICODE /DDEBUG_OSAPI_GETHOSTNAME osapi_gethostname.cpp /Fea_u16
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_OSAPI_GETHOSTNAME osapi_gethostname.cpp /Fea_u08
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8 /DUNICODE /D_UNICODE /DDEBUG_OSAPI_GETHOSTNAME osapi_gethostname.cpp /Fea_u16
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8 /DDEBUG_OSAPI_GETHOSTNAME osapi_gethostname.cpp /Fea_u08
 del osapi_gethostname.obj
 # :85,85 w! make.sh
 #!/bin/bash -x

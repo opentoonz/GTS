@@ -107,8 +107,8 @@ int main(int argc, char *argv[])
 #endif  /* !DEBUG_OSAPI_LOG_WITH_MSG_AND_ID */
 /*
 rem :110,112 w! make.bat
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DUNICODE /DDEBUG_OSAPI_LOG_WITH_MSG_AND_ID osapi_log_with_msg_and_id.cpp /Fea_u16
-cl /W4 /WX /MD /EHa /O2 /wd4819           /DDEBUG_OSAPI_LOG_WITH_MSG_AND_ID osapi_log_with_msg_and_id.cpp /Fea_u08
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8  /DUNICODE /DDEBUG_OSAPI_LOG_WITH_MSG_AND_ID osapi_log_with_msg_and_id.cpp /Fea_u16
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8            /DDEBUG_OSAPI_LOG_WITH_MSG_AND_ID osapi_log_with_msg_and_id.cpp /Fea_u08
 del osapi_log_with_msg_and_id.obj
 # :114,115 w! make.sh
 #!/bin/bash -x

@@ -7,7 +7,7 @@ void hsv_to_xyz(
 	const double h , const double s , const double v
 	,double& x , double& y , double& z
 );
-void hsv_to_xyz( /* ´Ø¿ô¥ª¡¼¥Ğ¡¼¥í¡¼¥É */
+void hsv_to_xyz( /* é–¢æ•°ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ */
 	const double h , const double s , const double v
 	,float& x , float& y , float& z
 );

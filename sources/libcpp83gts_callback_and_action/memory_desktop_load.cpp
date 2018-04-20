@@ -7,7 +7,7 @@
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"		/* ptbl_charcode_cp932_from_utf8() */
 #include "memory_desktop.h"
-#include "cppl_file_system.h"
+#include "osapi_mkdir.h"
 #include "gts_file_path.h"	/* ptbl_get_user_home(-)
 				get_desktop_dir_when_unix() */
 #include "gts_gui.h"
@@ -38,9 +38,7 @@ int memory_desktop::set_desktop_file_path_( void ) {
 		if (!ptbl_dir_or_file_is_exist(
 			const_cast<char *>(this->desktop_file_path_.c_str())
 		)) {
-			if (cppl::file_system::create_directory(
-			cppl::file_system_path(this->desktop_file_path_)
-			)==false) {
+			if (osapi::mkdir( desktop_file_path_ )==false) {
 				ret = NG;
 			}
 		}

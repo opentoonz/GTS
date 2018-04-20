@@ -1,8 +1,9 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = libcpp56iip_opengl
-OPTS = /W4 /MD /EHa /O2 /wd4819
-# /wd4819 : Stop warning message about Language Code
+OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I.\
 /I..\libcpp53iip_precision\

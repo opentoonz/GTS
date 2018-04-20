@@ -15,7 +15,7 @@
 namespace cppl {
 
 /*
-	注意：C++17で定義なので2018-4現在は利用に検討が必要
+	[WIP]利用検討用の実装です、実利用はまだ
 
 	ファイルあるいはフォルダーに対する操作関数群
 	エラー時は例外が飛ぶことを前提に利用すること
@@ -40,7 +40,7 @@ namespace file_system = std::tr2::sys;
 namespace file_system = std::experimental::filesystem;
 #endif
 
-std::vector<std::string> get_directory_list( const cppl::file_system_path& pa );
+// std::vector<std::string> get_directory_list( const cppl::file_system_path& pa );
 
 } // cppl
 

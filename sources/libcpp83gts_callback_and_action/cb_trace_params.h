@@ -26,7 +26,7 @@ public:
 		,widget_sets(6)
 	{}
 
-	/* ½é´ü²½ */
+	/* åˆæœŸåŒ– */
 	void init_color(void);
 
 	/* target rgb color editor */
@@ -45,7 +45,7 @@ public:
 	int get_hue_minmax_editing_number(void) const {
 		return this->hue_minmax_editing_number_; }
 
-	/* trace¤ÎÌÜÅª¿§¤òÆÀ¤ë */
+	/* traceã®ç›®çš„è‰²ã‚’å¾—ã‚‹ */
 	void get_target_rgb(
 		const int number
 		, unsigned char& r , unsigned char& g , unsigned char& b
@@ -55,8 +55,8 @@ public:
 		, unsigned char r , unsigned char g , unsigned char b
 	);
 
-	/* trace param¤Î³Æ¹àÌÜ¤òÇÛÎó¤È¤·¤Æ°·¤¦¤¿¤á¤Î½èÃÖ
-		"¾å²¼Æş¤ìÂØ¤¨"¡¡¤È¡¡"memory_config save&load"¡¡¤ÇÍøÍÑ
+	/* trace paramã®å„é …ç›®ã‚’é…åˆ—ã¨ã—ã¦æ‰±ã†ãŸã‚ã®å‡¦ç½®
+		"ä¸Šä¸‹å…¥ã‚Œæ›¿ãˆ"ã€€ã¨ã€€"memory_config save&load"ã€€ã§åˆ©ç”¨
 	*/
 	class widget_set {
 	public:
@@ -90,7 +90,7 @@ private:
 	double hmin_ ,hmax_;
 	bool rotate360_sw_;
 
-	/* ·×»»¤¹¤ë»ş¤Î¤ß»È¤¦°ì»şÊÑ¿ô */
+	/* è¨ˆç®—ã™ã‚‹æ™‚ã®ã¿ä½¿ã†ä¸€æ™‚å¤‰æ•° */
 	std::vector<calc::trace_by_hsv_params> param_sets_;
 
 	void init_widget_set_(void);

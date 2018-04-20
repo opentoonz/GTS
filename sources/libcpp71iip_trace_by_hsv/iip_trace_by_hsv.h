@@ -9,15 +9,15 @@
 
 /*
 	template
-	INN,OUT¤ÎPixelÃÍÍ×ÁÇ¤Ë¤Ä¤¤¤Æ
+	INN,OUTã®Pixelå€¤è¦ç´ ã«ã¤ã„ã¦
 		unsigned char
 		unsigned short
 		unsigned long
 		unsigned int	(=unsigned)
-	¤Î¤ß¥µ¥İ¡¼¥È
+	ã®ã¿ã‚µãƒãƒ¼ãƒˆ
 		float
 		double
-	¤Ï½èÍı¤Ç¤­¤Ê¤¤
+	ã¯å‡¦ç†ã§ããªã„
 */
 class iip_trace_by_hsv : public iip_canvas {
 public:

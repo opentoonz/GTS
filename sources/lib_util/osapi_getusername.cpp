@@ -46,7 +46,8 @@ std::string getusername( void )
 #include "osapi_mbs_wcs.cpp"
 int main(void)
 {
-// try { osapi::init_locale_to_jp();
+// try {
+	osapi::init_locale_to_jp();
 #ifdef _WIN32
 	std::TCOUT <<_T("username=\"") <<osapi::getusername() <<_T("\"\n");
 #else
@@ -61,8 +62,8 @@ int main(void)
 #endif
 /*
 rem :64,66 w! make.bat
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DUNICODE /D_UNICODE /DDEBUG_OSAPI_GETUSERNAME osapi_getusername.cpp /Fea_u16 advapi32.lib
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_OSAPI_GETUSERNAME osapi_getusername.cpp /Fea_u08 advapi32.lib
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8 /DUNICODE /D_UNICODE /DDEBUG_OSAPI_GETUSERNAME osapi_getusername.cpp /Fea_u16 advapi32.lib
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8                      /DDEBUG_OSAPI_GETUSERNAME osapi_getusername.cpp /Fea_u08 advapi32.lib
 del osapi_getusername.obj
 # :69,69 w! make.sh
 #!/bin/bash -x

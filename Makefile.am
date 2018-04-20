@@ -42,6 +42,7 @@ libgts_la_SOURCES = \
 					sources/lib_util/osapi_getusername.cpp \
 					sources/lib_util/osapi_log_with_msg_and_id.cpp \
 					sources/lib_util/osapi_mbs_wcs.cpp \
+					sources/lib_util/osapi_mkdir.cpp \
 					sources/lib_util/osapi_str_from_errid.cpp \
 					sources/libc11portable/ptbl_charcode.c \
 					sources/libc11portable/ptbl_dir_or_file_is_exist.c \

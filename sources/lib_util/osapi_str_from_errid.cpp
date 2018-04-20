@@ -27,8 +27,8 @@ int main(int argc , char *argv[])
 #endif
 /*
 rem :30,32 w! make.bat
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DUNICODE /DDEBUG_RSRC_STR_FROM_ERRID osapi_str_from_errid.cpp /Fea_u16
-cl /W4 /WX /MD /EHa /O2 /wd4819 /DDEBUG_RSRC_STR_FROM_ERRID osapi_str_from_errid.cpp /Fea_u08
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8 /DUNICODE /DDEBUG_RSRC_STR_FROM_ERRID osapi_str_from_errid.cpp /Fea_u16
+cl /W4 /WX /MD /EHa /O2 /source-charset:utf-8 /DDEBUG_RSRC_STR_FROM_ERRID osapi_str_from_errid.cpp /Fea_u08
 del osapi_str_from_errid.obj
 # :34,35 w! make.sh
 #!/bin/bash -x

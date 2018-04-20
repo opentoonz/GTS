@@ -2,8 +2,8 @@
 #define osapi_getusername_h
 
 /*
-¸½ºß¤Î¥æ¡¼¥¶¡¼Ì¾¤òÆÀ¤ë
-¸«¤Ä¤«¤é¤Ê¤¤¤È¤­¤ÏnullÊ¸»úÎó(nullptr¤Ç¤Ï¤Ê¤¤)¤òÊÖ¤¹
+ç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼åã‚’å¾—ã‚‹
+ã¤ã‹ã‚‰ãªã„ã¨ãã¯nullæ–‡å­—åˆ—(nullptrã§ã¯ãªã„)ã‚’è¿”ã™
 */
 
 #ifdef _WIN32
@@ -15,7 +15,7 @@ std::TSTRING getusername(void);
 #else	// unix
 #include <string>
 namespace osapi {
-/* Ãí°Õ¡§loginÌ¾¤Ç¤Ï¤Ê¤¤¾ì¹ç¤¢¤ê¡£Cygwin¤Ç¤ÏAdmin... */
+/* æ³¨æ„ï¼šloginåã§ã¯ãªã„å ´åˆã‚ã‚Šã€‚Cygwinã§ã¯Admin... */
 std::string getusername(void);
 } // namespace osapi
 #endif

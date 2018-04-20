@@ -2,8 +2,8 @@
 #define osapi_gethostname_h
 
 /*
-�ۥ���̾������
-���Ĥ���ʤ��Ȥ���nullʸ����(nullptr�ǤϤʤ�)���֤�
+ホスト名を得る
+見つからないときはnull文字列(nullptrではない)を返す
 */
 
 #ifdef _WIN32

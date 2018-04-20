@@ -10,15 +10,12 @@ void init_locale_to_jp(void)
 	ただし数値カテゴリはC localeのままに
 	(しないと3桁ごとにカンマが付く(1000-->1,000))
 	*/
-#ifdef UNICODE	/* vc2015からUNICODE以外でこの処理すると表示しない  */
+#if defined(UNICODE) && (_MSC_VER < 1900) /* vc2015より前のMS-C */
 	std::locale::global(
 	std::locale(std::locale(),"japanese",std::locale::ctype)
 	);
-	/* std::locale::global(std::locale("")); ダメ
-	*/
-	/* std::locale::global(std::locale("japanese")); ダメ
-	std::setlocale(LC_ALL,"japanese");
-	*/
+#else /* vc2015,vc2017 */
+	std::wcout.imbue( std::locale( "", std::locale::ctype ) );
 #endif
 }
 

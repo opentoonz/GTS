@@ -2,8 +2,8 @@
 #define osapi_getenv_h
 
 /*
-	�Ķ��ѿ�������
-	�б������ѿ����ʤ����nullʸ����(nullptr�ǤϤʤ�)���֤�
+	環境変数を得る
+	対応する変数がなければnull文字列(nullptrではない)を返す
 */
 
 #ifdef _WIN32
