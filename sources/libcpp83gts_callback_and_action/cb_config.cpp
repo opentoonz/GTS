@@ -1,7 +1,7 @@
 #include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
+#include "osapi_exist.h"
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_config.h"
@@ -223,7 +223,7 @@ void cb_config::save( void )
 	));
 
 	/* ダイオローグを表示 */
-	if (ptbl_dir_or_file_is_exist(const_cast<char *>(fpath.c_str()))) {
+	if (osapi::exist_utf8_mbs(fpath)) {
 		/* すでに存在するなら上書き確認 */
 		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )){
 			return;

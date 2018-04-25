@@ -8,8 +8,7 @@ OPTS = /W4 /MD /EHa /O2 /wd4996 /source-charset:utf-8
 INCS =\
 /I.
 SRCS =\
-ptbl_charcode.c\
-ptbl_dir_or_file_is_exist.c
+ptbl_charcode.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
 DPATH_APPL = ..\..\build

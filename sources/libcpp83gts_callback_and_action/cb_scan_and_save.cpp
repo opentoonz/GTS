@@ -3,9 +3,9 @@
 #include <sstream>	// std::ostringstream
 #include <iomanip>	// std::setfill(-) ,std::setw(-)
 #include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "ptbl_returncode.h"
 #include "pri.h"
+#include "osapi_exist.h"
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
 #include "cb_scan_and_save.h"
@@ -502,10 +502,7 @@ bool cb_scan_and_save::is_exist_save_files_(void)
 		/* 番号によるファイルパス */
 		std::string filepath( this->get_save_path( file_num ) );
 		/* ファイルの存在の表示チェック */
-		if (	!filepath.empty()
-		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
-			filepath.c_str()
-		))) {
+		if (!filepath.empty() && osapi::exist_utf8_mbs(filepath)) {
 		 sw = true;
 		 cl_gts_master.cl_number.replace_with_S( file_num ,ii );
 		}

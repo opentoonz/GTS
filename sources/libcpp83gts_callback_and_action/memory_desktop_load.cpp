@@ -6,6 +6,7 @@
 #include "pri.h"
 #include "ptbl_returncode.h"
 #include "ptbl_funct.h"		/* ptbl_charcode_cp932_from_utf8() */
+#include "osapi_exist.h"
 #include "memory_desktop.h"
 #include "osapi_mkdir.h"
 #include "gts_file_path.h"	/* ptbl_get_user_home(-)
@@ -35,10 +36,8 @@ int memory_desktop::set_desktop_file_path_( void ) {
 #ifndef _WIN32
 		this->desktop_file_path_ += get_desktop_dir_when_unix();
 		this->desktop_file_path_ += PATH_SEPARETER;
-		if (!ptbl_dir_or_file_is_exist(
-			const_cast<char *>(this->desktop_file_path_.c_str())
-		)) {
-			if (osapi::mkdir( desktop_file_path_ )==false) {
+		if (osapi::exist_utf8_mbs(this->desktop_file_path_)==false){
+			if (osapi::mkdir(this->desktop_file_path_)==false) {
 				ret = NG;
 			}
 		}

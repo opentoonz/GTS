@@ -1,5 +1,5 @@
 #include <fstream>
-#include "ptbl_funct.h"	/* ptbl_dir_or_file_is_exist(-) */
+#include "osapi_exist.h"
 #include "osapi_getenv.h"	/* osapi::getenv(-) */
 #include "osapi_mkdir.h"
 #include "gts_file_path.h"
@@ -84,8 +84,8 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 #ifndef _WIN32
 	fpath_user += PATH_SEPARETER;
 	fpath_user += get_desktop_dir_when_unix();
-	if (!ptbl_dir_or_file_is_exist((char *)fpath_user.c_str())) {
-		if (osapi::mkdir( fpath_user )==false) {
+	if ( ospai::exist_mbs( fpath_user ) == false ) {
+		if ( osapi::mkdir( fpath_user ) == false ) {
 			/* フォルダ作れないなら、親フォルダを返す */
 			ptbl_get_user_home(fpath_user);
 			return fpath_user;

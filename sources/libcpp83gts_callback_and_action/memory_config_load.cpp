@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string> // std::getline() , std::stod() --> C++11,throw exception then error
 #include "pri.h"
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
+#include "ptbl_funct.h" // ptbl_charcode_cp932_from_utf8()
 #include "igs_lex_white_space_and_double_quote.h"
 #include "memory_config.h"
 #include "gts_gui.h"

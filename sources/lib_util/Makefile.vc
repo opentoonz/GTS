@@ -16,6 +16,7 @@ cppl_file_system.cpp\
 cppl_stop_watch.cpp\
 opengl_camera_eye.cpp\
 opengl_vertex_buffer_object.cpp\
+osapi_exist.cpp\
 osapi_getenv.cpp\
 osapi_gethostname.cpp\
 osapi_getusername.cpp\

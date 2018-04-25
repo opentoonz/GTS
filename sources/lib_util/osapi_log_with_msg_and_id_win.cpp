@@ -64,6 +64,8 @@ msg
 	/* エラー番号→エラーメッセージ */
 	if (NO_ERROR != message_id) {
 	errmsg += log_sep_c;
+	errmsg += std::to_string(message_id);
+	errmsg += ' ';
 #ifdef UNICODE
 	errmsg += osapi::mbs_from_wcs(osapi::tstr_from_errid(message_id));
 #else

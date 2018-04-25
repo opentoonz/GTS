@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>	// std::ostringstream
 #include <iomanip>	// std::setw()
-#include "ptbl_funct.h"
+#include "osapi_exist.h"
 #include "ids_path_level_from_files.h"
 #include "cb_number.h"
 #include "gts_gui.h"
@@ -160,9 +160,7 @@ void cb_number::cb_set_list_from_string( void )
 
 		/* insert&Scroll for viewing */
 		if ( !this->get_save_path( file_num ).empty()
-		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
-			this->get_save_path( file_num ).c_str()
-		))) {
+		&&   osapi::exist_utf8_mbs(this->get_save_path(file_num))) {
 			insert_with_S_( file_num ,ii);
 		}
 		else {

@@ -1,7 +1,7 @@
 #include <fstream>	//std::ifstream
 #include "FL/fl_ask.H"	// fl_alert(-)
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
+#include "osapi_exist.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -59,9 +59,7 @@ void gts_master::cb_read_and_trace_and_preview(
 	}
 
 	/* 画像ファイル存在しない */
-	if (!ptbl_dir_or_file_is_exist(
-		const_cast<char *>(fpath_open.c_str())
-	)) {
+	if ( osapi::exist_utf8_mbs( fpath_open ) == false ) {
 		pri_funct_err_bttvr( "Warning : <%s> is not exist"
 			,fpath_open.c_str()
 		);

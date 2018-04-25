@@ -14,7 +14,6 @@ INCS =\
 /I..\libc12pri\
 /I..\libc11portable
 SRCS =\
-check_save.cpp\
 iip_read_file.cpp\
 iip_read_header.cpp\
 iip_read_set_tif_param.cpp\

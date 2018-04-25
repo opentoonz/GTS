@@ -65,7 +65,8 @@ tit
  }
 	/* エラー番号→エラーメッセージ */
  if (0 != erno) {
-	errmsg += log_sep_c;	errmsg += osapi::str_from_errid(erno);
+	errmsg += log_sep_c; errmsg += std::to_string(erno);
+	errmsg += ' '; errmsg += osapi::str_from_errid(erno);
  }
 	/* MBCSで返す */
 	return errmsg;

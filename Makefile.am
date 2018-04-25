@@ -37,6 +37,7 @@ libgts_la_SOURCES = \
 					sources/lib_util/cppl_stop_watch.cpp \
 					sources/lib_util/opengl_camera_eye.cpp \
 					sources/lib_util/opengl_vertex_buffer_object.cpp \
+					sources/lib_util/osapi_exist.cpp \
 					sources/lib_util/osapi_getenv.cpp \
 					sources/lib_util/osapi_gethostname.cpp \
 					sources/lib_util/osapi_getusername.cpp \
