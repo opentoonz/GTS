@@ -7,6 +7,10 @@
 #include "tif_image_rw.h"
 #include "tga_image_rw.h"
 
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
+
 #include "iip_write.h"
 
 int iip_write::file( void )
@@ -32,22 +36,27 @@ int iip_write::file( void )
 	if ( !strcmp( "tif", cp_ext )
 	||        !strcmp( "TIF", cp_ext ) ) {
 		if (OK != tif_image_write(
-			this->get_vp_canvas(),
-			this->get_l_width(),
-			this->get_l_height(),
-			this->get_l_channels(),
-			this->cl_ch_info.get_l_bytes(),
-			this->cl_ch_info.get_l_bits(),
-			this->_d_tif_dpi_x,
-			this->_d_tif_dpi_y,
-			this->_l_tif_compression,
-			this->_l_tif_lzw_prediction_scheme,
-			this->_l_tif_orientation,
-			this->_l_tif_byte_swap_mode,
-			this->cl_name.get_cp_name(),
-			this->get_i_mv_sw(),
-			this->get_i_pv_sw(),
-			this->get_i_cv_sw()
+			this->get_vp_canvas()
+			,this->get_l_width()
+			,this->get_l_height()
+			,this->get_l_channels()
+			,this->cl_ch_info.get_l_bytes()
+			,this->cl_ch_info.get_l_bits()
+			,this->_d_tif_dpi_x
+			,this->_d_tif_dpi_y
+			,this->_l_tif_compression
+			,this->_l_tif_lzw_prediction_scheme
+			,this->_l_tif_orientation
+			,this->_l_tif_byte_swap_mode
+#ifdef _WIN32
+		,const_cast<char *>(osapi::cp932_from_utf8(
+		 this->cl_name.get_cp_name()).c_str())
+#else
+		,this->cl_name.get_cp_name()
+#endif
+			,this->get_i_mv_sw()
+			,this->get_i_pv_sw()
+			,this->get_i_cv_sw()
 		)) {
 			pri_funct_err_bttvr(
 			"Error : tif_image_write(-) returns NG." );
@@ -58,16 +67,21 @@ int iip_write::file( void )
 	else if ( !strcmp( "tga", cp_ext )
 	||        !strcmp( "TGA", cp_ext ) ) {
 		if (OK != tga_image_write(
-			this->get_vp_canvas(),
-			this->get_l_width(),
-			this->get_l_height(),
-			this->get_l_channels(),
-			this->cl_ch_info.get_l_bytes(),
-			this->_i_tga_rle_sw,
-			this->cl_name.get_cp_name(),
-			this->get_i_mv_sw(),
-			this->get_i_pv_sw(),
-			this->get_i_cv_sw()
+			this->get_vp_canvas()
+			,this->get_l_width()
+			,this->get_l_height()
+			,this->get_l_channels()
+			,this->cl_ch_info.get_l_bytes()
+			,this->_i_tga_rle_sw
+#ifdef _WIN32
+		,const_cast<char *>(osapi::cp932_from_utf8(
+		 this->cl_name.get_cp_name()).c_str())
+#else
+		,this->cl_name.get_cp_name()
+#endif
+			,this->get_i_mv_sw()
+			,this->get_i_pv_sw()
+			,this->get_i_cv_sw()
 		)) {
 			pri_funct_err_bttvr(
 			"Error : tga_image_write(-) returns NG." );

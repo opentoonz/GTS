@@ -5,7 +5,9 @@
 #include <fstream>
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h"		/* ptbl_charcode_cp932_from_utf8() */
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
 #include "osapi_exist.h"
 #include "memory_desktop.h"
 #include "osapi_mkdir.h"
@@ -64,10 +66,8 @@ int memory_desktop::load( void ) {
 	/* 古いfileパスでファイルあるならそちらを優先-->保存は標準パス */
 	bool old_type_sw = false;
 
-#if defined _WIN32
-	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
-			   old_path.c_str()
-	));
+#ifdef _WIN32
+	std::ifstream ifs( osapi::cp932_from_utf8( old_path ) );
 #else
 	std::ifstream ifs( old_path );
 #endif

@@ -7,6 +7,10 @@
 #include "tif_image_rw.h"
 #include "tga_image_rw.h"
 
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
+
 #include "iip_read.h"
 
 int iip_read::file( void )
@@ -35,18 +39,23 @@ int iip_read::file( void )
 	||        !strcmp( "tzi", cp_ext )
 	||        !strcmp( "TIF", cp_ext ) ) {
 		vp_canvas = tif_image_read(
-			this->cl_name.get_cp_name(),
-			&l_w, &l_h, &l_c, &l_b,
-			&(l_tif_bits_per_sample),
-			&(this->_d_tif_dpi_x),
-			&(this->_d_tif_dpi_y),
-			&(this->_l_tif_tile_width),
-			&(this->_l_tif_tile_height),
-			&(this->_l_tif_compression),
-			&(this->_l_tif_orientation),
-			this->get_i_mv_sw(),
-			this->get_i_pv_sw(),
-			this->get_i_cv_sw()
+#ifdef _WIN32
+		const_cast<char *>(osapi::cp932_from_utf8(
+		this->cl_name.get_cp_name()).c_str())
+#else
+		this->cl_name.get_cp_name()
+#endif
+		,&l_w, &l_h, &l_c, &l_b
+		,&(l_tif_bits_per_sample)
+		,&(this->_d_tif_dpi_x)
+		,&(this->_d_tif_dpi_y)
+		,&(this->_l_tif_tile_width)
+		,&(this->_l_tif_tile_height)
+		,&(this->_l_tif_compression)
+		,&(this->_l_tif_orientation)
+		,this->get_i_mv_sw()
+		,this->get_i_pv_sw()
+		,this->get_i_cv_sw()
 		);
 		if (NULL == vp_canvas) {
 			pri_funct_err_bttvr(
@@ -59,11 +68,16 @@ int iip_read::file( void )
 	else if ( !strcmp( "tga", cp_ext )
 	||        !strcmp( "TGA", cp_ext ) ) {
 		vp_canvas = tga_image_read(
-			this->cl_name.get_cp_name(),
-			&l_w, &l_h, &l_c, &l_b,
-			this->get_i_mv_sw(),
-			this->get_i_pv_sw(),
-			this->get_i_cv_sw()
+#ifdef _WIN32
+		const_cast<char *>(osapi::cp932_from_utf8(
+		this->cl_name.get_cp_name()).c_str())
+#else
+		this->cl_name.get_cp_name()
+#endif
+		,&l_w, &l_h, &l_c, &l_b
+		,this->get_i_mv_sw()
+		,this->get_i_pv_sw()
+		,this->get_i_cv_sw()
 		);
 		if (NULL == vp_canvas) {
 			pri_funct_err_bttvr(

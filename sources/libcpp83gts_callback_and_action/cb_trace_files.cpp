@@ -5,8 +5,10 @@
 #include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h" // ptbl_charcode_cp932_from_utf8(-)
 #include "osapi_exist.h"
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
 #include "cb_trace_files.h"
@@ -279,17 +281,15 @@ void cb_trace_files::cb_rename(void)
 			}
 		}
 
-#if defined _WIN32
-		if ( ptbl_charcode_cp932_from_utf8(opa.c_str()) == nullptr
-		||   ptbl_charcode_cp932_from_utf8(npa.c_str()) == nullptr
-		) {
+#ifdef _WIN32
+		std::string opa2( osapi::cp932_from_utf8( opa ) );
+		std::string npa2( osapi::cp932_from_utf8( npa ) );
+		if (opa2.empty() || npa2.empty()) {
 			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
-		std::string op(ptbl_charcode_cp932_from_utf8(opa.c_str()));
-		std::string np(ptbl_charcode_cp932_from_utf8(npa.c_str()));
-		std::rename( op.c_str() ,np.c_str() );
+		std::rename( opa2.c_str() ,npa2.c_str() );
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif
@@ -375,17 +375,15 @@ void cb_trace_files::cb_renumber(void)
 			}
 		}
 
-#if defined _WIN32
-		if ( ptbl_charcode_cp932_from_utf8(opa.c_str()) == nullptr
-		||   ptbl_charcode_cp932_from_utf8(npa.c_str()) == nullptr
-		) {
+#ifdef _WIN32
+		std::string opa2( osapi::cp932_from_utf8( opa ) );
+		std::string npa2( osapi::cp932_from_utf8( npa ) );
+		if (opa2.empty() || npa2.empty()) {
 			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
-		std::string op(ptbl_charcode_cp932_from_utf8(opa.c_str()));
-		std::string np(ptbl_charcode_cp932_from_utf8(npa.c_str()));
-		std::rename( op.c_str() ,np.c_str() );
+		std::rename( opa2.c_str() ,npa2.c_str() );
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif

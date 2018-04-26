@@ -6,9 +6,8 @@
 #include <sstream>
 #include <FL/Fl.H>
 #include <FL/fl_ask.H> // fl_alert()
-#include "ptbl_funct.h"	// ptbl_charcode_cp932_from_utf8(-)
-#ifdef UNICODE
-#include "osapi_mbs_wcs.h"
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
 #endif
 #include "osapi_getusername.h"
 #include "osapi_gethostname.h"
@@ -325,12 +324,11 @@ void memory_config::save_number_( std::ofstream& ofs )
 int memory_config::save( const std::string& file_path )
 {
  try {
-#if defined _WIN32
-	std::ofstream ofs( ptbl_charcode_cp932_from_utf8(
-			  file_path.c_str()
-	)); /* ファイル開く */
+	/* ファイル開く */
+#ifdef _WIN32
+	std::ofstream ofs( osapi::cp932_from_utf8( file_path ) );
 #else
-	std::ofstream ofs(file_path); /* ファイル開く */
+	std::ofstream ofs(file_path);
 #endif
 	ofs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
 	this->save_head_(ofs);

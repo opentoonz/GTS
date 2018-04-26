@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <FL/fl_ask.H>
-#include "ptbl_funct.h"
 #include "pri.h"
 #include "gts_master.h"
 

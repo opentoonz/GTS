@@ -5,7 +5,9 @@
 #include <sstream>
 #include <string> // std::getline() , std::stod() --> C++11,throw exception then error
 #include "pri.h"
-#include "ptbl_funct.h" // ptbl_charcode_cp932_from_utf8()
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
 #include "igs_lex_white_space_and_double_quote.h"
 #include "memory_config.h"
 #include "gts_gui.h"
@@ -1038,12 +1040,11 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	//---------- read file ----------
   {
-#if defined _WIN32
-	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
-			   file_path.c_str()
-	));/* ファイル開く */
+	/* ファイル開く */
+#ifdef _WIN32
+	std::ifstream ifs( osapi::cp932_from_utf8( file_path ) );
 #else
-	std::ifstream ifs( file_path );/* ファイル開く */
+	std::ifstream ifs( file_path );
 #endif
 	ifs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
    try {	/* std::getline()はEOFの場合も例外を投げてしまう */

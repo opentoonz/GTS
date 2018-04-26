@@ -5,7 +5,6 @@ title Microsoft Visual Studio 2017 C/C++ x86 /MD
 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
 rem ------------------------
 for %%a in (
- libc11portable
  libc12pri
  libc14image_rw_base
  libc16image_rw_tif

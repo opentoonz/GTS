@@ -2,10 +2,9 @@
 #include <cstring>
 #include <ctime>
 #include <string>
-#include "ptbl_funct.h"	// ptbl_charcode_cp932_from_utf8(-)
 #include "ptbl_returncode.h"
-#ifdef UNICODE
-#include "osapi_mbs_wcs.h"
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
 #endif
 #include "osapi_getusername.h"
 #include "osapi_gethostname.h"
@@ -190,8 +189,8 @@ int memory_desktop::_save_by_fname( const char *cp_fname )
 {
 	FILE *fp;
 
-#if defined _WIN32
-	fp = fopen( ptbl_charcode_cp932_from_utf8( cp_fname ) , "w" );
+#ifdef _WIN32
+	fp = fopen( osapi::cp932_from_utf8( cp_fname ).c_str() , "w" );
 #else
 	fp = fopen( cp_fname , "w" );
 #endif
