@@ -9,8 +9,7 @@ INCS =\
 /I..\libcpp51iip_canvas\
 /I..\libcpp37calcu_rgb_to_hls\
 /I..\libcpp31calcu_precision\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 calcu_erase_dot_noise.cpp\
 iip_erase_dot_noise_exec.cpp\

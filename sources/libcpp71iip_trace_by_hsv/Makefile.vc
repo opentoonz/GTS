@@ -14,7 +14,6 @@ INCS =\
 /I..\libcpp31calcu_precision\
 /I..\lib_util\
 /I..\libc12pri\
-/I..\libc11portable\
 /I$(DPATH_FLTK)\
 /I$(DPATH_GLEW)\include
 SRCS =\

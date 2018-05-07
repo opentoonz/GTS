@@ -7,8 +7,7 @@ OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
 INCS =\
 /I.\
 /I..\libcpp51iip_canvas\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 iip_crop_and_downsample.cpp\
 iip_scale_by_subpixel_calcu_bresenham.cpp\

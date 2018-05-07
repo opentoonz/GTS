@@ -9,7 +9,6 @@ INCS =\
 /I.\
 /I..\libcpp51iip_canvas\
 /I..\libc12pri\
-/I..\libc11portable\
 /I$(DPATH_TWAIN)
 SRCS =\
 tw_win_l1_dsm_entry.cpp\

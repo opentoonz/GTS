@@ -1,7 +1,6 @@
 #include <math.h>	/* floor() */
 #include <limits.h>	/* CHAR_BIT */
 
-#include "ptbl_returncode.h"
 #include "calcu_precision.h"
 
 /* バイトでの最大整数値を得る */

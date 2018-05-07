@@ -7,8 +7,7 @@ OPTS = /W4 /MD /EHa /O2 /wd4996 /source-charset:utf-8
 # /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I.\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 bread.c\
 bwrite.c\

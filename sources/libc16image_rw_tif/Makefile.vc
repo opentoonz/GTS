@@ -9,8 +9,7 @@ INCS =\
 /I.\
 /I$(DPATH_TIFF)\
 /I..\libc14image_rw_base\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 tif_bw_invert.c\
 tif_bw_read.c\

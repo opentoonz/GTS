@@ -9,7 +9,6 @@ noinst_LTLIBRARIES = libgts.la
 
 libgts_la_CPPFLAGS = \
 				   -Isources/lib_util \
-				   -Isources/libc11portable \
 				   -Isources/libc12pri \
 				   -Isources/libc14image_rw_base \
 				   -Isources/libc16image_rw_tif \

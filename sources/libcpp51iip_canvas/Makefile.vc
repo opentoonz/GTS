@@ -1,6 +1,5 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
-APPLICATION_NAME = gts
 NAME = libcpp51iip_canvas
 OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
 # /wd4819 // Stop warning message about Language Code ,Used to use vc2013
@@ -8,8 +7,7 @@ OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
 INCS =\
 /I.\
 /I..\libcpp31calcu_precision\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 iip_canvas.cpp\
 iip_channel_info.cpp

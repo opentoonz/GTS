@@ -8,8 +8,7 @@ OPTS = /W4 /MD /EHa /O2 /wd4996 /source-charset:utf-8
 INCS =\
 /I.\
 /I..\libc14image_rw_base\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 tga_image_read.c\
 tga_image_read_header.c\

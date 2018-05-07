@@ -8,8 +8,7 @@ INCS =\
 /I.\
 /I..\libcpp53iip_precision\
 /I..\libcpp51iip_canvas\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 iip_opengl_l1edit_channel.cpp\
 iip_opengl_l1edit_draw.cpp\

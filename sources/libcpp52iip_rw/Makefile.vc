@@ -12,8 +12,7 @@ INCS =\
 /I..\libc18image_rw_tga\
 /I..\libc16image_rw_tif\
 /I..\libc14image_rw_base\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 iip_read_file.cpp\
 iip_read_header.cpp\
