@@ -84,7 +84,7 @@ std::string gts_file_path(const char *comm, const char *file_name) {
 #ifndef _WIN32
 	fpath_user += PATH_SEPARETER;
 	fpath_user += get_desktop_dir_when_unix();
-	if ( ospai::exist_mbs( fpath_user ) == false ) {
+	if ( osapi::exist( fpath_user ) == false ) {
 		if ( osapi::mkdir( fpath_user ) == false ) {
 			/* フォルダ作れないなら、親フォルダを返す */
 			ptbl_get_user_home(fpath_user);

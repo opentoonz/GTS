@@ -89,7 +89,6 @@ libgts_la_SOURCES = \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
 					sources/libcpp51iip_canvas/iip_canvas.cpp \
 					sources/libcpp51iip_canvas/iip_channel_info.cpp \
-					sources/libcpp52iip_rw/check_save.cpp \
 					sources/libcpp52iip_rw/iip_read_file.cpp \
 					sources/libcpp52iip_rw/iip_read_header.cpp \
 					sources/libcpp52iip_rw/iip_read_set_tif_param.cpp \
