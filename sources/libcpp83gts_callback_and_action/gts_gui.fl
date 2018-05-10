@@ -1,17 +1,17 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303 
-header_name {.h} 
+version 1.0304
+header_name {.h}
 code_name {.cpp}
 decl {\#include <sstream>} {
   comment {for "Help" --> "About This Application..."} private local
-} 
+}
 
 decl {\#include <FL/fl_ask.H>} {
   comment {for "Help" --> "About This Application..."} private local
-} 
+}
 
 decl {\#include "gts_master.h"} {private local
-} 
+}
 
 class gts_gui {open
 } {
@@ -430,7 +430,7 @@ cl_gts_gui.window_next_scan_non_modal->y()
       }
       Fl_Button button_next_save_non_modal {
         label {Save (Enter)}
-        callback {cl_gts_master.cl_scan_and_save.cb_save();}
+        callback {cl_gts_master.cl_scan_and_save.cb_save(true);}
         xywh {430 45 100 45} shortcut 0xff0d
       }
       Fl_Button {} {
@@ -636,7 +636,8 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         }
         Fl_Choice choice_pixel_type {
           label {Pixel Type}
-          callback {cl_gts_master.cb_choice_pixel_type_menu();} open
+          callback {cl_gts_master.cb_choice_pixel_type_menu();
+cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
           xywh {75 35 100 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
@@ -2113,7 +2114,7 @@ cyclic_color_wheel->redraw();}
       }
     }
   }
-} 
+}
 
 decl {gts_gui cl_gts_gui;} {public local
-} 
+}

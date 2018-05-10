@@ -152,6 +152,9 @@ int gts_master::exec( const char *comm )
 	       cl_gts_gui.choice_trace_save_image_format->value(0);
 	}
 
+	/* Scan and Saveの拡張子の有効無効の設定 */
+	this->cl_scan_and_save.set_gui_ext_list();
+
 	/* Save File Number Formatについての選択リスト設定 */
 	const char** names =
 		ids::path::get_separator_names_for_level_from_files();

@@ -426,6 +426,7 @@ bool memory_config::load_pixel_type_and_bright_(std::vector< std::string >& word
 
 	if ( ke == this->str_pixel_type_ ) {
 		set_pixel_type_( va );
+		cl_gts_master.cl_scan_and_save.set_gui_ext_list();
 	}
 	else if ( ke == this->str_bw_threshold_ ) {
 		cl_gts_gui.valinp_bw_threshold->value( std::stod(va) );

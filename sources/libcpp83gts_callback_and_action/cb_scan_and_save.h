@@ -17,7 +17,9 @@ public:
 	void cb_start( void );	/* 連番始めの番号から実行開始	*/
 	void cb_next( void );	/* 次の番号を実行		*/
 	void cb_rescan( void );	/* 同じ番号で再実行		*/
-	void cb_save( void );	/* 各フレーム毎に調整してから保存 */
+	void cb_save( const bool change_adjustable_sw=false );
+				/* 各フレーム毎に保存 */
+			/* 各フレーム毎に画像調整したときは引数をtrueに */
 
 	void cb_browse_save_folder( void );
 	void cb_set_number( void );
@@ -49,6 +51,12 @@ public:
 	void cb_switch_scan_filter_trace( const bool sw );
 	void cb_switch_scan_filter_erase_dot_noise( const bool sw );
 
+	/* GUI上の拡張子選択リストの変更
+		RGB:.tga,.tif
+		Grayscale:(.tga将来追加する),).tif
+		BW:.tif
+	*/
+	void set_gui_ext_list(void);
 private:
 	bool during_the_scan_is_;
 

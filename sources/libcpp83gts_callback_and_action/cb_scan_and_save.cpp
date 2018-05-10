@@ -87,7 +87,6 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	//------------------------------
 
 	/* 06 画像処理：回転、2値化、ドットノイズ消去 */
-/*
 	if (cl_gts_master.rot_and_trace_and_enoise(
 		cl_gts_master.cl_iip_scan.get_clp_canvas()
 		,cl_gts_gui.choice_rot90->value()
@@ -95,7 +94,6 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 		return_code = NG;
 		return std::string("Can not Fx");
 	}
-*/
 
 	//------------------------------
 
@@ -374,7 +372,7 @@ void cb_scan_and_save::cb_rescan( void )
 		cl_gts_gui.window_next_scan_non_modal->show();
 	}
 }
-void cb_scan_and_save::cb_save( void )
+void cb_scan_and_save::cb_save( const bool change_adjustable_sw )
 {
 	/* nextウインドウを消す */
 	cl_gts_gui.window_next_scan->position(
@@ -383,13 +381,22 @@ void cb_scan_and_save::cb_save( void )
 	);
 	cl_gts_gui.window_next_scan_non_modal->hide();
 
-	/* 06 画像処理：回転、2値化、ドットノイズ消去 */
-	if (cl_gts_master.rot_and_trace_and_enoise(
+	/* 06 画像処理：回転、2値化、ドットノイズ消去
+		通常は this->cb_scan_fx_display_( return_code ); で、
+		すでに処理しているので実行しない。
+		スキャン後に各フレーム毎に調整した
+		(change_adjustable_sw==true)
+		ときは、
+		変更を反映するため再度処理を行う。
+	*/
+	if (change_adjustable_sw) {
+	 if (cl_gts_master.rot_and_trace_and_enoise(
 		cl_gts_master.cl_iip_scan.get_clp_canvas()
 		,cl_gts_gui.choice_rot90->value()
-	) != OK) {
+	 ) != OK) {
 		fl_alert("Can not Fx");
 		return;
+	 }
 	}
 
 	/* ファイル保存する */
@@ -634,3 +641,38 @@ void cb_scan_and_save::cb_switch_scan_filter_erase_dot_noise( const bool sw )
 	}
 }
 
+//----------
+void cb_scan_and_save::set_gui_ext_list(void)
+{
+	if (this->ext_save.size() <= 1) {
+		return;
+	}
+	switch (cl_gts_gui.choice_pixel_type->value()) {
+	case 0:	/* BW */
+		const_cast<Fl_Menu_Item*>(
+		cl_gts_gui.choice_scan_save_image_format->find_item(
+		cl_gts_gui.choice_scan_save_image_format->text(
+			this->ext_save.size()-1
+		)
+		))->deactivate();
+		cl_gts_gui.choice_scan_save_image_format->value(0);
+		break;
+	case 1:	/* Grayscale */
+		const_cast<Fl_Menu_Item*>(
+		cl_gts_gui.choice_scan_save_image_format->find_item(
+		cl_gts_gui.choice_scan_save_image_format->text(
+			this->ext_save.size()-1
+		)
+		))->deactivate();
+		cl_gts_gui.choice_scan_save_image_format->value(0);
+		break;
+	case 2:	/* RGB */
+		const_cast<Fl_Menu_Item*>(
+		cl_gts_gui.choice_scan_save_image_format->find_item(
+		cl_gts_gui.choice_scan_save_image_format->text(
+			this->ext_save.size()-1
+		)
+		))->activate();
+		break;
+	}
+}
