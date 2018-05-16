@@ -116,15 +116,13 @@ It will be loaded automatically the next time you open the program.
 3. Get third party libraries
 
  ```sh
- $ brew install automake
- $ brew install autoconf-archive
+ $ brew install automake autoconf-archive libtool pkgconfig libtiff sane-backends
  $ sudo port install fltk-devel #not in homebrew
  ```
 
 4. How to build
 
  ```sh
- $ rm m4/ax_check_glu.m4 #it seems broken?
  $ ./autogen.sh && ./configure && make
  ```
 
