@@ -8,23 +8,23 @@ It's specialized in hand-drawn animation frames.
 
 ## Specification
 
-GTS's uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
+GTS uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-Interface is in English and scanned images are saved as TIFF.
+The interface is in English and scanned images are saved as TIFF.
 
 ## Requirements
 
 Please refer to the [OpenToonz site](https://opentoonz.github.io/e/index.html).
 
-## Installation(Windows)
+## Installation (Windows)
 
 [Download](https://github.com/opentoonz/GTS/releases) and unzip the most recent GTS-x.y.z.zip file.
 
-## How to Execute(Windows)
+## How to Execute (Windows)
 
-Execute "./gts" in unziped folder.
+Execute "./gts" in the unzipped folder.
 
-## How to Build Locally(Windows)
+## How to Build Locally (Windows)
 
 1. Environment for development
 
@@ -39,7 +39,7 @@ Execute "./gts" in unziped folder.
 
 3. Get third party libraries
 
- third party libraries unarchived in:
+ Third party libraries unarchived in:
  - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
  - `GTS/thirdparty/libtiff/tiff-4.0.3/`
 
@@ -56,7 +56,7 @@ Execute "./gts" in unziped folder.
 
  In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
 
-## How to Build Locally(Linux)
+## How to Build Locally (Linux)
 
 1. Environment for development
 
@@ -69,37 +69,31 @@ Execute "./gts" in unziped folder.
 3. Get third party libraries
 
  ```sh
- $ sudo apt install autoconf
- $ sudo apt install libtool
- $ sudo apt install autoconf-archive
- $ sudo apt install libtiff5-dev
- $ sudo apt install libfltk1.3-dev
- $ sudo apt install libsane-dev
+ $ sudo apt install autoconf libtool autoconf-archive libtiff5-dev libfltk1.3-dev libsane-dev libglu1-mesa-dev
  ```
 
 4. How to build
 
  ```sh
- $ rm m4/ax_check_glu.m4
  $ ./autogen.sh && ./configure && make
  ```
- The last(link) of make is an error, and then re-run by adding `-lGLU -lGL` in the run command line.
 
  If you're a developer and you need a debug build, do it like this:
  ```sh
- $ rm m4/ax_check_glu.m4
  $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
  ```
 
-5. Preparation for Execute
+5. Configuration file
 
- Change *_dir* to "/home" in `sources/main/gts_initial_configuration.txt` before installation.
- Copy the 2 .txt files in `sources/main/` to `~/.GTS/`.
+After installing the package with "make install", copy "/usr/local/share/GTS/gts\_initial\_configuration.txt"
+to "~/.GTS/" and open it from the main menu (File -> Open Config).
+Change some settings, then save your configuration with File -> Save config.
+
+It will be loaded automatically the next time you open the program.
 
 6. How to Execute
 
  ```sh
- # run it with
  ./gts
  ```
 
@@ -109,7 +103,7 @@ Execute "./gts" in unziped folder.
  gdb --args ./gts -bv
  ```
 
-## How to Build Locally(Max OS X)
+## How to Build Locally (macOS)
 
 1. Environment for development
 
@@ -136,7 +130,7 @@ Execute "./gts" in unziped folder.
 
 5. Preparation for Execute
 
- Same as linux.
+ Same as Linux.
 
 6. How to Execute
 

@@ -2,8 +2,7 @@ ACLOCAL_AMFLAGS = -I m4
 CPPFLAGS += -DPKGDATADIR='"$(pkgdatadir)"'
 
 pkgdata_DATA = \
-			   sources/main/_gts-scan_area.txt \
-			   sources/main/gts_install_setup.txt
+			   sources/main/gts_initial_configuration.txt
 
 noinst_LTLIBRARIES = libgts.la
 
