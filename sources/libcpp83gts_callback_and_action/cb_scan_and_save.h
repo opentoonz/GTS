@@ -9,14 +9,18 @@
 class cb_scan_and_save {
 public:
 	cb_scan_and_save()
-	:prev_scan_action_is_(OK)
+	:during_the_scan_is_(false)
 	{}
 
 	ids::path::extensions ext_save;
 
-	void cb_start( void );	/* ScanとSave処理実行 */
-	void cb_next( void );	/* 次の処理実行 */
-	void cb_rescan( void );	/* 同じ番号で再処理 */
+	void cb_start( void );	/* 連番始めの番号から実行開始	*/
+	void cb_next( void );	/* 次の番号を実行		*/
+	void cb_rescan( void );	/* 同じ番号で再実行		*/
+	void cb_save( const bool change_adjustable_sw=false );
+				/* 各フレーム毎に保存 */
+			/* 各フレーム毎に画像調整したときは引数をtrueに */
+
 	void cb_browse_save_folder( void );
 	void cb_set_number( void );
 	void cb_check_existing_saved_file( void ); /* Scan typeの時動作 */
@@ -47,14 +51,24 @@ public:
 	void cb_switch_scan_filter_trace( const bool sw );
 	void cb_switch_scan_filter_erase_dot_noise( const bool sw );
 
+	/* GUI上の拡張子選択リストの変更
+		RGB:.tga,.tif
+		Grayscale:(.tga将来追加する),).tif
+		BW:.tif
+	*/
+	void set_gui_ext_list(void);
 private:
-	int prev_scan_action_is_;
+	bool during_the_scan_is_;
 
-	int next_scan_and_save_( void );
-
+	//int next_scan_and_save_( void );
 	bool is_exist_save_files_( void );
-
 	std::string get_save_ext_for_legacy_(const std::string& type);
+
+	const char* cb_start_check_( void );
+	std::string cb_scan_fx_display_( int& return_code );
+	std::string cb_save_( void );
+	void cb_set_next_window_( void );
+	void cb_set_next_window_non_modal_( void );
 };
 
 #endif /* !cb_scan_and_save_h */

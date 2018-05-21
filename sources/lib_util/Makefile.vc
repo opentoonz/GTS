@@ -1,0 +1,48 @@
+.SUFFIXES: .obj .cpp
+#---define--------------------------------------------------------------
+NAME = lib_util
+OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
+INCS =\
+/I$(DPATH_GLEW)\include\
+/I$(DPATH_FLTK)\
+/I.
+SRCS =\
+calc_hsv_rgb.cpp\
+calc_hsv_xyz.cpp\
+calc_rad_deg.cpp\
+cppl_file_system.cpp\
+cppl_stop_watch.cpp\
+opengl_camera_eye.cpp\
+opengl_vertex_buffer_object.cpp\
+osapi_exist.cpp\
+osapi_getenv.cpp\
+osapi_gethostname.cpp\
+osapi_getusername.cpp\
+osapi_log_with_msg_and_id.cpp\
+osapi_mbs_wcs.cpp\
+osapi_mkdir.cpp\
+osapi_str_from_errid.cpp
+TARG = $(NAME).lib
+OBJS = $(SRCS:.cpp=.obj)
+DPATH_3RD_PARTY = ..\..\thirdparty
+DPATH_GLEW = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
+DPATH_FLTK = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-2
+DPATH_APPL = ..\..\build
+DPATH_LIBR = $(DPATH_APPL)\lib
+DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
+CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
+#---action--------------------------------------------------------------
+all: make_obj_dir $(TARG)
+make_obj_dir:
+	if not exist $(DPATH_APPL) (mkdir $(DPATH_APPL))
+	if not exist $(DPATH_LIBR) (mkdir $(DPATH_LIBR))
+	if not exist $(DPATH_OBJE) (mkdir $(DPATH_OBJE))
+$(TARG): $(OBJS)
+	pushd $(DPATH_OBJE) & lib /wx $? /out:$@ & popd & move $(DPATH_OBJE)\$@ $(DPATH_LIBR)\$@
+.cpp.obj:
+	cl $(CC_OPTIONS) /c $< /Fo$(DPATH_OBJE)/$@
+clean_obj:
+	pushd $(DPATH_OBJE) & del $(OBJS) & popd
+	rmdir $(DPATH_OBJE)

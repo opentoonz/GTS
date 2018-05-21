@@ -1,32 +1,32 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 APPLICATION_NAME = gts
-OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
-# /wd4996 : Stop warning message by MS-C old function
+OPTS = /W3 /MD /EHa /O2 /DWIN32 /wd4996 /source-charset:utf-8
 # /DWIN32 : for Use fltk in Windows
-# /wd4819 : Stop warning message about Language Code
+# /wd4996 : Stop warning message by MS-C old function
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I..\libcpp83gts_callback_and_action\
-/I..\libcpp82gts_hsv_histogram\
 /I..\libcpp72iip_erase_dot_noise\
-/I..\libcpp71iip_color_trace_hab\
+/I..\libcpp71iip_trace_by_hsv\
 /I..\libcpp64iip_rot90\
 /I..\libcpp56iip_opengl\
 /I..\libcpp55iip_scan\
 /I..\libcpp53iip_precision\
 /I..\libcpp52iip_rw\
 /I..\libcpp51iip_canvas\
+/I..\lib_util\
 /I..\libc12pri\
-/I..\libc11portable\
 /I$(DPATH_TWAIN)\
-/I$(DPATH_FLTK)
+/I$(DPATH_FLTK)\
+/I$(DPATH_GLEW)\include
 SRCS =\
 main.cpp
 LIBS =\
 $(DPATH_LIBR)\libcpp83gts_callback_and_action.lib\
-$(DPATH_LIBR)\libcpp82gts_hsv_histogram.lib\
 $(DPATH_LIBR)\libcpp72iip_erase_dot_noise.lib\
-$(DPATH_LIBR)\libcpp71iip_color_trace_hab.lib\
+$(DPATH_LIBR)\libcpp71iip_trace_by_hsv.lib\
 $(DPATH_LIBR)\libcpp69iip_scale_by_subpixel.lib\
 $(DPATH_LIBR)\libcpp64iip_rot90.lib\
 $(DPATH_LIBR)\libcpp56iip_opengl.lib\
@@ -34,16 +34,16 @@ $(DPATH_LIBR)\libcpp55iip_scan.lib\
 $(DPATH_LIBR)\libcpp53iip_precision.lib\
 $(DPATH_LIBR)\libcpp52iip_rw.lib\
 $(DPATH_LIBR)\libcpp51iip_canvas.lib\
-$(DPATH_LIBR)\libcpp38calcu_rgb_to_hsv.lib\
 $(DPATH_LIBR)\libcpp31calcu_precision.lib\
+$(DPATH_LIBR)\lib_util.lib\
 $(DPATH_LIBR)\libc18image_rw_tga.lib\
 $(DPATH_LIBR)\libc16image_rw_tif.lib\
 $(DPATH_LIBR)\libc14image_rw_base.lib\
 $(DPATH_LIBR)\libc12pri.lib\
-$(DPATH_LIBR)\libc11portable.lib\
-$(DPATH_TIFF)\lib\libtiff-4.0.3-vc2013-32.lib\
-$(DPATH_FLTK)\lib\fltk-1.3.4-1-vc2013-32.lib\
-$(DPATH_FLTK)\lib\fltkgl-1.3.4-1-vc2013-32.lib\
+$(DPATH_TIFF)\libtiff\libtiff.lib\
+$(DPATH_FLTK)\lib\fltk.lib\
+$(DPATH_FLTK)\lib\fltkgl.lib\
+$(DPATH_GLEW)\lib\Release\Win32\glew32s.lib\
 glu32.lib advapi32.lib shlwapi.lib opengl32.lib comctl32.lib wsock32.lib\
 user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib
 #------
@@ -51,14 +51,15 @@ TARG_CON = $(APPLICATION_NAME)_console.exe
 TARG = $(APPLICATION_NAME).exe
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
-DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-1
+DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-2
+DPATH_GLEW  = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
 DPATH_TWAIN = $(DPATH_3RD_PARTY)\twain\twain-2.3
-DPATH_TIFF  = $(DPATH_3RD_PARTY)\libtiff\tiff-4.0.3
-DPATH_APPL = ..\build
+DPATH_TIFF  = $(DPATH_3RD_PARTY)\libtiff\tiff-4.0.9
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj
-DPATH_BINA = ..\..\x86_release
-DPATH_REDIST = "%VCINSTALLDIR%"redist\x86\Microsoft.VC120.CRT
+DPATH_BINA = $(DPATH_APPL)\bin_x86
+DPATH_REDIST = "%VCINSTALLDIR%"Redist\MSVC\14.13.26020\x86\Microsoft.VC141.CRT
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
 #---action--------------------------------------------------------------
 #	copy _gts-scan_area.txt $(DPATH_BINA)
@@ -78,7 +79,7 @@ $(TARG):
 inst:
 	move $(TARG) $(DPATH_BINA)
 	copy gts_initial_configuration.txt $(DPATH_BINA)
-	copy $(DPATH_REDIST)\msvcp120.dll $(DPATH_BINA)
-	copy $(DPATH_REDIST)\msvcr120.dll $(DPATH_BINA)
+	copy $(DPATH_REDIST)\msvcp140.dll $(DPATH_BINA)
+	copy $(DPATH_REDIST)\vcruntime140.dll $(DPATH_BINA)
 inst_con:
 	move $(TARG_CON) $(DPATH_BINA)

@@ -1,22 +1,22 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = libcpp72iip_erase_dot_noise
-OPTS = /W4 /MD /EHa /O2 /wd4819
-# /wd4819 : Stop warning message about Language Code
+OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I.\
 /I..\libcpp51iip_canvas\
 /I..\libcpp37calcu_rgb_to_hls\
 /I..\libcpp31calcu_precision\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 calcu_erase_dot_noise.cpp\
 iip_erase_dot_noise_exec.cpp\
 iip_erase_dot_noise_uchar.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

@@ -28,16 +28,9 @@ public:
 	void cb_scan_full_area_and_crop( void );
 
 	/*
-		Preset
-	*/
-
-	void cb_area_selecter( void );
-	void cb_area_aspect_ratio_selecter( void );
-	void cb_area_set_max( void );
-
-	/*
 		Area
 	*/
+	void cb_area_set_max( void );
 	void cb_area_offset_cm_x( void );
 	void cb_area_offset_cm_y( void );
 	void cb_area_size_cm_w( void );
@@ -106,9 +99,6 @@ private:
 
 	/* cmサイズと対応するpixelサイズからdpiを得る */
 	double dpi_from_cm_per_pixel_(const double cm ,const double pixel);
-
-	void getset_y_size_from_x_size_( void );
-	void getset_x_size_from_y_size_( void );
 
 	void getset_x_size_from_x_pixel_( void );
 	void getset_y_size_from_y_pixel_( void );

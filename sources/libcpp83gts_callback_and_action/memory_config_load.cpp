@@ -5,7 +5,9 @@
 #include <sstream>
 #include <string> // std::getline() , std::stod() --> C++11,throw exception then error
 #include "pri.h"
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
 #include "igs_lex_white_space_and_double_quote.h"
 #include "memory_config.h"
 #include "gts_gui.h"
@@ -111,8 +113,15 @@ void memory_config::load_ifs_(
 		&&	this->load_number_(words)) {
 			continue;
 		}
+
+		/* 古い書式もできるだけ読み取る */
 		if (	this->load_trace_parameters_sw_
-		&&	this->load_trace_parameters_(words)) {
+		&&	this->load_trace_old_parameters_(words)) {
+			continue;
+		}
+
+		if (	this->load_trace_params_sw_
+		&&	this->load_trace_params_(words)) {
 			continue;
 		}
 		/* pri_funct_err_bttvr(
@@ -333,16 +342,7 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	const std::string& ke = words.at(0);
 	const std::string& va = words.at(1);
 
-	if ( this->str_area_select_ == ke) {
-		const Fl_Menu_Item *crnt =
-			cl_gts_gui.choice_area_selecter->find_item(
-				va.c_str() );
-		if (crnt != nullptr) {
-			cl_gts_gui.choice_area_selecter->value(crnt);
-			cl_gts_master.cl_area_and_rot90.cb_area_selecter();
-		}
-	}
-	else if ((this->str_area_offset_cm_x_		 == ke)
+	if ((this->str_area_offset_cm_x_		 == ke)
 	||	 (this->str_area_offset_cm_x_legacy2017_ == ke)
 	) {
 	  cl_gts_gui.valinp_area_offset_cm_x->value( std::stod(va) );
@@ -351,15 +351,6 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	||	 (this->str_area_offset_cm_y_legacy2017_ == ke)
 	) {
 	  cl_gts_gui.valinp_area_offset_cm_y->value( std::stod(va) );
-	}
-	else if ( this->str_area_aspect_ratio_select_ == ke) {
-		const Fl_Menu_Item *crnt =
-	       cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(
-			va.c_str() );
-		if (crnt != 0) {
-	cl_gts_gui.choice_area_aspect_ratio_selecter->value(crnt);
-	cl_gts_master.cl_area_and_rot90.cb_area_aspect_ratio_selecter();
-		}
 	}
 	else if ((this->str_area_size_cm_w_		== ke)
 	||	 (this->str_area_size_cm_w_legacy2017_  == ke)
@@ -435,6 +426,7 @@ bool memory_config::load_pixel_type_and_bright_(std::vector< std::string >& word
 
 	if ( ke == this->str_pixel_type_ ) {
 		set_pixel_type_( va );
+		cl_gts_master.cl_scan_and_save.set_gui_ext_list();
 	}
 	else if ( ke == this->str_bw_threshold_ ) {
 		cl_gts_gui.valinp_bw_threshold->value( std::stod(va) );
@@ -535,61 +527,30 @@ bool memory_config::load_number_(
 	return true;
 }
 
-bool memory_config::load_trace_parameters_( std::vector< std::string >& words )
+/* 古い書式もできるだけ読み取る */
+bool memory_config::load_trace_old_parameters_( std::vector< std::string >& words )
 {
+	std::vector<cb_trace_params::widget_set>& vwset(
+		cl_gts_master.cl_trace_params.widget_sets
+	);
+
 	/* 4項目のparameter */
 	if (words.size() == 4) {
-	 if (		this->str_color_trace_01_tgt_rgb_ == words.at(0)) {
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_01 , std::stoi(words.at(1))
-			, std::stoi(words.at(2)) , std::stoi(words.at(3))
-		);
-		cl_gts_gui.button_color_trace_01_tgt_rgb->redraw();
-		  cl_gts_gui.button_thickness_01_tgt_rgb->redraw();
-	 }
-	 else if (	this->str_color_trace_02_tgt_rgb_ == words.at(0)) {
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_02 , std::stoi(words.at(1))
-			, std::stoi(words.at(2)) , std::stoi(words.at(3))
-		);
-		cl_gts_gui.button_color_trace_02_tgt_rgb->redraw();
-		  cl_gts_gui.button_thickness_02_tgt_rgb->redraw();
-	 }
-	 else if (	this->str_color_trace_03_tgt_rgb_ == words.at(0)) {
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_03 , std::stoi(words.at(1))
-			, std::stoi(words.at(2)) , std::stoi(words.at(3))
-		);
-		cl_gts_gui.button_color_trace_03_tgt_rgb->redraw();
-		  cl_gts_gui.button_thickness_03_tgt_rgb->redraw();
-	 }
-	 else if (	this->str_color_trace_04_tgt_rgb_ == words.at(0)) {
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_04 , std::stoi(words.at(1))
-			, std::stoi(words.at(2)) , std::stoi(words.at(3))
-		);
-		cl_gts_gui.button_color_trace_04_tgt_rgb->redraw();
-		  cl_gts_gui.button_thickness_04_tgt_rgb->redraw();
-	 }
-	 else if (	this->str_color_trace_05_tgt_rgb_ == words.at(0)) {
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_05 , std::stoi(words.at(1))
-			, std::stoi(words.at(2)) , std::stoi(words.at(3))
-		);
-		cl_gts_gui.button_color_trace_05_tgt_rgb->redraw();
-		  cl_gts_gui.button_thickness_05_tgt_rgb->redraw();
-	 }
-	 else if (	this->str_color_trace_06_tgt_rgb_ == words.at(0)) {
-	cl_gts_master.cl_color_trace_enhancement.tgt_set_uchar_rgb_color(
-			    E_COLOR_TRACE_HAB_06 , std::stoi(words.at(1))
-			, std::stoi(words.at(2)) , std::stoi(words.at(3))
-		);
-		cl_gts_gui.button_color_trace_06_tgt_rgb->redraw();
-		  cl_gts_gui.button_thickness_06_tgt_rgb->redraw();
-	 }
+	 int num=0;
+	 if      (this->str_color_trace_01_tgt_rgb_==words.at(0)) {num=0;}
+	 else if (this->str_color_trace_02_tgt_rgb_==words.at(0)) {num=1;}
+	 else if (this->str_color_trace_03_tgt_rgb_==words.at(0)) {num=2;}
+	 else if (this->str_color_trace_04_tgt_rgb_==words.at(0)) {num=3;}
+	 else if (this->str_color_trace_05_tgt_rgb_==words.at(0)) {num=4;}
+	 else if (this->str_color_trace_06_tgt_rgb_==words.at(0)) {num=5;}
 	 else {
 		return false; // not defined
 	 }
+	 const uchar r = static_cast<uchar>(std::stoi(words.at(1)));
+	 const uchar g = static_cast<uchar>(std::stoi(words.at(2)));
+	 const uchar b = static_cast<uchar>(std::stoi(words.at(3)));
+	 cl_gts_master.cl_trace_params.set_target_rgb( num ,r,g,b );
+	 vwset.at(num).button_target_rgb->redraw();
 	 return true;
 	}
 
@@ -600,340 +561,365 @@ bool memory_config::load_trace_parameters_( std::vector< std::string >& words )
 
 	//---------- 1/6 ----------
 
-	if (		this->str_color_trace_01_chk_==words.at(0)) {
-		const int chk = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chkbtn_color_trace_01_chk->value( chk );
-		  cl_gts_gui.chkbtn_thickness_01_chk->value( chk );
-
-		if (
-		cl_gts_gui.chkbtn_color_trace_01_chk->value()) {
-		 cl_gts_gui.group_color_trace_01grp->activate();
-		   cl_gts_gui.group_thickness_01grp->activate();
-		} else {
-		 cl_gts_gui.group_color_trace_01grp->deactivate();
-		   cl_gts_gui.group_thickness_01grp->deactivate();
+	static double smin_ = 0. ,vmax_ = 0.;
+	if (	 this->str_color_trace_01_chk_==words.at(0)) {
+		cb_trace_params::widget_set& wset( vwset.at(0) );
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	}
+	else if (this->str_color_trace_01_src_hh_min_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(0) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_min->value(va);
+	}
+	else if (this->str_color_trace_01_src_hh_max_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(0) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_max->value(va);
+	}
+	else if (this->str_color_trace_01_src_aa_min_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_01_src_aa_max_==words.at(0)){ }
+	else if (this->str_color_trace_01_src_bb_min_==words.at(0)){ }
+	else if (this->str_color_trace_01_src_bb_max_==words.at(0)){
+		vmax_ = std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_01_tgt_color_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(0) );
+		double va = 0.;
+		if (words.at(1)==this->str_color_black_) {
+			va = vmax_;
+			wset.valinp_hue_min->value(-1.);
+			wset.valinp_hue_max->value(-1.);
+			wset.valinp_hue_min->hide();
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {va = smin_;
+			wset.valinp_hue_min->show();
+			wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
 		}
-	}
-	else if (	this->str_color_trace_01_src_hh_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_01_src_hh_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_hh_min)->value( val );
-	}
-	else if (	this->str_color_trace_01_src_hh_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_01_src_hh_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_hh_max)->value( val );
-	}
-	else if (	this->str_color_trace_01_src_aa_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_01_src_aa_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_aa_min)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_01);
-	}
-	else if (	this->str_color_trace_01_src_aa_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_01_src_aa_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_aa_max)->value( val );
-	}
-	else if (	this->str_color_trace_01_src_bb_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_01_src_bb_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_bb_min)->value( val );
-	}
-	else if (	this->str_color_trace_01_src_bb_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_01_src_bb_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_01_src_bb_max)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_01);
-	}
-	else if (	this->str_color_trace_01_tgt_color_==words.at(0)){
-		  cl_gts_gui.roubut_thickness_01_tgt_is_bl->value(
-			(words.at(1) == this->str_color_black_) ?1 :0
-		 );
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	}
 
 	//---------- 2/6 ----------
 
-	else if (	this->str_color_trace_02_chk_==words.at(0)){
-		const int chk = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chkbtn_color_trace_02_chk->value( chk );
-		  cl_gts_gui.chkbtn_thickness_02_chk->value( chk );
-
-		if (
-		cl_gts_gui.chkbtn_color_trace_02_chk->value()) {
-		 cl_gts_gui.group_color_trace_02grp->activate();
-		   cl_gts_gui.group_thickness_02grp->activate();
-		} else {
-		 cl_gts_gui.group_color_trace_02grp->deactivate();
-		   cl_gts_gui.group_thickness_02grp->deactivate();
+	else if (this->str_color_trace_02_chk_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(1) );
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	}
+	else if (this->str_color_trace_02_src_hh_min_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(1) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_min->value(va);
+	}
+	else if (this->str_color_trace_02_src_hh_max_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(1) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_max->value(va);
+	}
+	else if (this->str_color_trace_02_src_aa_min_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_02_src_aa_max_==words.at(0)){ }
+	else if (this->str_color_trace_02_src_bb_min_==words.at(0)){ }
+	else if (this->str_color_trace_02_src_bb_max_==words.at(0)){
+		vmax_ = std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_02_tgt_color_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(1) );
+		double va = 0.;
+		if (words.at(1)==this->str_color_black_) {
+			va = vmax_;
+			wset.valinp_hue_min->value(-1.);
+			wset.valinp_hue_max->value(-1.);
+			wset.valinp_hue_min->hide();
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {va = smin_;
+			wset.valinp_hue_min->show();
+			wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
 		}
-	}
-	else if (	this->str_color_trace_02_src_hh_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_02_src_hh_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_hh_min)->value( val );
-	}
-	else if (	this->str_color_trace_02_src_hh_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_02_src_hh_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_hh_max)->value( val );
-	}
-	else if (	this->str_color_trace_02_src_aa_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_02_src_aa_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_aa_min)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_02);
-	}
-	else if (	this->str_color_trace_02_src_aa_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_02_src_aa_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_aa_max)->value( val );
-	}
-	else if (	this->str_color_trace_02_src_bb_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_02_src_bb_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_bb_min)->value( val );
-	}
-	else if (	this->str_color_trace_02_src_bb_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_02_src_bb_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_02_src_bb_max)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_02);
-	}
-	else if (	this->str_color_trace_02_tgt_color_==words.at(0)){
-		  cl_gts_gui.roubut_thickness_02_tgt_is_bl->value(
-			(words.at(1) == this->str_color_black_) ?1 :0
-		 );
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	}
 
 	//---------- 3/6 ----------
 
-	else if (	this->str_color_trace_03_chk_==words.at(0)){
-		const int chk = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chkbtn_color_trace_03_chk->value( chk );
-		  cl_gts_gui.chkbtn_thickness_03_chk->value( chk );
-
-		if (
-		cl_gts_gui.chkbtn_color_trace_03_chk->value()) {
-		 cl_gts_gui.group_color_trace_03grp->activate();
-		   cl_gts_gui.group_thickness_03grp->activate();
-		} else {
-		 cl_gts_gui.group_color_trace_03grp->deactivate();
-		   cl_gts_gui.group_thickness_03grp->deactivate();
+	else if (this->str_color_trace_03_chk_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(2) );
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	}
+	else if (this->str_color_trace_03_src_hh_min_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(2) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_min->value(va);
+	}
+	else if (this->str_color_trace_03_src_hh_max_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(2) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_max->value(va);
+	}
+	else if (this->str_color_trace_03_src_aa_min_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_03_src_aa_max_==words.at(0)){ }
+	else if (this->str_color_trace_03_src_bb_min_==words.at(0)){ }
+	else if (this->str_color_trace_03_src_bb_max_==words.at(0)){
+		vmax_ = std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_03_tgt_color_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(2) );
+		double va = 0.;
+		if (words.at(1)==this->str_color_black_) {
+			va = vmax_;
+			wset.valinp_hue_min->value(-1.);
+			wset.valinp_hue_max->value(-1.);
+			wset.valinp_hue_min->hide();
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {va = smin_;
+			wset.valinp_hue_min->show();
+			wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
 		}
-	}
-	else if (	this->str_color_trace_03_src_hh_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_03_src_hh_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_hh_min)->value( val );
-	}
-	else if (	this->str_color_trace_03_src_hh_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_03_src_hh_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_hh_max)->value( val );
-	}
-	else if (	this->str_color_trace_03_src_aa_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_03_src_aa_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_aa_min)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_03);
-	}
-	else if (	this->str_color_trace_03_src_aa_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_03_src_aa_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_aa_max)->value( val );
-	}
-	else if (	this->str_color_trace_03_src_bb_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_03_src_bb_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_bb_min)->value( val );
-	}
-	else if (	this->str_color_trace_03_src_bb_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_03_src_bb_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_03_src_bb_max)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_03);
-	}
-	else if (	this->str_color_trace_03_tgt_color_==words.at(0)){
-		  cl_gts_gui.roubut_thickness_03_tgt_is_bl->value(
-			(words.at(1) == this->str_color_black_) ?1 :0
-		 );
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	}
 
 	//---------- 4/6 ----------
 
-	else if (	this->str_color_trace_04_chk_==words.at(0)){
-		const int chk = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chkbtn_color_trace_04_chk->value( chk );
-		  cl_gts_gui.chkbtn_thickness_04_chk->value( chk );
-
-		if (
-		cl_gts_gui.chkbtn_color_trace_04_chk->value()) {
-		 cl_gts_gui.group_color_trace_04grp->activate();
-		   cl_gts_gui.group_thickness_04grp->activate();
-		} else {
-		 cl_gts_gui.group_color_trace_04grp->deactivate();
-		   cl_gts_gui.group_thickness_04grp->deactivate();
+	else if (this->str_color_trace_04_chk_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(3) );
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	}
+	else if (this->str_color_trace_04_src_hh_min_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(3) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_min->value(va);
+	}
+	else if (this->str_color_trace_04_src_hh_max_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(3) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_max->value(va);
+	}
+	else if (this->str_color_trace_04_src_aa_min_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_04_src_aa_max_==words.at(0)){ }
+	else if (this->str_color_trace_04_src_bb_min_==words.at(0)){ }
+	else if (this->str_color_trace_04_src_bb_max_==words.at(0)){
+		vmax_ = std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_04_tgt_color_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(3) );
+		double va = 0.;
+		if (words.at(1)==this->str_color_black_) {
+			va = vmax_;
+			wset.valinp_hue_min->value(-1.);
+			wset.valinp_hue_max->value(-1.);
+			wset.valinp_hue_min->hide();
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {va = smin_;
+			wset.valinp_hue_min->show();
+			wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
 		}
-	}
-	else if (	this->str_color_trace_04_src_hh_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_04_src_hh_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_hh_min)->value( val );
-	}
-	else if (	this->str_color_trace_04_src_hh_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_04_src_hh_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_hh_max)->value( val );
-	}
-	else if (	this->str_color_trace_04_src_aa_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_04_src_aa_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_aa_min)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_04);
-	}
-	else if (	this->str_color_trace_04_src_aa_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_04_src_aa_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_aa_max)->value( val );
-	}
-	else if (	this->str_color_trace_04_src_bb_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_04_src_bb_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_bb_min)->value( val );
-	}
-	else if (	this->str_color_trace_04_src_bb_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_04_src_bb_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_04_src_bb_max)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_04);
-	}
-	else if (	this->str_color_trace_04_tgt_color_==words.at(0)){
-		  cl_gts_gui.roubut_thickness_04_tgt_is_bl->value(
-			(words.at(1) == this->str_color_black_) ?1 :0
-		 );
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	}
 
 	//---------- 5/6 ----------
 
-	else if (	this->str_color_trace_05_chk_==words.at(0)){
-		const int chk = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chkbtn_color_trace_05_chk->value( chk );
-		  cl_gts_gui.chkbtn_thickness_05_chk->value( chk );
-
-		if (
-		cl_gts_gui.chkbtn_color_trace_05_chk->value()) {
-		 cl_gts_gui.group_color_trace_05grp->activate();
-		   cl_gts_gui.group_thickness_05grp->activate();
-		} else {
-		 cl_gts_gui.group_color_trace_05grp->deactivate();
-		   cl_gts_gui.group_thickness_05grp->deactivate();
+	else if (this->str_color_trace_05_chk_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(4) );
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	}
+	else if (this->str_color_trace_05_src_hh_min_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(4) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_min->value(va);
+	}
+	else if (this->str_color_trace_05_src_hh_max_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(4) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_max->value(va);
+	}
+	else if (this->str_color_trace_05_src_aa_min_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_05_src_aa_max_==words.at(0)){ }
+	else if (this->str_color_trace_05_src_bb_min_==words.at(0)){ }
+	else if (this->str_color_trace_05_src_bb_max_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_05_tgt_color_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(4) );
+		double va = 0.;
+		if (words.at(1)==this->str_color_black_) {
+			va = vmax_;
+			wset.valinp_hue_min->value(-1.);
+			wset.valinp_hue_max->value(-1.);
+			wset.valinp_hue_min->hide();
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {va = smin_;
+			wset.valinp_hue_min->show();
+			wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
 		}
-	}
-	else if (	this->str_color_trace_05_src_hh_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_05_src_hh_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_hh_min)->value( val );
-	}
-	else if (	this->str_color_trace_05_src_hh_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_05_src_hh_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_hh_max)->value( val );
-	}
-	else if (	this->str_color_trace_05_src_aa_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_05_src_aa_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_aa_min)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_05);
-	}
-	else if (	this->str_color_trace_05_src_aa_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_05_src_aa_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_aa_max)->value( val );
-	}
-	else if (	this->str_color_trace_05_src_bb_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_05_src_bb_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_bb_min)->value( val );
-	}
-	else if (	this->str_color_trace_05_src_bb_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_05_src_bb_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_05_src_bb_max)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_05);
-	}
-	else if (	this->str_color_trace_05_tgt_color_==words.at(0)){
-		  cl_gts_gui.roubut_thickness_05_tgt_is_bl->value(
-			(words.at(1) == this->str_color_black_) ?1 :0
-		 );
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	}
 
 	//---------- 6/6 ----------
 
-	else if (	this->str_color_trace_06_chk_==words.at(0)){
-		const int chk = (words.at(1) == this->str_on_) ?1 :0;
-		cl_gts_gui.chkbtn_color_trace_06_chk->value( chk );
-		  cl_gts_gui.chkbtn_thickness_06_chk->value( chk );
-
-		if (
-		cl_gts_gui.chkbtn_color_trace_06_chk->value()) {
-		 cl_gts_gui.group_color_trace_06grp->activate();
-		   cl_gts_gui.group_thickness_06grp->activate();
-		} else {
-		 cl_gts_gui.group_color_trace_06grp->deactivate();
-		   cl_gts_gui.group_thickness_06grp->deactivate();
+	else if (this->str_color_trace_06_chk_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(5) );
+		const int sw_num = (words.at(1) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	}
+	else if (this->str_color_trace_06_src_hh_min_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(5) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_min->value(va);
+	}
+	else if (this->str_color_trace_06_src_hh_max_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(5) );
+		const double va = std::stod(words.at(1));
+		wset.valinp_hue_max->value(va);
+	}
+	else if (this->str_color_trace_06_src_aa_min_==words.at(0)){
+		smin_ = 100. - std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_06_src_aa_max_==words.at(0)){ }
+	else if (this->str_color_trace_06_src_bb_min_==words.at(0)){ }
+	else if (this->str_color_trace_06_src_bb_max_==words.at(0)){
+		vmax_ = std::stod(words.at(1));
+	}
+	else if (this->str_color_trace_06_tgt_color_==words.at(0)){
+		cb_trace_params::widget_set& wset( vwset.at(5) );
+		double va = 0.;
+		if (words.at(1)==this->str_color_black_) {
+			va = vmax_;
+			wset.valinp_hue_min->value(-1.);
+			wset.valinp_hue_max->value(-1.);
+			wset.valinp_hue_min->hide();
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {va = smin_;
+			wset.valinp_hue_min->show();
+			wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
 		}
-	}
-	else if (	this->str_color_trace_06_src_hh_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_06_src_hh_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_hh_min)->value( val );
-	}
-	else if (	this->str_color_trace_06_src_hh_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_06_src_hh_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_hh_max)->value( val );
-	}
-	else if (	this->str_color_trace_06_src_aa_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_06_src_aa_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_aa_min)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_06);
-	}
-	else if (	this->str_color_trace_06_src_aa_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_06_src_aa_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_aa_max)->value( val );
-	}
-	else if (	this->str_color_trace_06_src_bb_min_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_06_src_bb_min->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_bb_min)->value( val );
-	}
-	else if (	this->str_color_trace_06_src_bb_max_==words.at(0)){
-		const double val = std::stod(words.at(1));
-		cl_gts_gui.valinp_color_trace_06_src_bb_max->value( val );
-((Fl_Valuator *)cl_gts_gui.scrbar_color_trace_06_src_bb_max)->value( val );
-		cl_gts_master.cl_color_trace_thickness.set_scrbar_inpval(
-			    E_COLOR_TRACE_HAB_06);
-	}
-	else if (	this->str_color_trace_06_tgt_color_==words.at(0)){
-		  cl_gts_gui.roubut_thickness_06_tgt_is_bl->value(
-			(words.at(1) == this->str_color_black_) ?1 :0
-		 );
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
 	}
 	else {
+		return false; // not defined
+	}
+	return true;
+}
+bool memory_config::load_trace_params_( std::vector< std::string >& words )
+{
+	if (words.size() == 2) {
+	 if (words.at(0) == this->str_trace_display_target_sw_) {
+		const int sw = (words.at(1) == this->str_on_) ?1 :0;
+		    cl_gts_gui.chebut_trace_display_target_sw->value(sw);
+	 } else
+	 if (words.at(0) == this->str_trace_display_main_sw_) {
+		const int sw = (words.at(1) == this->str_on_) ?1 :0;
+		    cl_gts_gui.chebut_trace_display_main_sw->value(sw);
+	 } else {
+		return false; // not defined
+	 }
+	} else if ((words.size() == 4) || (words.size() == 6)) {
+	 if (words.at(0) == this->str_trace_params_title_) {
+	  const int num = std::stoi(words.at(1));
+	  std::vector<cb_trace_params::widget_set>& vwset(
+		cl_gts_master.cl_trace_params.widget_sets
+	  );
+	  if (num < 0 || static_cast<int>(vwset.size()) <= num) {
+		return false; // bad number
+	  }
+
+	  cb_trace_params::widget_set& wset( vwset.at(num) );
+
+	  if        (words.at(2) == this->str_trace_enable_sw_) {
+		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
+		wset.chebut_enable_sw->value(sw_num);
+		if (sw_num == 1){ wset.group_trace->activate(); }
+		else		{ wset.group_trace->deactivate(); }
+	  } else if (words.at(2) == this->str_trace_target_rgb_) {
+		if (words.size() != 6) {
+			return false; // bad word's count
+		}
+		const uchar r = static_cast<uchar>(std::stoi(words.at(3)));
+		const uchar g = static_cast<uchar>(std::stoi(words.at(4)));
+		const uchar b = static_cast<uchar>(std::stoi(words.at(5)));
+		cl_gts_master.cl_trace_params.set_target_rgb( num ,r,g,b );
+		wset.button_target_rgb->redraw();
+	  } else if (words.at(2) == this->str_trace_thickness_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_thickness->value(va);
+		((Fl_Valuator *)wset.scrbar_thickness)->value(va);
+	  } else if (words.at(2) == this->str_trace_hue_min_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_hue_min->value(va);
+		if (wset.valinp_hue_min->value() < 0.) {
+			wset.valinp_hue_min->hide();
+			wset.button_hue_minmax->hide();
+		} else {wset.valinp_hue_min->show();
+			wset.button_hue_minmax->show();
+		}
+	  } else if (words.at(2) == this->str_trace_hue_max_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_hue_max->value(va);
+		if (wset.valinp_hue_max->value() < 0.) {
+			wset.valinp_hue_max->hide();
+			wset.button_hue_minmax->hide();
+		} else {wset.valinp_hue_max->show();
+			wset.button_hue_minmax->show();
+		}
+	  } else if (words.at(2) == this->str_trace_slope_deg_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_slope_deg->value(va);
+	  } else if (words.at(2) == this->str_trace_intercept_) {
+		const double va = std::stod(words.at(3));
+		wset.valinp_intercept->value(va);
+	  } else if (words.at(2) == this->str_trace_display_sw_) {
+		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
+		wset.chebut_display_sw->value(sw_num);
+	  } else if (words.at(2) == this->str_trace_rotate360_sw_) {
+		const int sw_num = (words.at(3) == this->str_on_) ?1 :0;
+		wset.chebut_rotate360_sw->value(sw_num);
+	  } else {
+		return false; // not defined
+	  }
+	 } else {
+		return false; // not defined
+	 }
+	} else {
 		return false; // not defined
 	}
 	return true;
@@ -947,7 +933,8 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = false;
 	this->load_pixel_type_and_bright_sw_ = false;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;	// <---------
+	this->load_trace_params_sw_ = false;
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
 
@@ -959,7 +946,8 @@ int memory_config::load_only_trace_parameters( const std::string& file_path)
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
 	this->load_pixel_type_and_bright_sw_ = true;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
 	this->load_trace_batch_sw_ = true;
 	this->load_number_sw_ = true;
 	return ret;
@@ -970,9 +958,10 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 	this->load_image_sw_ = false;
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
-	this->load_crop_area_and_rot90_sw_ = true; // True only this.
+	this->load_crop_area_and_rot90_sw_ = true; // <---------
 	this->load_pixel_type_and_bright_sw_ = false;
 	this->load_trace_parameters_sw_ = false;
+	this->load_trace_params_sw_ = false;
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
 
@@ -984,7 +973,8 @@ int memory_config::load_only_area_and_rot90( const std::string& file_path)
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
 	this->load_pixel_type_and_bright_sw_ = true;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
 	this->load_trace_batch_sw_ = true;
 	this->load_number_sw_ = true;
 	return ret;
@@ -996,8 +986,9 @@ int memory_config::load_only_pixel_type_and_bright( const std::string& file_path
 	this->load_scan_and_save_sw_ = false;
 	this->load_trace_files_sw_ = false;
 	this->load_crop_area_and_rot90_sw_ = false;
-	this->load_pixel_type_and_bright_sw_ = true; // True only this.
+	this->load_pixel_type_and_bright_sw_ = true; // <----------
 	this->load_trace_parameters_sw_ = false;
+	this->load_trace_params_sw_ = false;
 	this->load_trace_batch_sw_ = false;
 	this->load_number_sw_ = false;
 
@@ -1009,7 +1000,35 @@ int memory_config::load_only_pixel_type_and_bright( const std::string& file_path
 	this->load_trace_files_sw_ = true;
 	this->load_crop_area_and_rot90_sw_ = true;
 	this->load_pixel_type_and_bright_sw_ = true;
-	this->load_trace_parameters_sw_ = true;	// True only this.
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
+	this->load_trace_batch_sw_ = true;
+	this->load_number_sw_ = true;
+	return ret;
+}
+int memory_config::load_only_trace_params( const std::string& file_path)
+{
+	this->load_config_sw_ = false;
+	this->load_image_sw_ = false;
+	this->load_scan_and_save_sw_ = false;
+	this->load_trace_files_sw_ = false;
+	this->load_crop_area_and_rot90_sw_ = false;
+	this->load_pixel_type_and_bright_sw_ = false;
+	this->load_trace_parameters_sw_ = true;	// <---------
+	this->load_trace_params_sw_ = true;	// <---------
+	this->load_trace_batch_sw_ = false;
+	this->load_number_sw_ = false;
+
+	const int ret = this->load(file_path , this->load_trace_batch_sw_);
+
+	this->load_config_sw_ = true;
+	this->load_image_sw_ = true;
+	this->load_scan_and_save_sw_ = true;
+	this->load_trace_files_sw_ = true;
+	this->load_crop_area_and_rot90_sw_ = true;
+	this->load_pixel_type_and_bright_sw_ = true;
+	this->load_trace_parameters_sw_ = true;
+	this->load_trace_params_sw_ = true;
 	this->load_trace_batch_sw_ = true;
 	this->load_number_sw_ = true;
 	return ret;
@@ -1022,12 +1041,11 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	//---------- read file ----------
   {
-#if defined _WIN32
-	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
-			   file_path.c_str()
-	));/* ファイル開く */
+	/* ファイル開く */
+#ifdef _WIN32
+	std::ifstream ifs( osapi::cp932_from_utf8( file_path ) );
 #else
-	std::ifstream ifs( file_path );/* ファイル開く */
+	std::ifstream ifs( file_path );
 #endif
 	ifs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
    try {	/* std::getline()はEOFの場合も例外を投げてしまう */
@@ -1043,14 +1061,6 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
   }
 
 	//---------- after reading ----------
-
-	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
-	cl_gts_master.cl_color_trace_thickness.cb_enh_01();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_02();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_03();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_04();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_05();
-	cl_gts_master.cl_color_trace_thickness.cb_enh_06();
 
 	/* Scan and SaveのEnd/Endless指定がない時はStart...End指定にする */
 	if (!scan_num_continue_type_sw && this->load_scan_and_save_sw_) {
@@ -1090,11 +1100,11 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	/* 画面クリア設定 */
 	cl_gts_master.cl_ogl_view.clear_opengl(
-		cl_gts_gui.opengl_view->w(),
-		cl_gts_gui.opengl_view->h()
+		cl_gts_gui.image_view->w(),
+		cl_gts_gui.image_view->h()
 	);
 	/* 画面クリア */
-	cl_gts_gui.opengl_view->flush();
+	cl_gts_gui.image_view->flush();
 
 	/* 画像読込表示 */
 	cl_gts_master.cb_number_read_and_trace_and_preview();

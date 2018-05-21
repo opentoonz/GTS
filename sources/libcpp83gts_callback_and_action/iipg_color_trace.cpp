@@ -66,52 +66,53 @@ int gts_master::_iipg_color_trace_setup( void )
 		this->cl_iip_edot.set_canvas_size(&(this->cl_iip_trac));
 	}
 
-	/* fltkメニューから実行パラメータをセットする */
-	this->cl_color_trace_enhancement.src_set_from_gui();
-
 	/* トレース範囲を全域に初期化 */
-	this->cl_iip_trac.set_l_area_xpos( 0L );
-	this->cl_iip_trac.set_l_area_ypos( 0L );
-	this->cl_iip_trac.set_l_area_xsize(
-	 this->cl_iip_trac.get_l_width() );
-	this->cl_iip_trac.set_l_area_ysize(
-	 this->cl_iip_trac.get_l_height() );
+	this->cl_iip_trac.set_area_xpos( 0 );
+	this->cl_iip_trac.set_area_ypos( 0 );
+	this->cl_iip_trac.set_area_xsize(
+		static_cast<int>(this->cl_iip_trac.get_l_width())
+	);
+	this->cl_iip_trac.set_area_ysize(
+		static_cast<int>(this->cl_iip_trac.get_l_height())
+	);
 
-	this->cl_iip_edot.set_l_area_xpos( 0L );
-	this->cl_iip_edot.set_l_area_ypos( 0L );
-	this->cl_iip_edot.set_l_area_xsize(
-	 this->cl_iip_edot.get_l_width() );
-	this->cl_iip_edot.set_l_area_ysize(
-	 this->cl_iip_edot.get_l_height() );
+	this->cl_iip_edot.set_area_xpos( 0 );
+	this->cl_iip_edot.set_area_ypos( 0 );
+	this->cl_iip_edot.set_area_xsize(
+		static_cast<int>(this->cl_iip_edot.get_l_width())
+	);
+	this->cl_iip_edot.set_area_ysize(
+		static_cast<int>(this->cl_iip_edot.get_l_height())
+	);
 
 	return OK;
 }
 void gts_master::_iipg_color_trace_exec( int i_area_sw )
 {
 	if (ON == i_area_sw) {
-		this->cl_iip_trac.set_l_area_xpos(
+		this->cl_iip_trac.set_area_xpos(
 		 this->cl_ogl_view.get_i_glcrop_xpos()
 		);
-		this->cl_iip_trac.set_l_area_ypos(
+		this->cl_iip_trac.set_area_ypos(
 		 this->cl_ogl_view.get_i_glcrop_ypos()
 		);
-		this->cl_iip_trac.set_l_area_xsize(
+		this->cl_iip_trac.set_area_xsize(
 		 this->cl_ogl_view.get_i_glcrop_width()
 		);
-		this->cl_iip_trac.set_l_area_ysize(
+		this->cl_iip_trac.set_area_ysize(
 		 this->cl_ogl_view.get_i_glcrop_height()
 		);
 
-		this->cl_iip_edot.set_l_area_xpos(
+		this->cl_iip_edot.set_area_xpos(
 		 this->cl_ogl_view.get_i_glcrop_xpos()
 		);
-		this->cl_iip_edot.set_l_area_ypos(
+		this->cl_iip_edot.set_area_ypos(
 		 this->cl_ogl_view.get_i_glcrop_ypos()
 		);
-		this->cl_iip_edot.set_l_area_xsize(
+		this->cl_iip_edot.set_area_xsize(
 		 this->cl_ogl_view.get_i_glcrop_width()
 		);
-		this->cl_iip_edot.set_l_area_ysize(
+		this->cl_iip_edot.set_area_ysize(
 		 this->cl_ogl_view.get_i_glcrop_height()
 		);
 	}
@@ -134,7 +135,20 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	/* トレース */
 	if ((	this->cl_iip_trac.get_l_channels() == 3L) && trace_sw) {
 		// RGB
-		this->cl_iip_trac.exec(&(this->cl_cal_trac));/* 2値化処理 */
+
+		/* fltk GUIの値を高速計算のための変数に置きなおす */
+		this->cl_trace_params.set_params_for_speedup();
+
+		/* 2値化処理 */
+		std::string err_msg (this->cl_iip_trac.exec(
+	this->cl_trace_params.get_param_sets()
+	,(cl_gts_gui.chebut_trace_display_main_sw->value()!=0) ?true :false
+	,(cl_gts_gui.menite_hsv_random_position->value()!=0) ?true :false
+	,cl_gts_gui.hsv_view->vbo
+		));
+		if (!err_msg.empty()) {
+			fl_alert( err_msg.c_str() );
+		}
 	}
 	else {	// BW,Grayscale
 		this->cl_iip_trac.copy_image_from_parent(

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "pri.h"
 #include "iip_opengl_l3event.h"
 
@@ -113,6 +114,173 @@ void iip_opengl_l3event::reshape_opengl( long l_view_xs, long l_view_ys )
 		);
 		break;
 	}
+}
+void iip_opengl_l3event::from_cursor_pos_to_image_pos(
+	const int cursor_pos_x ,const int cursor_pos_y	/* 左上原点 */
+	,const int view_xs ,const int view_ys
+	,int& image_pos_x ,int& image_pos_y		/* (注意)左下原点 */
+)
+{
+	const int cursor_y_ = view_ys - cursor_pos_y;
+
+	switch (this->_e_wview_type) {
+	case E_WVIEW_TYPE_NOTHING:
+		image_pos_x = -1;
+		image_pos_y = -1;
+		break;
+	case E_WVIEW_TYPE_MAIN:
+		this->_clp_main->from_cursor_pos_to_image_pos(
+			cursor_pos_x ,cursor_y_
+			,image_pos_x ,image_pos_y
+		);
+		break;
+	case E_WVIEW_TYPE_SUB:
+		this->_clp_sub->from_cursor_pos_to_image_pos(
+			cursor_pos_x ,cursor_y_
+			,image_pos_x ,image_pos_y
+		);
+		break;
+	/* 左右分割 */
+	/* ここでは表示エリアを記憶するのみ */
+	case E_WVIEW_TYPE_LR_PARALLEL:
+	case E_WVIEW_TYPE_LR_ONION: {
+		/* 左画像の右端(separeterの表示開始)位置 */
+		const int x1 = static_cast<int>(
+			this->_d_separete_x_ratio * view_xs
+		) - (this->_l_seaprete_thickness / 2L);
+
+		/* 右画像の左端(表示開始)位置 */
+		const int x2 = x1 + this->_l_seaprete_thickness;
+
+		if (cursor_pos_x < x1) {	/* 左 */
+			this->_clp_main->from_cursor_pos_to_image_pos(
+				cursor_pos_x ,cursor_y_
+				,image_pos_x ,image_pos_y
+			);
+		} else
+		if (x2 <= cursor_pos_x) {	/* 右 */
+			this->_clp_sub->from_cursor_pos_to_image_pos(
+				cursor_pos_x-x2 ,cursor_y_
+				,image_pos_x ,image_pos_y
+			);
+		}
+		else {			/* どちらでもない(=separeter上) */
+			image_pos_x = -1;
+			image_pos_y = -1;
+		}
+		} break;
+	/* 上下分割 */
+	/* ここでは表示エリアを記憶するのみ */
+	case E_WVIEW_TYPE_UD_PARALLEL:
+	case E_WVIEW_TYPE_UD_ONION: {
+		/* 下画像の上端(separeterの表示開始)位置 */
+		const int y1 = static_cast<long>(
+			this->_d_separete_y_ratio * view_ys
+		) - (this->_l_seaprete_thickness / 2L);
+
+		/* 上画像の下端(表示開始)位置 */
+		const int y2 = y1 + this->_l_seaprete_thickness;
+
+		if (cursor_y_ < y1) {	/* 下 */
+			this->_clp_main->from_cursor_pos_to_image_pos(
+				cursor_pos_x ,cursor_y_
+				,image_pos_x ,image_pos_y
+			);
+		} else
+		if (y2 <= cursor_y_) {	/* 上 */
+			this->_clp_sub->from_cursor_pos_to_image_pos(
+				cursor_pos_x ,cursor_y_ - y2
+				,image_pos_x ,image_pos_y
+			);
+		}
+		else {			/* どちらでもない(=separeter上) */
+			image_pos_x = -1;
+			image_pos_y = -1;
+		}
+		} break;
+	default:
+		image_pos_x = -1;
+		image_pos_y = -1;
+		break;
+	}
+}
+
+void iip_opengl_l3event::draw_image_pixel_pos(
+	const int image_pos_x ,const int image_pos_y
+)
+{
+	switch (this->_e_wview_type) {
+	case E_WVIEW_TYPE_NOTHING:
+		break;
+	case E_WVIEW_TYPE_MAIN:
+		this->_clp_main->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		);
+		break;
+	case E_WVIEW_TYPE_SUB:
+		if (this->temporary_display_main_sw_) {
+		 this->_clp_main->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		 );
+		} else {
+		 this->_clp_sub->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		 );
+		}
+		break;
+	/* 左右分割 */
+	/* ここでは表示エリアを記憶するのみ */
+	case E_WVIEW_TYPE_LR_PARALLEL:
+	case E_WVIEW_TYPE_LR_ONION:
+		this->_clp_main->reshape_opengl();
+		this->_clp_main->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		);
+
+		this->_clp_sub->reshape_opengl();
+		if (this->temporary_display_main_sw_) {
+		 this->_clp_main->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		 );
+		} else {
+		 this->_clp_sub->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		 );
+		}
+		break;
+	/* 上下分割 */
+	/* ここでは表示エリアを記憶するのみ */
+	case E_WVIEW_TYPE_UD_PARALLEL:
+	case E_WVIEW_TYPE_UD_ONION:
+		this->_clp_main->reshape_opengl();
+		this->_clp_main->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		);
+
+		this->_clp_sub->reshape_opengl();
+		if (this->temporary_display_main_sw_) {
+		 this->_clp_main->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		 );
+		} else {
+		 this->_clp_sub->draw_image_pixel_pos(
+			image_pos_x ,image_pos_y
+		 );
+		}
+		break;
+	default:
+		break;
+	}
+}
+void iip_opengl_l3event::get_image_pixel(
+	const int image_pos_x ,const int image_pos_y
+	,int&r ,int&g ,int&b ,int&ch ,int&by ,int&bt
+)
+{
+	this->_clp_main->get_image_pixel(
+		image_pos_x ,image_pos_y
+		,r,g,b,ch,by,bt
+	);
 }
 
 void iip_opengl_l3event::draw_opengl( void )

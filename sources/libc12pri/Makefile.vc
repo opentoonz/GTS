@@ -1,18 +1,18 @@
 .SUFFIXES: .obj .c
 #---define--------------------------------------------------------------
 NAME = libc12pri
-OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
+OPTS = /W4 /MD /EHa /O2 /wd4996 /source-charset:utf-8
 # /wd4996 : Stop warning message by MS-C old function
-# /wd4819 : Stop warning message about Language Code
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
-/I.\
-/I..\libc11portable
+/I.
 SRCS =\
 pri_cv.c\
 pri_msg_and_err.c
 TARG = $(NAME).lib
 OBJS = $(SRCS:.c=.obj)
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

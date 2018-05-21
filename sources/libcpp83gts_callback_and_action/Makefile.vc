@@ -1,56 +1,53 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = libcpp83gts_callback_and_action
-OPTS = /W3 /MD /EHa /O2 /wd4996 /DWIN32 /wd4819
-# /wd4996 : Stop warning message by MS-C old function
+OPTS = /W3 /MD /EHa /O2 /DWIN32 /wd4996 /source-charset:utf-8
 # /DWIN32 : for Use fltk in Windows
-# /wd4819 : Stop warning message about Language Code
+# /wd4996 : Stop warning message by MS-C old function
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I.\
-/I..\libcpp82gts_hsv_histogram\
 /I..\libcpp81gts_file_browser\
 /I..\libcpp72iip_erase_dot_noise\
-/I..\libcpp71iip_color_trace_hab\
+/I..\libcpp71iip_trace_by_hsv\
 /I..\libcpp64iip_rot90\
 /I..\libcpp56iip_opengl\
 /I..\libcpp55iip_scan\
 /I..\libcpp53iip_precision\
 /I..\libcpp52iip_rw\
 /I..\libcpp51iip_canvas\
-/I..\libcpp38calcu_rgb_to_hsv\
+/I..\lib_util\
 /I..\libc12pri\
-/I..\libc11portable\
 /I$(DPATH_TWAIN)\
-/I$(DPATH_FLTK)
+/I$(DPATH_FLTK)\
+/I$(DPATH_GLEW)\include
 SRCS =\
+gts_file_path.cpp\
 gts_gui.cpp\
 gts_master.cpp\
 cb_area_and_rot90.cpp\
 cb_change_view.cpp\
-cb_color_trace_edit_color.cpp\
-cb_color_trace_edit_hsv_minmax.cpp\
-cb_color_trace_enhancement_src.cpp\
-cb_color_trace_enhancement_tgt.cpp\
-cb_color_trace_src.cpp\
-cb_color_trace_thickness.cpp\
 cb_color_trace_view_area.cpp\
 cb_config.cpp\
 cb_image.cpp\
-cb_input_number_format.cpp\
 cb_number.cpp\
 cb_pixel_type_and_bright.cpp\
 cb_quit.cpp\
 cb_read_and_trace_and_preview.cpp\
 cb_scan_and_preview.cpp\
 cb_scan_and_save.cpp\
+cb_set_number_format.cpp\
 cb_trace_batch.cpp\
 cb_trace_files.cpp\
-cb_trace_parameters.cpp\
+cb_trace_params.cpp\
 dogascan_event.cpp\
 dogascan_print_window_headline.cpp\
 dogascan_scrollbar.cpp\
+fl_gl_cyclic_color_wheel.cpp\
+fl_gl_hsv_view.cpp\
+fl_gl_image_view.cpp\
 fltk_event.cpp\
-fltk_opengl.cpp\
 igs_lex_white_space_and_double_quote.cpp\
 ids_path_extensions.cpp\
 ids_path_fltk_native_browse.cpp\
@@ -63,15 +60,14 @@ iipg_view.cpp\
 memory_config_load.cpp\
 memory_config_save.cpp\
 memory_desktop_load.cpp\
-memory_desktop_save.cpp\
-memory_scan_area.cpp\
-memory_short_cut_key.cpp
+memory_desktop_save.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
-DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-1
+DPATH_FLTK = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-2
+DPATH_GLEW = $(DPATH_3RD_PARTY)\glew\glew-2.1.0
 DPATH_TWAIN = $(DPATH_3RD_PARTY)\twain\twain-2.3
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

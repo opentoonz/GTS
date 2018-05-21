@@ -1,7 +1,7 @@
 #include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
+#include "osapi_exist.h"
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_config.h"
@@ -142,6 +142,34 @@ void cb_config::open_only_pixel_type_and_bright( void )
 		return;
 	}
 }
+void cb_config::open_only_trace_params( void )
+{
+	/* NativeブラウザーOpenで開く */
+	int filter_current=0;
+	const std::string fpath = ids::path::fltk_native_browse_open(
+		"Open Config only Trace Params"
+		,this->dir_path_
+		,"" //,this->open_file_name_
+		,std::string("Text(Config)\t*")+this->ext_
+		,filter_current
+	).at(0);
+	/* Cancel */
+	if (fpath.empty()) {
+		return;
+	}
+
+	/* config情報を保存する */
+	if (OK !=
+	cl_gts_master.cl_memo_config.load_only_trace_params(
+		fpath
+	)) {
+		pri_funct_err_bttvr(
+"Error : cl_gts_master.cl_memo_config.load_only_trace_params(%s) returns NG"
+			, fpath.c_str()
+		);
+		return;
+	}
+}
 
 void cb_config::save_as( void )
 {
@@ -195,7 +223,7 @@ void cb_config::save( void )
 	));
 
 	/* ダイオローグを表示 */
-	if (ptbl_dir_or_file_is_exist(const_cast<char *>(fpath.c_str()))) {
+	if (osapi::exist_utf8_mbs(fpath)) {
 		/* すでに存在するなら上書き確認 */
 		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )){
 			return;

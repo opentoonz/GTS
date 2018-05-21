@@ -231,9 +231,9 @@ iip_canvas *gts_master::iipg_scan(
 	int&return_code/* OK/NG/CANCEL*/ ,const bool full_area_sw
 )
 {
-	deactivate_scan_();
+	//deactivate_scan_();
 	if (OK != this->iipg_scan_open_setup_unit_get_spec_()) {
-		activate_scan_();
+		//activate_scan_();
 		return NULL;
 	}
 
@@ -251,11 +251,11 @@ fl_alert(str.c_str());
 	 "Error : this->cl_iip_scan.close() returns NG.");
 std::string str("Scan Close Critical Error!\nSave Config and Restart!");
 fl_alert(str.c_str());
-		activate_scan_();
+		//activate_scan_();
 		return NULL;
 	}
 
-	activate_scan_();
+	//activate_scan_();
 
 	return this->cl_iip_scan.get_clp_canvas();
 }

@@ -5,8 +5,10 @@
 #include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
-#include "ptbl_path_max.h" // PTBL_PATH_MAX
+#include "osapi_exist.h"
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
 #include "ids_path_fltk_native_browse.h"
 #include "ids_path_level_from_files.h"
 #include "cb_trace_files.h"
@@ -33,9 +35,7 @@ int cb_trace_files::read_and_save_crnt_(
 	}
 
 	/* 読込：ファイルがあるかチェック */
-	if (!ptbl_dir_or_file_is_exist(
-		const_cast<char *>(fpath_open.c_str())
-	)) {
+	if ( osapi::exist_utf8_mbs( fpath_open ) == false ) {
 		pri_funct_msg_ttvr(
 	"Error : Not exist \"%s\"",fpath_open.c_str());
 		return NG;
@@ -281,16 +281,15 @@ void cb_trace_files::cb_rename(void)
 			}
 		}
 
-#if defined _WIN32
-		char opepa[PTBL_PATH_MAX];
-		strcpy( opepa ,ptbl_charcode_cp932_from_utf8(opa.c_str()) );
-		char* newpa = ptbl_charcode_cp932_from_utf8(npa.c_str());
-		if ( strlen(opepa) < 1 || strlen(newpa) < 1 ) {
+#ifdef _WIN32
+		std::string opa2( osapi::cp932_from_utf8( opa ) );
+		std::string npa2( osapi::cp932_from_utf8( npa ) );
+		if (opa2.empty() || npa2.empty()) {
 			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
-		std::rename( opepa ,newpa );
+		std::rename( opa2.c_str() ,npa2.c_str() );
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif
@@ -376,16 +375,15 @@ void cb_trace_files::cb_renumber(void)
 			}
 		}
 
-#if defined _WIN32
-		char opepa[PTBL_PATH_MAX];
-		strcpy( opepa ,ptbl_charcode_cp932_from_utf8(opa.c_str()) );
-		char* newpa = ptbl_charcode_cp932_from_utf8(npa.c_str());
-		if ( strlen(opepa) < 1 || strlen(newpa) < 1 ) {
+#ifdef _WIN32
+		std::string opa2( osapi::cp932_from_utf8( opa ) );
+		std::string npa2( osapi::cp932_from_utf8( npa ) );
+		if (opa2.empty() || npa2.empty()) {
 			fl_alert("Error:rename \"%s\" \"%s\""
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
-		std::rename( opepa ,newpa );
+		std::rename( opa2.c_str() ,npa2.c_str() );
 #else
 		std::rename( opa.c_str() ,npa.c_str() );
 #endif
@@ -585,10 +583,7 @@ bool cb_trace_files::is_exist_save_files_(void)
 		/* 番号によるファイルパス */
 		std::string filepath( this->get_save_path( file_num ) );
 		/* ファイルの存在の表示チェック */
-		if (   !filepath.empty()
-		&& ptbl_dir_or_file_is_exist(const_cast<char*>(
-			filepath.c_str()
-		))) {
+		if (!filepath.empty() && osapi::exist_utf8_mbs(filepath)) {
 		 sw = true;
 		 cl_gts_master.cl_number.replace_with_S( file_num ,ii );
 		}

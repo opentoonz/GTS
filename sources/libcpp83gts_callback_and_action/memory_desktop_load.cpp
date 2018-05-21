@@ -5,11 +5,19 @@
 #include <fstream>
 #include "pri.h"
 #include "ptbl_returncode.h"
-#include "ptbl_funct.h" // ptbl_getenv(-)
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
+#include "osapi_exist.h"
 #include "memory_desktop.h"
+#include "osapi_mkdir.h"
+#include "gts_file_path.h"	/* ptbl_get_user_home(-)
+				get_desktop_dir_when_unix() */
 #include "gts_gui.h"
 #include "gts_master.h"
 #include "igs_lex_white_space_and_double_quote.h"
+
+#define PATH_SEPARETER	('/')
 
 int memory_desktop::set_desktop_file_path_( void ) {
 	int ret = OK;
@@ -26,15 +34,14 @@ int memory_desktop::set_desktop_file_path_( void ) {
 	if (this->desktop_file_path_.empty()) {
 		/* 場所はホームディレクトリ固定 */
 		this->desktop_file_path_ = this->user_home_;
-		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
+		this->desktop_file_path_ += PATH_SEPARETER;
 #ifndef _WIN32
-		this->desktop_file_path_ +=
-			this->get_install_and_scan_area_and_desktop_dir();
-		this->desktop_file_path_ += ptbl_get_cp_path_separeter();
-		if (!ptbl_dir_or_file_is_exist(
-			const_cast<char *>(this->desktop_file_path_.c_str())
-		)) {
-			ptbl_mkdir(this->desktop_file_path_.c_str());
+		this->desktop_file_path_ += get_desktop_dir_when_unix();
+		this->desktop_file_path_ += PATH_SEPARETER;
+		if (osapi::exist_utf8_mbs(this->desktop_file_path_)==false){
+			if (osapi::mkdir(this->desktop_file_path_)==false) {
+				ret = NG;
+			}
 		}
 #endif
 		this->desktop_file_path_ += this->str_desktop_filename2_;
@@ -53,16 +60,14 @@ int memory_desktop::load( void ) {
 	/* 古いfileパスを得る */
 	std::string old_path;
 	old_path = this->user_home_;
-	old_path += ptbl_get_cp_path_separeter();
+	old_path += PATH_SEPARETER;
 	old_path += this->str_desktop_filename_;
 
 	/* 古いfileパスでファイルあるならそちらを優先-->保存は標準パス */
 	bool old_type_sw = false;
 
-#if defined _WIN32
-	std::ifstream ifs( ptbl_charcode_cp932_from_utf8(
-			   old_path.c_str()
-	));
+#ifdef _WIN32
+	std::ifstream ifs( osapi::cp932_from_utf8( old_path ) );
 #else
 	std::ifstream ifs( old_path );
 #endif
@@ -109,12 +114,8 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_main_view->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_next_scan_==key) && (4==ret)) {
-			if (di == "show") {
-		////cl_gts_gui.menite_next_scan->set();
-		//cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		//cl_gts_gui.window_next_scan->show();
-			}
 		cl_gts_gui.window_next_scan->position(xx,yy);
+		cl_gts_gui.window_next_scan_non_modal->position(xx,yy);
 		}
 		else if ((this->str_window_area_and_rot90==key)
 		&&(4==ret)) {
@@ -164,14 +165,23 @@ int memory_desktop::load( void ) {
 		cl_gts_gui.window_number->show();
 			}
 		}
-		else if ((this->str_window_trace_parameters_==key)
-		&& (4==ret)) {
+		else if ((this->str_window_trace_params_==key)
+		&& (6==ret)) {
 			if (di == "show") {
-		cl_gts_gui.menite_trace_parameters->set();
+		cl_gts_gui.menite_trace_params->set();
 		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_parameters->show();
+		cl_gts_gui.window_trace_params->show();
 			}
-		cl_gts_gui.window_trace_parameters->position(xx,yy);
+		cl_gts_gui.window_trace_params->resize(xx,yy,ww,hh);
+		}
+		else if ((this->str_window_trace_hsv_view_==key)
+		&& (6==ret)) {
+			if (di == "show") {
+		cl_gts_gui.menite_trace_hsv_view->set();
+		cl_gts_gui.window_main_view->show();/* Need for Minimize */
+		cl_gts_gui.window_trace_hsv_view->show();
+			}
+		cl_gts_gui.window_trace_hsv_view->resize(xx,yy,ww,hh);
 		}
 		else if ((this->str_window_trace_batch_==key)
 		&& (6==ret)) {
@@ -182,40 +192,14 @@ int memory_desktop::load( void ) {
 			}
 		cl_gts_gui.window_trace_batch->resize(xx,yy,ww,hh);
 		}
-		else if ((this->str_window_trace_thickness_==key)
+		else if ((this->str_window_trace_hue_minmax_==key)
 		&& (6==ret)) {
-		cl_gts_gui.window_trace_thickness->resize( xx ,yy ,ww
-		//,cl_gts_gui.window_trace_thickness->h()
-		,hh
-		);
-		cl_gts_gui.group_trace_thickness->size(
-		 cl_gts_gui.window_trace_thickness->w()-15
-		 ,cl_gts_gui.group_trace_thickness->h()
-		);
 			if (di == "show") {
-		cl_gts_gui.menite_trace_thickness->set();
+		cl_gts_gui.menite_trace_hue_minmax->set();
 		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_thickness->show();
+		cl_gts_gui.window_trace_hue_minmax->show();
 			}
-		}
-		else if ((this->str_window_trace_input_color_==key)
-		&& (4==ret)) {
-			if (di == "show") {
-		cl_gts_gui.menite_trace_input_color->set();
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_input_color->show();
-			}
-		cl_gts_gui.window_trace_input_color->position(xx,yy);
-		}
-		else if ((this->str_window_trace_output_color_==key)
-		&& ((4==ret) || (6==ret)/* for old format */)) {
-		cl_gts_gui.window_trace_output_color->resize( xx ,yy ,ww
-		,cl_gts_gui.window_trace_output_color->h()  );
-			if (di == "show") {
-		cl_gts_gui.menite_trace_output_color->set();
-		cl_gts_gui.window_main_view->show();/* Need for Minimize */
-		cl_gts_gui.window_trace_output_color->show();
-			}
+		cl_gts_gui.window_trace_hue_minmax->resize(xx,yy ,ww,hh);
 		}
 #ifndef _WIN32
 		else if ((this->str_sane_device_name_ == key)

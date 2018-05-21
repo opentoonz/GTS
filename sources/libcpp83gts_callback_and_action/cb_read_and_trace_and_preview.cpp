@@ -1,7 +1,7 @@
 #include <fstream>	//std::ifstream
 #include "FL/fl_ask.H"	// fl_alert(-)
-#include "ptbl_funct.h" // ptbl_dir_or_file_is_exist(-)
 #include "pri.h"
+#include "osapi_exist.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -59,9 +59,7 @@ void gts_master::cb_read_and_trace_and_preview(
 	}
 
 	/* 画像ファイル存在しない */
-	if (!ptbl_dir_or_file_is_exist(
-		const_cast<char *>(fpath_open.c_str())
-	)) {
+	if ( osapi::exist_utf8_mbs( fpath_open ) == false ) {
 		pri_funct_err_bttvr( "Warning : <%s> is not exist"
 			,fpath_open.c_str()
 		);
@@ -70,11 +68,11 @@ void gts_master::cb_read_and_trace_and_preview(
 		cl_gts_master.cl_ogl_view.no_view_canvas();
 		/* 画面クリア設定 */
 		cl_gts_master.cl_ogl_view.clear_opengl(
-			cl_gts_gui.opengl_view->w(),
-			cl_gts_gui.opengl_view->h()
+			cl_gts_gui.image_view->w(),
+			cl_gts_gui.image_view->h()
 		);
 		/* 画面クリア */
-		cl_gts_gui.opengl_view->flush();
+		cl_gts_gui.image_view->flush();
 
 		return;
 	}
@@ -191,16 +189,8 @@ int gts_master::redraw_image(
 	} /* それ以外の場合は現在の表示モードを維持する */
 
 	/* 表示 */
-	cl_gts_gui.opengl_view->redraw(); /* 画像再表示 */
+	cl_gts_gui.image_view->redraw(); /* 画像再表示 */
 
-	/* color trace histogram表示設定 */
-	if (3L <= parent->get_l_channels()) {
-		/* color trace histogram maxの設定 */
-		this->cl_color_trace_enhancement.src_set_histogram_max();
-
-		/* color trace histogram windowの再描画 */
-		cl_gts_gui.window_trace_input_color->flush();
-	}
 	return OK;
 }
 

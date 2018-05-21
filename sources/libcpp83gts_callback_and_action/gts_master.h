@@ -14,8 +14,7 @@
 #include "iip_write.h"
 #include "iip_read.h"
 #include "iip_opengl_l3event.h"
-#include "calcu_color_trace_hab.h"
-#include "iip_color_trace_hab.h"
+#include "iip_trace_by_hsv.h"
 #include "iip_erase_dot_noise.h"
 
 #include "memory_desktop.h"
@@ -24,16 +23,11 @@
 #include "cb_config.h"
 #include "cb_area_and_rot90.h"
 #include "cb_scan_and_save.h"
-#include "cb_trace_files.h"
 #include "cb_number.h"
+#include "cb_set_number_format.h"
 #include "cb_trace_batch.h"
-#include "cb_input_number_format.h"
-#include "cb_color_trace_edit_color.h"
-#include "cb_color_trace_edit_hsv_minmax.h"
-#include "cb_color_trace_enhancement.h"
-#include "cb_color_trace_thickness.h"
-#include "memory_scan_area.h"
-#include "memory_short_cut_key.h"
+#include "cb_trace_files.h"
+#include "cb_trace_params.h"
 
 class gts_master {
 public:
@@ -51,11 +45,8 @@ public:
 	void i_cv_sw( int sw );
 
 	const char *const cp_release_name( void ) const;
-	//void  cp_release_name( char *cp_name );
 	const char *const cp_release_date( void ) const;
-	//void  cp_release_date( char *cp_date );
 	const char *const cp_release_number( void ) const;
-	//void  cp_release_number( char *cp_num );
 
 	/* fltkウインドウ表示、イベントループへ */
 	int exec( const char *comm );
@@ -120,8 +111,6 @@ public:
 	fltk_event	cl_fltk_event;	/* イベントドリブン */
 	memory_desktop	cl_memo_desktop;	/* desktopの再現 */
 	memory_config	cl_memo_config;	/* 各パラメータの再現 */
-	memory_scan_area	cl_memo_scan_area;
-	memory_short_cut_key	cl_memo_short_cut_key;
 
 	cb_image		cl_image;
 	cb_config		cl_config;
@@ -129,19 +118,15 @@ public:
 	cb_scan_and_save	cl_scan_and_save;
 	cb_trace_files		cl_trace_files;
 	cb_number		cl_number;
-	cb_trace_batch		cl_trace_batch;
-	cb_input_number_format	cl_input_number_format;
+	cb_set_number_format	cl_set_number_format;
 
-	cb_color_trace_edit_color	cl_color_trace_edit_color;
-	cb_color_trace_edit_hsv_minmax	cl_color_trace_edit_hsv_minmax;
-	cb_color_trace_enhancement	cl_color_trace_enhancement;
-	cb_color_trace_thickness	cl_color_trace_thickness;
+	cb_trace_params		cl_trace_params;
+	cb_trace_batch		cl_trace_batch;
 
 	iip_scan	cl_iip_scan;	/* 画像読み込み */
 	iip_read	cl_iip_read;	/* 画像読込み */
 	iip_rot90	cl_iip_ro90;	/* 画像の正対 */
-	calcu_color_trace_hab	cl_cal_trac;
-	iip_color_trace_hab	cl_iip_trac;	/* BL,R,G,Bトレース */
+	iip_trace_by_hsv	cl_iip_trac;	/* BL,R,G,Bトレース */
 	iip_erase_dot_noise	cl_iip_edot;
 	iip_opengl_l3event cl_ogl_view;	/* OpenGL表示用unit */
 	iip_write	cl_iip_writ;	/* 画像保存 */

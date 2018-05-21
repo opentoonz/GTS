@@ -1,7 +1,7 @@
 #ifndef __pri_h__
 #define __pri_h__
 
-#include "ptbl_stdint.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,9 +1,9 @@
 #include <string.h> /* for memset() */
 
-#include "ptbl_funct.h"
 #include "ptbl_returncode.h"
 #include "pri.h"
 
+#include "cpu_byte_order_is_little_endian.h"
 #include "tga.h"
 
 static int _tga_write_header( TGA_FILE_HEADER *tp_header, BWRITE *tp_bwrite )
@@ -74,7 +74,7 @@ int tga_write_open( char *cp_fname, TGA_WRITE *tp_write )
 	}
 
 	/* ファイルをリトルインディアンで保存する */
-	if (ptbl_cpu_is_little_endian()) {
+	if (cpu_byte_order_is_little_endian()) {
 		bwrite_set_byte_swap_sw( OFF, &(tp_write->t_bwrite) );
 	} else {
 		bwrite_set_byte_swap_sw( ON, &(tp_write->t_bwrite) );

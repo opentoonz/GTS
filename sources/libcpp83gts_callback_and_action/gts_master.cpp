@@ -1,8 +1,7 @@
-#include <iostream> // std::cout
-#include <stdlib.h> /* getenv() */
 #include <FL/x.H> /* for fl_xid() */
 #include "pri.h"
 #include "ids_path_level_from_files.h"
+#include "gts_file_path.h"
 #include "gts_master.h"
 #include "gts_gui.h"
 
@@ -128,16 +127,10 @@ int gts_master::exec( const char *comm )
 		GUI(fltk)初期設定
 	*/
 
-	/* color trace enhancement */
-	this->cl_color_trace_enhancement.src_init_histogram_window();
-
 	/* DPIの値をユーザー入力しキャンセルした時の値の復元用記憶 */
 	this->cl_area_and_rot90.set_dpi_before_change(
 		cl_gts_gui.valinp_area_reso->value()
 	);
-
-	/* short cut key設定 */
-	this->cl_memo_short_cut_key.set_shortcut();
 
 	/* 画像書式種類(拡張子)をGUIに設定 */
 	for(int ii=0;ii<this->cl_scan_and_save.ext_save.size() ;++ii) {
@@ -145,16 +138,22 @@ int gts_master::exec( const char *comm )
 			this->cl_scan_and_save.ext_save.str_from_num(ii).c_str()
 		);
 	}
+	       cl_gts_gui.choice_scan_save_image_format->value(0);
 	for(int ii=0;ii<this->cl_trace_files.ext_open.size() ;++ii) {
 	       cl_gts_gui.choice_trace_open_image_format->add(
 			this->cl_trace_files.ext_open.str_from_num(ii).c_str()
 		);
+	       cl_gts_gui.choice_trace_open_image_format->value(0);
 	}
 	for(int ii=0;ii<this->cl_trace_files.ext_save.size() ;++ii) {
 	       cl_gts_gui.choice_trace_save_image_format->add(
 			this->cl_trace_files.ext_save.str_from_num(ii).c_str()
 		);
+	       cl_gts_gui.choice_trace_save_image_format->value(0);
 	}
+
+	/* Scan and Saveの拡張子の有効無効の設定 */
+	this->cl_scan_and_save.set_gui_ext_list();
 
 	/* Save File Number Formatについての選択リスト設定 */
 	const char** names =
@@ -164,105 +163,15 @@ int gts_master::exec( const char *comm )
 		cl_gts_gui.choice_input_num_form_separator->add(names[ii]);
 	}
 
-#if 0
-	/* gts_install_setup.txtによる初期設定01 : 各ブラウザーのフォルダ */
-	if (!this->cl_memo_install_setup.browser_top_folder.empty()) {
-		std::string dpath(
-	     this->cl_memo_install_setup.browser_top_folder
-		);
-		cl_gts_gui.filinp_scan_save_dir_path->value( dpath.c_str());
-		cl_gts_gui.filinp_trace_open_dir_path->value(dpath.c_str());
-		cl_gts_gui.filinp_trace_save_dir_path->value(dpath.c_str());
-		cl_gts_master.cl_trace_batch.set_dir_path(   dpath.c_str());
-		cl_gts_master.cl_config.set_dir_path(        dpath.c_str());
-	}
-
-	/* gts_install_setup.txtによる初期設定02 : 画像番号書式設定 */
-	if (!this->cl_memo_install_setup.save_number_format.empty()) {
-		std::string fmt(
-	     this->cl_memo_install_setup.save_number_format
-		);
-	 cl_gts_gui.output_scan_save_number_format->value(  fmt.c_str() );
-	 cl_gts_gui.output_trace_save_number_format->value( fmt.c_str() );
-	}
-
-	/* gts_install_setup.txtによる初期設定03 : 画像書式 */
-	if (!this->cl_memo_install_setup.image_file_format.empty()) {
-		const std::string fform(
-	     this->cl_memo_install_setup.image_file_format
-		);
-		if (fform == "TIFF"){
-			cl_gts_gui.choice_scan_save_image_format->value(0);
-			cl_gts_gui.choice_trace_open_image_format->value(0);
-			cl_gts_gui.choice_trace_save_image_format->value(0);
-
-			cl_gts_gui.choice_scan_save_image_format->redraw();
-			cl_gts_gui.choice_trace_open_image_format->redraw();
-			cl_gts_gui.choice_trace_save_image_format->redraw();
-		} else if (fform == "TGA") {
-			cl_gts_gui.choice_scan_save_image_format->value(1);
-			cl_gts_gui.choice_trace_open_image_format->value(1);
-			cl_gts_gui.choice_trace_save_image_format->value(1);
-
-			cl_gts_gui.choice_scan_save_image_format->redraw();
-			cl_gts_gui.choice_trace_open_image_format->redraw();
-			cl_gts_gui.choice_trace_save_image_format->redraw();
-		}
-	}
-	/* gts_install_setup.txtによる初期設定04 : DPI */
-	if (!this->cl_memo_install_setup.area_resolution_dpi.empty()) {
-		const double dpi = std::stod(
-			this->cl_memo_install_setup.area_resolution_dpi);
-		cl_gts_gui.valinp_area_reso->value(dpi);
-	}
-
-	/* gts_install_setup.txtによる初期設定05 : 回転値 */
-	if (!this->cl_memo_install_setup.area_rotate_per_90.empty()) {
-		const int idx = cl_gts_gui.choice_rot90->find_index(
-		 this->cl_memo_install_setup.area_rotate_per_90.c_str()
-		);
-		if (0 <= idx) {
-			cl_gts_gui.choice_rot90->value(idx);
-			this->cl_area_and_rot90.set_previous_choice_rot90(
-						  cl_gts_gui.choice_rot90->value()
-			);
-		}
-	}
-	/* gts_install_setup.txtによる初期設定06 : Pixel Type */
-	if (!this->cl_memo_install_setup.pixel_type.empty()) {
-		this->cb_choice_pixel_type_title( 
-			this->cl_memo_install_setup.pixel_type
-		);
-		this->cb_choice_pixel_type_menu();
-	}
-	/* gts_install_setup.txtによる初期設定07 : 連番の連続方法 */
-	if (!this->cl_memo_install_setup.scan_num_endless_direction.empty()) {
-	 this->cl_scan_and_save.cb_choice_and_num_continue_type(
-	  this->cl_memo_install_setup.scan_num_endless_direction
-	 );
-	}
-#endif
-
-	/* "Thickness"ウインドウ各値を"Color Trace Enhancement"で再表示 */
-	this->cl_color_trace_thickness.cb_enh_01();
-	this->cl_color_trace_thickness.cb_enh_02();
-	this->cl_color_trace_thickness.cb_enh_03();
-	this->cl_color_trace_thickness.cb_enh_04();
-	this->cl_color_trace_thickness.cb_enh_05();
-	this->cl_color_trace_thickness.cb_enh_06();
-
 	/* fltk windowのうちmain画面は必ず表示する */
 	/* set_non_model()は始めにshowしたwindowがメイン */
 	cl_gts_gui.window_main_view->show();
 	cl_gts_gui.window_main_view->wait_for_expose();
 	Fl::flush();
 
-	/* scan_area.txtによるscan area位置とサイズを読んで設定 */
-	/*if (OK != this->cl_memo_scan_area.load( comm )) {
-		pri_funct_err_bttvr(
-	 "Error : this->cl_memo_scan_area.load() returns NG" );
-		return NG;
-	}*/
+	/* trace paramsのguiを配列で利用するための変数初期設定 */
+	this->cl_trace_params.init_widget_set();
+	this->cl_trace_params.init_color(); /* init_widget_set()後使用 */
 
 	/* gts_initial_configuration.txtによる初期設定 */
 	{
@@ -276,6 +185,10 @@ int gts_master::exec( const char *comm )
 		}
 	}
 	}
+
+	/* trace paramsのguiを配列で利用するための変数初期設定 */
+	/* configで順番が決まってから0番目(赤)を指定 */
+	this->cl_trace_params.cb_hue_minmax_init_editor(0);
 
 	/* desktop.txtによる fltk window位置とサイズを復元 */
 	if (OK != this->cl_memo_desktop.load()) {

@@ -8,13 +8,12 @@ pkgdata_DATA = \
 noinst_LTLIBRARIES = libgts.la
 
 libgts_la_CPPFLAGS = \
-				   -Isources/libc11portable \
+				   -Isources/lib_util \
 				   -Isources/libc12pri \
 				   -Isources/libc14image_rw_base \
 				   -Isources/libc16image_rw_tif \
 				   -Isources/libc18image_rw_tga \
 				   -Isources/libcpp31calcu_precision \
-				   -Isources/libcpp38calcu_rgb_to_hsv \
 				   -Isources/libcpp51iip_canvas \
 				   -Isources/libcpp52iip_rw \
 				   -Isources/libcpp53iip_precision \
@@ -22,27 +21,33 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libcpp56iip_opengl \
 				   -Isources/libcpp64iip_rot90 \
 				   -Isources/libcpp69iip_scale_by_subpixel \
-				   -Isources/libcpp71iip_color_trace_hab \
+				   -Isources/libcpp71iip_trace_by_hsv \
 				   -Isources/libcpp72iip_erase_dot_noise \
-				   -Isources/libcpp82gts_hsv_histogram \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
 				   $(FLTK_CPPFLAGS)
 
 libgts_la_SOURCES = \
-					sources/libc11portable/ptbl_charcode.c \
-					sources/libc11portable/ptbl_cpu_is_little_endian.c \
-					sources/libc11portable/ptbl_dir_or_file_is_exist.c \
-					sources/libc11portable/ptbl_get_cp_hostname.c \
-					sources/libc11portable/ptbl_get_cp_loginname.c \
-					sources/libc11portable/ptbl_get_cp_username.c \
-					sources/libc11portable/ptbl_get_cp_userrealname.c \
-					sources/libc11portable/ptbl_mkdir.c \
-					sources/libc11portable/ptbl_utils_about_path.c \
+					sources/lib_util/calc_hsv_rgb.cpp \
+					sources/lib_util/calc_hsv_xyz.cpp \
+					sources/lib_util/calc_rad_deg.cpp \
+					sources/lib_util/cppl_file_system.cpp \
+					sources/lib_util/cppl_stop_watch.cpp \
+					sources/lib_util/opengl_camera_eye.cpp \
+					sources/lib_util/opengl_vertex_buffer_object.cpp \
+					sources/lib_util/osapi_exist.cpp \
+					sources/lib_util/osapi_getenv.cpp \
+					sources/lib_util/osapi_gethostname.cpp \
+					sources/lib_util/osapi_getusername.cpp \
+					sources/lib_util/osapi_log_with_msg_and_id.cpp \
+					sources/lib_util/osapi_mbs_wcs.cpp \
+					sources/lib_util/osapi_mkdir.cpp \
+					sources/lib_util/osapi_str_from_errid.cpp \
 					sources/libc12pri/pri_cv.c \
 					sources/libc12pri/pri_msg_and_err.c \
 					sources/libc14image_rw_base/bread.c \
 					sources/libc14image_rw_base/bwrite.c \
+					sources/libc14image_rw_base/cpu_byte_order_is_little_endian.c \
 					sources/libc16image_rw_tif/tif_bw_invert.c \
 					sources/libc16image_rw_tif/tif_bw_read.c \
 					sources/libc16image_rw_tif/tif_bw_reverse.c \
@@ -81,11 +86,8 @@ libgts_la_SOURCES = \
 					sources/libc18image_rw_tga/tga_write_scanline.c \
 					sources/libc18image_rw_tga/tga_write_setup_header.c \
 					sources/libcpp31calcu_precision/calcu_precision.cpp \
-					sources/libcpp38calcu_rgb_to_hsv/from_hsv.cpp \
-					sources/libcpp38calcu_rgb_to_hsv/to_hsv.cpp \
 					sources/libcpp51iip_canvas/iip_canvas.cpp \
 					sources/libcpp51iip_canvas/iip_channel_info.cpp \
-					sources/libcpp52iip_rw/check_save.cpp \
 					sources/libcpp52iip_rw/iip_read_file.cpp \
 					sources/libcpp52iip_rw/iip_read_header.cpp \
 					sources/libcpp52iip_rw/iip_read_set_tif_param.cpp \
@@ -123,48 +125,36 @@ libgts_la_SOURCES = \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_set_canvas.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_uchar.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_ushrt.cpp \
-					sources/libcpp71iip_color_trace_hab/calcu_color_trace_hab.cpp \
-					sources/libcpp71iip_color_trace_hab/calcu_histogram_hab.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_doubl.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_exec.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_uchar.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_ulong.cpp \
-					sources/libcpp71iip_color_trace_hab/iip_color_trace_hab_ushrt.cpp \
+					sources/libcpp71iip_trace_by_hsv/calc_trace_by_hsv.cpp \
+					sources/libcpp71iip_trace_by_hsv/iip_trace_by_hsv.cpp \
 					sources/libcpp72iip_erase_dot_noise/calcu_erase_dot_noise.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_exec.cpp \
 					sources/libcpp72iip_erase_dot_noise/iip_erase_dot_noise_uchar.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000_range_cyclic.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000_range_minmax.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000x100_histogram.cpp \
-					sources/libcpp82gts_hsv_histogram/fltk_1000x10_color_belt.cpp \
+					sources/libcpp83gts_callback_and_action/gts_file_path.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
 					sources/libcpp83gts_callback_and_action/cb_area_and_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_color.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_edit_hsv_minmax.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_src.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_enhancement_tgt.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_src.cpp \
-					sources/libcpp83gts_callback_and_action/cb_color_trace_thickness.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
 					sources/libcpp83gts_callback_and_action/cb_config.cpp \
 					sources/libcpp83gts_callback_and_action/cb_image.cpp \
-					sources/libcpp83gts_callback_and_action/cb_input_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_number.cpp \
 					sources/libcpp83gts_callback_and_action/cb_pixel_type_and_bright.cpp \
 					sources/libcpp83gts_callback_and_action/cb_quit.cpp \
 					sources/libcpp83gts_callback_and_action/cb_read_and_trace_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_preview.cpp \
 					sources/libcpp83gts_callback_and_action/cb_scan_and_save.cpp \
+					sources/libcpp83gts_callback_and_action/cb_set_number_format.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_batch.cpp \
 					sources/libcpp83gts_callback_and_action/cb_trace_files.cpp \
-					sources/libcpp83gts_callback_and_action/cb_trace_parameters.cpp \
+					sources/libcpp83gts_callback_and_action/cb_trace_params.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_event.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_print_window_headline.cpp \
 					sources/libcpp83gts_callback_and_action/dogascan_scrollbar.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_cyclic_color_wheel.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_hsv_view.cpp \
+					sources/libcpp83gts_callback_and_action/fl_gl_image_view.cpp \
 					sources/libcpp83gts_callback_and_action/fltk_event.cpp \
-					sources/libcpp83gts_callback_and_action/fltk_opengl.cpp \
 					sources/libcpp83gts_callback_and_action/igs_lex_white_space_and_double_quote.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_extensions.cpp \
 					sources/libcpp83gts_callback_and_action/ids_path_fltk_native_browse.cpp \
@@ -177,9 +167,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_config_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_config_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
-					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
-					sources/libcpp83gts_callback_and_action/memory_scan_area.cpp \
-					sources/libcpp83gts_callback_and_action/memory_short_cut_key.cpp
+					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp
 
 if WINDOWS
 libgts_la_CPPFLAGS += -Ithirdparty/twain/twain-2.3

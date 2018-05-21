@@ -10,7 +10,7 @@ It's specialized in hand-drawn animation frames.
 
 GTS uses TWAIN on Windows and SANE on other operating systems, so you need scanner drivers that support these APIs in order to run it.
 
-The interface is in English and scanned images are saved as TIFF.
+The interface is in English and scanned images are saved as TIFF/Targa.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ Execute "./gts" in the unzipped folder.
 
 1. Environment for development
 
- Microsoft Visual C++ 2013 (tested on a Windows 7 Enterprise SP1)
+ Microsoft Visual C++ 2017 (tested on a Windows 7 Enterprise SP1)
 
 2. Get source code
 
@@ -39,14 +39,34 @@ Execute "./gts" in the unzipped folder.
 
 3. Get third party libraries
 
- Third party libraries unarchived in:
- - `GTS/thirdparty/fltk/fltk-1.3.4-1/`
- - `GTS/thirdparty/libtiff/tiff-4.0.3/`
+ - Unzip third party libraries on the spot.
+   - `GTS/thirdparty/fltk/fltk-1.3.4-2.zip`
+   - `GTS/thirdparty/glew/glew-2.1.0.zip`
+   - `GTS/thirdparty/libtiff/tiff-4.0.9.zip`
+
+ - How to build fltk
+   - Open `GTS/thirdparty/fltk/fltk-1.3.4-2/ide/VisualC2010/fltk.sln` at Visual Studio 2017
+   - Set to `Release` about `Solution Configuration`
+   - Set to `Win32` about `Solution Platform`
+   - Set to `/MD` about `Runtime Library`
+   - Execute Solution Build
+ - How to build glew
+   - Open `GTS/thirdparty/glew/glew-2.1.0/build/vc12/glew.sln` at Visual Studio 2017
+   - Set to `Release` about `Solution Configuration`
+   - Set to `Win32` about `Solution Platform`
+   - Set to `/MD` about `Runtime Library`
+   - Execute Solution Build
+ - How to build libtiff
+   - vc2017(32bit) Command Prompt 
+ ```sh
+ $ cd GTS/thirdparty/libtiff/tiff-4.0.9/
+ $ nmake /f Makefile.vc lib
+ ```
 
 4. How to build
 
  The Windows application is compiled as 32-bit because the reference TWAIN driver used during development was only available in 32-bit.
- After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2013.bat` from a console (you might need to change the `vcvarsall.bat` path if you're not on a 64-bit Windows).
+ After building *fltk* and *tiff* with Visual C++, following their own instructions, go to `GTS/sources/` and run the batch file `one_step_build_vc2017.bat` from a console.
 
 5. Preparation for Execute
 
@@ -54,13 +74,13 @@ Execute "./gts" in the unzipped folder.
 
 6. How to Execute
 
- In `GTS/x86_release/` you'll find the executable `gts.exe`. Run it.
+ In `GTS/build/bin_x86/` you'll find the executable `gts.exe`. Run it.
 
 ## How to Build Locally (Linux)
 
 1. Environment for development
 
- Tested simply on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.1.1 Player(on a Windows 7 Enterprise SP1))
+ Tested simply on a Ubuntu 16.04-desktop 64bits(on a VMware Workstation 12.5.9 Player(on a Windows 7 Enterprise SP1))
 
 2. Get source code
 
@@ -69,7 +89,7 @@ Execute "./gts" in the unzipped folder.
 3. Get third party libraries
 
  ```sh
- $ sudo apt install autoconf libtool autoconf-archive libtiff5-dev libfltk1.3-dev libsane-dev libglu1-mesa-dev
+ $ sudo apt install autoconf libtool autoconf-archive libtiff5-dev libfltk1.3-dev libglew-dev libsane-dev libglu1-mesa-dev
  ```
 
 4. How to build
@@ -77,6 +97,7 @@ Execute "./gts" in the unzipped folder.
  ```sh
  $ ./autogen.sh && ./configure && make
  ```
+ The last(link) of make is an error, and then re-run by adding `-lpthread -lGLEW` in the run command line.
 
  If you're a developer and you need a debug build, do it like this:
  ```sh

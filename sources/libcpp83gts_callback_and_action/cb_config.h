@@ -17,6 +17,7 @@ public:
 	void open_only_trace_parameters( void );
 	void open_only_area_and_rot90( void );
 	void open_only_pixel_type_and_bright( void );
+	void open_only_trace_params( void );
 	void save_as(void);
 	void save(void);
 

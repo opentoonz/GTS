@@ -16,61 +16,56 @@ area_rotate_per_90           "CW_0"
 # Pixel Type and Bright
 pixel_type                   "RGB"
 
-# Trace Parameters
-color_trace_01_chk           ON
-color_trace_01_src_hue_min   280
-color_trace_01_src_hue_max   60
-color_trace_01_src_sat_min   20
-color_trace_01_src_sat_max   100
-color_trace_01_src_val_min   50
-color_trace_01_src_val_max   100
-color_trace_01_tgt_rgb       255 0 0
-color_trace_01_tgt_color     "not black"
-color_trace_02_chk           ON
-color_trace_02_src_hue_min   0
-color_trace_02_src_hue_max   360
-color_trace_02_src_sat_min   0
-color_trace_02_src_sat_max   30
-color_trace_02_src_val_min   0
-color_trace_02_src_val_max   70
-color_trace_02_tgt_rgb       0 0 0
-color_trace_02_tgt_color     "black"
-color_trace_03_chk           ON
-color_trace_03_src_hue_min   180
-color_trace_03_src_hue_max   300
-color_trace_03_src_sat_min   20
-color_trace_03_src_sat_max   100
-color_trace_03_src_val_min   50
-color_trace_03_src_val_max   100
-color_trace_03_tgt_rgb       0 0 255
-color_trace_03_tgt_color     "not black"
-color_trace_04_chk           ON
-color_trace_04_src_hue_min   60
-color_trace_04_src_hue_max   180
-color_trace_04_src_sat_min   20
-color_trace_04_src_sat_max   100
-color_trace_04_src_val_min   50
-color_trace_04_src_val_max   100
-color_trace_04_tgt_rgb       0 255 0
-color_trace_04_tgt_color     "not black"
-color_trace_05_chk           OFF
-color_trace_05_src_hue_min   240
-color_trace_05_src_hue_max   360
-color_trace_05_src_sat_min   20
-color_trace_05_src_sat_max   100
-color_trace_05_src_val_min   50
-color_trace_05_src_val_max   100
-color_trace_05_tgt_rgb       255 0 255
-color_trace_05_tgt_color     "not black"
-color_trace_06_chk           OFF
-color_trace_06_src_hue_min   120
-color_trace_06_src_hue_max   240
-color_trace_06_src_sat_min   20
-color_trace_06_src_sat_max   100
-color_trace_06_src_val_min   50
-color_trace_06_src_val_max   100
-color_trace_06_tgt_rgb       0 255 255
-color_trace_06_tgt_color     "not black"
+# Trace Params
+trace_display_main_sw            OFF
+trace_params 0 enable_sw         ON
+trace_params 0 target_rgb        255 0 0
+trace_params 0 thickness         70
+trace_params 0 hue_min           300
+trace_params 0 hue_max           60
+trace_params 0 slope_deg         45
+trace_params 0 intercept         100
+trace_params 0 display_sw        OFF
+trace_params 1 enable_sw         ON
+trace_params 1 target_rgb        0 0 0
+trace_params 1 thickness         70
+trace_params 1 hue_min           -1
+trace_params 1 hue_max           -1
+trace_params 1 slope_deg         45
+trace_params 1 intercept         100
+trace_params 1 display_sw        OFF
+trace_params 2 enable_sw         ON
+trace_params 2 target_rgb        0 0 255
+trace_params 2 thickness         70
+trace_params 2 hue_min           180
+trace_params 2 hue_max           300
+trace_params 2 slope_deg         45
+trace_params 2 intercept         100
+trace_params 2 display_sw        OFF
+trace_params 3 enable_sw         OFF
+trace_params 3 target_rgb        0 255 0
+trace_params 3 thickness         70
+trace_params 3 hue_min           60
+trace_params 3 hue_max           180
+trace_params 3 slope_deg         45
+trace_params 3 intercept         100
+trace_params 3 display_sw        OFF
+trace_params 4 enable_sw         OFF
+trace_params 4 target_rgb        255 0 255
+trace_params 4 thickness         70
+trace_params 4 hue_min           180
+trace_params 4 hue_max           180
+trace_params 4 slope_deg         45
+trace_params 4 intercept         100
+trace_params 4 display_sw        OFF
+trace_params 5 enable_sw         OFF
+trace_params 5 target_rgb        0 255 255
+trace_params 5 thickness         70
+trace_params 5 hue_min           300
+trace_params 5 hue_max           300
+trace_params 5 slope_deg         45
+trace_params 5 intercept         100
+trace_params 5 display_sw        OFF
 
 # Trace Batch
 trace_batch_dir              "C:\"

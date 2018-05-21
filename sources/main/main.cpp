@@ -5,7 +5,6 @@
 
 #include <string.h>	/* strcmp() */
 #include <stdlib.h>	/* exit() */
-#include "ptbl_funct.h"
 #include "pri.h"
 #include "gts_master.h"
 #include "gts_gui.h"
@@ -76,7 +75,7 @@ static int argument_analyzer( int argc, char *argv[], char *cp_comm, gts_master 
 #ifdef PACKAGE_NAME
 gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
 # else
-gts_master cl_gts_master( "gts" ,"2.4.0" ,"2017-07-04" );
+gts_master cl_gts_master( "gts" ,"2.5.0" ,"2018-05-21" );
 # endif
 
 int main( int argc, char **argv )

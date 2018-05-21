@@ -1,14 +1,14 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
 NAME = libcpp55iip_scan
-OPTS = /W4 /MD /EHa /O2 /wd4996 /wd4819
+OPTS = /W4 /MD /EHa /O2 /wd4996 /source-charset:utf-8
 # /wd4996 : Stop warning message by MS-C old function
-# /wd4819 : Stop warning message about Language Code
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I.\
 /I..\libcpp51iip_canvas\
 /I..\libc12pri\
-/I..\libc11portable\
 /I$(DPATH_TWAIN)
 SRCS =\
 tw_win_l1_dsm_entry.cpp\
@@ -58,7 +58,7 @@ TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
 DPATH_TWAIN = $(DPATH_3RD_PARTY)\twain\twain-2.3
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

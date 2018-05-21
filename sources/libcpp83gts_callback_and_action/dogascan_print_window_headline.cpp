@@ -16,9 +16,9 @@ int gts_master::print_window_headline( void )
 	const long l_zoom = this->cl_ogl_view.get_l_zoom();
 
 	/* Main Window Barに表示
-	Exsample1 "gts-2.3.0  Config A"
-	Exsample2 "gts-2.3.0  Config A  Zoom x1"
-	Exsample3 "gts-2.3.0  Config A  Zoom x1/16"
+	Exsample1 "gts-x.x.x  Config A"
+	Exsample2 "gts-x.x.x  Config A  Zoom x1"
+	Exsample3 "gts-x.x.x  Config A  Zoom x1/16"
 	*/
 	std::ostringstream ost;
 	ost	<< cl_gts_master.cp_release_name()

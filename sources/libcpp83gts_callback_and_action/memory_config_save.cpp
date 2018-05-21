@@ -6,7 +6,11 @@
 #include <sstream>
 #include <FL/Fl.H>
 #include <FL/fl_ask.H> // fl_alert()
-#include "ptbl_funct.h" // ptbl_get_cp_username
+#ifdef _WIN32
+#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+#endif
+#include "osapi_getusername.h"
+#include "osapi_gethostname.h"
 #include "memory_config.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -17,14 +21,14 @@ void save_stri_(
 	const std::string& key ,const std::string& val ,std::ofstream& ofs
 )
 {
-	ofs << std::setw(28) << std::left  << key
+	ofs << std::setw(32) << std::left  << key
 	    << ' ' << '\"'  << std::right << val << '\"' << '\n';
 }
 void save_fl64_(
 	const std::string& key ,const double val ,std::ofstream& ofs
 )
 {
-	ofs << std::setw(28) << std::left << key
+	ofs << std::setw(32) << std::left << key
 	    << ' ' << std::right << std::setprecision(16) << val<< '\n';
 	/*	double(=倍精度浮動小数点数)の精度は
 		53bit約16桁(=53log10(2)=15.954589...) */
@@ -34,15 +38,15 @@ void save_3int_(
 	,std::ofstream& ofs
 )
 {
-	ofs << std::setw(28) << std::left << key
+	ofs << std::setw(32) << std::left << key
 	    << ' ' << rr << ' ' << gg << ' ' << bb << '\n';
 }
 
 } // namespace
 
-void memory_config::save_bool_( const std::string& key ,const char sw ,std::ofstream& ofs )
+void memory_config::save_bool_( const std::string& key ,const int sw ,std::ofstream& ofs )
 {
-	ofs	<< std::setw(28) << std::left << key
+	ofs	<< std::setw(32) << std::left << key
 		<< ' ' << std::right
 		<< (sw==1 ?this->str_on_:this->str_off_) << '\n';
 }
@@ -60,13 +64,17 @@ void memory_config::save_head_( std::ofstream& ofs )
 	asctime()が返す文字列はstatic領域なのでfree()してはいけません
 	*/
 
-	const char* un = ptbl_get_cp_username();
-	if (un == nullptr) { un = "unknown"; }
-	ofs << "# username  : " << un << "\n";
-
-	const char* hn = ptbl_get_cp_hostname();
-	if (hn == nullptr) { hn = "unknown"; }
-	ofs << "# hostname  : " << hn << "\n";
+#ifdef UNICODE
+	std::string usern( osapi::mbs_from_wcs( osapi::getusername() ) );
+	std::string hostn( osapi::mbs_from_wcs( osapi::gethostname() ) );
+#else
+	std::string usern( osapi::getusername() );
+	std::string hostn( osapi::gethostname() );
+#endif
+	if (usern.empty()) { usern = "unknown"; }
+	ofs << "# username  : " << usern << "\n";
+	if (hostn.empty()) { hostn = "unknown"; }
+	ofs << "# hostname  : " << hostn << "\n";
 }
 void memory_config::save_config_( std::ofstream& ofs )
 {
@@ -140,7 +148,7 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 	  , cl_gts_gui.chkbtn_trace_filter_trace_sw->value() ,ofs );
 */
 	this->save_bool_( this->str_trace_filter_erase_dot_noise_sw_
-		, cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
+	  , cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value(),ofs);
 
 	save_stri_( this->str_trace_save_dir_path_
 	   ,cl_gts_gui.filinp_trace_save_dir_path->value() ,ofs );
@@ -154,14 +162,10 @@ void memory_config::save_trace_files_( std::ofstream& ofs )
 void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_area_and_rot90->label() << "\n";
-//	save_stri_( this->str_area_select_
-//	   ,cl_gts_gui.choice_area_selecter->text() ,ofs );
 	save_fl64_( this->str_area_offset_cm_x_
 	   ,cl_gts_gui.valinp_area_offset_cm_x->value() ,ofs );
 	save_fl64_( this->str_area_offset_cm_y_
 	   ,cl_gts_gui.valinp_area_offset_cm_y->value() ,ofs );
-//	save_stri_( this->str_area_aspect_ratio_select_
-//	   ,cl_gts_gui.choice_area_aspect_ratio_selecter->text() ,ofs);
 	save_fl64_( this->str_area_size_cm_w_
 	   ,cl_gts_gui.valinp_area_size_cm_w->value() ,ofs );
 	save_fl64_( this->str_area_size_cm_h_
@@ -210,162 +214,82 @@ void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 	save_fl64_( this->str_rgb_gamma_
 	   ,cl_gts_gui.valinp_rgb_gamma->value() ,ofs );
 }
-void memory_config::save_trace_parameters_( std::ofstream& ofs )
+void memory_config::save_trace_params_( std::ofstream& ofs )
 {
-	unsigned char uchar_red, uchar_gre, uchar_blu;
+	ofs << "\n# " <<  cl_gts_gui.window_trace_params->label() << "\n";
 
-	ofs << "\n# " <<  cl_gts_gui.window_trace_parameters->label() << "\n";
+	this->save_bool_( this->str_trace_display_target_sw_
+		, cl_gts_gui.chebut_trace_display_target_sw->value(),ofs);
+	this->save_bool_( this->str_trace_display_main_sw_
+		, cl_gts_gui.chebut_trace_display_main_sw->value(),ofs);
 
-	/* 01 ------------------------------------------------ */
-	this->save_bool_( this->str_color_trace_01_chk_
-		, cl_gts_gui.chkbtn_color_trace_01_chk->value() ,ofs );
-	save_fl64_( this->str_color_trace_01_src_hh_min_
-	  , cl_gts_gui.valinp_color_trace_01_src_hh_min->value(),ofs);
-	save_fl64_( this->str_color_trace_01_src_hh_max_
-	  , cl_gts_gui.valinp_color_trace_01_src_hh_max->value(),ofs);
-	save_fl64_( this->str_color_trace_01_src_aa_min_
-	  , cl_gts_gui.valinp_color_trace_01_src_aa_min->value(),ofs);
-	save_fl64_( this->str_color_trace_01_src_aa_max_
-	  , cl_gts_gui.valinp_color_trace_01_src_aa_max->value(),ofs);
-	save_fl64_( this->str_color_trace_01_src_bb_min_
-	  , cl_gts_gui.valinp_color_trace_01_src_bb_min->value(),ofs);
-	save_fl64_( this->str_color_trace_01_src_bb_max_
-	  , cl_gts_gui.valinp_color_trace_01_src_bb_max->value(),ofs);
-
-	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_01 , &uchar_red, &uchar_gre, &uchar_blu );
-	save_3int_( this->str_color_trace_01_tgt_rgb_
-		, uchar_red, uchar_gre, uchar_blu ,ofs );
-	save_stri_( this->str_color_trace_01_tgt_color_
-		, cl_gts_gui.roubut_thickness_01_tgt_is_bl->value() == 1
-		  ? this->str_color_black_ : this->str_color_not_black_
-		, ofs
+	std::vector<cb_trace_params::widget_set>& wset(
+		cl_gts_master.cl_trace_params.widget_sets
 	);
-	/* 02 ------------------------------------------------*/
-	this->save_bool_( this->str_color_trace_02_chk_
-		, cl_gts_gui.chkbtn_color_trace_02_chk->value() ,ofs );
-	save_fl64_( this->str_color_trace_02_src_hh_min_
-	  , cl_gts_gui.valinp_color_trace_02_src_hh_min->value(),ofs);
-	save_fl64_( this->str_color_trace_02_src_hh_max_
-	  , cl_gts_gui.valinp_color_trace_02_src_hh_max->value(),ofs);
-	save_fl64_( this->str_color_trace_02_src_aa_min_
-	  , cl_gts_gui.valinp_color_trace_02_src_aa_min->value(),ofs);
-	save_fl64_( this->str_color_trace_02_src_aa_max_
-	  , cl_gts_gui.valinp_color_trace_02_src_aa_max->value(),ofs);
-	save_fl64_( this->str_color_trace_02_src_bb_min_
-	  , cl_gts_gui.valinp_color_trace_02_src_bb_min->value(),ofs);
-	save_fl64_( this->str_color_trace_02_src_bb_max_
-	  , cl_gts_gui.valinp_color_trace_02_src_bb_max->value(),ofs);
+	for (unsigned ii=0 ; ii < wset.size() ; ++ii) {
+		auto& trace_set = wset.at(ii);
+		std::string ti( this->str_trace_params_title_ );
+		ti += " ";
+		ti += std::to_string(ii);
+		ti += " ";
 
-	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_02 , &uchar_red, &uchar_gre, &uchar_blu );
-	save_3int_( this->str_color_trace_02_tgt_rgb_
-		, uchar_red, uchar_gre, uchar_blu ,ofs );
-	save_stri_( this->str_color_trace_02_tgt_color_
-		, cl_gts_gui.roubut_thickness_02_tgt_is_bl->value() == 1
-		  ? this->str_color_black_ : this->str_color_not_black_
-		, ofs
-	);
-	/* 03 ------------------------------------------------*/
-	this->save_bool_( this->str_color_trace_03_chk_
-		, cl_gts_gui.chkbtn_color_trace_03_chk->value() ,ofs );
-	save_fl64_( this->str_color_trace_03_src_hh_min_
-	  , cl_gts_gui.valinp_color_trace_03_src_hh_min->value(),ofs);
-	save_fl64_( this->str_color_trace_03_src_hh_max_
-	  , cl_gts_gui.valinp_color_trace_03_src_hh_max->value(),ofs);
-	save_fl64_( this->str_color_trace_03_src_aa_min_
-	  , cl_gts_gui.valinp_color_trace_03_src_aa_min->value(),ofs);
-	save_fl64_( this->str_color_trace_03_src_aa_max_
-	  , cl_gts_gui.valinp_color_trace_03_src_aa_max->value(),ofs);
-	save_fl64_( this->str_color_trace_03_src_bb_min_
-	  , cl_gts_gui.valinp_color_trace_03_src_bb_min->value(),ofs);
-	save_fl64_( this->str_color_trace_03_src_bb_max_
-	  , cl_gts_gui.valinp_color_trace_03_src_bb_max->value(),ofs);
+		this->save_bool_(
+			ti+this->str_trace_enable_sw_
+			,trace_set.chebut_enable_sw->value()
+			,ofs
+		);
 
-	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_03 , &uchar_red, &uchar_gre, &uchar_blu );
-	save_3int_( this->str_color_trace_03_tgt_rgb_
-		, uchar_red, uchar_gre, uchar_blu ,ofs );
-	save_stri_( this->str_color_trace_03_tgt_color_
-		, cl_gts_gui.roubut_thickness_03_tgt_is_bl->value() == 1
-		  ? this->str_color_black_ : this->str_color_not_black_
-		, ofs
-	);
-	/* 04 ------------------------------------------------*/
-	this->save_bool_( this->str_color_trace_04_chk_
-		, cl_gts_gui.chkbtn_color_trace_04_chk->value() ,ofs );
-	save_fl64_( this->str_color_trace_04_src_hh_min_
-	  , cl_gts_gui.valinp_color_trace_04_src_hh_min->value(),ofs);
-	save_fl64_( this->str_color_trace_04_src_hh_max_
-	  , cl_gts_gui.valinp_color_trace_04_src_hh_max->value(),ofs);
-	save_fl64_( this->str_color_trace_04_src_aa_min_
-	  , cl_gts_gui.valinp_color_trace_04_src_aa_min->value(),ofs);
-	save_fl64_( this->str_color_trace_04_src_aa_max_
-	  , cl_gts_gui.valinp_color_trace_04_src_aa_max->value(),ofs);
-	save_fl64_( this->str_color_trace_04_src_bb_min_
-	  , cl_gts_gui.valinp_color_trace_04_src_bb_min->value(),ofs);
-	save_fl64_( this->str_color_trace_04_src_bb_max_
-	  , cl_gts_gui.valinp_color_trace_04_src_bb_max->value(),ofs);
+		unsigned char r=0, g=0, b=0;
+		cl_gts_master.cl_trace_params.get_target_rgb( ii ,r ,g ,b );
+		save_3int_(
+			ti+this->str_trace_target_rgb_
+			,static_cast<int>(r)
+			,static_cast<int>(g)
+			,static_cast<int>(b)
+			,ofs
+		);
 
-	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_04 , &uchar_red, &uchar_gre, &uchar_blu );
-	save_3int_( this->str_color_trace_04_tgt_rgb_
-		, uchar_red, uchar_gre, uchar_blu ,ofs );
-	save_stri_( this->str_color_trace_04_tgt_color_
-		, cl_gts_gui.roubut_thickness_04_tgt_is_bl->value() == 1
-		  ? this->str_color_black_ : this->str_color_not_black_
-		, ofs
-	);
-	/* 05 ------------------------------------------------*/
-	this->save_bool_( this->str_color_trace_05_chk_
-		, cl_gts_gui.chkbtn_color_trace_05_chk->value() ,ofs );
-	save_fl64_( this->str_color_trace_05_src_hh_min_
-	  , cl_gts_gui.valinp_color_trace_05_src_hh_min->value(),ofs);
-	save_fl64_( this->str_color_trace_05_src_hh_max_
-	  , cl_gts_gui.valinp_color_trace_05_src_hh_max->value(),ofs);
-	save_fl64_( this->str_color_trace_05_src_aa_min_
-	  , cl_gts_gui.valinp_color_trace_05_src_aa_min->value(),ofs);
-	save_fl64_( this->str_color_trace_05_src_aa_max_
-	  , cl_gts_gui.valinp_color_trace_05_src_aa_max->value(),ofs);
-	save_fl64_( this->str_color_trace_05_src_bb_min_
-	  , cl_gts_gui.valinp_color_trace_05_src_bb_min->value(),ofs);
-	save_fl64_( this->str_color_trace_05_src_bb_max_
-	  , cl_gts_gui.valinp_color_trace_05_src_bb_max->value(),ofs);
+		save_fl64_(
+			ti+this->str_trace_thickness_
+			,trace_set.valinp_thickness->value()
+			,ofs
+		);
 
-	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_05 , &uchar_red, &uchar_gre, &uchar_blu );
-	save_3int_( this->str_color_trace_05_tgt_rgb_
-		, uchar_red, uchar_gre, uchar_blu ,ofs );
-	save_stri_( this->str_color_trace_05_tgt_color_
-		, cl_gts_gui.roubut_thickness_05_tgt_is_bl->value() == 1
-		  ? this->str_color_black_ : this->str_color_not_black_
-		, ofs
-	);
-	/* 06 ------------------------------------------------*/
-	this->save_bool_( this->str_color_trace_06_chk_
-		, cl_gts_gui.chkbtn_color_trace_06_chk->value() ,ofs );
-	save_fl64_( this->str_color_trace_06_src_hh_min_
-	  , cl_gts_gui.valinp_color_trace_06_src_hh_min->value(),ofs);
-	save_fl64_( this->str_color_trace_06_src_hh_max_
-	  , cl_gts_gui.valinp_color_trace_06_src_hh_max->value(),ofs);
-	save_fl64_( this->str_color_trace_06_src_aa_min_
-	  , cl_gts_gui.valinp_color_trace_06_src_aa_min->value(),ofs);
-	save_fl64_( this->str_color_trace_06_src_aa_max_
-	  , cl_gts_gui.valinp_color_trace_06_src_aa_max->value(),ofs);
-	save_fl64_( this->str_color_trace_06_src_bb_min_
-	  , cl_gts_gui.valinp_color_trace_06_src_bb_min->value(),ofs);
-	save_fl64_( this->str_color_trace_06_src_bb_max_
-	  , cl_gts_gui.valinp_color_trace_06_src_bb_max->value(),ofs);
+		save_fl64_(
+			ti+this->str_trace_hue_min_
+			,trace_set.valinp_hue_min->value()
+			,ofs
+		);
 
-	cl_gts_master.cl_color_trace_enhancement.tgt_get_uchar_rgb_color(
-		E_COLOR_TRACE_HAB_06 , &uchar_red, &uchar_gre, &uchar_blu );
-	save_3int_( this->str_color_trace_06_tgt_rgb_
-		, uchar_red, uchar_gre, uchar_blu ,ofs );
-	save_stri_( this->str_color_trace_06_tgt_color_
-		,  cl_gts_gui.roubut_thickness_06_tgt_is_bl->value() == 1
-		  ? this->str_color_black_ : this->str_color_not_black_
-		, ofs
-	);
+		save_fl64_(
+			ti+this->str_trace_hue_max_
+			,trace_set.valinp_hue_max->value()
+			,ofs
+		);
+		this->save_bool_(
+			ti+this->str_trace_rotate360_sw_
+			,trace_set.chebut_rotate360_sw->value()
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_slope_deg_
+			,trace_set.valinp_slope_deg->value()
+			,ofs
+		);
+
+		save_fl64_(
+			ti+this->str_trace_intercept_
+			,trace_set.valinp_intercept->value()
+			,ofs
+		);
+
+		this->save_bool_(
+			ti+this->str_trace_display_sw_
+			,trace_set.chebut_display_sw->value()
+			,ofs
+		);
+	}
 }
 void memory_config::save_trace_batch_( std::ofstream& ofs )
 {
@@ -400,12 +324,11 @@ void memory_config::save_number_( std::ofstream& ofs )
 int memory_config::save( const std::string& file_path )
 {
  try {
-#if defined _WIN32
-	std::ofstream ofs( ptbl_charcode_cp932_from_utf8(
-			  file_path.c_str()
-	)); /* ファイル開く */
+	/* ファイル開く */
+#ifdef _WIN32
+	std::ofstream ofs( osapi::cp932_from_utf8( file_path ) );
 #else
-	std::ofstream ofs(file_path); /* ファイル開く */
+	std::ofstream ofs(file_path);
 #endif
 	ofs.exceptions(std::ios_base::failbit);/* エラー時例外送出設定 */
 	this->save_head_(ofs);
@@ -415,7 +338,8 @@ int memory_config::save( const std::string& file_path )
 	this->save_trace_files_(ofs);
 	this->save_crop_area_and_rot90_(ofs);
 	this->save_pixel_type_and_bright_(ofs);
-	this->save_trace_parameters_(ofs);
+	//this->save_trace_parameters_(ofs);
+	this->save_trace_params_(ofs);
 	this->save_trace_batch_(ofs);
 	this->save_number_(ofs);
 	ofs.close(); /* ファイル閉じる */

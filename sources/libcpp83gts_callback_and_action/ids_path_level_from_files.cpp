@@ -334,7 +334,7 @@ std::cout << "--------------------------------------------------\n";
 /*
 :321,323 w! make.bat
 rem windows make
-cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_IDS_PATH_STR_FROM_NUMBER /I..\..\thirdparty\fltk\fltk-1.3.4-1 ..\..\thirdparty\fltk\fltk-1.3.4-1\lib\fltk-1.3.4-1-vc2013-32.lib ids_path_level_from_files.cpp /Fet
+cl /W3 /MD /EHa /O2 /wd4819 /DWIN32 /DDEBUG_IDS_PATH_STR_FROM_NUMBER /I..\..\thirdparty\fltk\fltk-1.3.4-2 ..\..\thirdparty\fltk\fltk-1.3.4-2\lib\fltk.lib ids_path_level_from_files.cpp /Fet
 del ids_path_level_from_files.obj
 
 :326,327 w! make.csh

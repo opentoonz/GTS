@@ -1,20 +1,19 @@
 .SUFFIXES: .obj .cpp
 #---define--------------------------------------------------------------
-APPLICATION_NAME = gts
 NAME = libcpp51iip_canvas
-OPTS = /W4 /MD /EHa /O2 /wd4819
-# /wd4819 : Stop warning message about Language Code
+OPTS = /W4 /MD /EHa /O2 /source-charset:utf-8
+# /wd4819 // Stop warning message about Language Code ,Used to use vc2013
+# /source-charset:utf-8 // Use at vc2017
 INCS =\
 /I.\
 /I..\libcpp31calcu_precision\
-/I..\libc12pri\
-/I..\libc11portable
+/I..\libc12pri
 SRCS =\
 iip_canvas.cpp\
 iip_channel_info.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
-DPATH_APPL = ..\build
+DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)

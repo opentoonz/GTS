@@ -20,11 +20,15 @@ void differ_dpi_marking_(const bool sw)
 	Crop
 */
 
+static bool while_scan_sw_=false;
 void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 {
-	/* Presetを解除する */
-	cl_gts_gui.choice_area_selecter->value(0);
-	cl_gts_gui.choice_area_aspect_ratio_selecter->value(0);
+	/* ショートカット動作のとき、連続してキーインしたときの誤動作防止 */
+	/* マルチスレッドに非対応 */
+	if ( while_scan_sw_ == true ) { return; }
+	while_scan_sw_ = true;
+
+	/* GUIをactiveにする */
 	cl_gts_gui.group_area_crop->activate();
 
 	/* フルエリアでスキャンを実行
@@ -37,16 +41,19 @@ void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 	if (return_code == NG) {
 		pri_funct_err_bttvr(
 		      "Error : cl_gts_master.iipg_scan() returns NG" );
+		while_scan_sw_ = false;
 		return;
 	}
 	if (nullptr == clp_scan) {
 		pri_funct_err_bttvr(
 		      "Error : cl_gts_master.iipg_scan() returns nullptr" );
+		while_scan_sw_ = false;
 		return;
 	}
 
 	/* ユーザーからのキャンセルがあった */
 	if (return_code == CANCEL) {
+		while_scan_sw_ = false;
 		return;
 	}
 
@@ -62,80 +69,14 @@ void cb_area_and_rot90::cb_scan_full_area_and_crop( void )
 	);
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
+
+	while_scan_sw_ = false;
 }
 
 /*
 	Preset
 */
-
-void cb_area_and_rot90::cb_area_selecter( void )
-{
-	/* Areaセレクターで先頭のゼロを選択したときは"Custom" */
-	if (0 == cl_gts_gui.choice_area_selecter->value()) {
-		/* 各項目入力できるようにする */
-		cl_gts_gui.group_area_crop->activate();
-	}
-	/* Areaセレクターで2番目以後を選択したとき */
-	else {
-		/* 現在選択位置からArea情報をコピーで得る */
-		preset_axywhr area =
-		cl_gts_master.cl_memo_scan_area.areas.at(
-			cl_gts_gui.choice_area_selecter->value()-1
-		);
-
-		/* Start X Y cm */
-		cl_gts_gui.valinp_area_offset_cm_x->value( area.x );
-		cl_gts_gui.valinp_area_offset_cm_y->value( area.y );
-
-		/* Screen Aspect Ratio選択位置 */
-		cl_gts_gui.choice_area_aspect_ratio_selecter->value(
-		cl_gts_gui.choice_area_aspect_ratio_selecter->find_item(area.r.c_str())
-		);
-
-		/* Size W H cm */
-		cl_gts_gui.valinp_area_size_cm_w->value( area.w );
-		cl_gts_gui.valinp_area_size_cm_h->value( area.h );
-
-		/* Size W H pixel */
-		this->getset_x_pixel_from_x_size();
-		this->getset_y_pixel_from_y_size();
-
-		/* 各項目入力できなくする */
-		cl_gts_gui.group_area_crop->deactivate();
-
-		this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-		cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
-	}
-}
-
-void cb_area_and_rot90::cb_area_aspect_ratio_selecter( void )
-{
-	/* Areaセレクターで先頭のゼロを選択したときは"Custom" */
-	if (0 ==
-	cl_gts_gui.choice_area_aspect_ratio_selecter->value()) {
-		return;
-	}
-	/* Areaセレクターで2番目以後を選択したとき */
-	else {
-		/* 現在選択位置からArea情報をコピーで得る */
-		preset_rwh ratio =
-		cl_gts_master.cl_memo_scan_area.aspect_ratios.at(
-		 cl_gts_gui.choice_area_aspect_ratio_selecter->value()-1
-		);
-
-		/* Size H cm */
-		cl_gts_gui.valinp_area_size_cm_h->value(
-		 cl_gts_gui.valinp_area_size_cm_w->value() * ratio.h / ratio.w
-		);
-
-		/* Size H pixel */
-		this->getset_y_pixel_from_y_size();
-
-		this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-		cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
-	}
-}
 
 void cb_area_and_rot90::cb_area_set_max( void )
 {
@@ -156,7 +97,7 @@ void cb_area_and_rot90::cb_area_set_max( void )
 	this->getset_y_pixel_from_y_size();
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 }
 
 /*
@@ -183,7 +124,7 @@ void cb_area_and_rot90::cb_area_offset_cm_x( void )
 	}
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 }
 void cb_area_and_rot90::cb_area_offset_cm_y( void )
 {
@@ -205,7 +146,7 @@ void cb_area_and_rot90::cb_area_offset_cm_y( void )
 	}
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 }
 
 void cb_area_and_rot90::cb_area_size_cm_w( void )
@@ -227,16 +168,12 @@ void cb_area_and_rot90::cb_area_size_cm_w( void )
 	    fl_alert( "Too Small W!" );
 	}
 
-	/* Screen Aspect Ratioの指定があるときは
-	cm高さ値とpixel高さ値を計算してGUIに表示 */
-	//this->getset_y_size_from_x_size_();
-
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
 	this->getset_x_pixel_from_x_size();
 	this->getset_y_pixel_from_y_size();
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 }
 void cb_area_and_rot90::cb_area_size_cm_h( void )
 {
@@ -258,16 +195,12 @@ void cb_area_and_rot90::cb_area_size_cm_h( void )
 	    fl_alert( "Too Small H!" );
 	}
 
-	/* Screen Aspect Ratioの指定があるときは
-	cm高さ値とpixel高さ値を計算してGUIに表示 */
-	//this->getset_x_size_from_y_size_();
-
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
 	this->getset_x_pixel_from_x_size();
 	this->getset_y_pixel_from_y_size();
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 }
 
 void cb_area_and_rot90::cb_area_size_pixel_w( void )
@@ -320,7 +253,7 @@ void cb_area_and_rot90::cb_area_reso( void )
 	this->dpi_before_change_ = cl_gts_gui.valinp_area_reso->value();
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 
 	/* 既にCropしていて、かつ、その表示画像とDPIが一致しなくなった */
 	if (0.0 < this->dpi_when_cropped_
@@ -457,7 +390,7 @@ void cb_area_and_rot90::cb_rotate_per_90_when_scan( void )
 	);
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
-	cl_gts_gui.opengl_view->redraw(); /* 変更したので、再表示 */
+	cl_gts_gui.image_view->redraw(); /* 変更したので、再表示 */
 }
 
 /*
@@ -502,43 +435,6 @@ void cb_area_and_rot90::getset_y_pixel_from_y_size( void )
 			,cl_gts_gui.valinp_area_reso->value()
 		)
 	);
-}
-
-void cb_area_and_rot90::getset_y_size_from_x_size_( void )
-{
-	if (0 < cl_gts_master.cl_memo_scan_area.aspect_ratios.size()
-	&&  0 < cl_gts_gui.choice_area_aspect_ratio_selecter->value()
-	) {
-		preset_rwh ratio =
-		cl_gts_master.cl_memo_scan_area.aspect_ratios.at(
-		cl_gts_gui.choice_area_aspect_ratio_selecter->value()
-			-1
-		);
-		cl_gts_gui.valinp_area_size_cm_h->value(
-		cl_gts_gui.valinp_area_size_cm_w->value()  * ratio.h / ratio.w
-		);
-		cl_gts_gui.valinp_area_size_pixel_h->value(
-		cl_gts_gui.valinp_area_size_pixel_w->value() * ratio.h / ratio.w
-		);
-	}
- }
-void cb_area_and_rot90::getset_x_size_from_y_size_( void )
-{
-	if (0 < cl_gts_master.cl_memo_scan_area.aspect_ratios.size()
-	&&  0 < cl_gts_gui.choice_area_aspect_ratio_selecter->value()
-	) {
-		preset_rwh ratio =
-		cl_gts_master.cl_memo_scan_area.aspect_ratios.at(
-		cl_gts_gui.choice_area_aspect_ratio_selecter->value()
-			-1
-		);
-		cl_gts_gui.valinp_area_size_cm_w->value(
-		cl_gts_gui.valinp_area_size_cm_h->value()  * ratio.w / ratio.h
-		);
-		cl_gts_gui.valinp_area_size_pixel_w->value(
-		cl_gts_gui.valinp_area_size_pixel_h->value() * ratio.w / ratio.h
-		);
-	}
 }
 
 const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )

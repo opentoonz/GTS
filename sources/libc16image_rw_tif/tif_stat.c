@@ -2,30 +2,29 @@
 
 #include "tiffio.h"
 
-#include "ptbl_funct.h"
 #include "ptbl_returncode.h"
 #include "pri.h"
 
+#include "cpu_byte_order_is_little_endian.h"
 #include "tif.h"
 #include "tif_stat.h"
 
 static void _tif_stat_detail_reading_byte_swap_info( int i_read_is_byte_swap )
 {
-	int	i_cpu_is_little_endian,
-		i_file_is_swapped_order;
+	int	i_file_is_swapped_order;
 
-	i_cpu_is_little_endian = ptbl_cpu_is_little_endian();
+	int is_little_endian = cpu_byte_order_is_little_endian();
 
 	/* ファイルのバイトオーダーは? */
 	i_file_is_swapped_order =
 		/* CPUがbig endianで、swapして読んでる */
-		( !i_cpu_is_little_endian && i_read_is_byte_swap )||
+		( !is_little_endian && i_read_is_byte_swap )||
 		/* CPUがlittle endianで、orderどおり読んでる */
-		( i_cpu_is_little_endian && !i_read_is_byte_swap );
+		( is_little_endian && !i_read_is_byte_swap );
 
 	(void)fprintf(stdout,
-		"          cpu byte order            %d",
-		i_cpu_is_little_endian );
+		"          cpu byte order            %s",
+		is_little_endian ?"little endian" :"big endian" );
 	(void)fprintf(stdout,
 		" 0:big_endian(MIPS),1:little_endian(Intel)\n" );
 
@@ -188,16 +187,14 @@ static void _tif_stat_column_head( void )
 }
 static int _tif_stat_column_body( TIF_IMAGE_RW *tp_read, char *cp_path )
 {
-	char	*cp_file;
 	char	*cp_byte_order,
 		*cp_compre,
 		*cp_orienta,
 		*cp_photom,
 		*cp_planec;
 	int	i_byte_swapped;
-	int	i_cpu_is_little_endian;
 
-	i_cpu_is_little_endian = ptbl_cpu_is_little_endian();
+	int is_little_endian = cpu_byte_order_is_little_endian();
 
 	/* ファイル読み込み時バイトスワップしたか */
 	i_byte_swapped = TIFFIsByteSwapped( tp_read->tp_tiff_head );
@@ -205,10 +202,10 @@ static int _tif_stat_column_body( TIF_IMAGE_RW *tp_read, char *cp_path )
 	/* ファイルのバイトオーダーは？ */
 	if (
 		/* CPUがbigでorderどおり */
-		( !i_cpu_is_little_endian && !i_byte_swapped ) ||
+		( !is_little_endian && !i_byte_swapped ) ||
 
 		/* CPUがlittleでswapした  */
-		( i_cpu_is_little_endian && i_byte_swapped )
+		( is_little_endian && i_byte_swapped )
 	) {
 		cp_byte_order = "big";
 	}
@@ -266,8 +263,6 @@ static int _tif_stat_column_body( TIF_IMAGE_RW *tp_read, char *cp_path )
 		break;
 	}
 
-	cp_file = ptbl_get_cp_filename_from_path( cp_path );
-
 /***(void)fprintf(stdout, "0x%x ", tp_read->tp_tiff_head->tif_header.tiff_magic);***/
 	(void)fprintf(stdout, "%3s ", cp_byte_order );
 	(void)fprintf(stdout, "%5u ", tp_read->ui16_compression ); 
@@ -285,7 +280,7 @@ static int _tif_stat_column_body( TIF_IMAGE_RW *tp_read, char *cp_path )
 	(void)fprintf(stdout, "%3s ", cp_planec );
 	(void)fprintf(stdout, "%g ", tp_read->f_dpi_x );
 	(void)fprintf(stdout, "%g ", tp_read->f_dpi_y );
-	(void)fprintf(stdout, "%s", cp_file );
+	(void)fprintf(stdout, "%s", cp_path );
 
 	if (tp_read->i_tile_sw) {
 	 (void)fprintf(stdout, "(tiled %u %u)", 
@@ -338,19 +333,18 @@ int tif_stat_column( int i_count, char **cpp_name )
 void tif_stat_for_pv( TIF_IMAGE_RW *tp_read )
 {
 	char *cp_endian, *cp_comp;
-	int	i_cpu_is_little_endian,
-		i_read_is_byte_swap,
+	int	i_read_is_byte_swap,
 		i_file_is_swapped_order;
 
-	i_cpu_is_little_endian = ptbl_cpu_is_little_endian();
+	int is_little_endian = cpu_byte_order_is_little_endian();
 	i_read_is_byte_swap = TIFFIsByteSwapped(tp_read->tp_tiff_head);
 
 	/* ファイルのバイトオーダーは? */
 	i_file_is_swapped_order =
 		/* CPUがbig endianで、swapして読んでる */
-		( !i_cpu_is_little_endian && i_read_is_byte_swap )||
+		( !is_little_endian && i_read_is_byte_swap )||
 		/* CPUがlittle endianで、orderどおり読んでる */
-		( i_cpu_is_little_endian && !i_read_is_byte_swap );
+		( is_little_endian && !i_read_is_byte_swap );
 
 	if (i_file_is_swapped_order) {
 		cp_endian = "little-endian";

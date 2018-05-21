@@ -2,7 +2,7 @@
 #define __tif_h__
 
 #include "tiffio.h"
-#include "ptbl_stdint.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
