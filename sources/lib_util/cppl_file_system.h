@@ -1,13 +1,6 @@
 #ifndef cppl_file_system_h
 #define cppl_file_system_h
 
-#if 0
-#ifdef _WIN32
-#include <filesystem>	/* std::tr2::sys */
-#else
-#include <experimental/filesystem> /* std::experimental::filesystem */
-#endif
-#endif
 #include <string>
 #include <vector>
 #include "cppl_file_system_path.h"
@@ -36,6 +29,8 @@ namespace cppl {
 */
 #if defined(_WIN32) && (_MSC_VER < 1910)	/* vc2017より前のMS-C */
 namespace file_system = std::tr2::sys;
+#elif defined(_MACOS)
+namespace file_system = boost::filesystem;
 #else
 namespace file_system = std::experimental::filesystem;
 #endif

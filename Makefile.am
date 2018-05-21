@@ -233,3 +233,9 @@ gts_LDADD = \
 			$(GLEW_LIBS)
 gts_SOURCES = sources/main/main.cpp
 
+if MACOS
+libgts_la_CPPFLAGS += $(BOOST_CPPFLAGS)
+gts_LDFLAGS += $(BOOST_LDFLAGS)
+gts_LDADD += $(BOOST_FILESYSTEM_LIB)
+endif
+

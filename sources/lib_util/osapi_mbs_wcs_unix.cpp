@@ -1,6 +1,7 @@
 #include <iconv.h>	/* iconv_open(-) */
 #include <cstring>	/* memset(-) */
 #include <vector>
+#include <clocale>	/* LC_CTYPE */
 #include "osapi_mbs_wcs_unix.h"
 
 namespace osapi {

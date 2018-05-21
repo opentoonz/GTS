@@ -3,6 +3,8 @@
 
 #ifdef _WIN32
 #include <filesystem>	/* std::tr2::sys::path */
+#elif defined(_MACOS)
+#include <boost/filesystem.hpp>
 #else
 #include <experimental/filesystem> /* std::experimental::filesystem::path */
 #endif
@@ -47,6 +49,8 @@ namespace cppl {
 */
 #if defined(_WIN32) && (_MSC_VER < 1910)	/* vc2017より前のMS-C */
 using file_system_path = std::tr2::sys::path;
+#elif defined(_MACOS)
+using file_system_path = boost::filesystem::path;
 #else
 using file_system_path = std::experimental::filesystem::path;
 #endif

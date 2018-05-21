@@ -132,7 +132,7 @@ It will be loaded automatically the next time you open the program.
 3. Get third party libraries
 
  ```sh
- $ brew install automake autoconf-archive libtool pkgconfig libtiff sane-backends
+ $ brew install automake autoconf autoconf-archive libtool pkgconfig libtiff sane-backends glew boost
  $ sudo port install fltk-devel #not in homebrew
  ```
 
@@ -142,7 +142,7 @@ It will be loaded automatically the next time you open the program.
  $ ./autogen.sh && ./configure && make
  ```
 
-5. Preparation for Execute
+5. Configuration file
 
  Same as Linux.
 
