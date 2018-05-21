@@ -10,7 +10,7 @@
 
 ## 仕様
 
-TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセス。
+TWAIN規格(Windows)/SANE規格(Linux,macOS)によるスキャナーアクセス。
 
 メニュー表記は英語のみ。
 
@@ -101,27 +101,19 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 3. 外部ライブラリを準備
 
  ```sh
- $ sudo apt install autoconf
- $ sudo apt install libtool
- $ sudo apt install autoconf-archive
- $ sudo apt install libtiff5-dev
- $ sudo apt install libfltk1.3-dev
- $ sudo apt install libglew-dev
- $ sudo apt install libsane-dev
+ $ sudo apt install autoconf libtool autoconf-archive libtiff5-dev libfltk1.3-dev libglew-dev libsane-dev libglu1-mesa-dev
  ```
 
 4. ビルドする
 
  ```sh
- $ rm m4/ax_check_glu.m4
- $ sh ./autogen.sh && ./configure && make
+ $ ./autogen.sh && ./configure && make
  ```
- makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lpthread -lstdc++fs -lGLEW -lGLU -lGL`を付加して再実行します。
+ makeの最後のlinkがエラーとなるので、その実行コマンドラインに`-lpthread -lGLEW`を付加して再実行します。
 
  デバッグビルドをしたいときは以下のようにします。
  ```sh
- $ rm m4/ax_check_glu.m4
- $ sh ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
  ```
 
 5. 動作準備
@@ -142,7 +134,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
  gdb --args ./gts -bv
  ```
 
-## ビルド方法(Max OS X)
+## ビルド方法(maxOS)
 
 1. 環境を準備
 
@@ -163,8 +155,7 @@ TWAIN規格(Windows)/SANE規格(Linux,Mac OS X)によるスキャナーアクセ
 4. ビルドする
 
  ```sh
- $ rm m4/ax_check_glu.m4 #it seems broken?
- $ sh ./autogen.sh && ./configure && make
+ $ ./autogen.sh && ./configure && make
  ```
 
 5. 動作準備
