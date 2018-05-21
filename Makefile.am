@@ -1,9 +1,9 @@
 ACLOCAL_AMFLAGS = -I m4
 CPPFLAGS += -DPKGDATADIR='"$(pkgdatadir)"'
+CXXFLAGS += -std=c++11
 
 pkgdata_DATA = \
-			   sources/main/_gts-scan_area.txt \
-			   sources/main/gts_install_setup.txt
+			   sources/main/gts_initial_configuration.txt
 
 noinst_LTLIBRARIES = libgts.la
 
@@ -27,8 +27,7 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libcpp82gts_hsv_histogram \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
-				   $(FLTK_CPPFLAGS) \
-				   -std=c++11
+				   $(FLTK_CPPFLAGS)
 
 libgts_la_SOURCES = \
 					sources/libc11portable/ptbl_charcode.c \
