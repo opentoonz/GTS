@@ -10,6 +10,8 @@ LT_INIT
 
 PKG_CHECK_MODULES([TIFF], [libtiff-4])
 AX_CHECK_GLU
+PKG_CHECK_MODULES(GLEW, [glew])
+AC_CHECK_LIB(pthread, pthread_create, [LIBS="$LIBS -pthread"])
 
 AC_PATH_TOOL(FLTK_CONFIG, fltk-config, no)
 if test "$FLTK_CONFIG" = "no"; then

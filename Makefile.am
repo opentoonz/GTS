@@ -25,7 +25,8 @@ libgts_la_CPPFLAGS = \
 				   -Isources/libcpp72iip_erase_dot_noise \
 				   -Isources/libcpp83gts_callback_and_action \
 				   $(TIFF_CFLAGS) \
-				   $(FLTK_CPPFLAGS)
+				   $(FLTK_CPPFLAGS) \
+				   $(GLEW_CFLAGS)
 
 libgts_la_SOURCES = \
 					sources/lib_util/calc_hsv_rgb.cpp \
@@ -228,6 +229,7 @@ gts_LDADD = \
 			libgts.la \
 			$(TIFF_LIBS) \
 			$(FLTK_LIBS) \
-			$(SANE_LIBS)
+			$(SANE_LIBS) \
+			$(GLEW_LIBS)
 gts_SOURCES = sources/main/main.cpp
 

@@ -97,11 +97,12 @@ Execute "./gts" in the unzipped folder.
  ```sh
  $ ./autogen.sh && ./configure && make
  ```
- The last(link) of make is an error, and then re-run by adding `-lpthread -lGLEW` in the run command line.
 
  If you're a developer and you need a debug build, do it like this:
  ```sh
  $ ./autogen.sh && CFLAGS="-O2 -ggdb -march=native" CXXFLAGS="$CFLAGS" ./configure && make -j8
+ # now you can use gdb:
+ $ gdb --args ./gts -bv
  ```
 
 5. Configuration file
@@ -116,12 +117,6 @@ It will be loaded automatically the next time you open the program.
 
  ```sh
  ./gts
- ```
-
- If you're a developer and you need a debug build, do it like this:
- ```sh
- # now you can use gdb:
- gdb --args ./gts -bv
  ```
 
 ## How to Build Locally (macOS)
@@ -154,7 +149,6 @@ It will be loaded automatically the next time you open the program.
 6. How to Execute
 
  ```sh
- # run it with
  ./gts
  ```
 
