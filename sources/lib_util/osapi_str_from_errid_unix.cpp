@@ -1,29 +1,29 @@
 #include <cstring>	/* strerror(-) , strerror_r(-) */
 #include "osapi_str_from_errid.h"
+#include <cerrno>	/* EINVAL */
+#if defined(HAVE_CONFIG_H)
+#  include <config.h>
+#endif
 
 /* 引数がSccessの時(erno == 0)も対応する言葉を返す */
 std::string osapi::str_from_errid( const int erno )
 {
-#ifdef __HP_aCC
-	/* 
-	HP-UX(v11.23)では、strerror_r()をサポートしない。
-	注意::strerror()はThread SafeではなくMulti Threadでは正常動作しない
-	エラー番号が不明な場合は「Unknown error nnn」というメッセージが返る
-	*/
-	char* ptr = ::strerror(erno);
-	return ptr == nullptr? std::string(): std::string(ptr);
-
-#elif (_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600) && !_GNU_SOURCE
-
-	/*
-	POSIX.1-2001 で規定された XSI 準拠(XSI-compliant)のバージョン
-	(glibc 2.3.4 以降で利用可能)
-	*/
+#ifdef HAVE_STRERROR_R
 	char buff[4096]; buff[0] = '\0';
-	const int ret = ::strerror_r(erno,buff,sizeof(buff));
+#  ifdef STRERROR_R_CHAR_P
+	/*
+	 * strerror_r() returns a char*
+	*/
+	char* ptr = ::strerror_r(erno, buff, sizeof(buff));
+	return ptr == nullptr? std::string(): std::string(ptr);
+#  else
+	/*
+	 * strerror_r() returns an int
+	*/
+	const int ret = ::strerror_r(erno, buff, sizeof(buff));
 
 	if (-1 == ret) {
-	 swtich (errno) {	/* エラーメッセージをとる時のエラー! */
+	 switch (erno) {	/* エラーメッセージをとる時のエラー! */
 	 case EINVAL:
 		return std::string(
  "Error:strerror_r():The value of errnum is not a valid error number"
@@ -48,15 +48,13 @@ std::string osapi::str_from_errid( const int erno )
 	}
 
 	return std::string( buff );
+#  endif
 #else
 	/*
-	rhel4はここに来る、、、
-	GNU 仕様(GNU-specific)のバージョン
-	(glibc 2.0 以降で利用可能)
-	エラー番号が不明な場合は「Unknown error nnn」というメッセージが返る
+	 * strerror_r() not defined
 	*/
-	char buff[4096]; buff[0] = '\0';
-	char* ptr = ::strerror_r( erno ,buff ,sizeof(buff) );
+	char* ptr = ::strerror(erno);
 	return ptr == nullptr? std::string(): std::string(ptr);
 #endif
 }
+

@@ -38,6 +38,18 @@ std::TSTRING getenv(const std::TSTRING& name)
 #include <string>
 #include <cstdlib>	/* secure_getenv(-) */
 #include "osapi_getenv.h"
+
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#  ifndef HAVE_SECURE_GETENV
+#    ifdef HAVE___SECURE_GETENV
+#      define secure_getenv __secure_getenv
+#    else
+#      define secure_getenv getenv
+#    endif
+#  endif
+#endif
+
 namespace osapi {
 std::string getenv(const std::string& name)
 {
