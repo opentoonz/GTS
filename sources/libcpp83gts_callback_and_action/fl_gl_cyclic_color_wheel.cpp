@@ -215,10 +215,14 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 	/* display each hue range */
 	auto he = 1./(sz+1.);
 	GLfloat width = this->h() / 15.f;
-	int ii=0;
+	int ii=0 ,jj=0;
 	for (auto& aa : this->guide_widget_sets_) {
-		/* 各パラメータ */
+
+		/* 無効も含めたカウンター */
 		auto i2 = ii++; /* continueを避けてiiをカウントアップする */
+
+		/* 無効は無視して次へ */
+		if (aa.chebut_enable_sw->value() == 0) { continue; }
 
 		/* 色 */
 		if (i2 == this->hue_range_number_) {
@@ -228,7 +232,7 @@ void fl_gl_cyclic_color_wheel::draw_object_()
 		} else {continue;}
 
 		/* 上下位置 */
-		double yy = (sz-i2) / (sz+1.);
+		double yy = (sz - (jj++)) / (sz + 1.);
 		double y1 = yy - he/2.;
 		double y2 = yy + he/2.;
 
