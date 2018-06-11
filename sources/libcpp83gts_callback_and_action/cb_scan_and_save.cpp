@@ -231,7 +231,8 @@ void cb_scan_and_save::cb_start( void )
 	std::string err_msg( this->cb_start_check_() );
 	if ( !err_msg.empty() ) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() ); return;
+		fl_alert( err_msg.c_str() );
+		return;
 	}
 	}
 
@@ -249,7 +250,8 @@ void cb_scan_and_save::cb_start( void )
 	/* NGの時は動作終了する */
 	if (return_code == NG) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() ); return;
+		fl_alert( err_msg.c_str() );
+		return;
 	}
  }
 
@@ -304,7 +306,8 @@ void cb_scan_and_save::cb_next( void )
 	/* NGの時は動作終了する */
 	if (return_code == NG) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() ); return;
+		fl_alert( err_msg.c_str() );
+		return;
 	}
 
 	/* 調整しないで次番号を処理する */
@@ -353,7 +356,8 @@ void cb_scan_and_save::cb_rescan( void )
 	/* NGの時は動作終了する */
 	if (return_code == NG) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() ); return;
+		fl_alert( err_msg.c_str() );
+		return;
 	}
 
 	/* 調整しないで次番号を処理する */
@@ -394,6 +398,7 @@ void cb_scan_and_save::cb_save( const bool change_adjustable_sw )
 		cl_gts_master.cl_iip_scan.get_clp_canvas()
 		,cl_gts_gui.choice_rot90->value()
 	 ) != OK) {
+		this->during_the_scan_is_ = false;
 		fl_alert("Can not Fx");
 		return;
 	 }
@@ -402,7 +407,6 @@ void cb_scan_and_save::cb_save( const bool change_adjustable_sw )
 	/* ファイル保存する */
 	std::string err_msg = this->cb_save_();
 	if ( !err_msg.empty() ) {
-		this->during_the_scan_is_ = false;
 		fl_alert( err_msg.c_str() );
 		/* エラー情報を出して次のフレーム処理に行くことにしとく */
 	}
@@ -419,6 +423,13 @@ void cb_scan_and_save::cb_save( const bool change_adjustable_sw )
 		cl_gts_gui.window_main_view->show();/* Need for Minimize */
 		cl_gts_gui.window_next_scan->show();
 	}
+}
+
+//------------------------------------------------------------
+void cb_scan_and_save::cb_cancel( void )
+{
+	/* ショートカット動作で連続してキーインしたときの誤動作防止 */
+	this->during_the_scan_is_ = false;
 }
 
 //------------------------------------------------------------

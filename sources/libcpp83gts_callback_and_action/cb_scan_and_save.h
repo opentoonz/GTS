@@ -20,6 +20,7 @@ public:
 	void cb_save( const bool change_adjustable_sw=false );
 				/* 各フレーム毎に保存 */
 			/* 各フレーム毎に画像調整したときは引数をtrueに */
+	void cb_cancel( void );
 
 	void cb_browse_save_folder( void );
 	void cb_set_number( void );

@@ -1062,12 +1062,21 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 
 	//---------- after reading ----------
 
-	/* Scan and SaveのEnd/Endless指定がない時はStart...End指定にする */
-	if (!scan_num_continue_type_sw && this->load_scan_and_save_sw_) {
+	/*
+	Scan and SaveのEnd/Endless設定について
+	読込をする設定だけど、
+	実際に読込をしなかった場合、
+	Start...End指定にする */
+	if (
+		this->load_scan_and_save_sw_
+		&&
+		!scan_num_continue_type_sw
+	) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
-	 	"End" );
+	 "End" );
 	}
 
+	/* Config各パラメータとは間接的な表示変更部分 */
 	if (	cl_gts_master.cl_number.is_scan()) {
 		/* Numberウインドウに保存するFileHead名をセット */
 		cl_gts_gui.output_number_file_head_name->value(
@@ -1095,19 +1104,38 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		cl_gts_master.cl_trace_files.check_existing_saved_file();
 	}
 
-	/* 画面は空白表示する指定(データは残っている) */
-	cl_gts_master.cl_ogl_view.no_view_canvas();
+	/* 画像再表示 */
+	if (	cl_gts_master.cl_number.is_scan()) {
+		iip_canvas *parent
+			= cl_gts_master.cl_iip_scan.get_clp_canvas();
+		if (parent == nullptr) {
+			parent = &(cl_gts_master.cl_iip_read);
+		}
+		if (parent!=nullptr && parent->get_vp_canvas()!=nullptr) {
+		/* スキャンした後なら保持している画像を以前のまま再
+			回転、２値化、ドットノイズ消去、表示 */
+		cl_gts_master.rot_and_trace_and_enoise_and_preview(
+			parent ,cl_gts_gui.choice_rot90->value()
+		);
+		}
+	} else
+	if (	cl_gts_master.cl_number.is_trace()) {
+#if 0
+		/* 画面は空白表示する指定(データは残っている) */
+		cl_gts_master.cl_ogl_view.no_view_canvas();
 
-	/* 画面クリア設定 */
-	cl_gts_master.cl_ogl_view.clear_opengl(
-		cl_gts_gui.image_view->w(),
-		cl_gts_gui.image_view->h()
-	);
-	/* 画面クリア */
-	cl_gts_gui.image_view->flush();
+		/* 画面クリア設定 */
+		cl_gts_master.cl_ogl_view.clear_opengl(
+			cl_gts_gui.image_view->w(),
+			cl_gts_gui.image_view->h()
+		);
+		/* 画面クリア */
+		cl_gts_gui.image_view->flush();
+#endif
 
-	/* 画像読込表示 */
-	cl_gts_master.cb_number_read_and_trace_and_preview();
+		/* ファイルから読み直して表示しなおし */
+		cl_gts_master.cb_number_read_and_trace_and_preview();
+	}
  }
  catch (const std::ios_base::failure& e) {
 	std::ostringstream ost;

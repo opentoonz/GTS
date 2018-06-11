@@ -514,10 +514,12 @@ void gts_gui::cb_Stop(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_window_next_scan_non_modal_i(Fl_Double_Window*, void*) {
-  cl_gts_gui.window_next_scan->position(
+  cl_gts_master.cl_scan_and_save.cb_cancel();
+cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
 cl_gts_gui.window_next_scan_non_modal->y()
 );
+cl_gts_gui.window_next_scan_non_modal->hide();
 }
 void gts_gui::cb_window_next_scan_non_modal(Fl_Double_Window* o, void* v) {
   ((gts_gui*)(o->user_data()))->cb_window_next_scan_non_modal_i(o,v);
@@ -531,7 +533,8 @@ void gts_gui::cb_button_next_save_non_modal(Fl_Button* o, void* v) {
 }
 
 void gts_gui::cb_Stop1_i(Fl_Button*, void*) {
-  cl_gts_gui.window_next_scan->position(
+  cl_gts_master.cl_scan_and_save.cb_cancel();
+cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
 cl_gts_gui.window_next_scan_non_modal->y()
 );
@@ -2227,14 +2230,13 @@ Fl_Double_Window* gts_gui::make_window() {
     { norout_next_save_non_modal = new Fl_Output(0, 10, 545, 25);
       norout_next_save_non_modal->box(FL_BORDER_BOX);
     } // Fl_Output* norout_next_save_non_modal
-    { button_next_save_non_modal = new Fl_Button(430, 45, 100, 45, "Save (Enter)");
+    { button_next_save_non_modal = new Fl_Button(325, 45, 110, 45, "Save (Enter)");
       button_next_save_non_modal->shortcut(0xff0d);
       button_next_save_non_modal->callback((Fl_Callback*)cb_button_next_save_non_modal);
     } // Fl_Button* button_next_save_non_modal
-    { Fl_Button* o = new Fl_Button(455, 75, 90, 25, "Stop (Esc)");
+    { Fl_Button* o = new Fl_Button(455, 65, 80, 25, "Stop (Esc)");
       o->shortcut(0xff1b);
       o->callback((Fl_Callback*)cb_Stop1);
-      o->hide();
     } // Fl_Button* o
     window_next_scan_non_modal->set_non_modal();
     window_next_scan_non_modal->end();
