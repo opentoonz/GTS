@@ -10,6 +10,7 @@
 #include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
 #endif
 #include "ids_path_fltk_native_browse.h"
+#include "wincom_native_browse_directory.h"
 #include "ids_path_level_from_files.h"
 #include "cb_trace_files.h"
 #include "gts_gui.h"
@@ -496,10 +497,18 @@ void cb_trace_files::set_gui_for_open(
 void cb_trace_files::cb_browse_save_folder( void )
 {
 	/* Nativeフォルダーブラウザー開く */
+#ifdef _WIN32
+	const std::string filepath =wincom::native_browse_directory_m(
+		"Select Saving Folder for Trace"
+		,cl_gts_gui.filinp_trace_save_dir_path->value()
+		,::fl_xid( cl_gts_gui.window_trace_files )
+	);
+#else
 	const std::string filepath =ids::path::fltk_native_browse_directory(
 		"Set Saving Folder for Trace"
 		,cl_gts_gui.filinp_trace_save_dir_path->value()
 	).at(0);
+#endif
 
 	/* Cancel */
 	if (filepath.empty()) {

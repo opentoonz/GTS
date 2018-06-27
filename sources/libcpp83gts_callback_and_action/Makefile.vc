@@ -60,7 +60,8 @@ iipg_view.cpp\
 memory_config_load.cpp\
 memory_config_save.cpp\
 memory_desktop_load.cpp\
-memory_desktop_save.cpp
+memory_desktop_save.cpp\
+wincom_native_browse_directory.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
