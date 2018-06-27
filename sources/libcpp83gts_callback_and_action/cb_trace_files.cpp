@@ -10,7 +10,9 @@
 #include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
 #endif
 #include "ids_path_fltk_native_browse.h"
+#ifdef _WIN32
 #include "wincom_native_browse_directory.h"
+#endif
 #include "ids_path_level_from_files.h"
 #include "cb_trace_files.h"
 #include "gts_gui.h"

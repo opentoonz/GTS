@@ -168,8 +168,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/memory_config_load.cpp \
 					sources/libcpp83gts_callback_and_action/memory_config_save.cpp \
 					sources/libcpp83gts_callback_and_action/memory_desktop_load.cpp \
-					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp \
-					sources/libcpp83gts_callback_and_action/wincom_native_browse_directory.cpp
+					sources/libcpp83gts_callback_and_action/memory_desktop_save.cpp
 
 if WINDOWS
 libgts_la_CPPFLAGS += -Ithirdparty/twain/twain-2.3

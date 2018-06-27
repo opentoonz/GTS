@@ -7,7 +7,9 @@
 #include "pri.h"
 #include "osapi_exist.h"
 #include "ids_path_fltk_native_browse.h"
-#include "wincom_native_browse_directory.h"
+#ifdef _WIN32
+# include "wincom_native_browse_directory.h"
+#endif
 #include "ids_path_level_from_files.h"
 #include "cb_scan_and_save.h"
 #include "gts_gui.h"
