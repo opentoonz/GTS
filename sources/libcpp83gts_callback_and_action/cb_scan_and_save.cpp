@@ -7,6 +7,9 @@
 #include "pri.h"
 #include "osapi_exist.h"
 #include "ids_path_fltk_native_browse.h"
+#ifdef _WIN32
+# include "wincom_native_browse_directory.h"
+#endif
 #include "ids_path_level_from_files.h"
 #include "cb_scan_and_save.h"
 #include "gts_gui.h"
@@ -437,10 +440,18 @@ void cb_scan_and_save::cb_cancel( void )
 void cb_scan_and_save::cb_browse_save_folder( void )
 {
 	/* Nativeフォルダーブラウザー開く */
+#ifdef _WIN32
+	const std::string filepath =wincom::native_browse_directory_m(
+		"Select Saving Folder for Scan"
+		,cl_gts_gui.filinp_scan_save_dir_path->value()
+		,::fl_xid( cl_gts_gui.window_scan_and_save )
+	);
+#else
 	const std::string filepath =ids::path::fltk_native_browse_directory(
 		"Set Saving Folder for Scan"
 		,cl_gts_gui.filinp_scan_save_dir_path->value()
 	).at(0);
+#endif
 
 	/* Cancel */
 	if (filepath.empty()) {
