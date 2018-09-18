@@ -44,6 +44,8 @@ private:
   static void cb_Save1(Fl_Menu_*, void*);
   inline void cb_Save2_i(Fl_Menu_*, void*);
   static void cb_Save2(Fl_Menu_*, void*);
+  inline void cb_Save3_i(Fl_Menu_*, void*);
+  static void cb_Save3(Fl_Menu_*, void*);
   inline void cb_Quit_i(Fl_Menu_*, void*);
   static void cb_Quit(Fl_Menu_*, void*);
 public:

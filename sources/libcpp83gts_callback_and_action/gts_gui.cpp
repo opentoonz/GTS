@@ -53,6 +53,13 @@ void gts_gui::cb_Save2(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_Save2_i(o,v);
 }
 
+void gts_gui::cb_Save3_i(Fl_Menu_*, void*) {
+  cl_gts_master.cl_config.save_as_save_images_path();
+}
+void gts_gui::cb_Save3(Fl_Menu_* o, void* v) {
+  ((gts_gui*)(o->parent()->user_data()))->cb_Save3_i(o,v);
+}
+
 void gts_gui::cb_Quit_i(Fl_Menu_*, void*) {
   // cl_gts_master.reserve_by_menu(E_ACT_QUIT);
 cl_gts_master.cb_quit();
@@ -396,7 +403,8 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Save Image As...", 0x50073,  (Fl_Callback*)gts_gui::cb_Save, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Open Config...", 0x8006f,  (Fl_Callback*)gts_gui::cb_Open1, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Save Config", 0x80073,  (Fl_Callback*)gts_gui::cb_Save1, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Save Config As...", 0x90073,  (Fl_Callback*)gts_gui::cb_Save2, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Save Config As...", 0x90073,  (Fl_Callback*)gts_gui::cb_Save2, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Save Config As(Save Images Path)...", 0,  (Fl_Callback*)gts_gui::cb_Save3, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Quit", 0x40071,  (Fl_Callback*)gts_gui::cb_Quit, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Action", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
@@ -454,25 +462,25 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
 };
-Fl_Menu_Item* gts_gui::menite_scan_crop = gts_gui::menu_ + 9;
-Fl_Menu_Item* gts_gui::menite_preview_scan = gts_gui::menu_ + 10;
-Fl_Menu_Item* gts_gui::menite_scan_save = gts_gui::menu_ + 11;
-Fl_Menu_Item* gts_gui::menite_area_and_rot90 = gts_gui::menu_ + 17;
-Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 18;
-Fl_Menu_Item* gts_gui::menite_number = gts_gui::menu_ + 19;
-Fl_Menu_Item* gts_gui::menite_scan_and_save = gts_gui::menu_ + 20;
-Fl_Menu_Item* gts_gui::menite_trace_files = gts_gui::menu_ + 21;
-Fl_Menu_Item* gts_gui::menite_trace_params = gts_gui::menu_ + 22;
-Fl_Menu_Item* gts_gui::menite_trace_hsv_view = gts_gui::menu_ + 23;
-Fl_Menu_Item* gts_gui::menite_trace_hue_minmax = gts_gui::menu_ + 24;
-Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 25;
-Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 26;
-Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 38;
-Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 43;
-Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 44;
-Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 45;
-Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 46;
-Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 59;
+Fl_Menu_Item* gts_gui::menite_scan_crop = gts_gui::menu_ + 10;
+Fl_Menu_Item* gts_gui::menite_preview_scan = gts_gui::menu_ + 11;
+Fl_Menu_Item* gts_gui::menite_scan_save = gts_gui::menu_ + 12;
+Fl_Menu_Item* gts_gui::menite_area_and_rot90 = gts_gui::menu_ + 18;
+Fl_Menu_Item* gts_gui::menite_pixel_type_and_bright = gts_gui::menu_ + 19;
+Fl_Menu_Item* gts_gui::menite_number = gts_gui::menu_ + 20;
+Fl_Menu_Item* gts_gui::menite_scan_and_save = gts_gui::menu_ + 21;
+Fl_Menu_Item* gts_gui::menite_trace_files = gts_gui::menu_ + 22;
+Fl_Menu_Item* gts_gui::menite_trace_params = gts_gui::menu_ + 23;
+Fl_Menu_Item* gts_gui::menite_trace_hsv_view = gts_gui::menu_ + 24;
+Fl_Menu_Item* gts_gui::menite_trace_hue_minmax = gts_gui::menu_ + 25;
+Fl_Menu_Item* gts_gui::menite_trace_batch = gts_gui::menu_ + 26;
+Fl_Menu_Item* gts_gui::menite_sane_device = gts_gui::menu_ + 27;
+Fl_Menu_Item* gts_gui::menite_frame_cyclic = gts_gui::menu_ + 39;
+Fl_Menu_Item* gts_gui::menite_wview_main = gts_gui::menu_ + 44;
+Fl_Menu_Item* gts_gui::menite_wview_sub = gts_gui::menu_ + 45;
+Fl_Menu_Item* gts_gui::menite_wview_lr = gts_gui::menu_ + 46;
+Fl_Menu_Item* gts_gui::menite_wview_ud = gts_gui::menu_ + 47;
+Fl_Menu_Item* gts_gui::menite_help_about = gts_gui::menu_ + 60;
 
 void gts_gui::cb_scrbar_view_x_i(Fl_Scrollbar* o, void*) {
   cl_gts_master.reserve_by_scroll_x( o->value() );

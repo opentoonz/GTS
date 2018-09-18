@@ -19,6 +19,7 @@ public:
 	void open_only_pixel_type_and_bright( void );
 	void open_only_trace_params( void );
 	void save_as(void);
+	void save_as_save_images_path( void );
 	void save(void);
 
 	void add_ext_if_not_exist( std::string&fpath );
