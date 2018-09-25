@@ -75,7 +75,7 @@ static int argument_analyzer( int argc, char *argv[], char *cp_comm, gts_master 
 #ifdef PACKAGE_NAME
 gts_master cl_gts_master(PACKAGE_NAME, PACKAGE_VERSION, CONFIGURATION_DATE);
 # else
-gts_master cl_gts_master( "gts" ,"2.5.0.050" ,"2018-09-18" );
+gts_master cl_gts_master( "gts" ,"2.5.0.050" ,"2018-09-25" );
 # endif
 
 int main( int argc, char **argv )
