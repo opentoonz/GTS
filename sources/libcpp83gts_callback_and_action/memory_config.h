@@ -28,6 +28,8 @@ public:
 	    "config_save_file_name")
 		,str_config_save_file_name_legacy2016_(
 		    "config_save_as_file")
+	,str_config_save_as_set_scan_images_path_sw_(
+	    "config_save_as_set_scan_images_path_sw")
 
 	,str_image_dir_path_(
 	    "image_dir_path")
@@ -380,6 +382,7 @@ private:
 	const char* str_config_open_file_name_legacy2016_;
 	const char* str_config_save_file_name_;
 	const char* str_config_save_file_name_legacy2016_;
+	const char* str_config_save_as_set_scan_images_path_sw_;
 
 	const char* str_image_dir_path_;
 	const char* str_image_open_file_name_;

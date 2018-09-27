@@ -7,6 +7,7 @@ class cb_config {
 public:
 	cb_config()
 		:ext_(".txt")
+		,save_as_set_scan_images_path_sw(false)
 	{}
 
 	int loading_and_set_dpath_fname(
@@ -18,8 +19,10 @@ public:
 	void open_only_area_and_rot90( void );
 	void open_only_pixel_type_and_bright( void );
 	void open_only_trace_params( void );
+
 	void save_as(void);
-	void save_as_save_images_path( void );
+	bool save_as_set_scan_images_path_sw;
+
 	void save(void);
 
 	void add_ext_if_not_exist( std::string&fpath );

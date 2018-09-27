@@ -176,51 +176,25 @@ void cb_config::save_as( void )
 {
 	/* NativeブラウザーSaveで開く */
 	int filter_current=0;
-	std::string fpath = ids::path::fltk_native_browse_save(
-		"Save Config As"
-		,this->dir_path_
-		,this->save_file_name_
-		,std::string("Text(Config)\t*")+this->ext_
-		,filter_current
-	).at(0);
-	/* Cancel */
-	if (fpath.empty()) {
-		return;
-	}
-
-	/* 拡張子がなければ追加 */
-	this->add_ext_if_not_exist( fpath );
-
-	/* config情報を保存する */
-	if (OK != cl_gts_master.cl_memo_config.save( fpath )) {
-		pri_funct_err_bttvr(
-	 "Error : cl_gts_master.cl_memo_config.save(%s) returns NG",
-			fpath.c_str() );
-		return;
-	}
-
-	/* 保存名を記憶(開いた名前は変わらない) */
-	ids::path::from_fpath_to_dpath_fname(
-		fpath
-		,this->dir_path_
-		,this->save_file_name_
-	);
-
-	/* 記憶した名前を表示する */
-	cl_gts_master.print_window_headline();
-}
-
-void cb_config::save_as_save_images_path( void )
-{
-	/* NativeブラウザーSaveで開く */
-	int filter_current=0;
-	std::string fpath = ids::path::fltk_native_browse_save(
+	std::string fpath;
+	if (this->save_as_set_scan_images_path_sw) {
+		fpath = ids::path::fltk_native_browse_save(
 		"Save Config As"
 		,cl_gts_gui.filinp_scan_save_dir_path->value()
 		,cl_gts_gui.strinp_scan_save_file_head->value()
 		,std::string("Text(Config)\t*")+this->ext_
 		,filter_current
-	).at(0);
+		).at(0);
+	} else {
+		fpath = ids::path::fltk_native_browse_save(
+		"Save Config As"
+		,this->dir_path_
+		,this->save_file_name_
+		,std::string("Text(Config)\t*")+this->ext_
+		,filter_current
+		).at(0);
+	}
+
 	/* Cancel */
 	if (fpath.empty()) {
 		return;

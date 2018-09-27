@@ -151,6 +151,13 @@ bool memory_config::load_config_( std::vector< std::string >& words )
 	|| (this->str_config_save_file_name_legacy2016_ == words.at(0))) {
  cl_gts_master.cl_config.set_save_file_name( words.at(1) );
 	}
+	else if (
+	this->str_config_save_as_set_scan_images_path_sw_ == words.at(0)
+	) {
+ cl_gts_master.cl_config.save_as_set_scan_images_path_sw =
+ 		(words.at(1) == this->str_on_);
+	}
+
 	else {
 		return false; // not defined
 	}
