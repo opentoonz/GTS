@@ -201,7 +201,23 @@ void cb_config::save_as( void )
 	}
 
 	/* 拡張子がなければ追加 */
-	this->add_ext_if_not_exist( fpath );
+	bool add_ext_sw = this->add_ext_if_not_exist_( fpath );
+
+	/*
+	2018-11-01
+	Windowsのファイル保存ブラウザーは、その中では、
+	上書きになる場合、上書きの確認を聞いてくる
+	しかし、拡張子を書かなくてもいいようにブラウザーの外で
+	拡張子を付けている場合、ブラウザー内で感知できないので、
+	上書き確認は聞いてこない
+	なので
+	拡張子を別途付加してそのファイルが存在するなら上書き確認する
+	*/
+	if ( add_ext_sw && osapi::exist_utf8_mbs(fpath) ) {
+		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )) {
+			return;
+		}
+	}
 
 	/* config情報を保存する */
 	if (OK != cl_gts_master.cl_memo_config.save( fpath )) {
@@ -258,10 +274,12 @@ void cb_config::save( void )
 	}
 }
 
-void cb_config::add_ext_if_not_exist( std::string&fpath )
+bool cb_config::add_ext_if_not_exist_( std::string&fpath )
 {
 	if ((fpath.size() < this->ext_.size())
 	||  (fpath.substr(fpath.size()-this->ext_.size()) != this->ext_)) {
 		fpath += this->ext_;
+		return true;
 	}
+	return false;
 }

@@ -25,8 +25,6 @@ public:
 
 	void save(void);
 
-	void add_ext_if_not_exist( std::string&fpath );
-
 	void set_dir_path(const std::string&ss) {
 	   this->dir_path_ = ss; }
 	void set_open_file_name(const std::string&ss) {
@@ -46,6 +44,8 @@ private:
 			,open_file_name_ /* Openの時のみ設定する */
 			,save_file_name_;/* Open/Save両方で設定する */
 	const std::string ext_;
+
+	bool add_ext_if_not_exist_( std::string&fpath );
 };
 
 #endif /* !cb_config_h */
