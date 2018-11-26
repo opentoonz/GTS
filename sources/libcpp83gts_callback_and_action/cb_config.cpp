@@ -5,6 +5,7 @@
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_config.h"
+#include "gts_gui.h"
 #include "gts_master.h"
 
 int cb_config::loading_and_set_dpath_fname(
@@ -175,20 +176,48 @@ void cb_config::save_as( void )
 {
 	/* NativeブラウザーSaveで開く */
 	int filter_current=0;
-	std::string fpath = ids::path::fltk_native_browse_save(
+	std::string fpath;
+	if (this->save_as_set_scan_images_path_sw) {
+		fpath = ids::path::fltk_native_browse_save(
+		"Save Config As"
+		,cl_gts_gui.filinp_scan_save_dir_path->value()
+		,cl_gts_gui.strinp_scan_save_file_head->value()
+		,std::string("Text(Config)\t*")+this->ext_
+		,filter_current
+		).at(0);
+	} else {
+		fpath = ids::path::fltk_native_browse_save(
 		"Save Config As"
 		,this->dir_path_
 		,this->save_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
 		,filter_current
-	).at(0);
+		).at(0);
+	}
+
 	/* Cancel */
 	if (fpath.empty()) {
 		return;
 	}
 
 	/* 拡張子がなければ追加 */
-	this->add_ext_if_not_exist( fpath );
+	bool add_ext_sw = this->add_ext_if_not_exist_( fpath );
+
+	/*
+	2018-11-01
+	Windowsのファイル保存ブラウザーは、その中では、
+	上書きになる場合、上書きの確認を聞いてくる
+	しかし、拡張子を書かなくてもいいようにブラウザーの外で
+	拡張子を付けている場合、ブラウザー内で感知できないので、
+	上書き確認は聞いてこない
+	なので
+	拡張子を別途付加してそのファイルが存在するなら上書き確認する
+	*/
+	if ( add_ext_sw && osapi::exist_utf8_mbs(fpath) ) {
+		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )) {
+			return;
+		}
+	}
 
 	/* config情報を保存する */
 	if (OK != cl_gts_master.cl_memo_config.save( fpath )) {
@@ -245,10 +274,12 @@ void cb_config::save( void )
 	}
 }
 
-void cb_config::add_ext_if_not_exist( std::string&fpath )
+bool cb_config::add_ext_if_not_exist_( std::string&fpath )
 {
 	if ((fpath.size() < this->ext_.size())
 	||  (fpath.substr(fpath.size()-this->ext_.size()) != this->ext_)) {
 		fpath += this->ext_;
+		return true;
 	}
+	return false;
 }

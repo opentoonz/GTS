@@ -7,6 +7,7 @@ class cb_config {
 public:
 	cb_config()
 		:ext_(".txt")
+		,save_as_set_scan_images_path_sw(false)
 	{}
 
 	int loading_and_set_dpath_fname(
@@ -18,10 +19,11 @@ public:
 	void open_only_area_and_rot90( void );
 	void open_only_pixel_type_and_bright( void );
 	void open_only_trace_params( void );
-	void save_as(void);
-	void save(void);
 
-	void add_ext_if_not_exist( std::string&fpath );
+	void save_as(void);
+	bool save_as_set_scan_images_path_sw;
+
+	void save(void);
 
 	void set_dir_path(const std::string&ss) {
 	   this->dir_path_ = ss; }
@@ -42,6 +44,8 @@ private:
 			,open_file_name_ /* Openの時のみ設定する */
 			,save_file_name_;/* Open/Save両方で設定する */
 	const std::string ext_;
+
+	bool add_ext_if_not_exist_( std::string&fpath );
 };
 
 #endif /* !cb_config_h */
