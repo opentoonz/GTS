@@ -124,6 +124,15 @@ void iip_rot90::exec( void )
 			(unsigned long *)this->get_vp_canvas()
 		);
 		break;
+	case E_CH_NUM_FLOAT:
+		this->_exec_float(
+			this->get_l_width(),
+			this->get_l_height(),
+			this->get_l_channels(),
+			(float *)clpp->get_vp_canvas(),
+			(float *)this->get_vp_canvas()
+		);
+		break;
 	case E_CH_NUM_DOUBL:
 		this->_exec_doubl(
 			this->get_l_width(),
@@ -144,7 +153,8 @@ void iip_rot90::exec( void )
 			(unsigned char *)this->get_vp_canvas()
 		);
 		break;
-	case E_CH_NUM_EMPTY: break; /* for no warning */
+	case E_CH_NUM_EMPTY:
+		break; /* for no warning */
 	}
 
 	/* カウントダウン表示終了 */

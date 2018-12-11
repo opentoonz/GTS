@@ -98,6 +98,7 @@ void iip_erase_dot_noise::exec( void )
 		break;
 	case E_CH_NUM_USHRT: break;
 	case E_CH_NUM_ULONG: break;
+	case E_CH_NUM_FLOAT: break;
 	case E_CH_NUM_DOUBL: break;
 	case E_CH_NUM_BITBW: break; /* for no warning */
 	case E_CH_NUM_EMPTY: break; /* for no warning */

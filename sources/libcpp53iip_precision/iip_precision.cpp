@@ -73,6 +73,7 @@ void iip_precision::exec( void )
 	unsigned char	*ucharp_i=0, *ucharp_o=0;
 	unsigned short	*ushrtp_i=0, *ushrtp_o=0;
 	unsigned long	*ulongp_i=0, *ulongp_o=0;
+	float		*floatp_i=0, *floatp_o=0;
 	double		*doublp_i=0, *doublp_o=0;
 	double	d_max_i,
 		d_max_o,
@@ -138,6 +139,9 @@ void iip_precision::exec( void )
 	case E_CH_NUM_ULONG:
 		      ulongp_i =
 	     (unsigned long *)clpp->get_vp_canvas(); break;
+	case E_CH_NUM_FLOAT:
+		      floatp_i =
+		     (float *)clpp->get_vp_canvas(); break;
 	case E_CH_NUM_DOUBL:
 		      doublp_i =
 		     (double *)clpp->get_vp_canvas(); break;
@@ -155,6 +159,9 @@ void iip_precision::exec( void )
 	case E_CH_NUM_ULONG:
 		      ulongp_o =
 	     (unsigned long *)this->get_vp_canvas(); break;
+	case E_CH_NUM_FLOAT:
+		      floatp_o =
+		     (float *)this->get_vp_canvas(); break;
 	case E_CH_NUM_DOUBL:
 		      doublp_o =
 		     (double *)this->get_vp_canvas(); break;
@@ -197,6 +204,9 @@ void iip_precision::exec( void )
 		case E_CH_NUM_ULONG:
 		    d_val = (*ulongp_i)/d_max_i;
 			    ++ulongp_i; break;
+		case E_CH_NUM_FLOAT:
+		    d_val = (*floatp_i);
+			    ++floatp_i; break;
 		case E_CH_NUM_DOUBL:
 		    d_val = (*doublp_i);
 			    ++doublp_i; break;
@@ -216,6 +226,9 @@ void iip_precision::exec( void )
 		case E_CH_NUM_ULONG:
 			     *ulongp_o = (unsigned long)ul_val;
 			    ++ulongp_o; break;
+		case E_CH_NUM_FLOAT:
+			     *floatp_o = d_val;
+			    ++floatp_o; break;
 		case E_CH_NUM_DOUBL:
 			     *doublp_o = d_val;
 			    ++doublp_o; break;

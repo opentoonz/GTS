@@ -428,6 +428,7 @@ std::cerr << str << std::endl;
 			,random_position_sw
 		);
 		break;
+	case E_CH_NUM_FLOAT: break; /* Not support */
 	case E_CH_NUM_DOUBL: break; /* Not support */
 	case E_CH_NUM_BITBW: break; /* for no warning */
 	case E_CH_NUM_EMPTY: break; /* for no warning */
