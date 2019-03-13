@@ -157,10 +157,12 @@ It will be loaded automatically the next time you open the program.
 - Files outside of the `thirdparty` directory are based on the New BSD License.
   - [New BSD License](./LICENSE.txt).
 - For files in the `thirdparty` directory:
+
 |lib|homepage|license|license page|
+---|---|---|---
 |fltk|http://www.fltk.org/index.php|GPLv2 with exceptions that allow for static linking|http://www.fltk.org/index.php|
 |libtiff|http://www.simplesystems.org/libtiff/|LibTIFF Software License|http://www.simplesystems.org/libtiff/misc.html|
 |twain|https://www.twain.org/|TWAIN License|https://www.twain.org/twain-license/|
-|glew|http://glew.sourceforge.net/|The source code is licensed under the Modified BSD License , the Mesa 3-D License (MIT) and
-the Khronos License (MIT).The automatic code generation scripts are released under the GNU GPL.|https://github.com/nigels-com/glew#copyright-and-licensing|
-  - Please prioritize with the licenses in the appropriate READMEs or source codes.
+|glew|http://glew.sourceforge.net/|The source code is licensed under the Modified BSD License , the Mesa 3-D License (MIT) and the Khronos License (MIT).The automatic code generation scripts are released under the GNU GPL.|https://github.com/nigels-com/glew#copyright-and-licensing|
+
+Attention:Please prioritize with the licenses in the appropriate READMEs or source codes.
