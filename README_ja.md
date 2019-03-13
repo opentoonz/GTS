@@ -171,5 +171,10 @@ TWAIN規格(Windows)/SANE規格(Linux,macOS)によるスキャナーアクセス
 - thirdparty ディレクトリ以外のファイル
   - [New BSD License](./LICENSE.txt)
 - thirdparty ディレクトリ内のファイル
-  - 各ディレクトリ内の README やソースコードに記載されたライセンスに従ってください
-
+|lib|homepage|license|license page|
+|fltk|http://www.fltk.org/index.php|GPLv2 with exceptions that allow for static linking|http://www.fltk.org/index.php|
+|libtiff|http://www.simplesystems.org/libtiff/|LibTIFF Software License|http://www.simplesystems.org/libtiff/misc.html|
+|twain|https://www.twain.org/|TWAIN License|https://www.twain.org/twain-license/|
+|glew|http://glew.sourceforge.net/|The source code is licensed under the Modified BSD License , the Mesa 3-D License (MIT) and
+the Khronos License (MIT).The automatic code generation scripts are released under the GNU GPL.|https://github.com/nigels-com/glew#copyright-and-licensing|
+  - 各ディレクトリ内の README やソースコードに記載されたライセンスが優先します
