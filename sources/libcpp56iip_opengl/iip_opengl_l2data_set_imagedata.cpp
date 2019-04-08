@@ -35,7 +35,6 @@ int iip_opengl_l2data::set_imagedata( iip_canvas *clp_parent )
 	case E_CH_NUM_ULONG:
 	case E_CH_NUM_FLOAT:
 	case E_CH_NUM_DOUBL:
-	case E_CH_NUM_FLOAT:
 		this->cl_iip_prec.cl_ch_info.set_e_ch_num_type(
 			E_CH_NUM_UCHAR);
 		break;
