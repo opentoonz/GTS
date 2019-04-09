@@ -9,12 +9,7 @@ INCS =\
 /I..\libcpp51iip_canvas\
 /I..\libc12pri
 SRCS =\
-iip_rot90.cpp\
-iip_rot90_bitbw.cpp\
-iip_rot90_doubl.cpp\
-iip_rot90_uchar.cpp\
-iip_rot90_ulong.cpp\
-iip_rot90_ushrt.cpp
+iip_rot90.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_APPL = ..\..\build

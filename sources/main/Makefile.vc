@@ -59,7 +59,8 @@ DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj
 DPATH_BINA = $(DPATH_APPL)\bin_x86
-DPATH_REDIST = "%VCINSTALLDIR%"Redist\MSVC\14.13.26020\x86\Microsoft.VC141.CRT
+#DPATH_REDIST = "%VCINSTALLDIR%"Redist\MSVC\14.13.26020\x86\Microsoft.VC141.CRT
+DPATH_REDIST = "%VCINSTALLDIR%"Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT
 CC_OPTIONS = $(CXXFLAGS) $(OPTS) $(INCS)
 #---action--------------------------------------------------------------
 #	copy _gts-scan_area.txt $(DPATH_BINA)
