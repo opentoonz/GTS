@@ -16,6 +16,7 @@ INCS =\
 /I..\libcpp53iip_precision\
 /I..\libcpp52iip_rw\
 /I..\libcpp51iip_canvas\
+/I..\lib_image_rw\
 /I..\lib_util\
 /I..\libc12pri\
 /I$(DPATH_TWAIN)\
@@ -35,6 +36,7 @@ $(DPATH_LIBR)\libcpp53iip_precision.lib\
 $(DPATH_LIBR)\libcpp52iip_rw.lib\
 $(DPATH_LIBR)\libcpp51iip_canvas.lib\
 $(DPATH_LIBR)\libcpp31calcu_precision.lib\
+$(DPATH_LIBR)\lib_image_rw.lib\
 $(DPATH_LIBR)\lib_util.lib\
 $(DPATH_LIBR)\libc18image_rw_tga.lib\
 $(DPATH_LIBR)\libc16image_rw_tif.lib\

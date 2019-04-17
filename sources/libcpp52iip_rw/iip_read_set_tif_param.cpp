@@ -1,11 +1,11 @@
-#include "tif_image_rw.h"
+//#include "tif_image_rw.h"
 #include "iip_read.h"
 
 /* .tif画像の圧縮方法 */
-void iip_read::_set_tif_compression( void ) {
+/*void iip_read::_set_tif_compression( void ) {
 	   this->_l_tif_compression =
 	tif_write_get_i_compression_lzw();
-}
+}*/
 
 /* .tif画像の圧縮方法がLZWの時の詳細 */
 /* (注意)2004.09.14.tue
@@ -25,7 +25,7 @@ void iip_read::_set_tif_compression( void ) {
 */
 
 /* .tif画像の方向 */
-void iip_read::_set_tif_orientation( void ) {
+/*void iip_read::_set_tif_orientation( void ) {
 	     this->_l_tif_orientation =
 	  tif_write_get_i_orientation_rot0();
-}
+}*/

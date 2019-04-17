@@ -1,6 +1,7 @@
-#include "tif_image_rw.h"
+#include "tiff.h"
 #include "iip_write.h"
 
+#if 0
 /* .tif画像の圧縮方法 */
 void iip_write::set_tif_compression_none( void ) {
 	   this->_l_tif_compression =
@@ -50,35 +51,33 @@ void iip_write::set_tif_byte_order_little_endian( void ) {
 void iip_write::set_tif_byte_order_big_endian( void ) {
 	   this->_l_tif_byte_swap_mode = 'b';
 }
+#endif
 
 /* .tif画像の方向 */
 void iip_write::set_l_tif_orientation_rot0( void ) {
 	     this->_l_tif_orientation =
-	  tif_write_get_i_orientation_rot0();
+	  //tif_write_get_i_orientation_rot0();
+	  ORIENTATION_TOPLEFT;
 }
 void iip_write::set_l_tif_orientation_rot90( void ) {
 	     this->_l_tif_orientation =
-	  tif_write_get_i_orientation_rot90();
+	  //tif_write_get_i_orientation_rot90();
+	  ORIENTATION_LEFTBOT; /* ???RIGHTTOP??? */
 }
 void iip_write::set_l_tif_orientation_rot180( void ) {
 	     this->_l_tif_orientation =
-	  tif_write_get_i_orientation_rot180();
+	  //tif_write_get_i_orientation_rot180();
+	  ORIENTATION_BOTRIGHT;
 }
 void iip_write::set_l_tif_orientation_rot270( void ) {
 	     this->_l_tif_orientation =
-	  tif_write_get_i_orientation_rot270();
+	  //tif_write_get_i_orientation_rot270();
+	  ORIENTATION_RIGHTTOP; /* ???LEFTBOT??? */
 }
 
 /* モノクロ２階調専用の設定(左下原点のまま保存するため) */
 void iip_write::set_l_tif_orientation_botleft_rot0( void ) {
 	     this->_l_tif_orientation =
-	  tif_write_get_i_orientation_botleft_rot0();
-}
-
-/* .tga画像の圧縮指定 */
-void iip_write::set_i_tga_rle_on( void ) {
-	     this->_i_tga_rle_sw = ON;
-}
-void iip_write::set_i_tga_rle_off( void ) {
-	     this->_i_tga_rle_sw = OFF;
+	  //tif_write_get_i_orientation_botleft_rot0();
+	  ORIENTATION_BOTLEFT;
 }
