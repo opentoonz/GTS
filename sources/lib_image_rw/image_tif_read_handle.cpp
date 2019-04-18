@@ -455,12 +455,12 @@ read_handle::get_formed_parameter(void) {
 	}
 	ost
 	<< "fillorder      =" << this->fillorder(isexist) << "\t";
-	switch (this->fillorder(isexist)) {
-	case (unsigned int)0xffffffff:
+	switch (static_cast<unsigned int>(this->fillorder(isexist))) {
+	case static_cast<unsigned int>(0xffffffff):
  		ost << "Saved Adobe Photoshop CS2 --> MSB2LSB";break;
-	case FILLORDER_MSB2LSB:
+	case static_cast<unsigned int>(FILLORDER_MSB2LSB):
 		ost << "most significant bit -> least sig. default";break;
-	case FILLORDER_LSB2MSB:
+	case static_cast<unsigned int>(FILLORDER_LSB2MSB):
 		ost << "least significant bit -> most sig.";break;
 	default: ost << "bad fillorder"; break;
 	}

@@ -1,6 +1,7 @@
 #include <limits.h> /* CHAR_BIT */
 #include <assert.h> /* assert() */
 #include <string.h> /* strcmp() */
+#include <iostream>	/* std::cerr */
 
 #include "tiff.h"
 #include "pri.h"

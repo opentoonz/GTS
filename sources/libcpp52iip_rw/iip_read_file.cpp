@@ -1,5 +1,6 @@
 #include <assert.h>	/* assert() */
 #include <string.h>	/* strcmp() */
+#include <iostream>	/* std::cerr */
 #include <limits>	/* std::numeric_limits<> */
 
 #include "ptbl_returncode.h"

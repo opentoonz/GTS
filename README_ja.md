@@ -147,8 +147,7 @@ TWAIN規格(Windows)/SANE規格(Linux,macOS)によるスキャナーアクセス
 3. 外部ライブラリを準備
 
  ```sh
- $ brew install automake
- $ brew install autoconf-archive
+ $ brew install automake autoconf autoconf-archive libtool pkgconfig libtiff sane-backends glew boost
  $ sudo port install fltk-devel #not in homebrew
  ```
 

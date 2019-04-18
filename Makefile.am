@@ -9,9 +9,9 @@ noinst_LTLIBRARIES = libgts.la
 
 libgts_la_CPPFLAGS = \
 				   -Isources/lib_util \
+				   -Isources/lib_image_rw \
 				   -Isources/libc12pri \
 				   -Isources/libc14image_rw_base \
-				   -Isources/libc16image_rw_tif \
 				   -Isources/libc18image_rw_tga \
 				   -Isources/libcpp31calcu_precision \
 				   -Isources/libcpp51iip_canvas \
@@ -44,34 +44,18 @@ libgts_la_SOURCES = \
 					sources/lib_util/osapi_mbs_wcs.cpp \
 					sources/lib_util/osapi_mkdir.cpp \
 					sources/lib_util/osapi_str_from_errid.cpp \
+					sources/lib_image_rw/image_common.cpp \
+					sources/lib_image_rw/image_tif_common.cpp \
+					sources/lib_image_rw/image_tif_read_handle.cpp \
+					sources/lib_image_rw/image_tif_read_handle_info.cpp \
+					sources/lib_image_rw/image_tif_reader.cpp \
+					sources/lib_image_rw/image_tif_write_handle.cpp \
+					sources/lib_image_rw/image_tif_writer.cpp \
 					sources/libc12pri/pri_cv.c \
 					sources/libc12pri/pri_msg_and_err.c \
 					sources/libc14image_rw_base/bread.c \
 					sources/libc14image_rw_base/bwrite.c \
 					sources/libc14image_rw_base/cpu_byte_order_is_little_endian.c \
-					sources/libc16image_rw_tif/tif_bw_invert.c \
-					sources/libc16image_rw_tif/tif_bw_read.c \
-					sources/libc16image_rw_tif/tif_bw_reverse.c \
-					sources/libc16image_rw_tif/tif_bw_write.c \
-					sources/libc16image_rw_tif/tif_image_read.c \
-					sources/libc16image_rw_tif/tif_image_read_header.c \
-					sources/libc16image_rw_tif/tif_image_read_y_manual.c \
-					sources/libc16image_rw_tif/tif_image_write.c \
-					sources/libc16image_rw_tif/tif_init_rw_header.c \
-					sources/libc16image_rw_tif/tif_read_close.c \
-					sources/libc16image_rw_tif/tif_read_get_reverse_sw.c \
-					sources/libc16image_rw_tif/tif_read_open.c \
-					sources/libc16image_rw_tif/tif_read_sca_all.c \
-					sources/libc16image_rw_tif/tif_read_sca_y.c \
-					sources/libc16image_rw_tif/tif_read_scanline.c \
-					sources/libc16image_rw_tif/tif_read_til_all.c \
-					sources/libc16image_rw_tif/tif_read_tile.c \
-					sources/libc16image_rw_tif/tif_stat.c \
-					sources/libc16image_rw_tif/tif_write_close.c \
-					sources/libc16image_rw_tif/tif_write_get_param.c \
-					sources/libc16image_rw_tif/tif_write_header.c \
-					sources/libc16image_rw_tif/tif_write_open.c \
-					sources/libc16image_rw_tif/tif_write_scanline.c \
 					sources/libc18image_rw_tga/tga_image_read.c \
 					sources/libc18image_rw_tga/tga_image_read_header.c \
 					sources/libc18image_rw_tga/tga_image_write.c \
@@ -114,11 +98,6 @@ libgts_la_SOURCES = \
 					sources/libcpp56iip_opengl/iip_opengl_l3event_set_imagedata.cpp \
 					sources/libcpp56iip_opengl/iip_opengl_l3event_wview.cpp \
 					sources/libcpp64iip_rot90/iip_rot90.cpp \
-					sources/libcpp64iip_rot90/iip_rot90_bitbw.cpp \
-					sources/libcpp64iip_rot90/iip_rot90_doubl.cpp \
-					sources/libcpp64iip_rot90/iip_rot90_uchar.cpp \
-					sources/libcpp64iip_rot90/iip_rot90_ulong.cpp \
-					sources/libcpp64iip_rot90/iip_rot90_ushrt.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_crop_and_downsample.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_calcu_bresenham.cpp \
 					sources/libcpp69iip_scale_by_subpixel/iip_scale_by_subpixel_exec.cpp \

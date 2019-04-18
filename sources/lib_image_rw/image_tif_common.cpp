@@ -1,6 +1,7 @@
 #include <cstdio>	/* vsnprintf() */
 #include <string>	/* std::string */
 #include <stdexcept>	/* std::runtime_error */
+#include <limits>	/* std::numeric_limits<unsigned char> */
 #include "image_tif_common.h"
 
 /*
