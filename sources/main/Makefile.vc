@@ -39,7 +39,6 @@ $(DPATH_LIBR)\libcpp31calcu_precision.lib\
 $(DPATH_LIBR)\lib_image_rw.lib\
 $(DPATH_LIBR)\lib_util.lib\
 $(DPATH_LIBR)\libc18image_rw_tga.lib\
-$(DPATH_LIBR)\libc16image_rw_tif.lib\
 $(DPATH_LIBR)\libc14image_rw_base.lib\
 $(DPATH_LIBR)\libc12pri.lib\
 $(DPATH_TIFF)\libtiff\libtiff.lib\

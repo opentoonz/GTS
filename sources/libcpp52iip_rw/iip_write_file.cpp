@@ -97,13 +97,16 @@ int iip_write::file( void )
 		props.width	= this->get_l_width();
 		props.channels	= this->get_l_channels();
 		props.bits	= this->cl_ch_info.get_l_bits();
+		props.reso_unit	= image::common::resolution::inch;
 		props.reso_x	= this->_d_tif_dpi_x;
 		props.reso_y	= this->_d_tif_dpi_y;
 		props.orie_side =
  static_cast<image::common::orientation::side>(this->_l_tif_orientation);
 
-		size_t image_bytes = image::tif::bytes_of_scanline(
-			props.width , props.channels , props.bits );
+		const size_t image_bytes = props.height *
+			image::tif::bytes_of_scanline(
+				props.width , props.channels , props.bits
+			);
 		std::string history_str;
 		image::tif::writer wtr;
 		std::ostringstream error_or_warning_msg;

@@ -603,8 +603,22 @@ reader::get_data(
 	}
 
 	/* ORIENTATIONがTL(左上原点)の場合BL(OpenGL座標系=左下原点)に補正 */
-	/* 正しい正対処理をする!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-	if (r_handler.orientation(isexist) == ORIENTATION_TOPLEFT) {
+	/* 上下判別、Xウインドウ用のオーダーのときは上下反転して読み込む */
+	/* BOT... is order */
+	/* TOP... is reverse */
+	/* 過去のtif画像を正しく読むため現状維持 */
+	/* 将来、正しい正対処理をする!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	switch (r_handler.orientation(isexist)) {
+	case ORIENTATION_BOTLEFT:
+	case ORIENTATION_BOTRIGHT:
+	case ORIENTATION_LEFTBOT:
+	case ORIENTATION_RIGHTBOT:
+		break;
+	case ORIENTATION_TOPLEFT: /* 画像データとして標準的 */
+	case ORIENTATION_TOPRIGHT:
+	case ORIENTATION_LEFTTOP:
+	case ORIENTATION_RIGHTTOP: /* scannerから直のデータ? */
+	default:/* photoshopで作成したTIFFデータはゼロになっている */
 		image::tif::reverse_top_bottom(
 			  r_handler.imagelength(isexist)
 			, r_handler.imagewidth(isexist)

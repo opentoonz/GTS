@@ -119,24 +119,38 @@ const bool writer::error_from_properties(
 	switch (props.reso_unit) {
 	case image::common::resolution::not_defined:
 		error_or_warning_msg
-		<< "Warning : resolution unit is not defined\n";
+		<< "Error : resolution unit is not defined\n";
+		error_sw = true;
 		break;
 	case image::common::resolution::nothing:
 		error_or_warning_msg
-		<< "Warning : resolution unit is nothing\n";
+		<< "Error : resolution unit is nothing\n";
+		error_sw = true;
 		break;
+
 	case image::common::resolution::inch: break;
 	case image::common::resolution::centimeter: break;
+
 	case image::common::resolution::millimeter:
 		error_or_warning_msg
-		<< "Error : millimeter is not defined in TIFF\n";
+		<< "Error : millimeter can not use in TIFF\n";
 		error_sw = true;
 		break;
 	case image::common::resolution::meter:
 		error_or_warning_msg
-		<< "Error : meter is not defined in TIFF\n";
+		<< "Error : meter can not use in TIFF\n";
 		error_sw = true;
 		break;
+	}
+	if ( props.reso_x <= 0.0 ) {
+		error_or_warning_msg
+		<< "Error : resolution x is equal less than zero in TIFF\n";
+		error_sw = true;
+	}
+	if ( props.reso_y <= 0.0 ) {
+		error_or_warning_msg
+		<< "Error : resolution y is equal less than zero in TIFF\n";
+		error_sw = true;
 	}
 	return error_sw;
 }
@@ -328,7 +342,7 @@ writer::put_data(
 	    (orientation::topleft     != props.orie_side)) {***/
 	/* default指定もあえて保存する 2012-12-14 */
 
-	 w_handler.set_uint16_throw( TIFFTAG_ORIENTATION, ui16_orient );
+	w_handler.set_uint16_throw( TIFFTAG_ORIENTATION, ui16_orient );
 	/***}***/
 
 	/* --- 画像の並び ----------------------------- */
