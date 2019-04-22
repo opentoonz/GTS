@@ -375,8 +375,10 @@ void gts_gui::cb_menite_help_about_i(Fl_Menu_*, void*) {
   std::ostringstream ost;
 ost
 << cl_gts_master.cp_release_name()
-<< '\n' << "Version:" << cl_gts_master.cp_release_number()
-<< '\n' << "Date:" << cl_gts_master.cp_release_date()
+<< " Version:" << cl_gts_master.cp_release_number()
+<< " Date:" << cl_gts_master.cp_release_date()
+<< '\n' << cl_gts_master.cp_release_name()
+<< " is based in part on the work of the FLTK project (http://www.fltk.org)."
 << '\n' << "GL_Vender:" << glGetString(GL_VENDOR)	// already showed Fl_Gl_Window
 << '\n' << "GL_Renderer:" << glGetString(GL_RENDERER)	// already showed Fl_Gl_Window
 << '\n' << "GL_Version:" << glGetString(GL_VERSION)	// already showed Fl_Gl_Window

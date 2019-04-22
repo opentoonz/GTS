@@ -9,25 +9,24 @@
 class iip_write : public iip_canvas {
 public:
 	iip_write(void)
+	:_i_tga_rle_sw(ON)
 	{
 		this->set_ccp_object_name_of_mv("iip_write");
 		this->_d_tif_dpi_x = 0.0;
 		this->_d_tif_dpi_y = 0.0;
-		this->set_tif_compression_lzw();
-		this->set_tif_compression_lzw_no_prediction_scheme();
-		this->set_tif_byte_order_big_endian();
+		//this->set_tif_compression_lzw();
+		//this->set_tif_compression_lzw_no_prediction_scheme();
+		//this->set_tif_byte_order_big_endian();
 		this->set_l_tif_orientation_rot0();
-		this->set_i_tga_rle_on();
 	}
 	~iip_write(void)
 	{
 		this->_d_tif_dpi_x = 0.0;
 		this->_d_tif_dpi_y = 0.0;
-		this->set_tif_compression_lzw();
-		this->set_tif_compression_lzw_no_prediction_scheme();
-		this->set_tif_byte_order_big_endian();
+		//this->set_tif_compression_lzw();
+		//this->set_tif_compression_lzw_no_prediction_scheme();
+		//this->set_tif_byte_order_big_endian();
 		this->set_l_tif_orientation_rot0();
-		this->set_i_tga_rle_on();
 	}
 
 	/* 名前を格納する(以前のメモリを解放、メモリ確保、記録) */
@@ -46,6 +45,7 @@ public:
 	void set_d_tif_dpi_y( double dd ) {
 	  this->_d_tif_dpi_y = dd; }
 
+#if 0
 	void set_tif_compression_none( void );
 	void set_tif_compression_lzw( void );
 	void set_tif_compression_packbits( void );
@@ -72,6 +72,7 @@ public:
 	void set_tif_byte_order_depend_cpu( void );
 	void set_tif_byte_order_little_endian( void );
 	void set_tif_byte_order_big_endian( void );
+#endif
 
 	void set_l_tif_orientation_rot0( void );
 	void set_l_tif_orientation_rot90( void );
@@ -79,9 +80,6 @@ public:
 	void set_l_tif_orientation_rot270( void );
 
 	void set_l_tif_orientation_botleft_rot0( void );
-
-	void set_i_tga_rle_on( void );
-	void set_i_tga_rle_off( void );
 
 private:
 	double	_d_tif_dpi_x,

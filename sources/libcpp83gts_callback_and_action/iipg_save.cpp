@@ -49,6 +49,7 @@ int gts_master::iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, 
 		return NG;
 	}
 
+#if 0
 	/* BWの場合の圧縮 */
 	if (	(0 == this->cl_iip_writ.cl_ch_info.get_l_bytes()) &&
 		(1 == this->cl_iip_writ.cl_ch_info.get_l_bits())
@@ -62,6 +63,7 @@ int gts_master::iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, 
 
 	/* TIFFバイトオーダーをCPUに依存とする */
 	this->cl_iip_writ.set_tif_byte_order_depend_cpu();
+#endif
 
 	/* 読み込み画像があれば、ファイル属性情報
 		clp->get_d_tif_dpi_x();
@@ -71,6 +73,9 @@ int gts_master::iipg_save( iip_canvas *clp_canvas, char *cp_path, double d_dpi, 
 	を上書きする */
 	if (NULL != clp_read) {
 	 this->cl_iip_writ.set_file_attrbute_from_read(clp_read);
+
+	 /* 読込んだ場合は正対している */
+	 this->cl_iip_writ.set_l_tif_orientation_rot0();
 	}
 
 	/*

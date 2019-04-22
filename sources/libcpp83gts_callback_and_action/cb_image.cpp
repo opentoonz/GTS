@@ -120,7 +120,11 @@ void cb_image::save_as( void )
 		&(cl_gts_master.cl_iip_ro90)
 		,const_cast<char *>(fpath.c_str())
 		,dpi
-		,rot90
+
+		//,rot90
+ /* 2019-04-08 回転処理してあるのにさらに"rot90"で回転タグつけてはダメ */
+		,0
+
 		,read_attr
 	)) {
 		pri_funct_err_bttvr(

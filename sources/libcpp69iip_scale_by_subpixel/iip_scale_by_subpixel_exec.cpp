@@ -129,6 +129,7 @@ void iip_scale_by_subpixel::exec( void )
 			this->_lp_scanline);
 		break;
 	case E_CH_NUM_ULONG: break;
+	case E_CH_NUM_FLOAT: break;
 	case E_CH_NUM_DOUBL: break;
 	case E_CH_NUM_BITBW: break; /* for no warning */
 	case E_CH_NUM_EMPTY: break; /* for no warning */

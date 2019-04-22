@@ -201,7 +201,8 @@ void cb_config::save_as( void )
 	}
 
 	/* 拡張子がなければ追加 */
-	bool add_ext_sw = this->add_ext_if_not_exist_( fpath );
+	bool add_ext_sw = false;
+	this->add_ext_if_not_exist_( fpath ,add_ext_sw );
 
 	/*
 	2018-11-01
@@ -274,12 +275,13 @@ void cb_config::save( void )
 	}
 }
 
-bool cb_config::add_ext_if_not_exist_( std::string&fpath )
+void cb_config::add_ext_if_not_exist_( std::string&fpath ,bool& add_sw )
 {
 	if ((fpath.size() < this->ext_.size())
 	||  (fpath.substr(fpath.size()-this->ext_.size()) != this->ext_)) {
 		fpath += this->ext_;
-		return true;
+		add_sw = true;
+		return;
 	}
-	return false;
+	add_sw = false;
 }

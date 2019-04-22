@@ -7,9 +7,9 @@ rem ------------------------
 for %%a in (
  libc12pri
  libc14image_rw_base
- libc16image_rw_tif
  libc18image_rw_tga
  lib_util
+ lib_image_rw
  libcpp31calcu_precision
  libcpp51iip_canvas
  libcpp52iip_rw

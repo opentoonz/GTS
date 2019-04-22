@@ -4,19 +4,13 @@
 #include <stdio.h>
 #include "ptbl_returncode.h"
 
-/*
- * チャンネル情報
- */
-typedef	enum {
-	E_NUM_INTEGER = 1,
-	E_NUM_FLOATING
-} E_NUM_FORM;
-
+/* チャンネルタイプ */
 typedef	enum {
 	E_CH_NUM_EMPTY = 1, /* empty(not set channel_number_type) */
 	E_CH_NUM_UCHAR, /* unsigned char */
 	E_CH_NUM_USHRT, /* unsigned short */
 	E_CH_NUM_ULONG, /* unsigned long */
+	E_CH_NUM_FLOAT, /* float */
 	E_CH_NUM_DOUBL, /* double */
 	E_CH_NUM_BITBW  /* 1bitでモノクロ２階調 */
 } E_CH_NUM_TYPE;
@@ -58,7 +52,6 @@ public:
 private:
 	long	_l_bytes,
 		_l_bits;
-	E_NUM_FORM _e_num_form;
 	E_CH_NUM_TYPE _e_type;
 };
 

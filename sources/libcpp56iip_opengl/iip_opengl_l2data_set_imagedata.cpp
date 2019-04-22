@@ -33,6 +33,7 @@ int iip_opengl_l2data::set_imagedata( iip_canvas *clp_parent )
 	switch(this->cl_iip_prec.cl_ch_info.get_e_ch_num_type()){
 	case E_CH_NUM_USHRT:
 	case E_CH_NUM_ULONG:
+	case E_CH_NUM_FLOAT:
 	case E_CH_NUM_DOUBL:
 		this->cl_iip_prec.cl_ch_info.set_e_ch_num_type(
 			E_CH_NUM_UCHAR);
@@ -45,7 +46,6 @@ int iip_opengl_l2data::set_imagedata( iip_canvas *clp_parent )
 		break;
 	case E_CH_NUM_EMPTY:
 	case E_CH_NUM_UCHAR:
-	default:
 		break;
 	}
 

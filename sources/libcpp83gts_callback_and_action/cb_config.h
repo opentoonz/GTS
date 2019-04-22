@@ -45,7 +45,10 @@ private:
 			,save_file_name_;/* Open/Save両方で設定する */
 	const std::string ext_;
 
-	bool add_ext_if_not_exist_( std::string&fpath );
+	/*	bool add_ext_if_not_exist_( std::string&fpath );
+		だと、VirusTotalのチェックで引っかかる 2019-04-15
+	*/
+	void add_ext_if_not_exist_( std::string&fpath ,bool& add_sw );
 };
 
 #endif /* !cb_config_h */

@@ -39,6 +39,7 @@ int iip_scale_by_subpixel::set_canvas( void )
 	case E_CH_NUM_USHRT:
 		break;
 	case E_CH_NUM_ULONG:
+	case E_CH_NUM_FLOAT:
 	case E_CH_NUM_DOUBL:
 	case E_CH_NUM_BITBW:
 	case E_CH_NUM_EMPTY:

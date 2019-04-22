@@ -8,9 +8,10 @@ OPTS = /W4 /MD /EHa /O2 /wd4996 /source-charset:utf-8
 INCS =\
 /I.\
 /I..\libcpp51iip_canvas\
+/I..\lib_image_rw\
+/I$(DPATH_TIFF)\
 /I..\lib_util\
 /I..\libc18image_rw_tga\
-/I..\libc16image_rw_tif\
 /I..\libc14image_rw_base\
 /I..\libc12pri
 SRCS =\
@@ -23,6 +24,8 @@ iip_write_set_tif_param.cpp\
 name_strings.cpp
 TARG = $(NAME).lib
 OBJS = $(SRCS:.cpp=.obj)
+DPATH_3RD_PARTY = ..\..\thirdparty
+DPATH_TIFF = $(DPATH_3RD_PARTY)\libtiff\tiff-4.0.9\libtiff
 DPATH_APPL = ..\..\build
 DPATH_LIBR = $(DPATH_APPL)\lib
 DPATH_OBJE = $(DPATH_APPL)\obj\$(NAME)
