@@ -1,20 +1,28 @@
 GTS
 
-2019-04-19
+2019-04-22
 
 * TIFF保存に関するデバック
-"File" --> "Save Image As.."でTIFF画像保存すると、ORIENTATIONタグがRTとなっ(てPhotoshopで右90度回転表示し)たのを、TLに修正した
-* ウィルスチェックに引っかかる報告に対する対策
-"libcpp83gts_callback_and_action/cb_config.h"にて"bool"を返す関数を"void"にした
-* fltkからの表記指示
+"File" --> "Save Image As..."でTIFF画像で保存したファイルをPhotoshopで表示すると、右90度回転して表示していた
+保存したTIFF画像ファイルのORIENTATIONタグがRTとなっていた
+ORIENTATIONタグをTLとして保存し、Photoshopで正しく表示するようにした
+* ウィルスチェック対策
+ユーザーからウイル感染の報告あり
+別途 https://www.virustotal.com/ でのウイルスチェックに引っかかることを確認
+"libcpp83gts_callback_and_action/cb_config.h"にて"bool"を返す関数を"void"にした、その他デバッグとリファクタリングした
+https://www.virustotal.com/ でのチェックには引っかからなくなった
+ウイルスチェックに引っかかる原因を特定することはできないため、ウイルス感染なのか偽判定なのかは不明
+このリリースで様子を見る
+今後はウイルスチェックサイトによるチェックをしてリリースすることを検討する
+* fltk使用の表記をHelpに追加
 "fltk/COPYING"より、FLTKの使用を特定するための文を、"Help" --> "About This Application"に追加
-* README追記
-thirdpartyライセンスの案内をREADMEに追加
+* README修正
+thirdpartyライセンスの案内をREADMEに追加修正
 * Rrefactoring
 "libcpp51iip_canvas/iip_channel_info.h"にてE_NUM_FORMの削除とE_NUM_FLOATの追加、かつ関連の修正。
 * Rrefactoring
 "libcpp64iip_rot90/iip_rot90.h"にてジェネリックプログラミングに修正し、かつ関連の修正
 * Rrefactoring
-"lib_image_rw"を新たに作り"libc16image_rw_tif/"を置換えた
-* v2.5.1リリース予定
+"lib_image_rw/"を新たに作り"libc16image_rw_tif/"を置換えた
+* v2.5.1としてリリース予定
 
