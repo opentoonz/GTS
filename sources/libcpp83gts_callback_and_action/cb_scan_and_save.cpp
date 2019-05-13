@@ -6,6 +6,7 @@
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "osapi_exist.h"
+#include "osapi_mbs_wcs_win.h"
 #include "ids_path_fltk_native_browse.h"
 #ifdef _WIN32
 # include "wincom_native_browse_directory.h"
@@ -486,7 +487,7 @@ void cb_scan_and_save::cb_set_number( void )
 
 	/* End/EndlessによるNumberリストのdeactivate/activete */
 	this->cb_change_num_continue_type(
-	 cl_gts_gui.choice_scan_num_continue_type->text()
+	 cl_gts_gui.choice_scan_num_continue_type->value()
 	);
 
 	/* Numberウインドウ再構築 */
@@ -581,26 +582,22 @@ const std::string cb_scan_and_save::get_save_name( const int number )
 }
 
 //----------------------------------------------------------------------
-void cb_scan_and_save::cb_choice_and_num_continue_type(const std::string& type)
+void cb_scan_and_save::cb_choice_and_num_continue_type(const int type)
 {
-	const Fl_Menu_Item* crnt =
-	cl_gts_gui.choice_scan_num_continue_type->find_item( type.c_str() );
-	if (crnt == nullptr) { return; }
-
 	/* End/Endless表示のChoice切替 */
-	cl_gts_gui.choice_scan_num_continue_type->value(crnt);
+	cl_gts_gui.choice_scan_num_continue_type->value(type);
 
 	/* End/Endless表示のChoice以外の切替 */
 	this->cb_change_num_continue_type( type );
 }
-void cb_scan_and_save::cb_change_num_continue_type(const std::string& type)
+void cb_scan_and_save::cb_change_num_continue_type(const int type)
 {
-	if (std::string("End") == type) {
+	if (type == cl_gts_master.cl_number.get_end_type_value()) {
 		cl_gts_gui.valinp_scan_num_end->show();
 		cl_gts_gui.choice_scan_num_endless_direction->hide();
 		cl_gts_gui.selbro_number_list->activate();
 	} else
-	if (std::string("Endless") == type) {
+	if (type == cl_gts_master.cl_number.get_endless_type_value()) {
 		cl_gts_gui.valinp_scan_num_end->hide();
 		cl_gts_gui.choice_scan_num_endless_direction->show();
 		cl_gts_gui.selbro_number_list->deactivate();

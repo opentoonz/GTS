@@ -19,50 +19,50 @@ class gts_gui {open
   } {
     Fl_Window window_main_view {
       label GTS
-      callback {cl_gts_master.cb_quit();} selected
+      callback {cl_gts_master.cb_quit();}
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
         xywh {0 0 720 25}
       } {
         Submenu {} {
-          label File open
+          label {ファイル} open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {Open Image...}
+            label {画像を1枚表示...}
             callback {cl_gts_master.cl_image.open();}
             xywh {0 0 30 20} shortcut 0x4006f
           }
           MenuItem {} {
-            label {Save Image As...}
+            label {画像を(処理なし)1枚保存...}
             callback {cl_gts_master.cl_image.save_as();}
             xywh {0 0 30 20} shortcut 0x50073 divider
           }
           MenuItem {} {
-            label {Open Config...}
+            label {設定を再現...}
             callback {cl_gts_master.cl_config.open();}
             xywh {5 5 100 20} shortcut 0x8006f
           }
           MenuItem {} {
-            label {Save Config}
+            label {設定を即時保存}
             callback {cl_gts_master.cl_config.save();}
             xywh {5 5 100 20} shortcut 0x80073
           }
           MenuItem {} {
-            label {Save Config As...}
+            label {設定を保存...}
             callback {cl_gts_master.cl_config.save_as();}
             xywh {5 5 100 20} shortcut 0x90073 divider
           }
           MenuItem {} {
-            label Quit
+            label {終了}
             callback {// cl_gts_master.reserve_by_menu(E_ACT_QUIT);
 cl_gts_master.cb_quit();}
             xywh {10 10 100 20} shortcut 0x40071
           }
         }
         Submenu {} {
-          label Action open
+          label {実行} open
           xywh {5 5 100 20}
         } {
           MenuItem menite_scan_crop {
@@ -76,7 +76,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} shortcut 0x70
           }
           MenuItem menite_scan_save {
-            label {Scan Save}
+            label {連番スキャン保存の開始}
             callback {cl_gts_master.cl_scan_and_save.cb_start();}
             tooltip {Scan and Save Files} xywh {5 5 100 20} shortcut 0xff0d divider
           }
@@ -97,7 +97,7 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label Window open
+          label {ウインドウ} open
           xywh {10 10 100 20}
         } {
           MenuItem menite_area_and_rot90 {
@@ -131,7 +131,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffc0 divider
           }
           MenuItem menite_scan_and_save {
-            label {Scan Save...}
+            label {連番スキャン保存...}
             callback {if (menite_scan_and_save->value()) {
  window_main_view->show();/* Need for Minimize */
  window_scan_and_save->show();
@@ -199,61 +199,61 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label View open
+          label {画像表示調整} open
           xywh {10 10 100 20}
         } {
           Submenu {} {
-            label Zoom open
+            label {ズーム} open
             xywh {25 25 100 20}
           } {
             MenuItem {} {
-              label {In (at center of view)}
+              label {画面中心から拡大}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x7a
             }
             MenuItem {} {
-              label {Out (at center of view)}
+              label {画面中心から縮小}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x78
             }
             MenuItem {} {
-              label {In (at cursor position)}
+              label {カーソル位置から拡大}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_POS);}
               xywh {0 0 30 20} shortcut 0x1007a
             }
             MenuItem {} {
-              label {Out (at cursor position)}
+              label {カーソル位置から縮小}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_POS);}
               xywh {0 0 30 20} shortcut 0x10078
             }
             MenuItem {} {
-              label x1
+              label {ピクセル等倍}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);}
               xywh {30 30 100 20} shortcut 0x6e
             }
             MenuItem {} {
-              label {All Figure}
+              label {全体表示}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);}
               xywh {25 25 100 20} shortcut 0x6d
             }
           }
           Submenu {} {
-            label Frame open
+            label {フレーム切替} open
             xywh {0 0 62 20}
           } {
             MenuItem menite_frame_cyclic {
-              label Cyclic
+              label {循環}
               xywh {0 0 30 20} type Toggle
             }
             MenuItem {} {
-              label Prev
+              label {次}
               callback {if (cl_gts_master.cl_number.selected_prev_frame()) {
     cl_gts_master.cb_number_read_and_trace_and_preview();
 }}
               xywh {0 0 30 20} shortcut 0xff52
             }
             MenuItem {} {
-              label Next
+              label {前}
               callback {if (cl_gts_master.cl_number.selected_next_frame()) {
     cl_gts_master.cb_number_read_and_trace_and_preview();
 }}
@@ -261,11 +261,11 @@ cl_gts_master.cb_quit();}
             }
           }
           Submenu {} {
-            label {Color Trace} open
+            label {2値化用表示切替} open
             xywh {20 20 100 20}
           } {
             MenuItem menite_wview_main {
-              label {Source Image}
+              label {スキャン画像}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_main();
 }
@@ -275,7 +275,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc6 value 1
             }
             MenuItem menite_wview_sub {
-              label {Target Image}
+              label {2値化画像}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_sub();
 }
@@ -285,7 +285,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc7
             }
             MenuItem menite_wview_lr {
-              label {Split Left and Right}
+              label {左右分割}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_lr();
 }
@@ -295,7 +295,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc8
             }
             MenuItem menite_wview_ud {
-              label {Split Top and Bottom}
+              label {上下分割}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_ud();
 }
@@ -347,11 +347,11 @@ else {
           }
         }
         Submenu {} {
-          label Help open
+          label {ヘルプ} open
           xywh {0 0 62 20}
         } {
           MenuItem menite_help_about {
-            label {About This Application...}
+            label {このアプリについて...}
             callback {std::ostringstream ost;
 ost
 << cl_gts_master.cp_release_name()
@@ -389,21 +389,21 @@ fl_message( ost.str().c_str() );}
       }
     }
     Fl_Window window_next_scan {
-      label {Next Scan}
+      label {次のスキャン}
       xywh {50 50 545 100} type Double modal visible
     } {
       Fl_Button button_rescan {
-        label {Rescan (Space)}
+        label {同番号 (Space)}
         callback {cl_gts_master.cl_scan_and_save.cb_rescan();}
         xywh {60 75 110 25} shortcut 0x20
       }
       Fl_Button {} {
-        label {Next (Enter)}
+        label {次番号 (Enter)}
         callback {cl_gts_master.cl_scan_and_save.cb_next();}
         xywh {325 40 120 60} shortcut 0xff0d
       }
       Fl_Button {} {
-        label {Stop (Esc)}
+        label {中止 (Esc)}
         callback {cl_gts_gui.window_next_scan_non_modal->position(
 cl_gts_gui.window_next_scan->x(),
 cl_gts_gui.window_next_scan->y()
@@ -422,7 +422,7 @@ cl_gts_gui.window_next_scan->hide();}
       }
     }
     Fl_Window window_next_scan_non_modal {
-      label {Save (Adjustable Image)}
+      label {次の保存 (画像処理変更可能)}
       callback {cl_gts_master.cl_scan_and_save.cb_cancel();
 cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
@@ -435,12 +435,12 @@ cl_gts_gui.window_next_scan_non_modal->hide();}
         xywh {0 10 545 25} box BORDER_BOX
       }
       Fl_Button button_next_save_non_modal {
-        label {Save (Enter)}
+        label {保存 (Enter)}
         callback {cl_gts_master.cl_scan_and_save.cb_save(true);}
         xywh {325 45 110 45} shortcut 0xff0d
       }
       Fl_Button {} {
-        label {Stop (Esc)}
+        label {中止 (Esc)}
         callback {cl_gts_master.cl_scan_and_save.cb_cancel();
 cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
@@ -781,27 +781,27 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
           xywh {0 190 95 25} resizable
         }
         Fl_Button button_preview_scan {
-          label {Preview Scan}
+          label {確認スキャン}
           callback {cl_gts_master.cb_scan_and_preview();}
           xywh {95 190 100 25}
         }
       }
     }
     Fl_Window window_scan_and_save {
-      label {Scan Save}
+      label {連番スキャン保存}
       callback {cl_gts_gui.window_scan_and_save->hide();
 cl_gts_gui.menite_scan_and_save->clear();}
       xywh {50 50 200 330} type Double resizable non_modal size_range {200 330 1000 330} visible
     } {
       Fl_Group {} {
-        label Filter open
+        label {処理} open
         xywh {1 20 198 65} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
           xywh {1 25 198 25}
         } {
           Fl_Check_Button chkbtn_scan_filter_trace_sw {
-            label Trace
+            label {2値化}
             callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
 	o->box(FL_SHADOW_BOX);
@@ -821,7 +821,7 @@ else {
           xywh {1 55 198 25}
         } {
           Fl_Check_Button chkbtn_scan_filter_erase_dot_noise_sw {
-            label {Erase dot noise}
+            label {ドットノイズ除去}
             callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
 	o->box(FL_SHADOW_BOX);
@@ -839,14 +839,14 @@ else {
         }
       }
       Fl_Group {} {
-        label Save open
+        label {保存ファイルパス} open
         xywh {1 105 198 75} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
           xywh {1 110 198 35}
         } {
           Fl_File_Input filinp_scan_save_dir_path {
-            label Folder
+            label {フォルダ}
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             xywh {50 110 130 35} when 1 resizable
           }
@@ -864,7 +864,7 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             xywh {1 150 49 25}
           }
           Fl_Input strinp_scan_save_file_head {
-            label File
+            label {ファイル}
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_scan()) {
 	output_number_file_head_name->value( o->value() );
@@ -885,7 +885,7 @@ if (cl_gts_master.cl_number.is_scan()) {
         }
       }
       Fl_Group {} {
-        label Number open
+        label {連番} open
         xywh {1 200 198 95} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
@@ -895,7 +895,7 @@ if (cl_gts_master.cl_number.is_scan()) {
             xywh {1 205 84 25}
           }
           Fl_Value_Input valinp_scan_num_start {
-            label Start
+            label {開始番号}
             xywh {85 205 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
           }
           Fl_Box {} {
@@ -910,11 +910,11 @@ if (cl_gts_master.cl_number.is_scan()) {
             xywh {5 235 80 25} box BORDER_BOX down_box BORDER_BOX
           } {
             MenuItem {} {
-              label End
+              label {終番号}
               xywh {10 10 30 20}
             }
             MenuItem {} {
-              label Endless
+              label {番号送}
               xywh {10 10 30 20}
             }
           }
@@ -944,7 +944,7 @@ if (cl_gts_master.cl_number.is_scan()) {
             xywh {1 265 109 25} resizable
           }
           Fl_Button {} {
-            label {Set Number}
+            label {連番設定}
             callback {cl_gts_master.cl_scan_and_save.cb_set_number();
 cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             xywh {110 265 85 25}
@@ -955,14 +955,14 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
         xywh {1 300 198 25}
       } {
         Fl_Check_Button chkbtn_scan_adjustable_per_frame_sw {
-          label Adjustable
+          label {変更可で}
           xywh {5 300 85 25} down_box DOWN_BOX
         }
         Fl_Box {} {
           xywh {90 300 5 25} resizable
         }
         Fl_Button button_scan_save {
-          label {Scan Save}
+          label {開始}
           callback {cl_gts_master.cl_scan_and_save.cb_start();}
           tooltip {Scan and Save Files} xywh {95 300 100 25}
         }

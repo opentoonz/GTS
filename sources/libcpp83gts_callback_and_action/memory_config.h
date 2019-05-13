@@ -86,6 +86,10 @@ public:
 		   "level_num_end")
 	,str_scan_num_continue_type_(
 	    "scan_num_continue_type")
+	,str_scan_num_continue_type_end_(
+	    "End")
+	,str_scan_num_continue_type_endless_(
+	    "Endless")
 		,str_scan_num_continue_type_legacy2016_(
 		   "level_num_continue_type")
 	,str_scan_num_endless_direction_(
@@ -413,6 +417,8 @@ private:
 	const char* str_scan_num_end_;
 	const char* str_scan_num_end_legacy2016_;
 	const char* str_scan_num_continue_type_;
+	const char* str_scan_num_continue_type_end_;
+	const char* str_scan_num_continue_type_endless_;
 	const char* str_scan_num_continue_type_legacy2016_;
 	const char* str_scan_num_endless_direction_;
 	const char* str_scan_num_endless_direction_legacy2016_;

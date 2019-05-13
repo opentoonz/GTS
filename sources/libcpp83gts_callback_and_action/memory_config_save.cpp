@@ -121,8 +121,15 @@ void memory_config::save_scan_and_save_( std::ofstream& ofs )
 	   ,cl_gts_gui.valinp_scan_num_start->value() ,ofs );
 	save_fl64_( this->str_scan_num_end_
 	   ,cl_gts_gui.valinp_scan_num_end->value() ,ofs );
-	save_stri_( this->str_scan_num_continue_type_
-	   ,cl_gts_gui.choice_scan_num_continue_type->text() ,ofs);
+	{
+	const char* str_nu_ct_ty = (
+	(  cl_gts_gui.choice_scan_num_continue_type->value()
+	== cl_gts_master.cl_number.get_end_type_value())
+		? this->str_scan_num_continue_type_end_
+		: this->str_scan_num_continue_type_endless_
+	);
+	save_stri_( this->str_scan_num_continue_type_ ,str_nu_ct_ty ,ofs);
+	}
 	save_stri_( this->str_scan_num_endless_direction_
 	   ,cl_gts_gui.choice_scan_num_endless_direction->text() ,ofs );
 }

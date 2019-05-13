@@ -273,7 +273,12 @@ bool memory_config::load_scan_and_save_(
 	}
 	else if ( (this->str_scan_num_continue_type_ == ke)
 	||	  (this->str_scan_num_continue_type_legacy2016_ == ke)
-	) {	 ss.cb_choice_and_num_continue_type( va );
+	) {
+		ss.cb_choice_and_num_continue_type(
+			(va == this->str_scan_num_continue_type_end_)
+			? cl_gts_master.cl_number.get_end_type_value()
+			: cl_gts_master.cl_number.get_endless_type_value()
+		);
 			     scan_num_continue_type_sw = true;
 	}
 	else if ( (this->str_scan_num_endless_direction_ == ke)
@@ -1080,7 +1085,8 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		!scan_num_continue_type_sw
 	) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
-	 "End" );
+		cl_gts_master.cl_number.get_end_type_value()
+	 );
 	}
 
 	/* Config各パラメータとは間接的な表示変更部分 */

@@ -37,10 +37,10 @@ public:
 	//---------- fltk GUI access ----------
 
 	/* End/Endless表示のChoice含めた切替 */
-	void cb_choice_and_num_continue_type(const std::string& type);
+	void cb_choice_and_num_continue_type(const int type);
 
 	/* End/Endless表示のChoice以外の切替 */
-	void cb_change_num_continue_type( const std::string& type );
+	void cb_change_num_continue_type( const int type );
 
 	/* Endlessの方向選択の表示切替 */
 	void cb_choice_num_endless_direction( const std::string& type );
