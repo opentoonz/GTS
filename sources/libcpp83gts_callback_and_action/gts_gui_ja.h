@@ -61,12 +61,12 @@ public:
 private:
   inline void cb_menite_scan_save_i(Fl_Menu_*, void*);
   static void cb_menite_scan_save(Fl_Menu_*, void*);
-  inline void cb_Trace_i(Fl_Menu_*, void*);
-  static void cb_Trace(Fl_Menu_*, void*);
-  inline void cb_Rename_i(Fl_Menu_*, void*);
-  static void cb_Rename(Fl_Menu_*, void*);
-  inline void cb_Renumber_i(Fl_Menu_*, void*);
-  static void cb_Renumber(Fl_Menu_*, void*);
+  inline void cb_21_i(Fl_Menu_*, void*);
+  static void cb_21(Fl_Menu_*, void*);
+  inline void cb_5_i(Fl_Menu_*, void*);
+  static void cb_5(Fl_Menu_*, void*);
+  inline void cb_6_i(Fl_Menu_*, void*);
+  static void cb_6(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_area_and_rot90;
 private:
@@ -115,10 +115,6 @@ private:
 public:
   static Fl_Menu_Item *menite_sane_device;
 private:
-  inline void cb_5_i(Fl_Menu_*, void*);
-  static void cb_5(Fl_Menu_*, void*);
-  inline void cb_6_i(Fl_Menu_*, void*);
-  static void cb_6(Fl_Menu_*, void*);
   inline void cb_7_i(Fl_Menu_*, void*);
   static void cb_7(Fl_Menu_*, void*);
   inline void cb_8_i(Fl_Menu_*, void*);
@@ -127,13 +123,17 @@ private:
   static void cb_9(Fl_Menu_*, void*);
   inline void cb_a_i(Fl_Menu_*, void*);
   static void cb_a(Fl_Menu_*, void*);
-public:
-  static Fl_Menu_Item *menite_frame_cyclic;
-private:
   inline void cb_b_i(Fl_Menu_*, void*);
   static void cb_b(Fl_Menu_*, void*);
   inline void cb_c_i(Fl_Menu_*, void*);
   static void cb_c(Fl_Menu_*, void*);
+public:
+  static Fl_Menu_Item *menite_frame_cyclic;
+private:
+  inline void cb_d_i(Fl_Menu_*, void*);
+  static void cb_d(Fl_Menu_*, void*);
+  inline void cb_e_i(Fl_Menu_*, void*);
+  static void cb_e(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *menite_wview_main;
 private:
@@ -271,10 +271,10 @@ public:
   Fl_Button *radbut_area_reso_fix_cm;
   Fl_Button *radbut_area_reso_fix_pixel;
 private:
-  inline void cb_Set_i(Fl_Button*, void*);
-  static void cb_Set(Fl_Button*, void*);
-  inline void cb_Set1_i(Fl_Button*, void*);
-  static void cb_Set1(Fl_Button*, void*);
+  inline void cb_f_i(Fl_Button*, void*);
+  static void cb_f(Fl_Button*, void*);
+  inline void cb_10_i(Fl_Button*, void*);
+  static void cb_10(Fl_Button*, void*);
 public:
   Fl_Output *txtout_scanner_type;
   Fl_Value_Output *valout_scanner_size_cm_w;
@@ -392,8 +392,8 @@ public:
 private:
   inline void cb_filinp_scan_save_dir_path_i(Fl_File_Input*, void*);
   static void cb_filinp_scan_save_dir_path(Fl_File_Input*, void*);
-  inline void cb_d_i(Fl_Button*, void*);
-  static void cb_d(Fl_Button*, void*);
+  inline void cb_12_i(Fl_Button*, void*);
+  static void cb_12(Fl_Button*, void*);
 public:
   Fl_Input *strinp_scan_save_file_head;
 private:
@@ -421,8 +421,8 @@ public:
   static Fl_Menu_Item menu_choice_scan_num_endless_direction[];
   Fl_Value_Input *valinp_scan_num_end;
 private:
-  inline void cb_e_i(Fl_Button*, void*);
-  static void cb_e(Fl_Button*, void*);
+  inline void cb_13_i(Fl_Button*, void*);
+  static void cb_13(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_scan_adjustable_per_frame_sw;
   Fl_Button *button_scan_save;
@@ -440,12 +440,12 @@ public:
   Fl_Input *strinp_trace_open_number_format;
   Fl_Choice *choice_trace_open_image_format;
 private:
-  inline void cb_f_i(Fl_Button*, void*);
-  static void cb_f(Fl_Button*, void*);
-  inline void cb_Rename1_i(Fl_Button*, void*);
-  static void cb_Rename1(Fl_Button*, void*);
-  inline void cb_Renumber1_i(Fl_Button*, void*);
-  static void cb_Renumber1(Fl_Button*, void*);
+  inline void cb_14_i(Fl_Button*, void*);
+  static void cb_14(Fl_Button*, void*);
+  inline void cb_15_i(Fl_Button*, void*);
+  static void cb_15(Fl_Button*, void*);
+  inline void cb_16_i(Fl_Button*, void*);
+  static void cb_16(Fl_Button*, void*);
 public:
   Fl_Check_Button *chkbtn_trace_filter_trace_sw;
 private:
@@ -461,8 +461,8 @@ public:
 private:
   inline void cb_filinp_trace_save_dir_path_i(Fl_File_Input*, void*);
   static void cb_filinp_trace_save_dir_path(Fl_File_Input*, void*);
-  inline void cb_10_i(Fl_Button*, void*);
-  static void cb_10(Fl_Button*, void*);
+  inline void cb_17_i(Fl_Button*, void*);
+  static void cb_17(Fl_Button*, void*);
 public:
   Fl_Input *strinp_trace_save_file_head;
 private:
@@ -482,20 +482,20 @@ public:
   Fl_Value_Output *valout_trace_num_start;
   Fl_Value_Output *valout_trace_num_end;
 private:
-  inline void cb_Set2_i(Fl_Button*, void*);
-  static void cb_Set2(Fl_Button*, void*);
-  inline void cb_Trace1_i(Fl_Button*, void*);
-  static void cb_Trace1(Fl_Button*, void*);
+  inline void cb_18_i(Fl_Button*, void*);
+  static void cb_18(Fl_Button*, void*);
+  inline void cb_19_i(Fl_Button*, void*);
+  static void cb_19(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_number;
 private:
   inline void cb_window_number_i(Fl_Double_Window*, void*);
   static void cb_window_number(Fl_Double_Window*, void*);
   static Fl_Menu_Item menu_1[];
-  inline void cb_Select_i(Fl_Menu_*, void*);
-  static void cb_Select(Fl_Menu_*, void*);
-  inline void cb_Delete_i(Fl_Menu_*, void*);
-  static void cb_Delete(Fl_Menu_*, void*);
+  inline void cb_1a_i(Fl_Menu_*, void*);
+  static void cb_1a(Fl_Menu_*, void*);
+  inline void cb_1b_i(Fl_Menu_*, void*);
+  static void cb_1b(Fl_Menu_*, void*);
 public:
   Fl_Input *norinp_number_input;
 private:
@@ -513,16 +513,16 @@ public:
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
   static void cb_window_trace_batch(Fl_Double_Window*, void*);
-  inline void cb_Add_i(Fl_Button*, void*);
-  static void cb_Add(Fl_Button*, void*);
-  inline void cb_Upper_i(Fl_Button*, void*);
-  static void cb_Upper(Fl_Button*, void*);
-  inline void cb_Lower_i(Fl_Button*, void*);
-  static void cb_Lower(Fl_Button*, void*);
-  inline void cb_Delete1_i(Fl_Button*, void*);
-  static void cb_Delete1(Fl_Button*, void*);
-  inline void cb_Run_i(Fl_Button*, void*);
-  static void cb_Run(Fl_Button*, void*);
+  inline void cb_1c_i(Fl_Button*, void*);
+  static void cb_1c(Fl_Button*, void*);
+  inline void cb_1d_i(Fl_Button*, void*);
+  static void cb_1d(Fl_Button*, void*);
+  inline void cb_1e_i(Fl_Button*, void*);
+  static void cb_1e(Fl_Button*, void*);
+  inline void cb_1f_i(Fl_Button*, void*);
+  static void cb_1f(Fl_Button*, void*);
+  inline void cb_20_i(Fl_Button*, void*);
+  static void cb_20(Fl_Button*, void*);
 public:
   Fl_Browser *selbro_trace_batch_config_list;
   Fl_Double_Window *window_trace_params;
@@ -535,8 +535,8 @@ public:
 private:
   inline void cb_button_trace_params_i(fltk_button_trace_params*, void*);
   static void cb_button_trace_params(fltk_button_trace_params*, void*);
-  inline void cb_12_i(Fl_Button*, void*);
-  static void cb_12(Fl_Button*, void*);
+  inline void cb_22_i(Fl_Button*, void*);
+  static void cb_22(Fl_Button*, void*);
 public:
   Fl_Button *togbut_trace_open_under_sw;
 private:
@@ -998,10 +998,10 @@ private:
 public:
   Fl_Output *output_input_num_form_sample;
 private:
-  inline void cb_OK_i(Fl_Button*, void*);
-  static void cb_OK(Fl_Button*, void*);
-  inline void cb_Cancel_i(Fl_Button*, void*);
-  static void cb_Cancel(Fl_Button*, void*);
+  inline void cb_23_i(Fl_Button*, void*);
+  static void cb_23(Fl_Button*, void*);
+  inline void cb_24_i(Fl_Button*, void*);
+  static void cb_24(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_set_aspect_ratio;
 private:
@@ -1013,10 +1013,10 @@ public:
   Fl_Button *radbut_area_aspect_ratio_h;
   Fl_Value_Input *valinp_area_aspect_ratio_h;
 private:
-  inline void cb_OK1_i(Fl_Button*, void*);
-  static void cb_OK1(Fl_Button*, void*);
-  inline void cb_Cancel1_i(Fl_Button*, void*);
-  static void cb_Cancel1(Fl_Button*, void*);
+  inline void cb_25_i(Fl_Button*, void*);
+  static void cb_25(Fl_Button*, void*);
+  inline void cb_26_i(Fl_Button*, void*);
+  static void cb_26(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_set_color;
 private:
@@ -1086,10 +1086,10 @@ public:
   Fl_Box *box_set_color_ok;
   Fl_Box *box_set_color_cancel;
 private:
-  inline void cb_OK2_i(Fl_Button*, void*);
-  static void cb_OK2(Fl_Button*, void*);
-  inline void cb_Cancel2_i(Fl_Button*, void*);
-  static void cb_Cancel2(Fl_Button*, void*);
+  inline void cb_27_i(Fl_Button*, void*);
+  static void cb_27(Fl_Button*, void*);
+  inline void cb_28_i(Fl_Button*, void*);
+  static void cb_28(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_trace_hue_minmax;
 private:
@@ -1106,8 +1106,8 @@ public:
 private:
   inline void cb_radbut_hue_max_sw_i(Fl_Button*, void*);
   static void cb_radbut_hue_max_sw(Fl_Button*, void*);
-  inline void cb_Reset_i(Fl_Button*, void*);
-  static void cb_Reset(Fl_Button*, void*);
+  inline void cb_29_i(Fl_Button*, void*);
+  static void cb_29(Fl_Button*, void*);
 };
 extern gts_gui cl_gts_gui; 
 #endif
