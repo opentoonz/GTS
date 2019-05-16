@@ -396,39 +396,40 @@ void gts_gui::cb_menite_help_about(Fl_Menu_* o, void* v) {
 
 Fl_Menu_Item gts_gui::menu_[] = {
  {"\343\203\225\343\202\241\343\202\244\343\203\253", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\347\224\273\345\203\217""1\346\236\232\350\241\250\347\244\272...", 0x4006f,  (Fl_Callback*)gts_gui::cb_1, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\347\224\273\345\203\217(\345\207\246\347\220\206\343\201\252\343\201\227)1\
-\346\236\232\344\277\235\345\255\230...", 0x50073,  (Fl_Callback*)gts_gui::cb_11, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\347\224\273\345\203\217\351\226\213\343\201\217(1\346\236\232)...", 0x4006f,  (Fl_Callback*)gts_gui::cb_1, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\347\224\273\345\203\217\345\210\245\345\220\215\343\201\247\344\277\235\345\
+\255\230(\345\207\246\347\220\206\343\201\233\343\201\232""1\346\236\232)...", 0x50073,  (Fl_Callback*)gts_gui::cb_11, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\350\250\255\345\256\232\345\206\215\347\217\276...", 0x8006f,  (Fl_Callback*)gts_gui::cb_, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\350\250\255\345\256\232\345\215\263\346\231\202\344\277\235\345\255\230", 0x80073,  (Fl_Callback*)gts_gui::cb_2, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\350\250\255\345\256\232\344\277\235\345\255\230...", 0x90073,  (Fl_Callback*)gts_gui::cb_3, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\350\250\255\345\256\232\344\277\235\345\255\230", 0x80073,  (Fl_Callback*)gts_gui::cb_2, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\350\250\255\345\256\232\345\210\245\345\220\215\343\201\247\344\277\235\345\
+\255\230...", 0x90073,  (Fl_Callback*)gts_gui::cb_3, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\347\265\202\344\272\206", 0x40071,  (Fl_Callback*)gts_gui::cb_4, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"\345\256\237\350\241\214", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\346\234\200\345\244\247\343\202\271\343\202\255\343\203\243\343\203\263", 0,  (Fl_Callback*)gts_gui::cb_menite_scan_crop, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\346\234\200\345\244\247\343\202\271\343\202\255\343\203\243\343\203\263(\
+\342\206\222\347\257\204\345\233\262\347\267\250\351\233\206)", 0,  (Fl_Callback*)gts_gui::cb_menite_scan_crop, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\347\242\272\350\252\215\343\202\271\343\202\255\343\203\243\343\203\263", 0x70,  (Fl_Callback*)gts_gui::cb_menite_preview_scan, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\351\200\243\347\225\252\343\202\271\343\202\255\343\203\243\343\203\263\343\
 \201\250\344\277\235\345\255\230\351\226\213\345\247\213", 0xff0d,  (Fl_Callback*)gts_gui::cb_menite_scan_save, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\351\200\243\347\225\252\343\203\225\343\202\241\343\202\244\343\203\253""2\
 \345\200\244\345\214\226\345\256\237\350\241\214", 0x54,  (Fl_Callback*)gts_gui::cb_21, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\343\203\252\343\203\215\343\203\274\343\203\240...", 0,  (Fl_Callback*)gts_gui::cb_5, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\343\203\252\343\203\212\343\203\263\343\203\220\343\203\252\343\203\263\343\
-\202\260...", 0,  (Fl_Callback*)gts_gui::cb_6, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\343\203\252\343\203\215\343\203\274\343\203\240", 0,  (Fl_Callback*)gts_gui::cb_5, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\343\203\252\343\203\212\343\203\263\343\203\220\343\203\274", 0,  (Fl_Callback*)gts_gui::cb_6, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"\343\202\246\343\202\244\343\203\263\343\203\211\343\202\246", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\347\257\204\345\233\262\343\201\250\346\226\271\345\220\221...", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_area_and_rot90, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\347\257\204\345\233\262\343\201\250\346\226\271\345\220\221", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_area_and_rot90, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\347\224\273\345\203\217\343\202\277\343\202\244\343\203\227\343\201\250\346\
-\230\216\343\202\213\343\201\225...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"\345\256\237\350\241\214\347\225\252\345\217\267...", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+\230\216\343\202\213\343\201\225", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\345\256\237\350\241\214\347\225\252\345\217\267", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\351\200\243\347\225\252\343\202\271\343\202\255\343\203\243\343\203\263\343\
-\201\250\344\277\235\345\255\230...", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_scan_and_save, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+\201\250\344\277\235\345\255\230", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_scan_and_save, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\351\200\243\347\225\252\343\203\225\343\202\241\343\202\244\343\203\253""2\
-\345\200\244\345\214\226...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"2\345\200\244\345\214\226\350\252\277\346\225\264...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_params, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+\345\200\244\345\214\226", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"2\345\200\244\345\214\226\350\252\277\346\225\264", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_params, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"2\345\200\244\345\214\226HSV\350\211\262\347\253\213\344\275\223", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_hsv_view, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"2\345\200\244\345\214\226\350\211\262\347\233\270\347\257\204\345\233\262", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_hue_minmax, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"2\345\200\244\345\214\226\343\203\220\343\203\203\343\203\201...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Select SANE device...", 0,  0, 0, 16, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"2\345\200\244\345\214\226\343\203\220\343\203\203\343\203\201", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Select SANE device", 0,  0, 0, 16, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"\350\241\250\347\244\272", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\343\202\272\343\203\274\343\203\240", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
@@ -443,7 +444,7 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"\343\203\224\343\202\257\343\202\273\343\203\253\347\255\211\345\200\215", 0x6e,  (Fl_Callback*)gts_gui::cb_b, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\345\205\250\344\275\223\350\241\250\347\244\272", 0x6d,  (Fl_Callback*)gts_gui::cb_c, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
- {"\343\203\225\343\203\254\343\203\274\343\203\240\345\210\207\346\233\277", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\343\203\225\343\203\254\343\203\274\343\203\240", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\345\276\252\347\222\260", 0,  0, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\345\211\215", 0xff52,  (Fl_Callback*)gts_gui::cb_d, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"\346\254\241", 0xff54,  (Fl_Callback*)gts_gui::cb_e, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
@@ -2288,7 +2289,7 @@ Fl_Double_Window* gts_gui::make_window() {
       } // Fl_Value_Input* valinp_area_reso
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(1, 65, 198, 25, "\345\233\236\350\273\242");
+    { Fl_Group* o = new Fl_Group(1, 65, 198, 25, "\346\226\271\345\220\221");
       o->box(FL_BORDER_FRAME);
       o->color((Fl_Color)41);
       o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
@@ -2314,13 +2315,13 @@ Fl_Double_Window* gts_gui::make_window() {
         group_area_crop->align(Fl_Align(FL_ALIGN_TOP_LEFT));
         { Fl_Group* o = new Fl_Group(4, 160, 192, 25, "\351\226\213\345\247\213\344\275\215\347\275\256(\345\267\246\344\270\212)");
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-          { valinp_area_offset_cm_x = new Fl_Value_Input(25, 160, 55, 25, "X");
+          { valinp_area_offset_cm_x = new Fl_Value_Input(25, 160, 55, 25, "\346\250\252");
             valinp_area_offset_cm_x->box(FL_BORDER_BOX);
             valinp_area_offset_cm_x->maximum(60);
             valinp_area_offset_cm_x->callback((Fl_Callback*)cb_valinp_area_offset_cm_x);
             valinp_area_offset_cm_x->when(FL_WHEN_RELEASE);
           } // Fl_Value_Input* valinp_area_offset_cm_x
-          { valinp_area_offset_cm_y = new Fl_Value_Input(95, 160, 55, 25, "Y");
+          { valinp_area_offset_cm_y = new Fl_Value_Input(100, 160, 55, 25, "\347\270\246");
             valinp_area_offset_cm_y->box(FL_BORDER_BOX);
             valinp_area_offset_cm_y->maximum(60);
             valinp_area_offset_cm_y->callback((Fl_Callback*)cb_valinp_area_offset_cm_y);
@@ -2343,7 +2344,7 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_area_size_cm_w->callback((Fl_Callback*)cb_valinp_area_size_cm_w);
               valinp_area_size_cm_w->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_size_cm_w
-            { valinp_area_size_cm_h = new Fl_Value_Input(95, 220, 55, 25, "\351\253\230");
+            { valinp_area_size_cm_h = new Fl_Value_Input(100, 220, 55, 25, "\351\253\230");
               valinp_area_size_cm_h->box(FL_BORDER_BOX);
               valinp_area_size_cm_h->maximum(60);
               valinp_area_size_cm_h->callback((Fl_Callback*)cb_valinp_area_size_cm_h);
@@ -2359,7 +2360,7 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_area_size_pixel_w->callback((Fl_Callback*)cb_valinp_area_size_pixel_w);
               valinp_area_size_pixel_w->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_size_pixel_w
-            { valinp_area_size_pixel_h = new Fl_Value_Input(95, 250, 55, 25, "\351\253\230");
+            { valinp_area_size_pixel_h = new Fl_Value_Input(100, 250, 55, 25, "\351\253\230");
               valinp_area_size_pixel_h->box(FL_BORDER_BOX);
               valinp_area_size_pixel_h->maximum(10000);
               valinp_area_size_pixel_h->callback((Fl_Callback*)cb_valinp_area_size_pixel_h);
@@ -2731,7 +2732,7 @@ Fl_Double_Window* gts_gui::make_window() {
         { Fl_Box* o = new Fl_Box(1, 265, 109, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
-        { Fl_Button* o = new Fl_Button(110, 265, 85, 25, "\351\200\243\347\225\252\350\250\255\345\256\232");
+        { Fl_Button* o = new Fl_Button(110, 265, 85, 25, "\351\200\243\347\225\252\343\202\273\343\203\203\343\203\210");
           o->callback((Fl_Callback*)cb_13);
         } // Fl_Button* o
         o->end();
@@ -2807,8 +2808,7 @@ Fl_Double_Window* gts_gui::make_window() {
           o->tooltip("Rename");
           o->callback((Fl_Callback*)cb_15);
         } // Fl_Button* o
-        { Fl_Button* o = new Fl_Button(110, 120, 85, 20, "\343\203\252\343\203\212\343\203\263\343\203\220\343\203\252\343\203\263\343\
-\202\260...");
+        { Fl_Button* o = new Fl_Button(110, 120, 85, 20, "\343\203\252\343\203\212\343\203\263\343\203\220\343\203\274...");
           o->tooltip("Renumber");
           o->callback((Fl_Callback*)cb_16);
         } // Fl_Button* o
@@ -2889,16 +2889,16 @@ Fl_Double_Window* gts_gui::make_window() {
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Group* o = new Fl_Group(1, 320, 198, 25);
-        { valout_trace_num_start = new Fl_Value_Output(16, 320, 40, 25, "\345\247\213");
+        { valout_trace_num_start = new Fl_Value_Output(21, 320, 40, 25, "\345\247\213");
           valout_trace_num_start->box(FL_BORDER_BOX);
         } // Fl_Value_Output* valout_trace_num_start
-        { valout_trace_num_end = new Fl_Value_Output(69, 320, 40, 25, "\347\265\202");
+        { valout_trace_num_end = new Fl_Value_Output(79, 320, 40, 25, "\347\265\202");
           valout_trace_num_end->box(FL_BORDER_BOX);
         } // Fl_Value_Output* valout_trace_num_end
-        { Fl_Box* o = new Fl_Box(109, 320, 1, 25);
+        { Fl_Box* o = new Fl_Box(119, 320, 1, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
-        { Fl_Button* o = new Fl_Button(110, 320, 85, 25, "\351\200\243\347\225\252\343\202\273\343\203\203\343\203\210");
+        { Fl_Button* o = new Fl_Button(120, 320, 75, 25, "\351\200\243\347\225\252\343\202\273\343\203\203\343\203\210");
           o->callback((Fl_Callback*)cb_18);
         } // Fl_Button* o
         o->end();

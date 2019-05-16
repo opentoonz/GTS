@@ -407,21 +407,21 @@ Fl_Menu_Item gts_gui::menu_[] = {
  {"Scan Crop", 0,  (Fl_Callback*)gts_gui::cb_menite_scan_crop, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Preview Scan", 0x70,  (Fl_Callback*)gts_gui::cb_menite_preview_scan, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Scan Save", 0xff0d,  (Fl_Callback*)gts_gui::cb_menite_scan_save, 0, 128, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Files...", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Rename...", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Renumber...", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Files", 0x54,  (Fl_Callback*)gts_gui::cb_Trace, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Rename", 0,  (Fl_Callback*)gts_gui::cb_Rename, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Renumber", 0,  (Fl_Callback*)gts_gui::cb_Renumber, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Window", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Area and Rot90...", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_area_and_rot90, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Pixel Type and Bright...", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Number ...", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Scan Save...", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_scan_and_save, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Files...", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Params...", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_params, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Area and Rot90", 0xffbe,  (Fl_Callback*)gts_gui::cb_menite_area_and_rot90, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Pixel Type and Bright", 0xffbf,  (Fl_Callback*)gts_gui::cb_menite_pixel_type_and_bright, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Number", 0xffc0,  (Fl_Callback*)gts_gui::cb_menite_number, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Scan Save", 0xffc1,  (Fl_Callback*)gts_gui::cb_menite_scan_and_save, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Files", 0xffc2,  (Fl_Callback*)gts_gui::cb_menite_trace_files, 0, 130, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Params", 0xffc3,  (Fl_Callback*)gts_gui::cb_menite_trace_params, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace HSV View", 0xffc4,  (Fl_Callback*)gts_gui::cb_menite_trace_hsv_view, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Trace Hue Min,Max", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_hue_minmax, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Trace Batch...", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Select SANE device...", 0,  0, 0, 16, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Trace Batch", 0,  (Fl_Callback*)gts_gui::cb_menite_trace_batch, 0, 2, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Select SANE device", 0,  0, 0, 16, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"View", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {"Zoom", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
@@ -2306,7 +2306,7 @@ Fl_Double_Window* gts_gui::make_window() {
             valinp_area_offset_cm_x->callback((Fl_Callback*)cb_valinp_area_offset_cm_x);
             valinp_area_offset_cm_x->when(FL_WHEN_RELEASE);
           } // Fl_Value_Input* valinp_area_offset_cm_x
-          { valinp_area_offset_cm_y = new Fl_Value_Input(95, 160, 55, 25, "Y");
+          { valinp_area_offset_cm_y = new Fl_Value_Input(100, 160, 55, 25, "Y");
             valinp_area_offset_cm_y->box(FL_BORDER_BOX);
             valinp_area_offset_cm_y->maximum(60);
             valinp_area_offset_cm_y->callback((Fl_Callback*)cb_valinp_area_offset_cm_y);
@@ -2329,7 +2329,7 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_area_size_cm_w->callback((Fl_Callback*)cb_valinp_area_size_cm_w);
               valinp_area_size_cm_w->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_size_cm_w
-            { valinp_area_size_cm_h = new Fl_Value_Input(95, 220, 55, 25, "H");
+            { valinp_area_size_cm_h = new Fl_Value_Input(100, 220, 55, 25, "H");
               valinp_area_size_cm_h->box(FL_BORDER_BOX);
               valinp_area_size_cm_h->maximum(60);
               valinp_area_size_cm_h->callback((Fl_Callback*)cb_valinp_area_size_cm_h);
@@ -2345,7 +2345,7 @@ Fl_Double_Window* gts_gui::make_window() {
               valinp_area_size_pixel_w->callback((Fl_Callback*)cb_valinp_area_size_pixel_w);
               valinp_area_size_pixel_w->when(FL_WHEN_RELEASE);
             } // Fl_Value_Input* valinp_area_size_pixel_w
-            { valinp_area_size_pixel_h = new Fl_Value_Input(95, 250, 55, 25, "H");
+            { valinp_area_size_pixel_h = new Fl_Value_Input(100, 250, 55, 25, "H");
               valinp_area_size_pixel_h->box(FL_BORDER_BOX);
               valinp_area_size_pixel_h->maximum(10000);
               valinp_area_size_pixel_h->callback((Fl_Callback*)cb_valinp_area_size_pixel_h);
@@ -2868,16 +2868,16 @@ Fl_Double_Window* gts_gui::make_window() {
       o->box(FL_BORDER_BOX);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Group* o = new Fl_Group(1, 320, 198, 25);
-        { valout_trace_num_start = new Fl_Value_Output(16, 320, 40, 25, "S");
+        { valout_trace_num_start = new Fl_Value_Output(21, 320, 40, 25, "S");
           valout_trace_num_start->box(FL_BORDER_BOX);
         } // Fl_Value_Output* valout_trace_num_start
-        { valout_trace_num_end = new Fl_Value_Output(69, 320, 40, 25, "E");
+        { valout_trace_num_end = new Fl_Value_Output(79, 320, 40, 25, "E");
           valout_trace_num_end->box(FL_BORDER_BOX);
         } // Fl_Value_Output* valout_trace_num_end
-        { Fl_Box* o = new Fl_Box(109, 320, 1, 25);
+        { Fl_Box* o = new Fl_Box(119, 320, 1, 25);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
-        { Fl_Button* o = new Fl_Button(110, 320, 85, 25, "Set Number");
+        { Fl_Button* o = new Fl_Button(120, 320, 75, 25, "Set Number");
           o->callback((Fl_Callback*)cb_Set3);
         } // Fl_Button* o
         o->end();

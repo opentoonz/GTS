@@ -19,7 +19,7 @@ class gts_gui {open
   } {
     Fl_Window window_main_view {
       label GTS
-      callback {cl_gts_master.cb_quit();} selected
+      callback {cl_gts_master.cb_quit();}
       xywh {50 50 720 565} type Double resizable visible
     } {
       Fl_Menu_Bar {} {open
@@ -81,17 +81,17 @@ cl_gts_master.cb_quit();}
             tooltip {Scan and Save Files} xywh {5 5 100 20} shortcut 0xff0d divider
           }
           MenuItem {} {
-            label {Trace Files...}
+            label {Trace Files}
             callback {cl_gts_master.cl_trace_files.cb_start();}
             tooltip {Trace and Save Files} xywh {5 5 100 20} shortcut 0x54
           }
           MenuItem {} {
-            label {Rename...}
+            label Rename
             callback {cl_gts_master.cl_trace_files.cb_rename();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
-            label {Renumber...}
+            label Renumber
             callback {cl_gts_master.cl_trace_files.cb_renumber();}
             xywh {0 0 30 20}
           }
@@ -101,7 +101,7 @@ cl_gts_master.cb_quit();}
           xywh {10 10 100 20}
         } {
           MenuItem menite_area_and_rot90 {
-            label {Area and Rot90...}
+            label {Area and Rot90}
             callback {if (menite_area_and_rot90->value()) {
  window_main_view->show();/* Need for Minimize */
  window_area_and_rot90->show();
@@ -111,7 +111,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffbe
           }
           MenuItem menite_pixel_type_and_bright {
-            label {Pixel Type and Bright...}
+            label {Pixel Type and Bright}
             callback {if (menite_pixel_type_and_bright->value()) {
  window_main_view->show();/* Need for Minimize */
  window_pixel_type_and_bright->show();
@@ -121,7 +121,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffbf
           }
           MenuItem menite_number {
-            label {Number ...}
+            label Number
             callback {if (menite_number->value()) {
  window_main_view->show();/* Need for Minimize */
  window_number->show();
@@ -131,7 +131,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffc0 divider
           }
           MenuItem menite_scan_and_save {
-            label {Scan Save...}
+            label {Scan Save}
             callback {if (menite_scan_and_save->value()) {
  window_main_view->show();/* Need for Minimize */
  window_scan_and_save->show();
@@ -141,7 +141,7 @@ cl_gts_master.cb_quit();}
             xywh {10 10 100 20} type Toggle shortcut 0xffc1
           }
           MenuItem menite_trace_files {
-            label {Trace Files...}
+            label {Trace Files}
             callback {if (menite_trace_files->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_files->show();
@@ -151,7 +151,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 30 20} type Toggle shortcut 0xffc2 divider
           }
           MenuItem menite_trace_params {
-            label {Trace Params...}
+            label {Trace Params}
             callback {if (menite_trace_params->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_params->show();
@@ -184,7 +184,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_trace_batch {
-            label {Trace Batch...}
+            label {Trace Batch}
             callback {if (menite_trace_batch->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_batch->show();
@@ -194,7 +194,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 100 20} type Toggle
           }
           MenuItem menite_sane_device {
-            label {Select SANE device...}
+            label {Select SANE device}
             xywh {0 0 100 20} hide
           }
         }
@@ -524,7 +524,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             Fl_Value_Input valinp_area_offset_cm_y {
               label Y
               callback {cl_gts_master.cl_area_and_rot90.cb_area_offset_cm_y();}
-              xywh {95 160 55 25} box BORDER_BOX when 4 maximum 60
+              xywh {100 160 55 25} box BORDER_BOX when 4 maximum 60
             }
             Fl_Text_Display {} {
               label cm
@@ -546,7 +546,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
               Fl_Value_Input valinp_area_size_cm_h {
                 label H
                 callback {cl_gts_master.cl_area_and_rot90.cb_area_size_cm_h();}
-                xywh {95 220 55 25} box BORDER_BOX when 4 maximum 60
+                xywh {100 220 55 25} box BORDER_BOX when 4 maximum 60
               }
             }
             Fl_Group {} {open
@@ -560,7 +560,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
               Fl_Value_Input valinp_area_size_pixel_h {
                 label H
                 callback {cl_gts_master.cl_area_and_rot90.cb_area_size_pixel_h();}
-                xywh {95 250 55 25} box BORDER_BOX when 4 maximum 10000
+                xywh {100 250 55 25} box BORDER_BOX when 4 maximum 10000
               }
             }
             Fl_Group {} {open
@@ -1140,20 +1140,20 @@ if (cl_gts_master.cl_number.is_trace()) {
         } {
           Fl_Value_Output valout_trace_num_start {
             label S
-            xywh {16 320 40 25} box BORDER_BOX
+            xywh {21 320 40 25} box BORDER_BOX
           }
           Fl_Value_Output valout_trace_num_end {
             label E
-            xywh {69 320 40 25} box BORDER_BOX
+            xywh {79 320 40 25} box BORDER_BOX
           }
           Fl_Box {} {
-            xywh {109 320 1 25} resizable
+            xywh {119 320 1 25} resizable
           }
           Fl_Button {} {
             label {Set Number}
             callback {cl_gts_master.cl_trace_files.cb_set_number();
 cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
-            xywh {110 320 85 25}
+            xywh {120 320 75 25}
           }
         }
       }
