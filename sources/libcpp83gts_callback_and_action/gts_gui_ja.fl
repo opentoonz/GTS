@@ -30,27 +30,27 @@ class gts_gui {open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {画像開く(1枚)...}
+            label {画像 開く(1枚)...}
             callback {cl_gts_master.cl_image.open();}
             xywh {0 0 30 20} shortcut 0x4006f
           }
           MenuItem {} {
-            label {画像別名で保存(処理せず1枚)...}
+            label {画像 別名で保存(処理せず1枚)...}
             callback {cl_gts_master.cl_image.save_as();}
             xywh {0 0 30 20} shortcut 0x50073 divider
           }
           MenuItem {} {
-            label {設定再現...}
+            label {設定 再現...}
             callback {cl_gts_master.cl_config.open();}
             xywh {5 5 100 20} shortcut 0x8006f
           }
           MenuItem {} {
-            label {設定保存}
+            label {設定 保存}
             callback {cl_gts_master.cl_config.save();}
             xywh {5 5 100 20} shortcut 0x80073
           }
           MenuItem {} {
-            label {設定別名で保存...}
+            label {設定 別名で保存...}
             callback {cl_gts_master.cl_config.save_as();}
             xywh {5 5 100 20} shortcut 0x90073 divider
           }
