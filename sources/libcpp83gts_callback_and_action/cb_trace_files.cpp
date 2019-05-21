@@ -354,6 +354,7 @@ void cb_trace_files::cb_renumber(void)
 				nums.at(0) + diff_num ) );
 		fl_alert(
 "Error : Number need 0...9999 range\nFrom\n %s\nTo\n %s\nNumber List\n %s\n"
+/* u8"エラー\n%s\nから\n%s\nへの数値シフトだと連番が\n %s\nとなります。\n0から9999までの範囲になるように指定してください" */
 			,opa.c_str()
 			,npa.c_str()
 			,numost.str().c_str()

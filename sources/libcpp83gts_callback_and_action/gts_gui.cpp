@@ -666,7 +666,7 @@ void gts_gui::cb_button_pixel_type_and_bright(fltk_button_pixel_type_and_bright*
 }
 
 void gts_gui::cb_choice_pixel_type_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_choice_pixel_type_menu();
+  cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 cl_gts_master.cl_scan_and_save.set_gui_ext_list();
 }
 void gts_gui::cb_choice_pixel_type(Fl_Choice* o, void* v) {
@@ -2366,12 +2366,12 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Group* o
           o->end();
         } // Fl_Group* o
-        { Fl_Button* o = new Fl_Button(75, 195, 120, 17, "Set Aspect Ratio...");
+        { Fl_Button* o = new Fl_Button(75, 195, 120, 20, "Set Aspect Ratio...");
           o->callback((Fl_Callback*)cb_Set);
         } // Fl_Button* o
         group_area_crop->end();
       } // Fl_Group* group_area_crop
-      { Fl_Button* o = new Fl_Button(75, 125, 60, 17, "Set Max.");
+      { Fl_Button* o = new Fl_Button(75, 125, 80, 20, "Set Max.");
         o->callback((Fl_Callback*)cb_Set1);
       } // Fl_Button* o
       o->end();
@@ -2428,13 +2428,13 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Group* o = new Fl_Group(0, 35, 200, 25);
       { new Fl_Box(0, 35, 75, 25);
       } // Fl_Box* o
-      { choice_pixel_type = new Fl_Choice(75, 35, 100, 25, "Pixel Type");
+      { choice_pixel_type = new Fl_Choice(75, 35, 110, 25, "Pixel Type");
         choice_pixel_type->box(FL_BORDER_BOX);
         choice_pixel_type->down_box(FL_BORDER_BOX);
         choice_pixel_type->callback((Fl_Callback*)cb_choice_pixel_type);
         choice_pixel_type->menu(menu_choice_pixel_type);
       } // Fl_Choice* choice_pixel_type
-      { Fl_Box* o = new Fl_Box(175, 35, 25, 25);
+      { Fl_Box* o = new Fl_Box(185, 35, 15, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       o->end();

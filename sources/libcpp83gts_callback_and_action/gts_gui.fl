@@ -581,13 +581,13 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             callback {cl_gts_master.cl_area_and_rot90.cb_dialog_set_aspect_ratio(
 	window_area_and_rot90 ,o
 );}
-            xywh {75 195 120 17}
+            xywh {75 195 120 20}
           }
         }
         Fl_Button {} {
           label {Set Max.}
           callback {cl_gts_master.cl_area_and_rot90.cb_area_set_max();}
-          xywh {75 125 60 17}
+          xywh {75 125 80 20}
         }
       }
       Fl_Group {} {
@@ -643,9 +643,9 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         }
         Fl_Choice choice_pixel_type {
           label {Pixel Type}
-          callback {cl_gts_master.cb_choice_pixel_type_menu();
+          callback {cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
-          xywh {75 35 100 25} box BORDER_BOX down_box BORDER_BOX
+          xywh {75 35 110 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
             label BW
@@ -661,7 +661,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
           }
         }
         Fl_Box {} {
-          xywh {175 35 25 25} resizable
+          xywh {185 35 15 25} resizable
         }
       }
       Fl_Group group_bw {open

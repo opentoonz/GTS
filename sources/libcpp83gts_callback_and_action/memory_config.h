@@ -182,6 +182,12 @@ public:
 
 	,str_pixel_type_(
 	    "pixel_type")
+	,str_pixel_type_bw_(
+	    "BW")
+	,str_pixel_type_grayscale_(
+	    "Grayscale")
+	,str_pixel_type_rgb_(
+	    "RGB")
 	,str_bw_threshold_(
 	    "bw_threshold")
 	,str_grayscale_brightness_(
@@ -467,6 +473,9 @@ private:
 	const char* str_scanner_size_cm_h_;
 
 	const char* str_pixel_type_;
+	const char* str_pixel_type_bw_;
+	const char* str_pixel_type_grayscale_;
+	const char* str_pixel_type_rgb_;
 	const char* str_bw_threshold_;
 	const char* str_grayscale_brightness_;
 	const char* str_grayscale_contrast_;

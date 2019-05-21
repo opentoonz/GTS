@@ -2,7 +2,7 @@
 #include <iostream>	// std::cout
 #include <sstream>	// std::ostringstream
 #include <iomanip>	// std::setfill(-) ,std::setw(-)
-#include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
+#include <FL/fl_ask.H>  // fl_alert(-)
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "osapi_exist.h"

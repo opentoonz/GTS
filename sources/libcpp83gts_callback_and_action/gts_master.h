@@ -21,6 +21,7 @@
 #include "memory_config.h"
 #include "cb_image.h"
 #include "cb_config.h"
+#include "cb_pixel_type_and_bright.h"
 #include "cb_area_and_rot90.h"
 #include "cb_scan_and_save.h"
 #include "cb_number.h"
@@ -55,8 +56,6 @@ public:
 	void action( E_ACT e_act );
 
 	/* 実行 */
-	void cb_choice_pixel_type_title( const std::string& str );
-	void cb_choice_pixel_type_menu( void );
 	void cb_quit( void );
 
 	void cb_read_and_preview( void );
@@ -114,7 +113,9 @@ public:
 
 	cb_image		cl_image;
 	cb_config		cl_config;
-	cb_area_and_rot90	cl_area_and_rot90;
+
+	cb_pixel_type_and_bright	cl_pixel_type_and_bright;
+	cb_area_and_rot90		cl_area_and_rot90;
 	cb_scan_and_save	cl_scan_and_save;
 	cb_trace_files		cl_trace_files;
 	cb_number		cl_number;

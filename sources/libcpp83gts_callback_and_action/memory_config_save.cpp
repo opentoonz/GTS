@@ -201,8 +201,21 @@ void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_pixel_type_and_bright->label() << "\n";
-	save_stri_( this->str_pixel_type_
-	   ,cl_gts_gui.choice_pixel_type->text() ,ofs );
+	if (cl_gts_gui.choice_pixel_type->value()
+	==  cl_gts_master.cl_pixel_type_and_bright.get_bw_type_value()) {
+		save_stri_( this->str_pixel_type_
+			  , this->str_pixel_type_bw_ ,ofs );
+	} else
+	if (cl_gts_gui.choice_pixel_type->value() ==
+	cl_gts_master.cl_pixel_type_and_bright.get_grayscale_type_value()) {
+		save_stri_( this->str_pixel_type_
+			  , this->str_pixel_type_grayscale_ ,ofs );
+	} else
+	if (cl_gts_gui.choice_pixel_type->value()
+	==  cl_gts_master.cl_pixel_type_and_bright.get_rgb_type_value()) {
+		save_stri_( this->str_pixel_type_
+			  , this->str_pixel_type_rgb_ ,ofs );
+	}
 
 	save_fl64_( this->str_bw_threshold_
 	   ,cl_gts_gui.valinp_bw_threshold->value() ,ofs );

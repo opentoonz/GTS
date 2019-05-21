@@ -581,13 +581,13 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             callback {cl_gts_master.cl_area_and_rot90.cb_dialog_set_aspect_ratio(
 	window_area_and_rot90 ,o
 );}
-            xywh {75 195 120 17}
+            xywh {75 195 120 20}
           }
         }
         Fl_Button {} {
           label {最大セット}
           callback {cl_gts_master.cl_area_and_rot90.cb_area_set_max();}
-          xywh {75 125 60 17}
+          xywh {75 125 80 20}
         }
       }
       Fl_Group {} {
@@ -643,25 +643,25 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         }
         Fl_Choice choice_pixel_type {
           label {画像タイプ}
-          callback {cl_gts_master.cb_choice_pixel_type_menu();
+          callback {cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
-          xywh {75 35 100 25} box BORDER_BOX down_box BORDER_BOX
+          xywh {75 35 110 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
-            label BW
+            label {白黒2階調}
             xywh {20 20 100 20}
           }
           MenuItem {} {
-            label Grayscale
+            label {8ビットグレー}
             xywh {25 25 100 20}
           }
           MenuItem {} {
-            label RGB
+            label {２４ビットカラー}
             xywh {25 25 100 20}
           }
         }
         Fl_Box {} {
-          xywh {175 35 25 25} resizable
+          xywh {185 35 15 25} resizable
         }
       }
       Fl_Group group_bw {open
@@ -675,7 +675,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 80 35 25} box BORDER_BOX maximum 255 value 180
           }
           Fl_Scrollbar scrbar_bw_threshold {
-            label Threshold
+            label {白黒しきい値}
             callback {valinp_bw_threshold->value(o->value());}
             xywh {45 85 150 20} type Horizontal box BORDER_BOX align 5 maximum 255 value 180 resizable
             code0 {scrbar_bw_threshold->linesize(1);}
@@ -693,7 +693,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 80 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_grayscale_brightness {
-            label Brightness
+            label {明るさ}
             callback {valinp_grayscale_brightness->value(o->value());}
             xywh {55 85 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_grayscale_brightness->linesize(1);}
@@ -707,7 +707,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 120 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_grayscale_contrast {
-            label Contrast
+            label {コントラスト}
             callback {valinp_grayscale_contrast->value(o->value());}
             xywh {55 125 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_grayscale_contrast->linesize(1);}
@@ -721,7 +721,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 160 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
           }
           Fl_Scrollbar scrbar_grayscale_gamma {
-            label Gamma
+            label {ガンマ}
             callback {valinp_grayscale_gamma->value(((Fl_Valuator *)o)->value());}
             xywh {55 165 140 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01 value 1 resizable
             code0 {scrbar_grayscale_gamma->linesize(1);}
@@ -739,7 +739,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 80 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_rgb_brightness {
-            label Brightness
+            label {明るさ}
             callback {valinp_rgb_brightness->value(o->value());}
             xywh {55 85 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_rgb_brightness->linesize(1);}
@@ -753,7 +753,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 120 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_rgb_contrast {
-            label Contrast
+            label {コントラスト}
             callback {valinp_rgb_contrast->value(o->value());}
             xywh {55 125 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_rgb_contrast->linesize(1);}
@@ -767,7 +767,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 160 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
           }
           Fl_Scrollbar scrbar_rgb_gamma {
-            label Gamma
+            label {ガンマ}
             callback {valinp_rgb_gamma->value(((Fl_Valuator *)o)->value());}
             xywh {55 165 140 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01 value 1 resizable
             code0 {scrbar_rgb_gamma->linesize(1);}

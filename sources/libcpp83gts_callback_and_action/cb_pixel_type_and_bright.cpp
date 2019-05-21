@@ -5,29 +5,25 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-void gts_master::cb_choice_pixel_type_title( const std::string& str )
+void cb_pixel_type_and_bright::cb_choice_pixel_type_title( const int number )
 {
-	const Fl_Menu_Item *crnt = cl_gts_gui.choice_pixel_type->find_item(
-		str.c_str()
-	);
-	if (crnt != nullptr) {
-		cl_gts_gui.choice_pixel_type->value( crnt ); 
-	}
+	cl_gts_gui.choice_pixel_type->value( number ); 
 }
-void gts_master::cb_choice_pixel_type_menu( void )
+
+void cb_pixel_type_and_bright::cb_choice_pixel_type_menu( void )
 {
 	switch (cl_gts_gui.choice_pixel_type->value()) {
-	case 0:
+	case this->bw_type_value_:
 		cl_gts_gui.group_bw->show();
 		cl_gts_gui.group_grays->hide();
 		cl_gts_gui.group_rgb->hide();
 		break;
-	case 1:
+	case this->grayscale_type_value_:
 		cl_gts_gui.group_bw->hide();
 		cl_gts_gui.group_grays->show();
 		cl_gts_gui.group_rgb->hide();
 		break;
-	case 2:
+	case this->rgb_type_value_:
 		cl_gts_gui.group_bw->hide();
 		cl_gts_gui.group_grays->hide();
 		cl_gts_gui.group_rgb->show();

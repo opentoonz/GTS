@@ -680,7 +680,7 @@ void gts_gui::cb_button_pixel_type_and_bright(fltk_button_pixel_type_and_bright*
 }
 
 void gts_gui::cb_choice_pixel_type_i(Fl_Choice*, void*) {
-  cl_gts_master.cb_choice_pixel_type_menu();
+  cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 cl_gts_master.cl_scan_and_save.set_gui_ext_list();
 }
 void gts_gui::cb_choice_pixel_type(Fl_Choice* o, void* v) {
@@ -688,9 +688,10 @@ void gts_gui::cb_choice_pixel_type(Fl_Choice* o, void* v) {
 }
 
 Fl_Menu_Item gts_gui::menu_choice_pixel_type[] = {
- {"BW", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Grayscale", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"RGB", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\347\231\275\351\273\222""2\351\232\216\350\252\277", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"8\343\203\223\343\203\203\343\203\210\343\202\260\343\203\254\343\203\274", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"\357\274\222\357\274\224\343\203\223\343\203\203\343\203\210\343\202\253\343\
+\203\251\343\203\274", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 
@@ -2382,12 +2383,12 @@ Fl_Double_Window* gts_gui::make_window() {
           } // Fl_Group* o
           o->end();
         } // Fl_Group* o
-        { Fl_Button* o = new Fl_Button(75, 195, 120, 17, "\347\270\246\346\250\252\346\257\224\343\202\273\343\203\203\343\203\210...");
+        { Fl_Button* o = new Fl_Button(75, 195, 120, 20, "\347\270\246\346\250\252\346\257\224\343\202\273\343\203\203\343\203\210...");
           o->callback((Fl_Callback*)cb_f);
         } // Fl_Button* o
         group_area_crop->end();
       } // Fl_Group* group_area_crop
-      { Fl_Button* o = new Fl_Button(75, 125, 60, 17, "\346\234\200\345\244\247\343\202\273\343\203\203\343\203\210");
+      { Fl_Button* o = new Fl_Button(75, 125, 80, 20, "\346\234\200\345\244\247\343\202\273\343\203\203\343\203\210");
         o->callback((Fl_Callback*)cb_10);
       } // Fl_Button* o
       o->end();
@@ -2446,13 +2447,13 @@ Fl_Double_Window* gts_gui::make_window() {
     { Fl_Group* o = new Fl_Group(0, 35, 200, 25);
       { new Fl_Box(0, 35, 75, 25);
       } // Fl_Box* o
-      { choice_pixel_type = new Fl_Choice(75, 35, 100, 25, "\347\224\273\345\203\217\343\202\277\343\202\244\343\203\227");
+      { choice_pixel_type = new Fl_Choice(75, 35, 110, 25, "\347\224\273\345\203\217\343\202\277\343\202\244\343\203\227");
         choice_pixel_type->box(FL_BORDER_BOX);
         choice_pixel_type->down_box(FL_BORDER_BOX);
         choice_pixel_type->callback((Fl_Callback*)cb_choice_pixel_type);
         choice_pixel_type->menu(menu_choice_pixel_type);
       } // Fl_Choice* choice_pixel_type
-      { Fl_Box* o = new Fl_Box(175, 35, 25, 25);
+      { Fl_Box* o = new Fl_Box(185, 35, 15, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
       o->end();
@@ -2465,7 +2466,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_bw_threshold->value(180);
           valinp_bw_threshold->callback((Fl_Callback*)cb_valinp_bw_threshold);
         } // Fl_Value_Input* valinp_bw_threshold
-        { scrbar_bw_threshold = new Fl_Scrollbar(45, 85, 150, 20, "Threshold");
+        { scrbar_bw_threshold = new Fl_Scrollbar(45, 85, 150, 20, "\347\231\275\351\273\222\343\201\227\343\201\215\343\201\204\345\200\244");
           scrbar_bw_threshold->type(1);
           scrbar_bw_threshold->box(FL_BORDER_BOX);
           scrbar_bw_threshold->maximum(255);
@@ -2489,7 +2490,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_grayscale_brightness->maximum(1000);
           valinp_grayscale_brightness->callback((Fl_Callback*)cb_valinp_grayscale_brightness);
         } // Fl_Value_Input* valinp_grayscale_brightness
-        { scrbar_grayscale_brightness = new Fl_Scrollbar(55, 85, 140, 20, "Brightness");
+        { scrbar_grayscale_brightness = new Fl_Scrollbar(55, 85, 140, 20, "\346\230\216\343\202\213\343\201\225");
           scrbar_grayscale_brightness->type(1);
           scrbar_grayscale_brightness->box(FL_BORDER_BOX);
           scrbar_grayscale_brightness->minimum(-1000);
@@ -2508,7 +2509,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_grayscale_contrast->maximum(1000);
           valinp_grayscale_contrast->callback((Fl_Callback*)cb_valinp_grayscale_contrast);
         } // Fl_Value_Input* valinp_grayscale_contrast
-        { scrbar_grayscale_contrast = new Fl_Scrollbar(55, 125, 140, 20, "Contrast");
+        { scrbar_grayscale_contrast = new Fl_Scrollbar(55, 125, 140, 20, "\343\202\263\343\203\263\343\203\210\343\203\251\343\202\271\343\203\210");
           scrbar_grayscale_contrast->type(1);
           scrbar_grayscale_contrast->box(FL_BORDER_BOX);
           scrbar_grayscale_contrast->minimum(-1000);
@@ -2528,7 +2529,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_grayscale_gamma->value(1);
           valinp_grayscale_gamma->callback((Fl_Callback*)cb_valinp_grayscale_gamma);
         } // Fl_Value_Input* valinp_grayscale_gamma
-        { scrbar_grayscale_gamma = new Fl_Scrollbar(55, 165, 140, 20, "Gamma");
+        { scrbar_grayscale_gamma = new Fl_Scrollbar(55, 165, 140, 20, "\343\202\254\343\203\263\343\203\236");
           scrbar_grayscale_gamma->type(1);
           scrbar_grayscale_gamma->box(FL_BORDER_BOX);
           scrbar_grayscale_gamma->minimum(0.5);
@@ -2553,7 +2554,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_rgb_brightness->maximum(1000);
           valinp_rgb_brightness->callback((Fl_Callback*)cb_valinp_rgb_brightness);
         } // Fl_Value_Input* valinp_rgb_brightness
-        { scrbar_rgb_brightness = new Fl_Scrollbar(55, 85, 140, 20, "Brightness");
+        { scrbar_rgb_brightness = new Fl_Scrollbar(55, 85, 140, 20, "\346\230\216\343\202\213\343\201\225");
           scrbar_rgb_brightness->type(1);
           scrbar_rgb_brightness->box(FL_BORDER_BOX);
           scrbar_rgb_brightness->minimum(-1000);
@@ -2572,7 +2573,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_rgb_contrast->maximum(1000);
           valinp_rgb_contrast->callback((Fl_Callback*)cb_valinp_rgb_contrast);
         } // Fl_Value_Input* valinp_rgb_contrast
-        { scrbar_rgb_contrast = new Fl_Scrollbar(55, 125, 140, 20, "Contrast");
+        { scrbar_rgb_contrast = new Fl_Scrollbar(55, 125, 140, 20, "\343\202\263\343\203\263\343\203\210\343\203\251\343\202\271\343\203\210");
           scrbar_rgb_contrast->type(1);
           scrbar_rgb_contrast->box(FL_BORDER_BOX);
           scrbar_rgb_contrast->minimum(-1000);
@@ -2592,7 +2593,7 @@ Fl_Double_Window* gts_gui::make_window() {
           valinp_rgb_gamma->value(1);
           valinp_rgb_gamma->callback((Fl_Callback*)cb_valinp_rgb_gamma);
         } // Fl_Value_Input* valinp_rgb_gamma
-        { scrbar_rgb_gamma = new Fl_Scrollbar(55, 165, 140, 20, "Gamma");
+        { scrbar_rgb_gamma = new Fl_Scrollbar(55, 165, 140, 20, "\343\202\254\343\203\263\343\203\236");
           scrbar_rgb_gamma->type(1);
           scrbar_rgb_gamma->box(FL_BORDER_BOX);
           scrbar_rgb_gamma->minimum(0.5);
