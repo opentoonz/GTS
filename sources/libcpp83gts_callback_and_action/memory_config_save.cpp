@@ -189,8 +189,28 @@ void memory_config::save_crop_area_and_rot90_( std::ofstream& ofs )
 	   ,cl_gts_gui.valinp_area_aspect_ratio_h->value() ,ofs );
 	save_stri_( this->str_area_aspect_ratio_how_to_fix_
 	   ,cl_gts_gui.radbut_area_aspect_ratio_w->value()?"W":"H" ,ofs );
-	save_stri_( this->str_area_rotate_per_90_
-	   ,cl_gts_gui.choice_rot90->text() ,ofs );
+
+	if (cl_gts_gui.choice_rot90->value()
+	==  cl_gts_master.cl_area_and_rot90.cw270_type_value) {
+		save_stri_( this->str_area_rotate_per_90_
+		    , this->str_area_rotate_cwm90_ ,ofs );
+	} else
+	if (cl_gts_gui.choice_rot90->value()
+	==  cl_gts_master.cl_area_and_rot90.cw000_type_value) {
+		save_stri_( this->str_area_rotate_per_90_
+		    , this->str_area_rotate_cw000_ ,ofs );
+	} else
+	if (cl_gts_gui.choice_rot90->value()
+	==  cl_gts_master.cl_area_and_rot90.cw090_type_value) {
+		save_stri_( this->str_area_rotate_per_90_
+		    , this->str_area_rotate_cw090_ ,ofs );
+	} else
+	if (cl_gts_gui.choice_rot90->value()
+	==  cl_gts_master.cl_area_and_rot90.cw180_type_value) {
+		save_stri_( this->str_area_rotate_per_90_
+		    , this->str_area_rotate_cw180_ ,ofs );
+	}
+
 	save_stri_( this->str_scanner_type_
 	   ,cl_gts_gui.txtout_scanner_type->value() ,ofs );
 	save_fl64_( this->str_scanner_size_cm_w_

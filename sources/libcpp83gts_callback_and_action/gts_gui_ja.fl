@@ -483,19 +483,19 @@ cl_gts_gui.menite_area_and_rot90->clear();}
           xywh {57 65 90 25} box BORDER_BOX down_box BORDER_BOX align 8
         } {
           MenuItem {} {
-            label {CW_-90}
+            label {-90}
             xywh {5 65 100 20}
           }
           MenuItem {} {
-            label CW_0
+            label 0
             xywh {5 65 100 20}
           }
           MenuItem {} {
-            label CW_90
+            label 90
             xywh {5 65 100 20}
           }
           MenuItem {} {
-            label CW_180
+            label 180
             xywh {5 65 100 20}
           }
         }

@@ -13,33 +13,40 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-namespace { //--------------------------------------------------------
-
-void set_rotate_per_90_( const std::string& str1 )
+void memory_config::load_set_rotate_per_90_( const std::string& str )
 {
-	if (isdigit(str1.c_str()[0])) { /* For Legacy...Delete sameday */
-		 cl_gts_gui.choice_rot90->value( std::stoi(str1) );
+	if (isdigit(str.c_str()[0])) { /* For Legacy...Delete sameday */
+		cl_gts_gui.choice_rot90->value( std::stoi(str) );
 	}
-	else {
+
 	/*
 		0=CW_-90 , 1=CW_0 , 2=CW_90 , 3=CW_180
 		0=CW_-90はScannerにとっての正対なのでこれ以外は回転処理必要
 		1=CW_0は作業者にとっての正対
 	*/
-		const Fl_Menu_Item *crnt =
-			cl_gts_gui.choice_rot90->find_item( str1.c_str() );
-		if (crnt == nullptr) {
-			return;
-		}
-		cl_gts_gui.choice_rot90->value( crnt );
+	else
+	if (str == this->str_area_rotate_cwm90_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw270_type_value );
+	} else
+	if (str == this->str_area_rotate_cw000_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw000_type_value );
+	} else
+	if (str == this->str_area_rotate_cw090_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw090_type_value );
+	} else
+	if (str == this->str_area_rotate_cw180_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw180_type_value );
 	}
+
 	/* 設定したGUI値をメモリしとく */
 	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90(
 					  cl_gts_gui.choice_rot90->value()
 	);
 }
-
-} // namespace -------------------------------------------------------
 
 void memory_config::load_ifs_(
 	std::ifstream& ifs
@@ -393,7 +400,7 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	else if ( (this->str_area_rotate_per_90_	    == ke)
 	||	  (this->str_area_rotate_per_90_legacy2017_ == ke)
 	) {
-			set_rotate_per_90_( va );
+			this->load_set_rotate_per_90_( va );
 	}
 
 	//---------- scanner info. ----------

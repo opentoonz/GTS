@@ -171,6 +171,14 @@ public:
 	    "area_rotate_per_90")
 		,str_area_rotate_per_90_legacy2017_(
 		    "rotate_per_90")
+	,str_area_rotate_cwm90_(
+	    "CW_-90")
+	,str_area_rotate_cw000_(
+	    "CW_0")
+	,str_area_rotate_cw090_(
+	    "CW_90")
+	,str_area_rotate_cw180_(
+	    "CW_180")
 	,str_scanner_type_(
 	    "scanner_type")
 	,str_scanner_size_cm_w_(
@@ -467,6 +475,10 @@ private:
 	const char* str_area_aspect_ratio_h_;
 	const char* str_area_aspect_ratio_how_to_fix_;
 	const char* str_area_rotate_per_90_;
+	const char* str_area_rotate_cwm90_;
+	const char* str_area_rotate_cw000_;
+	const char* str_area_rotate_cw090_;
+	const char* str_area_rotate_cw180_;
 	const char* str_area_rotate_per_90_legacy2017_;
 	const char* str_scanner_type_;
 	const char* str_scanner_size_cm_w_;
@@ -611,6 +623,7 @@ private:
 	bool load_trace_params_( std::vector< std::string >& words );
 	bool load_trace_batch_( std::vector< std::string >& words );
 	bool load_number_( std::vector< std::string >& words );
+	void load_set_rotate_per_90_( const std::string& str );
 };
 
 #endif /* !memory_config_h */
