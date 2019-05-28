@@ -305,7 +305,7 @@ void cb_number::set_next_num_from_crnt_(
 		this->next_file_num_ = -1;
 		return;
 	}
-	if ( continue_type_value == this->end_type_value_ ) {
+	if ( continue_type_value == this->end_type_value ) {
 		/* End指定 */
 		if ( forward_sw ) {
 			/* 順送り(start <= end)の次選択位置 */
@@ -328,7 +328,7 @@ void cb_number::set_next_num_from_crnt_(
 		}
 	}
 	else	/* Endless指定 */
-	if ( continue_type_value == this->endless_type_value_ ) {
+	if ( continue_type_value == this->endless_type_value ) {
 
 		if (cl_gts_gui.choice_scan_num_endless_direction->value() == 0)
 		{
@@ -356,7 +356,7 @@ void cb_number::set_next_num_from_crnt_(
 /* 初期化 */
 void cb_number::counter_start( const int continue_type_value )
 {
-	if ( continue_type_value == this->end_type_value_ ) {
+	if ( continue_type_value == this->end_type_value ) {
 		/* End指定 */
 
 		/* GUIのfile number listの選択をたどる */
@@ -384,7 +384,7 @@ void cb_number::counter_start( const int continue_type_value )
 		}
 	}
 	else /* Endless指定 */
-	if ( continue_type_value == this->endless_type_value_ ) {
+	if ( continue_type_value == this->endless_type_value ) {
 		/* GUIのlistの選択は無視 */
 		/* 処理後のマーキングと選択解除は外で行う */
 
@@ -443,7 +443,7 @@ void cb_number::counter_next( const int continue_type_value )
 	this->crnt_file_num_ = this->next_file_num_;
 
 	/* Endless指定 */
-	if ( continue_type_value == this->endless_type_value_ ) {
+	if ( continue_type_value == this->endless_type_value ) {
 		/* File番号に一致するlist番号あれば現位置とし、
 		なければ追加して現位置とし、
 		選択状態にする */

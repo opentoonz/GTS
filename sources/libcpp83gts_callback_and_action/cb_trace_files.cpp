@@ -7,13 +7,15 @@
 #include "ptbl_returncode.h"
 #include "osapi_exist.h"
 #ifdef _WIN32
-#include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
+# include "osapi_mbs_wcs.h"	// osapi::cp932_from_utf8(-)
 #endif
 #include "ids_path_fltk_native_browse.h"
 #ifdef _WIN32
-#include "wincom_native_browse_directory.h"
+# include "wincom_native_browse_directory.h"
+# include "wincom_native_browse_directory.h"
 #endif
 #include "ids_path_level_from_files.h"
+#include "gts_str_language.h"	// gts_str::
 #include "cb_trace_files.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -406,7 +408,8 @@ void cb_trace_files::cb_browse_open_file( void )
 	int filter_current=
 		cl_gts_gui.choice_trace_open_image_format->value();
 	const std::string filepath = ids::path::fltk_native_browse_open(
-		"Open Images"
+//		"Open Images"
+		gts_str::trace_files::open
 		,cl_gts_gui.filinp_trace_open_dir_path->value()
 		,this->get_open_name_from_number_(
 		static_cast<int>(cl_gts_gui.valout_trace_num_start->value())
@@ -502,13 +505,16 @@ void cb_trace_files::cb_browse_save_folder( void )
 	/* Nativeフォルダーブラウザー開く */
 #ifdef _WIN32
 	const std::string filepath =wincom::native_browse_directory_m(
-		"Select Saving Folder for Trace"
+//		"Select and Set Saving Folder for Trace"
+		osapi::cp932_from_utf8(
+			gts_str::trace_files::select_folder )
 		,cl_gts_gui.filinp_trace_save_dir_path->value()
 		,::fl_xid( cl_gts_gui.window_trace_files )
 	);
 #else
 	const std::string filepath =ids::path::fltk_native_browse_directory(
-		"Set Saving Folder for Trace"
+//		"Select and Set Saving Folder for Trace"
+		gts_str::trace_files::select_folder
 		,cl_gts_gui.filinp_trace_save_dir_path->value()
 	).at(0);
 #endif
@@ -764,6 +770,7 @@ void cb_trace_files::cb_switch_trace_filter_erase_dot_noise( const bool sw )
 	}
 }
 //----------------------------------------------------------------------
+#if 0
 void cb_trace_files::cb_browse_save_file( void )
 {
 	/* Crop中は保存できない */
@@ -869,3 +876,4 @@ void cb_trace_files::cb_browse_save_file( void )
 		return;
 	}
 }
+#endif

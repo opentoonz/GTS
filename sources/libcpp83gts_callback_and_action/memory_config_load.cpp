@@ -270,8 +270,8 @@ bool memory_config::load_scan_and_save_(
 	) {
 		ss.cb_choice_and_num_continue_type(
 			(va == this->str_scan_num_continue_type_end_)
-			? cl_gts_master.cl_number.get_end_type_value()
-			: cl_gts_master.cl_number.get_endless_type_value()
+			? cl_gts_master.cl_number.end_type_value
+			: cl_gts_master.cl_number.endless_type_value
 		);
 			     scan_num_continue_type_sw = true;
 	}
@@ -433,15 +433,15 @@ bool memory_config::load_pixel_type_and_bright_(std::vector< std::string >& word
 	if ( ke == this->str_pixel_type_ ) {
 		if (va == this->str_pixel_type_bw_) {
   cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_title(
-   cl_gts_master.cl_pixel_type_and_bright.get_bw_type_value() );
+   cl_gts_master.cl_pixel_type_and_bright.bw_type_value );
 		} else
 		if (va == this->str_pixel_type_grayscale_) {
   cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_title(
-   cl_gts_master.cl_pixel_type_and_bright.get_grayscale_type_value() );
+   cl_gts_master.cl_pixel_type_and_bright.grayscale_type_value );
 		} else
 		if (va == this->str_pixel_type_rgb_) {
   cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_title(
-   cl_gts_master.cl_pixel_type_and_bright.get_rgb_type_value() );
+   cl_gts_master.cl_pixel_type_and_bright.rgb_type_value );
 		}
 		cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 		cl_gts_master.cl_scan_and_save.set_gui_ext_list();
@@ -1091,7 +1091,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		!scan_num_continue_type_sw
 	) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
-		cl_gts_master.cl_number.get_end_type_value()
+		cl_gts_master.cl_number.end_type_value
 	 );
 	}
 

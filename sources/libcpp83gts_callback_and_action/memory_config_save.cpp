@@ -124,7 +124,7 @@ void memory_config::save_scan_and_save_( std::ofstream& ofs )
 	{
 	const char* str_nu_ct_ty = (
 	(  cl_gts_gui.choice_scan_num_continue_type->value()
-	== cl_gts_master.cl_number.get_end_type_value())
+	== cl_gts_master.cl_number.end_type_value)
 		? this->str_scan_num_continue_type_end_
 		: this->str_scan_num_continue_type_endless_
 	);
@@ -222,17 +222,17 @@ void memory_config::save_pixel_type_and_bright_( std::ofstream& ofs )
 {
 	ofs << "\n# " <<  cl_gts_gui.window_pixel_type_and_bright->label() << "\n";
 	if (cl_gts_gui.choice_pixel_type->value()
-	==  cl_gts_master.cl_pixel_type_and_bright.get_bw_type_value()) {
+	==  cl_gts_master.cl_pixel_type_and_bright.bw_type_value) {
 		save_stri_( this->str_pixel_type_
 			  , this->str_pixel_type_bw_ ,ofs );
 	} else
 	if (cl_gts_gui.choice_pixel_type->value() ==
-	cl_gts_master.cl_pixel_type_and_bright.get_grayscale_type_value()) {
+	cl_gts_master.cl_pixel_type_and_bright.grayscale_type_value) {
 		save_stri_( this->str_pixel_type_
 			  , this->str_pixel_type_grayscale_ ,ofs );
 	} else
 	if (cl_gts_gui.choice_pixel_type->value()
-	==  cl_gts_master.cl_pixel_type_and_bright.get_rgb_type_value()) {
+	==  cl_gts_master.cl_pixel_type_and_bright.rgb_type_value) {
 		save_stri_( this->str_pixel_type_
 			  , this->str_pixel_type_rgb_ ,ofs );
 	}

@@ -2,6 +2,7 @@
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
 #include "osapi_exist.h"
+#include "gts_str_language.h" // gts_str::
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -11,7 +12,7 @@ void gts_master::cb_number_read_and_trace_and_preview( void )
 
 	/* File Number Listの選択の先頭項目を得る... */
 	this->cl_number.counter_start(
-		cl_gts_master.cl_number.get_end_type_value()
+		cl_gts_master.cl_number.end_type_value
 	);
 
 	/* ...選択がない */
@@ -39,7 +40,10 @@ void gts_master::cb_number_read_and_trace_and_preview( void )
 	if ( this->cl_number.is_trace() ) {
 	 fpath_open = this->cl_trace_files.get_open_path(crnt_file_num);
 	} else {
-		fl_alert("Click [Set Number]!");
+		fl_alert(
+//			"Click [Set Number]!"
+			gts_str::number::need_to_set_number
+		);
 		return;
 	}
 

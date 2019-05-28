@@ -81,7 +81,7 @@ cl_gts_master.cb_quit();}
             tooltip {Scan and Save Files} xywh {5 5 100 20} shortcut 0xff0d divider
           }
           MenuItem {} {
-            label {連番ファイル2値化実行}
+            label {連番ファイル2値化}
             callback {cl_gts_master.cl_trace_files.cb_start();}
             tooltip {Trace and Save Files} xywh {5 5 100 20} shortcut 0x54
           }

@@ -26,6 +26,7 @@ SRCS =\
 gts_file_path.cpp\
 gts_gui_ja.cpp\
 gts_master.cpp\
+gts_str_language_ja.cpp\
 cb_area_and_rot90.cpp\
 cb_change_view.cpp\
 cb_color_trace_view_area.cpp\
