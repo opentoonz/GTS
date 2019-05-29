@@ -141,7 +141,10 @@ int cb_trace_files::read_and_save_crnt_(
 int cb_trace_files::cb_start( const bool interactive_sw )
 {
 	if ( !cl_gts_master.cl_number.is_trace() ) {
-		fl_alert("Set Number for Trace");
+		fl_alert(
+//			"Set Number for Trace"
+			gts_str::trace_files::not_trace_number
+		);
 		return OK;
 	}
 
@@ -149,7 +152,10 @@ int cb_trace_files::cb_start( const bool interactive_sw )
 	{
 	std::string name(cl_gts_gui.strinp_trace_open_file_head->value());
 	if ( name.empty() ) {
-		fl_alert("Need Trace Open Name!");
+		fl_alert(
+//			"Need Trace Open Name!"
+			gts_str::trace_files::need_trace_open_name
+		);
 		return NG;
 	}
 	}
@@ -158,20 +164,29 @@ int cb_trace_files::cb_start( const bool interactive_sw )
 	{
 	std::string name(cl_gts_gui.strinp_trace_save_file_head->value());
 	if ( name.empty() ) {
-		fl_alert("Need Trace Save Name!");
+		fl_alert(
+//			"Need Trace Save Name!"
+			gts_str::trace_files::need_trace_save_name
+		);
 		return NG;
 	}
 	}
 
 	/* チェック：開くファイル名がない */
 	if (this->get_open_path(0).empty()) {
-		fl_alert("Check Open Folder and File name!");
+		fl_alert(
+//			"Check Open Folder and File name!"
+			gts_str::trace_files::check_open_folder_and_filename
+		);
 		return NG;
 	}
 
 	/* チェック：保存ファイル名がない */
 	if (this->get_save_path(0).empty()) {
-		fl_alert("Check Save Folder and File name!");
+		fl_alert(
+//			"Check Save Folder and File name!"
+			gts_str::trace_files::check_save_folder_and_filename
+		);
 		return NG;
 	}
 
@@ -181,7 +196,10 @@ int cb_trace_files::cb_start( const bool interactive_sw )
 
 	/* チェック：番号選択がない */
 	if (list_num < 1) {
-		fl_alert("Select Number!");
+		fl_alert(
+//			"Select Number!"
+			gts_str::trace_files::select_number
+		);
 		return NG;
 	}
 
@@ -196,8 +214,16 @@ int cb_trace_files::cb_start( const bool interactive_sw )
 	  cl_gts_gui.chkbtn_trace_filter_erase_dot_noise_sw->value() != 0;
 	 if (fl_ask(
 		"%s%s\n%s\n-->\n%s\n..."
-		,tsw ?"Trace" :"Not trace"
-		,esw ?" and Erase Dot Noise" :""
+		,tsw ?
+//			"Trace"
+			gts_str::trace_files::ask_do_trace
+			:
+//			"Not trace"
+			gts_str::trace_files::ask_do_not_trace
+		,esw ?
+//			" and Erase Dot Noise"
+			gts_str::trace_files::ask_and_erase_dot_noise
+			:""
 		,this->get_open_path(file_num).c_str()
 		,this->get_save_path(file_num).c_str()
 	 ) != 1) {
@@ -238,7 +264,11 @@ void cb_trace_files::cb_rename(void)
 	/* Openファイルのフルパスを得る */
 	const std::string filepath = this->get_open_path( 1 );
 	if (filepath.empty()) {
-		fl_alert( "Not set Open Folder or File name" );
+		fl_alert(
+//			"Not set Open Folder or File name"
+//			"Check Open Folder and File name!"
+			gts_str::trace_files::check_open_folder_and_filename
+		);
 		return;
 	}
 
@@ -250,7 +280,11 @@ void cb_trace_files::cb_rename(void)
 		filepath ,dpath ,head ,num ,number ,ext ,nums
 	);
 	if (head.empty() || nums.size() <= 0) {
-		fl_alert( "Not exist files" );
+		fl_alert(
+//			"Not exist name or number in \'%s\'"
+			gts_str::trace_files::filename_without_head_or_number
+			,filepath.c_str()
+		);
 		return;
 	}
 	std::ostringstream numost;
@@ -261,7 +295,9 @@ void cb_trace_files::cb_rename(void)
 
 	/* ユーザーから新しい名前を得る */
 	const char* new_head_ptr = fl_input(
-		"Enter New Level Name" ,head.c_str()
+//		"Enter New Level Name"
+		gts_str::trace_files::input_new_level_name
+		,head.c_str()
 	);
 	if (new_head_ptr == nullptr || head == new_head_ptr ) {
 		return; /* Cancel or 同じ名前なら何もしない */
@@ -277,7 +313,8 @@ void cb_trace_files::cb_rename(void)
 		/* 最初にこれでいいかユーザーに確認する */
 		if (ii==0) {
 			if (fl_ask(
- "Rename\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
+// "Rename\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
+			gts_str::trace_files::ask_rename
 				,opa.c_str()
 				,npa.c_str()
 				,numost.str().c_str()
@@ -290,7 +327,9 @@ void cb_trace_files::cb_rename(void)
 		std::string opa2( osapi::cp932_from_utf8( opa ) );
 		std::string npa2( osapi::cp932_from_utf8( npa ) );
 		if (opa2.empty() || npa2.empty()) {
-			fl_alert("Error:rename \"%s\" \"%s\""
+			fl_alert(
+//				"Error:rename \"%s\" \"%s\""
+				gts_str::trace_files::empty_rename_filename
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
@@ -309,7 +348,11 @@ void cb_trace_files::cb_renumber(void)
 	/* Openファイルのフルパスを得る */
 	const std::string filepath = this->get_open_path( 1 );
 	if (filepath.empty()) {
-		fl_alert( "Not set Open Folder or File name" );
+		fl_alert(
+//			"Not set Open Folder or File name"
+//			"Check Open Folder and File name!"
+			gts_str::trace_files::check_open_folder_and_filename
+		);
 		return;
 	}
 
@@ -321,13 +364,19 @@ void cb_trace_files::cb_renumber(void)
 		filepath ,dpath ,head ,num ,number ,ext ,nums
 	);
 	if (head.empty() || nums.size() <= 0) {
-		fl_alert( "Not exist files" );
+		fl_alert(
+//			"Not exist name or number in \'%s\'"
+			gts_str::trace_files::filename_without_head_or_number
+			,filepath.c_str()
+		);
 		return;
 	}
 
 	/* ユーザーから新しいStart番号を得る */
 	const char* new_start_num_ptr = fl_input(
-		"Enter New Start Number" ,std::to_string(nums.at(0)).c_str()
+//		"Enter New Start Number"
+		gts_str::trace_files::input_new_start_number
+		,std::to_string(nums.at(0)).c_str()
 	);
 	if (new_start_num_ptr == nullptr
 	||  std::stoi(std::string(new_start_num_ptr))==nums.at(0)) {
@@ -355,8 +404,9 @@ void cb_trace_files::cb_renumber(void)
 		std::string npa( this->get_open_path(
 				nums.at(0) + diff_num ) );
 		fl_alert(
-"Error : Number need 0...9999 range\nFrom\n %s\nTo\n %s\nNumber List\n %s\n"
+//"Error : Number need 0...9999 range\nFrom\n %s\nTo\n %s\nNumber List\n %s\n"
 /* u8"エラー\n%s\nから\n%s\nへの数値シフトだと連番が\n %s\nとなります。\n0から9999までの範囲になるように指定してください" */
+			gts_str::trace_files::number_is_out_of_range
 			,opa.c_str()
 			,npa.c_str()
 			,numost.str().c_str()
@@ -372,7 +422,8 @@ void cb_trace_files::cb_renumber(void)
 		/* 最初にこれでいいかユーザーに確認する */
 		if (ii==0) {
 			if (fl_ask(
-"Renumber\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
+// "Renumber\nFrom\n %s\nTo\n %s\nNumber List\n %s\nOK?"
+			gts_str::trace_files::ask_renumber
 				,opa.c_str()
 				,npa.c_str()
 				,numost.str().c_str()
@@ -385,7 +436,9 @@ void cb_trace_files::cb_renumber(void)
 		std::string opa2( osapi::cp932_from_utf8( opa ) );
 		std::string npa2( osapi::cp932_from_utf8( npa ) );
 		if (opa2.empty() || npa2.empty()) {
-			fl_alert("Error:rename \"%s\" \"%s\""
+			fl_alert(
+//				"Error:rename \"%s\" \"%s\""
+				gts_str::trace_files::empty_rename_filename
 				,opa.c_str() ,npa.c_str() );
 			return;
 		}
@@ -409,7 +462,7 @@ void cb_trace_files::cb_browse_open_file( void )
 		cl_gts_gui.choice_trace_open_image_format->value();
 	const std::string filepath = ids::path::fltk_native_browse_open(
 //		"Open Images"
-		gts_str::trace_files::open
+		gts_str::trace_files::open_images
 		,cl_gts_gui.filinp_trace_open_dir_path->value()
 		,this->get_open_name_from_number_(
 		static_cast<int>(cl_gts_gui.valout_trace_num_start->value())
@@ -433,20 +486,31 @@ void cb_trace_files::cb_browse_open_file( void )
 
 	/* チェック：ファイルヘッド(file head名)が空だとなにもしない */
 	if (head.empty()) {
-		fl_alert("No Head in File");
+		fl_alert(
+//			"No Head in File"
+			gts_str::trace_files::no_head_in_filepath
+			,filepath
+		);
 		return;
 	}
 
 	/* チェック：拡張子が対応した種類でないと何もしない */
 	const int ext_num = this->ext_open.num_from_str( ext );
 	if ( ext_num < 0 ) {
-		fl_alert("Bad Extension\"%s\" in File",ext.c_str());
+		fl_alert(
+//			"Bad Extension\"%s\" in File"
+			gts_str::trace_files::bad_extension_in_filepath
+		,ext.c_str());
 		return;
 	}
 
 	/* チェック：連番でないならなにもしない */
 	if (num.empty() || number == -1) {
-		fl_alert("No Number in File");
+		fl_alert(
+//			"No Number in File"
+			gts_str::trace_files::not_number_file
+			,filepath.c_str()
+		);
 		return;
 	}
 
@@ -543,7 +607,11 @@ void cb_trace_files::cb_set_number( void )
 		filepath ,dpath ,head ,num ,number ,ext ,nums
 	);
 	if (head.empty() || nums.empty() || nums.size() <= 0) {
-		fl_alert( "Not exist file about \'%s\'" ,filepath.c_str() );
+		fl_alert(
+//			"Not exist name or number in \'%s\'"
+			gts_str::trace_files::filename_without_head_or_number
+			,filepath.c_str()
+		);
 		return;
 	}
 
@@ -770,110 +838,3 @@ void cb_trace_files::cb_switch_trace_filter_erase_dot_noise( const bool sw )
 	}
 }
 //----------------------------------------------------------------------
-#if 0
-void cb_trace_files::cb_browse_save_file( void )
-{
-	/* Crop中は保存できない */
-	if (cl_gts_master.cl_ogl_view.get_crop_disp_sw()) {
-		fl_alert("Finish Cropping, Please Scan.");
-		return;
-	}
-	/* ScanもReadもまだしていない */
-	if (cl_gts_master.cl_iip_ro90.get_clp_parent() == nullptr ) {
-		fl_alert("Please Any Scan or Open.");
-		return;
-	}
-
-	/* parameter */
-	iip_canvas* parent = nullptr;
-	int rot90=0;
-	double dpi = 0;
-	iip_read* read_attr = nullptr;
-
-	/* ファイル読込後 */
-	if ( &(cl_gts_master.cl_iip_read)
-	==     cl_gts_master.cl_iip_ro90.get_clp_parent() ) {
-		parent = &(cl_gts_master.cl_iip_read);
-		rot90 = 0; /* 画像コンバート処理のみで、回転はしない */
-		dpi = cl_gts_master.cl_iip_read.get_d_tif_dpi_x();
-		read_attr = &(cl_gts_master.cl_iip_read);
-	}
-	else
-	/* スキャン後 */
-	if (   cl_gts_master.cl_iip_scan.get_clp_canvas()
-	==     cl_gts_master.cl_iip_ro90.get_clp_parent() ) {
-		parent = cl_gts_master.cl_iip_scan.get_clp_canvas();
-		rot90 = cl_gts_gui.choice_rot90->value();
-		dpi = cl_gts_gui.valinp_area_reso->value();
-	} else {
-		fl_alert("No Image");
-		return;
-	}
-
-	/* parameter */
-	std::string save_dpath;
-	std::string save_fname;
-	std::string save_filter;
-	int save_filter_num = 0;
-
-	/* ファイルトレスモード */
-	if (cl_gts_master.cl_number.is_trace()) {
-		save_dpath = cl_gts_gui.filinp_trace_save_dir_path->value();
-		save_fname = this->get_save_name_( -1 );
-		save_filter = this->ext_save.get_native_filters();
-		save_filter_num = cl_gts_gui.choice_trace_save_image_format->value();
-	} else
-	/* スキャンモード */
-	if (cl_gts_master.cl_number.is_scan()) {
-		save_dpath = cl_gts_gui.filinp_scan_save_dir_path->value();
-		save_fname = cl_gts_master.cl_scan_and_save.get_save_path( -1 );
-		save_filter = cl_gts_master.cl_scan_and_save.ext_save.get_native_filters();
-		save_filter_num = cl_gts_gui.choice_scan_save_image_format->value();
-	} else {
-		fl_alert("Not Scan/Trace");
-		return;
-	}
-
-	/* NativeブラウザーSaveで開く */
-//std::cout << __FILE__ << " " << "save_dpath=" << save_dpath << " save_fname=" << save_fname << std::endl;
-	const std::string fpath_save = ids::path::fltk_native_browse_save(
-		"Save Image"
-		,save_dpath
-		,save_fname
-		,save_filter
-		,save_filter_num
-	).at(0);
-
-	/* Cancel */
-	if (fpath_save.empty()) {
-		return;
-	}
-
-	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
-	if (cl_gts_master.rot_and_trace_and_enoise( parent ,rot90 ) != OK) {
-		return;
-	}
-
-	/* 保存 */
-	if (OK != cl_gts_master.iipg_save(
-		&(cl_gts_master.cl_iip_edot)
-		, const_cast<char *>(fpath_save.c_str())
-		,dpi
-		,rot90
-		,read_attr
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : cl_gts_master.iipg_save(-) returns NG" );
-		return;
-	}
-
-	/* 表示：画像の再表示 */
-	if (cl_gts_master.redraw_image(
-		&(cl_gts_master.cl_iip_edot)
-		, false /* crop sw */
-		, false /* force view scanimage sw */
-	)) {
-		return;
-	}
-}
-#endif

@@ -496,7 +496,9 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 	}
 	
 	/* AreaがScannerMax範囲外だとLimitかける... */
-	switch (fl_choice("Not inside , Limit..."
+	switch (fl_choice(
+//	"Not inside , Limit..."
+	gts_str::area_and_rot90::not_inside_then_limit
 	,"Cancel"
 	,"Size"
 	,"DPI"
@@ -734,7 +736,7 @@ const std::string dnd_paste_( const std::string &dnd_str )
 	if (std::string::npos != dnd_str.find("\n")) {
 		return
 //			"Error : Need Only 1 Filepath"
-			gts_str::area_and_rot90::need_only_1_filepath
+			gts_str::config::need_only_1_filepath
 			;
 	}
 
@@ -751,7 +753,7 @@ const std::string dnd_paste_( const std::string &dnd_str )
 		if (cl_gts_master.cl_memo_config.load_only_area_and_rot90(
 		dnd_str ) == NG) {
 		 return
-//			"Error : at loading area_and_rot90 in config"
+//			"Error : at loading in config"
 			gts_str::config::loading_config_error
 			;
 		}

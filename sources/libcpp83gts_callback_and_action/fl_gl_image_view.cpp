@@ -5,6 +5,7 @@
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include "pri.h"
 #include "fl_gl_image_view.h"
+#include "gts_str_language.h" // gts_str::
 #include "ids_path_level_from_files.h"
 #include "cb_scan_and_save.h"
 #include "cb_trace_files.h"
@@ -133,7 +134,10 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 {
 	/* 複数のファイルパスはエラー */
 	if (std::string::npos != dnd_str.find("\n")) {
-		return "Error : Need Only 1 Filepath";
+		return
+//			"Error : Need Only 1 Filepath"
+			gts_str::config::need_only_1_filepath
+			;
 	}
 
 	/* 必要な情報に変える */
@@ -146,7 +150,10 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 
 	/* ファイルヘッド名がない */
 	if ( head.empty() ) {
-		return "Error : Need Head name";
+		return
+//			"Error : Need Head name"
+			gts_str::fl_gl_image_view::need_image_head_name
+			;
 	}
 
 	/* Configファイル */
@@ -161,7 +168,10 @@ const std::string open_files_by_paste_( const std::string &dnd_str )
 	/* 画像の拡張子(.tga/.tif)ではない */
 	if ( cl_gts_master.cl_trace_files.ext_open.num_from_str(ext) < 0 ) {
 		/* 拡張子が対応外 */
-		return "Error : Need Extension .tga/.tif/.txt";
+		return
+//			"Error : Need Extension .tga/.tif/.txt"
+			gts_str::fl_gl_image_view::need_extension_of_image
+			;
 	}
 
 	/* 単体画像ファイル開き表示 */

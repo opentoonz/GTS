@@ -46,7 +46,10 @@ const std::string dnd_paste_( const std::string &dnd_str )
 {
 	/* 複数のファイルパスはエラー */
 	if (std::string::npos != dnd_str.find("\n")) {
-		return "Error : Need Only 1 Filepath";
+		return
+//			"Error : Need Only 1 Filepath"
+			gts_str::config::need_only_1_filepath
+			;
 	}
 
 	/* 必要な情報に変える */
@@ -62,7 +65,7 @@ const std::string dnd_paste_( const std::string &dnd_str )
 		if (cl_gts_master.cl_memo_config.load_only_pixel_type_and_bright(
 		dnd_str ) == NG) {
 		 return
-//			"Error : at loading pixel_type_and_bright in config"
+//			"Error : at loading in config"
 			gts_str::config::loading_config_error
 			;
 		}

@@ -117,7 +117,10 @@ void cb_trace_batch::cb_upper( void )
 	int crntnum = -1;
 	int selnum = how_many_select_( crntnum );
 	if (selnum != 1) {
-		fl_alert("Select only one(%d selected)" ,selnum);
+		fl_alert(
+//			"Select only one(%d selected)"
+			gts_str::trace_batch::too_many_selected
+			,selnum);
 		return;
 	}
 
@@ -131,7 +134,10 @@ void cb_trace_batch::cb_lower( void )
 	int crntnum = -1;
 	int selnum = how_many_select_( crntnum );
 	if (selnum != 1) {
-		fl_alert("Select only one(%d selected)" ,selnum);
+		fl_alert(
+//			"Select only one(%d selected)"
+			gts_str::trace_batch::too_many_selected
+			,selnum);
 		return;
 	}
 

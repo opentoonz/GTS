@@ -2,7 +2,7 @@
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
 #include "osapi_exist.h"
-#include "gts_str_language.h"	// gts_str::
+#include "gts_str_language.h" // gts_str::
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_config.h"
@@ -195,7 +195,10 @@ void cb_config::save_as( void )
 	拡張子を別途付加してそのファイルが存在するなら上書き確認する
 	*/
 	if ( add_ext_sw && osapi::exist_utf8_mbs(fpath) ) {
-		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )) {
+		if (0 == fl_ask(
+//			"Overwrite \"%s\"?"
+			gts_str::config::ask_overwrite
+			,fpath.c_str() )) {
 			return;
 		}
 	}
@@ -223,7 +226,10 @@ void cb_config::save( void )
 {
 	/* まだconfigファイルをOpenもSaveAsもしていない */
 	if ( this->dir_path_.empty() || this->save_file_name_.empty() ) {
-		fl_alert("Use \'Save Config As\'");
+		fl_alert(
+//			"Use \'Save Config As\'"
+			gts_str::config::use_save_config_as
+		);
 		return;
 	}
 
@@ -235,13 +241,19 @@ void cb_config::save( void )
 	/* ダイオローグを表示 */
 	if (osapi::exist_utf8_mbs(fpath)) {
 		/* すでに存在するなら上書き確認 */
-		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )){
+		if (0 == fl_ask(
+//			"Overwrite \"%s\"?"
+			gts_str::config::ask_overwrite
+			,fpath.c_str() )){
 			return;
 		}
 	}
 	else {
 		/* 存在しないときは保存確認 */
-		if (0 == fl_ask( "Save \"%s\"?" ,fpath.c_str() )) {
+		if (0 == fl_ask(
+//			"Save \"%s\"?"
+			gts_str::config::ask_save
+			,fpath.c_str() )) {
 			return;
 		}
 	}

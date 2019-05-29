@@ -7,6 +7,7 @@
 #include "calc_trace_by_hsv.h"	/* calc::line_len_from_rad() */
 #include "cb_trace_params.h"
 #include "ids_path_level_from_files.h"
+#include "gts_str_language.h" // gts_str::
 #include "gts_gui.h"
 #include "gts_master.h"
 
@@ -506,7 +507,10 @@ const std::string dnd_paste_( const std::string &dnd_str )
 {
 	/* 複数のファイルパスはエラー */
 	if (std::string::npos != dnd_str.find("\n")) {
-		return "Error : Need Only 1 Filepath";
+		return
+//			"Error : Need Only 1 Filepath"
+			gts_str::config::need_only_1_filepath
+			;
 	}
 
 	/* 必要な情報に変える */
@@ -521,12 +525,18 @@ const std::string dnd_paste_( const std::string &dnd_str )
 	if (ext == ".txt") {
 		if (cl_gts_master.cl_memo_config.load_only_trace_params(
 		dnd_str ) == NG) {
-		 return "Error : loading trace_params in config";
+		 return
+//			"Error : loading trace_params in config"
+			gts_str::config::loading_config_error
+			;
 		}
 	}
 	/* 拡張子が対応外エラー */
 	else {
-		return "Error : Need extension .txt";
+		return
+//			"Error : Need extension .txt"
+			gts_str::config::need_ext_txt
+			;
 	}
 	return std::string();
 }
