@@ -66,7 +66,7 @@ cl_gts_master.cb_quit();}
           xywh {5 5 100 20}
         } {
           MenuItem menite_scan_crop {
-            label {最大スキャン(→範囲編集)}
+            label {最大スキャン(範囲編集)}
             callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
             tooltip {Scan Overall and Crop} xywh {0 0 30 20}
           }

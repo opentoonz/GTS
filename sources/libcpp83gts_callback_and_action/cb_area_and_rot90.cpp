@@ -499,9 +499,12 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 	switch (fl_choice(
 //	"Not inside , Limit..."
 	gts_str::area_and_rot90::not_inside_then_limit
-	,"Cancel"
-	,"Size"
-	,"DPI"
+//	,"Cancel"
+	,gts_str::area_and_rot90::not_inside_then_limit_cancel
+//	,"Size"
+	,gts_str::area_and_rot90::not_inside_then_limit_size
+//	,"DPI"
+	,gts_str::area_and_rot90::not_inside_then_limit_dpi
 	)) {
 	case 0: /* Cancel */
 		return false;

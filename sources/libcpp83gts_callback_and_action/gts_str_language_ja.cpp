@@ -31,6 +31,12 @@ const char* click_h_or_w_button
 	= u8"縦横比によるサイズ指定をするときは固定する幅か高どちらかのボタンを選択してください";
 const char* not_inside_then_limit
 	= u8"範囲をはみ出しているため制限します";
+const char* not_inside_then_limit_cancel
+	= u8"キャンセル";
+const char* not_inside_then_limit_size
+	= u8"大きさをカット";
+const char* not_inside_then_limit_dpi
+	= u8"DPIを上げる";
 } // area_and_rot90
 
 namespace change_view {
@@ -159,9 +165,9 @@ const char* ask_do_not_trace
 const char* ask_and_erase_dot_noise
 	= u8"、ドットノイズ除去処理する";
 const char* ask_rename
-	= u8"リネーム実行します\n\"%s\"\nから\n\"%s\"\nまで\n番号リスト\"%s\"";
+	= u8"リネーム実行します\n\"%s\"\nを\n\"%s\"\nに\n番号リスト\"%s\"";
 const char* ask_renumber
-	= u8"リナンバー実行します\n\"%s\"\nから\n\"%s\"\nまで\n番号リスト\"%s\"";
+	= u8"リナンバー実行します\n\"%s\"\nを\n\"%s\"\nに\n番号リスト\"%s\"";
 const char* input_new_level_name
 	= u8"新しいファイル(頭)名を入力してください";
 const char* input_new_start_number

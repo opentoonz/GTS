@@ -18,6 +18,9 @@ extern const char* bad_aspect_ratio_h;
 extern const char* bad_aspect_ratio_w;
 extern const char* click_h_or_w_button;
 extern const char* not_inside_then_limit;
+extern const char* not_inside_then_limit_cancel;
+extern const char* not_inside_then_limit_size;
+extern const char* not_inside_then_limit_dpi;
 } // area_and_rot90
 
 namespace change_view {

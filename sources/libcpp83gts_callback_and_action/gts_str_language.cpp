@@ -31,6 +31,12 @@ const char* click_h_or_w_button
 	= "Click H or W button";
 const char* not_inside_then_limit
 	= "Not inside , Limit...";
+const char* not_inside_then_limit_cancel
+	= "Cancel";
+const char* not_inside_then_limit_size
+	= "Size";
+const char* not_inside_then_limit_dpi
+	= "DPI";
 } // area_and_rot90
 
 namespace change_view {

@@ -299,8 +299,11 @@ void cb_trace_files::cb_rename(void)
 		gts_str::trace_files::input_new_level_name
 		,head.c_str()
 	);
-	if (new_head_ptr == nullptr || head == new_head_ptr ) {
-		return; /* Cancel or 同じ名前なら何もしない */
+	if (new_head_ptr == nullptr	/* Cancel */
+	||  new_head_ptr[0] == '\0'	/* 空の名前 */
+	||  head == new_head_ptr	/* 同じ名前 */
+	) {
+		return; /* 何もしない */
 	}
 	const std::string new_head(new_head_ptr);
 
@@ -378,9 +381,12 @@ void cb_trace_files::cb_renumber(void)
 		gts_str::trace_files::input_new_start_number
 		,std::to_string(nums.at(0)).c_str()
 	);
-	if (new_start_num_ptr == nullptr
-	||  std::stoi(std::string(new_start_num_ptr))==nums.at(0)) {
-		return; /* Cancel or 同じ名前なら何もしない */
+	if (new_start_num_ptr == nullptr	/* Cancel */
+	||  new_start_num_ptr[0] == '\0'	/* 空文字 */
+	||  std::stoi(std::string(new_start_num_ptr))==nums.at(0)
+						/* 同じ番号 */
+	) {
+		return; /* 何もしない */
 	}
 	const std::string new_start_num( new_start_num_ptr );
 
