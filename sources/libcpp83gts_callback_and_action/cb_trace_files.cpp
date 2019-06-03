@@ -12,7 +12,6 @@
 #include "ids_path_fltk_native_browse.h"
 #ifdef _WIN32
 # include "wincom_native_browse_directory.h"
-# include "wincom_native_browse_directory.h"
 #endif
 #include "ids_path_level_from_files.h"
 #include "gts_str_language.h"	// gts_str::
