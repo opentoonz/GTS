@@ -246,14 +246,14 @@ cl_gts_master.cb_quit();}
               xywh {0 0 30 20} type Toggle
             }
             MenuItem {} {
-              label {前}
+              label {逆送り}
               callback {if (cl_gts_master.cl_number.selected_prev_frame()) {
     cl_gts_master.cb_number_read_and_trace_and_preview();
 }}
               xywh {0 0 30 20} shortcut 0xff52
             }
             MenuItem {} {
-              label {次}
+              label {順送り}
               callback {if (cl_gts_master.cl_number.selected_next_frame()) {
     cl_gts_master.cb_number_read_and_trace_and_preview();
 }}
