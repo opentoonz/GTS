@@ -6,11 +6,10 @@
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "osapi_exist.h"
-#include "osapi_mbs_wcs_win.h"
+#include "osapi_mbs_wcs.h" // osapi::cp932_from_utf8(-) , osapi::exist_utf8_mbs(-)
 #include "ids_path_fltk_native_browse.h"
 #ifdef _WIN32
 # include "wincom_native_browse_directory.h"
-# include "osapi_mbs_wcs.h" // osapi::cp932_from_utf8(-)
 #endif
 #include "ids_path_level_from_files.h"
 #include "gts_str_language.h"	// gts_str::

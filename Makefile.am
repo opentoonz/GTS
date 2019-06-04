@@ -113,6 +113,7 @@ libgts_la_SOURCES = \
 					sources/libcpp83gts_callback_and_action/gts_file_path.cpp \
 					sources/libcpp83gts_callback_and_action/gts_gui.cpp \
 					sources/libcpp83gts_callback_and_action/gts_master.cpp \
+					sources/libcpp83gts_callback_and_action/gts_str_language.cpp \
 					sources/libcpp83gts_callback_and_action/cb_area_and_rot90.cpp \
 					sources/libcpp83gts_callback_and_action/cb_change_view.cpp \
 					sources/libcpp83gts_callback_and_action/cb_color_trace_view_area.cpp \
