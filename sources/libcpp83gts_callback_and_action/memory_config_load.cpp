@@ -13,46 +13,40 @@
 #include "gts_gui.h"
 #include "gts_master.h"
 
-namespace { //--------------------------------------------------------
-
-void set_rotate_per_90_( const std::string& str1 )
+void memory_config::load_set_rotate_per_90_( const std::string& str )
 {
-	if (isdigit(str1.c_str()[0])) { /* For Legacy...Delete sameday */
-		 cl_gts_gui.choice_rot90->value( std::stoi(str1) );
+	if (isdigit(str.c_str()[0])) { /* For Legacy...Delete sameday */
+		cl_gts_gui.choice_rot90->value( std::stoi(str) );
 	}
-	else {
+
 	/*
 		0=CW_-90 , 1=CW_0 , 2=CW_90 , 3=CW_180
 		0=CW_-90はScannerにとっての正対なのでこれ以外は回転処理必要
 		1=CW_0は作業者にとっての正対
 	*/
-		const Fl_Menu_Item *crnt =
-			cl_gts_gui.choice_rot90->find_item( str1.c_str() );
-		if (crnt == nullptr) {
-			return;
-		}
-		cl_gts_gui.choice_rot90->value( crnt );
+	else
+	if (str == this->str_area_rotate_cwm90_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw270_type_value );
+	} else
+	if (str == this->str_area_rotate_cw000_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw000_type_value );
+	} else
+	if (str == this->str_area_rotate_cw090_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw090_type_value );
+	} else
+	if (str == this->str_area_rotate_cw180_) {
+		cl_gts_gui.choice_rot90->value(
+	 cl_gts_master.cl_area_and_rot90.cw180_type_value );
 	}
+
 	/* 設定したGUI値をメモリしとく */
 	cl_gts_master.cl_area_and_rot90.set_previous_choice_rot90(
 					  cl_gts_gui.choice_rot90->value()
 	);
 }
-void set_pixel_type_( const std::string& str )
-{
-	if (isdigit(str.c_str()[0])) {/* For Legacy Format...Delete sameday */
-		 cl_gts_gui.choice_pixel_type->value(
-		  std::stoi(str) // use C++11,throw exception then error
-		 );
-	}
-	else {
-		cl_gts_master.cb_choice_pixel_type_title( str );
-	}
-
-	cl_gts_master.cb_choice_pixel_type_menu();
-}
-
-} // namespace -------------------------------------------------------
 
 void memory_config::load_ifs_(
 	std::ifstream& ifs
@@ -273,7 +267,12 @@ bool memory_config::load_scan_and_save_(
 	}
 	else if ( (this->str_scan_num_continue_type_ == ke)
 	||	  (this->str_scan_num_continue_type_legacy2016_ == ke)
-	) {	 ss.cb_choice_and_num_continue_type( va );
+	) {
+		ss.cb_choice_and_num_continue_type(
+			(va == this->str_scan_num_continue_type_end_)
+			? cl_gts_master.cl_number.end_type_value
+			: cl_gts_master.cl_number.endless_type_value
+		);
 			     scan_num_continue_type_sw = true;
 	}
 	else if ( (this->str_scan_num_endless_direction_ == ke)
@@ -401,7 +400,7 @@ bool memory_config::load_crop_area_and_rot90_( std::vector< std::string >& words
 	else if ( (this->str_area_rotate_per_90_	    == ke)
 	||	  (this->str_area_rotate_per_90_legacy2017_ == ke)
 	) {
-			set_rotate_per_90_( va );
+			this->load_set_rotate_per_90_( va );
 	}
 
 	//---------- scanner info. ----------
@@ -432,7 +431,19 @@ bool memory_config::load_pixel_type_and_bright_(std::vector< std::string >& word
 	const std::string& va = words.at(1);
 
 	if ( ke == this->str_pixel_type_ ) {
-		set_pixel_type_( va );
+		if (va == this->str_pixel_type_bw_) {
+  cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_title(
+   cl_gts_master.cl_pixel_type_and_bright.bw_type_value );
+		} else
+		if (va == this->str_pixel_type_grayscale_) {
+  cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_title(
+   cl_gts_master.cl_pixel_type_and_bright.grayscale_type_value );
+		} else
+		if (va == this->str_pixel_type_rgb_) {
+  cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_title(
+   cl_gts_master.cl_pixel_type_and_bright.rgb_type_value );
+		}
+		cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 		cl_gts_master.cl_scan_and_save.set_gui_ext_list();
 	}
 	else if ( ke == this->str_bw_threshold_ ) {
@@ -1080,7 +1091,8 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		!scan_num_continue_type_sw
 	) {
 	 cl_gts_master.cl_scan_and_save.cb_choice_and_num_continue_type(
-	 "End" );
+		cl_gts_master.cl_number.end_type_value
+	 );
 	}
 
 	/* Config各パラメータとは間接的な表示変更部分 */

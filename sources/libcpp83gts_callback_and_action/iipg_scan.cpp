@@ -303,23 +303,41 @@ int gts_master::iipg_scan_get_scanner_info_( void )
 		this->cl_iip_scan.d_contrast()
 	);
 #endif
-	/* Area位置とサイズの初期設定をGUIに表示 */
-	cl_gts_gui.valinp_area_offset_cm_x->value(0.0);
-	cl_gts_gui.valinp_area_offset_cm_y->value(0.0);
-	cl_gts_gui.valinp_area_size_cm_w->value(
-	 cl_gts_gui.valout_scanner_size_cm_w->value()
-	);
-	cl_gts_gui.valinp_area_size_cm_h->value(
-	 cl_gts_gui.valout_scanner_size_cm_h->value()
-	);
-	this->cl_area_and_rot90.getset_x_pixel_from_x_size();
-	this->cl_area_and_rot90.getset_y_pixel_from_y_size();
-
 	/* TWAIN閉じる */
 	if (OK != this->cl_iip_scan.close()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_iip_scan.close() returns NG.");
 		return NG;
+	}
+
+	if (
+	/* まだ初期状態(gts_initial_configuration.txt内にArea設定がない) */
+	  ( cl_gts_gui.valinp_area_offset_cm_x->value() == 0
+	&&  cl_gts_gui.valinp_area_offset_cm_y->value() == 0
+	&&    cl_gts_gui.valinp_area_size_cm_w->value() == 0
+	&&    cl_gts_gui.valinp_area_size_cm_h->value() == 0)
+	||
+	/* スキャナ最大範囲外(gts_initial_configuration.txt内Area設定が) */
+	  ( cl_gts_gui.valinp_area_offset_cm_x->value() < 0
+	||  cl_gts_gui.valinp_area_offset_cm_y->value() < 0
+	|| cl_gts_gui.valout_scanner_size_cm_w->value() <
+	   (cl_gts_gui.valinp_area_offset_cm_x->value() +
+	      cl_gts_gui.valinp_area_size_cm_w->value())
+	|| cl_gts_gui.valout_scanner_size_cm_h->value() <
+	   (cl_gts_gui.valinp_area_offset_cm_y->value() +
+	      cl_gts_gui.valinp_area_size_cm_h->value()))
+	) {
+		/* Scan Areaをスキャナー最大範囲に初期設定する */
+		cl_gts_gui.valinp_area_offset_cm_x->value(0.0);
+		cl_gts_gui.valinp_area_offset_cm_y->value(0.0);
+		cl_gts_gui.valinp_area_size_cm_w->value(
+		cl_gts_gui.valout_scanner_size_cm_w->value()
+		);
+		cl_gts_gui.valinp_area_size_cm_h->value(
+		cl_gts_gui.valout_scanner_size_cm_h->value()
+		);
+		this->cl_area_and_rot90.getset_x_pixel_from_x_size();
+		this->cl_area_and_rot90.getset_y_pixel_from_y_size();
 	}
 
 	return OK;

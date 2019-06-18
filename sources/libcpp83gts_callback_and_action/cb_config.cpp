@@ -2,6 +2,7 @@
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
 #include "osapi_exist.h"
+#include "gts_str_language.h" // gts_str::
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_config.h"
@@ -47,7 +48,8 @@ void cb_config::open( void )
 	/* NativeブラウザーOpenで開く */
 	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Config"
+//		"Open Config"
+		gts_str::config::open
 		,this->dir_path_
 		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
@@ -61,39 +63,13 @@ void cb_config::open( void )
 	/* fpathを設定し、config情報を保存する */
 	this->loading_and_set_dpath_fname( fpath );
 }
-void cb_config::open_only_trace_parameters( void )
-{
-	/* NativeブラウザーOpenで開く */
-	int filter_current=0;
-	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Config only Trace Parameters"
-		,this->dir_path_
-		,"" //,this->open_file_name_
-		,std::string("Text(Config)\t*")+this->ext_
-		,filter_current
-	).at(0);
-	/* Cancel */
-	if (fpath.empty()) {
-		return;
-	}
-
-	/* config情報を保存する */
-	if (OK != cl_gts_master.cl_memo_config.load_only_trace_parameters(
-		fpath
-	)) {
-		pri_funct_err_bttvr(
-	 "Error : cl_gts_master.cl_memo_config.load_only_trace_parameters(%s) returns NG"
-			, fpath.c_str()
-		);
-		return;
-	}
-}
 void cb_config::open_only_area_and_rot90( void )
 {
 	/* NativeブラウザーOpenで開く */
 	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Config only Area and Rot90"
+//		"Open Config only Area and Rot90"
+		gts_str::config::open_only_area_and_rot90
 		,this->dir_path_
 		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
@@ -120,7 +96,8 @@ void cb_config::open_only_pixel_type_and_bright( void )
 	/* NativeブラウザーOpenで開く */
 	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Config only Pixel Type and Bright"
+//		"Open Config only Pixel Type and Bright"
+		gts_str::config::open_only_pixel_type_and_bright
 		,this->dir_path_
 		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
@@ -148,7 +125,8 @@ void cb_config::open_only_trace_params( void )
 	/* NativeブラウザーOpenで開く */
 	int filter_current=0;
 	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Config only Trace Params"
+//		"Open Config only Trace Params"
+		gts_str::config::open_only_trace_params
 		,this->dir_path_
 		,"" //,this->open_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
@@ -179,7 +157,8 @@ void cb_config::save_as( void )
 	std::string fpath;
 	if (this->save_as_set_scan_images_path_sw) {
 		fpath = ids::path::fltk_native_browse_save(
-		"Save Config As"
+//		"Save Config As"
+		gts_str::config::save_as
 		,cl_gts_gui.filinp_scan_save_dir_path->value()
 		,cl_gts_gui.strinp_scan_save_file_head->value()
 		,std::string("Text(Config)\t*")+this->ext_
@@ -187,7 +166,8 @@ void cb_config::save_as( void )
 		).at(0);
 	} else {
 		fpath = ids::path::fltk_native_browse_save(
-		"Save Config As"
+//		"Save Config As"
+		gts_str::config::save_as
 		,this->dir_path_
 		,this->save_file_name_
 		,std::string("Text(Config)\t*")+this->ext_
@@ -215,7 +195,10 @@ void cb_config::save_as( void )
 	拡張子を別途付加してそのファイルが存在するなら上書き確認する
 	*/
 	if ( add_ext_sw && osapi::exist_utf8_mbs(fpath) ) {
-		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )) {
+		if (0 == fl_ask(
+//			"Overwrite \"%s\"?"
+			gts_str::config::ask_overwrite
+			,fpath.c_str() )) {
 			return;
 		}
 	}
@@ -243,7 +226,10 @@ void cb_config::save( void )
 {
 	/* まだconfigファイルをOpenもSaveAsもしていない */
 	if ( this->dir_path_.empty() || this->save_file_name_.empty() ) {
-		fl_alert("Use \'Save Config As\'");
+		fl_alert(
+//			"Use \'Save Config As\'"
+			gts_str::config::use_save_config_as
+		);
 		return;
 	}
 
@@ -255,13 +241,19 @@ void cb_config::save( void )
 	/* ダイオローグを表示 */
 	if (osapi::exist_utf8_mbs(fpath)) {
 		/* すでに存在するなら上書き確認 */
-		if (0 == fl_ask( "Overwrite \"%s\"?" ,fpath.c_str() )){
+		if (0 == fl_ask(
+//			"Overwrite \"%s\"?"
+			gts_str::config::ask_overwrite
+			,fpath.c_str() )){
 			return;
 		}
 	}
 	else {
 		/* 存在しないときは保存確認 */
-		if (0 == fl_ask( "Save \"%s\"?" ,fpath.c_str() )) {
+		if (0 == fl_ask(
+//			"Save \"%s\"?"
+			gts_str::config::ask_save
+			,fpath.c_str() )) {
 			return;
 		}
 	}

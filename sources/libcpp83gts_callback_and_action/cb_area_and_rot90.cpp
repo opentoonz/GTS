@@ -2,6 +2,7 @@
 #include <algorithm> // std::max(-)
 #include <cmath> // rint(-)
 #include <FL/fl_ask.H> // fl_alert()
+#include "gts_str_language.h" // gts_str::
 #include "ids_path_level_from_files.h"
 #include "pri.h"
 #include "cb_area_and_rot90.h"
@@ -107,20 +108,26 @@ void cb_area_and_rot90::cb_area_set_max( void )
 void cb_area_and_rot90::cb_area_offset_cm_x( void )
 {
 	/* 先：横位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_size_cm_w->value()
-	 < (cl_gts_gui.valinp_area_offset_cm_x->value() +
-	    cl_gts_gui.valinp_area_size_cm_w->value())
+	if (	cl_gts_gui.valout_scanner_size_cm_w->value()
+	 < (	cl_gts_gui.valinp_area_offset_cm_x->value() +
+		cl_gts_gui.valinp_area_size_cm_w->value())
 	) {
-	    cl_gts_gui.valinp_area_offset_cm_x->value(
-	     cl_gts_gui.valout_scanner_size_cm_w->value() -
-	     cl_gts_gui.valinp_area_size_cm_w->value()
-	    ); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
-	    fl_alert( "Too Big X!" );
+		cl_gts_gui.valinp_area_offset_cm_x->value(
+		cl_gts_gui.valout_scanner_size_cm_w->value() -
+		cl_gts_gui.valinp_area_size_cm_w->value()
+		); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
+		fl_alert(
+//			"Too Big X!"
+			gts_str::area_and_rot90::offset_cm_x_big
+		);
 	}
 	/* 後：横位置が小さくてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valinp_area_offset_cm_x->value() < 0.0) {
-	    cl_gts_gui.valinp_area_offset_cm_x->value(0.0);
-	    fl_alert( "Too Small X!" );
+	if (	cl_gts_gui.valinp_area_offset_cm_x->value() < 0.0) {
+		cl_gts_gui.valinp_area_offset_cm_x->value(0.0);
+		fl_alert(
+//			"Too Small X!"
+			gts_str::area_and_rot90::offset_cm_x_small
+		);
 	}
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
@@ -129,20 +136,26 @@ void cb_area_and_rot90::cb_area_offset_cm_x( void )
 void cb_area_and_rot90::cb_area_offset_cm_y( void )
 {
 	/* 先：縦位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_size_cm_h->value()
-	 < (cl_gts_gui.valinp_area_offset_cm_y->value() +
-	    cl_gts_gui.valinp_area_size_cm_h->value())
+	if (	cl_gts_gui.valout_scanner_size_cm_h->value()
+	 < (	cl_gts_gui.valinp_area_offset_cm_y->value() +
+		cl_gts_gui.valinp_area_size_cm_h->value())
 	) {
-	    cl_gts_gui.valinp_area_offset_cm_y->value(
-	     cl_gts_gui.valout_scanner_size_cm_h->value() -
-	     cl_gts_gui.valinp_area_size_cm_h->value()
-	    ); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
-	    fl_alert( "Too Big Y!" );
+		cl_gts_gui.valinp_area_offset_cm_y->value(
+		cl_gts_gui.valout_scanner_size_cm_h->value() -
+		cl_gts_gui.valinp_area_size_cm_h->value()
+		); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
+		fl_alert(
+//			"Too Big Y!"
+			gts_str::area_and_rot90::offset_cm_y_big
+		);
 	}
 	/* 後：縦位置が小さくてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valinp_area_offset_cm_y->value() < 0.0) {
-	    cl_gts_gui.valinp_area_offset_cm_y->value(0.0);
-	    fl_alert( "Too Small Y!" );
+	if (	cl_gts_gui.valinp_area_offset_cm_y->value() < 0.0) {
+		cl_gts_gui.valinp_area_offset_cm_y->value(0.0);
+		fl_alert(
+//			"Too Small Y!"
+			gts_str::area_and_rot90::offset_cm_y_small
+		);
 	}
 
 	this->copy_value_to_opengl(); /* 表示ルーチンにArea設定 */
@@ -152,20 +165,26 @@ void cb_area_and_rot90::cb_area_offset_cm_y( void )
 void cb_area_and_rot90::cb_area_size_cm_w( void )
 {
 	/* 先：横位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_size_cm_w->value()
-	 < (cl_gts_gui.valinp_area_offset_cm_x->value() +
-	    cl_gts_gui.valinp_area_size_cm_w->value())
+	if (	cl_gts_gui.valout_scanner_size_cm_w->value()
+	 < (	cl_gts_gui.valinp_area_offset_cm_x->value() +
+		cl_gts_gui.valinp_area_size_cm_w->value())
 	) {
-	    cl_gts_gui.valinp_area_size_cm_w->value(
-	     cl_gts_gui.valout_scanner_size_cm_w->value() -
-	     cl_gts_gui.valinp_area_offset_cm_x->value()
-	    ); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
-	    fl_alert( "Too Big W!" );
+		cl_gts_gui.valinp_area_size_cm_w->value(
+		cl_gts_gui.valout_scanner_size_cm_w->value() -
+		cl_gts_gui.valinp_area_offset_cm_x->value()
+		); /* x_sizeが大きすぎる(誤値だが...)とマイナスになる */
+		fl_alert(
+//			"Too Big W!"
+			gts_str::area_and_rot90::size_cm_w_big
+		);
 	}
 	/* 後：横位置が小さくてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valinp_area_size_cm_w->value() < 0.0) {
-	    cl_gts_gui.valinp_area_size_cm_w->value(0.0);
-	    fl_alert( "Too Small W!" );
+	if (	cl_gts_gui.valinp_area_size_cm_w->value() < 0.0) {
+		cl_gts_gui.valinp_area_size_cm_w->value(0.0);
+		fl_alert(
+//			"Too Small W!"
+			gts_str::area_and_rot90::size_cm_w_small
+		);
 	}
 
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
@@ -178,21 +197,27 @@ void cb_area_and_rot90::cb_area_size_cm_w( void )
 void cb_area_and_rot90::cb_area_size_cm_h( void )
 {
 	/* 先：縦位置が大きすぎてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valout_scanner_size_cm_h->value()
-	 < (cl_gts_gui.valinp_area_offset_cm_y->value() +
-	    cl_gts_gui.valinp_area_size_cm_h->value())
+	if (	cl_gts_gui.valout_scanner_size_cm_h->value()
+	 < (	cl_gts_gui.valinp_area_offset_cm_y->value() +
+		cl_gts_gui.valinp_area_size_cm_h->value())
 	) {
-	    cl_gts_gui.valinp_area_size_cm_h->value(
-	    cl_gts_gui.valout_scanner_size_cm_h->value() -
-	    cl_gts_gui.valinp_area_offset_cm_y->value()
-	    ); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
-	    fl_alert( "Too Big H!" );
+		cl_gts_gui.valinp_area_size_cm_h->value(
+		cl_gts_gui.valout_scanner_size_cm_h->value() -
+		cl_gts_gui.valinp_area_offset_cm_y->value()
+		); /* y_sizeが大きすぎる(誤値だが...)とマイナスになる */
+		fl_alert(
+//			"Too Big H!"
+			gts_str::area_and_rot90::size_cm_h_big
+		);
 	}
 
 	/* 後：縦位置が小さくてはみ出す場合、範囲に収める */
-	if (cl_gts_gui.valinp_area_size_cm_h->value() < 0.0) {
-	    cl_gts_gui.valinp_area_size_cm_h->value(0.0);
-	    fl_alert( "Too Small H!" );
+	if (	cl_gts_gui.valinp_area_size_cm_h->value() < 0.0) {
+		cl_gts_gui.valinp_area_size_cm_h->value(0.0);
+		fl_alert(
+//			"Too Small H!"
+			gts_str::area_and_rot90::size_cm_h_small
+		);
 	}
 
 	/* cm幅値からpixel幅値を計算してGUIに表示 */
@@ -224,7 +249,9 @@ void cb_area_and_rot90::cb_area_reso( void )
 	( cl_gts_gui.valinp_area_reso->maximum()
 	< cl_gts_gui.valinp_area_reso->value())
 	) {
-		fl_alert( "Must be %g ... %g DPI"
+		fl_alert(
+//			"Must be %g ... %g DPI"
+			gts_str::area_and_rot90::dpi_out_of_range
 			,cl_gts_gui.valinp_area_reso->minimum()
 			,cl_gts_gui.valinp_area_reso->maximum()
 		);
@@ -260,7 +287,10 @@ void cb_area_and_rot90::cb_area_reso( void )
 	&&  this->dpi_when_cropped_ != cl_gts_gui.valinp_area_reso->value()
 	) {
 		differ_dpi_marking_(true);
-		fl_alert( "Crop again!" );
+		fl_alert(
+//			"Crop again!"
+			gts_str::area_and_rot90::crop_again
+		);
 	}
 	else {
 		/* また一回もCropしてない、あるいは
@@ -466,10 +496,15 @@ const bool cb_area_and_rot90::check_dpi_or_size_from_pixel_( void )
 	}
 	
 	/* AreaがScannerMax範囲外だとLimitかける... */
-	switch (fl_choice("Not inside , Limit..."
-	,"Cancel"
-	,"Size"
-	,"DPI"
+	switch (fl_choice(
+//	"Not inside , Limit..."
+	gts_str::area_and_rot90::not_inside_then_limit
+//	,"Cancel"
+	,gts_str::area_and_rot90::not_inside_then_limit_cancel
+//	,"Size"
+	,gts_str::area_and_rot90::not_inside_then_limit_size
+//	,"DPI"
+	,gts_str::area_and_rot90::not_inside_then_limit_dpi
 	)) {
 	case 0: /* Cancel */
 		return false;
@@ -702,7 +737,10 @@ const std::string dnd_paste_( const std::string &dnd_str )
 {
 	/* 複数のファイルパスはエラー */
 	if (std::string::npos != dnd_str.find("\n")) {
-		return "Error : Need Only 1 Filepath";
+		return
+//			"Error : Need Only 1 Filepath"
+			gts_str::config::need_only_1_filepath
+			;
 	}
 
 	/* 必要な情報に変える */
@@ -717,12 +755,18 @@ const std::string dnd_paste_( const std::string &dnd_str )
 	if (ext == ".txt") {
 		if (cl_gts_master.cl_memo_config.load_only_area_and_rot90(
 		dnd_str ) == NG) {
-		 return "Error : at loading area_and_rot90 in config";
+		 return
+//			"Error : at loading in config"
+			gts_str::config::loading_config_error
+			;
 		}
 	}
 	/* 拡張子が対応外エラー */
 	else {
-		return "Error : Need Extension .txt";
+		return
+//			"Error : Need Extension .txt"
+			gts_str::config::need_ext_txt
+			;
 	}
 	return std::string();
 }
@@ -769,7 +813,10 @@ void cb_area_and_rot90::cb_dialog_set_aspect_ratio(
 void cb_area_and_rot90::cb_valinp_area_aspect_ratio_w_( void )
 {
 	if (cl_gts_gui.valinp_area_aspect_ratio_h->value() <= 0.0) {
-		fl_alert( "Set H_Aspect_Ratio greater than zero!" );
+		fl_alert(
+//			"Set H_Aspect_Ratio greater than zero!"
+			gts_str::area_and_rot90::bad_aspect_ratio_h
+		);
 		return;
 	}
 	cl_gts_gui.valinp_area_size_cm_w->value(
@@ -783,7 +830,10 @@ void cb_area_and_rot90::cb_valinp_area_aspect_ratio_w_( void )
 void cb_area_and_rot90::cb_valinp_area_aspect_ratio_h_( void )
 {
 	if (cl_gts_gui.valinp_area_aspect_ratio_w->value() <= 0.0) {
-		fl_alert( "Set W_Aspect_Ratio greater than zero!" );
+		fl_alert(
+//			"Set W_Aspect_Ratio greater than zero!"
+			gts_str::area_and_rot90::bad_aspect_ratio_w
+		);
 		return;
 	}
 	cl_gts_gui.valinp_area_size_cm_h->value(
@@ -803,7 +853,10 @@ void cb_area_and_rot90::cb_ok_aspect_ratio(void)
 		this->cb_valinp_area_aspect_ratio_w_();
 	} else
 	{
-		fl_alert( "Click H or W button!" );
+		fl_alert(
+//			"Click H or W button!"
+			gts_str::area_and_rot90::click_h_or_w_button
+		);
 	}
 
 	cl_gts_gui.window_set_aspect_ratio->hide();

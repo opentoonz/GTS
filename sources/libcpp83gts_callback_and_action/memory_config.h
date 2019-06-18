@@ -86,6 +86,10 @@ public:
 		   "level_num_end")
 	,str_scan_num_continue_type_(
 	    "scan_num_continue_type")
+	,str_scan_num_continue_type_end_(
+	    "End")
+	,str_scan_num_continue_type_endless_(
+	    "Endless")
 		,str_scan_num_continue_type_legacy2016_(
 		   "level_num_continue_type")
 	,str_scan_num_endless_direction_(
@@ -167,6 +171,14 @@ public:
 	    "area_rotate_per_90")
 		,str_area_rotate_per_90_legacy2017_(
 		    "rotate_per_90")
+	,str_area_rotate_cwm90_(
+	    "CW_-90")
+	,str_area_rotate_cw000_(
+	    "CW_0")
+	,str_area_rotate_cw090_(
+	    "CW_90")
+	,str_area_rotate_cw180_(
+	    "CW_180")
 	,str_scanner_type_(
 	    "scanner_type")
 	,str_scanner_size_cm_w_(
@@ -178,6 +190,12 @@ public:
 
 	,str_pixel_type_(
 	    "pixel_type")
+	,str_pixel_type_bw_(
+	    "BW")
+	,str_pixel_type_grayscale_(
+	    "Grayscale")
+	,str_pixel_type_rgb_(
+	    "RGB")
 	,str_bw_threshold_(
 	    "bw_threshold")
 	,str_grayscale_brightness_(
@@ -413,6 +431,8 @@ private:
 	const char* str_scan_num_end_;
 	const char* str_scan_num_end_legacy2016_;
 	const char* str_scan_num_continue_type_;
+	const char* str_scan_num_continue_type_end_;
+	const char* str_scan_num_continue_type_endless_;
 	const char* str_scan_num_continue_type_legacy2016_;
 	const char* str_scan_num_endless_direction_;
 	const char* str_scan_num_endless_direction_legacy2016_;
@@ -455,12 +475,19 @@ private:
 	const char* str_area_aspect_ratio_h_;
 	const char* str_area_aspect_ratio_how_to_fix_;
 	const char* str_area_rotate_per_90_;
+	const char* str_area_rotate_cwm90_;
+	const char* str_area_rotate_cw000_;
+	const char* str_area_rotate_cw090_;
+	const char* str_area_rotate_cw180_;
 	const char* str_area_rotate_per_90_legacy2017_;
 	const char* str_scanner_type_;
 	const char* str_scanner_size_cm_w_;
 	const char* str_scanner_size_cm_h_;
 
 	const char* str_pixel_type_;
+	const char* str_pixel_type_bw_;
+	const char* str_pixel_type_grayscale_;
+	const char* str_pixel_type_rgb_;
 	const char* str_bw_threshold_;
 	const char* str_grayscale_brightness_;
 	const char* str_grayscale_contrast_;
@@ -596,6 +623,7 @@ private:
 	bool load_trace_params_( std::vector< std::string >& words );
 	bool load_trace_batch_( std::vector< std::string >& words );
 	bool load_number_( std::vector< std::string >& words );
+	void load_set_rotate_per_90_( const std::string& str );
 };
 
 #endif /* !memory_config_h */

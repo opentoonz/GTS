@@ -1,33 +1,30 @@
 #include <iostream>
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include "ids_path_level_from_files.h"
+#include "gts_str_language.h" // gts_str::
 #include "cb_pixel_type_and_bright.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
-void gts_master::cb_choice_pixel_type_title( const std::string& str )
+void cb_pixel_type_and_bright::cb_choice_pixel_type_title( const int number )
 {
-	const Fl_Menu_Item *crnt = cl_gts_gui.choice_pixel_type->find_item(
-		str.c_str()
-	);
-	if (crnt != nullptr) {
-		cl_gts_gui.choice_pixel_type->value( crnt ); 
-	}
+	cl_gts_gui.choice_pixel_type->value( number ); 
 }
-void gts_master::cb_choice_pixel_type_menu( void )
+
+void cb_pixel_type_and_bright::cb_choice_pixel_type_menu( void )
 {
 	switch (cl_gts_gui.choice_pixel_type->value()) {
-	case 0:
+	case this->bw_type_value:
 		cl_gts_gui.group_bw->show();
 		cl_gts_gui.group_grays->hide();
 		cl_gts_gui.group_rgb->hide();
 		break;
-	case 1:
+	case this->grayscale_type_value:
 		cl_gts_gui.group_bw->hide();
 		cl_gts_gui.group_grays->show();
 		cl_gts_gui.group_rgb->hide();
 		break;
-	case 2:
+	case this->rgb_type_value:
 		cl_gts_gui.group_bw->hide();
 		cl_gts_gui.group_grays->hide();
 		cl_gts_gui.group_rgb->show();
@@ -49,7 +46,10 @@ const std::string dnd_paste_( const std::string &dnd_str )
 {
 	/* 複数のファイルパスはエラー */
 	if (std::string::npos != dnd_str.find("\n")) {
-		return "Error : Need Only 1 Filepath";
+		return
+//			"Error : Need Only 1 Filepath"
+			gts_str::config::need_only_1_filepath
+			;
 	}
 
 	/* 必要な情報に変える */
@@ -64,12 +64,18 @@ const std::string dnd_paste_( const std::string &dnd_str )
 	if (ext == ".txt") {
 		if (cl_gts_master.cl_memo_config.load_only_pixel_type_and_bright(
 		dnd_str ) == NG) {
-		 return "Error : at loading pixel_type_and_bright in config";
+		 return
+//			"Error : at loading in config"
+			gts_str::config::loading_config_error
+			;
 		}
 	}
 	/* 拡張子が対応外エラー */
 	else {
-		return "Error : Need Extension .txt";
+		return
+//			"Error : Need Extension .txt"
+			gts_str::config::need_ext_txt
+			;
 	}
 	return std::string();
 }

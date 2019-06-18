@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
+#include "gts_str_language.h"	// gts_str::
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_image.h"
@@ -12,7 +13,8 @@ void cb_image::open( void )
 	/* NativeブラウザーOpenで開く */
 	int filter_current = this->ext_open_filter_current_;
 	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Image"
+//		"Open Image"
+		gts_str::image::open
 		,this->dir_path_
 		,"" /* 開くときは選択が必須のためファイル名は空白表示 */
 		,this->ext_open.get_native_filters()
@@ -46,12 +48,18 @@ void cb_image::save_as( void )
 {
 	/* Crop中は保存できない */
 	if (cl_gts_master.cl_ogl_view.get_crop_disp_sw()) {
-		fl_alert("Finish Cropping, Please Scan.");
+		fl_alert(
+//			"Finish Cropping, Please Scan."
+			gts_str::image::save_as_can_not_when_crop
+		);
 		return;
 	}
 	/* ScanもReadもまだしていない */
 	if (cl_gts_master.cl_iip_ro90.get_clp_parent() == nullptr ) {
-		fl_alert("Please Any Scan or Open.");
+		fl_alert(
+//			"Please Any Scan or Open."
+			gts_str::image::no_image
+		);
 		return;
 	}
 
@@ -77,14 +85,18 @@ void cb_image::save_as( void )
 		rot90 = cl_gts_gui.choice_rot90->value();
 		dpi = cl_gts_gui.valinp_area_reso->value();
 	} else {
-		fl_alert("No Image");
+		fl_alert(
+//			"No Image"
+			gts_str::image::no_image
+		);
 		return;
 	}
 
 	/* NativeブラウザーSaveで開く */
 	int filter_current = this->ext_save_filter_current_;
 	std::string fpath = ids::path::fltk_native_browse_save(
-		"Save Image As"
+//		"Save Image As"
+		gts_str::image::save_as
 		,this->dir_path_
 		,this->save_file_name_
 		,this->ext_save.get_native_filters()
@@ -104,13 +116,19 @@ void cb_image::save_as( void )
 
 	/* 拡張子がなければError */
 	if (this->ext_save_is_exist_( fpath ) == false) {
-		fl_alert("Need Extension.");
+		fl_alert(
+//			"Need Extension."
+			gts_str::image::need_extension
+		);
 		return;
 	}
 
 	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
 	if (cl_gts_master.rot_and_trace_and_enoise( parent ,rot90 ) != OK) {
-		fl_alert("Effects Error");
+		fl_alert(
+//			"Effects Error"
+			gts_str::image::effects_error
+		);
 		return;
 	}
 
@@ -129,7 +147,10 @@ void cb_image::save_as( void )
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : cl_gts_master.iipg_save(-) returns NG" );
-		fl_alert("Save \"%s\" Error" ,fpath.c_str() );
+		fl_alert(
+//			"Save \"%s\" Error"
+			gts_str::image::save_error
+			,fpath.c_str() );
 		return;
 	}
 }
