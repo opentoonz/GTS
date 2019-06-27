@@ -484,18 +484,18 @@ public:
 private:
   inline void cb_18_i(Fl_Button*, void*);
   static void cb_18(Fl_Button*, void*);
-  inline void cb_19_i(Fl_Button*, void*);
-  static void cb_19(Fl_Button*, void*);
+  inline void cb_22_i(Fl_Button*, void*);
+  static void cb_22(Fl_Button*, void*);
 public:
   Fl_Double_Window *window_number;
 private:
   inline void cb_window_number_i(Fl_Double_Window*, void*);
   static void cb_window_number(Fl_Double_Window*, void*);
   static Fl_Menu_Item menu_1[];
+  inline void cb_19_i(Fl_Menu_*, void*);
+  static void cb_19(Fl_Menu_*, void*);
   inline void cb_1a_i(Fl_Menu_*, void*);
   static void cb_1a(Fl_Menu_*, void*);
-  inline void cb_1b_i(Fl_Menu_*, void*);
-  static void cb_1b(Fl_Menu_*, void*);
 public:
   Fl_Input *norinp_number_input;
 private:
@@ -513,6 +513,8 @@ public:
 private:
   inline void cb_window_trace_batch_i(Fl_Double_Window*, void*);
   static void cb_window_trace_batch(Fl_Double_Window*, void*);
+  inline void cb_1b_i(Fl_Button*, void*);
+  static void cb_1b(Fl_Button*, void*);
   inline void cb_1c_i(Fl_Button*, void*);
   static void cb_1c(Fl_Button*, void*);
   inline void cb_1d_i(Fl_Button*, void*);
@@ -521,8 +523,6 @@ private:
   static void cb_1e(Fl_Button*, void*);
   inline void cb_1f_i(Fl_Button*, void*);
   static void cb_1f(Fl_Button*, void*);
-  inline void cb_20_i(Fl_Button*, void*);
-  static void cb_20(Fl_Button*, void*);
 public:
   Fl_Browser *selbro_trace_batch_config_list;
   Fl_Double_Window *window_trace_params;
@@ -535,8 +535,8 @@ public:
 private:
   inline void cb_button_trace_params_i(fltk_button_trace_params*, void*);
   static void cb_button_trace_params(fltk_button_trace_params*, void*);
-  inline void cb_22_i(Fl_Button*, void*);
-  static void cb_22(Fl_Button*, void*);
+  inline void cb_20_i(Fl_Button*, void*);
+  static void cb_20(Fl_Button*, void*);
 public:
   Fl_Button *togbut_trace_open_under_sw;
 private:
