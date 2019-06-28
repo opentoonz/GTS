@@ -134,8 +134,10 @@ void cb_image::save_as( void )
 
 	/* 保存 */
 	if (OK != cl_gts_master.iipg_save(
-		//&(cl_gts_master.cl_iip_edot)
-		&(cl_gts_master.cl_iip_ro90)
+		&(cl_gts_master.cl_iip_edot)
+				/* 処理したEffectの最後Node画像を保存 */
+		// &(cl_gts_master.cl_iip_ro90)
+				/* スキャン画像の保存 */
 		,const_cast<char *>(fpath.c_str())
 		,dpi
 

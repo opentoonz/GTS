@@ -79,7 +79,7 @@ namespace image {
 const char* open
 	= u8"画像を一枚ファイルから表示";
 const char* save_as
-	= u8"画像を処理せず一枚別名でファイルへ保存";
+	= u8"画像を(チェックのON/OFFによる処理後)一枚別名でファイルへ保存";
 const char* save_as_can_not_when_crop
 	= u8"最大スキャン(範囲編集)では保存できません。確認スキャンするか画像ファイルを開いてください";
 const char* no_image

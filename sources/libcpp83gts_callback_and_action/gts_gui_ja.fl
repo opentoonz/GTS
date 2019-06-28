@@ -35,7 +35,7 @@ class gts_gui {open
             xywh {0 0 30 20} shortcut 0x4006f
           }
           MenuItem {} {
-            label {画像 別名で保存(処理せず1枚)...}
+            label {画像 別名で保存(1枚)...}
             callback {cl_gts_master.cl_image.save_as();}
             xywh {0 0 30 20} shortcut 0x50073 divider
           }
