@@ -22,7 +22,7 @@ const char* size_cm_h_small
 const char* dpi_out_of_range
 	= u8"DPIは%gから%gの範囲で指定してください";
 const char* crop_again
-	= u8"最大スキャンをし直してください";
+	= u8"[サイズ設定]をし直してください";
 const char* bad_aspect_ratio_h
 	= u8"縦横比の高の値はゼロより大きい値が必要です";
 const char* bad_aspect_ratio_w
@@ -41,24 +41,24 @@ const char* not_inside_then_limit_dpi
 
 namespace change_view {
 const char* not_change
-	= u8"最大スキャン時は切替えできません";
+	= u8"[サイズ設定]時は切替えできません";
 const char* no_image
 	= u8"画像がありません";
 const char* no_rgb_image
-	= u8"24ビットカラー画像が必要です";
+	= u8"カラー(24ビット)画像が必要です";
 const char* view_setup_error
 	= u8"表示エラー";
 } // change_view
 
 namespace config {
 const char* open
-	= u8"設定をファイルから再現";
+	= u8"設定をファイルから読込み再現";
 const char* open_only_area_and_rot90
-	= u8"範囲と方向の設定をファイルから再現";
+	= u8"「サイズと解像度」設定をファイルから読込み再現";
 const char* open_only_pixel_type_and_bright
-	= u8"画像タイプと明るさの設定をファイルから再現";
+	= u8"「タイプ選択と明るさ」設定をファイルから読込み再現";
 const char* open_only_trace_params
-	= u8"二値化調整の設定をファイルから再現";
+	= u8"「線の調整」設定をファイルから読込み再現";
 const char* save_as
 	= u8"設定を別名でファイルに保存";
 const char* need_only_1_filepath
@@ -81,7 +81,7 @@ const char* open
 const char* save_as
 	= u8"画像を(チェックのON/OFFによる処理後)一枚別名でファイルへ保存";
 const char* save_as_can_not_when_crop
-	= u8"最大スキャン(範囲編集)では保存できません。確認スキャンするか画像ファイルを開いてください";
+	= u8"[サイズ設定]状態では保存できません。プレビューするか画像ファイルを開いてください";
 const char* no_image
 	= u8"画像がありません(スキャンするかファイルを開いてください)";
 const char* need_extension
@@ -94,18 +94,18 @@ const char* save_error
 
 namespace number {
 const char* need_to_set_number
-	= u8"「連番セット」ボタンを押して連番をセットしてください";
+	= u8"[セット]ボタンを押して「ナンバー」をセットしてください";
 } // number
 
 namespace scan_and_save {
 const char* select_folder
 	= u8"連番スキャン画像を保存するフォルダーを選択する";
 const char* not_scan_number
-	= u8"「連番スキャン」で[連番セット]してください";
+	= u8"「画像保存場所」で[セット]ボタンを押してください";
 const char* need_scan_save_name
-	= u8"連番スキャンのファイル名を指定してください";
+	= u8"連番スキャンの保存ファイル名を指定してください";
 const char* select_number
-	= u8"「実行番号」を選択してください";
+	= u8"「ナンバー」を選択してください";
 const char* bad_number
 	= u8"開始番号が間違っています";
 const char* bad_scan_number
@@ -131,11 +131,11 @@ const char* too_many_selected
 
 namespace trace_files {
 const char* open_images
-	= u8"連番画像ファイルとして(そのうち一枚)選択する";
+	= u8"一枚選択することで連番画像ファイルを開く";
 const char* select_folder
 	= u8"連番二値化画像を保存するフォルダーを選択する";
 const char* not_trace_number
-	= u8"「連番ファイル2値化」で[連番セット]してください";
+	= u8"「2値化バッチ」で[セット]ボタンを押してください";
 const char* need_trace_open_name
 	= u8"開くべき連番ファイル名がありません";
 const char* need_trace_save_name
@@ -145,7 +145,7 @@ const char* check_open_folder_and_filename
 const char* check_save_folder_and_filename
 	= u8"保存するフォルダー名とファイル名を確認してください";
 const char* select_number
-	= u8"「実行番号」を選択してください";
+	= u8"「ナンバー」を選択してください";
 const char* filename_without_head_or_number
 	= u8"ファイル頭名あるいは番号がありません\n\'%s\'";
 const char* empty_rename_filename

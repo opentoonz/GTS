@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
+#include "osapi_exist.h" // osapi::exist_utf8_mbs(-)
 #include "gts_str_language.h"	// gts_str::
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
@@ -108,20 +109,40 @@ void cb_image::save_as( void )
 		return;
 	}
 
+	/* 拡張子がなければ */
+	if (this->ext_save_is_exist_( fpath ) == false) {
+		/* 拡張子指定されていれば */
+		if (filter_current < this->ext_save.size()) {
+			/* 拡張子追加する */
+			fpath+= this->ext_save.str_from_num(filter_current);
+
+			/* ダイオローグを表示 */
+			if (osapi::exist_utf8_mbs(fpath)) {
+				/* すでに存在するなら上書き確認 */
+				if (0 == fl_ask(
+//			"Overwrite \"%s\"?"
+					gts_str::config::ask_overwrite
+					,fpath.c_str() )){
+					return;
+				}
+			}
+		}
+		/* ユーザーによる拡張子指定ない
+		(Image Files(*.tga;*.tif)/All Files(*.*)) */
+		else {
+			fl_alert(
+//			"Need Extension."
+				gts_str::image::need_extension
+			);
+			return;
+		}
+	}
+
 	/* 有効なパスを開いたらその状態を記憶する */
 	ids::path::from_fpath_to_dpath_fname(
 		fpath ,this->dir_path_ ,this->save_file_name_
 	);
 	this->ext_save_filter_current_ = filter_current;
-
-	/* 拡張子がなければError */
-	if (this->ext_save_is_exist_( fpath ) == false) {
-		fl_alert(
-//			"Need Extension."
-			gts_str::image::need_extension
-		);
-		return;
-	}
 
 	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
 	if (cl_gts_master.rot_and_trace_and_enoise( parent ,rot90 ) != OK) {
