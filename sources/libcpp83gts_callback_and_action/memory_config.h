@@ -41,6 +41,8 @@ public:
 	    "image_save_file_name")
 	,str_image_save_image_format_(
 	    "image_save_image_format")
+	,str_image_save_as_set_scan_images_path_sw_(
+	    "image_save_as_set_scan_images_path_sw")
 
 	,str_scan_filter_trace_sw_(
 	    "scan_filter_trace_sw")
@@ -407,6 +409,7 @@ private:
 	const char* str_image_open_image_format_;
 	const char* str_image_save_file_name_;
 	const char* str_image_save_image_format_;
+	const char* str_image_save_as_set_scan_images_path_sw_;
 
 	const char* str_scan_filter_trace_sw_;
 	const char* str_scan_filter_trace_sw_legacy2017_;

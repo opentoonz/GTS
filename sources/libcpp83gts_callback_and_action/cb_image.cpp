@@ -95,14 +95,26 @@ void cb_image::save_as( void )
 
 	/* NativeブラウザーSaveで開く */
 	int filter_current = this->ext_save_filter_current_;
-	std::string fpath = ids::path::fltk_native_browse_save(
+	std::string fpath;
+	if (this->save_as_set_scan_images_path_sw) {
+		fpath = ids::path::fltk_native_browse_save(
+//		"Save Image As"
+		gts_str::image::save_as
+		,cl_gts_gui.filinp_scan_save_dir_path->value()
+		,cl_gts_gui.strinp_scan_save_file_head->value()
+		,this->ext_save.get_native_filters()
+		,filter_current
+		).at(0);
+	} else {
+		fpath = ids::path::fltk_native_browse_save(
 //		"Save Image As"
 		gts_str::image::save_as
 		,this->dir_path_
 		,this->save_file_name_
 		,this->ext_save.get_native_filters()
 		,filter_current
-	).at(0);
+		).at(0);
+	}
 
 	/* Cancel */
 	if (fpath.empty()) {

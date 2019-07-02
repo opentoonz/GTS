@@ -1,5 +1,6 @@
 # Config
 config_save_as_set_scan_images_path_sw	ON
+image_save_as_set_scan_images_path_sw	ON
 
 # Scan and Save
 scan_save_dir_path           "C:\"

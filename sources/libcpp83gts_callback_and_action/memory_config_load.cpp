@@ -184,6 +184,12 @@ bool memory_config::load_image_( std::vector< std::string >& words )
 	    this->str_image_save_image_format_ == words.at(0) ) {
  cl_gts_master.cl_image.set_save_image_format( words.at(1) );
 	}
+	else if (
+	this->str_image_save_as_set_scan_images_path_sw_ == words.at(0)
+	) {
+ cl_gts_master.cl_image.save_as_set_scan_images_path_sw =
+ 		(words.at(1) == this->str_on_);
+	}
 	else {
 		return false; // not defined
 	}

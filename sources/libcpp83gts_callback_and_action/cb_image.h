@@ -7,8 +7,9 @@
 class cb_image {
 public:
 	cb_image()
-	:ext_open_filter_current_(0)
-	,ext_save_filter_current_(0)
+		:ext_open_filter_current_(0)
+		,ext_save_filter_current_(0)
+		,save_as_set_scan_images_path_sw(false)
 	{}
 
 	ids::path::extensions ext_open;
@@ -16,6 +17,7 @@ public:
 
 	void open(void);
 	void save_as(void);
+	bool save_as_set_scan_images_path_sw;
 
 	void set_dir_path(const std::string&ss) {
 	   this->dir_path_ = ss; }
