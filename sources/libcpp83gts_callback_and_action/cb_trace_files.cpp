@@ -139,38 +139,6 @@ int cb_trace_files::read_and_save_crnt_(
 
 int cb_trace_files::cb_start( const bool interactive_sw )
 {
-	if ( !cl_gts_master.cl_number.is_trace() ) {
-		fl_alert(
-//			"Set Number for Trace"
-			gts_str::trace_files::not_trace_number
-		);
-		return OK;
-	}
-
-	/* チェック：開くファイルのLevel名がない */
-	{
-	std::string name(cl_gts_gui.strinp_trace_open_file_head->value());
-	if ( name.empty() ) {
-		fl_alert(
-//			"Need Trace Open Name!"
-			gts_str::trace_files::need_trace_open_name
-		);
-		return NG;
-	}
-	}
-
-	/* チェック：保存ファイルのLevel名がない */
-	{
-	std::string name(cl_gts_gui.strinp_trace_save_file_head->value());
-	if ( name.empty() ) {
-		fl_alert(
-//			"Need Trace Save Name!"
-			gts_str::trace_files::need_trace_save_name
-		);
-		return NG;
-	}
-	}
-
 	/* チェック：開くファイル名がない */
 	if (this->get_open_path(0).empty()) {
 		fl_alert(
@@ -180,6 +148,18 @@ int cb_trace_files::cb_start( const bool interactive_sw )
 		return NG;
 	}
 
+	/* チェック：開くファイルのLevel名がない */
+/*	{
+	std::string name(cl_gts_gui.strinp_trace_open_file_head->value());
+	if ( name.empty() ) {
+		fl_alert(
+//			"Need Trace Open Name!"
+			gts_str::trace_files::need_trace_open_name
+		);
+		return NG;
+	}
+	}*/
+
 	/* チェック：保存ファイル名がない */
 	if (this->get_save_path(0).empty()) {
 		fl_alert(
@@ -187,6 +167,27 @@ int cb_trace_files::cb_start( const bool interactive_sw )
 			gts_str::trace_files::check_save_folder_and_filename
 		);
 		return NG;
+	}
+
+	/* チェック：保存ファイルのLevel名がない */
+/*	{
+	std::string name(cl_gts_gui.strinp_trace_save_file_head->value());
+	if ( name.empty() ) {
+		fl_alert(
+//			"Need Trace Save Name!"
+			gts_str::trace_files::need_trace_save_name
+		);
+		return NG;
+	}
+	}*/
+
+	/* チェック：ナンバーの設定してない */
+	if ( !cl_gts_master.cl_number.is_trace() ) {
+		fl_alert(
+//			"Set Number for Trace"
+			gts_str::trace_files::not_trace_number
+		);
+		return OK;
 	}
 
 	/* 順送り(start <= end)の初期位置 */
