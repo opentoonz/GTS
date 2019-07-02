@@ -692,6 +692,8 @@ const std::string cb_trace_files::get_open_path( const int number )
 {
 	/* Folder & File名が設定していないと空を返す */
 	if (cl_gts_gui.filinp_trace_open_dir_path->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.filinp_trace_open_dir_path->value()).empty()
 	||  this->get_open_name_from_number_( number ).empty()) {
 		return std::string();
 	}
@@ -737,6 +739,8 @@ const std::string cb_trace_files::get_open_path_from_head_and_number_(
 {
 	/* Folder & File名が設定していないと空を返す */
 	if (cl_gts_gui.filinp_trace_open_dir_path->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.filinp_trace_open_dir_path->value()).empty()
 	||  this->get_open_name_from_head_and_number_(
 	file_head,number).empty()) {
 		return std::string();
@@ -757,6 +761,8 @@ const std::string cb_trace_files::get_save_path( const int number )
 {
 	/* Folder & File名が設定していないと空を返す */
 	if (cl_gts_gui.filinp_trace_save_dir_path->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.filinp_trace_save_dir_path->value()).empty()
 	|| this->get_save_name_( number ).empty()) {
 		return std::string();
 	}
@@ -772,6 +778,8 @@ const std::string cb_trace_files::get_save_name_( const int number )
 {
 	/* 名(head,num_form,ext)が設定していないと空を返す */
 	if (cl_gts_gui.strinp_trace_save_file_head->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.strinp_trace_save_file_head->value()).empty()
 	||  (0 <= number
 	&&  cl_gts_gui.output_trace_save_number_format->value() == nullptr)
 	||  cl_gts_gui.choice_trace_save_image_format->text() == nullptr) {

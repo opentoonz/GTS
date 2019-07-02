@@ -19,20 +19,21 @@
 
 const char* cb_scan_and_save::cb_start_check_( void )
 {
-	/* 01 チェック：スキャンモードであること */
+	/* 01 チェック：フォルダーと保存ファイルのLevel名があること */
+	std::string filen(cl_gts_gui.strinp_scan_save_file_head->value());
+	std::string foldn(cl_gts_gui.filinp_scan_save_dir_path->value());
+	if ( filen.empty() || foldn.empty() ) {
+		return
+//			"Need Scan Save Folder or Name!"
+			gts_str::trace_files::check_save_folder_and_filename
+			;
+	}
+
+	/* 02 チェック：スキャンモードであること */
 	if ( !cl_gts_master.cl_number.is_scan() ) {
 		return
 //			"Set Number for Scan"
 			gts_str::scan_and_save::not_scan_number
-			;
-	}
-
-	/* 02 チェック：保存ファイルのLevel名があること */
-	std::string name(cl_gts_gui.strinp_scan_save_file_head->value());
-	if ( name.empty() ) {
-		return
-//			"Need Scan Save Name!"
-			gts_str::scan_and_save::need_scan_save_name
 			;
 	}
 
@@ -590,6 +591,8 @@ const std::string cb_scan_and_save::get_save_path( const int number )
 {
 	/* Folder & File名が設定していないと空を返す */
 	if (cl_gts_gui.filinp_scan_save_dir_path->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.filinp_scan_save_dir_path->value()).empty()
 	||  this->get_save_name(number).empty()) {
 		return std::string();
 	}
@@ -604,6 +607,8 @@ const std::string cb_scan_and_save::get_save_name( const int number )
 {
 	/* 名(head,num_form,ext)が設定していないと空を返す */
 	if (cl_gts_gui.strinp_scan_save_file_head->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.strinp_scan_save_file_head->value()).empty()
 	||  (0<=number
 	&&  cl_gts_gui.output_scan_save_number_format->value() == nullptr)
 	||  cl_gts_gui.choice_scan_save_image_format->text() == nullptr) {
