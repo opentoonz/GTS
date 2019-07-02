@@ -97,6 +97,8 @@ void cb_image::save_as( void )
 	int filter_current = this->ext_save_filter_current_;
 	std::string fpath;
 	if (this->save_as_set_scan_images_path_sw) {
+		filter_current =
+		 cl_gts_gui.choice_scan_save_image_format->value();
 		fpath = ids::path::fltk_native_browse_save(
 //		"Save Image As"
 		gts_str::image::save_as
