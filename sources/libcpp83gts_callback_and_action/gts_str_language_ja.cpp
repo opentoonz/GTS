@@ -135,7 +135,7 @@ const char* open_images
 const char* select_folder
 	= u8"連番二値化画像を保存するフォルダーを選択する";
 const char* not_trace_number
-	= u8"「2値化バッチ」で[セット]ボタンを押してください";
+	= u8"「2値化バッチ」で[フォルダ名]、[ファイル名]を指定して[セット]ボタンを押してください";
 const char* need_trace_open_name
 	= u8"開くべき連番ファイル名がありません";
 const char* need_trace_save_name

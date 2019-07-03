@@ -135,7 +135,7 @@ const char* open_images
 const char* select_folder
 	= "Select and Set Saving Folder for Trace";
 const char* not_trace_number
-	= "Set Number for Trace";
+	= "Set Folder and File and [Set Number] for Trace";
 const char* need_trace_open_name
 	= "Need Trace Open Name";
 const char* need_trace_save_name
