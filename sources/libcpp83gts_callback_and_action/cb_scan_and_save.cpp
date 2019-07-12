@@ -2,30 +2,39 @@
 #include <iostream>	// std::cout
 #include <sstream>	// std::ostringstream
 #include <iomanip>	// std::setfill(-) ,std::setw(-)
-#include <FL/fl_ask.H>  // fl_alert(-) fl_input(-)
+#include <FL/fl_ask.H>  // fl_alert(-)
 #include "ptbl_returncode.h"
 #include "pri.h"
 #include "osapi_exist.h"
+#include "osapi_mbs_wcs.h" // osapi::cp932_from_utf8(-) , osapi::exist_utf8_mbs(-)
 #include "ids_path_fltk_native_browse.h"
 #ifdef _WIN32
 # include "wincom_native_browse_directory.h"
 #endif
 #include "ids_path_level_from_files.h"
+#include "gts_str_language.h"	// gts_str::
 #include "cb_scan_and_save.h"
 #include "gts_gui.h"
 #include "gts_master.h"
 
 const char* cb_scan_and_save::cb_start_check_( void )
 {
-	/* 01 チェック：スキャンモードであること */
-	if ( !cl_gts_master.cl_number.is_scan() ) {
-		return "Set Number for Scan";
+	/* 01 チェック：フォルダーと保存ファイルのLevel名があること */
+	std::string filen(cl_gts_gui.strinp_scan_save_file_head->value());
+	std::string foldn(cl_gts_gui.filinp_scan_save_dir_path->value());
+	if ( filen.empty() || foldn.empty() ) {
+		return
+//			"Need Scan Save Folder or Name!"
+			gts_str::trace_files::check_save_folder_and_filename
+			;
 	}
 
-	/* 02 チェック：保存ファイルのLevel名があること */
-	std::string name(cl_gts_gui.strinp_scan_save_file_head->value());
-	if ( name.empty() ) {
-		return "Need Scan Save Name!";
+	/* 02 チェック：スキャンモードであること */
+	if ( !cl_gts_master.cl_number.is_scan() ) {
+		return
+//			"Set Number for Scan"
+			gts_str::scan_and_save::not_scan_number
+			;
 	}
 
 	/* 03 値セット：選択リストから先頭を得る */
@@ -36,12 +45,18 @@ const char* cb_scan_and_save::cb_start_check_( void )
 	/* 04 チェック：番号リストの選択からカレントを得る */
 	if (cl_gts_master.cl_number.get_crnt_file_num() < 1) {
 		if (cl_gts_gui.choice_scan_num_continue_type->value()
-		== cl_gts_master.cl_number.get_end_type_value()
+		== cl_gts_master.cl_number.end_type_value
 		) {	/* End type */
-		return "Select Number!";
+			return
+//				"Select Number!"
+				gts_str::scan_and_save::select_number
+				;
 		}
 		else {	/* Endless type */
-		return "Bad Number in Start!";
+			return
+//				"Bad Number in Start!"
+				gts_str::scan_and_save::bad_number
+				;
 		}
 	}
 	return "";
@@ -53,9 +68,13 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	if (cl_gts_master.cl_number.get_crnt_list_num() < 1
 	||  cl_gts_master.cl_number.get_crnt_file_num() < 1) {
 		std::ostringstream ost;
-		ost	<< "Bad Number(crnt_list_num="
+		ost
+			<<
+//			"Bad Number"
+			gts_str::scan_and_save::bad_scan_number
+			<< "(crnt_list_num,crnt_file_num)=("
 			<< cl_gts_master.cl_number.get_crnt_list_num()
-			<< ",crnt_file_num="
+			<< ","
 			<< cl_gts_master.cl_number.get_crnt_file_num()
 			<< ")"
 		;
@@ -72,7 +91,10 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	iip_canvas* clp_scan_err = cl_gts_master.iipg_scan( return_code );
 	if (return_code == NG) {
 		return_code = NG;
-		return std::string("Can not Scan(NG)");
+		return std::string(
+//			"Can not Scan(NG)"
+			gts_str::scan_and_save::scan_error
+		);
 	}
 
 	/* 04 スキャン：ユーザーからキャンセル指示があればここまで */
@@ -84,7 +106,10 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 	/* 05 スキャン：return_codeチェックのあとにエラーチェックする */
 	if (nullptr == clp_scan_err) {
 		return_code = NG;
-		return std::string("Can not Scan(nullptr)");
+		return std::string(
+//			"Can not Scan(nullptr)"
+			gts_str::scan_and_save::scan_error
+		);
 	}
 
 	//------------------------------
@@ -95,7 +120,10 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 		,cl_gts_gui.choice_rot90->value()
 	) != OK) {
 		return_code = NG;
-		return std::string("Can not Fx");
+		return std::string(
+//			"Can not Fx"
+			gts_str::scan_and_save::rot_and_trace_and_enoise_error
+		);
 	}
 
 	//------------------------------
@@ -111,7 +139,10 @@ std::string cb_scan_and_save::cb_scan_fx_display_( int& return_code )
 		cl_gts_master.cl_iip_scan.get_clp_canvas()
 		,false ,false ) != OK) {
 		return_code = NG;
-		return std::string("Can not Redraw");
+		return std::string(
+//			"Can not Redraw"
+			gts_str::scan_and_save::redraw_error
+		);
 	}
 
 	/* 10 表示：保存するタイプで画像を表示する */
@@ -143,7 +174,10 @@ std::string cb_scan_and_save::cb_save_( void )
 	) );
 	if (fpath_save.empty()) {
 		std::ostringstream ost;
-		ost	<< "Can not get save_file_path at current_number("
+		ost	<<
+//			"Can not get save_file_path at current_number"
+			gts_str::scan_and_save::can_not_get_save_path
+			<< "("
 			<< cl_gts_master.cl_number.get_crnt_file_num()
 			<< ")"
 			;
@@ -158,7 +192,10 @@ std::string cb_scan_and_save::cb_save_( void )
 		/* 回転値後を正対として角度ゼロ(default)として保存する */
 	) ) {
 		std::ostringstream ost;
-		ost	<< "Can not Save file("
+		ost	<<
+//			"Can not Save file"
+			gts_str::scan_and_save::can_not_save
+			<< "("
 			<< fpath_save
 			<< ")"
 			;
@@ -402,7 +439,10 @@ void cb_scan_and_save::cb_save( const bool change_adjustable_sw )
 		,cl_gts_gui.choice_rot90->value()
 	 ) != OK) {
 		this->during_the_scan_is_ = false;
-		fl_alert("Can not Fx");
+		fl_alert(
+//			"Can not Fx"
+			gts_str::scan_and_save::rot_and_trace_and_enoise_error
+		);
 		return;
 	 }
 	}
@@ -442,13 +482,16 @@ void cb_scan_and_save::cb_browse_save_folder( void )
 	/* Nativeフォルダーブラウザー開く */
 #ifdef _WIN32
 	const std::string filepath =wincom::native_browse_directory_m(
-		"Select Saving Folder for Scan"
+//		"Select and Set Saving Folder for Scan"
+		osapi::cp932_from_utf8(
+			gts_str::scan_and_save::select_folder )
 		,cl_gts_gui.filinp_scan_save_dir_path->value()
 		,::fl_xid( cl_gts_gui.window_scan_and_save )
 	);
 #else
 	const std::string filepath =ids::path::fltk_native_browse_directory(
-		"Set Saving Folder for Scan"
+//		"Select and Set Saving Folder for Scan"
+		gts_str::scan_and_save::select_folder
 		,cl_gts_gui.filinp_scan_save_dir_path->value()
 	).at(0);
 #endif
@@ -472,7 +515,7 @@ void cb_scan_and_save::cb_set_number( void )
 	int num_s = -1;
 	int num_e = -1;
 	if (cl_gts_gui.choice_scan_num_continue_type->value()
-	== cl_gts_master.cl_number.get_endless_type_value()) {
+	== cl_gts_master.cl_number.endless_type_value) {
  num_s = static_cast<int>(cl_gts_gui.valinp_scan_num_start->value());
  num_e = num_s;
 	}
@@ -486,7 +529,7 @@ void cb_scan_and_save::cb_set_number( void )
 
 	/* End/EndlessによるNumberリストのdeactivate/activete */
 	this->cb_change_num_continue_type(
-	 cl_gts_gui.choice_scan_num_continue_type->text()
+	 cl_gts_gui.choice_scan_num_continue_type->value()
 	);
 
 	/* Numberウインドウ再構築 */
@@ -548,6 +591,8 @@ const std::string cb_scan_and_save::get_save_path( const int number )
 {
 	/* Folder & File名が設定していないと空を返す */
 	if (cl_gts_gui.filinp_scan_save_dir_path->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.filinp_scan_save_dir_path->value()).empty()
 	||  this->get_save_name(number).empty()) {
 		return std::string();
 	}
@@ -562,6 +607,8 @@ const std::string cb_scan_and_save::get_save_name( const int number )
 {
 	/* 名(head,num_form,ext)が設定していないと空を返す */
 	if (cl_gts_gui.strinp_scan_save_file_head->value() == nullptr
+	|| std::string(
+	    cl_gts_gui.strinp_scan_save_file_head->value()).empty()
 	||  (0<=number
 	&&  cl_gts_gui.output_scan_save_number_format->value() == nullptr)
 	||  cl_gts_gui.choice_scan_save_image_format->text() == nullptr) {
@@ -581,26 +628,22 @@ const std::string cb_scan_and_save::get_save_name( const int number )
 }
 
 //----------------------------------------------------------------------
-void cb_scan_and_save::cb_choice_and_num_continue_type(const std::string& type)
+void cb_scan_and_save::cb_choice_and_num_continue_type(const int type)
 {
-	const Fl_Menu_Item* crnt =
-	cl_gts_gui.choice_scan_num_continue_type->find_item( type.c_str() );
-	if (crnt == nullptr) { return; }
-
 	/* End/Endless表示のChoice切替 */
-	cl_gts_gui.choice_scan_num_continue_type->value(crnt);
+	cl_gts_gui.choice_scan_num_continue_type->value(type);
 
 	/* End/Endless表示のChoice以外の切替 */
 	this->cb_change_num_continue_type( type );
 }
-void cb_scan_and_save::cb_change_num_continue_type(const std::string& type)
+void cb_scan_and_save::cb_change_num_continue_type(const int type)
 {
-	if (std::string("End") == type) {
+	if (type == cl_gts_master.cl_number.end_type_value) {
 		cl_gts_gui.valinp_scan_num_end->show();
 		cl_gts_gui.choice_scan_num_endless_direction->hide();
 		cl_gts_gui.selbro_number_list->activate();
 	} else
-	if (std::string("Endless") == type) {
+	if (type == cl_gts_master.cl_number.endless_type_value) {
 		cl_gts_gui.valinp_scan_num_end->hide();
 		cl_gts_gui.choice_scan_num_endless_direction->show();
 		cl_gts_gui.selbro_number_list->deactivate();

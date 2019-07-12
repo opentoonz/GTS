@@ -50,6 +50,7 @@ user32.lib gdi32.lib shell32.lib ole32.lib comdlg32.lib
 #------
 TARG_CON = $(APPLICATION_NAME)_console.exe
 TARG = $(APPLICATION_NAME).exe
+TARG_JA = $(APPLICATION_NAME)_ja.exe
 OBJS = $(SRCS:.cpp=.obj)
 DPATH_3RD_PARTY = ..\..\thirdparty
 DPATH_FLTK  = $(DPATH_3RD_PARTY)\fltk\fltk-1.3.4-2
@@ -83,5 +84,7 @@ inst:
 	copy gts_initial_configuration.txt $(DPATH_BINA)
 	copy $(DPATH_REDIST)\msvcp140.dll $(DPATH_BINA)
 	copy $(DPATH_REDIST)\vcruntime140.dll $(DPATH_BINA)
+inst_ja:
+	move $(TARG) $(DPATH_BINA)\$(TARG_JA)
 inst_con:
 	move $(TARG_CON) $(DPATH_BINA)

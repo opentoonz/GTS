@@ -1,6 +1,7 @@
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include "pri.h"
 #include "ids_path_fltk_native_browse.h"
+#include "gts_str_language.h"	// gts_str::
 #include "cb_trace_batch.h"
 #include "gts_gui.h"
 #include "gts_master.h"
@@ -62,7 +63,8 @@ void cb_trace_batch::cb_add_or_select( void )
 	int filter_current=0; /* "TEXT\t*.txt"を示す */
 	std::vector< std::string > vecstr(
 		ids::path::fltk_native_browse_open_files(
-			"Add Config File"
+//			"Add Config File"
+			gts_str::trace_batch::add_config
 			,this->dir_path_
 			,""
 			,"TEXT\t*.txt\n"
@@ -115,7 +117,10 @@ void cb_trace_batch::cb_upper( void )
 	int crntnum = -1;
 	int selnum = how_many_select_( crntnum );
 	if (selnum != 1) {
-		fl_alert("Select only one(%d selected)" ,selnum);
+		fl_alert(
+//			"Select only one(%d selected)"
+			gts_str::trace_batch::too_many_selected
+			,selnum);
 		return;
 	}
 
@@ -129,7 +134,10 @@ void cb_trace_batch::cb_lower( void )
 	int crntnum = -1;
 	int selnum = how_many_select_( crntnum );
 	if (selnum != 1) {
-		fl_alert("Select only one(%d selected)" ,selnum);
+		fl_alert(
+//			"Select only one(%d selected)"
+			gts_str::trace_batch::too_many_selected
+			,selnum);
 		return;
 	}
 

@@ -104,7 +104,8 @@ int gts_master::exec( const char *comm )
 		パラメータ初期設定
 	*/
 
-	/* 画像R/W書式(拡張子)の初期設定 */ 
+	/* 画像R/W書式(拡張子)の初期設定
+	 * 以下全て同一の順番と内容であること */ 
 	this->cl_scan_and_save.ext_save.set_filter("TIFF",".tif");/*0番目 */
 	this->cl_scan_and_save.ext_save.set_filter( "TGA",".tga");/*1番目 */
 	this->cl_trace_files.ext_open.set_filter("TIFF",".tif");/* 0番目 */

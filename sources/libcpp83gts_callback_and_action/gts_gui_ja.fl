@@ -26,82 +26,82 @@ class gts_gui {open
         xywh {0 0 720 25}
       } {
         Submenu {} {
-          label File open
+          label {ファイル} open
           xywh {5 5 100 20}
         } {
           MenuItem {} {
-            label {Open Image...}
+            label {画像 開く(1枚)...}
             callback {cl_gts_master.cl_image.open();}
             xywh {0 0 30 20} shortcut 0x4006f
           }
           MenuItem {} {
-            label {Save Image As...}
+            label {画像 別名で保存(1枚)...}
             callback {cl_gts_master.cl_image.save_as();}
             xywh {0 0 30 20} shortcut 0x50073 divider
           }
           MenuItem {} {
-            label {Open Config...}
+            label {設定 読込み...}
             callback {cl_gts_master.cl_config.open();}
             xywh {5 5 100 20} shortcut 0x8006f
           }
           MenuItem {} {
-            label {Save Config}
+            label {設定 保存}
             callback {cl_gts_master.cl_config.save();}
             xywh {5 5 100 20} shortcut 0x80073
           }
           MenuItem {} {
-            label {Save Config As...}
+            label {設定 別名で保存...}
             callback {cl_gts_master.cl_config.save_as();}
             xywh {5 5 100 20} shortcut 0x90073 divider
           }
           MenuItem {} {
-            label Quit
+            label {終了}
             callback {// cl_gts_master.reserve_by_menu(E_ACT_QUIT);
 cl_gts_master.cb_quit();}
             xywh {10 10 100 20} shortcut 0x40071
           }
         }
         Submenu {} {
-          label Action open
+          label {実行} open
           xywh {5 5 100 20}
         } {
           MenuItem menite_scan_crop {
-            label {Scan Crop}
+            label {サイズ設定}
             callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
             tooltip {Scan Overall and Crop} xywh {0 0 30 20}
           }
           MenuItem menite_preview_scan {
-            label {Preview Scan}
+            label {プレビュー}
             callback {cl_gts_master.cb_scan_and_preview();}
             xywh {5 5 100 20} shortcut 0x70
           }
           MenuItem menite_scan_save {
-            label {Scan Save}
+            label {スキャン保存}
             callback {cl_gts_master.cl_scan_and_save.cb_start();}
             tooltip {Scan and Save Files} xywh {5 5 100 20} shortcut 0xff0d divider
           }
           MenuItem {} {
-            label {Trace Files}
+            label {ファイル2値化}
             callback {cl_gts_master.cl_trace_files.cb_start();}
             tooltip {Trace and Save Files} xywh {5 5 100 20} shortcut 0x54
           }
           MenuItem {} {
-            label Rename
+            label {リネーム}
             callback {cl_gts_master.cl_trace_files.cb_rename();}
             xywh {0 0 30 20}
           }
           MenuItem {} {
-            label Renumber
+            label {リナンバー}
             callback {cl_gts_master.cl_trace_files.cb_renumber();}
             xywh {0 0 30 20}
           }
         }
         Submenu {} {
-          label Window open
+          label {ウインドウ} open
           xywh {10 10 100 20}
         } {
           MenuItem menite_area_and_rot90 {
-            label {Area and Rot90}
+            label {サイズと解像度}
             callback {if (menite_area_and_rot90->value()) {
  window_main_view->show();/* Need for Minimize */
  window_area_and_rot90->show();
@@ -111,7 +111,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffbe
           }
           MenuItem menite_pixel_type_and_bright {
-            label {Pixel Type and Bright}
+            label {タイプ選択と明るさ}
             callback {if (menite_pixel_type_and_bright->value()) {
  window_main_view->show();/* Need for Minimize */
  window_pixel_type_and_bright->show();
@@ -121,7 +121,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffbf
           }
           MenuItem menite_number {
-            label Number
+            label {ナンバー}
             callback {if (menite_number->value()) {
  window_main_view->show();/* Need for Minimize */
  window_number->show();
@@ -131,7 +131,7 @@ cl_gts_master.cb_quit();}
             xywh {5 5 100 20} type Toggle shortcut 0xffc0 divider
           }
           MenuItem menite_scan_and_save {
-            label {Scan Save}
+            label {画像保存場所}
             callback {if (menite_scan_and_save->value()) {
  window_main_view->show();/* Need for Minimize */
  window_scan_and_save->show();
@@ -141,7 +141,7 @@ cl_gts_master.cb_quit();}
             xywh {10 10 100 20} type Toggle shortcut 0xffc1
           }
           MenuItem menite_trace_files {
-            label {Trace Files}
+            label {2値化バッチ}
             callback {if (menite_trace_files->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_files->show();
@@ -151,7 +151,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 30 20} type Toggle shortcut 0xffc2 divider
           }
           MenuItem menite_trace_params {
-            label {Trace Params}
+            label {線の調整}
             callback {if (menite_trace_params->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_params->show();
@@ -161,7 +161,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 30 20} type Toggle shortcut 0xffc3
           }
           MenuItem menite_trace_hsv_view {
-            label {Trace HSV View}
+            label {線のHSV色立体}
             callback {if (menite_trace_hsv_view->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_hsv_view->show();
@@ -171,7 +171,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 30 20} type Toggle shortcut 0xffc4
           }
           MenuItem menite_trace_hue_minmax {
-            label {Trace Hue Min,Max}
+            label {線の色相範囲}
             callback {if (menite_trace_hue_minmax->value()) {
  cl_gts_master.cl_trace_params.cb_hue_minmax_init_editor(
   cl_gts_master.cl_trace_params.get_hue_minmax_editing_number()
@@ -184,7 +184,7 @@ cl_gts_master.cb_quit();}
             xywh {0 0 30 20} type Toggle
           }
           MenuItem menite_trace_batch {
-            label {Trace Batch}
+            label {一括2値化バッチ}
             callback {if (menite_trace_batch->value()) {
  window_main_view->show();/* Need for Minimize */
  window_trace_batch->show();
@@ -199,61 +199,61 @@ cl_gts_master.cb_quit();}
           }
         }
         Submenu {} {
-          label View open
+          label {表示} open
           xywh {10 10 100 20}
         } {
           Submenu {} {
-            label Zoom open
+            label {ズーム} open
             xywh {25 25 100 20}
           } {
             MenuItem {} {
-              label {In (at center of view)}
+              label {画面中心から拡大}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x7a
             }
             MenuItem {} {
-              label {Out (at center of view)}
+              label {画面中心から縮小}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_CEN);}
               xywh {30 30 100 20} shortcut 0x78
             }
             MenuItem {} {
-              label {In (at cursor position)}
+              label {カーソル位置から拡大}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_IN_TWICE_AT_POS);}
               xywh {0 0 30 20} shortcut 0x1007a
             }
             MenuItem {} {
-              label {Out (at cursor position)}
+              label {カーソル位置から縮小}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_OUT_HALF_AT_POS);}
               xywh {0 0 30 20} shortcut 0x10078
             }
             MenuItem {} {
-              label x1
+              label {ピクセル等倍}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ZOOM_E01);}
               xywh {30 30 100 20} shortcut 0x6e
             }
             MenuItem {} {
-              label {All Figure}
+              label {全体表示}
               callback {cl_gts_master.reserve_by_menu(E_ACT_ALL_VIEW);}
               xywh {25 25 100 20} shortcut 0x6d
             }
           }
           Submenu {} {
-            label Frame open
+            label {フレーム} open
             xywh {0 0 62 20}
           } {
             MenuItem menite_frame_cyclic {
-              label Cyclic
+              label {循環}
               xywh {0 0 30 20} type Toggle
             }
             MenuItem {} {
-              label Prev
+              label {逆送り}
               callback {if (cl_gts_master.cl_number.selected_prev_frame()) {
     cl_gts_master.cb_number_read_and_trace_and_preview();
 }}
               xywh {0 0 30 20} shortcut 0xff52
             }
             MenuItem {} {
-              label Next
+              label {順送り}
               callback {if (cl_gts_master.cl_number.selected_next_frame()) {
     cl_gts_master.cb_number_read_and_trace_and_preview();
 }}
@@ -261,11 +261,11 @@ cl_gts_master.cb_quit();}
             }
           }
           Submenu {} {
-            label {Color Trace} open
+            label {2値化} open
             xywh {20 20 100 20}
           } {
             MenuItem menite_wview_main {
-              label {Source Image}
+              label {スキャン画像}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_main();
 }
@@ -275,7 +275,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc6 value 1
             }
             MenuItem menite_wview_sub {
-              label {Target Image}
+              label {2値化画像}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_sub();
 }
@@ -285,7 +285,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc7
             }
             MenuItem menite_wview_lr {
-              label {Split Left and Right}
+              label {左右分割}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_lr();
 }
@@ -295,7 +295,7 @@ else {
               xywh {0 0 30 20} type Radio shortcut 0xffc8
             }
             MenuItem menite_wview_ud {
-              label {Split Top and Bottom}
+              label {上下分割}
               callback {if (cl_gts_master.check_change_wview()) {
 	cl_gts_master.cb_change_wview_ud();
 }
@@ -347,11 +347,11 @@ else {
           }
         }
         Submenu {} {
-          label Help open
+          label {ヘルプ} open
           xywh {0 0 62 20}
         } {
           MenuItem menite_help_about {
-            label {About This Application...}
+            label {このアプリについて...}
             callback {std::ostringstream ost;
 ost
 << cl_gts_master.cp_release_name()
@@ -389,21 +389,21 @@ fl_message( ost.str().c_str() );}
       }
     }
     Fl_Window window_next_scan {
-      label {Next Scan}
+      label {次のスキャン}
       xywh {50 50 545 100} type Double modal visible
     } {
       Fl_Button button_rescan {
-        label {Rescan (Space)}
+        label {同番号 (Space)}
         callback {cl_gts_master.cl_scan_and_save.cb_rescan();}
         xywh {60 75 110 25} shortcut 0x20
       }
       Fl_Button {} {
-        label {Next (Enter)}
+        label {次番号 (Enter)}
         callback {cl_gts_master.cl_scan_and_save.cb_next();}
         xywh {325 40 120 60} shortcut 0xff0d
       }
       Fl_Button {} {
-        label {Stop (Esc)}
+        label {中止 (Esc)}
         callback {cl_gts_gui.window_next_scan_non_modal->position(
 cl_gts_gui.window_next_scan->x(),
 cl_gts_gui.window_next_scan->y()
@@ -422,7 +422,7 @@ cl_gts_gui.window_next_scan->hide();}
       }
     }
     Fl_Window window_next_scan_non_modal {
-      label {Save (Adjustable Image)}
+      label {次の保存 (画像処理変更可能)}
       callback {cl_gts_master.cl_scan_and_save.cb_cancel();
 cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
@@ -435,12 +435,12 @@ cl_gts_gui.window_next_scan_non_modal->hide();}
         xywh {0 10 545 25} box BORDER_BOX
       }
       Fl_Button button_next_save_non_modal {
-        label {Save (Enter)}
+        label {保存 (Enter)}
         callback {cl_gts_master.cl_scan_and_save.cb_save(true);}
         xywh {325 45 110 45} shortcut 0xff0d
       }
       Fl_Button {} {
-        label {Stop (Esc)}
+        label {中止 (Esc)}
         callback {cl_gts_master.cl_scan_and_save.cb_cancel();
 cl_gts_gui.window_next_scan->position(
 cl_gts_gui.window_next_scan_non_modal->x(),
@@ -451,20 +451,20 @@ cl_gts_gui.window_next_scan_non_modal->hide();}
       }
     }
     Fl_Window window_area_and_rot90 {
-      label {Area and Rot90}
+      label {サイズと解像度}
       callback {cl_gts_gui.window_area_and_rot90->hide();
 cl_gts_gui.menite_area_and_rot90->clear();}
       xywh {50 50 200 295} type Double non_modal visible
     } {
       Fl_Button button_area_and_rot90 {
-        label {Open Config This...}
+        label {この設定を読込み...}
         callback {cl_gts_master.cl_config.open_only_area_and_rot90();}
         xywh {5 5 130 25}
         code0 {\#include "cb_area_and_rot90.h"}
         class fltk_button_area_and_rot90
       }
       Fl_Group {} {
-        label Resolution open
+        label {解像度} open
         xywh {1 35 198 25} box BORDER_FRAME color 41 align 20
       } {
         Fl_Value_Input valinp_area_reso {
@@ -474,46 +474,46 @@ cl_gts_gui.menite_area_and_rot90->clear();}
         }
       }
       Fl_Group {} {
-        label Rotate open
+        label {回転} open
         xywh {1 65 198 25} box BORDER_FRAME color 41 align 20
       } {
         Fl_Choice choice_rot90 {
-          label degree
+          label {度}
           callback {cl_gts_master.cl_area_and_rot90.cb_rotate_per_90_when_scan();} open
           xywh {57 65 90 25} box BORDER_BOX down_box BORDER_BOX align 8
         } {
           MenuItem {} {
-            label {CW_-90}
+            label {-90}
             xywh {5 65 100 20}
           }
           MenuItem {} {
-            label CW_0
+            label 0
             xywh {5 65 100 20}
           }
           MenuItem {} {
-            label CW_90
+            label 90
             xywh {5 65 100 20}
           }
           MenuItem {} {
-            label CW_180
+            label 180
             xywh {5 65 100 20}
           }
         }
       }
       Fl_Button button_scan_crop {
-        label {Scan Crop}
+        label {サイズ設定}
         callback {cl_gts_master.cl_area_and_rot90.cb_scan_full_area_and_crop();}
-        tooltip {Scan Overall and Crop} xywh {95 95 100 25}
+        tooltip {Scan Overall and Crop} xywh {105 95 90 25}
       }
       Fl_Group {} {open
         xywh {0 125 200 165} labeltype ENGRAVED_LABEL align 5
       } {
         Fl_Group group_area_crop {
-          label Area open
+          label {範囲} open
           xywh {1 140 198 150} box BORDER_FRAME color 41 align 5
         } {
           Fl_Group {} {
-            label Offset open
+            label {オフセット(左上原点)} open
             xywh {4 160 192 25} align 5
           } {
             Fl_Value_Input valinp_area_offset_cm_x {
@@ -532,7 +532,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             }
           }
           Fl_Group {} {
-            label Size open
+            label {サイズ} open
             xywh {4 210 192 75} box BORDER_FRAME color 41 align 5
           } {
             Fl_Group {} {open
@@ -577,15 +577,15 @@ cl_gts_gui.menite_area_and_rot90->clear();}
             }
           }
           Fl_Button {} {
-            label {Set Aspect Ratio...}
+            label {比率設定...}
             callback {cl_gts_master.cl_area_and_rot90.cb_dialog_set_aspect_ratio(
 	window_area_and_rot90 ,o
 );}
-            xywh {75 195 120 20}
+            xywh {75 195 100 20}
           }
         }
         Fl_Button {} {
-          label {Set Max.}
+          label {最大セット}
           callback {cl_gts_master.cl_area_and_rot90.cb_area_set_max();}
           xywh {75 125 80 20}
         }
@@ -616,7 +616,7 @@ cl_gts_gui.menite_area_and_rot90->clear();}
       }
     }
     Fl_Window window_pixel_type_and_bright {
-      label {Pixel Type and Bright}
+      label {タイプ選択と明るさ}
       callback {cl_gts_gui.window_pixel_type_and_bright->hide();
 cl_gts_gui.menite_pixel_type_and_bright->clear();}
       xywh {50 50 200 220} type Double resizable non_modal size_range {200 220 1000 220} visible
@@ -625,7 +625,7 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
         xywh {0 5 200 25}
       } {
         Fl_Button button_pixel_type_and_bright {
-          label {Open Config This...}
+          label {この設定を読込み...}
           callback {cl_gts_master.cl_config.open_only_pixel_type_and_bright();}
           xywh {5 5 130 25}
           code0 {\#include "cb_pixel_type_and_bright.h"}
@@ -642,26 +642,26 @@ cl_gts_gui.menite_pixel_type_and_bright->clear();}
           xywh {0 35 75 25}
         }
         Fl_Choice choice_pixel_type {
-          label {Pixel Type}
+          label {画像タイプ}
           callback {cl_gts_master.cl_pixel_type_and_bright.cb_choice_pixel_type_menu();
 cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
-          xywh {75 35 110 25} box BORDER_BOX down_box BORDER_BOX
+          xywh {75 35 120 25} box BORDER_BOX down_box BORDER_BOX
         } {
           MenuItem {} {
-            label BW
+            label {白黒(2階調)}
             xywh {20 20 100 20}
           }
           MenuItem {} {
-            label Grayscale
+            label {グレー(8ビット)}
             xywh {25 25 100 20}
           }
           MenuItem {} {
-            label RGB
+            label {カラー(24ビット)}
             xywh {25 25 100 20}
           }
         }
         Fl_Box {} {
-          xywh {185 35 15 25} resizable
+          xywh {195 35 5 25} resizable
         }
       }
       Fl_Group group_bw {open
@@ -675,7 +675,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 80 35 25} box BORDER_BOX maximum 255 value 180
           }
           Fl_Scrollbar scrbar_bw_threshold {
-            label Threshold
+            label {白黒しきい値}
             callback {valinp_bw_threshold->value(o->value());}
             xywh {45 85 150 20} type Horizontal box BORDER_BOX align 5 maximum 255 value 180 resizable
             code0 {scrbar_bw_threshold->linesize(1);}
@@ -693,7 +693,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 80 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_grayscale_brightness {
-            label Brightness
+            label {明るさ}
             callback {valinp_grayscale_brightness->value(o->value());}
             xywh {55 85 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_grayscale_brightness->linesize(1);}
@@ -707,7 +707,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 120 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_grayscale_contrast {
-            label Contrast
+            label {コントラスト}
             callback {valinp_grayscale_contrast->value(o->value());}
             xywh {55 125 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_grayscale_contrast->linesize(1);}
@@ -721,7 +721,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 160 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
           }
           Fl_Scrollbar scrbar_grayscale_gamma {
-            label Gamma
+            label {ガンマ}
             callback {valinp_grayscale_gamma->value(((Fl_Valuator *)o)->value());}
             xywh {55 165 140 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01 value 1 resizable
             code0 {scrbar_grayscale_gamma->linesize(1);}
@@ -739,7 +739,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 80 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_rgb_brightness {
-            label Brightness
+            label {明るさ}
             callback {valinp_rgb_brightness->value(o->value());}
             xywh {55 85 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_rgb_brightness->linesize(1);}
@@ -753,7 +753,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 120 45 25} box BORDER_BOX minimum -1000 maximum 1000
           }
           Fl_Scrollbar scrbar_rgb_contrast {
-            label Contrast
+            label {コントラスト}
             callback {valinp_rgb_contrast->value(o->value());}
             xywh {55 125 140 20} type Horizontal box BORDER_BOX align 5 minimum -1000 maximum 1000 resizable
             code0 {scrbar_rgb_contrast->linesize(1);}
@@ -767,7 +767,7 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
             xywh {5 160 45 25} box BORDER_BOX minimum 0.5 maximum 5 value 1
           }
           Fl_Scrollbar scrbar_rgb_gamma {
-            label Gamma
+            label {ガンマ}
             callback {valinp_rgb_gamma->value(((Fl_Valuator *)o)->value());}
             xywh {55 165 140 20} type Horizontal box BORDER_BOX align 5 minimum 0.5 maximum 5 step 0.01 value 1 resizable
             code0 {scrbar_rgb_gamma->linesize(1);}
@@ -778,30 +778,30 @@ cl_gts_master.cl_scan_and_save.set_gui_ext_list();} open
         xywh {0 190 200 25}
       } {
         Fl_Box {} {
-          xywh {0 190 95 25} resizable
+          xywh {0 190 105 25} resizable
         }
         Fl_Button button_preview_scan {
-          label {Preview Scan}
+          label {プレビュー}
           callback {cl_gts_master.cb_scan_and_preview();}
-          xywh {95 190 100 25}
+          xywh {105 190 90 25}
         }
       }
     }
     Fl_Window window_scan_and_save {
-      label {Scan Save}
+      label {画像保存場所}
       callback {cl_gts_gui.window_scan_and_save->hide();
 cl_gts_gui.menite_scan_and_save->clear();}
       xywh {50 50 200 330} type Double resizable non_modal size_range {200 330 1000 330} visible
     } {
       Fl_Group {} {
-        label Filter open
+        label {処理} open
         xywh {1 20 198 65} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
           xywh {1 25 198 25}
         } {
           Fl_Check_Button chkbtn_scan_filter_trace_sw {
-            label Trace
+            label {2値化}
             callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
 	o->box(FL_SHADOW_BOX);
@@ -821,7 +821,7 @@ else {
           xywh {1 55 198 25}
         } {
           Fl_Check_Button chkbtn_scan_filter_erase_dot_noise_sw {
-            label {Erase dot noise}
+            label {ドットノイズ除去}
             callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
 	o->box(FL_SHADOW_BOX);
@@ -839,16 +839,16 @@ else {
         }
       }
       Fl_Group {} {
-        label Save open
+        label {保存場所} open
         xywh {1 105 198 75} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
           xywh {1 110 198 35}
         } {
           Fl_File_Input filinp_scan_save_dir_path {
-            label Folder
+            label {フォルダ名}
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
-            xywh {50 110 130 35} when 1 resizable
+            xywh {65 110 115 35} when 1 resizable
           }
           Fl_Button {} {
             label {...}
@@ -864,12 +864,12 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
             xywh {1 150 49 25}
           }
           Fl_Input strinp_scan_save_file_head {
-            label File
+            label {ファイル名}
             callback {cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_scan()) {
 	output_number_file_head_name->value( o->value() );
 }}
-            xywh {50 150 50 25} box BORDER_BOX when 1 resizable
+            xywh {65 150 35 25} box BORDER_BOX when 1 resizable
           }
           Fl_Output output_scan_save_number_format {
             callback {cl_gts_master.cl_set_number_format.cb_dialog_set_number_format(
@@ -885,21 +885,21 @@ if (cl_gts_master.cl_number.is_scan()) {
         }
       }
       Fl_Group {} {
-        label Number open
+        label {ナンバー} open
         xywh {1 200 198 95} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
           xywh {1 205 198 25}
         } {
           Fl_Box {} {
-            xywh {1 205 84 25}
+            xywh {1 205 94 25}
           }
           Fl_Value_Input valinp_scan_num_start {
-            label Start
-            xywh {85 205 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+            label {開始番号}
+            xywh {95 205 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
           }
           Fl_Box {} {
-            xywh {135 205 64 25} resizable
+            xywh {145 205 54 25} resizable
           }
         }
         Fl_Group {} {open
@@ -907,19 +907,19 @@ if (cl_gts_master.cl_number.is_scan()) {
         } {
           Fl_Choice choice_scan_num_continue_type {
             callback {cl_gts_master.cl_scan_and_save.cb_change_num_continue_type(o->value());} open
-            xywh {5 235 80 25} box BORDER_BOX down_box BORDER_BOX
+            xywh {5 235 90 25} box BORDER_BOX down_box BORDER_BOX
           } {
             MenuItem {} {
-              label End
+              label {停止番号}
               xywh {10 10 30 20}
             }
             MenuItem {} {
-              label Endless
+              label {エンドレス}
               xywh {10 10 30 20}
             }
           }
           Fl_Choice choice_scan_num_endless_direction {open
-            xywh {85 235 50 25} box BORDER_BOX down_box BORDER_BOX
+            xywh {95 235 50 25} box BORDER_BOX down_box BORDER_BOX
           } {
             MenuItem {} {
               label {+1}
@@ -931,23 +931,23 @@ if (cl_gts_master.cl_number.is_scan()) {
             }
           }
           Fl_Value_Input valinp_scan_num_end {
-            xywh {85 235 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
+            xywh {95 235 50 25} box BORDER_BOX minimum 1 maximum 9999 value 1
           }
           Fl_Box {} {
-            xywh {135 235 64 25} resizable
+            xywh {145 235 54 25} resizable
           }
         }
         Fl_Group {} {open
           xywh {1 265 198 25}
         } {
           Fl_Box {} {
-            xywh {1 265 109 25} resizable
+            xywh {1 265 119 25} resizable
           }
           Fl_Button {} {
-            label {Set Number}
+            label {セット}
             callback {cl_gts_master.cl_scan_and_save.cb_set_number();
 cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
-            xywh {110 265 85 25}
+            xywh {120 265 75 25}
           }
         }
       }
@@ -955,27 +955,27 @@ cl_gts_master.cl_scan_and_save.cb_check_existing_saved_file();}
         xywh {1 300 198 25}
       } {
         Fl_Check_Button chkbtn_scan_adjustable_per_frame_sw {
-          label Adjustable
-          xywh {5 300 85 25} down_box DOWN_BOX
+          label {保存前確認}
+          xywh {5 300 95 25} down_box DOWN_BOX
         }
         Fl_Box {} {
-          xywh {90 300 5 25} resizable
+          xywh {100 300 5 25} resizable
         }
         Fl_Button button_scan_save {
-          label {Scan Save}
+          label {スキャン保存}
           callback {cl_gts_master.cl_scan_and_save.cb_start();}
-          tooltip {Scan and Save Files} xywh {95 300 100 25}
+          tooltip {Scan and Save Files} xywh {105 300 90 25}
         }
       }
     }
     Fl_Window window_trace_files {
-      label {Trace Files}
+      label {2値化バッチ}
       callback {cl_gts_gui.window_trace_files->hide();
 cl_gts_gui.menite_trace_files->clear();}
       xywh {50 50 200 385} type Double resizable non_modal size_range {200 385 1000 385} visible
     } {
       Fl_Group {} {
-        label Open open
+        label {開く} open
         xywh {1 20 198 125} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
@@ -991,8 +991,8 @@ cl_gts_gui.menite_trace_files->clear();}
                 xywh {1 25 49 35}
               }
               Fl_File_Input filinp_trace_open_dir_path {
-                label Folder
-                xywh {50 25 134 35} box BORDER_BOX when 1 resizable
+                label {フォルダ名}
+                xywh {65 25 119 35} box BORDER_BOX when 1 resizable
               }
             }
             Fl_Group {} {open
@@ -1002,8 +1002,8 @@ cl_gts_gui.menite_trace_files->clear();}
                 xywh {1 65 49 25}
               }
               Fl_Input strinp_trace_open_file_head {
-                label File
-                xywh {50 65 35 25} box BORDER_BOX when 1 resizable
+                label {ファイル名}
+                xywh {65 65 20 25} box BORDER_BOX when 1 resizable
               }
               Fl_Input strinp_trace_open_number_format {
                 xywh {85 65 45 25} box BORDER_BOX
@@ -1026,19 +1026,19 @@ cl_gts_gui.menite_trace_files->clear();}
             xywh {1 95 109 45} resizable
           }
           Fl_Button {} {
-            label {Rename...}
+            label {リネーム...}
             callback {cl_gts_master.cl_trace_files.cb_rename();}
             tooltip Rename xywh {110 95 85 20}
           }
           Fl_Button {} {
-            label {Renumber...}
+            label {リナンバー...}
             callback {cl_gts_master.cl_trace_files.cb_renumber();}
             tooltip Renumber xywh {110 120 85 20}
           }
         }
       }
       Fl_Group {} {
-        label Filter open
+        label {処理} open
         xywh {1 165 198 35} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
@@ -1065,7 +1065,7 @@ else {
           xywh {1 170 198 25}
         } {
           Fl_Check_Button chkbtn_trace_filter_erase_dot_noise_sw {
-            label {Erase dot noise}
+            label {ドットノイズ除去}
             callback {cl_gts_master.cb_rot_trace_enoise_preview();
 if (o->value()) {
 	o->box(FL_SHADOW_BOX);
@@ -1083,7 +1083,7 @@ else {
         }
       }
       Fl_Group {} {
-        label Save open
+        label {保存場所} open
         xywh {1 220 198 75} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
@@ -1093,9 +1093,9 @@ else {
             xywh {1 225 49 35}
           }
           Fl_File_Input filinp_trace_save_dir_path {
-            label Folder
+            label {フォルダ名}
             callback {cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
-            xywh {50 225 134 35} box BORDER_BOX when 1 resizable
+            xywh {65 225 119 35} box BORDER_BOX when 1 resizable
           }
           Fl_Button {} {
             label {...}
@@ -1111,12 +1111,12 @@ cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
             xywh {1 265 49 25}
           }
           Fl_Input strinp_trace_save_file_head {
-            label File
+            label {ファイル名}
             callback {cl_gts_master.cl_trace_files.cb_check_existing_saved_file();
 if (cl_gts_master.cl_number.is_trace()) {
 	output_number_file_head_name->value( o->value() );
 }}
-            xywh {50 265 50 25} box BORDER_BOX when 1 resizable
+            xywh {65 265 35 25} box BORDER_BOX when 1 resizable
           }
           Fl_Output output_trace_save_number_format {
             callback {cl_gts_master.cl_set_number_format.cb_dialog_set_number_format(
@@ -1132,25 +1132,25 @@ if (cl_gts_master.cl_number.is_trace()) {
         }
       }
       Fl_Group {} {
-        label Number open
+        label {ナンバー} open
         xywh {1 315 198 35} box BORDER_BOX align 5
       } {
         Fl_Group {} {open
           xywh {1 320 198 25}
         } {
           Fl_Value_Output valout_trace_num_start {
-            label S
+            label {始}
             xywh {21 320 40 25} box BORDER_BOX
           }
           Fl_Value_Output valout_trace_num_end {
-            label E
+            label {終}
             xywh {79 320 40 25} box BORDER_BOX
           }
           Fl_Box {} {
             xywh {119 320 1 25} resizable
           }
           Fl_Button {} {
-            label {Set Number}
+            label {セット}
             callback {cl_gts_master.cl_trace_files.cb_set_number();
 cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
             xywh {120 320 75 25}
@@ -1161,17 +1161,17 @@ cl_gts_master.cl_trace_files.cb_check_existing_saved_file();}
         xywh {1 355 198 25}
       } {
         Fl_Box {} {
-          xywh {1 355 94 25} resizable
+          xywh {1 355 104 25} resizable
         }
         Fl_Button {} {
-          label {Trace Files...}
+          label {ファイル2値化}
           callback {cl_gts_master.cl_trace_files.cb_start();}
-          tooltip {Trace and Save Files} xywh {95 355 100 25}
+          tooltip {Trace and Save Files} xywh {105 355 90 25}
         }
       }
     }
     Fl_Window window_number {
-      label Number
+      label {ナンバー}
       callback {cl_gts_gui.window_number->hide();
 cl_gts_gui.menite_number->clear();}
       xywh {50 50 116 350} type Double resizable non_modal size_range {116 0 200 4000} visible
@@ -1180,16 +1180,16 @@ cl_gts_gui.menite_number->clear();}
         xywh {0 0 116 25}
       } {
         Submenu {} {
-          label Edit open
+          label {編集} open
           xywh {0 0 116 20}
         } {
           MenuItem {} {
-            label {Select All}
+            label {全選択}
             callback {cl_gts_master.cl_number.select_all();}
             xywh {0 0 116 20} shortcut 0x40061
           }
           MenuItem {} {
-            label Delete
+            label {削除}
             callback {cl_gts_master.cl_number.cb_remove_selected();}
             xywh {0 0 116 20} shortcut 0x40078
           }
@@ -1206,7 +1206,7 @@ cl_gts_gui.menite_number->clear();}
           xywh {0 50 50 25}
         }
         Fl_Output output_number_action_type {
-          label Action
+          label {作業名}
           xywh {50 50 66 25} box BORDER_BOX resizable
         }
       }
@@ -1217,7 +1217,7 @@ cl_gts_gui.menite_number->clear();}
           xywh {0 75 50 25}
         }
         Fl_Output output_number_file_head_name {
-          label Save
+          label {保存名}
           xywh {50 75 66 25} box BORDER_BOX resizable
         }
       }
@@ -1227,7 +1227,7 @@ cl_gts_gui.menite_number->clear();}
       }
     }
     Fl_Window window_trace_batch {
-      label {Trace Batch}
+      label {一括2値化バッチ}
       callback {cl_gts_gui.window_trace_batch->hide();  /* Window閉じる */
 cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
       xywh {50 50 300 185} type Double resizable non_modal size_range {240 30 0 0} visible
@@ -1236,32 +1236,32 @@ cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
         xywh {0 4 300 30}
       } {
         Fl_Button {} {
-          label {Add...}
+          label {追加...}
           callback {cl_gts_master.cl_trace_batch.cb_add_or_select();}
-          xywh {5 5 40 25}
+          xywh {5 5 45 25}
         }
         Fl_Button {} {
-          label Upper
+          label {上へ}
           callback {cl_gts_master.cl_trace_batch.cb_upper();}
           xywh {55 5 45 25}
         }
         Fl_Button {} {
-          label Lower
+          label {下へ}
           callback {cl_gts_master.cl_trace_batch.cb_lower();}
           xywh {105 5 45 25}
         }
         Fl_Button {} {
-          label Delete
+          label {削除}
           callback {cl_gts_master.cl_trace_batch.cb_delete();}
           xywh {160 5 45 25}
         }
         Fl_Box {} {
-          xywh {205 5 60 25} resizable
+          xywh {205 5 50 25} resizable
         }
         Fl_Button {} {
-          label Run
+          label {実行}
           callback {cl_gts_master.cl_trace_batch.cb_run();}
-          xywh {265 5 30 25}
+          xywh {255 5 40 25}
         }
       }
       Fl_Group {} {open
@@ -1273,7 +1273,7 @@ cl_gts_gui.menite_trace_batch->clear(); /* menuのcheck外す */}
       }
     }
     Fl_Window window_trace_params {
-      label {Trace Params}
+      label {線の調整}
       callback {cl_gts_gui.window_trace_params->hide();
 cl_gts_gui.menite_trace_params->clear();}
       xywh {50 50 465 250} type Double non_modal visible
@@ -1282,7 +1282,7 @@ cl_gts_gui.menite_trace_params->clear();}
         xywh {0 0 465 250}
       } {
         Fl_Button button_trace_params {
-          label {Open Config This...}
+          label {この設定を読込み...}
           callback {cl_gts_master.cl_config.open_only_trace_params();}
           xywh {5 5 130 25}
           code0 {\#include "cb_trace_params.h"}
@@ -1321,31 +1321,31 @@ window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
           xywh {325 5 17 25} down_box DOWN_BOX align 4 hide
         }
         Fl_Check_Button chebut_trace_display_main_sw {
-          label {Divide Points →}
+          label {範囲内外区分け→}
           callback {image_view->redraw();}
-          xywh {365 20 17 20} down_box DOWN_BOX align 7
+          xywh {365 20 17 20} down_box DOWN_BOX labelsize 12 align 7
         }
         Fl_Group {} {open
           xywh {0 34 450 31}
         } {
           Fl_Text_Display {} {
-            label {Col.}
+            label {色}
             xywh {22 45 0 0} align 6
           }
           Fl_Text_Display {} {
-            label {|------- Thickness -------|}
+            label {|----------- 太さ -----------|}
             xywh {50 45 0 0} align 6
           }
           Fl_Text_Display {} {
-            label {Up/Dn}
-            xywh {213 53 0 0} align 6
+            label {上下換}
+            xywh {213 58 0 0} align 6
           }
           Fl_Text_Display {} {
             label {↓}
-            xywh {229 63 0 0} align 6
+            xywh {229 63 0 0} align 6 hide
           }
           Fl_Text_Display {} {
-            label {|----- Hue -----|}
+            label {|---- 色相 ----|}
             xywh {265 35 0 0} align 6
           }
           Fl_Text_Display {} {
@@ -1353,32 +1353,32 @@ window_trace_params->size(   o->x() + o->w() + 5 ,window_trace_params->h());
             xywh {250 48 0 0} align 6 hide
           }
           Fl_Text_Display {} {
-            label min
-            xywh {265 48 0 0} align 6
+            label {最小}
+            xywh {265 50 0 0} labelsize 12 align 6
           }
           Fl_Text_Display {} {
-            label max
-            xywh {300 48 0 0} align 6
+            label {最大}
+            xywh {300 50 0 0} labelsize 12 align 6
           }
           Fl_Text_Display {} {
-            label {ed.}
-            xywh {335 48 0 0} align 6
+            label {編}
+            xywh {335 50 0 0} labelsize 12 align 6
           }
           Fl_Text_Display {} {
-            label {G.}
+            label {示}
             xywh {365 45 0 0} align 6
           }
           Fl_Text_Display {} {
-            label Slope
-            xywh {390 35 0 0} align 6
+            label {傾斜}
+            xywh {390 45 0 0} align 6
           }
           Fl_Text_Display {} {
             label {↓}
-            xywh {393 48 0 0} align 6
+            xywh {393 48 0 0} align 6 hide
           }
           Fl_Text_Display {} {
-            label Intercept
-            xywh {402 48 0 0} align 6
+            label {切片}
+            xywh {425 45 0 0} align 6
           }
         }
         Fl_Group {} {open
@@ -1820,7 +1820,7 @@ window_trace_hue_minmax->hide();}
       }
     }
     Fl_Window window_trace_hsv_view {
-      label {Trace HSV View}
+      label {線のHSV色立体}
       callback {cl_gts_gui.window_trace_hsv_view->hide();
 cl_gts_gui.menite_trace_hsv_view->clear();}
       xywh {50 50 500 500} type Double resizable non_modal visible
@@ -1871,17 +1871,17 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
       }
     }
     Fl_Window window_set_number_format {
-      label {Set Number Format}
+      label {連番書式}
       callback {o->hide();}
       xywh {50 50 200 150} type Double modal visible
     } {
       Fl_Choice choice_input_num_form_separator {
-        label Separator
+        label {区切}
         callback {cl_gts_master.cl_set_number_format.cb_separator();} open
         xywh {80 10 105 25} box BORDER_BOX down_box BORDER_BOX
       } {}
       Fl_Counter counte_input_num_form_num_of_digits {
-        label {Number of digits}
+        label {桁数}
         callback {cl_gts_master.cl_set_number_format.cb_digits();}
         xywh {120 40 65 25} type Simple box BORDER_BOX align 4 minimum 2 maximum 4 step 1
       }
@@ -1889,18 +1889,18 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
         xywh {60 80 80 25} box BORDER_BOX
       }
       Fl_Button {} {
-        label OK
+        label {セット}
         callback {cl_gts_master.cl_set_number_format.cb_ok();}
         xywh {20 115 60 25}
       }
       Fl_Button {} {
-        label Cancel
+        label {キャンセル}
         callback {window_set_number_format->hide();}
         xywh {120 115 60 25}
       }
     }
     Fl_Window window_set_aspect_ratio {
-      label {Set Aspect Ratio}
+      label {縦横比}
       callback {o->hide();}
       xywh {50 50 160 90} type Double modal visible
     } {
@@ -1923,18 +1923,18 @@ cl_gts_gui.menite_trace_hsv_view->clear();}
         }
       }
       Fl_Button {} {
-        label OK
+        label {セット}
         callback {cl_gts_master.cl_area_and_rot90.cb_ok_aspect_ratio();}
         xywh {15 55 60 25}
       }
       Fl_Button {} {
-        label Cancel
+        label {キャンセル}
         callback {window_set_aspect_ratio->hide();}
         xywh {85 55 60 25}
       }
     }
     Fl_Window window_set_color {
-      label {Set Color}
+      label {色}
       callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
 o->hide();}
       xywh {50 50 200 205} type Double resizable modal size_range {200 205 1000 205} visible
@@ -2055,12 +2055,12 @@ cl_gts_master.cl_trace_params.cb_target_rgb_color_change();}
             xywh {130 150 65 20} box FLAT_BOX color 22
           }
           Fl_Button {} {
-            label OK
+            label {セット}
             callback {window_set_color->hide();}
             xywh {65 175 60 25}
           }
           Fl_Button {} {
-            label Cancel
+            label {キャンセル}
             callback {cl_gts_master.cl_trace_params.cb_target_rgb_color_cancel();
 window_set_color->hide();}
             xywh {135 175 60 25}
@@ -2069,7 +2069,7 @@ window_set_color->hide();}
       }
     }
     Fl_Window window_trace_hue_minmax {
-      label {Trace Hue Min,Max}
+      label {線の色相範囲}
       callback {cl_gts_gui.window_trace_hue_minmax->hide();
 cl_gts_gui.menite_trace_hue_minmax->clear();}
       xywh {50 50 200 70} type Double resizable non_modal size_range {200 70 1000 100} visible
@@ -2096,13 +2096,13 @@ cl_gts_gui.menite_trace_hue_minmax->clear();}
           xywh {0 40 75 30}
         } {
           Fl_Button radbut_hue_min_sw {
-            label {Min.}
+            label {最小}
             callback {cyclic_color_wheel->set_min_or_max(false);
 cyclic_color_wheel->redraw();}
             xywh {5 40 35 25} type Radio value 1
           }
           Fl_Button radbut_hue_max_sw {
-            label {Max.}
+            label {最大}
             callback {cyclic_color_wheel->set_min_or_max(true);
 cyclic_color_wheel->redraw();}
             xywh {40 40 35 25} type Radio
@@ -2112,7 +2112,7 @@ cyclic_color_wheel->redraw();}
           xywh {75 40 70 25} resizable
         }
         Fl_Button {} {
-          label Reset
+          label {リセット}
           callback {cl_gts_master.cl_trace_params.cb_hue_min_or_max_cancel();
 cyclic_color_wheel->set_reset();
 cyclic_color_wheel->redraw();}

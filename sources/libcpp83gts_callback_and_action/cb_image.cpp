@@ -1,6 +1,8 @@
 #include <iostream>
 #include "FL/fl_ask.H"	// fl_alert(-)
 #include "pri.h"
+#include "osapi_exist.h" // osapi::exist_utf8_mbs(-)
+#include "gts_str_language.h"	// gts_str::
 #include "ids_path_level_from_files.h"
 #include "ids_path_fltk_native_browse.h"
 #include "cb_image.h"
@@ -12,7 +14,8 @@ void cb_image::open( void )
 	/* NativeブラウザーOpenで開く */
 	int filter_current = this->ext_open_filter_current_;
 	const std::string fpath = ids::path::fltk_native_browse_open(
-		"Open Image"
+//		"Open Image"
+		gts_str::image::open
 		,this->dir_path_
 		,"" /* 開くときは選択が必須のためファイル名は空白表示 */
 		,this->ext_open.get_native_filters()
@@ -46,12 +49,18 @@ void cb_image::save_as( void )
 {
 	/* Crop中は保存できない */
 	if (cl_gts_master.cl_ogl_view.get_crop_disp_sw()) {
-		fl_alert("Finish Cropping, Please Scan.");
+		fl_alert(
+//			"Finish Cropping, Please Scan."
+			gts_str::image::save_as_can_not_when_crop
+		);
 		return;
 	}
 	/* ScanもReadもまだしていない */
 	if (cl_gts_master.cl_iip_ro90.get_clp_parent() == nullptr ) {
-		fl_alert("Please Any Scan or Open.");
+		fl_alert(
+//			"Please Any Scan or Open."
+			gts_str::image::no_image
+		);
 		return;
 	}
 
@@ -77,23 +86,70 @@ void cb_image::save_as( void )
 		rot90 = cl_gts_gui.choice_rot90->value();
 		dpi = cl_gts_gui.valinp_area_reso->value();
 	} else {
-		fl_alert("No Image");
+		fl_alert(
+//			"No Image"
+			gts_str::image::no_image
+		);
 		return;
 	}
 
 	/* NativeブラウザーSaveで開く */
 	int filter_current = this->ext_save_filter_current_;
-	std::string fpath = ids::path::fltk_native_browse_save(
-		"Save Image As"
+	std::string fpath;
+	if (this->save_as_set_scan_images_path_sw) {
+		filter_current =
+		 cl_gts_gui.choice_scan_save_image_format->value();
+		fpath = ids::path::fltk_native_browse_save(
+//		"Save Image As"
+		gts_str::image::save_as
+		,cl_gts_gui.filinp_scan_save_dir_path->value()
+		,cl_gts_gui.strinp_scan_save_file_head->value()
+		,this->ext_save.get_native_filters()
+		,filter_current
+		).at(0);
+	} else {
+		fpath = ids::path::fltk_native_browse_save(
+//		"Save Image As"
+		gts_str::image::save_as
 		,this->dir_path_
 		,this->save_file_name_
 		,this->ext_save.get_native_filters()
 		,filter_current
-	).at(0);
+		).at(0);
+	}
 
 	/* Cancel */
 	if (fpath.empty()) {
 		return;
+	}
+
+	/* 拡張子がなければ */
+	if (this->ext_save_is_exist_( fpath ) == false) {
+		/* 拡張子指定されていれば */
+		if (filter_current < this->ext_save.size()) {
+			/* 拡張子追加する */
+			fpath+= this->ext_save.str_from_num(filter_current);
+
+			/* ダイオローグを表示 */
+			if (osapi::exist_utf8_mbs(fpath)) {
+				/* すでに存在するなら上書き確認 */
+				if (0 == fl_ask(
+//			"Overwrite \"%s\"?"
+					gts_str::config::ask_overwrite
+					,fpath.c_str() )){
+					return;
+				}
+			}
+		}
+		/* ユーザーによる拡張子指定ない
+		(Image Files(*.tga;*.tif)/All Files(*.*)) */
+		else {
+			fl_alert(
+//			"Need Extension."
+				gts_str::image::need_extension
+			);
+			return;
+		}
 	}
 
 	/* 有効なパスを開いたらその状態を記憶する */
@@ -102,22 +158,21 @@ void cb_image::save_as( void )
 	);
 	this->ext_save_filter_current_ = filter_current;
 
-	/* 拡張子がなければError */
-	if (this->ext_save_is_exist_( fpath ) == false) {
-		fl_alert("Need Extension.");
-		return;
-	}
-
 	/* 処理：Rot90 and Effects(color Trace and Erase color dot noise) */
 	if (cl_gts_master.rot_and_trace_and_enoise( parent ,rot90 ) != OK) {
-		fl_alert("Effects Error");
+		fl_alert(
+//			"Effects Error"
+			gts_str::image::effects_error
+		);
 		return;
 	}
 
 	/* 保存 */
 	if (OK != cl_gts_master.iipg_save(
-		//&(cl_gts_master.cl_iip_edot)
-		&(cl_gts_master.cl_iip_ro90)
+		&(cl_gts_master.cl_iip_edot)
+				/* 処理したEffectの最後Node画像を保存 */
+		// &(cl_gts_master.cl_iip_ro90)
+				/* スキャン画像の保存 */
 		,const_cast<char *>(fpath.c_str())
 		,dpi
 
@@ -129,7 +184,10 @@ void cb_image::save_as( void )
 	)) {
 		pri_funct_err_bttvr(
 	 "Error : cl_gts_master.iipg_save(-) returns NG" );
-		fl_alert("Save \"%s\" Error" ,fpath.c_str() );
+		fl_alert(
+//			"Save \"%s\" Error"
+			gts_str::image::save_error
+			,fpath.c_str() );
 		return;
 	}
 }

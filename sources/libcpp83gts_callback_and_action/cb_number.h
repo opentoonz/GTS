@@ -59,12 +59,6 @@ public:
 	int get_crnt_file_num(void) const { return this->crnt_file_num_; }
 	int get_next_file_num(void) const { return this->next_file_num_; }
 
-	/* 画像の番号をたどる方法を指定するための番号(scan時はGUI値から) */
-	int get_end_type_value(void) const { return this->end_type_value_; }
-	int get_endless_type_value(void) const {
-		return this->endless_type_value_;
-	}
-
 	/* 画像の番号をたどる (file番号とlist番号) */
 	/* 1 初期化し、開始位置 */
 	void counter_start( const int continue_type_value );
@@ -96,6 +90,12 @@ public:
 
 	const std::string get_save_path( const int num );
 
+	/* 画像の番号をたどる方法を指定するための番号(scan時はGUI値から) */
+	enum choice_level_continue_type_value {
+		end_type_value		// 0
+		,endless_type_value	// 1
+	};
+
 private:
 	int	crnt_list_num_
 		, crnt_file_num_
@@ -109,11 +109,6 @@ private:
 	const char* str_type_trace_;
 
 	//-------------------------------------
-
-	enum choice_level_continue_type_value_ {
-		end_type_value_		// 0
-		,endless_type_value_	// 1
-	};
 
 	int insert_and_select_fnum_in_list_( const int file_num );
 

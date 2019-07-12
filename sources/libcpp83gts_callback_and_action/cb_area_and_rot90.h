@@ -49,6 +49,13 @@ public:
 		Rot90
 	*/
 
+	enum enum_choice_rot90_type_value {
+		 cw270_type_value	// 0 (-90)
+		,cw000_type_value	// 1 (0)
+		,cw090_type_value	// 2 (90)
+		,cw180_type_value	// 3 (180)
+	};
+
 	/* Scanの場合のみ、数値(Offset、Size),画像,表示Area、を回転する */
 	void cb_rotate_per_90_when_scan( void );
 
