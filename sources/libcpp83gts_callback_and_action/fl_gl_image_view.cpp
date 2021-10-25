@@ -1,6 +1,7 @@
 #include <iostream>	//std::cout
 #include <cstdlib>
 #include <algorithm>	// std::sort()
+#include <limits>       // std::numerical_limits
 #include <sstream>
 #include "FL/fl_ask.H"  // fl_alert(-)
 #include "pri.h"
