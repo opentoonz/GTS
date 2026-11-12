@@ -42,13 +42,17 @@ AM_CONDITIONAL([MACOS], [test "$on_macos" = "yes"])
 
 if test "$on_windows" = "no"; then
     AC_CHECK_HEADERS([sane/sane.h], [], [AC_MSG_ERROR([SANE not found])])
-    AC_PATH_TOOL(SANE_CONFIG, sane-config, no)
-    if test "$SANE_CONFIG" = "no"; then
-        AC_MSG_ERROR(sane-config is required)
-    fi
-    AC_SUBST(SANE_CFLAGS, `$SANE_CONFIG --cflags`)
-    AC_SUBST(SANE_LDFLAGS, `$SANE_CONFIG --ldflags`)
-    AC_SUBST(SANE_LIBS, `$SANE_CONFIG --libs`)
+    PKG_CHECK_MODULES([SANE], [sane-backends], [
+        AC_SUBST(SANE_LDFLAGS, "")
+    ], [
+        AC_PATH_TOOL(SANE_CONFIG, sane-config, no)
+        if test "$SANE_CONFIG" = "no"; then
+            AC_MSG_ERROR([neither sane-backends (pkg-config) nor sane-config found])
+        fi
+        AC_SUBST(SANE_CFLAGS, `$SANE_CONFIG --cflags`)
+        AC_SUBST(SANE_LDFLAGS, `$SANE_CONFIG --ldflags`)
+        AC_SUBST(SANE_LIBS, `$SANE_CONFIG --libs`)
+    ])
 fi
 
 if test "$on_macos" = "yes"; then
