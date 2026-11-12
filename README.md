@@ -24,6 +24,22 @@ Please refer to the [OpenToonz site](https://opentoonz.github.io/e/index.html).
 
 Execute "./gts" in the unzipped folder.
 
+## How to Build with CMake (Linux / macOS)
+
+Requires libtiff, GLEW, FLTK (`fltk-config`), OpenGL/GLU and SANE (`sane-backends`) development packages. The autoconf build (`./autogen.sh && ./configure && make`) is still supported.
+
+```
+# Release
+cmake -S . -B build/release -DCMAKE_BUILD_TYPE=Release
+cmake --build build/release -j
+
+# Debug
+cmake -S . -B build/debug -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/debug -j
+```
+
+The executable is `build/<type>/gts`. `cmake --install build/release` installs it. If `CMAKE_BUILD_TYPE` is omitted, Release is used.
+
 ## How to Build Locally (Windows)
 
 1. Environment for development
