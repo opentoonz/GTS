@@ -1,3 +1,4 @@
+#include <limits>
 #include <cassert>
 #include <iostream>	// std::cerr
 #include <vector>

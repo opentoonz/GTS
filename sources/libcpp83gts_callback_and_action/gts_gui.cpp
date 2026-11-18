@@ -386,7 +386,7 @@ ost
 << '\n' << "ScannerMaxWidth(cm):" << cl_gts_gui.valout_scanner_size_cm_w->value()
 << '\n' << "ScannerMaxHeight(cm):" << cl_gts_gui.valout_scanner_size_cm_h->value()
 ;
-fl_message( ost.str().c_str() );
+fl_message("%s", ost.str().c_str());
 }
 void gts_gui::cb_menite_help_about(Fl_Menu_* o, void* v) {
   ((gts_gui*)(o->parent()->user_data()))->cb_menite_help_about_i(o,v);

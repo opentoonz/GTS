@@ -1,3 +1,4 @@
+#include <limits>
 #include <cassert>	/* assert(-) */
 #include <iostream>	/* std::cout */
 #include <sstream>	/* std::ostringstream */
@@ -36,7 +37,7 @@ void init_glew_(void)
 		std::ostringstream ost;
 		ost	<< "Critical Error:"
 			<< glewGetErrorString(err);
-		fl_alert( ost.str().c_str() );
+		fl_alert("%s", ost.str().c_str());
 		assert( !ost.str().c_str() );
 	}
 
@@ -774,7 +775,7 @@ void fl_gl_hsv_view::dummy_reset_vbo( const int pixel_size )
 	/* vbo初期化 */
 	std::string err_msg( this->vbo.open_or_reopen( pixel_size ) );
 	if (!err_msg.empty()) {
-		fl_alert( err_msg.c_str() );
+		fl_alert("%s", err_msg.c_str());
 		return; // by Error
 	}
 	this->vbo.pr_vbo_info();

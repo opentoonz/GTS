@@ -234,7 +234,7 @@ void cb_scan_and_save::cb_start( void )
 	std::string err_msg( this->cb_start_check_() );
 	if ( !err_msg.empty() ) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() );
+		fl_alert("%s", err_msg.c_str());
 		return;
 	}
 	}
@@ -253,7 +253,7 @@ void cb_scan_and_save::cb_start( void )
 	/* NGの時は動作終了する */
 	if (return_code == NG) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() );
+		fl_alert("%s", err_msg.c_str());
 		return;
 	}
  }
@@ -309,7 +309,7 @@ void cb_scan_and_save::cb_next( void )
 	/* NGの時は動作終了する */
 	if (return_code == NG) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() );
+		fl_alert("%s", err_msg.c_str());
 		return;
 	}
 
@@ -359,7 +359,7 @@ void cb_scan_and_save::cb_rescan( void )
 	/* NGの時は動作終了する */
 	if (return_code == NG) {
 		this->during_the_scan_is_ = false;
-		fl_alert( err_msg.c_str() );
+		fl_alert("%s", err_msg.c_str());
 		return;
 	}
 
@@ -410,7 +410,7 @@ void cb_scan_and_save::cb_save( const bool change_adjustable_sw )
 	/* ファイル保存する */
 	std::string err_msg = this->cb_save_();
 	if ( !err_msg.empty() ) {
-		fl_alert( err_msg.c_str() );
+		fl_alert("%s", err_msg.c_str());
 		/* エラー情報を出して次のフレーム処理に行くことにしとく */
 	}
 

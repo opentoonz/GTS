@@ -88,7 +88,7 @@ int fltk_button_pixel_type_and_bright::handle( int event )
 	{
 		std::string err(dnd_paste_( Fl::event_text() ));
 		if (!err.empty()) {
-			fl_alert( err.c_str() );
+			fl_alert("%s", err.c_str());
 		}
 	}
 		return 1;

@@ -316,7 +316,7 @@ ofs << "cp932=" <<  utf8_to_ansi_(src_utf8) << "\n";
 		//<< " \"" << open_file_path << "\""
 		<< "," << e.what() << std::endl;
 	std::cerr << ost.str();
-	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	fl_alert("%s", ost.str().c_str());/* ユーザーに知らせる */
 	return 1;
  }
  catch (...) {

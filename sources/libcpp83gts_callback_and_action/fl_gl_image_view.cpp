@@ -1,3 +1,4 @@
+#include <limits>
 #include <iostream>	//std::cout
 #include <cstdlib>
 #include <algorithm>	// std::sort()
@@ -380,7 +381,7 @@ int fl_gl_image_view::handle( int event )
 	{
 		std::string err(open_files_by_paste_( Fl::event_text() ));
 		if (!err.empty()) {
-			fl_alert( err.c_str() );
+			fl_alert("%s", err.c_str());
 		}
 	}
 		return 1;

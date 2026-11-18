@@ -147,7 +147,7 @@ void gts_master::_iipg_color_trace_exec( int i_area_sw )
 	,cl_gts_gui.hsv_view->vbo
 		));
 		if (!err_msg.empty()) {
-			fl_alert( err_msg.c_str() );
+			fl_alert("%s", err_msg.c_str());
 		}
 	}
 	else {	// BW,Grayscale

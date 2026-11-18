@@ -546,7 +546,7 @@ int fltk_button_trace_params::handle( int event )
 	{
 		std::string err(dnd_paste_( Fl::event_text() ));
 		if (!err.empty()) {
-			fl_alert( err.c_str() );
+			fl_alert("%s", err.c_str());
 		}
 	}
 		return 1;
