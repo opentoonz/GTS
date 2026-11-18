@@ -730,6 +730,8 @@ int iip_scan::read(void) {
         clp_canvas->set_l_height(param.lines);
         if (OK != clp_canvas->mem_alloc_canvas()) {
             pri_funct_err_bttvr("Error: clp_canvas->mem_alloc_canvas() returns NG.");
+            sane_cancel(this->sane_handle);
+            free(buffer);
             return NG;
         }
         canvas = clp_canvas->get_vp_canvas();
@@ -813,6 +815,13 @@ DONE_WRITING:
         }
     } while(!param.last_frame);
 
+    // The scan finished normally (EOF). Per the SANE API the application must
+    // call sane_cancel() to end the scan session. Some backends (e.g. Brother
+    // brother4/brscan4) otherwise stay in a "scanning" state and the next
+    // sane_open() blocks forever, freezing the whole GUI.
+    sane_cancel(this->sane_handle);
+    free(buffer);
+
     return OK;
 }
 
@@ -822,7 +831,11 @@ int iip_scan::close( void )
         pri_funct_msg_ttvr( "iip_scan::close()" );
     }
     if(this->sane_handle) {
+        // Always cancel before closing: harmless if no scan is running, and
+        // required by backends that keep the device busy otherwise.
+        sane_cancel(this->sane_handle);
         sane_close(this->sane_handle);
+        this->sane_handle = NULL;
     }
     sane_exit();
     this->sane_devlist = NULL;
