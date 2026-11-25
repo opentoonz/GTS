@@ -1150,7 +1150,7 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		<< file_path << "\","
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
-	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	fl_alert("%s", ost.str().c_str());/* ユーザーに知らせる */
 	return NG;
  }
  catch (std::exception& e) {
@@ -1159,14 +1159,14 @@ int memory_config::load( const std::string& file_path ,const bool load_trace_bat
 		<< file_path << "\","
 		<< e.what() << std::endl;
 	std::cerr << ost.str();
-	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	fl_alert("%s", ost.str().c_str());/* ユーザーに知らせる */
 	return NG;
  }
  catch (...) {
 	std::ostringstream ost;
 	ost << "Error(other) in loading.";/* ユーザーに知らせる */
 	std::cerr << ost.str();
-	fl_alert( ost.str().c_str() );/* ユーザーに知らせる */
+	fl_alert("%s", ost.str().c_str());/* ユーザーに知らせる */
 	return NG;
  }
 	return OK;

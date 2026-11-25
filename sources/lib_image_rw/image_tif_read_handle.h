@@ -1,6 +1,7 @@
 #ifndef image_tif_read_handle_h
 #define image_tif_read_handle_h
 
+#include <limits>
 #include <cstdint> /* int32_t */
 #include <string>
 #include "tiffio.h" /* TIFF uint32 */

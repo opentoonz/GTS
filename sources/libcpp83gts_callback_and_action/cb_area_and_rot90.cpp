@@ -741,7 +741,7 @@ int fltk_button_area_and_rot90::handle( int event )
 	{
 		std::string err(dnd_paste_( Fl::event_text() ));
 		if (!err.empty()) {
-			fl_alert( err.c_str() );
+			fl_alert("%s", err.c_str());
 		}
 	}
 		return 1;

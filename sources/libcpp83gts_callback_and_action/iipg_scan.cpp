@@ -243,14 +243,14 @@ iip_canvas *gts_master::iipg_scan(
 	     "Error : this->iipg_scan_action_(-) returns NG.");
 		/* ここでエラーがおきてもclose()はやる */
 std::string str("Scan Critical Error!\nSave Config and Restart!");
-fl_alert(str.c_str());
+fl_alert("%s", str.c_str());
 	}
 
 	if (OK != this->cl_iip_scan.close()) {
 		pri_funct_err_bttvr(
 	 "Error : this->cl_iip_scan.close() returns NG.");
 std::string str("Scan Close Critical Error!\nSave Config and Restart!");
-fl_alert(str.c_str());
+fl_alert("%s", str.c_str());
 		//activate_scan_();
 		return NULL;
 	}
